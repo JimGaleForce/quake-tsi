@@ -1,10 +1,11 @@
-# Data is not committed — every dataset is re-downloadable via the scripts in this repo
+# Data is not committed - every dataset is re-downloadable via the scripts in this repo
 # (download_catalogs.py, and the URLs documented in README.md / download_log.md).
 data/
 
-# Private working documents — correspondence drafts and internal notes, not part of the
+# Private working documents - correspondence drafts and internal notes, not part of the
 # scientific record this repo shares.
 DRAFT_PANEL_EMAIL.md
+DRAFT_PANEL_EMAIL.txt
 EQ18_FULL_NOTES.md
 RESPONSE_XUE_QUESTIONS.md
 
