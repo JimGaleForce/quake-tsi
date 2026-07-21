@@ -1,0 +1,69 @@
+{
+  "protocol_version": "1.1.0",
+  "frozen_at_local": "2026-07-20",
+  "amendment_1": "Original Kosmos r89 definitions adopted pre-unblinding; see PROTOCOL.md Amendment 1",
+  "regions": {
+    "apennines": {
+      "name": "Central Apennines, Italy",
+      "min_lat": 41.5, "max_lat": 44.5, "min_lon": 11.5, "max_lon": 14.5,
+      "primary_source": "INGV", "completeness_start": "2005-04-16",
+      "role": "test"
+    },
+    "taupo": {
+      "name": "Taupo Volcanic Zone + extensional NZ",
+      "min_lat": -40.0, "max_lat": -37.0, "min_lon": 175.0, "max_lon": 177.5,
+      "primary_source": "GEONET", "completeness_start": "2003-01-01",
+      "role": "test"
+    },
+    "iceland": {
+      "name": "Iceland",
+      "min_lat": 63.0, "max_lat": 67.0, "min_lon": -25.0, "max_lon": -13.0,
+      "primary_source": "USGS", "completeness_start": "1995-01-01",
+      "role": "test",
+      "note": "ComCat only, effective floor M4.0; IMO/SIL catalog is a pre-registered amendment target"
+    },
+    "parkfield_control": {
+      "name": "Central San Andreas / Parkfield-Cholame (negative control, strike-slip)",
+      "min_lat": 35.0, "max_lat": 37.0, "min_lon": -121.5, "max_lon": -119.5,
+      "primary_source": "USGS", "completeness_start": "1990-01-01",
+      "role": "negative_control"
+    }
+  },
+  "time_span": { "start": "1990-01-01", "end": "2026-06-30" },
+  "magnitude": { "primary_floor": 2.5, "comparability_floor": 4.5, "small_event_ceiling": 5.0 },
+  "max_depth_km": 30,
+  "declustering": {
+    "method": "gardner_knopoff_1974",
+    "time_window_days_log10": { "slope": 0.032, "intercept": 2.7389 },
+    "dist_window_km_log10": { "slope": 0.1238, "intercept": 0.983 },
+    "aftershock_latency_hours": 24
+  },
+  "fault_style": {
+    "normal_rake_range_deg": [-135, -45],
+    "mapped_fault_max_dist_km": 10
+  },
+  "tidal_windows": {
+    "method": "kosmos_r89_thresholds",
+    "syzygy_phase_angle_deg": { "new_below": 30, "full_above": 150 },
+    "perigee_normalized_distance_below": 0.25,
+    "lunar_distance_normalization_km": { "perigee": 356500, "apogee": 406700 },
+    "strain_rate_percentile_window_hours": 24,
+    "strain_rate_resolution_minutes": 1,
+    "aftershock_link": { "rule": "nearest_preceding_larger_event", "max_dist_km": 100 },
+    "ephemeris": "DE440",
+    "superseded_defaults": { "syzygy_halfwidth_hours": 36, "perigee_halfwidth_hours": 48 }
+  },
+  "null_model": {
+    "method": "tidal_phase_randomization_circular_shift",
+    "shift_period_days": 29.53059,
+    "n_surrogates": 10000,
+    "seed": 20261120
+  },
+  "decision_rule": {
+    "pooled_alpha": 0.05,
+    "single_region_er_threshold": 1.5,
+    "single_region_alpha": 0.05,
+    "sided": "one"
+  },
+  "tsi_grid": { "resolution_deg": 0.1, "gnss_solution": "NGL_MIDAS_IGS14" }
+}

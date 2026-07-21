@@ -1,0 +1,21 @@
+{
+  "mc": 1.2,
+  "n_above_floor": 61297,
+  "n_background": 19787,
+  "background_volumetric": {
+    "n": 19786,
+    "Pm_over_P0": 0.017367918381563017,
+    "phi_deg": 5.329162462198482,
+    "synth_p97.5": 0.027230951504712688,
+    "significant_95": false,
+    "empirical_p": 0.23658780406531157
+  },
+  "all_events_volumetric": {
+    "n": 61296,
+    "Pm_over_P0": 0.010929117749486036,
+    "phi_deg": -3.867508748916769,
+    "synth_p97.5": 0.018230943487812783,
+    "significant_95": false,
+    "empirical_p": 0.2729090303232256
+  }
+}

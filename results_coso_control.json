@@ -1,0 +1,90 @@
+{
+  "QTM_vol": {
+    "whole_catalog": {
+      "n": 45069,
+      "Pm_over_P0": 0.004605874535355297,
+      "phi_deg": -86.9387569973039,
+      "synth_p97.5": 0.02121621705301618,
+      "synth_p99.5": 0.025569261581916365,
+      "significant_95": false,
+      "significant_99": false,
+      "empirical_p": 0.8567144285238254
+    },
+    "coso": {
+      "n": 3129,
+      "Pm_over_P0": 0.015789092162241555,
+      "phi_deg": -163.66669319449048,
+      "synth_p97.5": 0.07264045218323831,
+      "synth_p99.5": 0.08427395554044542,
+      "significant_95": false,
+      "significant_99": false,
+      "empirical_p": 0.8197267577474175
+    }
+  },
+  "SCSN_vol": {
+    "whole_catalog": {
+      "n": 50311,
+      "Pm_over_P0": 0.0006341359343544658,
+      "phi_deg": -62.032159665665624,
+      "synth_p97.5": 0.020354236277150266,
+      "synth_p99.5": 0.023760202854577975,
+      "significant_95": false,
+      "significant_99": false,
+      "empirical_p": 0.9950016661112963
+    },
+    "coso": {
+      "n": 2022,
+      "Pm_over_P0": 0.013271404679655107,
+      "phi_deg": -95.30280331509039,
+      "synth_p97.5": 0.08756769088369819,
+      "synth_p99.5": 0.10518101401074789,
+      "significant_95": false,
+      "significant_99": false,
+      "empirical_p": 0.9166944351882705
+    }
+  },
+  "QTM_sxx": {
+    "whole_catalog": {
+      "n": 45069,
+      "Pm_over_P0": 0.008260059841578666,
+      "phi_deg": 99.95418164289406,
+      "synth_p97.5": 0.022701295880288342,
+      "synth_p99.5": 0.027638896076124027,
+      "significant_95": false,
+      "significant_99": false,
+      "empirical_p": 0.6791069643452182
+    },
+    "coso": {
+      "n": 3129,
+      "Pm_over_P0": 0.018682705365619296,
+      "phi_deg": 133.0529693849603,
+      "synth_p97.5": 0.06876474603405339,
+      "synth_p99.5": 0.08296424322380254,
+      "significant_95": false,
+      "significant_99": false,
+      "empirical_p": 0.7644118627124292
+    }
+  },
+  "SCSN_sxx": {
+    "whole_catalog": {
+      "n": 50311,
+      "Pm_over_P0": 0.015490459726816511,
+      "phi_deg": 108.15995412779363,
+      "synth_p97.5": 0.02165839658184894,
+      "synth_p99.5": 0.026019149617969785,
+      "significant_95": false,
+      "significant_99": false,
+      "empirical_p": 0.18027324225258248
+    },
+    "coso": {
+      "n": 2022,
+      "Pm_over_P0": 0.008212059165866483,
+      "phi_deg": -152.04596060768165,
+      "synth_p97.5": 0.08741473094673705,
+      "synth_p99.5": 0.1036615961950087,
+      "significant_95": false,
+      "significant_99": false,
+      "empirical_p": 0.9720093302232589
+    }
+  }
+}

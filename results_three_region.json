@@ -1,0 +1,102 @@
+{
+  "window_fraction": 0.09576489833959938,
+  "apennines": {
+    "n_events": 14377,
+    "n_mainshocks": 20,
+    "ms_in_window": 1,
+    "ms_binom_p": 0.8664551208021016,
+    "famous": [
+      {
+        "name": "L'Aquila 2009",
+        "mag": 6.1,
+        "in_window": false
+      },
+      {
+        "name": "Amatrice 2016",
+        "mag": 6.0,
+        "in_window": false
+      },
+      {
+        "name": "Visso 2016",
+        "mag": 5.9,
+        "in_window": false
+      },
+      {
+        "name": "Norcia 2016",
+        "mag": 6.5,
+        "in_window": false
+      }
+    ],
+    "aftershock_class": {
+      "n": 2395,
+      "obs": 126,
+      "exp": 246.9678,
+      "ER": 0.5101879678241454,
+      "p": 0.5333466653334666
+    }
+  },
+  "taupo": {
+    "n_events": 59160,
+    "n_mainshocks": 188,
+    "ms_in_window": 15,
+    "ms_binom_p": 0.8053171238947019,
+    "famous": [],
+    "aftershock_class": {
+      "n": 1566,
+      "obs": 62,
+      "exp": 169.9184,
+      "ER": 0.36488102524505883,
+      "p": 0.7265273472652735
+    }
+  },
+  "iceland": {
+    "n_events": 902,
+    "n_mainshocks": 106,
+    "ms_in_window": 9,
+    "ms_binom_p": 0.6958162995122206,
+    "famous": [
+      {
+        "name": "South Iceland 2000a",
+        "mag": 6.5,
+        "in_window": false
+      },
+      {
+        "name": "South Iceland 2000b",
+        "mag": 6.5,
+        "in_window": false
+      },
+      {
+        "name": "South Iceland 2008",
+        "mag": 6.3,
+        "in_window": false
+      }
+    ],
+    "aftershock_class": {
+      "n": 163,
+      "obs": 3,
+      "exp": 10.3107,
+      "ER": 0.2909598766330123,
+      "p": 0.9565043495650435
+    }
+  },
+  "parkfield_control": {
+    "n_events": 4914,
+    "n_mainshocks": 6,
+    "ms_in_window": 1,
+    "ms_binom_p": 0.45337665950261047,
+    "famous": [
+      {
+        "name": "Parkfield 2004",
+        "mag": 5.97,
+        "in_window": false
+      }
+    ],
+    "aftershock_class": {
+      "n": 309,
+      "obs": 253,
+      "exp": 38.2362,
+      "ER": 6.616766310459722,
+      "p": 0.11078892110788921
+    }
+  }
+}

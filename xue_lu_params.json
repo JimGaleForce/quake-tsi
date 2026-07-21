@@ -1,0 +1,25 @@
+{
+  "protocol_version": "1.0.0",
+  "frozen_at_local": "2026-07-21",
+  "data_dir": "data/xue_lu_zenodo",
+  "catalogs": {
+    "QTM": { "raw": "QTM_12dev.txt", "mc": 0.1, "role": "primary" },
+    "SCSN": { "raw": "SCSN_original_catalog.txt", "mc": 1.5, "role": "secondary" }
+  },
+  "mainshock_min_mag": 5.0,
+  "aftershock": { "max_mag_exclusive": 5.0, "max_dt_hours": 24, "max_dist_km": 100, "association": "closest_in_distance" },
+  "fault_geometry": {
+    "file": "CFM5.3_traceslonLat_fault_geometry.txt",
+    "normal_rake_range_deg": [-135, -45],
+    "strike_slip_rake_tolerance_deg": 45,
+    "max_dist_km": 10
+  },
+  "tidal_windows": {
+    "syzygy_elongation_deg": { "new_below": 30, "full_above": 150 },
+    "perigee_normalized_distance_below": 0.25,
+    "lunar_distance_normalization_km": { "perigee": 356500, "apogee": 406700 }
+  },
+  "null_model": { "n_surrogates": 10000, "shift_period_days": 29.53059, "seed": 20260721 },
+  "h2": { "window_hours": 24, "resolution_minutes": 1, "n_calibration_surrogates": 1000 },
+  "decision": { "alpha": 0.05, "strong_er": 1.5, "sided": "one" }
+}
