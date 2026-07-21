@@ -55,6 +55,11 @@ Order of execution mirrors the audit trail:
 `coso_fault_resolved.py` → `coso_fm_test.py` → `tsi_map.py` → `three_region_test.py` →
 `long_valley_test.py` → `socal_bin_scan.py`.
 
+## License
+
+Code: MIT. Protocol documents, notes, and figures: CC-BY 4.0. Datasets are not distributed here
+and remain under their providers' terms (see below). Details in `LICENSE`.
+
 ## Acknowledgments / data credits
 
 Lu, Xue, Yue, Zhuang & Zhao (2025) for the openly shared dataset (CC-BY 4.0); SCEDC and the
