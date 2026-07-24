@@ -1,4 +1,4 @@
-"""EQ-22 — Long Valley TSI prediction test, per LONG_VALLEY_PROTOCOL.md (frozen).
+"""EQ-22 - Long Valley TSI prediction test, per LONG_VALLEY_PROTOCOL.md (frozen).
 
 This script implements: catalog load, Mc estimate, GK-window declustering to a background set,
 the astropy tidal-potential volumetric strain series at the caldera, and the phase-modulation

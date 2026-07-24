@@ -1,4 +1,4 @@
-# Frozen Protocol — Blind Cross-Test on the Lu/Xue Southern California Dataset (EQ-18)
+# Frozen Protocol - Blind Cross-Test on the Lu/Xue Southern California Dataset (EQ-18)
 
 **Status: FROZEN 2026-07-21 (America/Los_Angeles), before any analysis of the catalogs.**
 Disclosure at freeze time: the only inspection of the data so far is file head-rows (first 3 lines)
@@ -9,15 +9,15 @@ affected step runs.
 
 ## 1. Question
 
-Does the Kosmos-r89 "predictability class" — small (M < 5.0), early (< 24 h) aftershocks on normal
-faults, occurring during perigee-syzygy — show tidal-window enrichment in the Lu/Xue Southern
+Does the Kosmos-r89 "predictability class" - small (M < 5.0), early (< 24 h) aftershocks on normal
+faults, occurring during perigee-syzygy - show tidal-window enrichment in the Lu/Xue Southern
 California catalogs (QTM, Mc 0.1, 2008–2017; relocated SCSN, Mc 1.5, 1981–2018)?
 
 This is out-of-sample in two ways: (a) the original n=14 came almost entirely from Chalfant Valley
-(37.5°N), which lies OUTSIDE the Lu et al. Southern California study region — so nothing here can
+(37.5°N), which lies OUTSIDE the Lu et al. Southern California study region - so nothing here can
 re-find the original events; (b) the QTM catalog reaches Mc 0.1, ~3 magnitude units deeper than the
 original M≥4.5 catalog. The poroelastic mechanism predicts the signal should be PRESENT and
-STRONGER at small magnitudes in fluid-rich (geothermal) zones — Lu et al.'s own finding of
+STRONGER at small magnitudes in fluid-rich (geothermal) zones - Lu et al.'s own finding of
 modulation at Coso and other low-effective-stress areas makes this a fair, live test.
 
 ## 2. Event classes (faithful to r89's operational definitions, protocol v1.1.0 Amendment 1)
@@ -32,7 +32,7 @@ modulation at Coso and other low-effective-stress areas makes this a fair, live 
   as normal). The r89 class was mechanism-specific; comparable enrichment in the strike-slip subset
   argues artifact, not mechanism.
 - Note: this replaces Gardner-Knopoff classification with r89's actual operational association
-  (nearest preceding larger event within 100 km / 24 h) — which is what produced the original n=14.
+  (nearest preceding larger event within 100 km / 24 h) - which is what produced the original n=14.
 
 ## 3. Tidal windows (identical to Amendment 1)
 
@@ -45,11 +45,11 @@ modulation at Coso and other low-effective-stress areas makes this a fair, live 
 
 - **H1 (primary):** the normal-fault aftershock class in the QTM catalog is enriched in
   perigee-syzygy windows. Null: 10,000 surrogates re-evaluating each event's tidal mask at
-  t + δ, δ ~ Uniform(0, 29.53059 d) (circular ephemeris shift; event times untouched — preserves
+  t + δ, δ ~ Uniform(0, 29.53059 d) (circular ephemeris shift; event times untouched - preserves
   all clustering exactly). ER = observed in-window count / mean surrogate in-window count;
   one-sided p = exceedance fraction (add-one). Decision: supported if ER > 1 with p < 0.05;
   strong if ER ≥ 1.5. SCSN is the secondary readout (longer era, higher Mc).
-- **Sequence-level robustness (mandatory):** jackknife by mainshock — drop each mainshock's
+- **Sequence-level robustness (mandatory):** jackknife by mainshock - drop each mainshock's
   aftershocks and recompute ER; report range. A result driven by one sequence (Chalfant redux)
   is reported as such.
 - **H2 (secondary):** for in-window normal-fault events, |dεv/dt| percentile within the 24-h
@@ -63,7 +63,7 @@ modulation at Coso and other low-effective-stress areas makes this a fair, live 
 ## 5. Interpretation commitments (written before running)
 
 - **H1 null in both catalogs:** the r89 class does not generalize beyond Chalfant Valley at any
-  magnitude — the California section of the paper is downgraded to a single-swarm case study, and
+  magnitude - the California section of the paper is downgraded to a single-swarm case study, and
   we report this back to Bürgmann/Vidale/Xue as the blind-test outcome.
 - **H1 supported, control clean:** first out-of-sample support for the predictability class;
   immediately map WHERE the in-window events sit vs Lu et al.'s low-effective-stress regions

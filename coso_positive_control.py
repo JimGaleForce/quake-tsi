@@ -1,4 +1,4 @@
-"""EQ-18 step A — pipeline positive control: reproduce Lu et al. (2025) tidal phase modulation
+"""EQ-18 step A - pipeline positive control: reproduce Lu et al. (2025) tidal phase modulation
 at Coso using THEIR declustered catalogs, THEIR tidal strain series, and THEIR method
 (phase histogram, inherent-background-bias correction, synthetic-catalog significance).
 

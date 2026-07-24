@@ -1,4 +1,4 @@
-# Frozen Replication Protocol — Out-of-Sample Test of the TSI "Predictability Class"
+# Frozen Replication Protocol - Out-of-Sample Test of the TSI "Predictability Class"
 
 **Linear issue:** EQ-1 · **Status:** FROZEN as of 2026-07-20 (America/Los_Angeles)
 **Rule:** No parameter below may change after regional event data has been downloaded and inspected,
@@ -23,13 +23,13 @@ rate/poroelastic mechanism, not Coulomb, governs timing.
 **H3 (exploratory, not confirmatory):** Enrichment scales with local TSI (events in top-quartile TSI
 cells show higher ER than bottom-quartile).
 
-## 2. Test regions (chosen a priori — all predicted "susceptible" by the TSI model)
+## 2. Test regions (chosen a priori - all predicted "susceptible" by the TSI model)
 
 | Region | Box (lat, lon) | Rationale | Primary catalog | Secondary |
 |---|---|---|---|---|
 | Central Apennines, Italy | 41.5–44.5N, 11.5–14.5E | Normal faults + CO2-rich fluids; 2009 L'Aquila, 2016–17 Amatrice–Norcia–Campotosto | INGV FDSN | USGS ComCat |
 | Taupō Volcanic Zone + adjacent extensional NZ | 40.0–37.0S, 175.0–177.5E | Rifting + geothermal | GeoNet FDSN | USGS ComCat |
-| Iceland | 63.0–67.0N, 25.0–13.0W | Plate boundary rift + geothermal | USGS ComCat (IMO/SIL access is a follow-up amendment if obtainable) | — |
+| Iceland | 63.0–67.0N, 25.0–13.0W | Plate boundary rift + geothermal | USGS ComCat (IMO/SIL access is a follow-up amendment if obtainable) | - |
 
 Negative-control region (H1 should FAIL here; strike-slip, low-TSI): **central San Andreas /
 Parkfield-Cholame corridor** 35.0–37.0N, 121.5–119.5W, strike-slip events only, same era. A "hit" in
@@ -123,10 +123,10 @@ before event analysis, and hashed into the download log.
 
 ## Amendments
 
-### Amendment 1 — 2026-07-20 (pre-unblinding; original Kosmos definitions recovered)
+### Amendment 1 - 2026-07-20 (pre-unblinding; original Kosmos definitions recovered)
 
 Source: Kosmos run `quakes4` (playground.edisonscientific.com/kosmos/7e2d1b15-…), subtask **r89**
-"Identification of Tidally Sensitive California Aftershocks" — the task that produced the paper's
+"Identification of Tidally Sensitive California Aftershocks" - the task that produced the paper's
 sensitive-event dataset. Exercising the §6 reserved amendment: the original run did NOT use time
 half-widths; it used phase-angle/distance thresholds. To replicate the original class definition
 faithfully, the following **replace** the corresponding frozen defaults. No regional event data has
@@ -152,9 +152,9 @@ normalized-distance mask under circular ephemeris shifts, identically.
 Also recorded from r89 for the audit trail (affects interpretation, not parameters):
 - The original "sensitive" set is **n=14**, of which **12 are from the 1986 Chalfant Valley
   sequence** and 13/14 from the Long Valley–Chalfant corridor → effective sample ≈ 1–3 sequences.
-- r89's own Wilcoxon (median percentile > 50%) was p = 0.034 — the paper's stronger p = 0.0002 /
+- r89's own Wilcoxon (median percentile > 50%) was p = 0.034 - the paper's stronger p = 0.0002 /
   "100% of 13" figure comes from a different subtask comparing vs Coulomb-rate percentiles.
 - Kosmos's internal dataset notes state that in multivariate spatial models (r82/r83),
-  **max_shear_rate alone — not the TSI ratio — was the primary significant spatial predictor** of
+  **max_shear_rate alone - not the TSI ratio - was the primary significant spatial predictor** of
   tidal sensitivity. H3 will therefore be evaluated BOTH ways (TSI ratio and max-shear-rate),
   pre-declared here.

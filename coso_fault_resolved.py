@@ -1,4 +1,4 @@
-"""EQ-18 step A (part 2) — fault-resolved positive control at Coso.
+"""EQ-18 step A (part 2) - fault-resolved positive control at Coso.
 
 Projects the Lu/Xue tidal stress tensor onto representative CFM 5.3 Coso fault geometries
 (their own rotation code, vectorized) and runs the phase-modulation test on sigma_n, shear

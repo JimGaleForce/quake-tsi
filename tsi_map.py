@@ -1,4 +1,4 @@
-"""EQ-20 / EQ-18 step B — Southern California strain-rate & TSI maps from NGL MIDAS velocities.
+"""EQ-20 / EQ-18 step B - Southern California strain-rate & TSI maps from NGL MIDAS velocities.
 
 Produces the deliverable Burgmann asked for: dilatation rate, max shear strain rate, and TSI
 (= dilatation / max shear) shown SEPARATELY, with geothermal fields and Lu et al. modulation
@@ -123,7 +123,7 @@ def main():
         ax.set_title(title)
         ax.set_xlabel("Longitude"); ax.set_ylabel("Latitude")
         fig.colorbar(im, ax=ax, shrink=0.85)
-    fig.suptitle("Southern California geodetic strain rates & TSI — NGL MIDAS IGS14, "
+    fig.suptitle("Southern California geodetic strain rates & TSI - NGL MIDAS IGS14, "
                  f"Gaussian σ={SIGMA_KM:.0f} km, {GRID_STEP}° grid (black dots: GNSS stations)",
                  fontsize=13)
     fig.savefig(OUT / "socal_strain_tsi.png", dpi=180)

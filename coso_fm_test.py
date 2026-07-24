@@ -1,4 +1,4 @@
-"""EQ-18 step A (part 3) — Coso positive control with PER-EVENT focal mechanisms (Lu et al. §2.5).
+"""EQ-18 step A (part 3) - Coso positive control with PER-EVENT focal mechanisms (Lu et al. §2.5).
 
 Each declustered event matched (by SCSN evid) to the Yang-Hauksson-Shearer / SCEDC focal
 mechanism catalog gets the tidal stress tensor resolved onto its own mechanism (preferred plane).
@@ -8,7 +8,7 @@ bias correction is possible (heterogeneous orientations), so significance is eva
 
 sigma_n and tau are linear combinations of the base stress series (sxx, syy, sxy, szz), so we
 precompute the four upsampled base series once and combine per orientation group (angles rounded
-to 15 deg) — one find_peaks pass per group.
+to 15 deg) - one find_peaks pass per group.
 """
 import json
 import numpy as np

@@ -1,4 +1,4 @@
-"""EQ-18 blind cross-test — implements XUE_LU_PROTOCOL.md (frozen 2026-07-21).
+"""EQ-18 blind cross-test - implements XUE_LU_PROTOCOL.md (frozen 2026-07-21).
 
 All analytic parameters come from xue_lu_params.json. Faithful reimplementation of the
 Kosmos-r89 pipeline (selection criteria, lunar windows, strain-rate percentiles) applied

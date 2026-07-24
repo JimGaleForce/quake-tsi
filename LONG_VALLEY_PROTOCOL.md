@@ -1,4 +1,4 @@
-# Frozen Protocol — Long Valley TSI Out-of-Sample Prediction Test (EQ-22)
+# Frozen Protocol - Long Valley TSI Out-of-Sample Prediction Test (EQ-22)
 
 **Status: FROZEN 2026-07-21 (America/Los_Angeles), before any Long Valley catalog data is
 downloaded or inspected.** Hash recorded in download_log.md.
@@ -7,8 +7,8 @@ downloaded or inspected.** Hash recorded in download_log.md.
 
 Our SoCal geodetic map (tsi_map.py, NGL MIDAS, maps/socal_strain_tsi.png) identifies Long Valley
 caldera as the strongest positive TSI anomaly in the mapped region (TSI ≈ +6.3 at the caldera vs
-regional median ≈ −0.11), while Coso — the one site with independently established tidal
-modulation (Lu et al. 2025; Wang et al. 2022) — has TSI ≈ −0.43.
+regional median ≈ −0.11), while Coso - the one site with independently established tidal
+modulation (Lu et al. 2025; Wang et al. 2022) - has TSI ≈ −0.43.
 
 **H-LV (if the TSI ratio has predictive merit):** declustered background seismicity in the Long
 Valley box exhibits statistically significant tidal phase modulation (95% level against
@@ -39,17 +39,17 @@ Coso positive control.
 
 Window-based (Gardner-Knopoff, same windows as protocol_params.json): remove every event inside
 the space-time window of any larger event; the remainder is the background set. (Lu et al. used
-ETAS declustering; GK-windowing is our pre-declared variant — coarser but deterministic. If the
+ETAS declustering; GK-windowing is our pre-declared variant - coarser but deterministic. If the
 background set shows modulation, an ETAS-declustered robustness check follows before claiming.)
 
 ## 4. Detection statistic
 
 Primary: the statistic variant that SUCCEEDS on the Coso positive control (per results_coso_fm.json
-— per-event focal-mechanism resolution if that is what works, else whichever fixed-orientation
+- per-event focal-mechanism resolution if that is what works, else whichever fixed-orientation
 variant does), applied to Long Valley UNCHANGED except for location-specific inputs.
 Tidal forcing at Long Valley: astropy tidal-potential volumetric strain series computed at the
 caldera (37.68N, −118.90E) at 600-s sampling (body tide; ocean loading negligible this far inland
-relative to SoCal coast — recorded as an assumption), plus fault-resolved projections via the
+relative to SoCal coast - recorded as an assumption), plus fault-resolved projections via the
 calc_stress.py rotation for the mechanism/geometry variants using the same elastic constants.
 Secondary (always reported): volumetric-phase modulation, regardless of primary outcome.
 Significance: 3,000 synthetic catalogs (random times over the analyzed era, orientations
@@ -63,10 +63,10 @@ any claims about TSI's overall merit require the full label-map correlation (pla
 
 ## Amendments
 
-### Amendment 1 — 2026-07-21 (declustering method, documented before any interpreted result)
+### Amendment 1 - 2026-07-21 (declustering method, documented before any interpreted result)
 
 The §3 GK-window declustering is inapplicable at this catalog's magnitudes: T(M=1.2) ≈ 598 days,
-so windows cascade and only 81 of 61,297 events survived — no usable background set (this outcome
+so windows cascade and only 81 of 61,297 events survived - no usable background set (this outcome
 is recorded in results_long_valley.json as the failed first pass; its modulation numbers are void
 for the primary/secondary endpoints). Replacement, pre-declared here before rerun:
 **Zaliapin & Ben-Zion (2013) nearest-neighbor declustering** with standard parameters

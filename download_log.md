@@ -1,4 +1,4 @@
-# Download / audit log — EQ-1 replication
+# Download / audit log - EQ-1 replication
 
 ## Protocol freeze record
 
@@ -13,7 +13,7 @@ b0affd004e7a739762f09952ca7843139a3452fec0a44d9feb25727390b7ad07  download_catal
 ```
 
 For true pre-registration these hashes should be pinned somewhere third-party-timestamped
-(git commit pushed to GitHub, or OSF registration) — repo is not yet a git repo; recommend
+(git commit pushed to GitHub, or OSF registration) - repo is not yet a git repo; recommend
 `git init` + push before analysis unblinding. (Left to Jim per repo conventions.)
 
 ## Amendments to non-analytic tooling
@@ -25,7 +25,7 @@ For true pre-registration these hashes should be pinned somewhere third-party-ti
 
 ## Amendment 1 hash record
 
-2026-07-20 23:19:42 PDT — original Kosmos r89 tidal-window definitions adopted (PROTOCOL.md
+2026-07-20 23:19:42 PDT - original Kosmos r89 tidal-window definitions adopted (PROTOCOL.md
 Amendment 1; params v1.1.0). Raw catalogs downloaded but NOT analyzed at amendment time.
 
 ```
@@ -35,7 +35,7 @@ ef4d0a37e25ed67aadc245141836276a0b064f289416ee4da563d3ed9f4271cd  protocol_param
 
 ## EQ-18 cross-test protocol freeze record
 
-2026-07-21 00:14:24 PDT — XUE_LU_PROTOCOL.md frozen BEFORE any analysis of the Lu/Xue Zenodo
+2026-07-21 00:14:24 PDT - XUE_LU_PROTOCOL.md frozen BEFORE any analysis of the Lu/Xue Zenodo
 catalogs (only head-rows/row-counts had been inspected, per INVENTORY.md).
 
 ```

@@ -1,4 +1,4 @@
-"""EQ-18/EQ-22 — full SoCal 0.2-degree bin scan of tidal phase modulation (Lu Fig 4 layout).
+"""EQ-18/EQ-22 - full SoCal 0.2-degree bin scan of tidal phase modulation (Lu Fig 4 layout).
 
 Purpose (dual):
  1. Sensitivity diagnostic: if ANY bin reaches significance with our implementation, the pipeline

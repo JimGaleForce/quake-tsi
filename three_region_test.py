@@ -1,9 +1,9 @@
-"""EQ-1/EQ-18 step C — three-region extension (Apennines, Taupo, Iceland) + Parkfield control.
+"""EQ-1/EQ-18 step C - three-region extension (Apennines, Taupo, Iceland) + Parkfield control.
 
 Mainshock-level perigee-syzygy timing test (the artifact-free version of the question) plus the
 exploratory class-level enrichment with the circular-shift null. Fault-style assignment is NOT
 attempted here (no CFM equivalent loaded); the Apennines belt is treated as predominantly
-normal-faulting, Taupo as extensional — labeled exploratory, distinct from the frozen EQ-1
+normal-faulting, Taupo as extensional - labeled exploratory, distinct from the frozen EQ-1
 confirmatory run. Also lists the famous mainshocks and whether each fell in-window.
 """
 import json
