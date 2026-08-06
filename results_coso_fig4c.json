@@ -1,0 +1,50 @@
+{
+  "box": {
+    "lat": [
+      36.2,
+      36.6
+    ],
+    "lon": [
+      -118.0,
+      -117.6
+    ]
+  },
+  "protocol": "COSO_FIG4C_PROTOCOL.md",
+  "seed": 20260806,
+  "tau": {
+    "QTM": {
+      "n": 29,
+      "note": "too few FM matches"
+    },
+    "SCSN": {
+      "n": 113,
+      "Pm_over_P0": 0.33969832555319485,
+      "phi_deg": -133.41502238999868,
+      "synth_p97.5": 0.3618559499190874,
+      "synth_p99.5": 0.42791181530490635,
+      "significant_95": false,
+      "empirical_p": 0.04065311562812396
+    }
+  },
+  "sigma_n": {
+    "QTM": {
+      "n": 29,
+      "note": "too few FM matches"
+    },
+    "SCSN": {
+      "n": 113,
+      "Pm_over_P0": 0.2710402795974808,
+      "phi_deg": 160.87004734614516,
+      "synth_p97.5": 0.35852138748059925,
+      "synth_p99.5": 0.42283606058597784,
+      "significant_95": false,
+      "empirical_p": 0.12329223592135954
+    }
+  },
+  "tau_qtm_m1.5": {
+    "QTM": {
+      "n": 20,
+      "note": "too few FM matches"
+    }
+  }
+}

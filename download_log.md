@@ -56,6 +56,13 @@ cd2b1e3c8d96a37a36a47f6db95d2a928b49c99b01a1a44d0e30f09dc6b4a59d  xue_lu_params.
 
 See `data/retrieval_log_*.tsv` written by `download_catalogs.py`.
 
+## Coso Fig 4c reproduction protocol freeze record
+
+aa97685b1000e7f5da0affc05ff81483a0d168a01191da385bb7faccd053bae0 *COSO_FIG4C_PROTOCOL.md
+Thu Aug 6 2026 (frozen BEFORE any analysis in Weifan Lu's Fig 4c bin — lat [36.2,36.6],
+lon [−118,−117.6]; parameters received from Weifan by email 2026-08-06. Prior Coso runs
+used a different, mostly non-overlapping box; no analysis of this bin had been run.)
+
 ## EQ-22 Long Valley protocol freeze record
 
 826ddc072275789e7f85276560f5ad9592033cdc6ea23bcb048e83a74920cffc *LONG_VALLEY_PROTOCOL.md
