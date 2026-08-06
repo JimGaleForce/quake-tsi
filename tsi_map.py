@@ -80,8 +80,9 @@ def strain_grid(df):
                 cn, *_ = np.linalg.lstsq(A, vn[sel] * W, rcond=None)
             except np.linalg.LinAlgError:
                 continue
-            dvedx, dvedy = ce[1], ce[2]   # mm/yr per km = nanostrain/yr
-            dvndx, dvndy = cn[1], cn[2]
+            # mm/yr per km = 1e-6/yr; ×1000 -> nanostrain/yr
+            dvedx, dvedy = ce[1] * 1000, ce[2] * 1000
+            dvndx, dvndy = cn[1] * 1000, cn[2] * 1000
             exx = dvedx                    # x = east
             eyy = dvndy
             exy = 0.5 * (dvedy + dvndx)

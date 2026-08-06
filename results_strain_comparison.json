@@ -1,0 +1,97 @@
+{
+  "stations": {
+    "midas": 1084,
+    "kreemer_young": 941
+  },
+  "fields": {
+    "dil": {
+      "n_nodes": 4679,
+      "pearson_r": 0.7824998383918199,
+      "spearman_rho": 0.7405438368080297,
+      "median_abs_diff": 8.109248948654756,
+      "median_a": -2.6751304355634913,
+      "median_b": 1.674263788705713
+    },
+    "max_shear": {
+      "n_nodes": 4679,
+      "pearson_r": 0.9340244264537655,
+      "spearman_rho": 0.9282633044200173,
+      "median_abs_diff": 5.339109546308228,
+      "median_a": 32.264956798728676,
+      "median_b": 28.35913943414092
+    },
+    "inv2": {
+      "n_nodes": 4679,
+      "pearson_r": 0.9321810557792658,
+      "spearman_rho": 0.9282574757752252,
+      "median_abs_diff": 8.044009293777187,
+      "median_a": 50.721862388235124,
+      "median_b": 41.72600671027126
+    },
+    "eps_min": {
+      "n_nodes": 4679,
+      "pearson_r": 0.9255777569342379,
+      "spearman_rho": 0.9180672526645287,
+      "median_abs_diff": 7.2484773064420835,
+      "median_a": 42.33691523164721,
+      "median_b": 35.238613454199744
+    }
+  },
+  "high_strain_mask_47": {
+    "midas_frac": 0.45372942936524896,
+    "ky_frac": 0.3876896772814704,
+    "jaccard": 0.8303114830311483
+  },
+  "sites": {
+    "Coso": {
+      "midas": {
+        "dil": -17.19,
+        "max_shear": 39.69
+      },
+      "ky": {
+        "dil": -6.66,
+        "max_shear": 32.05
+      }
+    },
+    "Long Valley": {
+      "midas": {
+        "dil": 145.97,
+        "max_shear": 23.33
+      },
+      "ky": {
+        "dil": 71.49,
+        "max_shear": 35.35
+      }
+    },
+    "Salton Sea": {
+      "midas": {
+        "dil": 27.72,
+        "max_shear": 270.08
+      },
+      "ky": {
+        "dil": 4.33,
+        "max_shear": 265.39
+      }
+    },
+    "Cerro Prieto": {
+      "midas": {
+        "dil": -52.88,
+        "max_shear": 275.51
+      },
+      "ky": {
+        "dil": 10.67,
+        "max_shear": 209.99
+      }
+    },
+    "Brawley": {
+      "midas": {
+        "dil": 24.13,
+        "max_shear": 299.44
+      },
+      "ky": {
+        "dil": 0.29,
+        "max_shear": 283.51
+      }
+    }
+  }
+}
