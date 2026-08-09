@@ -1,0 +1,489 @@
+{
+  "meta": {
+    "catalog": "SCSN_original_catalog.txt",
+    "box": {
+      "lat": [
+        31.5,
+        38.0
+      ],
+      "lon": [
+        -122.0,
+        -113.5
+      ]
+    },
+    "split_utc": "2010-01-01 00:00:00+00:00",
+    "mainshock_min_mag": 5.0,
+    "aftershock_window_days": 100.0,
+    "aftershock_radius_km": 50.0,
+    "min_aftershocks": 30,
+    "b_floor": 2.5,
+    "b_bin": 0.1,
+    "min_b_events": 30,
+    "neighborhood_deg": 0.5,
+    "seed": 20260809,
+    "runtime_guard": {
+      "projected_sim_minutes": 0.01668333333333333,
+      "halved": false,
+      "n_sim_used": 1000,
+      "n_perm_used": 1000
+    },
+    "n_events_in_box": 633667,
+    "n_mainshocks_total": 130,
+    "n_mainshocks_train": 100,
+    "n_mainshocks_test": 30,
+    "runtime_seconds": 4.176758766174316
+  },
+  "i": {
+    "n_train_sequences_fitted": 74,
+    "n_test_sequences_fitted": 16,
+    "train_p": {
+      "n": 74,
+      "n_cells": 31,
+      "n_cells_with_2plus": 15,
+      "mean": 0.7994884351201311,
+      "sd": 0.6421098287767654,
+      "icc_like_ssb_over_sst": 0.22336496387654703,
+      "perm_null_mean": 0.41519754932015723,
+      "perm_p": 0.967032967032967,
+      "n_permutations": 1000
+    },
+    "train_b": {
+      "n": 52,
+      "n_cells": 24,
+      "n_cells_with_2plus": 10,
+      "mean": 0.9183136028847828,
+      "sd": 0.2251054092638503,
+      "icc_like_ssb_over_sst": 0.6871650034972795,
+      "perm_null_mean": 0.44683365802613434,
+      "perm_p": 0.008991008991008992,
+      "n_permutations": 1000
+    },
+    "test_prediction": {
+      "n_test_predictable": 15,
+      "global_train_mean_p": 0.7994884351201311,
+      "global_train_mean_b": 0.9183136028847828,
+      "train_sd_p": 0.6421098287767654,
+      "train_sd_b": 0.22510540926385034,
+      "p_param": {
+        "n": 15,
+        "wins": 7,
+        "frac": 0.4666666666666667,
+        "binom_p_greater": 0.696380615234375
+      },
+      "b_param": {
+        "n": 8,
+        "wins": 0,
+        "frac": 0.0,
+        "binom_p_greater": 1.0
+      },
+      "joint": {
+        "n": 15,
+        "wins": 7,
+        "frac": 0.4666666666666667,
+        "binom_p_greater": 0.696380615234375
+      },
+      "per_sequence": [
+        {
+          "t_unix": 1270420842.16,
+          "lat": 32.2735,
+          "lon": -115.294,
+          "mag": 7.2,
+          "n_train_neighbors": 9,
+          "obs_p": 1.1293534596734722,
+          "obs_b": 0.8261319504498815,
+          "nb_p": 0.9803730155839536,
+          "nb_b": 0.9266015857358659,
+          "win_p": true,
+          "win_b": false,
+          "win_joint": true
+        },
+        {
+          "t_unix": 1270420980.98,
+          "lat": 32.5295,
+          "lon": -115.61234,
+          "mag": 5.26,
+          "n_train_neighbors": 8,
+          "obs_p": 1.74058441410777,
+          "obs_b": 0.8386722680234828,
+          "nb_p": 1.0333496320296454,
+          "nb_b": 0.9218785479896289,
+          "win_p": true,
+          "win_b": false,
+          "win_joint": true
+        },
+        {
+          "t_unix": 1270421417.9299998,
+          "lat": 32.0913,
+          "lon": -115.1793,
+          "mag": 5.7,
+          "n_train_neighbors": 9,
+          "obs_p": 0.943156200164148,
+          "obs_b": 0.8694169799779108,
+          "nb_p": 0.9803730155839536,
+          "nb_b": 0.9266015857358659,
+          "win_p": true,
+          "win_b": false,
+          "win_joint": true
+        },
+        {
+          "t_unix": 1270423506.0,
+          "lat": 32.203,
+          "lon": -115.2015,
+          "mag": 5.7,
+          "n_train_neighbors": 9,
+          "obs_p": 1.3012523017254671,
+          "obs_b": 0.8550506616634983,
+          "nb_p": 0.9803730155839536,
+          "nb_b": 0.9266015857358659,
+          "win_p": true,
+          "win_b": false,
+          "win_joint": true
+        },
+        {
+          "t_unix": 1270466054.8,
+          "lat": 32.662,
+          "lon": -115.8067,
+          "mag": 5.1,
+          "n_train_neighbors": 3,
+          "obs_p": 0.6435918295910429,
+          "obs_b": null,
+          "nb_p": 1.6613332899981252,
+          "nb_b": 1.0209745334802827,
+          "win_p": false,
+          "win_joint": false
+        },
+        {
+          "t_unix": 1270474385.4,
+          "lat": 32.6402,
+          "lon": -115.801,
+          "mag": 5.1,
+          "n_train_neighbors": 3,
+          "obs_p": 1.0029791076298413,
+          "obs_b": null,
+          "nb_p": 1.6613332899981252,
+          "nb_b": 1.0209745334802827,
+          "win_p": false,
+          "win_joint": false
+        },
+        {
+          "t_unix": 1270745065.9,
+          "lat": 32.2198,
+          "lon": -115.276,
+          "mag": 5.3,
+          "n_train_neighbors": 9,
+          "obs_p": 0.2,
+          "obs_b": null,
+          "nb_p": 0.9803730155839536,
+          "nb_b": 0.9266015857358659,
+          "win_p": false,
+          "win_joint": false
+        },
+        {
+          "t_unix": 1276576018.14,
+          "lat": 32.70381,
+          "lon": -115.91661,
+          "mag": 5.72,
+          "n_train_neighbors": 3,
+          "obs_p": 0.7369099421597669,
+          "obs_b": 0.810847868925194,
+          "nb_p": 1.6613332899981252,
+          "nb_b": 1.0209745334802827,
+          "win_p": false,
+          "win_b": false,
+          "win_joint": false
+        },
+        {
+          "t_unix": 1278546813.22,
+          "lat": 33.42467,
+          "lon": -116.473,
+          "mag": 5.43,
+          "n_train_neighbors": 2,
+          "obs_p": 0.7548537459141901,
+          "obs_b": null,
+          "nb_p": 0.715040070435358,
+          "nb_b": null,
+          "win_p": true,
+          "win_joint": true
+        },
+        {
+          "t_unix": 1284461538.0,
+          "lat": 32.0485,
+          "lon": -115.1982,
+          "mag": 5.0,
+          "n_train_neighbors": 9,
+          "obs_p": 0.2367813204095747,
+          "obs_b": 0.9156158612980247,
+          "nb_p": 0.9803730155839536,
+          "nb_b": 0.9266015857358659,
+          "win_p": false,
+          "win_b": false,
+          "win_joint": false
+        },
+        {
+          "t_unix": 1298051255.7500002,
+          "lat": 32.062,
+          "lon": -115.07633,
+          "mag": 5.07,
+          "n_train_neighbors": 9,
+          "obs_p": 0.2,
+          "obs_b": 0.827030672512739,
+          "nb_p": 0.9803730155839536,
+          "nb_b": 0.9266015857358659,
+          "win_p": false,
+          "win_b": false,
+          "win_joint": false
+        },
+        {
+          "t_unix": 1346009482.6,
+          "lat": 33.01926,
+          "lon": -115.52727,
+          "mag": 5.32,
+          "n_train_neighbors": 4,
+          "obs_p": 3.0,
+          "obs_b": null,
+          "nb_p": 1.4829601222139621,
+          "nb_b": 0.9969728909816193,
+          "win_p": true,
+          "win_joint": true
+        },
+        {
+          "t_unix": 1346014677.77,
+          "lat": 33.01875,
+          "lon": -115.52621,
+          "mag": 5.44,
+          "n_train_neighbors": 4,
+          "obs_p": 0.9208444922364664,
+          "obs_b": 0.7911493990950789,
+          "nb_p": 1.4829601222139621,
+          "nb_b": 0.9969728909816193,
+          "win_p": false,
+          "win_b": false,
+          "win_joint": false
+        },
+        {
+          "t_unix": 1396066182.3,
+          "lat": 33.9325,
+          "lon": -117.9172,
+          "mag": 5.1,
+          "n_train_neighbors": 5,
+          "obs_p": 0.8216046408487581,
+          "obs_b": null,
+          "nb_p": 0.7337766146870643,
+          "nb_b": 0.8022484132781507,
+          "win_p": false,
+          "win_joint": false
+        },
+        {
+          "t_unix": 1465545878.7,
+          "lat": 33.4315,
+          "lon": -116.4427,
+          "mag": 5.2,
+          "n_train_neighbors": 2,
+          "obs_p": 0.7447257260240201,
+          "obs_b": null,
+          "nb_p": 0.715040070435358,
+          "nb_b": null,
+          "win_p": true,
+          "win_joint": true
+        }
+      ]
+    },
+    "verdict": "FAIL: neighborhood beat global on 7/15 (46.7%) predictable test sequences (joint standardized SE), binomial p=0.696; criterion was >=60% and p<0.05."
+  },
+  "ii": {
+    "train": {
+      "n_mainshocks": 100,
+      "span_days": 10591.923973842591,
+      "rate_per_day": 0.009441155379037478,
+      "interevent_cv": 1.4730342504113234,
+      "cv_poisson_null_mean": 0.9962096190694413,
+      "cv_p_greater": 0.000999000999000999,
+      "ripley_k": {
+        "30.0": 353.0641324614197,
+        "100.0": 582.0208729060979,
+        "365.0": 1089.1493540779554
+      },
+      "ripley_k_poisson_expectation": {
+        "30.0": 60.0,
+        "100.0": 200.0,
+        "365.0": 730.0
+      },
+      "ripley_k_null_mean": {
+        "30.0": 60.55370839106495,
+        "100.0": 200.53828745546542,
+        "365.0": 717.6317362932188
+      },
+      "ripley_k_p_greater": {
+        "30.0": 0.000999000999000999,
+        "100.0": 0.000999000999000999,
+        "365.0": 0.000999000999000999
+      },
+      "n_simulations": 1000,
+      "hazard_mining": [
+        {
+          "X_days": 7.0,
+          "n_eligible": 99,
+          "n_hits": 37,
+          "p_observed": 0.37373737373737376,
+          "p_poisson": 0.06395159364754655,
+          "ratio": 5.844066620092929
+        },
+        {
+          "X_days": 30.0,
+          "n_eligible": 99,
+          "n_hits": 46,
+          "p_observed": 0.46464646464646464,
+          "p_poisson": 0.2466570133818491,
+          "ratio": 1.883775605144244
+        },
+        {
+          "X_days": 90.0,
+          "n_eligible": 98,
+          "n_hits": 67,
+          "p_observed": 0.6836734693877551,
+          "p_poisson": 0.5724585277131837,
+          "ratio": 1.194275980338427
+        },
+        {
+          "X_days": 365.0,
+          "n_eligible": 96,
+          "n_hits": 87,
+          "p_observed": 0.90625,
+          "p_poisson": 0.9681278188316661,
+          "ratio": 0.936085073036802
+        }
+      ]
+    },
+    "X_star_days": 7.0,
+    "test": {
+      "n_mainshocks": 30,
+      "span_days": 3286.9660539351844,
+      "rate_per_day": 0.009126957658745438,
+      "X_star_days": 7.0,
+      "n_eligible": 30,
+      "n_hits": 18,
+      "p_observed": 0.6,
+      "poisson_base_rate": 0.061890598090467264,
+      "binom_p_greater": 7.4412788333276e-15
+    },
+    "verdict": "PASS: with X*=7 d frozen from train, P(next M>=5 within X* | M>=5) on test = 0.600 (18/30) vs Poisson base 0.062, binomial p=7.44e-15."
+  },
+  "iii": {
+    "train_windows": [
+      {
+        "window": "1981-01-01..1986-01-01",
+        "partial": false,
+        "n_events": 70502,
+        "b": 0.9507559183785707,
+        "n_b": 5412,
+        "cv_m3": 1.6859683330414519,
+        "n_m3": 1634
+      },
+      {
+        "window": "1986-01-01..1991-01-01",
+        "partial": false,
+        "n_events": 58224,
+        "b": 1.0596777527619317,
+        "n_b": 7578,
+        "cv_m3": 1.5771286492872136,
+        "n_m3": 1887
+      },
+      {
+        "window": "1991-01-01..1996-01-01",
+        "partial": false,
+        "n_events": 132290,
+        "b": 0.9504114207188809,
+        "n_b": 10260,
+        "cv_m3": 2.22924754686593,
+        "n_m3": 2958
+      },
+      {
+        "window": "1996-01-01..2001-01-01",
+        "partial": false,
+        "n_events": 83872,
+        "b": 0.9467904866423804,
+        "n_b": 5392,
+        "cv_m3": 1.6067359914426325,
+        "n_m3": 1644
+      },
+      {
+        "window": "2001-01-01..2006-01-01",
+        "partial": false,
+        "n_events": 64048,
+        "b": 0.9030490751907961,
+        "n_b": 3293,
+        "cv_m3": 1.4304269373429639,
+        "n_m3": 1036
+      },
+      {
+        "window": "2006-01-01..2010-01-01",
+        "partial": true,
+        "n_events": 52182,
+        "b": 0.8695623776624251,
+        "n_b": 2805,
+        "cv_m3": 1.382702357404884,
+        "n_m3": 961
+      }
+    ],
+    "test_windows": [
+      {
+        "window": "2010-01-01..2015-01-01",
+        "partial": false,
+        "n_events": 106978,
+        "b": 0.8622336557439846,
+        "n_b": 7234,
+        "cv_m3": 1.943725764205966,
+        "n_m3": 2517
+      },
+      {
+        "window": "2015-01-01..2018-12-31",
+        "partial": true,
+        "n_events": 65570,
+        "b": 0.8538305486774821,
+        "n_b": 1488,
+        "cv_m3": 1.286488274598375,
+        "n_m3": 516
+      }
+    ],
+    "n_train_windows": 6,
+    "n_test_windows": 2,
+    "b": {
+      "n_windows": 5,
+      "values": [
+        0.9507559183785707,
+        1.0596777527619317,
+        0.9504114207188809,
+        0.9467904866423804,
+        0.9030490751907961
+      ],
+      "spearman_rho": -0.8999999999999998,
+      "spearman_p": 0.03738607346849874,
+      "monotone_trend_frozen": true,
+      "frozen_sign": -1,
+      "test_values": [
+        0.8622336557439846,
+        0.8538305486774821
+      ],
+      "test_spearman_rho": -0.9999999999999999,
+      "test_beyond_last_train_in_frozen_direction": [
+        true,
+        true
+      ],
+      "continuation_holds": true
+    },
+    "cv_m3": {
+      "n_windows": 5,
+      "values": [
+        1.6859683330414519,
+        1.5771286492872136,
+        2.22924754686593,
+        1.6067359914426325,
+        1.4304269373429639
+      ],
+      "spearman_rho": -0.49999999999999994,
+      "spearman_p": 0.3910022189557703,
+      "monotone_trend_frozen": false
+    },
+    "verdict": "b: monotone train trend (rho=-0.90) frozen sign -1; test windows continue in that direction: YES ([True, True]). cv_m3: no monotone train trend (rho=-0.50, |rho|<=0.8) - descriptive only."
+  }
+}

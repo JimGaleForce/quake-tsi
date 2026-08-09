@@ -1,0 +1,268 @@
+{
+  "experiment": "EXP-H",
+  "protocol": "PATTERN_PROTOCOL.md :: EXP-H",
+  "state_class": "first-run",
+  "run_utc": "2026-08-09T16:49:50.700091+00:00",
+  "catalog": {
+    "file": "SCSN_original_catalog.txt",
+    "detected_column_order": "raw",
+    "n_rows": 634252,
+    "n_in_box": 633667,
+    "box": {
+      "lat": [
+        31.5,
+        38.0
+      ],
+      "lon": [
+        -122.0,
+        -113.5
+      ]
+    },
+    "t_first": "1981-01-01 01:49:28.660000+00:00",
+    "t_last": "2018-12-31 23:11:07.060000+00:00"
+  },
+  "mc_check": {
+    "method": "maximum curvature (0.1-mag bins) + 0.2 safety, per decade and per split",
+    "per_period": {
+      "1981-1990": {
+        "n": 118760,
+        "mc_maxcurv": 1.5,
+        "mc_maxcurv_plus_0.2": 1.7
+      },
+      "1990-2000": {
+        "n": 207320,
+        "mc_maxcurv": 1.5,
+        "mc_maxcurv_plus_0.2": 1.7
+      },
+      "2000-2010": {
+        "n": 135038,
+        "mc_maxcurv": 1.4,
+        "mc_maxcurv_plus_0.2": 1.6
+      },
+      "2010-2019": {
+        "n": 172549,
+        "mc_maxcurv": 1.0,
+        "mc_maxcurv_plus_0.2": 1.2
+      },
+      "train(<2010)": {
+        "n": 461118,
+        "mc_maxcurv": 1.4,
+        "mc_maxcurv_plus_0.2": 1.6
+      },
+      "test(>=2010)": {
+        "n": 172549,
+        "mc_maxcurv": 1.0,
+        "mc_maxcurv_plus_0.2": 1.2
+      }
+    },
+    "worst_case_mc_est": 1.7,
+    "chosen_floor_M0": 2.5,
+    "rule": "M0=2.5 if every period's (maxcurv+0.2) <= 2.5, else 3.0",
+    "stable_at_2.5": true
+  },
+  "train_fit": {
+    "history_start": "1981-01-02 15:03:08.769999981+00:00",
+    "fit_window_start": "1982-01-02 15:03:08.769999981+00:00",
+    "fit_window_end": "2010-01-01 00:00:00+00:00",
+    "burn_in_days": 365.0,
+    "n_target_events": 34184,
+    "fit_window_days": 10225.372815162038,
+    "train_window_rate_per_day": 3.3430565924513234,
+    "truncation_window_days_for_fit": 1000.0,
+    "truncation_error_LL_at_optimum": {
+      "LL_truncated": 37097.0741320284,
+      "LL_untruncated": 36777.60064847314,
+      "delta_LL": -319.473483555259,
+      "delta_LL_per_event": -0.009345702186849374
+    },
+    "starts": [
+      {
+        "start": {
+          "mu": 1.6715282962256617,
+          "K": 0.02,
+          "alpha": 1.0,
+          "c": 0.01,
+          "p": 1.1
+        },
+        "LL": 37097.074132027265,
+        "params": {
+          "mu": 0.36628233476465655,
+          "K": 0.039172154875699285,
+          "alpha": 0.5476214485940878,
+          "c": 0.010077317739068625,
+          "p": 1.0734374789444605
+        },
+        "nit": 31,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "seconds": 207.8
+      },
+      {
+        "start": {
+          "mu": 0.6686113184902647,
+          "K": 0.005,
+          "alpha": 1.5,
+          "c": 0.05,
+          "p": 1.2
+        },
+        "LL": 37097.0741320284,
+        "params": {
+          "mu": 0.3662829628322405,
+          "K": 0.03917217544515869,
+          "alpha": 0.547621281728255,
+          "c": 0.010077343185003822,
+          "p": 1.0734377426981614
+        },
+        "nit": 30,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "seconds": 166.8
+      },
+      {
+        "start": {
+          "mu": 2.6744452739610587,
+          "K": 0.05,
+          "alpha": 0.8,
+          "c": 0.005,
+          "p": 1.05
+        },
+        "LL": 37097.07413202245,
+        "params": {
+          "mu": 0.36628321700815014,
+          "K": 0.03917212995891222,
+          "alpha": 0.5476217015328205,
+          "c": 0.010077365790306927,
+          "p": 1.0734377385432436
+        },
+        "nit": 30,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "seconds": 148.3
+      },
+      {
+        "start": {
+          "mu": 1.1700698073579632,
+          "K": 0.01,
+          "alpha": 1.2,
+          "c": 0.02,
+          "p": 1.15
+        },
+        "LL": 37097.074132026086,
+        "params": {
+          "mu": 0.3662824833262872,
+          "K": 0.0391721361968077,
+          "alpha": 0.5476214647144653,
+          "c": 0.010077312373840897,
+          "p": 1.0734374085942102
+        },
+        "nit": 37,
+        "success": true,
+        "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+        "seconds": 189.4
+      }
+    ],
+    "best_truncated": {
+      "mu": 0.3662829628322405,
+      "K": 0.03917217544515869,
+      "alpha": 0.547621281728255,
+      "c": 0.010077343185003822,
+      "p": 1.0734377426981614
+    },
+    "best_truncated_LL": 37097.0741320284,
+    "final_untruncated_refine": {
+      "maxiter": 25,
+      "nit": 25,
+      "LL": 36971.92218955457
+    },
+    "frozen_params": {
+      "mu": 0.27502337126874,
+      "K": 0.04123827608373218,
+      "alpha": 0.5365634510857317,
+      "c": 0.014264021187001614,
+      "p": 1.118288850426858,
+      "M0": 2.5
+    },
+    "b_value_train_aki": 1.0654297094679333,
+    "branching_ratio_n": 1.1610962662920339,
+    "branching_ratio_formula": "n = K*c^(1-p)/(p-1) * b/(b-alpha)  [valid for p>1 and b>alpha]",
+    "train_subsampled_to_recent_15yr": false
+  },
+  "test": {
+    "window_start": "2010-01-01 00:00:00+00:00",
+    "window_end": "2018-12-31 15:45:34.649999619+00:00",
+    "window_days": 3286.6566510416633,
+    "n_test_events": 8722,
+    "scoring": "walk-forward, params frozen from train, history = all prior events (train + earlier test), untruncated kernel",
+    "sum_log_lambda": 21044.87245173916,
+    "integral_lambda": 9975.191670138842,
+    "LL_etas": 11069.680781600318,
+    "baselines": {
+      "poisson_train_rate": {
+        "rate_per_day": 3.3430565924513234,
+        "LL": -461.0235399462381,
+        "gain_bits_per_event": 1.9072792871648883
+      },
+      "poisson_test_rate_oracle": {
+        "rate_per_day": 2.6537606224354695,
+        "LL": -209.5221793758028,
+        "gain_bits_per_event": 1.8656787636987344
+      }
+    },
+    "magnitude_bands": {
+      "2.5-3": {
+        "n": 5689,
+        "poisson_train_rate": {
+          "log_term_bits_per_event": 1.5607191205928672,
+          "with_uniform_integral_correction_bits": 1.7281603240739796
+        },
+        "poisson_test_rate_oracle": {
+          "log_term_bits_per_event": 1.893848657268301,
+          "with_uniform_integral_correction_bits": 1.686559800607826
+        }
+      },
+      "3-4": {
+        "n": 2743,
+        "poisson_train_rate": {
+          "log_term_bits_per_event": 2.040469291326898,
+          "with_uniform_integral_correction_bits": 2.20791049480801
+        },
+        "poisson_test_rate_oracle": {
+          "log_term_bits_per_event": 2.3735988280023315,
+          "with_uniform_integral_correction_bits": 2.1663099713418563
+        }
+      },
+      ">=4": {
+        "n": 290,
+        "poisson_train_rate": {
+          "log_term_bits_per_event": 2.4101014576806583,
+          "with_uniform_integral_correction_bits": 2.5775426611617704
+        },
+        "poisson_test_rate_oracle": {
+          "log_term_bits_per_event": 2.7432309943560917,
+          "with_uniform_integral_correction_bits": 2.5359421376956166
+        }
+      }
+    },
+    "band_note": "log_term = mean[log2 lambda_ETAS - log2 lambda_poisson] over band events; the integral difference is a single global term, apportioned uniformly per test event in with_uniform_integral_correction_bits",
+    "triggered_fraction_mean_over_test_events": 0.9151567383102464,
+    "triggered_fraction_of_integrated_intensity": 0.9093844587389545,
+    "lambda_stats": {
+      "min": 0.7367323172776002,
+      "median": 6.467514633065074,
+      "max": 1540.7640268003706,
+      "mean": 81.94119450238574
+    }
+  },
+  "success_rule": {
+    "rule": "gain > 0.5 bits/event vs BOTH baselines",
+    "gain_vs_train_rate": 1.9072792871648883,
+    "gain_vs_test_rate_oracle": 1.8656787636987344,
+    "PASS": true
+  },
+  "runtime_minutes": 22.03,
+  "flags": {
+    "train_subsampled_to_recent_15yr": false,
+    "truncated_kernel_used_for_fit_only": true,
+    "test_scoring_untruncated": true
+  }
+}
