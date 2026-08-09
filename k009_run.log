@@ -1,0 +1,75 @@
+[frozen EXP-H] mu=0.27502/d K=0.04124 alpha=0.5366 c=0.01426 p=1.1183 M0=2.5 b=1.0654
+[data] raw order; M>=2.5 in box: 43462  train(<2010)=34740  window=8720 over 469 weeks
+[grid] 448 footprint cells (>= 5 train events); 187 edge / 261 interior
+[bg] building background fields from TRAIN-window events only ...
+[bg] done (1s)
+[fit] fitting spatial kernel (d, gamma, q) on train window, temporal params frozen ...
+[fit] 13661534 candidate parent-child pairs (dt<=100.0d, dr<=100.0km), 34184 targets
+[fit] spatial kernel: d=0.141 km  gamma=0.494  q=1.266  (-LL=227079.9, 66 it)
+[exp] computing expected counts (43460 sources x 448 cells x 469 weeks) ...
+[exp] done (12s). obs total=8521  exp total=9257
+[audit] kernel mass over footprint cells, interior sources: median 0.965 (p5 0.952, p95 0.972);  obs/exp = 0.921
+[real:adaptive_k4       ] acf1=+0.0958  T=52.00 wk  L=41.0 km  MoranI=+0.0114  EOF1=19.7%  red=0.33
+[real:adaptive_k8       ] acf1=+0.0963  T=52.00 wk  L=41.2 km  MoranI=+0.0116  EOF1=19.7%  red=0.33
+[real:uniform_footprint ] acf1=+0.0760  T=48.63 wk  L=46.4 km  MoranI=+0.0042  EOF1=19.7%  red=0.33
+[real:time-rescaling] n=8720 KS=0.0361 mean=1.061 CV=0.993 lag1(u)=+0.0678
+[real:interior] n=261 acf1=+0.1031 T=52.00 wk
+[real:edge    ] n=187 acf1=+0.0489 T=37.88 wk
+[null] simulating spatio-temporal ETAS (cap=69760) ...
+[null] sim 1/20: n=10801 (obs 8720) acf1=-0.0096 T=52.00 L=120.0 MoranI=-0.0026 EOF1=3.9%  (33s)
+[null] sim 2/20: n=9686 (obs 8720) acf1=-0.0072 T=52.00 L=59.8 MoranI=-0.0058 EOF1=4.3%  (29s)
+[null] sim 3/20: n=9629 (obs 8720) acf1=-0.0082 T=52.00 L=120.0 MoranI=-0.0038 EOF1=4.4%  (30s)
+[null] sim 4/20: n=8850 (obs 8720) acf1=-0.0240 T=52.00 L=120.0 MoranI=-0.0068 EOF1=4.3%  (26s)
+[null] sim 5/20: n=9599 (obs 8720) acf1=-0.0172 T=52.00 L=120.0 MoranI=-0.0056 EOF1=5.2%  (27s)
+[null] sim 6/20: n=10070 (obs 8720) acf1=+0.0066 T=52.00 L=44.2 MoranI=-0.0045 EOF1=4.9%  (29s)
+[null] sim 7/20: n=8438 (obs 8720) acf1=-0.0220 T=52.00 L=120.0 MoranI=-0.0040 EOF1=4.0%  (24s)
+[null] sim 8/20: n=9104 (obs 8720) acf1=-0.0199 T=52.00 L=75.8 MoranI=-0.0005 EOF1=4.3%  (27s)
+[null] sim 9/20: n=8761 (obs 8720) acf1=-0.0187 T=52.00 L=56.0 MoranI=-0.0060 EOF1=3.7%  (26s)
+[null] sim 10/20: n=9251 (obs 8720) acf1=-0.0205 T=52.00 L=99.2 MoranI=-0.0085 EOF1=4.0%  (27s)
+[null] sim 11/20: n=10326 (obs 8720) acf1=-0.0141 T=52.00 L=70.5 MoranI=-0.0043 EOF1=3.3%  (30s)
+[null] sim 12/20: n=8479 (obs 8720) acf1=-0.0025 T=52.00 L=55.1 MoranI=+0.0009 EOF1=4.5%  (25s)
+[null] sim 13/20: n=8973 (obs 8720) acf1=-0.0065 T=52.00 L=120.0 MoranI=-0.0032 EOF1=5.0%  (27s)
+[null] sim 14/20: n=9884 (obs 8720) acf1=-0.0207 T=52.00 L=39.5 MoranI=-0.0041 EOF1=3.7%  (29s)
+[null] sim 15/20: n=9129 (obs 8720) acf1=-0.0157 T=52.00 L=69.5 MoranI=-0.0000 EOF1=3.9%  (27s)
+[null] sim 16/20: n=10142 (obs 8720) acf1=-0.0294 T=52.00 L=48.7 MoranI=-0.0064 EOF1=5.0%  (29s)
+[null] sim 17/20: n=9154 (obs 8720) acf1=-0.0214 T=52.00 L=65.1 MoranI=-0.0044 EOF1=4.5%  (27s)
+[null] sim 18/20: n=9646 (obs 8720) acf1=-0.0177 T=52.00 L=95.2 MoranI=-0.0064 EOF1=4.3%  (29s)
+[null] sim 19/20: n=10627 (obs 8720) acf1=-0.0098 T=52.00 L=81.6 MoranI=-0.0023 EOF1=3.4%  (33s)
+[null] sim 20/20: n=9747 (obs 8720) acf1=-0.0133 T=52.00 L=120.0 MoranI=-0.0027 EOF1=4.1%  (30s)
+[rho_sta] building network-capability proxy Mc(x,t) from the sub-M2.5 catalog ...
+[rho_sta] EOF1-PC vs region-mean Mc: R^2=0.0473   partial acf1=+0.0885 (raw +0.0958)  partial MoranI=+0.0116  partial T=52.00 wk  partial L=40.1 km
+[posctrl] injecting OU latent field (tau=122 d = 17.4 wk, L=35.0 km, sd ladder=[1.5, 3.0]) into simulated catalogs ...
+[posctrl] 1 (sd=1.5): T=52.00 wk (truth 17.4) L=120.0 km (truth 35.0) acf1=-0.0038
+[posctrl] 2 (sd=1.5): T=52.00 wk (truth 17.4) L=120.0 km (truth 35.0) acf1=-0.0051
+[posctrl] 3 (sd=1.5): T=52.00 wk (truth 17.4) L=120.0 km (truth 35.0) acf1=+0.0089
+[posctrl] 4 (sd=3.0): T=23.28 wk (truth 17.4) L=120.0 km (truth 35.0) acf1=+0.1231
+[posctrl] 5 (sd=3.0): T=27.50 wk (truth 17.4) L=45.5 km (truth 35.0) acf1=+0.0747
+[posctrl] 6 (sd=3.0): T=13.30 wk (truth 17.4) L=34.4 km (truth 35.0) acf1=+0.1537
+[posctrl] sd=1.5: median T=52.00 wk, L=120.0 km; within-factor-2 T 0% L 0%
+[posctrl] sd=3.0: median T=23.28 wk, L=45.5 km; within-factor-2 T 100% L 67%
+C:\Users\jimgale\miniconda3\Lib\site-packages\numpy\lib\_nanfunctions_impl.py:1593: RuntimeWarning: All-NaN slice encountered
+  return fnb._ureduce(a,
+[crossing] real ACF above null p97.5 for lags 1..52 contiguous (52/52 lags above) [CENSORED at spec window]; correlogram above null to 30 km contiguous / 110 km last (8 bins above)
+[robust] EOF1 PC peaks at week 13 (2010-04-02), top-5 weeks carry 90.6% of PC variance
+[robust] excluding 2010: acf1=+0.0382 (full +0.0958), MoranI=+0.0099, EOF1=4.9%, T_crossing=52 wk -> survives=False
+[null] rate-matched sims (+-30% of n_obs=8720): 20 / 20
+D:\CODE\git\quake\replication\exp_k009_residual_whiteness.py:1128: RuntimeWarning: All-NaN slice encountered
+  "median": np.nanmedian(null_cor_curves, axis=0).tolist(),
+[generators] T_crossing=52+ (censored) wk vs W-003 predicted 0 and W-001/W-002 predicted 27.6 (band 13.8-55.3)  ->  W-003 FALSIFIED; consistent with W-001/W-002 but NOT sharply -- the measured T is a censored lower bound that overlaps the factor-2 band rather than landing inside it
+D:\CODE\git\quake\replication\exp_k009_residual_whiteness.py:1322: RuntimeWarning: All-NaN slice encountered
+  a.plot(sops.centers, np.nanmedian(null_cor_curves, axis=0), "k--", lw=1, label="null median")
+[fig] D:\CODE\git\quake\replication\maps\k009_residuals.png
+
+==============================================================================
+K-009  |  448 cells x 469 weeks; 8720 observed events
+  HEADLINE  correlation TIME   > 52 weeks (364 d) [CENSORED: lower bound] -- ACF above sim-null p97.5 at 52/52 lags
+  HEADLINE  correlation LENGTH = 30 km contiguous (110 km last bin above null, 8 bins); e-folding fit 41.0 km; resolution floor ~18 km
+  lag-1 weekly ACF = +0.0958; null 97.5% = +0.0023; excess = +0.0935 (need >= 0.05): True
+  kernel swap stable: True   adaptive_k4:+0.0958  adaptive_k8:+0.0963  uniform_footprint:+0.0760
+  survives rho_sta partial: True (partial acf1 +0.0885)
+  VERDICT (Popper's rule): SUCCESS
+  GENERATOR (vs c2bf012 register): W-003 FALSIFIED; consistent with W-001/W-002 but NOT sharply -- the measured T is a censored lower bound that overlaps the factor-2 band rather than landing inside it
+  sim counts: median 9614 vs obs 8720 (20/20 rate-matched)
+  runtime 12.52 min  ->  results_k009.json, k009_residuals.png
+==============================================================================
+EXIT=0
