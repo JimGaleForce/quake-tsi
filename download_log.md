@@ -87,3 +87,7 @@ Sun Aug 9 2026 (EXP-J frozen before computation)
 ## EXP-K/L addendum hash
 4b347599113aca2dd7ae6313c178f2e142d3fc31e0632e8e82b81a33fa581e54 *PATTERN_PROTOCOL.md
 Sun Aug 9 2026
+
+## EXP-M addendum hash
+aca4b729277762fe1ca9f9fdf561291e3527710f5240394b7a7a12e06d6995b2 *PATTERN_PROTOCOL.md
+Sun Aug 9 2026 (frozen before any global download)

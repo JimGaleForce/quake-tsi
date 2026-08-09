@@ -133,3 +133,32 @@ probabilities via 1,000 forward ETAS simulations (thinning, GR magnitudes b=1.06
 horizon 7 d); also the no-future-triggering analytic lower bound. Output: results_forecast_
 <date>.json + console statement with honest framing (probability forecast, conditional
 skill, not an event prediction). Script: etas_forecast.py (reusable daily).
+
+## EXP-M (added 2026-08-09, frozen before ANY global data download): world transfer test
+
+Directive (Jim): retro-predict worldwide, learn fault-type modifiers, prove they hold on
+regions NOT learned from.
+
+- Data: ComCat global, M >= 4.5, 1995-01-01 -> now, per-region boxes below. Burn-in
+  1995-2000 (history only); walk-forward scoring 2000 -> now. Temporal ETAS per EXP-H's
+  form, M0 = 4.5.
+- TRAIN regions (fit per-region, then pool params per TYPE by median):
+  subduction: Japan (30..46, 129..147), Chile (-46..-17, -76..-66), Indonesia (-11..6, 95..130)
+  transform: California (31.5..42, -125..-113), Turkey (35..42, 25..45)
+  collision: Himalaya (25..38, 70..98)
+  rift: Iceland (62..67, -25..-13)
+- HOLDOUT regions (never fit; scored walk-forward only):
+  subduction: Alaska-Aleutians (50..62, -180..-140), Mexico (14..20, -105..-92),
+              Philippines (5..20, 120..128)
+  transform: Caribbean (17..20, -75..-68)
+  collision: Iran (26..36, 44..62)
+  rift: Greece-Aegean (34..41, 19..29)  [label per dominant normal-faulting extension]
+- For each holdout region, score bits/event (vs that region's own-period Poisson rate -
+  a LOCAL oracle baseline, deliberately harsh) under three frozen parameter sources:
+  (a) GLOBAL pool (median of all 7 train-region fits), (b) TYPE pool (median of same-type
+  train fits; collision/rift pools have n=1 - acknowledged), (c) SoCal EXP-H frozen params.
+- Success rule (frozen): TYPE pool beats GLOBAL pool in >= 5 of 6 holdout regions (sign
+  test); 4/6 = suggestive only. Also report per-region parameter tables (do productivity/
+  alpha/p vary systematically by type?) and each holdout region's own best-fit (post-hoc,
+  descriptive) for context.
+- Script exp_m_world_transfer.py -> results_exp_m.json + data/comcat_world_log.txt.
