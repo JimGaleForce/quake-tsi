@@ -1,0 +1,183 @@
+{
+  "experiment": "K-009 prediction register (pre-scoring)",
+  "ruling": "Popper round-2 binding ruling: K-009 must be a two-generator discrimination. This file is written BEFORE the spec-window residual correlation statistics are scored, and is to be publicly committed before scoring proceeds.",
+  "state_class": "prediction-only (no residual statistic computed in this file)",
+  "run_utc": "2026-08-09T20:57:58.844977+00:00",
+  "input_discipline": "train window only (< 2010-01-01); the 2010-2018 residual window is untouched",
+  "frozen_params_source": "results_exp_h.json :: train_fit.frozen_params",
+  "frozen_params": {
+    "mu": 0.27502337126874,
+    "K": 0.04123827608373218,
+    "alpha": 0.5365634510857317,
+    "c": 0.014264021187001614,
+    "p": 1.118288850426858,
+    "M0": 2.5
+  },
+  "generator_A_W003": {
+    "quote": "W-003-P2: THE RESIDUALS ARE WHITE. K-009 must return spatial correlation length ~= 0 and temporal correlation time ~= 0 in the ETAS residual field, against the ETAS-sim null.",
+    "predicted_correlation_TIME_weeks": 0.0,
+    "predicted_correlation_LENGTH_km": 0.0,
+    "operational": "measured T and L both inside the ETAS-sim null 2.5-97.5 envelope, and lag-1 weekly ACF excess < 0.05 over the null 97.5th percentile"
+  },
+  "generator_B_W001_W002": {
+    "quote": "W-001/W-002 both predict K-009 residuals are RED, with a correlation time equal to the local t_a -- months to years. t_a = A*sigma / stressing-rate is the time at which an aftershock sequence returns to background (Dieterich 1994).",
+    "predicted_correlation_TIME_days": 193.41095840133383,
+    "predicted_correlation_TIME_weeks": 27.63013691447626,
+    "predicted_correlation_TIME_months": 6.353842260227786,
+    "acceptance_band_factor": 2.0,
+    "operational": "measured T within a factor of 2 of the predicted t_a, i.e. 13.8 - 55.3 weeks (97 - 387 days), AND above the ETAS-sim null 97.5th percentile",
+    "estimator_uncertainty": {
+      "stacked_crossing_days": 193.41095840133383,
+      "per_mainshock_median_days": 1749.6596710633564,
+      "per_mainshock_IQR_days": [
+        465.9972203002853,
+        3390.3045257579247
+      ],
+      "note": "the two empirical estimators disagree by roughly an order of magnitude: the stacked crossing is robust but averages over heterogeneous zones, while the per-mainshock 'last bin above background' is biased long by single late events in wide log bins. Honest range for t_a in this catalogue is ~200 d to ~5 yr, i.e. exactly W-001/W-002's 'months to years'. The factor-2 acceptance band below is anchored on the stacked estimator (the primary); a measurement falling between 27.6 and 250 weeks is inside the full estimator range and must be reported as 'consistent with t_a but not sharply discriminating'.",
+      "full_estimator_range_weeks": [
+        27.63013691447626,
+        249.95138158047948
+      ]
+    },
+    "predicted_correlation_LENGTH_km": null,
+    "length_note": "t_a fixes a TIME, not a LENGTH. W-001/W-002 do not supply a zero-parameter length prediction; the K-009 hypothesis text's own prior expectation (Moran's I excess at 20-60 km) is registered here as a weaker, non-derived expectation and must not be scored as if it were derived.",
+    "length_prior_expectation_km": [
+      20.0,
+      60.0
+    ]
+  },
+  "t_a_empirical": {
+    "method": "stacked aftershock rate of isolated train-window mainshocks vs the pre-mainshock background rate in the same zone; t_a = crossing time",
+    "mainshock_Mmin": 4.5,
+    "radius_km": 25.0,
+    "isolation": {
+      "days": 365.0,
+      "km": 100.0
+    },
+    "background_window_days_before": [
+      100.0,
+      3000.0
+    ],
+    "n_mainshocks_selected": 27,
+    "n_mainshocks_stacked": 22,
+    "zone_background_rate_per_day": 0.10357366771159876,
+    "t_a_days": 193.41095840133383,
+    "t_a_weeks": 27.63013691447626,
+    "t_a_months": 6.353842260227786,
+    "per_mainshock_t_a_days": {
+      "n": 21,
+      "median": 1749.6596710633564,
+      "p25": 465.9972203002853,
+      "p75": 3390.3045257579247
+    },
+    "stacked_curve": {
+      "bin_center_days": [
+        0.01179835017653989,
+        0.01642342932095629,
+        0.022861588834410276,
+        0.03182357556510616,
+        0.04429875670861901,
+        0.061664341956631806,
+        0.0858374218932557,
+        0.1194866070647878,
+        0.16632663182276622,
+        0.2315284460165968,
+        0.32229006700490914,
+        0.4486312117457178,
+        0.6244994331437628,
+        0.8693098736472463,
+        1.2100886186819415,
+        1.6844562674986565,
+        2.3447810956242727,
+        3.263960301303192,
+        4.54346756222327,
+        6.324555320336756,
+        8.8038484818469,
+        12.255051013956662,
+        17.059161759128052,
+        23.74653517090012,
+        33.055430306888596,
+        46.01351165169377,
+        64.05129913191101,
+        89.16009174741018,
+        124.1117989509453,
+        172.76494827392668,
+        240.49065120625443,
+        334.7655522456274,
+        465.9972203002853,
+        648.6731023276269,
+        902.9598790572235,
+        1256.9297852205864,
+        1749.6596710633564,
+        2435.5449290337924,
+        3390.3045257579247
+      ],
+      "rate_per_day_per_mainshock": [
+        301.476024922207,
+        141.60734811784602,
+        155.584974326445,
+        73.08035730879816,
+        98.82325516432276,
+        99.83415047126358,
+        74.90691426183106,
+        51.52215252268261,
+        51.817859693315114,
+        36.043436588568,
+        42.87214050048919,
+        36.5925332132213,
+        26.50660071421504,
+        28.484242649692646,
+        17.862433499564187,
+        11.695087251392362,
+        11.960580855217842,
+        8.885701244754019,
+        5.269280659552489,
+        3.5041745663496515,
+        2.6261217664961833,
+        1.9981984687170007,
+        1.2269714511074152,
+        0.737412394047743,
+        0.5338848652451869,
+        0.3984007374897302,
+        0.2520314736230768,
+        0.23475866890728553,
+        0.21273794154580727,
+        0.12432106796008356,
+        0.07281359696470849,
+        0.06742856174562546,
+        0.08043923857467215,
+        0.06094985363434531,
+        0.040300821319374514,
+        0.06661025843889984,
+        0.04902466937784506,
+        0.04600324534688349,
+        0.031998910536681836
+      ],
+      "background_per_day": 0.10357366771159876
+    }
+  },
+  "t_a_etas_implied": {
+    "method": "time at which one mainshock's frozen-ETAS Omori triggering rate equals the typical active-zone background rate: (K 10^(alpha dM)/mu_zone)^(1/p) - c",
+    "mu_zone_per_day": 0.0048090426220131835,
+    "zone_cells": 4,
+    "t_days_by_magnitude": {
+      "M4.5": 62.236087196015625,
+      "M5.5": 187.89551065316223,
+      "M6.5": 567.2127913726288
+    },
+    "caveat": "magnitude-dependent, so it is NOT the rate-and-state t_a; registered as a consistency check on the order of magnitude only"
+  },
+  "scoring_plan": {
+    "outcome_W003_wins": "T and L inside the ETAS-sim null envelope",
+    "outcome_W001_W002_wins": "T above the null 97.5th percentile AND within a factor of 2 of 27.6 weeks",
+    "outcome_neither": "T above the null envelope but outside the factor-2 band around the predicted t_a -- residuals are red but not at the rate-and-state timescale; both generators lose and the number is reported as a bare measurement",
+    "note": "Popper's own K-009 success rule still gates any 'there is weather' claim: lag-1 ACF excess >= 0.05 over the sim-null 97.5th percentile, stable across the kernel swap, and surviving the rho_sta partial."
+  },
+  "ORDERING_DISCLOSURE": {
+    "status": "PREDICTION POST-REGISTERED (ordering violation, self-reported)",
+    "what_happened": "Two smoke-test runs of exp_k009_residual_whiteness.py were executed BEFORE this ruling arrived, on a REDUCED 2-year sub-window (2010-01-01 .. 2012-01-01, not the spec's 2010-2018) with 2 simulations, to debug the pipeline. Those runs printed measured residual correlation statistics, which the executing agent has therefore seen. The spec-window (2010-2018) scoring has NOT been run and results_k009.json does not exist.",
+    "what_was_seen": "2010-2012 sub-window, adaptive-k4 background: lag-1 pooled ACF approx +0.16 to +0.18, exponential-fit correlation time approx 9.8-10.2 weeks, correlation length approx 27-29 km; 2-sim null lag-1 ACF approx -0.015 (post-bugfix run). These are debug-run numbers on a quarter-length window with a 2-sample null and are not results.",
+    "why_it_matters": "The predicted t_a in this file is derived only from train-window (<2010) aftershock stacking and the frozen EXP-H parameters -- no residual statistic enters its computation -- but the executing agent was not blind when writing it. The prediction is therefore POST-registered, not pre-registered, and the result must carry that caveat.",
+    "not_backdated": true
+  }
+}
