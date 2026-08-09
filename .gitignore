@@ -14,3 +14,8 @@ RESPONSE_XUE_QUESTIONS.md
 # Python
 __pycache__/
 *.pyc
+
+# Sagan narrative artifacts live OUTSIDE the repo (quake root) - they contain private-context
+# correspondence beats. Never commit them here.
+CHRONICLE.md
+METHODS_STORY.md
