@@ -91,3 +91,12 @@ Sun Aug 9 2026
 ## EXP-M addendum hash
 aca4b729277762fe1ca9f9fdf561291e3527710f5240394b7a7a12e06d6995b2 *PATTERN_PROTOCOL.md
 Sun Aug 9 2026 (frozen before any global download)
+
+## Amendment: LONG_VALLEY_PROTOCOL.md hash discrepancy (recorded 2026-08-09)
+
+Faraday's audit: the recorded freeze hash 826ddc07... does not match the committed (fd5b2978...)
+or working-copy (d3141cd1...) versions. PROTOCOL.md and XUE_LU_PROTOCOL.md verify EXACTLY at
+pre-copyedit commit 78f2227, so the 0d8f897 copyedit commit is the likely cause: the record is
+shifted by a documented copyedit, not broken. Continuity is via git history (see also the
+0d8f897 note in HANDOFF). Do not recompute or "fix" the recorded hash; this amendment is the
+record.
