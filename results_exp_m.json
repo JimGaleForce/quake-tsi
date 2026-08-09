@@ -1,0 +1,1748 @@
+{
+  "experiment": "EXP-M",
+  "protocol": "PATTERN_PROTOCOL.md :: EXP-M",
+  "state_class": "first-run",
+  "run_utc": "2026-08-09T18:09:30.816948+00:00",
+  "download_cutoff_utc": "2026-08-09T18:00:00+00:00",
+  "settings": {
+    "M0": 4.5,
+    "catalog_start": "1995-01-01 00:00:00+00:00",
+    "burn_in": "1995-01-01 -> 2000-01-01 (history only)",
+    "score_window_start": "2000-01-01 00:00:00+00:00",
+    "score_window_end": "2026-08-09T18:00:00+00:00",
+    "trunc_days_fit": 1000.0,
+    "alpha_bounds": [
+      0.3,
+      2.5
+    ],
+    "p_bounds": [
+      0.8,
+      2.0
+    ],
+    "n_starts": 4
+  },
+  "regions": {
+    "Japan": {
+      "windows": 1,
+      "window_counts": [
+        32
+      ],
+      "rows_before_dedup": 12797,
+      "duplicate_ids_removed": 32,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Japan.csv",
+      "n_events": 12765,
+      "role": "train",
+      "type": "subduction",
+      "box": {
+        "lat": [
+          30.0,
+          46.0
+        ],
+        "lon": [
+          129.0,
+          147.0
+        ]
+      },
+      "t_first": "1995-01-01 02:39:43.830000+00:00",
+      "t_last": "2026-08-08 17:57:58.745000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 997,
+      "n_scoring_2000_now": 11768,
+      "b_value_aki": 1.1617554179779952
+    },
+    "Chile": {
+      "windows": 1,
+      "window_counts": [
+        26
+      ],
+      "rows_before_dedup": 9525,
+      "duplicate_ids_removed": 26,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Chile.csv",
+      "n_events": 9499,
+      "role": "train",
+      "type": "subduction",
+      "box": {
+        "lat": [
+          -46.0,
+          -17.0
+        ],
+        "lon": [
+          -76.0,
+          -66.0
+        ]
+      },
+      "t_first": "1995-01-01 04:04:55.890000+00:00",
+      "t_last": "2026-08-08 12:44:22.647000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 961,
+      "n_scoring_2000_now": 8538,
+      "b_value_aki": 1.1577854661181797
+    },
+    "Indonesia": {
+      "windows": 32,
+      "window_counts": [
+        527,
+        541,
+        493,
+        541,
+        491,
+        779,
+        602,
+        646,
+        668,
+        755,
+        1785,
+        1151,
+        1240,
+        852,
+        1004,
+        723,
+        673,
+        753,
+        653,
+        721,
+        722,
+        561,
+        671,
+        835,
+        960,
+        657,
+        799,
+        802,
+        781,
+        647,
+        656,
+        749
+      ],
+      "rows_before_dedup": 24438,
+      "duplicate_ids_removed": 0,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Indonesia.csv",
+      "n_events": 24437,
+      "role": "train",
+      "type": "subduction",
+      "box": {
+        "lat": [
+          -11.0,
+          6.0
+        ],
+        "lon": [
+          95.0,
+          130.0
+        ]
+      },
+      "t_first": "1995-01-01 02:02:25.490000+00:00",
+      "t_last": "2026-08-09 15:15:03.956000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 2593,
+      "n_scoring_2000_now": 21844,
+      "b_value_aki": 1.172062955683393
+    },
+    "California": {
+      "windows": 1,
+      "window_counts": [
+        1
+      ],
+      "rows_before_dedup": 442,
+      "duplicate_ids_removed": 1,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\California.csv",
+      "n_events": 441,
+      "role": "train",
+      "type": "transform",
+      "box": {
+        "lat": [
+          31.5,
+          42.0
+        ],
+        "lon": [
+          -125.0,
+          -113.0
+        ]
+      },
+      "t_first": "1995-04-23 08:41:36.650000+00:00",
+      "t_last": "2026-06-24 15:10:40.760000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 88,
+      "n_scoring_2000_now": 353,
+      "b_value_aki": 0.9729437105858556
+    },
+    "Turkey": {
+      "windows": 1,
+      "window_counts": [
+        3
+      ],
+      "rows_before_dedup": 1436,
+      "duplicate_ids_removed": 3,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Turkey.csv",
+      "n_events": 1433,
+      "role": "train",
+      "type": "transform",
+      "box": {
+        "lat": [
+          35.0,
+          42.0
+        ],
+        "lon": [
+          25.0,
+          45.0
+        ]
+      },
+      "t_first": "1995-01-21 03:48:15.750000+00:00",
+      "t_last": "2026-07-18 03:21:00.414000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 154,
+      "n_scoring_2000_now": 1279,
+      "b_value_aki": 1.1004225843291664
+    },
+    "Himalaya": {
+      "windows": 1,
+      "window_counts": [
+        11
+      ],
+      "rows_before_dedup": 3948,
+      "duplicate_ids_removed": 11,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Himalaya.csv",
+      "n_events": 3937,
+      "role": "train",
+      "type": "collision",
+      "box": {
+        "lat": [
+          25.0,
+          38.0
+        ],
+        "lon": [
+          70.0,
+          98.0
+        ]
+      },
+      "t_first": "1995-01-01 19:56:13.620000+00:00",
+      "t_last": "2026-08-08 03:30:04.685000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 460,
+      "n_scoring_2000_now": 3477,
+      "b_value_aki": 1.2346945611694768
+    },
+    "Iceland": {
+      "windows": 1,
+      "window_counts": [
+        1
+      ],
+      "rows_before_dedup": 476,
+      "duplicate_ids_removed": 1,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Iceland.csv",
+      "n_events": 475,
+      "role": "train",
+      "type": "rift",
+      "box": {
+        "lat": [
+          62.0,
+          67.0
+        ],
+        "lon": [
+          -25.0,
+          -13.0
+        ]
+      },
+      "t_first": "1995-12-11 05:22:46.630000+00:00",
+      "t_last": "2026-07-28 05:36:39.419000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 11,
+      "n_scoring_2000_now": 464,
+      "b_value_aki": 1.417312805936413
+    },
+    "Alaska-Aleutians": {
+      "windows": 1,
+      "window_counts": [
+        14
+      ],
+      "rows_before_dedup": 3728,
+      "duplicate_ids_removed": 14,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Alaska-Aleutians.csv",
+      "n_events": 3714,
+      "role": "holdout",
+      "type": "subduction",
+      "box": {
+        "lat": [
+          50.0,
+          62.0
+        ],
+        "lon": [
+          -180.0,
+          -140.0
+        ]
+      },
+      "t_first": "1995-01-01 11:30:04.460000+00:00",
+      "t_last": "2026-08-09 03:36:17.166000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 653,
+      "n_scoring_2000_now": 3061,
+      "b_value_aki": 0.9644064010694634
+    },
+    "Mexico": {
+      "windows": 1,
+      "window_counts": [
+        65
+      ],
+      "rows_before_dedup": 2332,
+      "duplicate_ids_removed": 65,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Mexico.csv",
+      "n_events": 2267,
+      "role": "holdout",
+      "type": "subduction",
+      "box": {
+        "lat": [
+          14.0,
+          20.0
+        ],
+        "lon": [
+          -105.0,
+          -92.0
+        ]
+      },
+      "t_first": "1995-01-05 01:09:49.350000+00:00",
+      "t_last": "2026-08-04 07:07:08.745000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 265,
+      "n_scoring_2000_now": 2002,
+      "b_value_aki": 1.059072523987685
+    },
+    "Philippines": {
+      "windows": 1,
+      "window_counts": [
+        49
+      ],
+      "rows_before_dedup": 8882,
+      "duplicate_ids_removed": 49,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Philippines.csv",
+      "n_events": 8833,
+      "role": "holdout",
+      "type": "subduction",
+      "box": {
+        "lat": [
+          5.0,
+          20.0
+        ],
+        "lon": [
+          120.0,
+          128.0
+        ]
+      },
+      "t_first": "1995-01-01 00:02:07.250000+00:00",
+      "t_last": "2026-08-09 17:05:42.371000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 1404,
+      "n_scoring_2000_now": 7429,
+      "b_value_aki": 1.2431736720899043
+    },
+    "Caribbean": {
+      "windows": 1,
+      "window_counts": [
+        1
+      ],
+      "rows_before_dedup": 254,
+      "duplicate_ids_removed": 1,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Caribbean.csv",
+      "n_events": 253,
+      "role": "holdout",
+      "type": "transform",
+      "box": {
+        "lat": [
+          17.0,
+          20.0
+        ],
+        "lon": [
+          -75.0,
+          -68.0
+        ]
+      },
+      "t_first": "1995-01-01 09:37:21.560000+00:00",
+      "t_last": "2026-08-03 05:01:20.034000+00:00",
+      "underpowered": true,
+      "n_burn_in_1995_2000": 18,
+      "n_scoring_2000_now": 235,
+      "b_value_aki": 1.221121403884447
+    },
+    "Iran": {
+      "windows": 1,
+      "window_counts": [
+        4
+      ],
+      "rows_before_dedup": 1783,
+      "duplicate_ids_removed": 4,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Iran.csv",
+      "n_events": 1779,
+      "role": "holdout",
+      "type": "collision",
+      "box": {
+        "lat": [
+          26.0,
+          36.0
+        ],
+        "lon": [
+          44.0,
+          62.0
+        ]
+      },
+      "t_first": "1995-01-01 08:51:08.800000+00:00",
+      "t_last": "2026-07-20 03:48:50.292000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 258,
+      "n_scoring_2000_now": 1521,
+      "b_value_aki": 1.226656955316159
+    },
+    "Greece-Aegean": {
+      "windows": 1,
+      "window_counts": [
+        10
+      ],
+      "rows_before_dedup": 1980,
+      "duplicate_ids_removed": 10,
+      "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world\\Greece-Aegean.csv",
+      "n_events": 1970,
+      "role": "holdout",
+      "type": "rift",
+      "box": {
+        "lat": [
+          34.0,
+          41.0
+        ],
+        "lon": [
+          19.0,
+          29.0
+        ]
+      },
+      "t_first": "1995-01-03 22:51:45.050000+00:00",
+      "t_last": "2026-07-02 11:06:21.359000+00:00",
+      "underpowered": false,
+      "n_burn_in_1995_2000": 205,
+      "n_scoring_2000_now": 1765,
+      "b_value_aki": 1.2639387344502984
+    }
+  },
+  "excluded_regions": {},
+  "download_log": "D:\\CODE\\git\\quake\\replication\\data\\comcat_world_log.txt",
+  "train_fits": {
+    "Japan": {
+      "params": {
+        "mu": 0.0035826620362303997,
+        "K": 0.04087545693568253,
+        "alpha": 0.587016625622099,
+        "c": 0.014621532445296535,
+        "p": 1.0137703993018832
+      },
+      "LL": 2842.3128654002776,
+      "n_target_events": 11768,
+      "fit_window_days": 9717.75,
+      "window_rate_per_day": 1.2109799079004913,
+      "truncated_fit_LL": 2773.8114225422196,
+      "untruncated_LL_at_truncated_optimum": 2716.7226334272964,
+      "delta_LL_truncation": -57.0887891149232,
+      "refine_improved": true,
+      "starts": [
+        {
+          "start": {
+            "mu": 0.6054899539502456,
+            "K": 0.02,
+            "alpha": 1.0,
+            "c": 0.01,
+            "p": 1.1
+          },
+          "LL": 2773.8114225422196,
+          "params": {
+            "mu": 0.1377588474542434,
+            "K": 0.04458988703499077,
+            "alpha": 0.5581153358900025,
+            "c": 0.016177215113299767,
+            "p": 1.0252614350005114
+          },
+          "nit": 33,
+          "success": true,
+          "seconds": 52.0
+        },
+        {
+          "start": {
+            "mu": 0.24219598158009825,
+            "K": 0.005,
+            "alpha": 1.5,
+            "c": 0.05,
+            "p": 1.2
+          },
+          "LL": 2773.8114225422178,
+          "params": {
+            "mu": 0.1377588214416386,
+            "K": 0.04458988550990887,
+            "alpha": 0.5581153484535992,
+            "c": 0.016177212862600293,
+            "p": 1.0252614206403032
+          },
+          "nit": 28,
+          "success": true,
+          "seconds": 43.4
+        },
+        {
+          "start": {
+            "mu": 0.968783926320393,
+            "K": 0.05,
+            "alpha": 0.8,
+            "c": 0.005,
+            "p": 1.05
+          },
+          "LL": 2773.8114225422123,
+          "params": {
+            "mu": 0.1377588588823936,
+            "K": 0.044589890123413384,
+            "alpha": 0.5581153292390438,
+            "c": 0.016177222984025907,
+            "p": 1.0252614567886025
+          },
+          "nit": 31,
+          "success": true,
+          "seconds": 38.6
+        },
+        {
+          "start": {
+            "mu": 0.42384296776517194,
+            "K": 0.01,
+            "alpha": 0.5,
+            "c": 0.02,
+            "p": 1.15
+          },
+          "LL": 2773.8114225422196,
+          "params": {
+            "mu": 0.13775885349979997,
+            "K": 0.0445898866063643,
+            "alpha": 0.5581153399291786,
+            "c": 0.01617721524475131,
+            "p": 1.0252614364494685
+          },
+          "nit": 28,
+          "success": true,
+          "seconds": 55.7
+        }
+      ],
+      "type": "subduction",
+      "role": "train",
+      "n_events_total": 12765,
+      "b_value_aki": 1.1617554179779952
+    },
+    "Chile": {
+      "params": {
+        "mu": 0.30968699293262764,
+        "K": 0.014769965445435967,
+        "alpha": 0.8151149845753073,
+        "c": 0.02472616903093563,
+        "p": 1.033581492672377
+      },
+      "LL": -3893.4207487901695,
+      "n_target_events": 8538,
+      "fit_window_days": 9717.75,
+      "window_rate_per_day": 0.8785984409971443,
+      "truncated_fit_LL": -3923.3653885104395,
+      "untruncated_LL_at_truncated_optimum": -3917.5913093248782,
+      "delta_LL_truncation": 5.774079185561277,
+      "refine_improved": true,
+      "starts": [
+        {
+          "start": {
+            "mu": 0.4392992204985722,
+            "K": 0.02,
+            "alpha": 1.0,
+            "c": 0.01,
+            "p": 1.1
+          },
+          "LL": -3923.365388510958,
+          "params": {
+            "mu": 0.397537783115601,
+            "K": 0.015494059030031815,
+            "alpha": 0.8100700155055652,
+            "c": 0.030686360181799235,
+            "p": 1.070887243417462
+          },
+          "nit": 27,
+          "success": true,
+          "seconds": 25.7
+        },
+        {
+          "start": {
+            "mu": 0.17571968819942888,
+            "K": 0.005,
+            "alpha": 1.5,
+            "c": 0.05,
+            "p": 1.2
+          },
+          "LL": -3923.365388510658,
+          "params": {
+            "mu": 0.3975377252163304,
+            "K": 0.01549404320056544,
+            "alpha": 0.8100700266404194,
+            "c": 0.030686240531632377,
+            "p": 1.070886879886124
+          },
+          "nit": 29,
+          "success": true,
+          "seconds": 18.1
+        },
+        {
+          "start": {
+            "mu": 0.7028787527977155,
+            "K": 0.05,
+            "alpha": 0.8,
+            "c": 0.005,
+            "p": 1.05
+          },
+          "LL": -3923.3653885104395,
+          "params": {
+            "mu": 0.39753782475802224,
+            "K": 0.015494049207506076,
+            "alpha": 0.8100699854081514,
+            "c": 0.030686266519039117,
+            "p": 1.0708871522581729
+          },
+          "nit": 27,
+          "success": true,
+          "seconds": 14.8
+        },
+        {
+          "start": {
+            "mu": 0.3075094543490005,
+            "K": 0.01,
+            "alpha": 0.5,
+            "c": 0.02,
+            "p": 1.15
+          },
+          "LL": -3923.365388510476,
+          "params": {
+            "mu": 0.3975377368776189,
+            "K": 0.01549405046830097,
+            "alpha": 0.8100699259648214,
+            "c": 0.03068623818907247,
+            "p": 1.0708870956449408
+          },
+          "nit": 25,
+          "success": true,
+          "seconds": 18.7
+        }
+      ],
+      "type": "subduction",
+      "role": "train",
+      "n_events_total": 9499,
+      "b_value_aki": 1.1577854661181797
+    },
+    "Indonesia": {
+      "params": {
+        "mu": 0.42002655019683866,
+        "K": 0.03506063813993835,
+        "alpha": 0.5982656015631048,
+        "c": 0.01930974529525829,
+        "p": 1.0302757141368089
+      },
+      "LL": 1846.8879510898514,
+      "n_target_events": 21844,
+      "fit_window_days": 9717.75,
+      "window_rate_per_day": 2.247845437472666,
+      "truncated_fit_LL": 1836.78609589615,
+      "untruncated_LL_at_truncated_optimum": 1741.4068663794133,
+      "delta_LL_truncation": -95.37922951673681,
+      "refine_improved": true,
+      "starts": [
+        {
+          "start": {
+            "mu": 1.123922718736333,
+            "K": 0.02,
+            "alpha": 1.0,
+            "c": 0.01,
+            "p": 1.1
+          },
+          "LL": 1836.7860958961392,
+          "params": {
+            "mu": 0.6576522082064706,
+            "K": 0.03504872060168454,
+            "alpha": 0.5956269521546522,
+            "c": 0.019722954811295247,
+            "p": 1.0366091245949849
+          },
+          "nit": 32,
+          "success": true,
+          "seconds": 84.2
+        },
+        {
+          "start": {
+            "mu": 0.4495690874945332,
+            "K": 0.005,
+            "alpha": 1.5,
+            "c": 0.05,
+            "p": 1.2
+          },
+          "LL": 1836.78609589615,
+          "params": {
+            "mu": 0.6576521978392184,
+            "K": 0.035048719976657865,
+            "alpha": 0.5956269527048268,
+            "c": 0.019722952874249723,
+            "p": 1.0366091179930028
+          },
+          "nit": 31,
+          "success": true,
+          "seconds": 88.2
+        },
+        {
+          "start": {
+            "mu": 1.798276349978133,
+            "K": 0.05,
+            "alpha": 0.8,
+            "c": 0.005,
+            "p": 1.05
+          },
+          "LL": 1836.78609589615,
+          "params": {
+            "mu": 0.6576521896434243,
+            "K": 0.03504872125008853,
+            "alpha": 0.5956269406059583,
+            "c": 0.019722952020212747,
+            "p": 1.036609120704314
+          },
+          "nit": 29,
+          "success": true,
+          "seconds": 67.8
+        },
+        {
+          "start": {
+            "mu": 0.786745903115433,
+            "K": 0.01,
+            "alpha": 0.5,
+            "c": 0.02,
+            "p": 1.15
+          },
+          "LL": 1836.7860958961428,
+          "params": {
+            "mu": 0.6576521992209099,
+            "K": 0.03504872016443411,
+            "alpha": 0.5956269521958413,
+            "c": 0.019722953203151407,
+            "p": 1.036609118392317
+          },
+          "nit": 29,
+          "success": true,
+          "seconds": 64.0
+        }
+      ],
+      "type": "subduction",
+      "role": "train",
+      "n_events_total": 24437,
+      "b_value_aki": 1.172062955683393
+    },
+    "California": {
+      "params": {
+        "mu": 0.016239965302086188,
+        "K": 0.006769335900230732,
+        "alpha": 0.9045619846539208,
+        "c": 0.001048281123066927,
+        "p": 1.0423796871684101
+      },
+      "LL": -994.9492915287536,
+      "n_target_events": 353,
+      "fit_window_days": 9717.75,
+      "window_rate_per_day": 0.036325281057858046,
+      "truncated_fit_LL": -995.011664062501,
+      "untruncated_LL_at_truncated_optimum": -995.5582867305322,
+      "delta_LL_truncation": -0.5466226680312047,
+      "refine_improved": true,
+      "starts": [
+        {
+          "start": {
+            "mu": 0.018162640528929023,
+            "K": 0.02,
+            "alpha": 1.0,
+            "c": 0.01,
+            "p": 1.1
+          },
+          "LL": -995.0116640625018,
+          "params": {
+            "mu": 0.018094105291858585,
+            "K": 0.0067260772907765266,
+            "alpha": 0.9049389750573417,
+            "c": 0.0010643004574288522,
+            "p": 1.0446180362681818
+          },
+          "nit": 27,
+          "success": true,
+          "seconds": 0.3
+        },
+        {
+          "start": {
+            "mu": 0.00726505621157161,
+            "K": 0.005,
+            "alpha": 1.5,
+            "c": 0.05,
+            "p": 1.2
+          },
+          "LL": -995.0116640625018,
+          "params": {
+            "mu": 0.01809410387488757,
+            "K": 0.006726079868572355,
+            "alpha": 0.9049389067527768,
+            "c": 0.001064300316667762,
+            "p": 1.0446179867338445
+          },
+          "nit": 28,
+          "success": true,
+          "seconds": 0.3
+        },
+        {
+          "start": {
+            "mu": 0.02906022484628644,
+            "K": 0.05,
+            "alpha": 0.8,
+            "c": 0.005,
+            "p": 1.05
+          },
+          "LL": -995.0116640627913,
+          "params": {
+            "mu": 0.01809409927744814,
+            "K": 0.00672607362550017,
+            "alpha": 0.9049395330997249,
+            "c": 0.0010643097029306918,
+            "p": 1.0446182360184488
+          },
+          "nit": 24,
+          "success": true,
+          "seconds": 0.2
+        },
+        {
+          "start": {
+            "mu": 0.012713848370250315,
+            "K": 0.01,
+            "alpha": 0.5,
+            "c": 0.02,
+            "p": 1.15
+          },
+          "LL": -995.011664062501,
+          "params": {
+            "mu": 0.01809410376244893,
+            "K": 0.006726078905539206,
+            "alpha": 0.9049389293215081,
+            "c": 0.0010642998740880505,
+            "p": 1.0446180011190123
+          },
+          "nit": 23,
+          "success": true,
+          "seconds": 0.2
+        }
+      ],
+      "type": "transform",
+      "role": "train",
+      "n_events_total": 441,
+      "b_value_aki": 0.9729437105858556
+    },
+    "Turkey": {
+      "params": {
+        "mu": 0.03988017448227761,
+        "K": 0.02113579048621552,
+        "alpha": 0.7295568828025314,
+        "c": 0.013691685857759258,
+        "p": 1.0588222282089006
+      },
+      "LL": -2404.7360632779773,
+      "n_target_events": 1279,
+      "fit_window_days": 9717.75,
+      "window_rate_per_day": 0.131614828535412,
+      "truncated_fit_LL": -2406.1403510604287,
+      "untruncated_LL_at_truncated_optimum": -2407.448287060981,
+      "delta_LL_truncation": -1.3079360005522176,
+      "refine_improved": true,
+      "starts": [
+        {
+          "start": {
+            "mu": 0.065807414267706,
+            "K": 0.02,
+            "alpha": 1.0,
+            "c": 0.01,
+            "p": 1.1
+          },
+          "LL": -2406.1403510604287,
+          "params": {
+            "mu": 0.04696697443285999,
+            "K": 0.021284006607602105,
+            "alpha": 0.7289734679971247,
+            "c": 0.014142964805496927,
+            "p": 1.061970457762098
+          },
+          "nit": 26,
+          "success": true,
+          "seconds": 1.3
+        },
+        {
+          "start": {
+            "mu": 0.026322965707082403,
+            "K": 0.005,
+            "alpha": 1.5,
+            "c": 0.05,
+            "p": 1.2
+          },
+          "LL": -2406.1403510643113,
+          "params": {
+            "mu": 0.04696680261728501,
+            "K": 0.021284174283344903,
+            "alpha": 0.728970942875128,
+            "c": 0.014142868252875338,
+            "p": 1.0619698270826508
+          },
+          "nit": 29,
+          "success": true,
+          "seconds": 1.5
+        },
+        {
+          "start": {
+            "mu": 0.10529186282832961,
+            "K": 0.05,
+            "alpha": 0.8,
+            "c": 0.005,
+            "p": 1.05
+          },
+          "LL": -2406.1403510604287,
+          "params": {
+            "mu": 0.046966971954290636,
+            "K": 0.0212840079513007,
+            "alpha": 0.7289734612757547,
+            "c": 0.014142967119032042,
+            "p": 1.0619704510075558
+          },
+          "nit": 18,
+          "success": true,
+          "seconds": 0.7
+        },
+        {
+          "start": {
+            "mu": 0.0460651899873942,
+            "K": 0.01,
+            "alpha": 0.5,
+            "c": 0.02,
+            "p": 1.15
+          },
+          "LL": -2406.140351060528,
+          "params": {
+            "mu": 0.046967001847434374,
+            "K": 0.02128402251188636,
+            "alpha": 0.728973259665744,
+            "c": 0.01414296544280705,
+            "p": 1.0619705064301732
+          },
+          "nit": 20,
+          "success": true,
+          "seconds": 0.9
+        }
+      ],
+      "type": "transform",
+      "role": "train",
+      "n_events_total": 1433,
+      "b_value_aki": 1.1004225843291664
+    },
+    "Himalaya": {
+      "params": {
+        "mu": 0.18414690057822156,
+        "K": 0.013771060991333212,
+        "alpha": 0.7750833256708068,
+        "c": 0.008699147063708659,
+        "p": 1.0444317816523152
+      },
+      "LL": -5310.12433083416,
+      "n_target_events": 3477,
+      "fit_window_days": 9717.75,
+      "window_rate_per_day": 0.3577988731959559,
+      "truncated_fit_LL": -5311.7420391247815,
+      "untruncated_LL_at_truncated_optimum": -5314.491876988074,
+      "delta_LL_truncation": -2.7498378632926688,
+      "refine_improved": true,
+      "starts": [
+        {
+          "start": {
+            "mu": 0.17889943659797794,
+            "K": 0.02,
+            "alpha": 1.0,
+            "c": 0.01,
+            "p": 1.1
+          },
+          "LL": -5311.742039125416,
+          "params": {
+            "mu": 0.20656300311503215,
+            "K": 0.013460806441163297,
+            "alpha": 0.7776673123930975,
+            "c": 0.009251138750868219,
+            "p": 1.0573026030377282
+          },
+          "nit": 25,
+          "success": true,
+          "seconds": 5.8
+        },
+        {
+          "start": {
+            "mu": 0.07155977463919118,
+            "K": 0.005,
+            "alpha": 1.5,
+            "c": 0.05,
+            "p": 1.2
+          },
+          "LL": -5311.7420391247815,
+          "params": {
+            "mu": 0.20656326213955295,
+            "K": 0.013460779236037643,
+            "alpha": 0.7776675412670756,
+            "c": 0.009251180146369985,
+            "p": 1.057303478048354
+          },
+          "nit": 32,
+          "success": true,
+          "seconds": 7.4
+        },
+        {
+          "start": {
+            "mu": 0.2862390985567647,
+            "K": 0.05,
+            "alpha": 0.8,
+            "c": 0.005,
+            "p": 1.05
+          },
+          "LL": -5311.742039124788,
+          "params": {
+            "mu": 0.2065632534360919,
+            "K": 0.013460780263390143,
+            "alpha": 0.7776675180128588,
+            "c": 0.00925117971512113,
+            "p": 1.0573035069658416
+          },
+          "nit": 27,
+          "success": true,
+          "seconds": 5.0
+        },
+        {
+          "start": {
+            "mu": 0.12522960561858454,
+            "K": 0.01,
+            "alpha": 0.5,
+            "c": 0.02,
+            "p": 1.15
+          },
+          "LL": -5311.74203912484,
+          "params": {
+            "mu": 0.20656327831176086,
+            "K": 0.013460772315784133,
+            "alpha": 0.7776676873965447,
+            "c": 0.009251183743431608,
+            "p": 1.0573036230779893
+          },
+          "nit": 26,
+          "success": true,
+          "seconds": 5.0
+        }
+      ],
+      "type": "collision",
+      "role": "train",
+      "n_events_total": 3937,
+      "b_value_aki": 1.2346945611694768
+    },
+    "Iceland": {
+      "params": {
+        "mu": 0.002927054648664162,
+        "K": 0.10405129202820898,
+        "alpha": 0.3,
+        "c": 0.0802020367943831,
+        "p": 1.191053917544488
+      },
+      "LL": -751.5825603993168,
+      "n_target_events": 464,
+      "fit_window_days": 9717.75,
+      "window_rate_per_day": 0.04774767821769443,
+      "truncated_fit_LL": -758.1306409631514,
+      "untruncated_LL_at_truncated_optimum": -753.2625241190419,
+      "delta_LL_truncation": 4.868116844109522,
+      "refine_improved": true,
+      "starts": [
+        {
+          "start": {
+            "mu": 0.023873839108847213,
+            "K": 0.02,
+            "alpha": 1.0,
+            "c": 0.01,
+            "p": 1.1
+          },
+          "LL": -758.1306409631514,
+          "params": {
+            "mu": 0.004846493191047814,
+            "K": 0.11310586647021,
+            "alpha": 0.3,
+            "c": 0.10192804381324065,
+            "p": 1.226313235310299
+          },
+          "nit": 21,
+          "success": true,
+          "seconds": 0.2
+        },
+        {
+          "start": {
+            "mu": 0.009549535643538887,
+            "K": 0.005,
+            "alpha": 1.5,
+            "c": 0.05,
+            "p": 1.2
+          },
+          "LL": -758.1306409631514,
+          "params": {
+            "mu": 0.004846493061390252,
+            "K": 0.11310586878393838,
+            "alpha": 0.3,
+            "c": 0.10192804871408166,
+            "p": 1.2263132445207914
+          },
+          "nit": 23,
+          "success": true,
+          "seconds": 0.3
+        },
+        {
+          "start": {
+            "mu": 0.03819814257415555,
+            "K": 0.05,
+            "alpha": 0.8,
+            "c": 0.005,
+            "p": 1.05
+          },
+          "LL": -758.1306409631518,
+          "params": {
+            "mu": 0.004846492932401095,
+            "K": 0.1131058667957215,
+            "alpha": 0.3,
+            "c": 0.1019280423289773,
+            "p": 1.2263132185192045
+          },
+          "nit": 21,
+          "success": true,
+          "seconds": 0.3
+        },
+        {
+          "start": {
+            "mu": 0.01671168737619305,
+            "K": 0.01,
+            "alpha": 0.5,
+            "c": 0.02,
+            "p": 1.15
+          },
+          "LL": -758.1306409631582,
+          "params": {
+            "mu": 0.004846495345690129,
+            "K": 0.11310588815158666,
+            "alpha": 0.3,
+            "c": 0.10192811252509075,
+            "p": 1.2263132629313545
+          },
+          "nit": 26,
+          "success": true,
+          "seconds": 0.3
+        }
+      ],
+      "type": "rift",
+      "role": "train",
+      "n_events_total": 475,
+      "b_value_aki": 1.417312805936413
+    }
+  },
+  "pools": {
+    "GLOBAL": {
+      "params": {
+        "mu": 0.03988017448227761,
+        "K": 0.02113579048621552,
+        "alpha": 0.7295568828025314,
+        "c": 0.014621532445296535,
+        "p": 1.0423796871684101
+      },
+      "n_train_regions": 7,
+      "regions": [
+        "Japan",
+        "Chile",
+        "Indonesia",
+        "California",
+        "Turkey",
+        "Himalaya",
+        "Iceland"
+      ]
+    },
+    "TYPE": {
+      "subduction": {
+        "params": {
+          "mu": 0.30968699293262764,
+          "K": 0.03506063813993835,
+          "alpha": 0.5982656015631048,
+          "c": 0.01930974529525829,
+          "p": 1.0302757141368089
+        },
+        "n_train_regions": 3,
+        "regions": [
+          "Japan",
+          "Chile",
+          "Indonesia"
+        ]
+      },
+      "transform": {
+        "params": {
+          "mu": 0.028060069892181898,
+          "K": 0.013952563193223126,
+          "alpha": 0.8170594337282261,
+          "c": 0.007369983490413092,
+          "p": 1.0506009576886552
+        },
+        "n_train_regions": 2,
+        "regions": [
+          "California",
+          "Turkey"
+        ]
+      },
+      "collision": {
+        "params": {
+          "mu": 0.18414690057822156,
+          "K": 0.013771060991333212,
+          "alpha": 0.7750833256708068,
+          "c": 0.008699147063708659,
+          "p": 1.0444317816523152
+        },
+        "n_train_regions": 1,
+        "regions": [
+          "Himalaya"
+        ]
+      },
+      "rift": {
+        "params": {
+          "mu": 0.002927054648664162,
+          "K": 0.10405129202820898,
+          "alpha": 0.3,
+          "c": 0.0802020367943831,
+          "p": 1.191053917544488
+        },
+        "n_train_regions": 1,
+        "regions": [
+          "Iceland"
+        ]
+      }
+    },
+    "SOCAL_EXP_H_rescaled": {
+      "source": "results_exp_h.json :: train_fit.frozen_params (SoCal, M0=2.5)",
+      "original": {
+        "mu": 0.27502337126874,
+        "K": 0.04123827608373218,
+        "alpha": 0.5365634510857317,
+        "c": 0.014264021187001614,
+        "p": 1.118288850426858,
+        "M0": 2.5
+      },
+      "b_value_socal": 1.0654297094679333,
+      "K_rescale_derivation": "K*10^(alpha(M-M0_old)) = K*10^(alpha(M0_new-M0_old))*10^(alpha(M-M0_new)) => K_new = K*10^(alpha*(M0_new-M0_old))",
+      "K_rescale_factor": 11.83387294584504,
+      "mu_rescale_derivation": "GR: rate(M>=M0_new) = rate(M>=M0_old)*10^(-b(M0_new-M0_old))",
+      "mu_rescale_factor": 0.0073984472393686905,
+      "K_brief_sign_variant": 0.003484765830463918,
+      "note_on_brief": "the task brief wrote K'=K*10^(alpha*(M0_old-M0_new)); the intensity algebra gives the opposite sign. Exact-invariance form used.",
+      "params_rescaled": {
+        "mu": 0.00203474590192508,
+        "K": 0.48800851968056674,
+        "alpha": 0.5365634510857317,
+        "c": 0.014264021187001614,
+        "p": 1.118288850426858
+      },
+      "caveat": "SoCal params were estimated with M>=2.5 SOURCES; applied to an M>=4.5 catalog the triggering sum omits all 2.5<=M<4.5 sources, so the transferred intensity is a lower bound on what those params imply."
+    }
+  },
+  "runtime_guard": {
+    "projected_scoring_minutes": 1.05,
+    "budget_minutes": 120.0,
+    "scoring_truncation_days": null,
+    "scoring_untruncated": true
+  },
+  "holdout_scores": {
+    "Alaska-Aleutians": {
+      "type": "subduction",
+      "n_events_total": 3714,
+      "n_burn_in": 653,
+      "n_scored": 3061,
+      "scoring_days": 9717.75,
+      "b_value_aki": 0.9644064010694634,
+      "underpowered": false,
+      "poisson_local_oracle": {
+        "rate_per_day": 0.3149906099662988,
+        "LL": -6597.1053101589805
+      },
+      "own_fit_POST_HOC_DESCRIPTIVE_ONLY": {
+        "params": {
+          "mu": 0.14387194264576764,
+          "K": 0.01533639084046239,
+          "alpha": 0.6585072425428599,
+          "c": 0.005450532491716373,
+          "p": 1.0771837001541644
+        },
+        "LL_in_sample": -4669.136712519445,
+        "label": "post-hoc in-sample fit on the holdout itself - NOT a forecast; ceiling only"
+      },
+      "bits_per_event": {
+        "GLOBAL": {
+          "LL": -4807.995034463713,
+          "bits_per_event_vs_local_poisson": 0.8432344078239298,
+          "params": {
+            "mu": 0.03988017448227761,
+            "K": 0.02113579048621552,
+            "alpha": 0.7295568828025314,
+            "c": 0.014621532445296535,
+            "p": 1.0423796871684101
+          },
+          "triggered_fraction_mean_over_events": 0.8441716632662803
+        },
+        "TYPE": {
+          "LL": -5713.910444595332,
+          "bits_per_event_vs_local_poisson": 0.4162629378266158,
+          "params": {
+            "mu": 0.30968699293262764,
+            "K": 0.03506063813993835,
+            "alpha": 0.5982656015631048,
+            "c": 0.01930974529525829,
+            "p": 1.0302757141368089
+          },
+          "triggered_fraction_mean_over_events": 0.5556394868344571
+        },
+        "SOCAL_rescaled": {
+          "LL": -28811.4366818818,
+          "bits_per_event_vs_local_poisson": -10.469946326902528,
+          "params": {
+            "mu": 0.00203474590192508,
+            "K": 0.48800851968056674,
+            "alpha": 0.5365634510857317,
+            "c": 0.014264021187001614,
+            "p": 1.118288850426858
+          },
+          "triggered_fraction_mean_over_events": 0.9990581942067246
+        },
+        "OWN_FIT_ceiling": {
+          "LL": -4669.136712519445,
+          "bits_per_event_vs_local_poisson": 0.9086804099327697,
+          "params": {
+            "mu": 0.14387194264576764,
+            "K": 0.01533639084046239,
+            "alpha": 0.6585072425428599,
+            "c": 0.005450532491716373,
+            "p": 1.0771837001541644
+          },
+          "triggered_fraction_mean_over_events": 0.5432500452453548
+        }
+      },
+      "TYPE_minus_GLOBAL_bits": -0.426971469997314
+    },
+    "Mexico": {
+      "type": "subduction",
+      "n_events_total": 2267,
+      "n_burn_in": 265,
+      "n_scored": 2002,
+      "scoring_days": 9717.75,
+      "b_value_aki": 1.059072523987685,
+      "underpowered": false,
+      "poisson_local_oracle": {
+        "rate_per_day": 0.20601476679272465,
+        "LL": -5164.774473462332
+      },
+      "own_fit_POST_HOC_DESCRIPTIVE_ONLY": {
+        "params": {
+          "mu": 0.09517930256860979,
+          "K": 0.011595426311878796,
+          "alpha": 0.740758955953952,
+          "c": 0.008592310278974577,
+          "p": 0.9928758653882845
+        },
+        "LL_in_sample": -4139.945369313462,
+        "label": "post-hoc in-sample fit on the holdout itself - NOT a forecast; ceiling only"
+      },
+      "bits_per_event": {
+        "GLOBAL": {
+          "LL": -4249.548654589826,
+          "bits_per_event_vs_local_poisson": 0.6595363387517011,
+          "params": {
+            "mu": 0.03988017448227761,
+            "K": 0.02113579048621552,
+            "alpha": 0.7295568828025314,
+            "c": 0.014621532445296535,
+            "p": 1.0423796871684101
+          },
+          "triggered_fraction_mean_over_events": 0.757586214782332
+        },
+        "TYPE": {
+          "LL": -5286.340942273975,
+          "bits_per_event_vs_local_poisson": -0.08760406677969046,
+          "params": {
+            "mu": 0.30968699293262764,
+            "K": 0.03506063813993835,
+            "alpha": 0.5982656015631048,
+            "c": 0.01930974529525829,
+            "p": 1.0302757141368089
+          },
+          "triggered_fraction_mean_over_events": 0.4340371587250387
+        },
+        "SOCAL_rescaled": {
+          "LL": -18933.92959505308,
+          "bits_per_event_vs_local_poisson": -9.922423482092828,
+          "params": {
+            "mu": 0.00203474590192508,
+            "K": 0.48800851968056674,
+            "alpha": 0.5365634510857317,
+            "c": 0.014264021187001614,
+            "p": 1.118288850426858
+          },
+          "triggered_fraction_mean_over_events": 0.9982207456324201
+        },
+        "OWN_FIT_ceiling": {
+          "LL": -4139.945369313462,
+          "bits_per_event_vs_local_poisson": 0.7385194137433836,
+          "params": {
+            "mu": 0.09517930256860979,
+            "K": 0.011595426311878796,
+            "alpha": 0.740758955953952,
+            "c": 0.008592310278974577,
+            "p": 0.9928758653882845
+          },
+          "triggered_fraction_mean_over_events": 0.5379976080970088
+        }
+      },
+      "TYPE_minus_GLOBAL_bits": -0.7471404055313916
+    },
+    "Philippines": {
+      "type": "subduction",
+      "n_events_total": 8833,
+      "n_burn_in": 1404,
+      "n_scored": 7429,
+      "scoring_days": 9717.75,
+      "b_value_aki": 1.2431736720899043,
+      "underpowered": false,
+      "poisson_local_oracle": {
+        "rate_per_day": 0.764477373877698,
+        "LL": -9424.153412837388
+      },
+      "own_fit_POST_HOC_DESCRIPTIVE_ONLY": {
+        "params": {
+          "mu": 0.16568747295135827,
+          "K": 0.03420315543083504,
+          "alpha": 0.6426872073767808,
+          "c": 0.01421794333990888,
+          "p": 1.053850117365922
+        },
+        "LL_in_sample": -4663.640561216456,
+        "label": "post-hoc in-sample fit on the holdout itself - NOT a forecast; ceiling only"
+      },
+      "bits_per_event": {
+        "GLOBAL": {
+          "LL": -5409.401398074337,
+          "bits_per_event_vs_local_poisson": 0.7796557843717363,
+          "params": {
+            "mu": 0.03988017448227761,
+            "K": 0.02113579048621552,
+            "alpha": 0.7295568828025314,
+            "c": 0.014621532445296535,
+            "p": 1.0423796871684101
+          },
+          "triggered_fraction_mean_over_events": 0.9089215241766045
+        },
+        "TYPE": {
+          "LL": -4903.940949321897,
+          "bits_per_event_vs_local_poisson": 0.8778150632491968,
+          "params": {
+            "mu": 0.30968699293262764,
+            "K": 0.03506063813993835,
+            "alpha": 0.5982656015631048,
+            "c": 0.01930974529525829,
+            "p": 1.0302757141368089
+          },
+          "triggered_fraction_mean_over_events": 0.6868011615862591
+        },
+        "SOCAL_rescaled": {
+          "LL": -47277.93940327913,
+          "bits_per_event_vs_local_poisson": -7.3511198448354325,
+          "params": {
+            "mu": 0.00203474590192508,
+            "K": 0.48800851968056674,
+            "alpha": 0.5365634510857317,
+            "c": 0.014264021187001614,
+            "p": 1.118288850426858
+          },
+          "triggered_fraction_mean_over_events": 0.999586039945706
+        },
+        "OWN_FIT_ceiling": {
+          "LL": -4663.640561216456,
+          "bits_per_event_vs_local_poisson": 0.9244808565246595,
+          "params": {
+            "mu": 0.16568747295135827,
+            "K": 0.03420315543083504,
+            "alpha": 0.6426872073767808,
+            "c": 0.01421794333990888,
+            "p": 1.053850117365922
+          },
+          "triggered_fraction_mean_over_events": 0.7832669984239351
+        }
+      },
+      "TYPE_minus_GLOBAL_bits": 0.09815927887746045
+    },
+    "Caribbean": {
+      "type": "transform",
+      "n_events_total": 253,
+      "n_burn_in": 18,
+      "n_scored": 235,
+      "scoring_days": 9717.75,
+      "b_value_aki": 1.221121403884447,
+      "underpowered": true,
+      "poisson_local_oracle": {
+        "rate_per_day": 0.024182552545599548,
+        "LL": -1109.6991106327246
+      },
+      "own_fit_POST_HOC_DESCRIPTIVE_ONLY": {
+        "params": {
+          "mu": 0.012066478588154432,
+          "K": 0.011895775735200436,
+          "alpha": 0.9075914353823591,
+          "c": 0.03224177802451023,
+          "p": 1.208175444200396
+        },
+        "LL_in_sample": -675.9970132180174,
+        "label": "post-hoc in-sample fit on the holdout itself - NOT a forecast; ceiling only"
+      },
+      "bits_per_event": {
+        "GLOBAL": {
+          "LL": -824.2081763964047,
+          "bits_per_event_vs_local_poisson": 1.75266534060211,
+          "params": {
+            "mu": 0.03988017448227761,
+            "K": 0.02113579048621552,
+            "alpha": 0.7295568828025314,
+            "c": 0.014621532445296535,
+            "p": 1.0423796871684101
+          },
+          "triggered_fraction_mean_over_events": 0.4755210084404739
+        },
+        "TYPE": {
+          "LL": -741.582315778883,
+          "bits_per_event_vs_local_poisson": 2.259916061291818,
+          "params": {
+            "mu": 0.028060069892181898,
+            "K": 0.013952563193223126,
+            "alpha": 0.8170594337282261,
+            "c": 0.007369983490413092,
+            "p": 1.0506009576886552
+          },
+          "triggered_fraction_mean_over_events": 0.48451814872919324
+        },
+        "SOCAL_rescaled": {
+          "LL": -2241.980599520357,
+          "bits_per_event_vs_local_poisson": -6.951220803866209,
+          "params": {
+            "mu": 0.00203474590192508,
+            "K": 0.48800851968056674,
+            "alpha": 0.5365634510857317,
+            "c": 0.014264021187001614,
+            "p": 1.118288850426858
+          },
+          "triggered_fraction_mean_over_events": 0.9716022994532518
+        },
+        "OWN_FIT_ceiling": {
+          "LL": -675.9970132180174,
+          "bits_per_event_vs_local_poisson": 2.662552617716341,
+          "params": {
+            "mu": 0.012066478588154432,
+            "K": 0.011895775735200436,
+            "alpha": 0.9075914353823591,
+            "c": 0.03224177802451023,
+            "p": 1.208175444200396
+          },
+          "triggered_fraction_mean_over_events": 0.5010255357512596
+        }
+      },
+      "TYPE_minus_GLOBAL_bits": 0.5072507206897079
+    },
+    "Iran": {
+      "type": "collision",
+      "n_events_total": 1779,
+      "n_burn_in": 258,
+      "n_scored": 1521,
+      "scoring_days": 9717.75,
+      "b_value_aki": 1.226656955316159,
+      "underpowered": false,
+      "poisson_local_oracle": {
+        "rate_per_day": 0.15651771243343365,
+        "LL": -4341.825453411878
+      },
+      "own_fit_POST_HOC_DESCRIPTIVE_ONLY": {
+        "params": {
+          "mu": 0.06914850565161575,
+          "K": 0.022195116683944506,
+          "alpha": 0.6481832577434418,
+          "c": 0.008776887381308699,
+          "p": 1.0430572645031413
+        },
+        "LL_in_sample": -3576.884634588083,
+        "label": "post-hoc in-sample fit on the holdout itself - NOT a forecast; ceiling only"
+      },
+      "bits_per_event": {
+        "GLOBAL": {
+          "LL": -3617.642279040353,
+          "bits_per_event_vs_local_poisson": 0.6869003776206616,
+          "params": {
+            "mu": 0.03988017448227761,
+            "K": 0.02113579048621552,
+            "alpha": 0.7295568828025314,
+            "c": 0.014621532445296535,
+            "p": 1.0423796871684101
+          },
+          "triggered_fraction_mean_over_events": 0.6717517978731875
+        },
+        "TYPE": {
+          "LL": -3862.8335867594224,
+          "bits_per_event_vs_local_poisson": 0.454332143751246,
+          "params": {
+            "mu": 0.18414690057822156,
+            "K": 0.013771060991333212,
+            "alpha": 0.7750833256708068,
+            "c": 0.008699147063708659,
+            "p": 1.0444317816523152
+          },
+          "triggered_fraction_mean_over_events": 0.35359074390044404
+        },
+        "SOCAL_rescaled": {
+          "LL": -12740.94687990651,
+          "bits_per_event_vs_local_poisson": -7.966713234600949,
+          "params": {
+            "mu": 0.00203474590192508,
+            "K": 0.48800851968056674,
+            "alpha": 0.5365634510857317,
+            "c": 0.014264021187001614,
+            "p": 1.118288850426858
+          },
+          "triggered_fraction_mean_over_events": 0.9973962193183651
+        },
+        "OWN_FIT_ceiling": {
+          "LL": -3576.884634588083,
+          "bits_per_event_vs_local_poisson": 0.7255597145895015,
+          "params": {
+            "mu": 0.06914850565161575,
+            "K": 0.022195116683944506,
+            "alpha": 0.6481832577434418,
+            "c": 0.008776887381308699,
+            "p": 1.0430572645031413
+          },
+          "triggered_fraction_mean_over_events": 0.5582065127817211
+        }
+      },
+      "TYPE_minus_GLOBAL_bits": -0.2325682338694156
+    },
+    "Greece-Aegean": {
+      "type": "rift",
+      "n_events_total": 1970,
+      "n_burn_in": 205,
+      "n_scored": 1765,
+      "scoring_days": 9717.75,
+      "b_value_aki": 1.2639387344502984,
+      "underpowered": false,
+      "poisson_local_oracle": {
+        "rate_per_day": 0.18162640528929022,
+        "LL": -4775.743035964002
+      },
+      "own_fit_POST_HOC_DESCRIPTIVE_ONLY": {
+        "params": {
+          "mu": 0.02598740555301618,
+          "K": 0.03455167612070178,
+          "alpha": 0.5230505982533322,
+          "c": 0.005807283437483448,
+          "p": 0.9430612634498791
+        },
+        "LL_in_sample": -3725.6485172932266,
+        "label": "post-hoc in-sample fit on the holdout itself - NOT a forecast; ceiling only"
+      },
+      "bits_per_event": {
+        "GLOBAL": {
+          "LL": -3806.730509006709,
+          "bits_per_event_vs_local_poisson": 0.792062077734034,
+          "params": {
+            "mu": 0.03988017448227761,
+            "K": 0.02113579048621552,
+            "alpha": 0.7295568828025314,
+            "c": 0.014621532445296535,
+            "p": 1.0423796871684101
+          },
+          "triggered_fraction_mean_over_events": 0.7091537763546658
+        },
+        "TYPE": {
+          "LL": -3935.12975170548,
+          "bits_per_event_vs_local_poisson": 0.6871096977366313,
+          "params": {
+            "mu": 0.002927054648664162,
+            "K": 0.10405129202820898,
+            "alpha": 0.3,
+            "c": 0.0802020367943831,
+            "p": 1.191053917544488
+          },
+          "triggered_fraction_mean_over_events": 0.9740767304967411
+        },
+        "SOCAL_rescaled": {
+          "LL": -13954.982961892922,
+          "bits_per_event_vs_local_poisson": -7.503027716865511,
+          "params": {
+            "mu": 0.00203474590192508,
+            "K": 0.48800851968056674,
+            "alpha": 0.5365634510857317,
+            "c": 0.014264021187001614,
+            "p": 1.118288850426858
+          },
+          "triggered_fraction_mean_over_events": 0.9977315990719109
+        },
+        "OWN_FIT_ceiling": {
+          "LL": -3725.6485172932266,
+          "bits_per_event_vs_local_poisson": 0.8583377646181365,
+          "params": {
+            "mu": 0.02598740555301618,
+            "K": 0.03455167612070178,
+            "alpha": 0.5230505982533322,
+            "c": 0.005807283437483448,
+            "p": 0.9430612634498791
+          },
+          "triggered_fraction_mean_over_events": 0.8569183503443579
+        }
+      },
+      "TYPE_minus_GLOBAL_bits": -0.1049523799974027
+    }
+  },
+  "scoring_truncation_probe": {
+    "region": "Mexico",
+    "n_scored": 2002,
+    "LL_untruncated": -5286.340942273975,
+    "LL_trunc_500d": -5097.948668800292,
+    "delta_LL": 188.39227347368342,
+    "delta_bits_per_event": 0.1357605388023379,
+    "note": "diagnostic only; scoring above is untruncated"
+  },
+  "sign_test": {
+    "rule": "TYPE pool beats GLOBAL pool in >=5 of 6 holdouts (4/6 = suggestive only)",
+    "n_holdouts_scored": 6,
+    "holdouts_used": [
+      "Alaska-Aleutians",
+      "Mexico",
+      "Philippines",
+      "Caribbean",
+      "Iran",
+      "Greece-Aegean"
+    ],
+    "TYPE_wins": 2,
+    "GLOBAL_wins": 4,
+    "ties": 0,
+    "verdict": "FAIL"
+  },
+  "flags": {
+    "underpowered_regions": [
+      "Caribbean"
+    ],
+    "excluded_regions": [],
+    "type_pools_with_n1": [
+      "collision",
+      "rift"
+    ],
+    "own_fit_is_post_hoc_descriptive": true,
+    "socal_params_from_M2.5_sources_applied_to_M4.5_catalog": true,
+    "scoring_untruncated": true,
+    "mu_pooled_across_regions_is_a_known_weakness": "mu is a per-region background RATE; medianing it across regions of very different seismicity is what the frozen protocol specifies, and it dominates the transferred LL. Recorded as-is."
+  },
+  "runtime_minutes": 29.44
+}
