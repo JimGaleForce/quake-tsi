@@ -5260,3 +5260,395 @@ Sources for every claim above are named with venue and year; where I could verif
 abstract or a publisher's summary rather than the full text — Zaliapin & Ben-Zion (2020),
 Ross & Cochran (2021), the 2025 MMPP paper, Guns et al. (2024) — I say so here rather than let a
 claim stand unmarked.*
+
+---
+
+# RULING (Popper) — K-009, EXECUTED. Round 3.
+*Adjudicated 2026-08-09, on `results_k009.json` @ c371442 (final corrected run),
+`results_k009_prediction.json` @ c2bf012, my own spec @ 0a73fd2 (§3, K-009) and R2-3 (W-003-P2),
+and Merton's §M-001. Ledger write only; no other file touched, no commit.*
+
+---
+
+## §P3-0. RECONCILIATION FIRST: Merton critiqued an intermediate run. Does his dossier still bind?
+
+It binds. It is not stale, and I checked it statistic by statistic rather than take either party's
+word.
+
+**Every number in Merton's §M-001.0 table reproduces the FINAL JSON exactly.** lag-1 ACF 0.0958;
+integral correlation time 2.42 wk; crossing T 52.0 wk with all 20 null sims pinned at the same
+cap; e-folding L 41.0 km against a null median 78.7 and p2.5 41.7; Moran's I 0.0114 vs null p97.5
+0.00045; EOF1 variance fraction 0.197 vs null p97.5 0.0508; EOF1 redness 0.332; interior/edge ACF1
+0.103/0.049; Mc-proxy partial ACF1 0.0885, L 40.1 km. **The intermediate/final difference is not in
+these statistics.** Merton's central methodological objection — that the two numbers the spec named
+as the deliverable are the two numbers that do not survive — transfers to the final run intact.
+
+**What the final run adds that he did not see, and how it changes his reading:**
+
+1. **A second, non-degenerate length statistic, and it does show excess.** The final run reports
+   the correlogram *envelope crossing* (real pooled curve above the ETAS-sim null p97.5:
+   contiguous to **30 km**, 8 bins above out to 110 km, resolution floor ~18 km) and the
+   **integral correlation length, 0.866 km vs null p97.5 0.120** — a clear excess. Merton's
+   "L = 41 km is at the null's 2.5th percentile, therefore not an excess" is **correct about the
+   e-folding estimator and superseded as a statement about spatial structure**. Correct reading:
+   *the e-folding L is uninformative (the estimator is degenerate against this null); the
+   correlogram envelope and the integral length do separate, and the defensible spatial number is
+   "contiguous excess to ~30 km above an ~18 km resolution floor", not "40 km coherence".*
+   His warning against the strong phrasing stands; his verdict on the underlying spatial
+   dependence is revised upward.
+2. **The 2010-exclusion arm — which is the empirical confirmation of his Contested Axis 1.**
+   Merton predicted, from Zaliapin & Ben-Zion (2020)'s Δm≷4 threshold, that our excess might be
+   carried by large-sequence blocks rather than a smooth latent field. **The final run's own
+   robustness arm demonstrates exactly that**, without him having seen it. A literature-derived
+   caveat has been promoted to an in-house measurement. That is the single most consequential
+   fact in this package and it drives most of what follows.
+3. Rate-matched null, supercritical branching-ratio disclosure (n = 1.161), and the numerics audit
+   — all new, all in the executor's favour as disclosure, none of which changes a verdict.
+
+**Ruling on the reconciliation:** Merton's §M-001 is ADOPTED against the final run, with the single
+amendment at (1) above. His classification stands: **K-009 is REDISCOVERY, strong, multiply
+independent, in our own region.** It may never be written as novel. The one thing we own is the
+pre-registered two-generator design — and §P3-2 below takes most of even that away.
+
+---
+
+## §P3-1. THE FIVE-PRONG SCORE
+
+I score prong by prong, and I score **per statistic, not per run**, because this package contains
+two claims with different provenance and they do not deserve the same status.
+
+**Prong 1 — Pre-registered. SPLIT: PASS for the success rule, FAIL for the generator scoring.**
+The success rule, the statistic, the null and the controls were frozen in my §3 K-009 verdict at
+0a73fd2 and the decisive data was scored afterwards. That freeze is intact and I credit it fully.
+The **two-generator prediction was POST-registered** (c2bf012, self-reported as an ordering
+violation), and worse, two smoke runs on a **2010–2012 sub-window of the scoring window** printed
+lag-1 ACF ≈ +0.16–0.18, T ≈ 10 wk, L ≈ 27–29 km before the prediction file was written. The
+executor disclosed this unprompted and retained the artifacts. That disclosure is exactly the
+behaviour I want and it is why this run is adjudicable at all rather than discarded.
+*Consequence, and it is asymmetric:* the leak could only have told the executor "not white". It
+cannot manufacture a 40× separation from zero. **Generator A's rejection is therefore unaffected
+by the ordering violation.** But the leak sits upstream of a *choice of acceptance band* (the
+factor-2 width) for generator B. **Generator B's scoring is demoted to EXPLORATORY, permanently,
+with no route back except a fresh pre-registration on an untouched window** (S-10 discipline,
+applied to a prediction file rather than a model).
+
+**Prong 2 — Out-of-sample. PARTIAL.** The frozen EXP-H parameters and the spatial kernel were fit
+on <2010 and scored on 2010–2018: a genuine temporal holdout *for the model*. There is no spatial
+holdout, no independent catalogue, and **the world arm mandated in my own spec (0.5°/30 d, 13
+boxes) is UNRUN.** The executor logged it as UNRUN under a runtime guard rather than dropping it
+silently; correct conduct, but the verdict is partial with respect to the frozen spec and I record
+it as such.
+
+**Prong 3 — Artifact-adversarial. WEAK. This is where the package is thinnest.**
+- Negative control: present and good (ETAS-sim null through the identical code path).
+- Border gradients: **cleared, and cleanly** — interior ACF1 0.103 exceeds edge 0.049. The signal
+  is stronger where the artifact would be weaker. That is the right sign and I say so plainly.
+- **Positive control: passes only at log_sd = 3.0, fails at 1.5.** The pipeline's demonstrated
+  sensitivity is to a latent field of implausible amplitude. Merton's takeable 16 (Hainzl & Ogata:
+  a few percent of activity attributable to real fluid forcing in a textbook fluid-driven region)
+  makes this worse, not better. **We have not demonstrated that this instrument could see the
+  thing the business case is about.** My own spec said the positive control "is what makes a null
+  interpretable" — it also governs how much a positive is worth, and I under-specified that.
+- **ρ_sta partial: NOT CLEARED.** K-031 is unrun and ρ_sta(x,t) is not on disk; an Mc(x,t)
+  maximum-curvature surrogate was substituted which explains R² = 0.047 of EOF1. The mandated
+  observer-nuisance control has not been run. The executor flagged this himself.
+- **Kernel swap: passes, but self-declared low power** (triggered fraction 0.909, so all three
+  background fields yield near-identical residuals). "Stable across the kernel swap" is therefore
+  near-uninformative against Bray et al. (2014)'s documented on-fault/off-fault ETAS misfit — the
+  named artifact this control exists to exclude.
+- **n_sims = 20 against a spec of 500.** Recorded, not concealed.
+
+**Prong 4 — Effect size that matters. FAIL AS SPECIFIED.** My spec named the deliverable: "the
+correlation time and correlation length with CIs — those two numbers, not a p-value." Neither
+number survives. T's e-folding estimator is pinned at its 52-week cap in the real data **and in
+20/20 null sims** — an estimator with no resolving power, and the "PRIMARY_TIME > 52 weeks" figure
+is a censored lower bound, not a measurement. L's e-folding estimator puts the real value below the
+null median. **There is no bits/event number anywhere in this run**, so S-11's floor is not
+engaged and the result cannot enter any forecasting comparison. What does survive as a defensible
+effect size is a different, smaller set: ACF1 excess +0.0935 over the null ceiling; **integral**
+correlation time 2.42 wk (null p97.5 0.0035); **integral** correlation length 0.866 km (null p97.5
+0.120); Moran's I 0.0114 (null p97.5 0.00045); contiguous correlogram excess to 30 km.
+
+**Prong 5 — Independent replication. NOT MET.** One region, one catalogue, one period.
+
+---
+
+## §P3-2. THE DECISIVE NUMBER, AND IT IS NOT THE ONE IN THE HEADLINE
+
+The executor reports the El Mayor sensitivity as a temporal-excess problem (+0.0935 → +0.036,
+below my 0.05) and notes Moran's I is unchanged. **That framing understates it and I am correcting
+it.** Take the three statistics apart:
+
+| statistic | full window | excl. 2010 | null p97.5 | reading |
+|---|---|---|---|---|
+| lag-1 ACF | 0.0958 | 0.0382 | 0.00228 | **still 16.8× the null ceiling** — below my threshold, nowhere near inside the envelope |
+| Moran's I | 0.0114 | 0.00990 | 0.000448 | **still 22.1× the null ceiling** — robust |
+| **EOF1 variance fraction** | 0.197 | **0.0494** | **0.0508** | **BELOW the null ceiling. The excess is gone entirely.** |
+
+And: EOF1's top five weeks carry **90.6%** of the PC variance; the peak week is 2010-04-02, the
+M7.2 El Mayor-Cucapah week.
+
+**This is the ruling's hinge.** Moran's I is a per-time-step, pooled measure of *spatial
+dependence*. EOF1's variance fraction is the measure of *a single coherent field with a shared
+time history* — it is the statistic that operationalises the word "weather", and it is the one that
+dies. A leading residual mode that is 90.6% five weeks long is not a field; it is a sequence with
+an EOF drawn around it.
+
+So the honest decomposition is three-tier, and it must be reported this way or not at all:
+- **Residuals are not white, and not spatially independent** — robust to the El Mayor exclusion,
+  robust to the kernel swap, robust to the (surrogate) completeness partial, not a border artifact.
+  Also **already known** (Luen & Stark 2012; Zaliapin & Ben-Zion 2020, same region).
+- **The magnitude of the temporal non-whiteness** is sequence-dominated: roughly 60% of the lag-1
+  excess is one year, and that year contains an M7.2.
+- **"A coherent slow latent field"** — **NOT SHOWN.** The statistic that would show it does not
+  survive the removal of one sequence.
+
+**Correcting the generator verdict.** The run states "W-003 FALSIFIED; consistent with W-001/W-002
+but not sharply." I accept the first clause and **reject the second**. A censored lower bound of
+">52 weeks" cannot be called consistent with a 13.8–55.3 week band — a bound that touches a band at
+its edge is not a measurement inside it — and the only non-degenerate temporal estimator we have,
+the integral T at **2.42 weeks**, is an order of magnitude *below* the band. Merton reaches the
+same conclusion independently. **Generator B is UNSUPPORTED, not "consistent".** And the El Mayor
+result actively favours the third branch I named in R2-3: **generator C, ETAS misspecification of
+large sequences.** That is now the leading reading of K-009, and it was pre-named, so it costs
+nothing to adopt.
+
+---
+
+## §P3-3. VERDICT
+
+### K-009 — **PROVISIONAL, SCOPE-NARROWED.** Not VALIDATED. Not BASELINE. Does not open the assimilation gate.
+
+Prongs 1(partial), 2(partial), 3(weak), 4(fail-as-specified), 5(unmet). A result that clears its
+frozen rule with two of five prongs partial, one weak, one failed and one unmet earns the status
+its evidence supports, and that status is PROVISIONAL. **The frozen rule was cleared and I credit
+it in full — see §P3-4, this is not a retroactive fail.** It is a ceiling imposed by the other four
+prongs, every one of which was in my spec before the run.
+
+**Scope line, to travel with every use of this result, verbatim:**
+> *SoCal box, M≥2.5, 0.2° × 7 d, 2010–2018, SCSN, against a frozen spatio-temporal ETAS whose
+> parameters and spatial kernel were fit on <2010. Temporal-and-spatial residual structure only.
+> No bits/event. No independent region, catalogue or period. The mandated ρ_sta observer control
+> was not run (surrogate substituted). The world arm was not run. n_sims = 20 of 500. Pipeline
+> sensitivity demonstrated only for injected latent fields of log_sd = 3.0; it failed to recover
+> log_sd = 1.5.*
+
+### Consequential gate rulings
+
+- **K-010 Tier 2 (particle filter): GATE REMAINS SHUT.** My round-1 gate was "run only if K-009
+  returns a residual correlation time materially greater than the model's own." The only
+  non-degenerate estimate is 2.4 weeks, and the coherent-mode statistic collapses on removing one
+  sequence. Spending 5,000 particles to track a mode that is 90.6% five weeks of 2010 is compute
+  spent on El Mayor's aftershocks. **Re-gate on K-009R.** K-010 **Tier 1 remains approved** and is
+  unaffected — and per Merton's takeables 1–2 it should start from Kumazawa–Ogata spline+ABIC and
+  Marsan's alternating scheme, not a fresh EWMA, or record why not.
+- **K-012: unchanged (NEEDS-DATA, Cascadia gate first)** — with one new binding rider: the K-009
+  residual field it consumes must be the **sequence-excluded** field, or K-012 will cross-correlate
+  geodetic transients against El Mayor.
+- **K-011, K-027: unaffected.**
+
+---
+
+## §P3-4. PRECEDENT — S-12. Frozen rules are floors on STATUS; post-hoc sensitivities bind SCOPE.
+
+The question the executor's robustness arm forces is program-level and I rule it once, generally.
+
+**S-12(a) — A post-hoc sensitivity NEVER retroactively converts a PASS into a FAIL.** For any
+result there exists some subset whose removal kills it. If post-hoc subsetting can reverse a
+verdict, then all discretion returns to the adjudicator *after* unblinding, and pre-registration
+buys nothing at all — it becomes a ritual that constrains only the honest. The frozen rule was
+cleared; K-009 passed it; that is a fact on the record and no later argument of mine removes it.
+
+**S-12(b) — A post-hoc sensitivity that a competent reviewer would run unprompted, and that
+changes the answer, BINDS THE SCOPE.** The claim is narrowed to the domain where it holds
+unconditionally, and the failing subset is **named inside the claim text**, not in a footnote.
+**Ceiling: no claim may exceed PROVISIONAL while a leading sensitivity is unresolved**, regardless
+of how many frozen rules it cleared. Status is set by the weakest prong, not the frozen rule.
+
+**S-12(c) — The attack is PROMOTED, not argued.** Any post-hoc sensitivity that materially moves a
+headline must be rewritten as a **pre-registered success rule on an untouched window** before the
+next run of that entry. This converts a debate into a test and is the **only** route from
+PROVISIONAL to VALIDATED for the affected claim. Applied here: "excess survives exclusion of every
+M≥6 mainshock's space–time block" becomes a frozen K-009R rule on 2019+, below.
+
+**S-12(d) — Pre-registration is scored PER STATISTIC, not per run.** One run may carry a frozen
+statistic and an exploratory one; they get different statuses in the same ruling. K-009's success
+rule is confirmatory; its generator-B scoring is exploratory. Never let a run's cleanest component
+launder its dirtiest.
+
+**S-12(e) — My own fault, recorded.** A frozen rule that passes on a statistic the run itself shows
+to be degenerate — T saturated at its cap in **20/20 null sims** — is a **defective rule, and the
+defect is the adjudicator's, not the executor's.** I named "correlation time and correlation length
+with CIs" as the deliverable without specifying an estimator that could resolve them against this
+null, and Merton's takeable 3 (Zhuang 2006 second-order residuals; Bray et al. 2014 Voronoi
+residuals — both built *because* rectangular-grid residual diagnostics lose power) is the
+literature telling us this was foreseeable. **Binding forward: any spec of mine that names a
+statistic must name the estimator and require its null distribution to be non-degenerate, or the
+statistic is void on arrival.**
+
+**S-12(f) — Retiring W-003-P2 as a discriminator, against myself.** W-003-P2 asked whether *our
+fitted model's* residuals are white. That is a question about our fit quality, not about whether
+the medium is temporally static — which is W-003's actual content. A misspecified aftershock kernel
+produces red residuals under a perfectly static Earth. **W-003-P2 was a bad operationalisation and
+I wrote it. It is retired as a W-003 discriminator** and replaced by the R2-3 five-part death
+condition, which is stated in bits and therefore cannot be satisfied by our own misfit.
+
+---
+
+## §P3-5. THE CLAIM TEXT FOR FARADAY'S REGISTER
+
+The executor proposes: *"W-003-P2 is dead and the residual field is spatially coherent."*
+**REJECTED as written.** The first clause is true but nearly newsless; the second is the one
+statement in the package that the package itself disproves — "spatially coherent field" is EOF1,
+and EOF1's excess vanishes when one sequence is removed.
+
+**APPROVED TEXT — use verbatim, all three paragraphs, never the first alone:**
+
+> **K-009 (PROVISIONAL).** In the SoCal box (M≥2.5, 0.2° × 7 d, 2010–2018, SCSN), the residual
+> field of a spatio-temporal ETAS frozen on pre-2010 data is **not white and not spatially
+> independent**, measured against 20 catalogues simulated from that same fitted model: lag-1
+> weekly ACF 0.096 vs a null 97.5th percentile of 0.002; Moran's I 0.011 vs 0.0004; integral
+> correlation time 2.4 weeks vs 0.004; spatial excess contiguous to ~30 km above an ~18 km
+> resolution floor. The excess is **stronger in the interior than at the edges**, so it is not a
+> border artifact. **This confirms prior work rather than discovering anything: it is the same
+> conclusion reached for Southern California by Luen & Stark (2012) and by Zaliapin & Ben-Zion
+> (2020), and it must always be cited as such.**
+>
+> **What it does not show.** It does not show a coherent slow latent field. The leading residual
+> EOF's variance fraction (0.197, ~4× the null ceiling) **falls to 0.049 — below the null ceiling
+> of 0.051 — when the 2010 El Mayor-Cucapah year is excluded**, and its top five weeks carry 90.6%
+> of the PC variance: the leading mode is one sequence, not a field. Excluding that year the lag-1
+> ACF excess falls from +0.094 to +0.036, below the pre-registered 0.05 bar (though still ~17×
+> the null ceiling); Moran's I is essentially unchanged. **The leading interpretation is therefore
+> ETAS misspecification of large sequences, not a latent driving field.** No correlation *time* is
+> measured: the e-folding estimator saturates at its 52-week cap in the real data and in 20 of 20
+> null simulations. No forecasting value is claimed — this run produces **no bits/event**. The
+> mandated station-density (ρ_sta) control was not run; a completeness surrogate explaining R²=0.05
+> of EOF1 was substituted. The world arm was not run. 20 of 500 simulations were run. The pipeline
+> recovered an injected latent field at log_sd = 3.0 and **failed to recover it at log_sd = 1.5**,
+> so sensitivity to realistically-sized latent forcing (Hainzl & Ogata 2005: a few percent of
+> activity) is **undemonstrated**.
+>
+> **On the incumbent.** The prediction "the residuals are white" (W-003-P2) is falsified — but it
+> had already been contradicted in this region by prior art independent of us, and it is retired as
+> a discriminator because it tested our fit rather than the Earth. **W-003 itself takes no loss.**
+
+---
+
+## §P3-6. THE FOLLOW-UP BATTERY, PRIORITISED
+
+Ranked by decision value per compute-hour, as always. **1–3 are one pre-registration; freeze them
+together or the 2019+ window is spent.**
+
+1. **The swarm co-location third arm (Merton M-001.6§3). Highest value per hour in the ledger.**
+   Join the residual field against **Ross & Cochran (2021)'s 92 labelled long-duration SoCal
+   swarms, 2008–2020** (fully overlapping our window; 53% with diffusive backfronts). Does the red
+   mode co-locate in space and time? **Frozen rule:** residual excess concentrated on swarm cells
+   at ≥2× the off-swarm rate, against a label-permuted null ⇒ generator **B** (aseismic forcing).
+   Excess instead concentrated on-fault / around large sequences, with the on-fault
+   under-prediction / off-fault over-prediction pattern of **Bray et al. (2014)** ⇒ generator **C**
+   (misspecification). Run **both** arms — the Bray pattern is the specific artifact the low-power
+   kernel swap failed to exclude, and it must be tested by its named signature, not generically.
+   Cost: one join plus a permutation null. **This discriminates B vs C, which is the only live
+   question left, and it is sharper than the t_a band, which spans an order of magnitude by the
+   prediction file's own admission.**
+2. **The sequence/Δm exclusion battery, PRE-REGISTERED on the untouched 2019+ window — the S-12(c)
+   promotion.** One job, four arms, frozen before the window is read:
+   (a) Δm control, M2.5–4.5 only (Zaliapin & Ben-Zion's Δm<2 regime — Merton M-001.6§4);
+   (b) exclusion of the El Mayor year (the post-hoc attack, now a frozen rule);
+   (c) exclusion of every M≥6 mainshock's space–time block, generally;
+   (d) full window, for contrast.
+   **2019+ is genuinely untouched — but it is not neutral, and that is why it is the right window:
+   it contains Ridgecrest (M7.1, 2019-07-05).** If the excess is sequence-carried, 2019–2025 must
+   show a *larger* full-window excess than 2010–2018 and a *collapsed* one under arm (c). That is a
+   real risky prediction with a direction attached, and it doubles as prong-5 replication in
+   period. **Frozen success rule: lag-1 ACF excess ≥ 0.05 over the null p97.5 AND EOF1 variance
+   fraction above the null p97.5, under arm (c).** Anything less and "latent field" is closed and
+   the finding is recorded as "ETAS under-models large sequences" — a real, useful, publishable
+   negative that specifies a model repair.
+3. **The instrument rebuild — mandatory before any number of ours is quoted with a CI.** Four
+   items, all cheap relative to what they license: **500 sims** as specified; **retire the
+   saturating e-folding estimators** in favour of the integral and envelope-crossing statistics
+   plus **Zhuang (2006) second-order residuals and/or Bray et al. (2014) Voronoi residuals**
+   (Merton takeable 3 — the fix for exactly the degeneracy S-12(e) admits); a **positive-control
+   amplitude ladder** to find the minimum detectable log_sd, reported as the pipeline's sensitivity
+   floor (this is a K-035 client and should ride on K-035's power machinery); and the
+   **Zaliapin–Ben-Zion reshuffled null** as a cheap second null bracketing the ETAS-sim null from
+   the other side (takeable 5).
+4. **Real ρ_sta — run K-031 and re-score.** The mandated observer control is an **outstanding debt
+   against an already-scored result**, and K-031 is already in the standing queue with W-004-P1 and
+   K-028 as one job. Until it runs, every K-009 statement carries the surrogate caveat.
+5. **The world arm (0.5° × 30 d, 13 boxes).** Completes my frozen spec and supplies prong-5
+   replication *in region*, which is worth more than the period replication at (2). Below (4) only
+   because it is the more expensive of the two debts.
+6. **Real-data positive controls (Merton takeables 9–10).** Salton Trough M≥1.5, 1990–2009 —
+   Llenos & McGuire's exact dataset, where the answer is independently known. And **Cahuilla
+   (2016–2019, in-window, in-region, known duration, few-km scale)**: if our residual field cannot
+   see Cahuilla, the answer is our 0.2°/7 d resolution, not the crust. These are worth more than
+   another synthetic OU injection.
+
+**Not in the battery, deliberately:** re-scoring generator B against t_a. It is exploratory
+permanently (§P3-1, prong 1) and the integral estimator is an order of magnitude off the band. It
+returns only if a fresh prediction is frozen on an untouched window.
+
+---
+
+## §P3-7. THE INCUMBENT'S LEDGER STATUS, RESTATED PRECISELY
+
+- **W-003-P1 — UNCHANGED. Remains the program's STANDING NULL, undefeated.** The R2-3 five-part
+  death condition requires all of: ≥0.01 bits/event out of sample; a **sequence-block** bootstrap CI
+  excluding zero; clearing the ETAS-sim max-statistic over the full declared family; the
+  detector-invariance gate or a recorded exemption; and one independent replication. **K-009
+  delivers none of the five. It produces no bits at all.** W-003 therefore takes **no loss** from
+  this result. The anti-wriggle clause is not even triggered — nobody has exhibited bits for a
+  static-parameter ETAS variant to absorb.
+- **W-003-P2 — the arm is LOST, and simultaneously RETIRED as a discriminator** (§P3-4(f)). Its
+  prediction of white residuals is falsified in SoCal 2010–2018; the loss is small because prior
+  art had already contradicted it in this region three times independently (Merton M-001.3), and
+  because the arm tested our fit quality rather than W-003's content. **A falsified sub-prediction
+  is not a falsified theory when the sub-prediction was mis-derived — and I derived it.**
+- **The scoreboard, restated verbatim for quotation:** *"W-003: 5–0 on forecasting-skill claims
+  (EXP-A, EXP-B, EXP-G, EXP-M, EXP-C2 — untouched by K-009, which scores no forecast); 0–0 on
+  physical-response claims, pending K-035. One sub-prediction (W-003-P2, residual whiteness) is
+  falsified and withdrawn as mis-derived; the theory is unmoved."*
+- **Where W-003 is now genuinely exposed:** generator C — "ETAS under-models large sequences" — is
+  compatible with a static heterogeneous medium and is currently the *leading* reading of K-009. If
+  follow-up (2) shows the excess survives full sequence-block exclusion **and** produces bits under
+  K-010, that is the first real threat. It is a threat that must arrive in bits, per R2-3.
+
+---
+
+## §P3-8. PRIORITY QUEUE — CHANGES
+
+Round-2 order was: 1 K-035, 2 K-009, 3 W-004-P1+K-031+K-028, 4 W-001-P1, 5 W-006-P1(b).
+
+- **K-009 leaves the queue (executed).**
+- **1. K-035 — unchanged at the top.** Its value rises: K-009's positive control failing at
+  log_sd = 1.5 makes the program-wide minimum-detectable-amplitude question a live debt on a
+  *positive* result now, not only on the corpses. Fold K-009's amplitude ladder into it
+  (battery item 3).
+- **2. W-004-P1 + K-031 + K-028 — PROMOTED from 3.** Reason: K-031 is no longer only an audit of
+  future claims; it is an **outstanding mandated control against a result already on the register**.
+  Debts against scored results outrank new exploration, by the same logic as amendment 3.
+- **3. K-009R — NEW, entering at 3, as one pre-registered job**: swarm co-location + Bray on/off-
+  fault arm + the Δm/sequence-exclusion battery frozen on 2019+ + the instrument rebuild (battery
+  items 1–3). Ranked here and not higher only because item 3's estimator swap should be built once,
+  after K-035's power machinery exists.
+- **4. W-001-P1 — unchanged in rank** (still gated on K-035). Note it is *not* strengthened by
+  K-009: generator B was not supported.
+- **5. W-006-P1(b) — unchanged.**
+- **Gate changes recorded:** K-010 Tier 2 gate **shut**, re-gated on K-009R (§P3-3). K-010 Tier 1
+  unchanged and should adopt Kumazawa–Ogata + Marsan estimators or record why not. K-012 unchanged
+  but must consume the sequence-excluded residual field. The world arm becomes item 5 of the
+  battery rather than a queue entry of its own.
+
+---
+
+*Popper, round 3. One entry adjudicated post-execution: K-009 → PROVISIONAL (scope-narrowed).
+One new standard: S-12 (frozen rules are floors on status; post-hoc sensitivities bind scope; the
+attack is promoted to a pre-registered rule, never merely argued). Two self-corrections recorded:
+S-12(e), I specified a deliverable whose estimator was degenerate against its own null; S-12(f),
+W-003-P2 was a mis-derived discriminator and is retired. Merton's §M-001 adopted with one amendment.
+To Kepler: the floor did not move as far as the headline suggests — "is there a latent state" is
+answered yes by three prior literatures, and our own run adds a sequence, not a field. The
+unclaimed ground is amplitude, estimator, and bits/event. Riff there.*
