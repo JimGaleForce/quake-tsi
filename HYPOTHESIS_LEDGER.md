@@ -3015,3 +3015,688 @@ REFRAMED 7 (K-006R, 016R, 019R, 020R, 021R, 025R, 032); REJECTED 1 (K-024). Zero
 no tests have been run; nothing above may be claimed. Kepler: the estimator objections are not
 objections to the ideas. Five of these are running-quality as written, and K-028 is a criterion
 I should have proposed myself.*
+
+
+---
+
+# META-THEORIES (Wegener)
+
+## Round 1 — 2026-08-09. Charter: unify the field's DOCUMENTED, replicated observations into
+## single-entity accounts, and earn ledger status only by novel excess prediction.
+
+My namesake did not discover a mechanism. He noticed that four literatures — coastline geometry,
+fossil ranges, paleoclimate scars, stratigraphic correlation — were each individually explained
+away, and that one claim explained all four at once. The claim was right for forty years before
+anyone found the convection cell. What follows is that move applied here.
+
+The single most important thing I want on the record before the table: **this program's five
+corpses are not five failures. They are five measurements of the same quantity, taken in the one
+place on Earth where that quantity is smallest.** That sentence is the whole of §W-RETRO below,
+and everything between here and there is the evidence for it.
+
+Web-verified this session via four parallel literature sweeps; every row carries its replication
+status. Where a source I was handed was misattributed, I corrected it and say so. Where a number
+I expected turned out wrong, I record the correct one and flag my prior.
+
+---
+
+## §W-OBS — THE OBSERVATION TABLE
+
+Columns: **effect size** (as published) | **where it holds** | **where it does NOT hold / the
+null domain** | **status** (REPLICATED / SINGLE-STUDY / CONTESTED / OURS).
+
+The non-observations are load-bearing. O-7 (ordinary crustal seismicity feels no tide) constrains
+harder than O-4 (tremor feels every tide), because O-4 has many possible causes and O-7 has few.
+
+### A. The sensitivity ladder — the same load, wildly different responses
+
+**O-1 — Remote dynamic triggering, Landers 1992.** Sudden seismicity-rate increases to ~1250 km
+(Long Valley, Coso, The Geysers, Yellowstone, Cedar City, western Nevada), coincident with
+surface-wave passage; implied dynamic stresses ~0.01–0.1 MPa, comparable to solid-earth tides.
+*Holds:* pre-existing persistent seismicity, disproportionately geothermal / volcanic /
+hydrothermal / extensional. *Does not hold:* remote triggering of LARGE events is essentially
+absent (Parsons & Velasco 2011, Nat. Geosci., ngeo1110) — the far field triggers small events
+only. *Status:* REPLICATED. Hill et al. 1993, Science 260, 1617, doi:10.1126/science.260.5114.1617.
+
+**O-2 — Dynamic triggering is globally common.** 12 of 15 M>7 mainshocks (1990+) produced
+detectable triggered seismicity somewhere during Love/Rayleigh passage. *Status:* REPLICATED as a
+phenomenon; the stronger reading ("setting-independent") is CONTESTED — the largest responses
+remain concentrated in fluid-rich terranes. Velasco et al. 2008, Nat. Geosci. 1, 375, doi:10.1038/ngeo204.
+
+**O-3 — There is no triggering THRESHOLD; there is a continuous gain.** Statistical detection of
+triggering down to dynamic strains of ~3×10⁻⁹ (sub-Pa-scale stress), with triggering intensity
+scaling continuously with amplitude rather than switching on at a cutoff. *Status:* SINGLE-STUDY
+but methodologically strong and never refuted. van der Elst & Brodsky 2010, JGR 115, B07311,
+doi:10.1029/2009JB006681. **This row is the hinge of the entire table** — it says the crust's
+response function is smooth and the observations differ by GAIN, not by an on/off switch.
+
+**O-4 — Tremor and LFEs are modulated by sub-kPa to few-kPa tidal stress.** Cascadia, Nankai, and
+the deep San Andreas; the Parkfield LFE result is interpreted as requiring near-lithostatic pore
+pressure, i.e. effective normal stress driven toward zero. *Does not hold:* nowhere in the
+ordinary brittle seismogenic zone. *Status:* REPLICATED across ≥4 independent settings and groups.
+Rubinstein et al. 2008; Thomas, Nadeau & Bürgmann 2009, Nature 462, 1048, doi:10.1038/nature08654;
+Royer et al. 2015; Yabe et al. 2015.
+
+**O-5 — Tremor's tidal sensitivity RISES within a single ETS episode** (low early, high late, at
+the ~2.5 kPa scale), interpreted as progressive fault weakening as slip accumulates. *Status:*
+SINGLE-STUDY / emerging, consistent with Yabe et al. 2015. Houston 2015, Nat. Geosci. 8, 409,
+doi:10.1038/ngeo2419. **A state variable observed changing during the event — the closest thing
+in the whole table to a directly watched "living" state.**
+
+**O-6 — Tremor triggered by teleseismic surface waves at 12–43 kPa** (Denali waves at Vancouver
+Island), with later reports to ~3–8 kPa. *Does not hold:* the same patch does not respond every
+time comparable waves pass — susceptibility itself varies in time. *Status:* REPLICATED
+(phenomenon), CONTESTED (any universal threshold). Rubinstein et al. 2007, Nature 448, 579,
+doi:10.1038/nature06017; Peng & Gomberg 2010, Nat. Geosci. 3, 599, doi:10.1038/ngeo940.
+
+**O-7 — ORDINARY CRUSTAL SEISMICITY SHOWS NO TIDAL CORRELATION.** The paradigm null: shallow
+California crustal seismicity, no significant correlation with solid-earth tides. *Status:*
+REPLICATED — and independently reproduced by this program four times (EXP-A/B/C/E, §14–14b).
+Vidale, Agnew, Johnston & Oppenheimer 1998, JGR 103, 24567, doi:10.1029/98JB00594.
+
+**O-8 — …EXCEPT shallow thrust faults in high-ocean-load regions,** where the rate varies by a
+factor of ~3 over the tidal cycle, best fit at μ≈0.4. Also reported for mid-ocean-ridge seismicity
+and, globally, more strongly for reverse than strike-slip/normal mechanisms. *Status:* REPLICATED
+but strictly setting-specific. Cochran, Vidale & Tanaka 2004, Science 306, 1164,
+doi:10.1126/science.1103961.
+
+**O-9 — THE POWER NUMBER (theory, and the most consequential row in this table for us).**
+Rate-and-state predicts tidal correlation in ordinary crust is real but ~1% of events, requiring
+catalogues of **10⁵–10⁶ events** for robust detection. *Status:* accepted theory, widely used as
+the field's explanation for why O-7 looks null. Beeler & Lockner 2003, JGR 108, 2391,
+doi:10.1029/2001JB001518. **Our EXP-A tested this at n ≈ 10²–10³ per bin. See §W-RETRO.**
+
+**O-10 — Tidal stress lowers b, so large events prefer tidal maxima.** *Status:* SINGLE-STUDY, no
+independent replication located; weight it low. Ide, Yabe & Tanaka 2016, Nat. Geosci. 9, 834,
+doi:10.1038/ngeo2796. (Related: Tanaka 2010/2012 precursory tidal correlation before Tohoku and
+Sumatra — small-N, retrospective, never prospectively confirmed. CONTESTED.)
+
+### B. Fluids: the same load again, with pore pressure as the dial
+
+**O-11 — Induced seismicity responds to injection RATE, not cumulative volume.** Wells above
+~300,000 bbl/month are far more strongly associated with seismicity. Triggering pore-pressure
+perturbations of order **0.01–0.1 MPa** on critically stressed faults. *Does not hold:* the large
+majority of ~40,000 US Class II disposal wells induce nothing felt; Koyna reservoir impoundment
+required >300–600 kPa. *Status:* REPLICATED (rate control, USGS + multiple regional studies);
+CONTESTED that "10 kPa" is any kind of universal constant — it is a fault-state-dependent number
+spanning at least a decade and a half in magnitude. Weingarten et al. 2015, Science 348, 1336,
+doi:10.1126/science.aab1345; Ellsworth 2013, Science 341, doi:10.1126/science.1225942.
+
+**O-12 — Basel 2006: the largest event (ML 3.4) came AFTER shut-in.** *Status:* REPLICATED as a
+single deeply-analysed case (many re-analyses, one site). The delay is a memory the instantaneous
+Coulomb picture does not have.
+
+**O-13 — Near-lithostatic pore pressure in the tremor/SSE zone,** inferred from Poisson's ratios
+to ~0.35 and bright plate-interface reflectors. *Status:* the OBSERVATION (high Vp/Vs and high
+reflectivity co-located with tremor across Cascadia, Nankai, Shikoku) is REPLICATED; the
+QUANTITATIVE effective-stress inference is CONTESTED — crack fabric and serpentinization also
+raise Vp/Vs. Audet et al. 2009, Nature 457, 76, doi:10.1038/nature07650; Kodaira et al. 2004,
+Science 304, 1295.
+
+**O-14 — LFE stress drops are 2–3 orders below ordinary earthquakes** (kPa to tens of kPa vs
+1–10 MPa). *Status:* REPLICATED qualitatively, study-dependent numerically. Chestler & Creager
+2017; Ide et al. 2008. **An independent route to the same conclusion as O-13, with different
+assumptions — which is why I weight the pair heavily even though each alone is contested.**
+
+### C. Slow loads and slow slip
+
+**O-15 — Seasonal hydrologic loading modulates seismicity at kPa amplitudes.** California: annual
+hydrospheric Coulomb changes ~0.5–2 kPa, detectable modulation of small-earthquake timing, with
+hydrology the largest seasonal stress source (larger than atmospheric, thermal, or tidal).
+Himalaya: winter/summer rate ratio ~2× at 2–4 kPa monsoon loading. Japan: snow-load unclamping at
+a few kPa. *Does not hold / caution:* our own EXP-F did NOT detect an annual signal in SoCal, but
+that null is weak (the 7-day method check failed to fire). *Status:* REPLICATED. Johnson, Fu &
+Bürgmann 2017, Science 356, 1161, doi:10.1126/science.aak9547; Bettinelli et al. 2008, **EPSL**
+(commonly miscited as Nat. Geosci. — corrected here); Heki 2003, **EPSL** (commonly miscited as
+Science — corrected here); Amos et al. 2014, Nature 509, doi:10.1038/nature13275.
+
+**O-16 — THE FREQUENCY PARADOX (my framing of O-7 + O-15, and I have not seen it stated).**
+Ordinary California crust demonstrably responds to a **1–2 kPa annual** load and demonstrably does
+not respond to a **1–3 kPa semidiurnal** load. Same crust. Same amplitude. Different period. Any
+theory of the table must explain this, and only one class of theory does.
+
+**O-17 — Episodic tremor and slip recurs quasi-regularly** (Cascadia ~14 months). *Status:*
+REPLICATED. Rogers & Dragert 2003, Science 300, 1942. *Does not hold as a predictor:* no great
+earthquake has occurred in Cascadia or Nankai to test its precursory value.
+
+**O-18 — Precursory slow slip / migrating foreshocks before Tohoku 2011 (2–10 km/day) and
+Iquique 2014.** *Status:* a genuine TWO-CASE pattern, not a law. *The null side is decisive:* no
+established base rate; the overwhelming majority of slow-slip episodes and swarms are followed by
+nothing; and the apparent prevalence of foreshocks is strongly dependent on the completeness
+threshold used. Kato et al. 2012, Science 335, 705, doi:10.1126/science.1215141; Ruiz et al. 2014,
+Science 345, 1165, doi:10.1126/science.1256074; Mignan 2014, Sci. Rep. (foreshock meta-analysis) —
+CONTESTED.
+
+**O-19 — Repeating earthquakes work as creep meters:** +18% seismic moment per 10× recurrence
+interval, 160 Parkfield sequences. *Does not hold:* the magnitude-dependent stress-drop scaling
+underlying the moment→slip conversion has NOT been reproduced by later work; repeaters are
+interpretable only where small locked patches are embedded in creep. *Status:* REPLICATED
+(scaling), DOCUMENTED FAILURE (its mechanical justification). Nadeau & McEvilly 1999, Science 285,
+718; Uchida & Bürgmann 2019, Annu. Rev. Earth Planet. Sci. 47, 305.
+
+### D. The constitutive law and its limits
+
+**O-20 — Rate-and-state friction.** Seismicity-rate response to a stress step
+`R = r₀·exp(Δτ/Aσ)`, relaxing over `t_a = Aσ/τ̇`. Lab a ≈ 0.005–0.015, b ≈ 0.005–0.02; field Aσ
+inverted from aftershock sequences ≈ **0.01–0.1 MPa**. *Does not hold:* the lab-to-field nucleation
+dimension gap (cm-scale lab Lc vs field-inferred kilometre-scale) is an acknowledged UNRESOLVED
+failure, not a caveat; slow slip requires a narrowly tuned a≈b regime that is fitted, not
+predicted. *Status:* REPLICATED as a formalism, with a named hole. Dieterich 1994, JGR 99, 2601;
+Marone 1998, AREPS; McLaskey 2019, JGR 124, 12882, doi:10.1029/2019JB018363.
+
+**O-21 — Nucleation: visible in the lab, elusive in the field.** Lab shows smooth accelerating
+preslip to a critical length. Field: the seismic nucleation phase (~0.5% of moment, ~1/6 of
+duration, 48 events Mw 1.1–8.1) has never been established as a general precursor, and the
+preslip-vs-cascade question is unresolved. The Parkfield Prediction Experiment — the best-
+instrumented prediction test ever fielded — recorded **no diagnostic precursory signal** when the
+M6 finally arrived in 2004. *Status:* CONTESTED (mechanism), REPLICATED NEGATIVE (field
+detectability). Ellsworth & Beroza 1995, Science 268, 851; Bouchon et al. 2013, Nat. Geosci. 6, 299.
+
+**O-22 — b decreases with differential stress.** `b = 1.23 ± 0.06 − (0.0012 ± 0.0003)·(σ1−σ3)` in
+MPa, i.e. **db/dσ ≈ −0.0012 per MPa** — an order of magnitude SMALLER than the figure I carried
+into this session, and I record the correction rather than the prior. Field ordering
+thrust < strike-slip < normal. *Does not hold:* b̂ is exquisitely sensitive to Mc; the operational
+precursor version (foreshock traffic-light) is CONTESTED and not prospectively validated.
+*Status:* REPLICATED (relation), CONTESTED (application). Scholz 2015, GRL 42, 1399,
+doi:10.1002/2014GL062863; Schorlemmer, Wiemer & Wyss 2005, Nature 437, 539, doi:10.1038/nature04094;
+Gulia & Wiemer 2019, Nature 574, 193 (contested).
+
+**O-23 — Coulomb static triggering at ~+0.01 MPa.** *The triggering side is REPLICATED; the
+suppression side (stress shadows) is genuinely CONTESTED* — Harris & Simpson 1998 for, Mallman &
+Zoback 2007 against (rates rose almost everywhere regardless of predicted sign), and the
+static-vs-dynamic diagnostic itself is disputed (Felzer & Brodsky 2006 vs Marsan 2010). I mark it
+so, as the charter requires; it constrains weakly. King, Stein & Lin 1994, BSSA 84, 935;
+Stein 1999, Nature 402, 605.
+
+### E. Universality, modes, and the predictability record
+
+**O-24 — Omori/ETAS universality.** p ≈ 1.1 ± 0.25 globally; ETAS as the operational standard.
+*Status:* REPLICATED. Utsu, Ogata & Matsu'ura 1995; Ogata 1988, JASA 83, 9. **OURS (B-1/EXP-M):
+p ∈ [0.94, 1.08] in 12 of 13 regions; generic shape + locally-fitted μ delivered +0.66 to +1.75
+bits/event on six never-trained regions, within 0.07–0.15 bits of each region's post-hoc in-sample
+ceiling. Fault-TYPE pooling FAILED the frozen sign test (2/6); α and K spread WITHIN type ≥
+BETWEEN types; the only thing type pooling changed was μ, which should never be pooled.**
+Related: Båth's law (Δm≈1.2) is empirically REPLICATED but CONTESTED as physics — derivable from
+GR plus selection (Helmstetter et al. 2003).
+
+**O-25 — Swarms vs mainshock-aftershock is a continuum, not a binary.** Of 71 SoCal bursts:
+14 clean aftershock sequences, 18 swarm-like, ~39 **blended**. Mechanism is region-dependent —
+fluid-driven in West Bohemia/Vogtland, aseismic-creep-driven on oceanic transforms (migration
+0.1–1 km/hr, too fast for the diffusivities inferred from injection). *Status:* REPLICATED that
+the taxonomy blurs; CONTESTED that there is one swarm mechanism. Vidale & Shearer 2006, JGR 111,
+B05312, doi:10.1029/2005JB004034; Roland & McGuire 2009, GJI 178, 1677; Hainzl (Vogtland).
+
+**O-26 — No precursor has ever passed a prospective CSEP-style test.** Smoothed seismicity and
+ETAS remain the hardest baselines to beat; operational earthquake forecasting is explicitly
+probabilistic, not predictive. *Status:* REPLICATED NEGATIVE. Geller et al. 1997, Science 275,
+1616; Jordan et al. 2011, Ann. Geophys. 54, 315. **OURS: this program is a faithful five-corpse
+instance of exactly this result.**
+
+### F. Our own documented realities (advantage: I know how they were made)
+
+**O-27 (OURS, B-2)** — SoCal walk-forward ETAS, params frozen from train, +1.907 bits/event vs
+train-rate Poisson and +1.866 vs the **test-rate oracle**; skill RISES with magnitude (+2.54 to
++2.58 at M≥4); triggered fraction 0.915. `results_exp_h.json`.
+
+**O-28 (OURS, B-3)** — P(M≥5 within 7 d | M≥5) = 18/30 = 0.60 vs 0.062 base, p = 7×10⁻¹⁵.
+`results_exp_i.json`.
+
+**O-29 (OURS, B-4)** — The stress ledger's negative space is real geology: silent-loading cells
+recover, blind, BOTH the SAF **creeping** section (Imperial/Brawley too) AND the 1857 Fort Tejon
+**locked** Big Bend strand. `results_exp_j.json`, `results_exp_k.json`. **The two most opposite
+hazard states in California came out of the same list.** Hold that thought for W-006.
+
+**O-30 (OURS)** — Coso Fig-4c north bin (36.2–36.6 N, −118 to −117.6), SCSN M≥1.5, shear on the
+per-event FM plane: Pm/P0 = **0.340**, one-sided p = 0.041, n = 113 — QUALIFIED REPRODUCTION; and
+σ_n in the same bin is **null** (0.271, p = 0.12). §12, `results_coso_fig4c.json`.
+
+**O-31 (OURS, corpses)** — Static tidal-phase susceptibility maps: null with clean anti-leak
+controls. Feature-vs-amplitude correlations: small-n bias. Phase migration: killed by our own
+cross-catalog and walk-forward confirmations. Fixed periodicities incl. annual: not detected
+(weak power). Golden-ratio interevent structure: nothing. Fault-type pooling: failed.
+Spatial transfer of sequence shapes (p, b): failed 7/15. §14–17.
+
+---
+
+## §W-SPINE — WHAT THE TABLE IS ACTUALLY A TABLE OF
+
+Read O-3, O-9, O-16 and O-20 together and the table stops being a list of phenomena.
+
+O-3 says there is no threshold — the response is smooth all the way down to nanostrain. O-20
+gives the response its functional form, `R = exp(Δτ/Aσ)`, relaxing over `t_a = Aσ/τ̇`. O-9 says
+that in ordinary crust the tidal response is ~1%, not zero. O-16 says the same crust responds to
+an annual load of the same amplitude.
+
+So the field has not been measuring twelve phenomena. It has been measuring **one transfer
+function, sampled at different values of two numbers**: a **gain** (1/Aσ, set by effective normal
+stress, i.e. by fluids) and a **corner frequency** (1/t_a, set by the loading rate). Every row in
+§W-OBS is a point on that surface:
+
+| regime | Aσ implied | t_a implied | what the literature calls it |
+|---|---|---|---|
+| deep LFE/tremor, near-lithostatic Pp | ~kPa | short | "extreme tidal sensitivity" (O-4, O-5, O-13, O-14) |
+| geothermal / high-Pp shallow / swarm | ~10s kPa | short–mid | "remote triggering hotspots" (O-1), "swarms" (O-25), **our Coso 0.340** (O-30) |
+| critically stressed faults near wells | 10–100 kPa | short | "induced seismicity" (O-11) |
+| ordinary seismogenic crust | 0.01–0.1 MPa | months–years | "the tidal null" (O-7) + "seasonal modulation works" (O-15) |
+| deep locked megathrust | high | very long | "no short-period sensitivity, decadal cycles" |
+
+That is the unification claim in one paragraph. The six W-entries below are the serious candidate
+readings of it — including the two that say it is wrong.
+
+---
+
+## §W-THEORIES
+
+Each entry: **mechanism** → **corollary map** (which O-rows it absorbs) → **≥2 distinguishing
+predictions with falsifiers** → **what the living entity IS** → **our assets that bear on it**.
+Per the Einstein criterion, an entry that merely renames the table is worthless; each prediction
+below is one the disjoint explanations do not make.
+
+---
+
+### W-001 — THE GAIN FIELD. One constitutive law; one hidden two-component state field; the crust is a spatially varying LOW-PASS FILTER on stress.
+
+**Mechanism.** There is one crust and one friction law. Seismicity rate responds to any stress
+perturbation as `R = exp(Δτ/Aσ)`, relaxed over `t_a = Aσ/τ̇`. `Aσ = a·(σ_n − P_p)` is a hidden
+scalar field; `τ̇` is the local loading rate. Nothing else is needed. Every documented
+"sensitivity" phenomenon is a reading of `1/Aσ`; every documented FREQUENCY dependence is a
+reading of `t_a`. Fluids do not make a different kind of fault; they move the same fault along the
+gain axis.
+
+**Corollary map.** Absorbs O-1 (geothermal = low Aσ), O-3 (no threshold — exp is smooth), O-4/O-13/
+O-14 (near-lithostatic Pp → Aσ→0 → O(1) response to kPa), O-6 (variable susceptibility = variable
+Aσ in time), O-7 + O-8 + O-9 + O-15 + O-16 **together** (see P1), O-11 (Aσ small on critically
+stressed faults; most wells sit on faults with large Aσ, hence the vast null), O-20, O-22 (b and Aσ
+are both functions of effective stress, hence correlated without either causing the other), and —
+crucially — **O-24**: Dieterich's derivation makes the Omori exponent p≈1 *parameter-free* while
+the aftershock DURATION `t_a = Aσ/τ̇` carries all the local information. That is precisely our
+EXP-M shape/scalar split, derived rather than observed.
+
+**P1 (the flagship excess prediction) — THE FREQUENCY-RESPONSE COLLAPSE.** A rate-state solid is a
+low-pass filter with corner at `1/t_a`. Therefore, in one and the same cell, the response to a
+periodic load of period T is attenuated by a factor that depends only on `T/t_a`. Since `t_a` is
+independently measurable from that cell's own Omori aftershock-decay duration — **with no tides
+involved** — the theory predicts, with **zero free parameters**, the ratio of a cell's response at
+two different tidal frequencies. Concretely: the **fortnightly (Mf, 14.8 d) to semidiurnal (M2,
+12.42 h) response ratio must be an increasing function of the cell's measured `t_a`**, following
+the rate-state low-pass form.
+*Why no disjoint explanation makes it:* the tidal literature treats amplitude, the aftershock
+literature treats decay, and nobody has ever required the two to agree in the same rock. It also
+retrodicts O-16 immediately — annual loads are quasi-static (T ≫ t_a: full `exp(Δτ/Aσ)` response,
+which is why Johnson/Bettinelli/Heki succeed) while semidiurnal tides are far above the corner
+(strongly attenuated, which is why Vidale nulls). Same crust, same kPa, different side of the
+corner.
+*Falsifier:* the Mf/M2 ratio is uncorrelated with independently measured `t_a` across cells at
+adequate power; or the crust responds equally at both frequencies; or the fitted corner sits
+orders of magnitude away from `1/t_a`.
+
+**P2 — TIDAL SENSITIVITY IS PREDICTABLE FROM NON-TIDAL DATA, AND IS NOT SYNONYMOUS WITH
+"GEOTHERMAL".** Rank cells by `Aσ` estimated purely from aftershock relaxation and ledger loading
+rate, blind to tides and blind to the geothermal map. W-001 predicts the top-ranked cells recover
+the known tidally-sensitive ones (Coso-north) **and additionally name non-geothermal cells that
+are tidally sensitive.**
+*Falsifier:* when scored blind, every tidally-sensitive cell is geothermal/volcanic, i.e. the
+`Aσ` ranking adds nothing over a map of hot water. That would demote Aσ from a field to a label.
+
+**P3 — THE INDUCED-SEISMICITY BRIDGE.** The `Aσ` inverted from aftershock decay in a region must
+predict the region's induced-seismicity susceptibility — the pore-pressure change per unit rate
+increase — quantitatively, across Oklahoma / Basel / Groningen / Koyna. Koyna's 300–600 kPa
+requirement (O-11) must correspond to a measurably larger `Aσ` than Oklahoma's 10–100 kPa.
+*Falsifier:* no rank agreement between aftershock-derived Aσ and induced-seismicity threshold
+across sites with adequate data.
+
+**The living entity.** The crust is a **continuous medium with a spatially and temporally varying
+gain and memory** — not a set of faults that break, but a field that amplifies. It is "alive" in
+exactly the sense that an amplifier with a slowly drifting bias is alive: the same input produces
+wildly different output depending on a hidden state, and the hidden state is knowable.
+
+**Our assets.** `data/xue_lu_zenodo/SCSN_original_catalog.txt` (633,667 events, 1981–2018,
+Mc ≤ 1.7 all eras) + `data/xue_lu_zenodo/Tidal_{N_0,N_90,S_0,Vol}.txt` (6000-s series from 1981) +
+`coso_fm_test.py` / `coso_fig4c_test.py` (validated FM-resolved machinery) + CFM5.3 (557 segments
+with strike/dip/rake) + frozen EXP-H ETAS (`results_exp_h.json`) as the baseline intensity +
+`results_exp_j/k.json` for τ̇. **P1 is 100% on disk.** Directly extends K-036 (which fits Aσ but
+has no frequency axis and no zero-parameter prediction) and supplies K-035's power audit with the
+physical amplitude it should be auditing against.
+
+---
+
+### W-002 — THE VALVE. The state is not a smooth scalar but the CONNECTIVITY of an overpressured fluid phase; the crust is plumbing, and plumbing has hysteresis.
+
+**Mechanism.** Fault zones are compartmented, self-sealing, episodically breaching hydraulic
+systems (Sibson's fault-valve). Effective stress is not a smooth field but a two-phase mixture:
+sealed compartments at hydrostatic-ish pressure, and percolating overpressured pathways. What
+looks like "low Aσ" is really "currently connected to an overpressured reservoir." Permeability is
+dynamic and is itself modified by shaking and by slip.
+
+**Corollary map.** Absorbs everything W-001 does, plus the rows W-001 handles awkwardly:
+O-5 (sensitivity RISING during an ETS episode — a valve opening in real time, not a fixed gain),
+O-12 (Basel's largest event AFTER shut-in — pressure diffusion has its own clock), O-25 (swarms as
+a distinct MODE with migration fronts, and the region-dependence of swarm mechanism), the delayed
+and long-lived character of remote triggering in geothermal fields (O-1), and O-19's failure mode
+(repeaters stop being creep meters when the surrounding patch's hydraulics change).
+
+**P1 — BIMODALITY, NOT A CONTINUUM.** W-001 says sensitivity is a smooth monotone function of a
+scalar, so across cells the sensitivity distribution should be **unimodal and log-continuous**.
+W-002 says percolation is a transition, so the distribution should be **bimodal** (connected vs
+sealed) with a sparse middle, and the two modes should separate on migration signature: connected
+cells show √t diffusive migration of activity, sealed cells do not.
+*Falsifier:* unimodal sensitivity distribution with no migration-signature separation, at power
+sufficient to see a 2-component mixture.
+
+**P2 — HYSTERESIS (the memory a gain field does not have).** After a cell is dynamically triggered
+by a large remote event, its sensitivity to subsequent small loads should remain **elevated for
+months to years** and then decay with a recharge/resealing timescale — a path dependence. W-001
+predicts sensitivity returns immediately to its Aσ-set value once the transient stress has passed.
+This is directly testable in our own record: Landers 1992, Hector Mine 1999, Ridgecrest 2019 are
+all in the catalogue on disk, with 1981–2018 (SCSN) and 2010–2026 (ComCat) coverage around them.
+*Falsifier:* post-trigger tidal/seasonal coupling in triggered cells is statistically
+indistinguishable from pre-trigger coupling, at matched event counts.
+
+**P3 — SEALING SHOULD BE VISIBLE AS A DRIFT IN t_a, NOT ONLY IN AMPLITUDE.** If valving is real,
+the corner frequency of a cell drifts with its hydraulic state, so W-001's P1 collapse should show
+**systematic residuals organised in time** (cells moving along the t_a axis after fluid events),
+not just scatter.
+*Falsifier:* P1 residuals are white in time.
+
+**The living entity.** The crust is a **circulatory system** — a self-sealing, self-breaching
+network of overpressured pathways, in which "state" means which valves are currently open.
+Earthquakes are the noise the plumbing makes. This is the reading closest to Jim's "living entity"
+in the literal sense: it has organs (compartments), a fluid, a pulse (recharge), and memory.
+
+**Our assets.** Same catalogue and tidal series as W-001; the three great SoCal sequences for the
+hysteresis test; `results_exp_k.json` swarm/style stratification; and the `tsi_map.GEOTHERMAL`
+layer as an independent labelling of known plumbing. P2 is the cheapest genuinely NEW measurement
+in this whole entry set, and it is the one that separates W-002 from W-001 most sharply.
+
+---
+
+### W-003 — THE NULL UNIFIER (and the current champion): THERE IS NO ENTITY. One stationary branching process with static heterogeneous parameters; every apparent "state" is either the process's own memory or the observer's detection function.
+
+**Mechanism.** The crust is a spatially heterogeneous but **temporally static** medium hosting a
+near-critical branching process. Clustering alone manufactures rising rates, rising variance,
+rising correlation length, shrinking interevent times, and apparent precursors. Everything anyone
+has ever called a precursor is either (i) the branching process's own conditional intensity, or
+(ii) a change in Mc, or (iii) small-n estimator bias.
+
+**Corollary map.** Absorbs O-24 (universality is the signature of a single simple generator),
+O-26 (nothing beats ETAS because nothing else exists to beat it with), O-21 (no nucleation because
+there is no nucleation), O-23's contested half (stress shadows are contested because they are not
+there), O-18's null side (foreshocks are Mc-dependent selection), O-10's fragility, **and our
+entire corpse list including the EXP-C2 self-correction, the EXP-B n-bias finding, and the EXP-M
+fault-type failure** — under W-003, "fault type" cannot carry information because parameters are
+heterogeneous at a scale finer than any label.
+
+**P1 — ZERO INCREMENTAL BITS, FROM EVERYTHING.** W-003 forbids, categorically, that any order
+parameter (K-018 n(t), K-019R residual correlation time, K-021R fixed-n Var(b), K-022 S_max,
+K-026 entropy) or any load covariate or interaction (K-033/K-036/K-039) yields incremental
+bits/event above frozen ETAS on a temporal holdout with an ETAS-sim null.
+*Falsifier:* any single one of them clears zero with a block-bootstrap CI excluding zero. **This
+is the most falsifiable entry in this section, and it is why it belongs here rather than being
+dismissed as defeatism.** It is also currently WINNING: our record is 5 corpses to 0.
+
+**P2 — THE RESIDUALS ARE WHITE.** K-009 must return spatial correlation length ≈ 0 and temporal
+correlation time ≈ 0 in the ETAS residual field, against the ETAS-sim null.
+*Falsifier:* a leading residual EOF with a red spectrum and a correlation time of months.
+(Note the internal consistency: W-001/W-002 both predict K-009 residuals are RED, with a
+correlation time equal to the local `t_a` — months to years. K-009 is therefore a *shared*
+discriminator, which is why Popper ranked it "run it first" and why I agree.)
+
+**The living entity.** There isn't one. The apparent life is our pattern-matching plus the
+process's own memory. **This entry is in the ledger because a unifier who cannot state the version
+of the world where his unification is unnecessary has not done the work.**
+
+**Our assets.** Everything. W-003 is the standing null for every other entry here; it is scored
+automatically whenever any of them is tested.
+
+---
+
+### W-004 — THE INSTRUMENT. The sensitivity map is a detectability map: the observation table is partly a survey of where we can count small earthquakes.
+
+**Mechanism.** Detecting a fractional rate modulation `a` requires roughly `N ≳ a⁻²` events. Every
+setting in which small-stress sensitivity has been "discovered" is also a setting with anomalously
+low Mc: template-matched tremor/LFE catalogues in the best-instrumented subduction zones (O-4),
+dense local arrays around geothermal fields (O-1) and injection wells (O-11), and the enormous
+event counts those produce. Every setting where the null lives is a setting with ordinary Mc and
+ordinary counts (O-7). The gradient in the table may be a gradient in `N`, not in `Aσ`.
+
+**Corollary map.** Absorbs O-7 vs O-4 without any physics; absorbs O-9 directly (Beeler & Lockner
+literally say you need 10⁵–10⁶ events); absorbs O-18's Mc-dependence of foreshock prevalence
+(Mignan 2014); absorbs O-22's Mc sensitivity; and absorbs the ordering of our OWN results — the
+one place we reproduced a tidal signal (Coso-north, O-30) is the place with the local FM catalogue
+and the dense array, and our nulls came from FM-matched subsets of n ≈ 10²–10³. It is the
+uncomfortable cousin of K-028 (detector invariance) and the reason K-035 exists.
+
+**P1 — POWER-MATCHED EQUIVALENCE.** Subsample the high-count settings down to the event counts of
+the null settings, and the "sensitivity gradient" must **collapse**: Coso-north at n = 113 vs
+ordinary SoCal cells at n = 113 should be statistically indistinguishable in detected modulation,
+and the apparent amplitude should scale as `N^(−1/2)` in both.
+*Falsifier:* at strictly matched N and matched estimator, Coso-north still shows a large coupling
+and ordinary crust still shows zero. **That single comparison is worth more than any new
+hypothesis, because it decides whether §W-OBS is a table about the Earth or about seismometers.**
+
+**P2 — THE INVERSE PREDICTION: SoCal's null must DIE at full catalogue power.** W-004 (and O-9)
+jointly predict that running the tidal test on the **whole** SCSN catalogue above a fixed
+era-stable Mc (order 6×10⁵ events, not the 10²–10³ our corpses used) will reveal the ~1% ordinary-
+crust modulation that theory says has been there all along.
+*Falsifier:* a genuinely powered full-catalogue test still returns zero, with an upper bound below
+1%. That outcome would be a real result: it would falsify Beeler–Lockner in California and make
+O-7 a physical fact rather than a power limit.
+
+**The living entity.** Partly an artifact of where we put the instruments. The honest version of
+Jim's question is: *is the crust alive, or is it only alive where we are watching closely?*
+
+**Our assets.** `SCSN_original_catalog.txt` is 633,667 events with Mc ≤ 1.7 in every era — this
+program is one of the few that can actually run P2. `binscan_QTM.csv` / `binscan_SCSN.csv` and the
+QTM template-matched catalogue give a second, independent detector for the K-028 invariance arm.
+
+---
+
+### W-005 — SHAPE VS SCALAR: universality is not a discovery, it is a receipt for the absence of information. All predictive content lives in the local scalars.
+
+**Mechanism.** This is a meta-theory about the observation table rather than about rock, and it is
+the most Wegener-like entry here: the coastlines fit, and that fact is about the map, not the
+shore. Every documented regularity in §W-OBS decomposes cleanly into a **universal shape** and a
+**local scalar**: Omori p (universal) vs aftershock duration t_a (local); GR b≈1 (universal) vs
+corner magnitude (local); rate-state a,b (universal) vs Aσ (local); ETAS kernel form (universal)
+vs μ (local). **Universality is precisely insensitivity to local details — therefore any quantity
+that is universal carries zero information about local state, and therefore zero forecasting
+skill.** Sixty years of the field's best work has been the discovery of shapes; the scalars have
+been treated as nuisance parameters.
+
+**Corollary map.** Absorbs O-24 and, in one stroke, our EXP-M result in its exact observed form:
+p universal in 12/13 regions, generic-shape-plus-local-μ transferring at +0.66..+1.75 bits, and
+fault-TYPE pooling FAILING because "type" is a shape label being asked to do a scalar's job — and
+because the only thing type pooling actually changed was μ, the one quantity that must never be
+pooled. Also absorbs O-19 (repeaters work as creep meters because they are a direct scalar
+readout, and fail when their shape assumption is questioned), O-26 (smoothed seismicity wins
+because it is nothing BUT a local scalar field), and O-25 (the swarm/mainshock taxonomy blurs
+because it is a shape label over a continuous scalar).
+
+**P1 — THE ARCHITECTURE PREDICTION.** Out-of-sample forecast improvement will come **only** from
+better estimation of local scalars, never from richer functional forms. Concretely: an ETAS whose
+μ, t_a (=Aσ/τ̇) and corner magnitude are locally estimated will beat any structurally fancier model
+(connectivity-magnitude coupling, K-022; multi-kernel; neural) that uses globally pooled scalars,
+on the same holdout.
+*Falsifier:* K-022's percolation model, or any structural elaboration, beats scalar-refined ETAS
+on CRPS out of sample. That is a clean head-to-head and both models already have designs in this
+ledger.
+
+**P2 — THE UNIVERSALITY/SKILL ANTICORRELATION.** Across the 13 world regions, rank each ETAS
+parameter by its cross-region dispersion. W-005 predicts **skill contribution is monotone in
+dispersion**: the more universal a parameter, the less it contributes to bits/event when localised.
+p (dispersion ~0.07) should contribute essentially nothing when locally fitted; μ (dispersion of
+orders of magnitude) should contribute nearly everything; α and K in between.
+*Falsifier:* localising p buys as much as localising μ. **This is nearly free — it is a re-scoring
+of `results_exp_m.json` with one parameter localised at a time.**
+
+**The living entity.** The living thing is **the scalar field, not the law**. The law is dead
+physics, identical everywhere, and that is exactly why it can be written down. Jim's intuition
+that "the crust is a stateful, driven, responsive system" is, in this reading, precisely correct
+and precisely orthogonal to everything the field has been publishing.
+
+**Our assets.** `results_exp_m.json` (13 regions, all per-region fits and holdout scores already
+stored) makes P2 a re-scoring job, not an experiment. P1 is the K-022 vs scalar-ETAS head-to-head.
+
+---
+
+### W-006 — THE SHADOW. Seismicity is the fast, thresholded readout of a slow ASEISMIC slip field. The living entity is the creep; earthquakes are what it says out loud.
+
+**Mechanism.** Split the table by what is aseismic. Everything documented that behaves in an
+orderly, quasi-predictable way is **aseismic or aseismically driven**: ETS recurs on a ~14-month
+clock (O-17); repeaters meter creep rate (O-19); induced seismicity tracks injection rate (O-11);
+seasonal modulation tracks hydrology (O-15); the two megathrust precursors were slow-slip
+transients (O-18); tremor's sensitivity rises with accumulated slow slip (O-5). Everything
+documented that is disorderly is the **seismic** part (O-21, O-26). Therefore: the crust's state
+variable is the aseismic slip-rate field, and the earthquake catalogue is a sparse, thresholded,
+heavily-clustered sampling of it.
+
+**Corollary map.** Absorbs O-5, O-11, O-15, O-17, O-18, O-19, O-25's creep-driven swarms; explains
+O-26 (we have been trying to forecast the sampler from the sampler); and it absorbs **O-29, our
+own B-4, in a way nothing else here does.** The stress ledger found the SAF creeping section and
+the 1857 locked Big Bend strand in the SAME silent list — because a moment-deficit ledger built
+from a catalogue measures *what did not radiate*, and cannot distinguish "absorbed aseismically"
+from "stored elastically." Those are the two most opposite hazard states in California, and they
+are degenerate in catalogue space by construction.
+
+**P1 — THE DEGENERACY-BREAKING PREDICTION (sharp, cheap, and ours).** The silent-loading list is
+a mixture of exactly two populations with **opposite** hazard, and the discriminator is **not in
+the catalogue** — it must come from geodesy (surface creep rate / geodetic coupling). W-006
+predicts: (a) no catalogue-derived statistic separates the creeping cells from the locked cells
+at better than chance; (b) adding a single geodetic coupling covariate separates them cleanly.
+*Falsifier:* a purely catalogue-derived statistic (b-value, swarm fraction, repeater fraction,
+interevent CV) separates creeping from locked silent cells. **Note the honest tension: repeater
+fraction is arguably a catalogue-derived aseismic readout, so if THAT separates them, W-006 is
+confirmed in spirit and refuted in letter — I record the ambiguity rather than hide it.**
+
+**P2 — THE SKILL-CEILING RANKING.** Forecast skill above the ETAS ceiling should be obtainable
+**only** in proportion to the quality of the region's aseismic readout. Ranking, pre-registered:
+regions with repeater catalogues + dense geodesy + tremor (Cascadia, Nankai, Parkfield) >
+regions with geodesy only (SoCal) > regions with neither (most of our 13 boxes) — at matched
+catalogue power.
+*Falsifier:* a region with a rich aseismic readout shows no more above-ETAS skill than one with
+none. This also predicts something uncomfortable and specific: **SoCal's above-ETAS ceiling is
+low, and our program has been mining the wrong region.** The place to test the "living entity" is
+Cascadia or Nankai, where the entity is directly observable, not SoCal, where only its shadow is.
+
+**The living entity.** The aseismic slip field. It is continuous, it is driven, it is stateful, it
+has memory and episodicity and a clock — everything Jim means by "living" — and the earthquake
+catalogue is its exhaust. Under W-006, asking a catalogue to reveal the entity is asking a
+tachometer to describe the engine.
+
+**Our assets.** `results_exp_j.json` / `results_exp_k.json` (the silent list, 200 unexplained-
+silent cells, 154 strike-slip / 90 on-fault); `data/socal_strain_grid.npz` (66×86 max-shear +
+dilatation) for the geodetic covariate; B-5's finding that shear is robust and dilatation is not,
+which tells us *which* geodetic component the discriminator may use. **P1 is fully on disk and is
+a one-afternoon job.**
+
+---
+
+## §W-RETRO — WHAT THIS SAYS ABOUT OUR OWN NULLS (the prize the charter names)
+
+The charter asked for a meta-theory that retroactively explains the PATTERN of our nulls and
+reproductions. Here it is, in the order the pattern occurred.
+
+**1. Why ordinary SoCal seismicity shows no tidal effect while tremor/LFEs feel every tide.**
+Two reasons, and they compound. *Physics (W-001):* ordinary crust has Aσ ~ 0.01–0.1 MPa versus
+near-zero in the LFE zone — a gain difference of two to three orders of magnitude, independently
+corroborated by the stress-drop contrast (O-14) and the Vp/Vs inference (O-13). *Frequency
+(W-001-P1):* semidiurnal tides sit far above the ordinary crust's corner frequency `1/t_a`, so
+even that residual gain is attenuated — which is why the SAME crust at the SAME kPa amplitude
+responds to the annual load (O-15) and not the tidal one (O-7). Our four tidal corpses measured a
+quantity that theory says is ~1% (O-9), using samples of n ≈ 10²–10³, when O-9 says you need
+10⁵–10⁶. **We did not measure zero. We measured "less than our resolution," and our resolution was
+about three orders of magnitude coarser than the predicted effect.** That is not a failure of the
+work — the work was clean and the controls were right — it is a failure to have computed the power
+first, and it is exactly what K-035 was created to fix.
+
+**2. Why Coso-north modulates.** Coso-north is the one cell in our study area that sits at the
+geothermal end of the gain ladder: a fluid-rich, high-Pp, swarm-dominated volume — plausibly
+Aσ an order of magnitude below ordinary crust. W-001 says its modulation should be roughly
+`exp(Δτ/Aσ) − 1` with a small Aσ; we measured Pm/P0 = 0.340 (O-30). And the internal detail is the
+part that convinces me: the effect appears in **shear on the FM plane** and is **null in σ_n**
+(0.271, p = 0.12). A detection artifact does not know the difference between two stress components
+resolved on the same events. That is a mechanism signature, not a p-value.
+
+**3. Why fault-type pooling failed while ETAS shape transferred universally.** W-005, exactly:
+"fault type" is a **shape** label, and shapes are universal, so the label can carry no information;
+meanwhile the thing TYPE pooling actually moved was **μ**, a local scalar that must never be
+pooled — which is why pooling by type made Alaska and Mexico *worse*. Our own worker diagnosed
+this correctly in §17 ("the transferable object is the universal clustering law + a locally-
+estimated μ"). W-005 says that sentence is not a finding about ETAS. It is a finding about the
+whole field.
+
+**4. Why the stress ledger found the safest and the most dangerous places in the same list.**
+W-006: a catalogue-based moment-deficit ledger is blind to the difference between "absorbed
+aseismically" and "stored elastically." The degeneracy is structural, not a bug, and it is
+diagnostic — B-4 is best read not as a hazard map but as **a direct detection of the aseismic
+field through its negative space**, which is a stronger and more defensible claim than the one we
+have been making.
+
+**5. Why EXP-C2's phase-migration "finding" collapsed.** W-003, honoured: overlapping-window
+autocorrelation dressed as coherence. I include this because a unifier who only explains his
+program's successes is fitting.
+
+**WHERE THE PATTERN BREAKS NEXT — pre-registered, in order of my confidence.**
+- **(a)** The tidal null in ordinary SoCal crust breaks at full catalogue power (~6×10⁵ events,
+  fixed era-stable Mc, intensity likelihood) — an effect of order 1%, not zero. [W-001-P2/W-004-P2]
+- **(b)** The tidal null breaks *first* at the **fortnightly** period, not the semidiurnal, because
+  Mf sits closer to the ordinary crust's corner frequency. **This is the sharpest thing I can say,
+  and to my knowledge nobody has said it.** [W-001-P1]
+- **(c)** Blind Aσ ranking names at least one **non-geothermal** tidally-sensitive cell in SoCal.
+  [W-001-P2]
+- **(d)** Sensitivity in cells shaken by Landers/Hector Mine/Ridgecrest is elevated for months–years
+  afterwards. [W-002-P2]
+- **(e)** The silent list splits cleanly on geodesy and not on catalogue statistics. [W-006-P1]
+- **(f)** Localising p across the 13 regions buys ~0 bits; localising μ buys nearly everything.
+  [W-005-P2]
+
+If (a)–(c) hold, the corpse "static tidal-phase susceptibility maps" stays dead (it was a *map* of
+a *marginal* at low power) while the underlying physics is alive, conditional, and measurable —
+which is precisely Jim's match-and-wet-log reframe arriving from the literature side rather than
+from ours.
+
+---
+
+## §W-FIRST — THE ONE PREDICTION I WOULD TEST FIRST
+
+**W-001-P1, in its fully on-disk form: the fortnightly/semidiurnal response ratio per cell,
+predicted with zero free parameters from that cell's independently measured `t_a`.**
+
+Why this one, out of all fourteen predictions above:
+
+1. **It is a zero-free-parameter cross-observable collapse.** `t_a` comes from Omori decay, with
+   no tide anywhere in its estimation. The predicted Mf/M2 ratio then follows from rate-state with
+   nothing left to tune. Two unrelated literatures forced to agree in the same rock — the hardest
+   kind of result to fake, and the only kind that satisfies the Einstein criterion here.
+2. **It separates four meta-theories in one run.** W-001 predicts slope-1 collapse on `t_a`;
+   W-003 predicts no relation at all; W-004 predicts amplitude ∝ N^(−1/2) with no residual
+   relation to `t_a` once N is controlled (so include N as a covariate — this is the whole
+   adjudication); W-002 predicts the cells are bimodal rather than lying on a line.
+3. **It is a frequency contrast INTERNAL to one dataset.** Mf and M2 are both in the tidal series
+   already on disk, both from the same events, same catalogue, same Mc, same era. Detection
+   artifacts, seasonality, quarry blasts and network changes are common-mode and largely cancel in
+   the ratio. Compare that to every corpse we have, each of which fought a confounder it could not
+   subtract.
+4. **It retrodicts the two rows the field keeps in separate drawers** — O-7 (tides null) and O-15
+   (seasons work) — and it explains our own EXP-F ambiguity as a corner-frequency effect rather
+   than as a failure.
+5. **It is cheap and it is ours.** `SCSN_original_catalog.txt` (633,667 events, 1981–2018, Mc ≤ 1.7
+   in every era) + `Tidal_{N_0,N_90,S_0,Vol}.txt` (6000-s from 1981) + CFM5.3 strikes +
+   `coso_fm_test.py` machinery + the frozen EXP-H ETAS as the baseline intensity. No downloads. The
+   only new code is the intensity-likelihood coupling estimator that K-033 needs anyway, so the
+   build is shared.
+
+**Mandatory conditions before I would believe any outcome** (stated now so they cannot be added
+later): the K-034 Landers positive control must fire first, or a null here is uninterpretable;
+`N` enters as a covariate in every fit; `t_a` must be estimated on sequences disjoint from the
+windows used for the tidal coupling; Mc must be fixed and era-stable; and the null is an ETAS-sim
+catalogue with the real tidal series left in place, not a Poisson catalogue.
+
+**If it fails cleanly** — Mf/M2 uncorrelated with `t_a` at demonstrated power — then W-001 and
+W-002 are both badly wounded, W-003 gains its strongest evidence yet, and this program should stop
+looking for a hidden state field in California and go where the entity is directly observable
+(W-006-P2: Cascadia, Nankai, Parkfield). That is a worthwhile outcome. It is the first test I have
+seen in this program whose failure would be as informative as its success.
+
+*— Wegener, round 1. Kepler is welcome to riff; Popper will find things I have not; Laplace should
+tell me what `t_a` can actually be measured to at our event counts before anyone writes a protocol.*
