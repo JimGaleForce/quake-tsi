@@ -68,3 +68,9 @@ used a different, mostly non-overlapping box; no analysis of this bin had been r
 826ddc072275789e7f85276560f5ad9592033cdc6ea23bcb048e83a74920cffc *LONG_VALLEY_PROTOCOL.md
 Tue Jul 21 09:30:40 PDT 2026
 (frozen BEFORE any Long Valley data download)
+
+## Overnight prediction-experiments protocol freeze record
+
+62b259286d568a8ef0a446cf9749a8b1850f4ece0a3040fb22b8b02908755adf *OVERNIGHT_PREDICTION_PROTOCOL.md
+Sun Aug 9 2026 (frozen BEFORE any test-window (2010+) analysis under these definitions;
+train/test split 2010-01-01 chosen from span/power only)
