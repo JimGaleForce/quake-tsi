@@ -1098,7 +1098,489 @@ supervisor and Jim decide. Each is phrased as a line that could be pasted into
    into a cumulative, publishable quantity instead of a list of disappointments.
 
 ---
-*End Kepler round 1 (K-001..K-032). All PROPOSED. Nothing above is claimed as true; nothing
+
+### Conditional-triggering seed (Jim)
+
+Jim's reframe, which I think is correct and which I should have made myself: **every corpse on
+our list is a MARGINAL effect.** Tidal phase alone. Periodicity alone. Amplitude alone. We have
+never once tested a *conditional* effect. A match does nothing to a wet log and everything to a
+dry one, and we have been measuring the average effect of matches on logs.
+
+Three structural consequences, which govern every entry below:
+
+**(a) The statistical object changes.** The right model is a conditional-intensity point process
+with covariates and interactions:
+`λ(t,x) = [ μ(x)·R(t,x) + Σ_{t_i<t} triggering ] · exp( Σ_k β_k z_k(t,x) + Σ_{j<k} γ_jk z_j z_k )`
+where z are external-load covariates and the γ are the interaction terms Jim is asking about.
+This is ETAS-with-covariates (a Cox-ETAS). Critically, **the ETAS terms sit in the baseline**,
+which means the sequence-coherence artifact that destroyed the original TSI paper — the founding
+lesson of this whole program — is *structurally* removed rather than avoided by hand. Round 1
+could not test conditional effects safely. It can now.
+
+**(b) The non-firing is already in the likelihood, and it is half of it.** Jim asks whether
+windows where loads were maximal and nothing happened are informative. The answer is sharper
+than "yes": the point-process log-likelihood is `Σ_i log λ(t_i) − ∫ λ(t) dt`. The first term is
+the events; **the second term is the silence, and it carries comparable information.** Every
+corpse-era test we ran (phase histograms, Rayleigh statistics, Schuster tests) used the first
+term only. That is not a small methodological difference — see K-035, which measures exactly how
+much power we threw away. Jim's negative-space intuition is, mathematically, an argument that we
+have been analyzing our data at roughly half efficiency.
+
+**(c) We now have a KNOWN-TRUE positive control, and it gates everything.** Remote dynamic
+triggering from Landers 1992 is documented, replicated science. It means the covariate machinery
+can be *calibrated* rather than merely used: if the engine recovers Landers at the right
+amplitude, its nulls elsewhere become quantitative upper bounds instead of shrugs. **I propose
+K-034 be run FIRST and that no null from this family be interpreted until it passes.**
+
+Standing design discipline for this whole family (stated once; assumed by every entry below):
+covariate list and interaction grid **enumerated in the frozen protocol before any fitting**;
+selection on train only (group-lasso or LRT scan with Benjamini-Hochberg, procedure frozen);
+**one** test-window unblinding scored in bits/event; ETAS-sim null throughout; and every
+interaction reported with its marginal alongside it, so we can always see whether the
+conditional effect is real or is a marginal effect in disguise.
+
+Note on Laplace: these specs assume a measurement engine that can grind full covariate sweeps
+with interactions. That capability is a genuine unlock — but it is also the fastest known route
+to a forking-paths disaster, which is why the discipline above is stated before the ideas.
+
+**K-033 — THE FRAMEWORK ENTRY: Cox-ETAS. One conditional-intensity model, a frozen covariate
+set, a frozen interaction grid, scored in bits/event out of sample.**
+- Claim: external loads contribute measurable forecasting skill *only* through interaction terms
+  with the crust's state; the marginal coefficients β will be indistinguishable from zero
+  (consistent with every corpse) while at least one interaction γ will not.
+- Inversion: stop asking "does the tide trigger earthquakes" (a question about an average) and
+  ask "for which crust, in which state, at which moment" (a question about a conditional). The
+  average over a heterogeneous crust of a state-dependent effect is exactly zero-ish — which is
+  what we measured, four times, correctly.
+- Covariate set z (frozen, all resolvable at hourly-to-daily resolution):
+  *external loads* — (1) tidal Coulomb stress on the local fault plane (on disk:
+  `data/xue_lu_zenodo/Tidal_{N_0,N_90,S_0,Vol}.txt`, 6000-s from 1981, ×1e-9 strain, via
+  `calc_stress.py`, E=75 GPa ν=0.25, resolved with CFM5.3 strikes and the `coso_fm_test.py`
+  machinery that is already validated); (2) tidal stressing RATE (dτ/dt — a different physical
+  quantity from phase, and the one rate-state theory actually cares about); (3) atmospheric
+  surface pressure (ERA5, download); (4) hydrologic load (ERA5-Land soil moisture + snow water
+  equivalent; GRACE/GRACE-FO mascons 2002-, download); (5) remote dynamic stress proxy (K-038).
+  *state variables* — (6) EXP-J/K ledger class and log-chi (on disk, `results_exp_j/k.json`);
+  (7) branching ratio n(t) from K-018; (8) recent-rate regime (trailing 30-d rate / long-term
+  mean); (9) depth; (10) distance to geothermal (`tsi_map.GEOTHERMAL`); (11) local b-value.
+- Interaction grid (frozen, 5 loads × 6 states = 30 terms, not a free-form search): every
+  load × every state, plus load×load for the combination question (K-036/K-042).
+- Test: SoCal M>=2.5, train <2010, walk-forward test 2010-2026 (SCSN to 2018 + ComCat 2010-2026,
+  with a K-028 invariance check across the seam). Statistic: bits/event over the frozen B-2
+  baseline (μ, K, α, c, p held at the EXP-H values so the covariate terms cannot absorb ETAS
+  misfit); per-term LRT with BH-FDR at q=0.05.
+- Null: ETAS-sim catalogs with the covariates left in place (so the covariates are real but the
+  crust is indifferent to them) — this gives the exact distribution of spurious γ under
+  "loads do nothing", including all the correlation the covariates have with each other and with
+  seasonality.
+- Expected: marginal β ≈ 0 (|effect| < 0.02 bits/event); best interaction +0.02 to +0.15
+  bits/event. Small in absolute terms — but a 1.05-1.3× rate multiplier that switches on
+  conditionally is operationally different from a 1.02× multiplier that is always on.
+- Why dismissed too quickly: "tidal triggering is settled null in California." It is settled
+  null *marginally*, and we ourselves produced some of the cleanest evidence for that. Nobody
+  has published the conditional version with a ledger-derived state variable, because nobody
+  else has a validated stress ledger to condition on. B-4 is the asset that makes this test
+  possible and it did not exist a week ago.
+
+**K-034 — RUN THIS FIRST: Landers 1992 as a known-true positive control that licenses every
+subsequent null.**
+- Claim: the Cox-ETAS engine, applied blind to a remote-dynamic-stress covariate, recovers the
+  documented Landers-triggered rate increases (Long Valley, Coso, Geysers, Cedar City, western
+  Nevada) at the amplitude and timing the literature reports — and if it does not, the engine is
+  not yet trustworthy and no null from K-035..K-045 may be interpreted.
+- Inversion: the deepest problem with this program's null results is that we cannot distinguish
+  "no effect" from "no power". Jim has handed us the fix: a triggering phenomenon that is
+  *known to be real*, in *our own catalog*, in *our own box*, with a well-documented amplitude.
+  That converts our detection threshold from an assumption into a measurement. This is the same
+  move as EXP-F's 7-day artifact control (which, notably, FAILED to fire — and that failure
+  correctly downgraded the whole periodicity null to "weak evidence"). Do it deliberately this
+  time.
+- Test (mostly on disk): SCSN original catalog covers 1992 — Landers (M7.3, 1992-06-28) and Big
+  Bear are in it, as are Hector Mine 1999 and Ridgecrest 2019 (ComCat). Build the dynamic-stress
+  covariate as in K-038 and fit the response with NO knowledge of the literature values; then
+  compare the fitted response to published Landers triggering distances/amplitudes. Statistic:
+  (i) does the dynamic-stress term reach significance at all; (ii) the implied triggering
+  threshold in peak dynamic stress (literature: order 0.01-0.1 MPa PGV-equivalent); (iii) spatial
+  pattern of response — geothermal/volcanic areas should light up first, which is a strong
+  pattern prediction, not a single number.
+- Null: circular time-shift of the trigger catalog against the target catalog (this program's
+  established null machinery), plus the ETAS-sim null so that ordinary aftershocks of Landers
+  inside SoCal are not counted as "remote" triggering. The distance gate matters: score only
+  targets beyond 2 rupture lengths.
+- Expected: clear detection for Landers-class events; the deliverable is the **minimum detectable
+  dynamic stress at our power**, which becomes the denominator for interpreting every subsequent
+  null in this family.
+- Why dismissed too quickly: "it's a positive control, not a discovery." Correct, and it is the
+  most valuable non-discovery available to us. Without it, K-035..K-045 produce uninterpretable
+  nulls; with it, they produce bounded upper limits, which is exactly the currency K-032 needs.
+
+**K-035 — POWER AUDIT OF THE CORPSES: how much did we lose by using event-only statistics
+instead of the full likelihood? Possibly the corpses are not dead but underpowered — and we can
+say by how much, to two significant figures.**
+- Claim: the intensity-likelihood formulation detects a given tidal modulation at materially
+  smaller amplitude than the phase-histogram/Schuster formulation used in EXP-A — plausibly a
+  factor of 1.5-3× in minimum detectable effect — because it uses the ∫λdt term (the silence)
+  and because it conditions on ETAS rather than comparing to uniform.
+- Inversion: Jim asked whether non-firing is informative. Rather than argue, *measure the value
+  of the information*. This is a pure power calculation, requires no new data, and it retroactively
+  re-prices every null this program has produced.
+- Test (100% on disk, no downloads, fast): injection-recovery. Generate synthetic SoCal catalogs
+  from the frozen EXP-H ETAS with a *known* tidal modulation injected into the intensity,
+  amplitude a ∈ {0, 0.01, 0.02, 0.05, 0.10, 0.20, 0.40}, using the real tidal series so the
+  sampling and aliasing are authentic. Analyze each synthetic catalog TWICE: (i) with the exact
+  EXP-A pipeline (per-bin phase selection, pooled S, circular-shift null); (ii) with the
+  Cox-ETAS likelihood of K-033. Statistic: detection probability vs a for each method →
+  the minimum detectable amplitude at 80% power for each.
+- Null: a = 0 arm confirms both methods hold their false-positive rate (and doubles as a check
+  on the new machinery, which is the safer reason to run it first).
+- Expected: EXP-A's minimum detectable a ≈ 0.10-0.20 at SoCal FM-matched sample sizes; Cox-ETAS
+  ≈ 0.03-0.08. If so, then the true statement about round 1 is not "no tidal effect" but **"no
+  tidal effect larger than ~15%, and we could not have seen a 5% one"** — and rate-state theory
+  (K-036) predicts an effect of a few percent. That would mean our headline null and the leading
+  physical prediction have never actually been in contact with each other.
+- Why dismissed too quickly: "you are trying to resurrect a result you already killed." I am
+  trying to put a number on the coffin. If the audit shows EXP-A could have detected a 3% effect
+  and did not, the corpse is *more* dead than it was, and I will say so — that is the honest
+  symmetry of this test, and it is why it is worth running regardless of which way it lands.
+
+**K-036 — Combinations of loads, done with the right link function: SUM the Coulomb stressing
+rates and let rate-and-state supply the response curve. One physical parameter, Aσ.**
+- Claim: seismicity responds not to any single load but to the *summed* Coulomb stressing rate
+  from all sources, through the rate-state response `R = exp(Δτ/Aσ)`, with a single fitted
+  parameter Aσ ≈ 0.01-0.1 MPa — and fitting the sum beats fitting any component, and beats
+  fitting them as independent additive terms.
+- Inversion/analogy: Jim's "combinations of loads" is exactly right, and it has a rigorous form
+  already waiting for it. Dieterich's rate-state theory *predicts the functional shape* of the
+  response to a stress perturbation, so this is not curve-fitting — it is a one-parameter
+  physical model with a strong prior, and Aσ has an independent physical meaning (effective
+  normal stress × friction parameter). Better still, it predicts *where* sensitivity should be
+  highest: where Aσ is small, i.e. low effective normal stress — fluid-rich, geothermal, shallow.
+  That is a spatial pattern prediction we can test, and it is the same map B-4 already produces.
+- Test: build the total stressing series per 0.2° cell: solid-earth tide (on disk) + ocean
+  loading (SPOTL/TPXO, download) + atmospheric pressure (ERA5) + hydrologic (ERA5-Land + GRACE)
+  + thermoelastic, each resolved onto the local CFM strike/dip/rake (machinery on disk). Fit
+  Cox-ETAS with the rate-state link and Aσ free. Compare, by out-of-sample bits/event: (a) sum
+  with rate-state link; (b) each component alone; (c) all components as free additive linear
+  terms; (d) no load terms (= B-2).
+- Statistic: nested model comparison in bits/event on the test window; the fitted Aσ with CI;
+  and the spatial map of fitted Aσ tested against the geothermal/fluid-rich prior (rank
+  correlation with distance-to-geothermal and with B-4's chi).
+- Null: ETAS-sim with loads present but inert; plus independent circular shifts of each load
+  series (K-042's null), which preserves each load's own statistics and destroys only their
+  co-occurrence.
+- Expected: Aσ in the 0.01-0.1 MPa range if anything is there; +0.02 to +0.10 bits/event for the
+  summed model over the best single component. The strongest possible outcome is not the bits —
+  it is a *map of Aσ* that matches the independently-derived fluid-rich map, because two
+  unrelated observables agreeing is far harder to fake than one p-value.
+- Why dismissed too quickly: "rate-state tidal predictions have been tested and are marginal."
+  They have been tested marginally, on single load components, without conditioning on state, and
+  with event-only statistics whose power we are about to measure in K-035. The novel content here
+  is the *summation* and the *spatial prediction of Aσ*, neither of which is standard.
+
+**K-037 — Hydrologic/atmospheric loading, with the killer falsifier: the SIGN is predicted per
+fault from geometry, so a spurious correlation cannot pass.**
+- Claim: seasonal hydrologic loading modulates seismicity with a sign that flips between faults
+  according to their orientation and sense of slip relative to the load — and the observed
+  per-fault modulation phase matches the geometrically predicted sign significantly more often
+  than chance.
+- Inversion: every seasonality correlation is drowning in confounders (temperature-dependent
+  detection, seasonal noise, holiday quarry blasting, snow on stations). But a confounder cannot
+  know a fault's rake. Predict the sign *per fault* from geometry first, then test the agreement
+  pattern — this converts a weak correlational claim into a strong pattern-matching one. It is
+  the same design logic that made the fault-resolved tidal work meaningful, applied to weather.
+- Test: compute seasonal surface load (ERA5-Land SWE + soil moisture + ERA5 pressure; GRACE
+  mascons as an independent cross-check post-2002); convert to Coulomb stress change on each
+  CFM5.3 segment via an elastic half-space Green's function (Boussinesq/Farrell loading — the
+  standard, well-documented computation); the predicted sign is then fixed by strike/dip/rake,
+  which are in the file on disk. Assign each SoCal event to its nearest segment; compute the
+  observed annual phase of seismicity per segment; statistic = fraction of segments (weighted by
+  n) whose observed phase falls in the predicted half-cycle, binomial test against 0.5.
+- Null: binomial 0.5; plus a rake-shuffled control (permute the predicted signs across segments)
+  which destroys the geometry link and keeps everything else; plus the ETAS-sim null.
+- Expected: 55-65% sign agreement if real, on maybe 100-200 usable segments. Also run it in
+  reverse as a diagnostic: if agreement is ~50% but a strong *marginal* annual signal exists,
+  that is positive evidence the annual signal is an observational artifact — a useful result for
+  EXP-F's ambiguous periodicity null.
+- Why dismissed too quickly: "seasonal seismicity is a detection artifact." Possibly — and the
+  sign test is precisely the design that can tell the two apart, which is why it is worth doing
+  rather than assuming. Note this hypothesis has real published support in California (Central
+  Valley unloading, seasonal M>=4 modulation) which we should treat as a weak positive control,
+  not as a conclusion.
+
+**K-038 — Remote dynamic triggering as a CONTINUOUS covariate, not an event study — and its
+interaction with ledger class is the real hypothesis.**
+- Claim: build a continuous "dynamic-stress weather" series for every SoCal cell from all global
+  earthquakes; its marginal effect on rate will be small, but its interaction with the crust's
+  state (B-4 ledger class, geothermal proximity, recent-rate regime) will be substantial —
+  susceptibility to remote triggering is spatially organized and predictable from the ledger.
+- Inversion: the literature does remote triggering as a series of case studies (one big
+  earthquake, one target region, one window). Invert it into a *field*: the crust is being shaken
+  constantly by the whole planet, and that continuous exposure is a covariate like any other.
+  Case studies cannot estimate an interaction; a continuous covariate over 45 years can.
+- Data: on disk, `data/comcat_world/*.csv` already contains **179 M>=7.0 and 517 M>=6.5**
+  (1995-2026) — but for a proper ping series we want global coverage and a longer span: one
+  ComCat FDSN query for worldwide M>=5.5, 1980-now (~30k events). Proxy: peak dynamic stress
+  ∝ PGV via a standard attenuation relation `log PGV = a + bM − c·log r` (frozen coefficients,
+  not fitted), arrival time = r / 3.5 km s⁻¹ for surface waves. Jim's `10^M/r` is the right
+  instinct; the attenuation form is its calibrated version and costs nothing extra.
+- Test: add the PGV covariate and its interactions to K-033. Statistic: bits/event; the fitted
+  triggering threshold; and the map of per-cell susceptibility. Key secondary test: is
+  susceptibility *predicted* by the ledger (silent-loading vs coupled) out of sample?
+- Null: circular shift of the global trigger catalog relative to the SoCal target catalog;
+  ETAS-sim; and a crucial exclusion of the trigger's own aftershock zone.
+- Expected: threshold-like behaviour with detection above ~0.05 MPa; interaction with geothermal
+  proximity strong (this is the best-documented pattern in the literature and doubles as a second
+  positive control); interaction with ledger class is the genuinely new claim, and I would guess
+  a 1.5-3× susceptibility ratio between classes.
+- Why dismissed too quickly: "remote triggering is known and only happens in geothermal areas."
+  If that is true, the ledger interaction will be null and the geothermal one positive — which is
+  a clean, informative outcome that also validates the machinery. The hypothesis worth money is
+  that "geothermal" is a proxy for "low Aσ / near-critical", and the ledger measures that
+  directly and everywhere, including where there is no geothermal field.
+
+**K-039 — The dry-log test proper: tidal sensitivity is nonzero ONLY in near-critical cells and
+near-critical times.**
+- Claim: the tidal coupling coefficient, estimated conditionally, is significantly larger in
+  (a) B-4 silent-loading/late-cycle cells, (b) cells with low measured Aσ from K-036, (c)
+  periods of elevated n(t) (K-018), and (d) the final weeks before a large local event — while
+  remaining ~0 on average, exactly as EXP-A found.
+- Inversion: this is Jim's match-and-log stated in our own variables. The corpse was the average
+  over all logs. And note the internal consistency requirement: if K-039 is true, then EXP-A's
+  clean null is not an embarrassment but a *prediction* of K-039 — the marginal must be ~0 when a
+  state-dependent effect is averaged over a heterogeneous crust.
+- Test: interaction terms in K-033, with the four state variables above. Because (d) is the
+  operationally interesting one and the most vulnerable to hindsight, it gets its own frozen
+  design: for each M>=5 SoCal mainshock, estimate the tidal coupling in the 90 d before it (using
+  M>=2.5 events in a 50 km radius, intensity-likelihood so Omori/foreshocks are in the baseline)
+  versus the same cell's long-term coupling. Paired statistic across mainshocks.
+- Null: ETAS-sim (which has no tidal coupling at all, so any apparent pre-mainshock coupling
+  there is pure noise); plus a matched-window control that equalizes event counts, since coupling
+  estimates are noisier when n is small and pre-mainshock windows are busier — the exact
+  n-bias that killed EXP-B. Stated explicitly so it cannot recur.
+- Expected: modulation of 5-15% in the dry-log subset versus 0-2% overall. If (d) holds, it is a
+  short-term precursor with a physical mechanism, which would be the most consequential result
+  this program could produce — and correspondingly the one I would demand replicate on an
+  independent region (Japan, where the tidal signal is documented as stronger and where Lian
+  Xue's group has already invited collaboration) before anyone says a word in public.
+- Why dismissed too quickly: "you already killed this." I killed the marginal, with good
+  controls, and I will kill the conditional too if it dies — but K-035 may well show EXP-A could
+  not have seen an effect of the size rate-state predicts, and a state-conditioned effect is a
+  different hypothesis with a different null.
+
+**K-040 — Go where the counts are: big aftershock sequences are the highest-SNR laboratory on
+disk for ANY small-stress effect, in both directions (enhancement AND suppression).**
+- Claim: inside the Landers 1992, Hector Mine 1999, and Ridgecrest 2019 sequences, where rates
+  run 10-100× background, small stress perturbations are detectable at amplitudes an order of
+  magnitude below what background seismicity permits — and suppression during unfavourable phase
+  should be as detectable as enhancement during favourable phase.
+- Inversion: power in a point process scales with the number of events. We have been hunting a
+  1-5% modulation in background seismicity, which is the lowest-count regime available, while
+  sitting on three sequences containing tens of thousands of events each. Also invert the sign:
+  everyone looks for triggering; *clamping* is equally predicted by the physics and is easier to
+  see against a high rate. Nobody looks for the hole.
+- The trap, named explicitly: this is precisely where the sequence-coherence artifact lives — it
+  is the artifact that killed the original TSI paper (24-h aftershock windows inheriting the
+  mainshock's tidal-window membership; effective n = number of mainshocks). The intensity-model
+  formulation is what makes this safe now: Omori decay is in the baseline term, so the modulation
+  coefficient is estimated *relative to the decaying rate*, and pseudo-replication cannot inflate
+  it. This entry is only runnable because of that; it would have been indefensible in round 1.
+- Test: fit Cox-ETAS restricted to each sequence (M>=2.0 within 50 km, 0-365 d), with tidal
+  Coulomb stress on the dominant local FM orientation (the FM catalogs on disk cover these) as
+  the covariate, plus a stressing-rate term. Statistic: coupling coefficient with CI, per
+  sequence; consistency of sign and phase across the three sequences (an independent-replication
+  test built into the design); and separately the suppression amplitude.
+- Null: ETAS-sim of each sequence with the fitted Omori parameters and no tidal coupling — this
+  is the control that would have caught the original artifact, and running it here retires that
+  ghost properly.
+- Expected: minimum detectable modulation ~1-3% in these sequences versus ~10-20% in background
+  (quantified by K-035). If a real effect exists anywhere in California at rate-state amplitudes,
+  this is the place it becomes visible.
+- Why dismissed too quickly: "aftershock tidal studies are contaminated." They were — by the
+  specific artifact this program diagnosed and named. We are the group best positioned to redo
+  them correctly, and it would be strange not to use that.
+
+**K-041 — THE NEGATIVE-SPACE ENTRY: the didn't-fire ledger. Loads maximal, cell near-critical,
+nothing happened. Is silence-under-load a strength gauge?**
+- Claim: cells that repeatedly fail to respond to their own combined-load maxima are measurably
+  stronger/further from failure than cells that respond — and that non-response history predicts,
+  out of sample, both a lower short-term rate and a *larger* eventual event when they do go.
+- Inversion: this is B-4's move (model where the system says events should fire and don't) moved
+  from the 29-year secular timescale to the hourly load timescale. B-4's negative space was
+  geodetic; this one is dynamic, and it refreshes every tidal cycle instead of every decade.
+- The formal point worth stating for Jim: non-firing is not a gap in the data, it is the
+  `∫λ(t)dt` term of the likelihood. A cell that sat through 500 load maxima without firing has
+  contributed a large, precise, negative constraint on its own susceptibility. The right tool is
+  a survival model with time-varying covariates (equivalently, the same point-process
+  likelihood), and the "didn't fire" windows are not censoring to be discarded — they are the
+  measurement.
+- Test: define per cell a **responsiveness index** ρ = fitted load-coupling coefficient from
+  K-033/K-036 restricted to that cell, estimated on train only. Partition cells into responsive
+  / unresponsive at a frozen threshold, matched on event count and loading rate (the matching is
+  essential — unresponsive will otherwise just mean low-n). Then three frozen out-of-sample
+  tests: (i) does ρ persist train→test (Spearman)? [this is the EXP-J persistence question asked
+  of a different quantity, and EXP-J's persistence was NULL, so this is a genuine test, not a
+  formality]; (ii) do unresponsive cells have lower test-period rates?; (iii) **the payoff** — is
+  the maximum magnitude in the test period larger in unresponsive cells than responsive ones
+  (Mann-Whitney on per-cell Mmax, count-matched)?
+- Null: ETAS-sim, where ρ is pure noise and therefore must not persist; plus the count-matched
+  permutation.
+- Expected: honest prior is that (i) fails, as EXP-J's persistence did — chi at cell scale was
+  transient-dominated, and ρ may be too. But (iii) is the one worth the compute: "quiet under
+  load" as a predictor of *size* rather than *timing* is a hypothesis nobody has posed in this
+  form, and it is the natural reading of the stored-strength picture.
+- Why dismissed too quickly: "absence of evidence." No — this is evidence of absence, formalized:
+  the number of load maxima survived is a measured quantity with a computable likelihood
+  contribution, and the entry stands or falls on frozen out-of-sample tests.
+
+**K-042 — Combinations means JOINT EXTREMES, not average effects. Test the top 0.1% of hours,
+with a null that destroys co-occurrence and preserves everything else.**
+- Claim: the interesting combined-load events are rare joint maxima — spring tide at perigee,
+  plus a deep atmospheric low, plus peak snowmelt, plus a teleseismic surface wave, aligned within
+  hours — and seismicity in those few hundred hours per decade is elevated beyond what any
+  additive model of the components predicts.
+- Inversion: regression estimates a mean response and is structurally blind to a threshold that
+  is crossed only in the tail. If the crust has a failure threshold, the physics lives entirely
+  in the tail and the mean response is the wrong statistic. Import extreme-value theory:
+  peaks-over-threshold on the *combined* load, and test the seismicity conditional on being in
+  the tail.
+- Test: form the summed Coulomb stress series per cell (K-036); identify the top 0.1% and top
+  0.01% of hours by combined amplitude; statistic = observed event count in those hours versus
+  the ETAS-expected count (so clustering is accounted for), as a rate ratio with a Poisson CI.
+  Also fit the tail-dependence structure between load components (do they co-occur more than
+  independence implies? tides and weather are genuinely independent; snowmelt and pressure are
+  not) — that is a required preliminary, because apparent combination effects can come from the
+  loads themselves being correlated.
+- Null (this is the crux and the reason the entry is worth running): **independent circular time
+  shifts of each load series.** This preserves every component's own amplitude distribution,
+  autocorrelation, seasonality, and marginal relationship to seismicity, and destroys *only* their
+  co-occurrence. Any excess that survives is attributable to combination and nothing else. It is
+  the cleanest null in this entire round.
+- Expected: rate ratio 1.1-1.5 in the top 0.1%, if the threshold picture is right. Sample size is
+  the limiting factor — ~400 hours per decade per cell — so this must be pooled across cells with
+  the intensity model doing the pooling.
+- Why dismissed too quickly: "you are testing 0.1% of the data, that is cherry-picking." The
+  threshold is defined on the *covariate* alone, with no reference to seismicity, and frozen
+  before unblinding — which makes it a pre-specified subgroup, not a cherry-pick. The distinction
+  is the whole methodology of extreme-value statistics.
+
+**K-043 — FRAME-BREAK: stop passively observing. Every global M>=7 pings the whole planet — the
+Earth is running a free active-source experiment and we can read local criticality off the
+response. A global PING MAP.**
+- The presupposition attacked: that we are limited to observing what the crust does
+  spontaneously. We are not. Roughly 15 M>=7 events per year send measurable dynamic stresses
+  through every fault system on Earth. That is an *active-source stress experiment*, run
+  continuously since 1980, for free, and this program — like most of the field — has been
+  treating it as noise or as case studies.
+- The lens: seismology as **spectroscopy**. You learn a material's state by driving it and
+  measuring the response, not by watching it sit. The response amplitude to a known stress
+  transient is a direct readout of how close a region is to failure — and, crucially, it is
+  **independent of the local catalog**, so it is not circular with ETAS the way every
+  catalog-derived criticality measure (n(t), b, entropy) necessarily is. That independence is
+  what makes it worth more than all of K-018..K-026 combined if it works.
+- Claim: define per region a susceptibility S(region, t) = fitted rate response per unit peak
+  dynamic stress, estimated over a rolling multi-year window from all teleseismic pings. Then:
+  (i) S is spatially structured and reproducible; (ii) S varies in time by more than estimation
+  noise; (iii) high S precedes local large events.
+- Test: global ComCat M>=5.5 1980-now as the ping catalog (one download); targets = the 13
+  regional catalogs on disk plus SoCal at M>=2.5. For each ping, the response is the rate change
+  in a 0-72 h window after the predicted surface-wave arrival, relative to the ETAS-expected
+  rate, at distances beyond 2 rupture lengths. Pool across pings weighted by PGV to fit S.
+  Statistic: (i) inter-region variance of S vs its estimation error; (ii) an ANOVA-style test of
+  temporal variation in S within region; (iii) ROC AUC for "M>=6.5 in this region in the next
+  1-2 yr" from S(t).
+- Null: circular shift of the ping catalog against each target catalog (the established
+  machinery), which is exact here because pings and targets are causally independent under the
+  null; plus ETAS-sim targets.
+- Expected: (i) will work — geothermal/volcanic/extensional regions will show high S; this is
+  effectively K-034 generalized and doubles as its global validation. (ii) is the real question
+  and I would put it near even odds. (iii) is the prize and I would put it low, maybe 20% — but
+  a 20% shot at a *non-circular, actively-probed, globally-available criticality gauge* is the
+  best-expected-value item in this seed.
+- Why dismissed too quickly: "triggering thresholds are too high; most regions never respond."
+  Then S = 0 with a tight bound almost everywhere, and the map of where S > 0 is still a new and
+  useful object — it is a map of where the crust is close enough to failure that a passing
+  surface wave matters, which is a hazard-relevant statement independent of any forecast. And the
+  null costs one download and reuses the K-034 machinery.
+
+**K-044 — FRAME-BREAK: admittance spectroscopy. Stop testing frequencies one at a time; measure
+the whole transfer function from stress to seismicity — and rate-state predicts its SHAPE.**
+- The presupposition attacked: that "periodicity" is a list of candidate periods to test. EXP-F
+  tested a 60-period comb and produced an ambiguous null with a failed positive control. The
+  frame is wrong: a driven dissipative system does not have "periods", it has a **transfer
+  function** — a complex-valued admittance H(f) mapping stress forcing to rate response, with an
+  amplitude and a phase at every frequency.
+- Why this is not the periodicity corpse: EXP-F asked "is seismicity periodic?" (a property of
+  the output alone, with no input). This asks "what is the linear response of seismicity to a
+  *measured input*?" — a coherence between two observed series, with the input's own spectrum
+  divided out. Those are different statistics with different nulls, and the second one is far
+  more powerful because it uses the known forcing. Also decisive: **rate-state predicts the shape
+  of H(f)** — a high-pass response with a corner at the Dieterich aftershock timescale
+  t_a = Aσ / τ̇, giving a corner period of months to years. Measuring that corner *measures Aσ*
+  independently of K-036, and two independent estimates of the same physical constant agreeing
+  would be far stronger evidence than either alone.
+- Test: form the total stressing-rate series (K-036) and the seismicity-rate series per region;
+  compute magnitude-squared coherence and the complex admittance across 1/hour to 1/decade
+  (multitaper, with the ETAS-expected rate removed first so the response is measured against the
+  clustering baseline). Statistic: coherence with confidence bounds; the fitted corner frequency
+  and implied Aσ; comparison of the measured |H(f)| against the rate-state prediction by χ².
+- Null: ETAS-sim seismicity driven by the *real* stress series but with zero coupling — gives the
+  exact coherence distribution under "no response", including the coherence that arises from both
+  series sharing seasonality.
+- Expected: coherence low but possibly significant at the lowest frequencies; the corner is the
+  target. A null with tight bounds is genuinely valuable here too — it would bound Aσ from below
+  across California, which is a crustal property nobody has mapped.
+- Why dismissed too quickly: "this is the periodicity search again, and that comb had weak
+  power." It is the inverse problem, not the same one: the input series is measured rather than
+  assumed, the statistic is coherence rather than Rayleigh, and the hypothesis has a predicted
+  functional form to be tested against rather than a list of frequencies to be scanned. And the
+  EXP-F failure mode — slow rate fluctuations masquerading as cycles — is precisely what dividing
+  by the measured input spectrum removes.
+
+**K-045 — FRAME-BREAK: use the regime where the signal is enormous. Induced seismicity is a
+known-stress, known-timing, high-SNR experiment; fit the response function there and TRANSFER it
+to natural loads.**
+- The presupposition attacked: that we must learn the crust's response to stress from natural
+  loads, where the signal is at the edge of detectability. We do not. Humans have been running
+  large, well-documented stress experiments — Oklahoma wastewater injection, reservoir
+  impoundment, geothermal operations at Coso and the Salton Sea (both already in our
+  `tsi_map.GEOTHERMAL` list) — with *published input time series*. Signal-to-noise there is orders
+  of magnitude better than anything the tides offer.
+- The lens (this is the move I most want run): **calibrate in the strong-signal regime, transfer
+  to the weak-signal regime.** Fit the conditional-intensity response function — including the
+  state interactions Jim is asking about — where the stress input is large and precisely known.
+  Then take the *functional form and the interaction structure* (not the coefficients) as a
+  prior for the natural-load fits. This is transfer learning applied across signal regimes rather
+  than across geography, and it is a direct riff on B-1: EXP-M taught us that the transferable
+  object is the universal shape with locally-calibrated amplitude. Same principle, new axis.
+- Test: data — Oklahoma Corporation Commission public injection volumes (well-level, monthly,
+  2011-now) plus ComCat Oklahoma catalog (one query); Coso/Salton Sea production data (CalGEM/
+  DOGGR public). Fit Cox-ETAS with injection-derived pore-pressure covariate and the same frozen
+  interaction grid as K-033. Statistic: bits/event, the fitted response shape, and the fitted
+  Aσ-equivalent. Then the transfer test: does imposing the Oklahoma-fitted response *shape* on
+  the SoCal natural-load model improve out-of-sample bits/event over a free-form fit? (This is
+  precisely the EXP-M sign-test design reused, and it can fail cleanly.)
+- Null: ETAS-sim; and the honest control that Oklahoma's response may be entirely
+  pore-pressure-diffusion-driven and share no mechanism with elastic tidal loading — in which
+  case transfer fails and we have learned that the two regimes are physically distinct, which is
+  itself a real finding about mechanism.
+- Expected: strong detection in Oklahoma (near-certain — this is a positive control as solid as
+  Landers, and should be treated as a second gate on the machinery); transfer to natural loads is
+  maybe 30%. But the Oklahoma fit alone gives us the first *well-constrained* measurement of the
+  interaction structure Jim is asking about, at SNR the natural experiment will never provide.
+- Why dismissed too quickly: "induced seismicity is a different phenomenon, off-topic for a
+  tidal-triggering program." That objection assumes the answer to the question the test asks.
+  And strategically: this program's scarcest resource is signal, and there is a regime nearby
+  where signal is abundant. Refusing to calibrate there because it is "not our topic" is how a
+  research program stays underpowered on purpose.
+
+**Ordering I would recommend to the supervisor for this seed:** K-034 and K-035 first (they are
+cheap, they are gates, and their outcomes re-price everything else); then K-033 as the engine;
+then K-036/K-039/K-040 as the substantive conditional tests; then K-043 and K-045 as the two
+highest-upside frame-breaks. K-041 and K-042 can ride along on K-036's covariate build for
+almost no marginal cost.
+
+---
+*End Kepler round 1 (K-001..K-045). All PROPOSED. Nothing above is claimed as true; nothing
 above has been tested. Popper to adjudicate; supervisor to run frozen tests. The charter
 amendments are proposals to my own definition, offered because I was told the file is a floor —
 and because points 2, 3 and 7 are the ones I would want enforced against me.*
