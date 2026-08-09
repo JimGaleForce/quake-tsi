@@ -4773,3 +4773,490 @@ have seen 3%, then Kepler and Wegener are both wrong, the corpse gets deader, an
 with the same emphasis.
 
 *End Popper round 2.*
+
+
+---
+
+## PRIOR ART (Merton)
+
+*Charter: .claude/agents/merton.md. My unit of work is OUR claims (Wegener's §W-OBS is the
+field's — I do not duplicate his rows; where a source of mine deserves an observation row I say
+so and leave the row to him). Classifications are NOVEL / REDISCOVERY / CONTRADICTED /
+CONTESTED. No commits; ledger writes only.*
+
+## Round 1 — 2026-08-09. Assignments: K-009 (primary), B-4/EXP-J, B-3/EXP-I(ii).
+
+---
+
+## M-001 — PRIMARY DOSSIER: K-009, "ETAS residuals in SoCal are not white"
+
+### M-001.0 What we are actually claiming (read from the artifacts, not the headline)
+
+From `results_k009.json` (run 2026-08-09T21:16:53Z, 0.2° × 7 d, 2010–2018, M≥2.5, 448 cells,
+469 weeks, frozen EXP-H params, spatial kernel fit on train only):
+
+| statistic | real (adaptive k=4) | ETAS-sim null | verdict |
+|---|---|---|---|
+| lag-1 weekly ACF | **0.0958** | median −0.0165, p97.5 **0.0023** | clear excess (+0.093) |
+| integral corr. time | **2.42 wk** | median 0.0, p97.5 0.0035 wk | clear excess |
+| crossing corr. time | 52.0 wk | **all 20 sims = 52.0 wk (cap)** | **estimator saturated — no resolving power** |
+| corr. length (crossing) | **41.0 km** | median 78.7, p2.5 41.7, p97.5 120 (7/20 at cap) | real is at/below the null p2.5 — **not an excess** |
+| Moran's I | **0.0114** | p97.5 0.00045 | clear excess |
+| EOF1 variance fraction | **0.197** | p97.5 0.0508 | ~4× the null ceiling |
+| EOF1 redness | 0.332 | p97.5 0.234 | excess |
+| interior vs edge ACF1 | 0.103 vs 0.049 | — | not a border artifact (good) |
+| Mc-proxy partial | ACF1 0.0885, L 40.1 km | — | survives, but see M-001.4(c) |
+
+**Provenance-relevant caution before any literature comparison.** The prose headline
+"months-scale temporal persistence, ~40 km spatial coherence" is not what these numbers say.
+The 52-week correlation time is the estimator's ceiling and the *null also sits on it*; the
+41 km length is *smaller* than the null's median and sits on the null's 2.5th percentile. The
+statistics that actually separate real from null are ACF1, the integral correlation time
+(2.4 weeks, not months), Moran's I, and the EOF1 variance fraction. When I compare us to prior
+art below I compare on those. Adjudication of whether "months" and "40 km" may be said at all
+is Popper's, not mine — but the prior art is much less generous to the strong phrasing than to
+the weak one, and reviewers will make exactly this comparison. `n_sims = 20` against a spec of
+500 is also on the record.
+
+### M-001.1 Search trails run (so a null search is auditable)
+
+Vocabularies searched, adversarially, assuming someone has done it:
+`ETAS residual analysis` · `stochastic declustering residual` (Zhuang/Ogata) · `nonstationary
+background rate ETAS` · `time-varying background rate` · `Kumazawa Ogata non-stationary ETAS
+state space` · `aseismic transient forcing swarms` (Llenos & McGuire) · `fluid-driven swarms
+Vogtland` (Hainzl) · `model-independent triggering / background forcing inversion` (Marsan) ·
+`Poisson tests of declustered catalogues` (Luen & Stark) · `hidden Markov / latent state /
+Markov-modulated Poisson seismicity` · `second-order residual analysis spatiotemporal point
+process` · `Voronoi residuals CSEP/ETAS California` · `data assimilation seismicity sequential
+Monte Carlo / particle filter` · `relative quiescence / anomalous seismicity detection` (Ogata
+HIST-ETAS) · `detection incompleteness Mc variation ETAS bias` (Hainzl ETASI) · `long-duration
+swarms Southern California` (Ross) · `background rate seasonal/hydrologic modulation California`.
+Trails that returned **nothing**: an explicit published measurement of a *correlation length and
+correlation time of a gridded ETAS residual field*, calibrated against ETAS-simulated catalogs,
+in any region. That specific two-number deliverable I could not find. Everything else was found.
+
+### M-001.2 CLASSIFICATION: **REDISCOVERY — strong, multiply independent, in our own region.**
+### With a real but narrow delta (see M-001.4). It is not NOVEL and must never be written as such.
+
+The proposition "the residual/background field of a fitted ETAS is not white in Southern
+California" has been established at least three independent times, by three different
+communities, using three different estimators, before us.
+
+**The five most load-bearing.**
+
+1. **Zaliapin & Ben-Zion (2020), JGR Solid Earth 125, e2018JB017120 — "Earthquake Declustering
+   Using the Nearest-Neighbor Approach in Space-Time-Magnitude Domain."**
+   *What they showed (verified beyond abstract via the paper's own summary text):* applying
+   nearest-neighbour declustering to Southern California and global catalogs and testing the
+   estimated *background* events, the null hypotheses of **stationarity and space–time
+   independence are NOT rejected for magnitude ranges Δm < 4, but ARE rejected for Δm > 4**, and
+   "the deviations from the nulls are mainly due to **local temporal fluctuations of seismicity
+   and activity switching among subregions**; they can be traced back to the original catalogs
+   and **represent genuine features of background seismicity**."
+   *Why this is our result.* "Local temporal fluctuations + activity switching among subregions,
+   genuine, in SoCal" is our lag-1 ACF excess and our Moran's I / EOF1 excess in their
+   vocabulary. Same region, same conclusion, six years earlier, and with an explicit statement
+   that it is not an artifact. **This is the citation that decides the classification.**
+   *And it carries a caveat that cuts against us:* our window is M≥2.5 with an M7.2 (El
+   Mayor-Cucapah, 2010) in it — Δm ≈ 4.7, i.e. squarely in the regime where they reject. Their
+   Δm<4 non-rejection is a live alternative reading: the non-whiteness may be carried by the
+   large-magnitude sequence blocks rather than by a smooth latent field. See M-001.5.
+
+2. **Luen & Stark (2012), Geophys. J. Int. 189, 691–700 — "Poisson tests of declustered
+   catalogues."**
+   *What they showed:* Gardner & Knopoff's (1974) classic "SoCal is Poisson after declustering"
+   rested on a **low-power test**. With better temporal and a novel spatio-temporal test, SCEC
+   catalogues M≥3.8 (1932–1971 and 1932–2010) declustered with GK windows fail the
+   stationary-independent-time-homogeneous-Poisson hypothesis; Reasenberg (1985) declustering
+   produces catalogues inconsistent with SITHP even at M≥4.0. Conclusions depend on declustering
+   method, catalogue, magnitude range and test.
+   *Why it matters:* the *formal statistical* claim that SoCal background is not white is
+   fourteen years old, and it came with the methodological warning we should have anticipated —
+   **the answer is estimator-dependent**. Our own saturated T and L estimators are a live
+   instance of exactly that warning.
+
+3. **Llenos, McGuire & Ogata (2009), EPSL 281, 59–69 — "Modeling seismic swarms triggered by
+   aseismic transients"; and Llenos & McGuire (2011), JGR — "Detecting aseismic strain
+   transients from seismicity data."**
+   *What they showed:* swarms are insufficiently clustered to conform to ETAS with a *stationary*
+   forcing rate; combining ETAS with rate-and-state and embedding it in a **data-assimilation
+   algorithm that inverts a seismicity catalog for space–time variations in stressing rate**,
+   applied to the Salton Trough M≥1.5, 1990–2009. Lohman & McGuire (2007, JGR) supplied the
+   geodetic ground truth: the 2005 Obsidian Buttes swarm required shallow aseismic creep beyond
+   the recorded seismicity.
+   *Why it matters, and this is the uncomfortable one:* K-009 is framed in the ledger as "the
+   go/no-go for the entire assimilation thread." **The assimilation was built and run, in a
+   sub-region of our own box, seventeen years ago, and it returned a positive.** We are not
+   deciding whether to start; we are re-deriving the justification for a program that exists.
+
+4. **Kumazawa & Ogata (2013, 2014, Ann. Appl. Stat. 8, 1825–1852 — "Nonstationary ETAS models for
+   nonstandard earthquakes"); Kumazawa, Ogata et al. (2017), Earth Planets Space 69:14 —
+   "Non-stationary ETAS to model earthquake occurrences affected by episodic aseismic
+   transients."**
+   *What they showed:* a time-dependent factor on the ETAS background rate as a first-order
+   spline, hyperparameters chosen by Bayesian smoothing with **ABIC**; applied to induced/
+   fluid-affected inland Japanese seismicity after Tohoku-oki, recovering episodic aseismic
+   transients. Also Ogata (2004, JGR 109, B03308) and Ogata (2005, JGR 110, B05S06) HIST-ETAS +
+   Delaunay space–time anomaly fields — i.e. **a fitted, mapped, space–time field of departures
+   from ETAS**, which is our residual EOF with a better estimator and twenty years' head start.
+   *Why it matters:* K-010's μ_t is this, and this is the estimator we should be adopting.
+
+5. **Ross & Cochran (2021), Geophys. Res. Lett. 48, e2021GL092465 — "Evidence for Latent Crustal
+   Fluid Injection Transients in Southern California From Long-Duration Earthquake Swarms."**
+   *What they showed:* a deep-learning-derived 12-year SoCal catalog, **2008–2020**, yields **92
+   long-duration swarms with durations from 6 months to 7 years**; **53% show ultra-slow
+   diffusive patterns with propagating backfronts** consistent with natural fluid injection; the
+   authors conclude aseismic driving processes were **active at all times** during the period.
+   Companion: Ross, Cochran, Trugman & Smith (2020), Science 368, 1357–1361 (Cahuilla, a 4-year
+   fluid-driven swarm, 2016–2019, inside our window).
+   *Why it matters:* this is our putative latent field, **named, dated, located, and counted, in
+   our region, over our exact window**. If K-009's red mode is aseismic-transient forcing it must
+   co-locate with these 92. This is simultaneously the strongest support for a W-001/W-002
+   reading and the most decisive control we have not run.
+
+**Supporting (each independently sufficient to defeat a novelty claim):**
+
+- **Ogata (1988), JASA 83, 9–27; Ogata (1989), Tectonophysics 169, 159–174 ("Statistical model
+  for standard seismicity and detection of anomalies by residual analysis"); Ogata (1992), JGR
+  97, 19845 (precursory relative quiescence).** Residual/transformed-time analysis of ETAS to
+  detect departures is the *founding application* of the residual, not a new use of it. Ogata
+  1989's title is, almost word for word, our experiment.
+- **Zhuang (2006), JRSS-B 68, 635–653 — second-order residual analysis of spatiotemporal point
+  processes**, explicitly "for identifying features of the data not implied in the baseline
+  model," with spatiotemporal ETAS as the baseline. This is our design intent with a
+  martingale-grounded estimator.
+- **Zhuang, Ogata & Vere-Jones (2002), JASA 97, 369–380 — stochastic declustering**; and
+  Zhuang (2011, PAGEOPH) ETAS declustering / background assessment.
+- **Marsan, Prono & Helmstetter (2013), BSSA 103, 169–179 — "Monitoring aseismic forcing in fault
+  zones using earthquake time series"**; **Marsan, Reverso, Helmstetter & Enescu (2013), JGR 118,
+  4900–4909 — slow slip offshore Japan revealed by seismicity rate changes.** Semi-parametric
+  alternation between MLE-ETAS at fixed forcing and update of the forcing rate; explicitly
+  model-independent-leaning, explicitly aimed at the transient. Reverso, Marsan & Helmstetter
+  (2015/2016) extend it to the Aleutians.
+- **Hainzl & Ogata (2005), JGR 110, B05S07 — "Detecting fluid signals in seismicity data through
+  statistical earthquake modeling"** (Vogtland/West Bohemia; moving-window ETAS resolves a
+  time-dependent background; only a few percent of activity directly fluid-triggered, the rest
+  Omori cascade). **Hainzl et al. (2016), JGR 121 — 2014 West Bohemia/Vogtland fluid intrusion.**
+  *Note the deflationary finding embedded here:* even in a textbook fluid-driven swarm region,
+  the **fraction of activity attributable to the transient forcing was small**. A small ACF
+  excess is what the mechanism predicts; it is not evidence against it, but it is also not the
+  large latent field the K-009 business case assumes.
+- **Bray, Wong, Barr & Schoenberg (2014), Ann. Appl. Stat. 8, 2247–2267 — Voronoi residual
+  analysis of California forecasts**; Gordon, Bray, Schoenberg et al. (2015) Voronoi residuals
+  applied to CSEP. *They found ETAS with a uniform background systematically under-predicts
+  on-fault and over-predicts off-fault*, and that grid-based residual diagnostics (N-test,
+  L-test) have low power. **This is the pre-existing, documented, non-"weather" explanation for
+  a Moran's I excess**, and it is the artifact class Popper flagged as fix (2) — the literature
+  already reports the misfit our kernel-swap is trying to rule out.
+- **Latent-state seismicity models, an entire established family:** Poisson hidden Markov models
+  for seismicity levels (Orfanogiannaki, Karlis & Papadopoulos, 2010, PAGEOPH 167, 919–931);
+  Markov-modulated Hawkes with stepwise decay (Wang, Bebbington & Harte, 2012, GJI); MMPP for
+  deep earthquakes (Lu, Harte & Bebbington); and **"Modeling background events across Southern
+  California using the Markov-modulated Poisson process," Earth Science Informatics (2025)**,
+  which reports a **three-state MMPP as the best fit to SoCal background** under GK, Grünthal,
+  Uhrhammer and nearest-neighbour declustering (four states under Reasenberg), motivated
+  explicitly by the observation that declustered background does not conform to a single-rate
+  Poisson model. K-009's "is there a latent state?" has a published, region-specific answer with
+  a state count attached.
+- **Werner, Ide & Sornette (2011), Nonlin. Processes Geophys. 18, 49–70 — "Earthquake forecasting
+  based on data assimilation: sequential Monte Carlo methods for renewal point processes."** The
+  first implementable DA scheme for point-process seismicity forecasting. K-010 Tier 2 is a
+  variant of this and must cite it.
+- **Deep Gaussian process background rates (Molkenthin et al. / Zhu et al., 2023, GJI 234,
+  427–xxx, doi:10.1093/gji/ggad074)** and graphical-Dirichlet-process inhomogeneous background
+  intensities (Math. Geosci. 2026) — the "background field is a smooth latent random field"
+  program is active and well past the diagnostic stage.
+
+### M-001.3 CONTRADICTED? — No. CONTESTED? — Yes, on two axes.
+
+**Nothing credibly shows the opposite.** I looked for a paper asserting that fitted-ETAS
+residuals in California are adequately white and found none; the closest is Gardner & Knopoff
+(1974), which Luen & Stark (2012) explicitly attribute to low test power. **W-003-P2's "the
+residuals are white" is therefore a generator with, as far as I can find, no prior-art support
+in this region.** That is worth saying plainly: our own incumbent theory made the prediction the
+literature had already falsified three times. Popper should weigh that when scoring the
+two-generator discrimination — generator A was not a 50/50 prior even before we ran.
+
+**Contested axis 1 — magnitude range.** Zaliapin & Ben-Zion (2020) do *not* reject stationarity
+for Δm < 4. If our excess is carried by the M≥6 sequence blocks and their imperfectly-modelled
+aftershock fields, "there is a latent field" and "ETAS under-models big sequences" are not
+distinguished by any statistic in `results_k009.json`.
+
+**Contested axis 2 — misfit vs state.** Bray/Schoenberg's documented ETAS spatial misfit and
+Hainzl's rate-dependent incompleteness are both live, published, non-latent-field generators for
+our Moran's I and ACF excesses. Our kernel swap and Mc-proxy partial address them; the
+literature says they are the right things to address and does not say our controls are
+sufficient.
+
+**Adjacent negative result worth recording.** Sirorattanakul & Avouac (2026), *Science Advances*
+12(13), eadz5711 — "Seismic rhythms" — find annual hydrologic modulation of background rate up to
+**15% in the northern SAF** but **minimal modulation in Southern California**, and no significant
+semidiurnal tidal modulation, with peak seismicity lagging peak stress by a median 0.52 months.
+This *helps* us: a seasonal hydrologic driver is unlikely to be the source of our SoCal red
+residual. It also supplies an independent ~2-week nucleation-response timescale that sits
+suspiciously close to our 2.4-week integral correlation time.
+
+### M-001.4 What OUR version actually adds (the honest delta list)
+
+Ranked by how well it survives an adversarial reviewer.
+
+- **(a) Pre-registered two-generator discrimination with a zero-free-parameter alternative
+  value — DEFENSIBLE AND, AS FAR AS I CAN FIND, UNPRECEDENTED IN THIS LITERATURE.**
+  `results_k009_prediction.json` was written before scoring and commits generator B to a numeric
+  correlation time derived from an *independently measured* `t_a` (193 d stacked;
+  full honest estimator range 200 d – 5 yr), with an acceptance band and an explicit
+  "consistent but not sharply discriminating" clause. I found no prior residual-analysis or
+  background-rate paper that pre-registers a predicted correlation time from an independent
+  physical estimate and then scores against it. Every prior work above is exploratory or
+  descriptive at this step. **This is the strongest thing we own.**
+- **(b) A null simulated from the same frozen fitted spatio-temporal ETAS — a genuine
+  methodological improvement, but with a named precedent to cite.** Prior work compares to
+  analytic Poisson (Luen & Stark), to randomized-reshuffled catalogs preserving the spatial
+  distribution (Zaliapin & Ben-Zion), to uniformity of transformed times (Ogata; KS/Ljung-Box),
+  or to the model's own second-order structure (Zhuang 2006). Simulating the fitted generator
+  and pushing the sims through the identical pipeline absorbs ETAS-manufactured correlation and
+  all estimator pathologies at once. **Nearest prior: Zhuang (2006).** Claim "sim-calibrated" as
+  a design choice, not an invention.
+- **(c) SoCal-wide gridded field rather than a case study.** Llenos & McGuire: Salton Trough.
+  Hainzl & Ogata: Vogtland. Kumazawa & Ogata: post-Tohoku inland Japan. Ogata's HIST-ETAS/
+  Delaunay maps are the real precedent for a region-wide field and they predate us by two
+  decades — so this is *scale*, not *kind*. Modest delta.
+- **(d) The completeness partial — an ADOPTED CONTROL, NOT A NOVELTY.** Hainzl, Zöller & Wang
+  (2013) showed short-term Mc variation biases ETAS parameters (notably α); Hainzl (2016, BSSA)
+  introduced rate-dependent detection probability; Hainzl (2022) the **ETASI** closed form.
+  Presenting "surviving a completeness-proxy partial" as a distinguishing rigour would be
+  incorrect — it is standard practice, and our version is a **surrogate** (the file's own FLAG:
+  the K-031 ρ_sta field is not on disk; we used an Mc maximum-curvature proxy on 0.6° super-cells
+  which explains only R²=0.047 of EOF1). The partial as run is weaker than the field's norm.
+- **(e) Not a delta:** "the residual is the innovation / if white there is no state to estimate."
+  That framing is the standing premise of Werner, Ide & Sornette (2011) and of the entire
+  Llenos–McGuire assimilation line. It is a good framing. It is theirs.
+
+### M-001.5 TAKEABLES (adopt instead of reinventing)
+
+**Estimators**
+1. **Kumazawa–Ogata spline background + ABIC** for μ_t — a validated, published, hyperparameter-
+   objective alternative to K-010 Tier 1's EWMA. Adopt or justify not adopting.
+2. **Marsan et al. (2013, BSSA) alternating MLE-ETAS / forcing-rate update** — a second,
+   independent, validated latent-forcing estimator. Two estimators agreeing is worth more than
+   one estimator with a null.
+3. **Zhuang (2006) second-order residuals** and **Bray et al. (2014) Voronoi residuals** — both
+   were built *because* rectangular-grid residual diagnostics have low power. Our T and L
+   estimators saturating at their caps in 20/20 and 7/20 null sims is that low-power problem
+   arriving on schedule. This is the single most actionable methodological takeable.
+4. **ETASI (Hainzl 2022)** — replaces the Mc-proxy partial with a model that absorbs
+   rate-dependent incompleteness inside the intensity, rather than regressing it out afterwards.
+5. **Zaliapin & Ben-Zion randomized-reshuffled null** (stationary, space–time independent,
+   preserves the spatial distribution) — a cheap *second* null that brackets the ETAS-sim null
+   from the other side.
+6. **Werner–Ide–Sornette SMC** for K-010 Tier 2; **deep-GP / Dirichlet-process background fields**
+   (GJI 2023; Math. Geosci. 2026) if the latent field is to be estimated rather than detected.
+7. **MMPP with 3 states** as the pre-fitted discrete-state alternative to K-010's OU state in
+   SoCal (Earth Sci. Inf. 2025). Gives a state count we would otherwise have to search for.
+
+**Datasets we can use tomorrow, already labelled**
+8. **Ross & Cochran (2021) catalog of 92 long-duration SoCal swarms, 2008–2020, durations 0.5–7
+   yr, 53% with diffusive backfronts.** Overlaps 2010–2018 completely. This is a *ground-truth
+   label set for the latent field*. Recommended as a K-009 add-on control (see M-001.6).
+9. **Salton Trough M≥1.5 1990–2009** (Llenos & McGuire's exact dataset) — a region and window
+   where the answer is independently known, i.e. a real-data positive control to complement our
+   synthetic OU injection.
+10. **Cahuilla swarm 2016–2019** (Ross et al. 2020, Science) — a single, well-characterised,
+    in-window, in-region transient with a known duration and a known ~few-km spatial scale. If
+    our residual field cannot see Cahuilla, our 0.2°/7 d resolution is the answer, not the crust.
+
+**Named artifacts prior work already paid for**
+11. ETAS spatial-kernel misfit: on-fault under-prediction / off-fault over-prediction (Bray et
+    al. 2014). Our kernel swap must be reported against this specific pattern, not generically.
+12. Short-term aftershock incompleteness biases α downward (Hainzl et al. 2013) — our frozen
+    α = 0.537 is low; that is a documented signature of exactly this bias and it propagates into
+    every expected count in K-009.
+13. Declustering/estimator sensitivity of the whiteness verdict (Luen & Stark 2012): the answer
+    depends on method, catalogue, magnitude range and test. Report all four.
+14. Magnitude-range dependence of the stationarity rejection, Δm ≷ 4 (Zaliapin & Ben-Zion 2020).
+15. Low power of grid-based point-process diagnostics (N-test/L-test family) — Bray et al. 2014.
+
+**Parameter values worth comparing ours against**
+16. Hainzl & Ogata (2005): only a *few percent* of Vogtland swarm activity directly attributable
+    to the fluid signal. A useful prior on the amplitude of the latent forcing we should expect —
+    and a reason our positive control failing at log_sd = 1.5 matters more than it looks.
+17. Sirorattanakul & Avouac (2026): ~15% annual modulation amplitude (N. California), ~0.52-month
+    stress-to-seismicity lag, minimal SoCal seasonal signal.
+18. Meade & Hager (2005) moment-rate numbers — see M-002.
+
+### M-001.6 FEEDING THE TRIO — what this changes
+
+**For Popper (the pending K-009 ruling).**
+1. **The replication burden on "not white" should fall; the burden on the two numbers should
+   rise.** "Not white" is independently established in SoCal by Luen & Stark (2012) and Zaliapin
+   & Ben-Zion (2020). We are confirming, not discovering — so demanding a second region before
+   believing the sign of the effect is over-strict. But K-009's *stated deliverable* is "the
+   correlation time and correlation length with CIs — those two numbers, not a p-value," and
+   those two numbers are the part of this run that does not survive scrutiny: T is pinned to the
+   estimator cap in the real data *and in 20/20 null sims*; L = 41.0 km sits at the null's 2.5th
+   percentile with the null median at 78.7 km. **On the ledger's own success criterion the
+   defensible K-009 result today is "lag-1 ACF excess +0.093, Moran's I and EOF1 excess,
+   integral correlation time 2.4 weeks" — and NOT "months-scale persistence with 40 km
+   coherence."** The prior art makes this worse rather than better: Luen & Stark's central
+   methodological finding is that whiteness verdicts are estimator-dependent, and Bray et al.
+   and Zhuang both built better residual estimators precisely because grid statistics lose power.
+2. **The two-generator scoring is affected by an asymmetric prior.** Generator A (W-003, "white")
+   had already been falsified in this region three times before we tested it. A W-003 death from
+   K-009 is therefore worth less than the ledger's R2-7 table implies, and the interesting
+   discrimination is not A-vs-B but **B (aseismic forcing, T ≈ t_a) vs C (ETAS misspecification)**
+   — which the ledger already names as the third branch. Note that 2.4 weeks is far from t_a's
+   193 d–5 yr band, so on the integral estimator generator B is *not* currently confirmed either.
+3. **A cheap third-arm control now exists and I recommend Popper mandate it.** Ross & Cochran's
+   **92 labelled long-duration SoCal swarms, 2008–2020** overlap our window entirely. Test: does
+   the residual field's red mode co-locate in space and time with those 92? Co-location ⇒ B
+   (aseismic transient forcing), and it is a far sharper discriminator than the t_a band, which
+   spans an order of magnitude by the prediction file's own admission. No co-location, but excess
+   concentrated on-fault / around large sequences ⇒ C (misspecification, per Bray et al.). Cost:
+   one join against a published catalog. This is the highest-value hour in the queue.
+4. **Δm control.** Re-run restricted to M2.5–4.5 (Δm < 2) per Zaliapin & Ben-Zion's threshold. If
+   the excess vanishes, the "latent field" is the large-sequence residual and the assimilation
+   case collapses to "fit aftershocks better."
+5. **Nothing in the prior art relieves** `n_sims = 20` against a spec of 500, or the positive
+   control passing only at log_sd = 3.0 and failing at 1.5 — the latter reads worse in light of
+   Hainzl & Ogata's finding that real fluid forcing contributes only a few percent of activity.
+
+**For Wegener.** Two candidate observation rows are his to write, not mine: (i) Ross & Cochran
+(2021) 92 long-duration SoCal swarms, 6 mo – 7 yr, 53% diffusive, aseismic driving "active at
+all times" 2008–2020 — this is a direct, replicated, documented observation of W-001/W-002's
+driver in our region; (ii) Zaliapin & Ben-Zion (2020) Δm-dependent stationarity rejection. Note
+also that **W-003-P2's whiteness prediction is contradicted by prior art independent of our
+test** — the incumbent was already in trouble.
+
+**For Kepler.** The floor moved. "Is there a latent state?" is answered (yes, several ways, by
+several groups). The unclaimed ground is: *what is the latent field's amplitude, its estimator,
+and its forecast value in bits/event* — i.e. K-010 and K-012, not K-009. And K-010 should start
+from Kumazawa–Ogata + Marsan, not from a fresh EWMA.
+
+---
+
+## M-002 — QUICK DOSSIER: B-4 / EXP-J — "silent-loading cells recover the creeping SAF and the 1857 strand"
+
+### CLASSIFICATION: **REDISCOVERY (of the geography) — and the program record already says so.**
+### The degeneracy at its heart is **CONTESTED**, and prior art has already produced a discriminator.
+
+**What we have.** `results_exp_j.json` / `results_exp_k.json`: 1,195 cells at 0.2°, 228
+SILENT-LOADING; 175/229 interior (18.5% interior vs 20.9% edge — not a border artifact); top
+interior silent cells are the SAF creeping section (36.1–36.9 N, −120.8..−121.8) plus
+Imperial/Brawley; top *unexplained*-silent cells sit on the 1857 Fort Tejon Mojave/Big Bend
+strand (34.4–34.8 N, −117.5..−119.1, d_fault 1–5 km). EQ18_FULL_NOTES §15 already calls this
+"the ledger's negative space rediscovers known aseismic zones blind = **validation**." That
+sentence is the correct classification and it should never drift into a discovery claim.
+
+**The shoulders, and they are crowded.**
+
+1. **Meade & Hager (2005), JGR 110, B03403 — "Spatial localization of moment deficits in
+   southern California."** GPS-constrained block model, fault slip-rate catalog; SoCal scalar
+   moment accumulation **17.8 ± 1.1 × 10¹⁸ N m/yr, ≈50% larger than the 200-yr average release
+   rate**, with deficits **localized in three regions: the southern SAF and San Jacinto, the
+   offshore faults + LA/Ventura basins, and the Eastern California Shear Zone**. This is B-4's
+   experiment — geodetic loading minus seismic release, mapped, in SoCal — done twenty-one years
+   earlier with a better loading model. Our delta is grid resolution (0.2° cells vs blocks) and a
+   frozen pre-2010 train, not the concept and not the headline geography.
+2. **Kostrov (1974), Izv. Earth Phys. 1, 23–44** — the summation the whole ledger rests on; and
+   **Ward (1998), GJI 134, 172–186 / Ward (1994)** for California Kostrov budgets. **Guns,
+   Bennett et al. (2024), JGR 129, e2023JB027939** — "Seismic Moment Accumulation Rate From
+   Geodesy: Constraining Kostrov Thickness in Southern California" — the *current* state of the
+   art on exactly our quantity, and the paper to check our χ normalisation against (recall EQ18
+   §15: "χ absolute values biased low ... geography is the signal, not the level" — Guns et al.
+   is where the level lives).
+3. **Field et al. (2014), BSSA 104, 1122–1180 (UCERF3)**; **WGCEP (1988, 1995)** — the 1857
+   Mojave/Big Bend section is the most-forecast locked, late-in-cycle strand in California, with
+   a paleoseismic recurrence record (Weldon et al., 2004, GSA Today) to match. "The ledger found
+   the 1857 strand blind" is a statement about the ledger's sensitivity, not about the Earth.
+4. **Jolivet et al. (2015), GRL 42, 297–306 — aseismic slip and seismogenic coupling along the
+   central SAF from InSAR**; **Tong, Sandwell & Smith-Konter (2013), JGR**; **Ryder & Bürgmann
+   (2008), GJI 175, 837 — spatial variations in slip deficit on the central SAF from InSAR**;
+   **Maurer & Johnson**. Coupling maps of the creeping section exist at far higher resolution
+   than a 0.2° catalog-derived ledger, from data that is not degenerate the way ours is.
+5. **Liu, Ross, Cochran & Lapusta (2022), Science Advances 8, eabk1167 — "A unified perspective
+   of seismicity and fault coupling along the San Andreas Fault."** *This is the important one
+   for us.* They show **creep rate along the central SAF is directly proportional to the fraction
+   of non-clustered earthquakes, 1984–2020**: lower coupling ⇒ weaker temporal clustering, with
+   repeating earthquakes as the end-member.
+
+**Delta assessment.** Small and methodological: a 0.2°-resolution, catalog-Kostrov-vs-geodesy
+ledger, trained pre-2010, whose *negative space* was read as the signal and which recovered known
+geology without being told. That is a legitimate instrument-validation claim and a nice framing.
+It is not a new observation about California, and the ledger's §10 SCOPE line plus the
+auto-FLAG (158/200 unexplained-silent cells with n_train < 20) already constrain it correctly.
+
+**CONTESTED — and W-006-P1 is in immediate trouble from prior art.** W-006-P1(a) predicts *no
+catalogue-derived statistic separates creeping from locked silent cells at better than chance*.
+**Liu et al. (2022) already published a catalogue-derived statistic that does exactly that** on
+the central SAF — the non-clustered fraction, proportional to creep rate over 36 years. Wegener's
+own honest note anticipated the shape of this ("repeater fraction is arguably a catalogue-derived
+aseismic readout"); the non-clustered fraction is a cleaner instance and it is not hypothetical.
+**Recommendation to Popper:** W-006-P1(a) as written is close to pre-falsified in the literature
+and should be re-scoped to SoCal cells off the central SAF, or reframed as "the *ledger's own* χ
+does not separate them, but a clustering statistic does" — which is a better and still-testable
+claim, and one that hands B-4 a free upgrade rather than killing it.
+
+**Takeables.** (i) Guns et al. (2024) for Kostrov thickness / χ level calibration; (ii) Meade &
+Hager (2005) three-region deficit map as a *direct comparison target* — Jaccard our silent list
+against their three localizations and report it, because a reviewer will; (iii) Liu et al. (2022)
+non-clustered fraction as the ready-made degeneracy discriminator, computable from our own
+catalog at zero data cost; (iv) Jolivet/Ryder-Bürgmann InSAR coupling as the geodetic covariate
+W-006-P1(b) asks for, already published, no new inversion needed.
+
+---
+
+## M-003 — QUICK DOSSIER: B-3 / EXP-I(ii) — "P(M≥5 within 7 d | M≥5) = 0.60"
+
+### CLASSIFICATION: **REDISCOVERY — canonical, textbook, operational. Zero novelty. Cite or retract.**
+
+This is Omori–Utsu decay plus Gutenberg–Richter, evaluated in a 7-day window. It has been the
+operational basis of public earthquake advisories in California for thirty-seven years. The
+ledger's §10 SCOPE line already attaches the right caveat ("ordinary within-sequence triggering,
+not exotic meta-structure"); this dossier supplies the citations so the caveat has a bibliography.
+
+**The canonical citations — attach these to B-3 permanently.**
+
+1. **Reasenberg & Jones (1989), Science 243, 1173–1176 — "Earthquake hazard after a mainshock in
+   California."** *The* generic California clustering model: modified Omori + G-R, giving the
+   probability of further events (including larger ones) in intervals following any earthquake.
+   Extended in Reasenberg & Jones (1994), Science 265, 1251. **This is B-3.**
+2. **Jones (1985), BSSA 75, 1669–1680 — "Foreshocks and time-dependent earthquake hazard
+   assessment in southern California."** P(an M≥3 SoCal event is followed by a *larger* event
+   within 5 d and 10 km) = **6 ± 0.5%**, rising with foreshock magnitude to **6.5 ± 2.5% at
+   M≥5**; the mainshock most likely in the first hour, decaying as ~1/t.
+   **Read this against our 0.60 carefully.** Jones's 6.5% is P(*larger* event); ours is P(*any*
+   M≥5, including equal-or-smaller aftershocks of the same sequence). They are different
+   statistics and the numbers are not in conflict — but they will be *read* as in conflict if we
+   quote 0.60 without the definition. Anyone reporting B-3 must state "any M≥5, same sequence
+   included" in the same sentence as the number.
+3. **Gerstenberger, Wiemer, Jones & Reasenberg (2005), Nature 435, 328–331 — "Real-time forecasts
+   of tomorrow's earthquakes in California" (STEP).** The operational short-term clustering
+   forecast; the direct ancestor of every 7-day hazard window.
+4. **Ogata (1988), JASA 83, 9–27 — ETAS.** Our own B-2 baseline already contains this rule; B-3
+   is a marginal read-out of the same generator, which is why the two must never be quoted as
+   independent findings.
+5. **Michael et al. (2020), SRL 91, 153–173 — the USGS operational aftershock forecast (OAF)
+   system**; **Page, van der Elst, Hardebeck, Felzer & Michael (2016), BSSA 106, 2290–2301 —
+   "Three ingredients for improved global aftershock forecasts"**; **Hardebeck et al., updated
+   California aftershock parameters (USGS)**. Current practice, with published parameter values
+   for the exact windows we used.
+
+**Delta:** none. Not scale, not rigour, not region. Our n_test = 30 is far smaller than any of
+the above; the p = 7×10⁻¹⁵ measures how strongly we rejected a Poisson straw man that no one in
+this literature has believed since 1989. **Mandate: B-3 is presented only as a local
+re-measurement of the Reasenberg–Jones effect, with Reasenberg & Jones (1989) and Jones (1985)
+cited in the same breath, and with the "any M≥5" definition attached.** Its legitimate value is
+as an app layer (EQ-15 layer 2), not as a finding.
+
+---
+
+*End Merton round 1. Counts: 1 primary + 2 quick dossiers. REDISCOVERY 3 (K-009, B-4, B-3),
+NOVEL 0, CONTRADICTED 0, CONTESTED 2 (K-009 interpretation: magnitude-range and misfit-vs-state;
+B-4/W-006-P1 degeneracy, where prior art supplies a discriminator W-006 predicts cannot exist).
+The one thing in this round we genuinely own is the pre-registered two-generator discrimination
+with an independently-measured predicted correlation time — I found no precedent for it. The
+phenomenon it discriminates over was found before us, in our region, at least three times.
+Sources for every claim above are named with venue and year; where I could verify only an
+abstract or a publisher's summary rather than the full text — Zaliapin & Ben-Zion (2020),
+Ross & Cochran (2021), the 2025 MMPP paper, Guns et al. (2024) — I say so here rather than let a
+claim stand unmarked.*
