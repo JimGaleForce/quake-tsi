@@ -3700,3 +3700,1076 @@ seen in this program whose failure would be as informative as its success.
 
 *— Wegener, round 1. Kepler is welcome to riff; Popper will find things I have not; Laplace should
 tell me what `t_a` can actually be measured to at our event counts before anyone writes a protocol.*
+
+---
+
+# VERDICTS (Popper) — Round 2: K-033..K-045 (conditional-triggering seed) + W-001..W-006 (meta-theories)
+
+*Adjudicated 2026-08-09. Kepler's and Wegener's sections above are untouched. Nothing below is a
+result. Round 1's rulings (S-1..S-6, the retirement mechanism, §9, §10) stand and are assumed;
+where round 2 amends them I say so explicitly.*
+
+Two things about this round before the verdicts.
+
+**First, it is a better round than round 1, and the reason is that both personas brought
+*controls* rather than only ideas.** Kepler's K-034/K-035 gating instinct and Wegener's
+W-003/W-004 (a unifier who writes down the version of the world where his unification is
+unnecessary, and the version where the whole table is a survey of seismometers) are the two
+best pieces of methodological work in this ledger, mine included. K-042's independent-circular-
+shift null and W-001-P1's internal frequency contrast are the two best-designed statistics
+anyone has proposed here. I record that plainly, because my round-1 note said my objections were
+about estimators and not ideas, and this round the estimators improved.
+
+**Second, the round has one systematic weakness and it is the same one in both personas:
+every entry is designed against *noise* and almost none is designed against *systematic error*.**
+That is the correct instinct when you are 10–30× short of the power you need. It becomes the
+wrong instinct the moment you get the power — which is exactly what K-035, W-004-P2 and
+W-001-P1 propose to do. See §R2-1(c). This is the single most important paragraph I will write
+this round.
+
+---
+
+## R2-0. NEW SHARED STANDARDS (additions to S-1..S-6)
+
+### S-7. The CLOCK is a covariate transformation, not a phenomenon. (Pre-adjudicating Jim's directive.)
+
+Jim's directive — that any accumulating property is a candidate x-axis and that clock variants
+must be pre-adjudicated — is correct and I adopt it. It is also the most dangerous instrument
+either persona has been handed, because a clock scan is a period comb wearing a costume, and
+this program has already produced one ambiguous comb (EXP-F, 60 periods, positive control failed
+to fire). Five rules, binding on every clock-reparameterised variant of any entry:
+
+**(a) Exogenous vs endogenous clocks are not the same object.** An *exogenous* clock is built
+from a series measured outside the catalogue (cumulative tidal Coulomb stress, integrated
+geodetic strain, injected volume, cumulative hydrologic load). An *endogenous* clock is built
+from the catalogue itself (event count / natural time, summed moment, integrated fitted
+intensity). **Rescaling time by a model's own integrated intensity is the time-rescaling
+theorem: a correct model is unit-rate Poisson in that clock BY CONSTRUCTION.** Structure found
+in an endogenous clock is therefore a statement about model misfit, not about the Earth, and
+**may not support a physical claim without exogenous replication.** Endogenous clocks remain
+excellent *diagnostics* — that is Laplace's residual-mining loop and it is sound.
+
+**(b) The success statistic is unchanged: incremental bits/event out of sample, in wall time.**
+"The process is simpler/more periodic in τ" is not a result. Convert the simplicity into a
+forecast in calendar time and score it against the frozen ETAS baseline on the holdout. A clock
+that simplifies without forecasting is a re-plot.
+
+**(c) Every clock tried is a test.** Clocks enter the same declared multiplicity family as
+covariates and interactions, and the headline must be the sim-null-calibrated max-statistic over
+the whole family (see S-8), not a per-clock p-value. Declare the count of clocks tried, in the
+protocol, before unblinding — including clocks tried and abandoned.
+
+**(d) Mandatory clock-specific null.** Uniformity-in-τ is trivially induced when the
+accumulator's rate co-varies with the event rate. The required null is a circular shift or
+spectrum-preserving phase randomisation of the clock series against the catalogue, which
+destroys the alignment and preserves everything else. This is K-042's null, generalised, and it
+is the right one.
+
+**(e) EXP-F's positive control is mandatory here.** Before any clock result is interpreted, the
+clock machinery must recover a *known* signal injected as periodic-in-τ at a realistic amplitude.
+EXP-F's 7-day method check failed to fire and correctly downgraded that whole null to weak
+evidence. A clock scan without an injection-recovery arm inherits that downgrade in advance.
+
+### S-8. Multiplicity is settled by a sim-calibrated max-statistic, not by BH.
+
+K-033 proposes BH-FDR at q=0.05 over ~30–40 correlated interaction terms. BH is not wrong, but
+it is the weaker instrument here and it invites a per-term reading of a family result. **Rule for
+every entry in this round that scans a declared family (covariates, interactions, clocks,
+frequencies, thresholds): the confirmatory statistic is the maximum absolute effect over the
+entire declared family, compared to the distribution of that same maximum computed over ETAS-sim
+catalogues through the identical code path.** This handles multiplicity and covariate
+cross-correlation exactly and simultaneously, requires no independence assumption, and cannot be
+gamed by re-partitioning the family. Per-term BH may be reported as secondary.
+
+### S-9. The forking path is upstream of the frozen grid: freeze the CONSTRUCTION, not just the model.
+
+This is my answer to the K-033 forking-paths question and it applies family-wide. Freezing a
+30-term interaction grid is good discipline that addresses the *smaller* half of the problem.
+Every covariate in that grid is itself the output of a chain of unfrozen choices: which tidal
+component, which resolved stress component (shear / σ_n / Coulomb with which μ), cell size,
+lag/lead, the trailing window for "recent-rate regime", the b-value estimator and its Mc, the
+ledger-class cut point, the attenuation coefficients for PGV, the segment-assignment radius.
+Ten binary choices upstream of a frozen grid is a 1024-fold search space that the frozen grid
+does not touch. **Rule: the protocol names one value for every construction choice, with no
+alternatives run. If an alternative is run for any reason, it joins the declared family and
+enters the S-8 max-statistic.** Protocol hashed and committed before the test window's
+seismicity is read; download_log.md discipline as established.
+
+### S-10. Exactly one model crosses into the test window.
+
+Selection (group-lasso / LRT scan) happens on train. **One** frozen model — coefficients,
+covariate list, interaction set, construction choices, clock — is written to the protocol and
+scored once on the holdout. Any re-fit after unblinding converts the entry to exploratory
+permanently, with no route back except a new holdout.
+
+### S-11. A bits floor, and the CI that goes with it.
+
+No claim below **0.01 bits/event** out of sample, regardless of p, and the CI must be a
+**block bootstrap over sequences, not over events** (SoCal's large events arrive in a handful of
+sequences; event-level resampling manufactures independence that does not exist — the same
+correction I applied to B-2 in S-5). This floor is also the death condition for W-003; see R2-3.
+
+---
+
+## R2-1. RULING ON THE CORPSE-POWER CONVERGENCE (K-035 ∧ W-004/O-9 ∧ §W-RETRO)
+
+Jim asks the right question: two personas, working independently, both indict the power of the
+tidal corpses. Does that change round 1?
+
+### (a) The convergence itself is worth nothing, and I want that on the record.
+
+Kepler and Wegener did not independently *measure* anything. They read the same two numbers off
+the same two documents — our own EXP-A event counts, and Beeler & Lockner's required-N — and
+performed the same division. Agreement between two readers of one arithmetic is one observation,
+not two. **A research program that treats persona concurrence as corroboration has invented peer
+review with a shared prior, which is how a field acquires a consensus it never tested.** The
+correct weight of the convergence on the *claim* is zero. Its correct weight on the *queue* is
+large, because both personas independently identified the same cheapest unblocking measurement,
+and that is a signal about what to run, not about what is true.
+
+### (b) The arithmetic is right in direction and wrong by one and a half orders of magnitude. Correcting it.
+
+Wegener writes: *"our resolution was about three orders of magnitude coarser than the predicted
+effect."* That is wrong, and it is wrong in the direction that flatters the reopening.
+
+The shortfall in **N** is 2–3 orders (n ≈ 10²–10³ per bin against O-9's 10⁵–10⁶). But detection
+resolution on a fractional modulation scales as **N^(−1/2)**. So the shortfall in **amplitude
+resolution is 1 to 1.5 orders — a factor of roughly 10 to 30, not 1000.** Concretely, for a
+Schuster/Rayleigh-class statistic, the 80%-power minimum detectable modulation is roughly
+2.8·√(2/N): ≈ 12% at N = 10³, ≈ 4% at N = 10⁴, ≈ 1.3% at N = 10⁵. Against a predicted ~1%
+effect, EXP-A's *per-bin* test was short by about 10×.
+
+And one further correction that cuts the other way and that neither persona made: **EXP-A's
+confirmatory statistic was pooled, not per-bin.** Pooled across the region, the event count is
+1–2 orders larger than the per-bin count, which puts the pooled resolution within a factor of
+perhaps 2–4 of the predicted effect — not 10×, and nowhere near 1000×. The severity of the
+under-resolution depends entirely on which statistic you are re-pricing, and the two personas
+have been re-pricing the wrong one.
+
+**K-035 must report both numbers separately** — per-bin and pooled minimum detectable amplitude
+at 80% power, with the per-bin *selection step* included in the simulation (train selected 1 bin
+of 42; the selection is itself a large part of the power loss and omitting it will understate the
+damage). Until those numbers exist, no one in this program quotes an order of magnitude for the
+shortfall, and the "three orders" sentence does not leave this file.
+
+### (c) The consequence nobody has drawn: at the required power, this stops being a noise problem and becomes a systematics problem.
+
+This is the important half of the ruling, and it inverts the mood of both personas' framing.
+
+W-004-P2 proposes the full-catalogue test at N ≈ 6×10⁵. At that N the statistical resolution on
+a fractional modulation is ~0.4%. **A 0.4% statistical error means the measurement is limited by
+any systematic of order 0.4% or larger — and the catalogue has several that are one to two
+orders larger than that.** Specifically:
+
+- **The solar semidiurnal detection cycle.** Network noise, and therefore Mc, varies over the
+  day; in Mc-limited catalogues the resulting modulation of detected event counts is of order
+  several percent — **ten or more times the signal being sought.** Its principal line is S2 at
+  exactly 12.000 h. M2 is at 12.421 h. Over a 37-year record those lines are separable in
+  principle (they beat at 14.77 d), but **the beat envelope of an S2 artifact against M2 sits at
+  14.77 d — within the fortnightly band W-001-P1 is built on.** A diurnal detection artifact can
+  therefore deposit power in *both* of the two bands whose ratio is the entire test.
+- **Era boundaries and magnitude-scale revisions** produce step changes in effective Mc; steps
+  are broadband and land in every band.
+- **Aftershock coda masking** raises Mc transiently after every large event, with an
+  Omori-decaying envelope keyed to the mainshock's time of day.
+
+**Standing mandate for every high-power tidal-band measurement in this program (K-035 arm ii,
+K-040, W-001-P1, W-004-P2, K-044R):** the model must include explicit nuisance terms at
+**S1 (24.000 h), S2 (12.000 h), K1, P1 and the Msf/synodic-fortnightly line (14.765 d)**; must
+carry a measured time-of-day Mc curve; and must report an **off-tidal negative-control line**
+(a period with no tidal constituent, e.g. 11.0 d and 16.5 d) which must return null. An entry
+without these is not a powered test; it is a well-funded way to rediscover the day/night cycle.
+
+### (d) What actually changes in round 1.
+
+1. **The corpse framing changes, and it needed to.** The claim *"tidal triggering is null in
+   SoCal"* — which has circulated in this program's summaries — is **retired as unsupported at
+   the power we had.** What survives, unchanged and well-controlled, is narrower and still
+   valuable: *"static tidal-phase susceptibility maps have no out-of-sample forecasting skill in
+   SoCal at M≥1.5, 1981–2018, with clean anti-leak controls (EXP-A), and phase migration does not
+   replicate across catalogues or walk-forward (EXP-E/§14b)."* Those were tests of a **forecast**,
+   they failed their own pre-registered success rules, and power against a 1% physical effect is
+   irrelevant to them. **The corpse of the map stands. The corpse of the physics was never a
+   corpse; it was an unresolved measurement described as one.** I wrote round 1's verdicts against
+   the map claim and I would write them again; but the program's *prose* over-generalised and I
+   did not catch it. Corrected here.
+2. **K-032 item 6 is promoted and merged.** In round 1 I called the corpse-to-upper-bound
+   conversion the best idea in K-032 and ranked it #10. That was too low, and K-035 is its
+   rigorous implementation for the tidal family. Item 6 is now K-035's mandatory deliverable and
+   moves to the top of the queue.
+3. **A CORPSE EXPOSURE list is added**, symmetric with the baseline exposure lists of §10:
+   every corpse now carries the artifact classes and power limits it was *not* tested against.
+   Drafts in R2-5.
+4. **No baseline is demoted or retired on this argument.** Retirement mechanism rule 2 —
+   nothing is retired on argument alone — applies to reopening as well as to retiring. Nothing
+   in this ruling is a result.
+5. **K-017's round-1 verdict is UPHELD and strengthened.** I ruled it a new hypothesis rather
+   than a rerun of the EXP-F corpse; the power audit is the quantitative version of that ruling.
+
+### (e) The anti-ratchet clause. The reopening is bounded, in advance, in writing.
+
+The failure mode I am most worried about this round is not error. It is that a corpse has been
+reopened on a power argument, and power arguments never expire — every future null can be met
+with "still underpowered", forever, which is precisely how a program grows an unfalsifiable core
+(round 1, §9, my objection to K-032's item 3). So:
+
+**The tidal thread is reopened for exactly one bounded programme: K-035's audit, plus the
+conditional and frequency-contrast tests it licenses (K-036 Tier 1, K-039R a–c, K-040,
+W-001-P1, W-004-P2). If that programme returns null at demonstrated power — i.e. K-035 shows the
+methods could have detected the amplitude that theory predicts, and they do not — the thread
+closes with a published bound, and it may be reopened thereafter only by NEW DATA (a new
+catalogue, a new region, a new instrument), never by a new statistic on the same data.** Kepler
+offered this symmetry himself ("if the audit shows EXP-A could have detected a 3% effect and did
+not, the corpse is more dead, and I will say so"). It is now binding, and it is binding on me
+too.
+
+---
+
+## R2-2. VERDICTS — K-033..K-045 (the conditional-triggering seed)
+
+Kepler's framing premise — that every corpse on the list is a **marginal** effect and that we
+have never tested a conditional — is correct, is the most useful sentence in the seed, and I
+accept it. His point (b), that the `∫λdt` term is half the likelihood and that every corpse-era
+statistic used only the first term, is also correct and is the strongest technical argument in
+this ledger. My objections below are to *estimators, gating logic and construction freedom*, not
+to the reframe.
+
+### K-033 — TESTABLE-NOW, with six mandated amendments. It is infrastructure, and it must also be able to lose.
+
+The Cox-ETAS framework is right, and the observation that putting ETAS in the baseline
+*structurally* removes the sequence-coherence artifact that killed the original TSI paper —
+rather than avoiding it by hand — is the single best argument in the seed. Adopted.
+
+Two problems with the entry as posed.
+
+*It is an engine described as a hypothesis.* K-033's stated claim ("marginal β ≈ 0 while at least
+one interaction γ ≠ 0") cannot lose as written: thirty terms, one of which must fire. **Frozen
+success rule: K-033's own claim passes only if the maximum |γ| over the entire declared family
+exceeds its ETAS-sim max-statistic distribution at α=0.05 AND the selected model adds ≥ 0.01
+bits/event out of sample with a sequence-block bootstrap CI excluding zero (S-8, S-11). If it
+does not, K-033 is scored as a LOSS for the conditional-triggering programme and a win for
+W-003, and it is recorded as such in the corpse-to-bound table.** Kepler does not get to keep an
+engine that only reports discoveries.
+
+*Kepler's stated discipline is good and it is not sufficient.* It governs the model and leaves the
+construction free — see **S-9**, which is written primarily against this entry. Ten unfrozen
+upstream choices dominate a frozen thirty-term grid.
+
+**Mandates.** (1) S-8 max-statistic replaces per-term BH as the headline. (2) S-9: every
+construction choice named with one value in the protocol. (3) S-10: exactly one model crosses
+into the test window. (4) S-11: bits floor + sequence-block CI. (5) S-7(c): any clock variant
+declared and counted. (6) **S-1(b) applies with force** — soil moisture, pressure and snow are
+seasonal, and so is detection; the ETAS-sim null must be passed through an Mc(x,t) detection
+function derived from real network history, or the entry carries a recorded exemption naming
+seasonal completeness as an untested exposure.
+*Leakage risk named:* the covariates are constructed over the full record including the test
+window. That is legitimate (they are exogenous) **provided** no covariate is standardised,
+thresholded, or PCA'd using test-window statistics. Freeze all normalisations on train.
+*W-003 dies if:* max|γ| clears the sim max-statistic and the model adds ≥0.01 bits/event OOS.
+
+### K-034 — TESTABLE-NOW, but its LICENSING SCOPE is wrong and I am correcting it. This is the most consequential ruling in R2-2.
+
+Kepler proposes, and Wegener adopts as a mandatory precondition, that Landers gates every
+subsequent null in the family. **It does not, and the error matters.**
+
+A positive control licenses nulls **at the amplitude, duty cycle and bandwidth where it fired,
+and nowhere else.** Landers-class remote dynamic triggering is a **transient** perturbation of
+**0.01–0.1 MPa**. The tidal question is a **periodic** perturbation of **1–3 kPa**. Those differ
+by one to two orders of magnitude in amplitude and completely in temporal structure. An engine
+that recovers Landers has demonstrated exactly one thing: that it can detect a 10–100 kPa step.
+It has demonstrated nothing whatever about its sensitivity to a 1 kPa sinusoid, which is a
+different statistic with a different noise floor and a different systematic (R2-1c).
+
+**Ruling — the gating structure is re-assigned:**
+- **K-034 is the licensing gate for the DYNAMIC-TRIGGERING family: K-038, K-043, W-002-P2.**
+  There it is exactly right and I endorse it without reservation.
+- **K-035 is the licensing gate for the TIDAL/PERIODIC-LOAD family: K-036, K-039R, K-040,
+  K-042, K-044R, W-001-P1, W-004-P2.** Injection-recovery at the actual amplitude and the actual
+  frequency is the only control that speaks to that question.
+- **Wegener's §W-FIRST condition ("the K-034 Landers positive control must fire first, or a null
+  here is uninterpretable") is well-motivated and gates on the wrong instrument. Substitute
+  K-035.** Recorded so the substitution is not mistaken for a relaxation: it is a tightening.
+
+**Further mandates on K-034 itself.** (1) *Seal the literature values.* "Fit blind, then compare
+to published amplitudes" is unenforceable when the analyst has read the literature. The
+supervisor writes the published Landers triggering distances/amplitudes to a hashed file before
+the fit; the comparison is scored against that file. (2) *n = 1 is not a control.* Require the
+same engine on **Landers 1992, Hector Mine 1999, Ridgecrest 2019, and Denali 2002 (global
+targets)**, with a pass defined as firing on ≥2 with the correct spatial pattern. (3) *Pre-register
+the pattern.* "Geothermal/volcanic areas light up first" must be a **named, ranked list of cells
+committed before unblinding**, or it is post-hoc pattern-matching wearing a pattern prediction's
+clothes. (4) *Define the failure branch.* If it does not fire, that is ambiguous between "engine
+broken" and "our box/catalogue too small"; resolve it by injecting a synthetic Landers-scale
+transient into an ETAS-sim and confirming recovery, before the engine is declared untrustworthy.
+*Precedent cited:* EXP-F's 7-day method check failed to fire and correctly downgraded that null.
+That is the behaviour being institutionalised here, and it is the right one.
+*W-003 dies if:* not applicable — K-034 is a control, and its success is not evidence for
+anything. Recorded so it cannot later be quoted as support.
+
+### K-035 — TESTABLE-NOW. **Priority 1 in the program.** And it is now the tidal family's licensing gate.
+
+Pure injection-recovery, no downloads, fast, and it re-prices five corpses and licenses six
+entries. It is also the safest possible first use of the new machinery, because the a = 0 arm is a
+false-positive check on code that has never been run.
+
+**Mandates.** (1) *Extend the amplitude grid downward to a ∈ {0.005, 0.01}* — the grid must
+straddle the theoretically predicted ~1%, or the audit cannot answer the question it was created
+to answer. (2) *Arm (i) must reproduce EXP-A's pipeline exactly, including the train-side per-bin
+selection step* (1 of 42 bins). The selection is a large part of the power loss and omitting it
+will understate the damage — which is the direction that flatters the reopening. (3) *Report
+per-bin AND pooled minimum detectable amplitude separately* (R2-1b). (4) *The a = 0 arm passes
+before any other arm is read.* (5) *Run the injection through the R2-1(c) systematics* — inject
+an S2-band detection artifact of realistic amplitude alongside the tidal signal and report the
+false-positive rate of each method against it. This converts K-035 from a power audit into a
+power-**and-systematics** audit, which is what the program actually needs. (6) *Deliverable is the
+K-032-item-6 table, written into this ledger as quotable sentences* of the form "tidal phase maps:
+|modulation| < X% at 80% power, SoCal, M≥1.5, FM-matched, 1981–2018".
+**The symmetry commitment is recorded as binding:** if the audit shows EXP-A could have detected
+a 3% effect and did not, this program states publicly that the corpse is more dead, with the
+number attached.
+*W-003 dies if:* not applicable — K-035 is a measurement of our instruments, not of the Earth.
+Its output sets the threshold at which every other entry's null becomes evidence for W-003.
+
+### K-036 — TESTABLE-NOW (Tier 1, solid-earth only) / NEEDS-DATA (Tier 2, the full sum).
+
+The summed-Coulomb-stressing-rate model with a rate-state link and one free Aσ is the right
+physical instrument, and Kepler is right that the valuable output is not the bits but **the map
+of fitted Aσ agreeing with an independently-derived fluid-rich map**. Two unrelated observables
+agreeing is worth more than a p-value, and I endorse that as the headline.
+
+**Split.** *Tier 1* (solid-earth tide, on disk, CFM5.3 resolution, `coso_fm_test.py` machinery):
+TESTABLE-NOW after K-035. *Tier 2* (ocean loading via SPOTL/TPXO; ERA5 pressure; ERA5-Land +
+GRACE hydrology; thermoelastic): NEEDS-DATA. Cheapest acquisition path — ERA5/ERA5-Land monthly
+via the Copernicus CDS API; GRACE/GRACE-FO JPL RL06 mascons via PO.DAAC; TPXO9-atlas via the
+OSU registration form; SPOTL is a compile-from-source job. Budget: one day of acquisition, and
+Tier 2 must not start before Tier 1's result is in, because Tier 1 tells us whether the sum is
+worth building.
+
+**Mandates.** (1) The Aσ-map-vs-geothermal rank correlation is confounded by N (geothermal cells
+are high-N by construction — this is W-004's entire thesis): **fixed-n subsampling across cells,
+per S-4, not N as a regression covariate.** (2) Model comparison (a)–(d) by out-of-sample bits
+only; in-sample likelihood ratios between models of different dimension are not admissible here.
+(3) S-9 on the stress construction: one Green's function, one μ for the Coulomb combination, one
+segment-assignment radius.
+*W-003 dies if:* the summed rate-state model beats B-2 by ≥0.01 bits/event OOS, **and** the fitted
+Aσ map's rank correlation with the independent fluid-rich map survives fixed-n matching.
+
+### K-037 — NEEDS-DATA (ERA5/GRACE), spec frozen below. The sign test is excellent design with one hole.
+
+"A confounder cannot know a fault's rake" is the best single sentence in the hydrologic entry and
+it is the reason this survives where a bare seasonality correlation would not. But it is not quite
+true as stated, and the hole is specific:
+
+**Predicted sign is spatially organised, and so is every seasonal detection artifact.** Rake is
+not scattered at random across California — thrusts cluster in the Transverse Ranges, strike-slip
+in the Mojave and the Peninsular Ranges. Any north–south, coastal–inland or elevation gradient in
+seasonal detection (snow on stations is the obvious one, and Kepler names it) will align with the
+rake geography by geology, not by physics. **Kepler's proposed rake-shuffled control — permuting
+predicted signs across all segments — destroys that spatial structure and therefore makes the
+control too easy to pass.**
+
+**Mandate (this one is not optional): the rake-shuffle must be spatially restricted** — permute
+rakes only *within* geographic blocks (or within strata matched on location, elevation and n), so
+the control preserves the spatial organisation and destroys only the geometry–seismicity link.
+Additional: report the n-weighted and unweighted agreement fractions separately (n-weighting hands
+the vote to a few large segments); and run Kepler's diagnostic inversion — ~50% agreement plus a
+strong marginal annual signal is positive evidence that the annual signal is observational, which
+is a genuinely useful outcome for EXP-F's ambiguous null and should be pre-registered as such.
+*W-003 dies if:* spatially-restricted-shuffle-corrected sign agreement exceeds 0.5 with a binomial
+CI excluding it, on ≥100 segments.
+
+### K-038 — TESTABLE-NOW, sequenced after K-034 (it is K-034's covariate). One FDSN query is not a data blocker.
+
+The inversion from case studies to a continuous field is right, and "case studies cannot estimate
+an interaction; a continuous covariate over 45 years can" is correct.
+
+**Mandates.** (1) *The novel claim is the ledger-class interaction, and ledger class is
+catalogue-derived, correlates with N, and correlates with geothermal proximity.* Geothermal must
+enter the model as a **competing covariate**, not merely as a second positive control, and the
+ledger interaction must be reported as its increment over geothermal. Fixed-n matching per S-4.
+(2) *Trigger selection:* restrict the ping catalogue to events **outside the SoCal box**, because
+"remote triggering" from an in-box trigger is not separable from ordinary aftershocks by an
+ETAS-sim that cannot know which events are Landers' children. Distance gate ≥2 rupture lengths as
+proposed, plus the box exclusion. (3) Frozen attenuation coefficients as stated — good, and S-9
+binds them.
+*W-003 dies if:* the PGV covariate or its ledger interaction adds ≥0.01 bits/event OOS above a
+model already containing geothermal proximity.
+
+### K-039 — REFRAMED → **K-039R** (credit K-039, Kepler). Arms (a)–(c) confirmatory; arm (d) demoted to exploratory and gated on multi-region pooling.
+
+The conditional dry-log test is the seed's central hypothesis and arms (a)–(c) are properly
+specified: interaction terms in K-033 against B-4 ledger class, fitted Aσ, and n(t), with the
+count-matched control Kepler explicitly names against EXP-B's n-bias. Credit for naming the exact
+artifact that killed EXP-B, in advance, in his own entry.
+
+**Arm (d) — tidal coupling in the 90 days before each M≥5 — is demoted, for three reasons.**
+(i) *Power.* The unit of analysis is the mainshock, not the event; SoCal 1981–2026 gives perhaps
+30–40 M≥5, and a temporal holdout leaves ~10 to score. That is a paired test on n ≈ 10.
+(ii) *n-bias in the direction of the hypothesis.* Pre-mainshock windows are busier (foreshocks),
+coupling estimates are noisier and upward-biased at low n, and "busier" is exactly the condition
+the hypothesis selects on. Count-matching is necessary and, at n ≈ 10 mainshocks, not sufficient.
+(iii) *The window is a free parameter.* Why 90 days? Freeze one value, and if more than one is
+examined it joins the S-8 family.
+**Ruling: (d) may be run as exploratory and may not be claimed, quoted or briefed, in any form,
+until it is pooled with an independent region (Japan — the Xue collaboration is the named path)
+to reach adequate mainshock counts.** Kepler himself demands independent replication before
+"anyone says a word in public"; this converts his demand into a gate rather than an intention,
+which is what he asked me for in charter amendment 7.
+
+**One further mandate, on the entry's logic.** K-039's internal-consistency argument — that under
+K-039, EXP-A's null is a *prediction* rather than an embarrassment — is elegant, and it is also
+the shape of a theory that explains its own past failures, which is the shape I am paid to
+distrust. **Mandate: K-039R states, in the protocol and before unblinding, the quantitative
+MARGINAL modulation that its conditional model implies for the exact EXP-A configuration, and
+that implied marginal must be consistent with EXP-A's measured upper bound from K-035.** If the
+conditional effect is large enough to be worth finding, its implied marginal is a testable
+number, not a free pass. This turns the internal-consistency claim into a constraint.
+*W-003 dies if:* any of (a)–(c) yields an interaction clearing the S-8 max-statistic with ≥0.01
+bits/event OOS.
+
+### K-040 — TESTABLE-NOW. Strong entry, and it names its own trap correctly — but it names the wrong one as dominant.
+
+Going where the counts are is right; the intensity formulation genuinely defuses the
+sequence-coherence artifact (Omori in the baseline, coefficient estimated relative to the decaying
+rate); and inverting the sign to look for **clamping** is the best under-exploited idea in the
+seed. Nobody looks for the hole. Credit.
+
+**But the dominant artifact in a big aftershock sequence is not sequence coherence — it is
+time-varying completeness, and Kepler does not name it.** Mc is elevated for hours to days after
+a mainshock by coda masking, decays roughly with the sequence, and — decisively — **its diurnal
+component is keyed to the mainshock's own time of day**, which aliases directly into the tidal
+bands. This is the mechanism by which "aftershock tidal studies are contaminated", and it is not
+the one the entry defuses.
+**Mandate: a per-sequence time-varying Mc(t) estimated from the data, events below it discarded,
+and the ETAS-sim null passed through the identical Mc(t)** (S-1b, non-negotiable here). Plus the
+R2-1(c) nuisance lines.
+**Second mandate:** "consistency of sign and phase across the three sequences" is described as an
+independent-replication test built into the design. It is three samples. It is a good coherence
+check and it is **not** a replication; do not label it one.
+*W-003 dies if:* a tidal coupling coefficient consistent in sign and phase across ≥2 of the three
+sequences clears the ETAS-sim distribution after Mc(t) correction.
+
+### K-041 — REFRAMED → **K-041R** (credit K-041, Kepler). The formalisation of non-firing is correct; the payoff statistic has a fake n.
+
+"Non-firing is not a gap in the data, it is the `∫λdt` term" is right and is the seed's best
+reply to Jim's negative-space question. Arms (i) and (ii) are properly specified and Kepler's
+honest prior that (i) fails, citing EXP-J's null persistence, is exactly the register I want.
+
+**Arm (iii) is reframed.** "Is per-cell Mmax in the test period larger in unresponsive cells?"
+run as a Mann-Whitney over ~1000 cells has an apparent n of 1000 and a real n equal to the number
+of large events, which is a few tens — and per-cell Mmax in a 16-year window is dominated by
+whether a sequence happened to land there. Heavy-tailed, sequence-driven, and the cell count is
+not information.
+**Reframed statistic: the count of M≥5 events in unresponsive versus responsive cells, scored as
+a rate ratio against ETAS-expected counts with a permutation test at the event level, exposure-
+and count-matched.** And the entry must state its power in advance; my expectation is <30% for a
+2× effect, which makes this a ride-along on K-036's covariate build and never a headline.
+**Retained mandate:** ρ is an estimate whose noise scales as n^(−1/2), so "unresponsive" is an
+n-partition in disguise unless matched. Kepler says this himself. Held to it.
+*W-003 dies if:* ρ persists train→test (Spearman CI excluding zero) at fixed n — which is the
+arm Kepler expects to fail, and is therefore the honest one.
+
+### K-042 — TESTABLE-NOW. **The independent-circular-shift null is the best null proposed in either round.** One technical hole.
+
+Preserving every component's own amplitude distribution, autocorrelation, seasonality and
+marginal relationship to seismicity while destroying *only* co-occurrence is exactly the right
+instrument for a combination claim, and the peaks-over-threshold framing correctly answers the
+cherry-picking objection: a threshold defined on the covariate alone, frozen before unblinding, is
+a pre-specified subgroup. Endorsed as written on both points.
+
+**The hole:** a circular shift by a near-multiple of one year does **not** destroy co-occurrence
+between two strongly annual series — it re-aligns them. Snowmelt, soil moisture and pressure are
+all strongly annual. **Mandate: restrict shifts to lags bounded away from integer-year multiples,
+or replace the circular shift with spectrum-preserving phase randomisation of each load series.**
+Report the shift-lag distribution used.
+**Second mandate:** state whether the top-0.1% threshold is defined on train and applied to test,
+or defined on the full covariate record before unblinding. Either is defensible; the protocol must
+pick one. **Third:** the tail-dependence preliminary is required and must be reported even when
+the main test is null — it is the more reusable of the two results.
+*W-003 dies if:* the top-0.1% rate ratio exceeds its independent-shift null distribution, pooled
+across cells by the intensity model.
+
+### K-043 — TESTABLE-NOW for arms (i)–(ii); arm (iii) descriptive only. And it deserves a specific credit.
+
+The active-source framing is genuinely good. More importantly: **S(region,t) is the only proposed
+criticality gauge in this entire ledger that is not a function of the local event rate.** Every
+order parameter in K-018..K-026 is a rate proxy, which is the whole of my round-1 S-3 objection to
+the emergence family; the ping response is driven by an exogenous catalogue and is therefore
+structurally immune to it. That is a real methodological advance and I did not have it in round 1.
+Recorded.
+
+**Arm (iii)** — high S precedes local M≥6.5 within 1–2 yr — is the prize and is underpowered:
+13 regions × rolling multi-year windows gives an effective n of order 100 with heavy overlap
+(S-2), against a target event class that is rare in every box. Kepler's own 20% prior is honest.
+**Ruling: (iii) runs as exploratory, is reported with its window-overlap fraction and effective
+DOF, and may not be claimed.** **Arm (ii)** — S varies in time by more than estimation noise —
+must be assessed against a sim null with matched ping counts and matched target counts per window,
+not by analytic ANOVA, because the estimation error itself varies with both.
+*W-003 dies if:* inter-region variance of S exceeds its estimation error against the
+circular-shift null (arm i) — this is a static-heterogeneity result and W-003 survives it — **or,
+decisively, if arm (ii) shows temporal variation in S beyond matched-count noise**, which W-003's
+temporally-static medium forbids outright. **Arm (ii) is the cleanest single discriminator against
+W-003 in the whole round, and it does not depend on any forecast succeeding.** Raise its standing
+accordingly.
+
+### K-044 — REFRAMED → **K-044R** (credit K-044, Kepler). It is not the EXP-F corpse. It is also not yet powered, and the two-point version dominates it.
+
+I record plainly, as I did for K-017: **this is not a rerun of EXP-F.** EXP-F asked whether the
+output is periodic — a property of one series with no input. K-044 asks for the response to a
+*measured* input, with the input's spectrum divided out. Different statistic, different null,
+strictly more information. Kepler is right, and the rate-state prediction of H(f)'s *shape*
+converts a scan into a shape test, which is the correct move.
+
+**Why it is reframed anyway.** Magnitude-squared coherence is biased upward by roughly 1/(number
+of averaged segments), and **the corner the entry exists to measure sits at months-to-years, which
+is precisely where a 37–45 year record has almost no independent segments** — of order 4 at a
+decade, tens at a year. The estimator is worst exactly where the physics is. The ETAS-sim null
+absorbs the *bias* (it is present there too) but cannot manufacture *power*.
+
+**Reframed as K-044R.** (1) **W-001-P1 runs first** — it is the two-point (Mf, M2) version of the
+identical measurement, is far better powered, and carries a zero-free-parameter prediction that
+the full band does not. (2) The continuous-band admittance is authorised **only** after a
+Laplace power calculation, filed in the protocol, showing the predicted corner is detectable at
+our record length and event counts; Wegener's closing request to Laplace is exactly this and I
+adopt it as a gate. (3) Effective DOF reported per frequency band. (4) R2-1(c) nuisance lines
+apply. **A tightly-bounded null here remains valuable** — bounding Aσ from below across California
+is a crustal measurement nobody has published — but only if the bound is demonstrated rather than
+asserted.
+*W-003 dies if:* coherence between the measured stressing-rate series and the seismicity-rate
+series exceeds its zero-coupling sim distribution in any pre-declared band, with the fitted corner
+within an order of magnitude of the independently measured 1/t_a.
+
+### K-045 — NEEDS-DATA (Oklahoma injection volumes, ComCat OK, CalGEM). The best strategic entry in the seed, and the one with the worst confound.
+
+"Calibrate in the strong-signal regime, transfer to the weak-signal regime" is B-1's logic on a
+new axis, and Kepler is right that a program whose scarcest resource is signal should not refuse
+to work where signal is abundant. The transfer test reuses EXP-M's frozen sign-test design, which
+has already failed honestly once — the best possible provenance for a design.
+
+**Acquisition path:** Oklahoma Corporation Commission UIC well-level injection volumes (monthly,
+public CSV); ComCat FDSN query for the Oklahoma box; CalGEM/DOGGR production data for Coso and
+Salton Sea. Order one day.
+
+**Mandates.** (1) **The Oklahoma confound is close to perfect and must be met head-on:** the
+covariate (injection volume) and the artifact (regional network densification, and therefore
+falling Mc) are both strongly monotone in time over 2011–2016. This is precisely why induced-rate
+curves are contested in the literature. **Fixed era-stable Mc, plus a network-history arm, or the
+entry is not interpretable.** (2) **A strong Oklahoma detection is near-certain and is therefore
+not evidence for anything.** Its entire value is machinery validation plus a well-constrained
+measurement of the interaction structure. **It may not be quoted as support for the tidal
+thread.** (3) The transfer test must be the frozen EXP-M-style sign test, scored once. (4) Kepler's
+honest null — that pore-pressure diffusion and elastic tidal loading share no mechanism, so
+transfer fails and we learn the regimes are physically distinct — should be **pre-registered as
+the expected outcome**, per charter amendment 4's prior-weighting.
+*W-003 dies if:* the Oklahoma-fitted response *shape*, imposed on the SoCal natural-load model,
+improves OOS bits/event over a free-form fit — a cross-regime transfer that a temporally-static
+heterogeneous branching process has no way to produce.
+
+**Ordering ruling for the seed.** Kepler recommends K-034 and K-035 first, then K-033, then
+K-036/K-039/K-040, then K-043 and K-045, with K-041/K-042 riding along. I adopt that with one
+change, which follows from the K-034 scope correction: **K-035 first and alone**, because it gates
+the larger family and it is the safe first exercise of untested machinery; **K-034 second**, gating
+only the dynamic family; then K-033 as the engine. The rest as Kepler has it.
+
+---
+
+## R2-3. THE INCUMBENT: W-003, AND THE CONDITIONS UNDER WHICH IT LOSES
+
+Jim's instruction is that the null unifier must be falsifiable rather than the permanent winner.
+Agreed, and it needs two things: a death condition it cannot wriggle out of, and an honest
+scoreboard. Both below.
+
+### W-003-P1 — **ADOPTED AS THE PROGRAM'S STANDING NULL**, with a frozen death condition. Not a claim to be run; the thing every claim is run against.
+
+Wegener's insistence on writing down the version of the world in which his unification is
+unnecessary is the best single act of discipline in the meta-theory section, and I say so first
+because most of what follows is me tightening it against him.
+
+**Frozen death condition, program-wide, effective now.** W-003 is DISCONFIRMED by any single
+order parameter, load covariate, interaction, or clock that satisfies **all five**:
+1. **≥ 0.01 bits/event** incremental over frozen ETAS, out of sample, on a temporal holdout
+   (S-11);
+2. a **sequence-block bootstrap CI excluding zero** (not event-level);
+3. clearing the **ETAS-sim max-statistic over the full declared family**, including every clock
+   and construction variant tried (S-7c, S-8, S-9);
+4. surviving the **detector-invariance gate** (charter amendment 2) or carrying a recorded
+   exemption naming the untested exposure;
+5. **one independent replication** — second region, catalogue, or period.
+
+**The anti-wriggle clause, and it is the load-bearing one.** When a covariate does add bits, the
+available W-003 defence is "your ETAS baseline was misspecified in that dimension; the bits are
+ETAS's, not the Earth's." That defence is legitimate *once* and unfalsifiable *always*, so it is
+now costed: **anyone raising it must exhibit a STATIC-PARAMETER ETAS variant, fitted on train
+only, that absorbs the bits on the same holdout. If no such variant is produced, the defence is
+withdrawn and W-003 takes the loss.** W-003's whole content is a temporally static medium; a
+defence that requires a time-varying parameter has conceded the point.
+
+### Correcting the scoreboard: W-003 is not winning 5–0. It is winning 5–0 in one competition and 0–0 in the other, and both personas have merged them.
+
+Wegener writes that W-003 "is currently WINNING: our record is 5 corpses to 0." That sentence
+conflates two different claim classes and the correction cuts against the sceptic — which is my
+charter's requirement and, this round, my duty.
+
+- **Forecasting-skill claims. W-003 leads, genuinely and at adequate power.** EXP-A's static
+  phase map failed its own out-of-sample rule with a clean anti-leak control; EXP-B's
+  feature-vs-amplitude correlations were small-n bias with a bias-robust label correlating with
+  nothing; EXP-G's golden-ratio structure returned p = 1.0 on both train and test; EXP-M's
+  fault-type pooling failed a frozen sign test 2/6; EXP-C2's phase migration was killed by our own
+  two designed confirmations. **Those are five real wins and they stand.**
+- **Physical-response claims. The score is 0–0, not 5–0.** Whether the crust responds to a 1 kPa
+  periodic load at the ~1% level was never tested at a power that could have seen it (R2-1b), and
+  EXP-F's periodicity null carries a *failed positive control* on its face. **A null at inadequate
+  power is not a win; it is an absence of information, and awarding it to the incumbent is exactly
+  the error the incumbent exists to prevent us from making.**
+
+**Ruling: W-003's record is restated as "5–0 on forecasting-skill claims; 0–0 on physical-response
+claims, pending K-035."** It remains the champion of the only competition this program is actually
+scored in — forecasting — and it has never been in the ring for the other one.
+
+### W-003-P2 — TESTABLE-NOW, and Wegener has materially upgraded K-009.
+
+In round 1 I ranked K-009 first while noting its weakness: "white vs not-white" has no predicted
+alternative value, so a red result is ambiguous between structure and ETAS misfit. **W-001 and
+W-002 supply the missing number: the residual correlation time should equal the local `t_a`,
+measured independently from Omori decay with no tides involved.** That converts K-009 from a
+one-generator test into the two-generator discrimination my own S-1(a) demands, with a
+zero-free-parameter prediction attached. This is the most useful thing the meta-theory section
+does for the existing queue.
+**Mandate: the per-cell predicted correlation time is computed from `t_a` and committed to the
+protocol before K-009 is scored.** Then: white ⇒ W-003; red with correlation time ≈ t_a ⇒
+W-001/W-002; red with correlation time unrelated to t_a ⇒ ETAS misspecification, and the
+data-assimilation thread proceeds on a different basis.
+*W-003 dies if:* leading residual EOF has a red spectrum with correlation time of months against
+the ETAS-sim null.
+
+---
+
+## R2-4. VERDICTS — W-001..W-006 distinguishing predictions
+
+**On §W-OBS itself — ADOPTED AS EVIDENCE BASE, not adjudicated as a claim, with four riders.**
+The 31-row table with per-row replication status and explicit null domains is a real asset and the
+right format. Credit specifically for the corrections against Wegener's own priors: Bettinelli and
+Heki relocated to EPSL from their commonly-miscited journals, and db/dσ ≈ −0.0012/MPa recorded as
+an order of magnitude smaller than the figure he carried in. That is the behaviour the charter
+asks for and it is rarer than it should be. Riders:
+1. **O-9 is reclassified from observation to THEORY-PREDICTION.** Beeler & Lockner's 10⁵–10⁶ is a
+   model-dependent number contingent on assumed Aσ and tidal amplitude. It is doing more work in
+   §W-RETRO than any other row and it must not be quoted as an established fact. It is the thing
+   K-035 and W-004-P2 test.
+2. **O-16, "the frequency paradox", is Wegener's inference, not a literature row, and it is
+   circular with W-001-P1.** O-7 (Vidale 1998) and O-15 (Johnson 2017) differ in estimator,
+   magnitude range, target and power, not only in frequency. "Same crust, same amplitude, different
+   period" is established **only** by a single analysis, one catalogue, one estimator, both bands —
+   which is precisely W-001-P1's design. **O-16 is therefore a conclusion of the test, not an input
+   to it, and may not be cited in its motivation.**
+3. **O-30 (our Coso 0.340, p = 0.041, n = 113) is quarantined as a load-bearing anchor** until
+   W-004-P1 runs. §W-RETRO leans on it heavily as a "mechanism signature". The shear-positive /
+   σ_n-null contrast is a genuinely good argument — a detection artifact does not distinguish two
+   stress components resolved on the same events — and it is one comparison at n = 113 with a
+   one-sided p of 0.041 and no look-elsewhere correction over this program's search history. It may
+   be cited as suggestive. It may not carry a meta-theory.
+4. **§W-SPINE's regime table is a hypothesis, not a summary.** Assigning Aσ and t_a values to five
+   regimes is the unification claim itself; presenting it as a reading of the table imports the
+   conclusion. Label it as W-001's corollary.
+
+### W-001-P1 — TESTABLE-NOW, **gated on K-035**, with four mandates. Best new prediction in either persona's round.
+
+Zero free parameters, cross-observable, internal frequency contrast, on disk. It genuinely
+separates four meta-theories in one run and it genuinely satisfies the Einstein criterion: `t_a`
+comes from Omori decay with no tide anywhere in its estimation, and the Aσ gain cancels in the
+ratio, so the predicted Mf/M2 relation has nothing left to tune. I have not seen this test in the
+literature either. It is the best-designed statistic in this ledger.
+
+**Now the artifact analysis Jim asked for, because "artifacts are common-mode and largely cancel
+in the ratio" is true for some artifacts, false for the ones that matter here, and one of the
+failure modes biases toward confirmation.**
+
+**(1) Band-dependent estimator bias does NOT cancel — it is amplified by the ratio, and it points
+the way W-001 predicts. This is the fatal one if unhandled.** Amplitude estimates of a periodic
+modulation in a point process are biased *upward*, with bias scaling as the estimator's noise,
+~N_eff^(−1/2). The two bands have wildly different effective sample support: 37 years contains
+~26,000 M2 cycles and ~990 Mf cycles. Low-frequency bands additionally suffer from red background
+rate fluctuation leaking into the estimate — which is *exactly* the failure mode that killed
+EXP-F's three multi-year "detections" (slow rate fluctuations, not cycles). **So the Mf estimate is
+upward-biased relative to the M2 estimate for purely statistical reasons, in every cell, and the
+Mf/M2 ratio inherits the full bias rather than cancelling it.** Worse: cells with long `t_a` are
+cells with long, slow sequences — i.e. more low-frequency rate wander — so the spurious Mf excess
+correlates with `t_a`. **That is W-001-P1's predicted signal, manufactured from nothing.**
+*Mandate:* the claim is never the measured ratio. **The claim is the measured ratio's excess over
+the ratio produced by the identical estimator on ETAS-sim catalogues with ZERO coupling and the
+real tidal series in place, run per cell through the identical code path**, with the sim's own
+`t_a` distribution matched. If the sim reproduces the predicted trend, the prediction is dead on
+arrival — and that is the first thing to check.
+
+**(2) Never form a ratio of two noisy estimates.** The prior, given the corpses, is that both
+band amplitudes are consistent with zero. A ratio of two such estimates is Cauchy-like: infinite
+variance, no usable CI, unstable to sign flips in the denominator. *Mandate: fit both band
+responses jointly and test the rate-state low-pass model against the flat (frequency-independent)
+model by likelihood ratio, with log `t_a` as the predictor and errors-in-variables on `t_a`.
+Report the two amplitudes and their covariance; never publish the ratio as a statistic.*
+
+**(3) Mf-band completeness seasonality — the one Jim named — is real but is not the worst one, and
+its dangerous form is different from the obvious one.** Direct seasonal completeness variation
+lives at 1/yr and its harmonics, not at 13.66 d, so it does not contaminate Mf directly. The
+dangerous coupling is the one in R2-1(c): **an S2 (12.000 h) detection artifact beating against
+M2 (12.421 h) produces an envelope at 14.77 d, inside the fortnightly band.** Mf proper is
+13.661 d and is separable from 14.765 d given ≳1.5 yr of record, so this is fixable — but only
+by an analysis that explicitly models both lines. *Mandate: S1, S2, K1, P1 and the Msf line
+(14.765 d) enter as nuisance regressors; a measured time-of-day Mc curve is reported; and two
+off-tidal negative-control lines (11.0 d, 16.5 d) must return null.* Without this, a powered
+Mf/M2 measurement will find structure and it will be the day/night cycle beating against the moon.
+
+**(4) `t_a` is catalogue-derived and correlates with N; N-as-covariate is the wrong fix.** Wegener
+proposes including N as a covariate and calls it "the whole adjudication" against W-004. A linear
+covariate cannot absorb an N^(−1/2) bias. *Mandate: fixed-n subsampling across cells with
+replication over draws (S-4), not N as a regression term.* Doing it Wegener's way leaves W-004
+alive by construction, which defeats the stated purpose of the test.
+
+**(5) A structural power problem, which is why the K-035 gate is not optional.** Under W-001, low-
+Aσ cells have high gain **and** short `t_a` **and** therefore a high corner frequency and a
+ratio near 1; high-Aσ ordinary crust has low gain, long `t_a`, and a large predicted ratio.
+**The predicted signal is largest exactly where both amplitudes are smallest and hardest to
+measure.** Per-cell estimation may simply be impossible at our counts. *Mandate: K-035's power
+curve exists before this protocol is frozen; if per-cell power is inadequate, the test runs as a
+pooled hierarchical regression with cells as random effects, or it does not run.*
+
+**Verdict:** with (1)–(5), TESTABLE-NOW and ranked #4. Without (1), it is an entry that would very
+likely confirm itself.
+*W-003 dies if:* the joint two-band model's dependence on `t_a` beats the flat model by likelihood
+ratio against the zero-coupling sim distribution, at fixed n.
+
+### W-001-P2 — REFRAMED → **W-001-P2R**. Blind ranking is right; "does it name the known one" is not a test.
+
+We have exactly one qualified tidally-sensitive cell (O-30, itself quarantined). A ranking scored
+against one positive has no power, and "additionally names non-geothermal cells" has no scoring
+rule at all as written. **Reframed: a continuous rank correlation between blind-predicted Aσ and
+measured per-cell coupling across all cells, at fixed n, with the statistic being the increment
+over a distance-to-geothermal baseline** — because the claim is that Aσ is a field and not a label,
+which is an incremental claim. Ranking frozen and hash-committed before scoring.
+*W-003 dies if:* that increment over the geothermal baseline is positive with a CI excluding zero.
+
+### W-001-P3 — NEEDS-DATA, and underpowered as framed. n = 4 sites cannot support a rank test.
+
+Oklahoma / Basel / Groningen / Koyna gives a best-possible p of 1/24 for a perfect ordering, and
+the induced thresholds themselves span a decade and a half with contested values (O-11). *Cheapest
+unblocking path:* the Weingarten et al. well-level dataset (~40,000 Class II wells, most inducing
+nothing — the null side is the asset here) turns 4 sites into many faults. K-045 builds half the
+machinery. Until then, NEEDS-DATA.
+
+### W-002-P1 — REFRAMED → **W-002-P1R**. Bimodality is untestable at our measurement noise; the migration arm survives and is better.
+
+A dip test on a distribution of estimates whose noise exceeds their spread cannot find a mixture;
+worse, our cells have a strongly non-uniform N distribution, so any bimodality recovered would
+most plausibly be bimodality in estimator variance. *Reframed to the arm that is actually sharp:
+**do cells exhibiting √t diffusive migration of activity show higher measured load coupling than
+matched cells without, at fixed n?*** A binary label against a continuous estimate is far better
+powered than a mixture test, and it retains exactly the content that separates W-002 from W-001.
+*W-003 dies if:* the migration-labelled cells' coupling excess clears the sim null at fixed n.
+
+### W-002-P2 — TESTABLE-NOW. Wegener is right that this is the cheapest genuinely-new measurement separating W-002 from W-001. Three mandates.
+
+Hysteresis — post-trigger sensitivity elevated for months to years, decaying with a resealing
+timescale — is a memory a gain field does not have, and Landers/Hector Mine/Ridgecrest are all on
+disk with coverage either side. Good entry.
+*Mandates:* (1) **count-matching is mandatory and the bias runs toward the hypothesis** —
+post-trigger windows contain far more events, coupling estimates are upward-biased at low n, so
+the pre-window's lower n manufactures the predicted contrast; (2) post-trigger Mc is elevated
+(S-1b, and see K-040's Mc(t) mandate — same machinery); (3) the ETAS-sim must generate the
+mainshock's aftershocks and pass through the identical procedure. Bundle the run with K-040 and
+K-039R; they are three questions of one dataset.
+*W-003 dies if:* post-trigger coupling exceeds pre-trigger coupling at matched n and matched
+Mc(t), against a sim null containing the same sequences — a temporally static medium cannot
+produce path dependence.
+
+### W-002-P3 — REFRAMED → conditional, and currently vacuous. Spec deferred.
+
+"P1 residuals are organised in time rather than white" is a second-order test on a first-order
+measurement that may not exist. **It is authorised only if W-001-P1 returns a measurable
+`t_a` relation; if W-001-P1 nulls, W-002-P3 has no residuals to structure and must be withdrawn
+rather than re-scoped.** Recorded now so it cannot become the retreat position.
+
+### W-004-P1 — TESTABLE-NOW. **The highest-value observer test in the round**, and it folds into G3.
+
+"Subsample the high-count settings down to the null settings' counts and see whether the
+sensitivity gradient collapses" — Wegener's claim that this single comparison is worth more than
+any new hypothesis, because it decides whether §W-OBS is a table about the Earth or about
+seismometers, is correct. It is also a direct, uncomfortable challenge to our own O-30, which is
+exactly the adversarial self-audit charter amendment 3 requires and which I said I would name if
+Kepler did not. He did not; Wegener did.
+*Mandates:* (1) matching on **n, Mc, and FM-availability** — Coso-north's 113 are FM-resolved
+events, a different selection from ordinary cells; (2) the comparison is against a **distribution**
+of many n = 113 ordinary-cell draws, not one; (3) the headline statistic is the fraction of
+ordinary-cell draws reaching Pm/P0 ≥ 0.340, which is Coso's *look-elsewhere-corrected* p-value and
+is the number this program has never computed.
+*W-003 dies if:* at strictly matched N and estimator, Coso-north retains large coupling while
+ordinary crust returns zero — that is heterogeneity of *response*, which W-003's static-parameter
+medium can actually accommodate; so more precisely, **W-003 survives W-004-P1 either way, and
+W-004 is the entry that would kill W-001/W-002 instead.** Recorded so the discriminator is not
+mis-assigned.
+
+### W-004-P2 — TESTABLE-NOW. The most decisive single experiment available to this program, and the one where systematics beat statistics.
+
+Running the tidal test on the full SCSN catalogue at a fixed era-stable Mc is the direct test of
+O-9 in California, and this program is one of very few that can run it. At N ≈ 6×10⁵ the
+statistical resolution is ~0.4%, which genuinely reaches the predicted 1%.
+**And that is precisely why R2-1(c) is binding here above all entries: at 0.4% statistical error,
+a several-percent diurnal detection modulation is ten or more times the signal.** All R2-1(c)
+mandates apply without exemption. Additionally: verify the "Mc ≤ 1.7 in every era" claim
+empirically before fixing Mc, and report the surviving N.
+**Wegener states the falsifier correctly and generously** — a powered full-catalogue null with an
+upper bound below 1% would falsify Beeler–Lockner in California and convert O-7 from a power limit
+into a physical fact. That is a publishable result either way, and it is the clearest instance in
+this ledger of a test whose failure is as informative as its success.
+*W-003 dies if:* a systematics-controlled full-catalogue test returns a tidal modulation above its
+sim null with the off-tidal control lines null.
+
+### W-005-P1 — TESTABLE-NOW. Clean head-to-head; both designs already exist.
+
+Scalar-refined ETAS (locally estimated μ, t_a, corner magnitude) versus K-022's percolation model
+on the same holdout. *Mandates:* matched parameter counts, identical holdout, CRPS **and**
+bits/event both reported. One caveat on the framing: "any structurally fancier model" is an
+unbounded class and cannot be falsified; **the frozen comparison is the two named models only**,
+and a loss by K-022 does not establish the general claim.
+*W-003 dies if:* neither wins by ≥0.01 bits over frozen ETAS — that is a W-003 *win*; W-003 dies
+here only if the scalar-refined model itself clears the floor, which it plausibly does, since
+localised μ is close to rate re-calibration. See W-005-P2's problem, which is the same one.
+
+### W-005-P2 — REFRAMED → **W-005-P2R**. Near-tautological as posed, and underpowered as a rank test.
+
+Two problems. (i) The point-process log-score is dominated by the overall rate, and μ *is* the
+rate scale — so "localising μ buys nearly everything" is close to arithmetic rather than a
+finding about the Earth. (ii) The monotone claim across parameters is a Spearman correlation on
+n = 5 points, which needs ρ ≈ 0.9 to reach p < 0.05 and cannot distinguish monotone from
+"μ dominates".
+*Reframed:* run the per-parameter localisation gain table as a **measurement**, descriptive, no
+claim attached; and score only the one sharp falsifiable sub-prediction — **"localising p buys
+< 0.05 bits/event across the 13 regions"** — which is cheap, honest, and can lose. Keep it in the
+queue at low cost and low rank; it is a re-scoring of `results_exp_m.json`, as Wegener says.
+
+### W-006-P1 — (a) REFRAMED, (b) TESTABLE-NOW. Cheap, on disk, and it is a second independent challenge to B-4.
+
+**(a) as posed would have been REJECTED.** "No catalogue-derived statistic separates creeping from
+locked silent cells at better than chance" is a universally-quantified negative over an unbounded
+class of statistics; it cannot be tested and Wegener half-knows it, since he names repeater
+fraction as a counterexample-in-waiting and records the ambiguity rather than hiding it — credit
+for that. *Reframed to a bounded statement:* **"none of the following frozen list — b-value, swarm
+fraction, repeater fraction, interevent CV, Omori p, magnitude entropy — separates the two
+populations above AUC 0.6 at fixed n."** Frozen list, stated power, quotable bound.
+**(b) TESTABLE-NOW** and it is the valuable half: does a single geodetic coupling covariate
+separate them cleanly?
+*Mandates:* (1) **count-matching is not optional** — 158/200 unexplained-silent cells have
+n_train < 20 and 95 have n_test = 0, so catalogue statistics are unmeasurable there by
+construction and (a) would otherwise pass for free and mean nothing; (2) use **shear**, not
+dilatation (B-5: dilatation carries ±2× measurement uncertainty); (3) **the creeping/locked labels
+must come from an independent published source** — creepmeter/alignment-array compilations or a
+published geodetic coupling model — **and not from `socal_strain_grid.npz`, which is the covariate.
+Labelling from the covariate would make the test circular, and Wegener does not state this.**
+**Standing:** this is a formal CHALLENGE to B-4 under the retirement mechanism, filed by Wegener,
+naming exposure "the silent list is a mixture of two opposite hazard states and the ledger cannot
+tell them apart." Under §8 rule 3 the likely outcome is **NARROWED**, not RETIRED — and Wegener's
+own reading is that B-4 is then better described as *a direct detection of the aseismic field
+through its negative space*, which is a stronger and more defensible claim than the hazard-map
+reading we have been making. Audits take priority over exploration (amendment 3), which is why
+this enters the top five.
+*W-003 dies if:* the geodetic covariate separates the two populations at fixed n while the frozen
+catalogue-statistic list does not — a real, non-catalogue state variable carrying information the
+branching process cannot.
+
+### W-006-P2 — NEEDS-DATA, and structurally confounded with W-004. Its strategic claim must not move resources yet.
+
+"Above-ETAS skill ranks with the quality of the region's aseismic readout" is a good pre-registered
+ranking, and it is confounded in its purest form: Cascadia, Nankai and Parkfield have rich aseismic
+readouts **because** they are the best-instrumented, lowest-Mc regions on Earth — which is W-004's
+entire thesis. "At matched catalogue power" is stated but is very hard to achieve across
+subduction and strike-slip regimes with different Mc histories and different magnitude scales.
+**Ruling: NEEDS-DATA (repeater catalogues, tremor catalogues, geodetic coupling models for ≥3
+regions), and the entry's strategic conclusion — "SoCal's above-ETAS ceiling is low and this
+program has been mining the wrong region" — may not influence resource allocation until the
+ranking is tested.** It is the most expensive claim in the meta-theory section and currently the
+least supported.
+
+---
+
+## R2-5. HOUSEKEEPING — the CORPSE EXPOSURE list (new, symmetric with §10)
+
+Required by R2-1(d)3. Corpses now carry what they were *not* tested against, so a null cannot be
+over-quoted and cannot be reopened on a vague power argument.
+
+- **EXP-A (static tidal-phase susceptibility maps).** WHAT DIED: out-of-sample forecasting skill
+  of a static phase map, SoCal, M≥1.5 FM-matched, train ≤2009 / test 2010–2018, with a clean
+  anti-leak control (22 train-null bins, S = 0.009, p = 0.28). **This stands.** EXPOSURE: physical
+  response amplitude not bounded (pending K-035); per-bin n ≈ 10²–10³ vs O-9's predicted ~1%
+  effect; diurnal/S2 detection systematics never modelled; conditional (state-dependent) effects
+  never tested. **NOT a corpse of "tidal triggering in SoCal".**
+- **EXP-B (feature-vs-amplitude susceptibility predictors).** WHAT DIED: all apparent correlations
+  as small-n amplitude bias (a_b vs n_train ρ = −0.49, p = 0.001); bias-robust label correlated
+  with nothing. **Stands, and it is a methodological asset, not merely a null.** EXPOSURE: fixed-n
+  subsampling not used at the time (analytic reasoning only).
+- **EXP-C / C2 / E (phase migration, tracking).** WHAT DIED: cross-catalogue replication (QTM +25°
+  vs SCSN +159°, same rock, same decade) and walk-forward tracking (S = −0.095, p = 0.92).
+  **Stands, and the self-correction is the program's best single act.** EXPOSURE: none material —
+  this is a detector-invariance failure, which is the strongest kind of null we produce.
+- **EXP-F (fixed periodicities incl. annual).** WHAT DIED: nothing cleanly. **The 7-day method
+  check FAILED to fire.** EXPOSURE: comb power unquantified; input spectrum never divided out
+  (K-044R's point); no injection-recovery. **This null is weak evidence and must always be quoted
+  with its failed positive control attached.**
+- **EXP-G (golden-ratio interevent structure).** WHAT DIED: p = 1.0 train and test. **Stands at
+  high power.** EXPOSURE: none material.
+- **EXP-M(i) (spatial transfer of sequence shapes) and fault-type pooling.** WHAT DIED: frozen sign
+  tests, 7/15 and 2/6. **Stand.** EXPOSURE: W-005 offers an explanation (type is a shape label
+  being asked to do a scalar's job) that is consistent with, and not evidence for, these results.
+
+**Program prose rule, effective now:** the sentence "tidal triggering is null in SoCal" does not
+appear in any draft, email, briefing or README from this program. The permitted form is the
+EXP-A scope sentence above, plus the K-035 bound once it exists.
+
+---
+
+## R2-6. REVISED PRIORITY QUEUE
+
+Ranked by decision value per compute-hour, with what changes on each outcome. Round 1's top five
+were K-009, K-031+K-028, K-027, K-005, K-001. **Three are displaced and none is downgraded** —
+the new entries are cheaper gates that license larger families, which is the only legitimate
+reason to jump a queue.
+
+**1. K-035 — the power-and-systematics audit (100% on disk, pure simulation, fastest item in the
+ledger).** *Decision value:* it is the licensing gate for six entries and it re-prices five
+corpses into quotable bounds (K-032 item 6). **If EXP-A's methods could have detected ~1–3% and
+did not**, the tidal corpse is *more* dead, the physical thread closes with a published bound, and
+W-001/W-002/K-036/K-039R/K-040 are all cancelled before a line of protocol is written — the
+largest possible saving in the program. **If the minimum detectable amplitude is ~10–20%**, then
+our headline null and the leading physical prediction have never been in contact, the conditional
+programme is licensed, and every subsequent null becomes an upper bound instead of a shrug. It
+also is the safe first exercise of untested Cox-ETAS machinery (the a = 0 arm). No other item this
+cheap decides this much.
+
+**2. K-009 — ETAS residual whiteness, upgraded (100% on disk).** *Decision value:* unchanged from
+round 1 — it is the go/no-go for the entire data-assimilation thread — and **raised** by W-003-P2,
+which supplies the quantitative alternative it lacked: the residual correlation time should equal
+the independently measured local `t_a`. White ⇒ close K-010 Tier 2 and K-012 and tell Jim compute
+buys nothing beyond the backbone. Red at ≈ t_a ⇒ W-001/W-002 gain their first real support and
+the filter is specified. Red but unrelated to t_a ⇒ ETAS misspecification, a different and still
+valuable finding.
+
+**3. W-004-P1 + K-031 + K-028 — the observer job, run as one (one FDSN query, three catalogues on
+disk).** *Decision value:* decides whether the sensitivity ladder is a fact about the Earth or a
+survey of seismometers, and simultaneously whether B-4's silent list and EXP-I(iii)'s b-decline
+are rock or network. It also produces the look-elsewhere-corrected p-value for our own Coso
+result, which has never been computed and which §W-RETRO currently leans on. **If the gradient
+collapses at matched N**, W-001/W-002 are badly wounded before they are ever tested and this
+program stops chasing a gain field. **If it survives**, the ladder is physical, B-4 hardens, and
+the detector-invariance gate ships with a worked example. Audits outrank exploration (amendment 3).
+
+**4. W-001-P1 — the frequency-response collapse (on disk; gated on K-035; four mandates in R2-4).**
+*Decision value:* the only zero-free-parameter cross-observable prediction in the ledger, and it
+separates four meta-theories in one run. **If the Mf/M2–`t_a` relation clears the zero-coupling
+sim ratio at fixed n**, this program has a physical state field, W-003 takes its first loss, and
+everything conditional becomes worth building. **If it nulls at demonstrated power**, W-001 and
+W-002 are both badly wounded, W-003 gains its strongest evidence, and — per Wegener's own honest
+closing — the program should stop looking for a hidden state field in California. It shares its
+only new code with K-033, so the marginal build cost is near zero. Ranked below K-035 solely
+because it cannot be frozen until K-035's power curve exists.
+
+**5. W-006-P1(b) — geodetic degeneracy-breaking of B-4's silent list (100% on disk, one afternoon).**
+*Decision value:* B-4 is this program's strongest current claim and is already auto-flagged for
+challenge under trigger 4(b). This is a second, independent challenge with a cheap, decisive test.
+**If geodesy separates the creeping from the locked cells and the frozen catalogue list does not**,
+B-4 is NARROWED and simultaneously *strengthened* — it becomes a direct detection of the aseismic
+field through its negative space, which is more defensible than the hazard-map reading we have
+been briefing. **If neither separates them**, B-4's silent list is a low-count artifact and the
+app's layer-3 candidate is pulled. Either outcome is worth an afternoon.
+
+*Next in queue, named so the ordering is legible:* **6. K-027** (predictability frontier — decides
+what product Jim ships; displaced only because three cheaper gates arrived); **7. K-034** (the
+dynamic-family licensing gate, with sealed literature values and ≥2 of 4 events — must precede
+K-038 and K-043); **8. K-005** (M0-invariance; still gates K-006R and K-018 under G1);
+**9. K-001** (magnitude-stratified skill; nearly free re-scoring); **10. K-033** (the Cox-ETAS
+engine, built once and reused by K-036/K-038/K-039R/K-040/K-041R/K-042/W-001-P1 — high build cost,
+so it is ranked by its own claim's value, not by the family's); **11. K-043 arm (ii)** (temporal
+variation in ping susceptibility — the cleanest single discriminator against W-003 that does not
+require any forecast to succeed); **12. W-002-P2 + K-040 + K-039R(a–c)** as one job on the three
+great sequences; **13. K-042** (rides on K-036's covariate build); **14. W-005-P2R** (a re-scoring
+of `results_exp_m.json`); **15. K-002** (still gates the entire spatial slate under G4).
+
+---
+
+## R2-7. WHAT WOULD DISCONFIRM W-003 — one table, so the incumbent can lose
+
+Per Jim's instruction. Every TESTABLE-NOW approved this round, and the specific result that costs
+the null unifier the round. All are subject to the five-part death condition in R2-3.
+
+| entry | W-003 loses if |
+|---|---|
+| K-033 | max\|γ\| clears the sim max-statistic **and** the frozen model adds ≥0.01 bits/event OOS |
+| K-035 | (control — sets the threshold at which every other null becomes evidence *for* W-003) |
+| K-036 T1 | summed rate-state model beats B-2 by ≥0.01 bits **and** the Aσ map matches the fluid map at fixed n |
+| K-038 | PGV covariate or its ledger interaction adds ≥0.01 bits above a model already containing geothermal |
+| K-039R(a–c) | any state×tide interaction clears the sim max-statistic with ≥0.01 bits OOS |
+| K-040 | tidal coupling consistent in sign and phase across ≥2 of 3 sequences after Mc(t) correction |
+| K-041R | ρ persists train→test at fixed n (Spearman CI excluding zero) |
+| K-042 | top-0.1% joint-extreme rate ratio exceeds the independent-shift null |
+| K-043 (ii) | S varies in time beyond matched-count estimation noise — **a static medium forbids this outright** |
+| K-044R | coherence clears the zero-coupling sim in a pre-declared band with the corner near 1/t_a |
+| K-045 | Oklahoma-fitted response *shape* improves SoCal OOS bits over a free-form fit |
+| W-001-P1 | joint two-band model's `t_a` dependence beats flat by LR against the zero-coupling sim ratio |
+| W-001-P2R | blind-Aσ ranking's increment over the geothermal baseline has a CI excluding zero |
+| W-002-P1R | migration-labelled cells show excess coupling at fixed n |
+| W-002-P2 | post-trigger coupling exceeds pre-trigger at matched n and Mc(t) — **path dependence** |
+| W-003-P2 / K-009 | leading residual EOF is red with a correlation time of months vs the sim null |
+| W-004-P1 | (does not discriminate W-003 — it discriminates W-001/W-002 against W-004; recorded so it is not miscounted) |
+| W-004-P2 | systematics-controlled full-catalogue test finds modulation with off-tidal controls null |
+| W-005-P1 | scalar-refined ETAS clears ≥0.01 bits over frozen ETAS on the shared holdout |
+| W-006-P1(b) | geodetic covariate separates creeping from locked while the frozen catalogue list does not |
+
+**Two of these — K-043 arm (ii) and W-002-P2 — are the entries W-003 cannot absorb by any route,
+because a temporally static heterogeneous medium forbids both time-varying susceptibility and path
+dependence outright.** They are therefore the round's cleanest discriminators and neither requires
+a forecast to succeed. K-043(ii) is under-ranked in Kepler's own ordering and I have moved it to 11
+partly on this basis.
+
+---
+
+## R2-8. COUNTS AND CLOSING
+
+**Round 2 verdict counts.**
+- **TESTABLE-NOW — 15:** K-033, K-034, K-035, K-036 (Tier 1), K-038, K-040, K-042, K-043,
+  W-001-P1, W-002-P2, W-003-P2 (=K-009 upgraded), W-004-P1, W-004-P2, W-005-P1, W-006-P1(b).
+- **NEEDS-DATA — 5:** K-037, K-045, K-036 Tier 2, W-001-P3, W-006-P2.
+- **REFRAMED — 7:** K-039R, K-041R, K-044R, W-001-P2R, W-002-P1R, W-002-P3 (conditional),
+  W-005-P2R.
+- **REJECTED — 0.** W-006-P1(a) as posed and W-002-P1 as posed were both rejection-grade —
+  a universally-quantified negative and an untestable mixture test — and both had survivable
+  cousins, so both were reframed. I record that the round produced no outright kill, and I record
+  why: this is a stronger slate than round 1's tail, and the weak entries were weak in their
+  statistics rather than in their logic.
+- **ADOPTED AS STANDING NULL — 1:** W-003-P1, with the five-part death condition and the
+  anti-wriggle clause.
+- **New shared standards — 5:** S-7 (clocks), S-8 (max-statistic multiplicity), S-9 (freeze the
+  construction), S-10 (one model crosses), S-11 (bits floor + sequence-block CI).
+- **Zero VALIDATED. No test has been run. Nothing above may be claimed.**
+
+**Round-1 amendments made here:** the corpse framing (R2-1d); K-032 item 6 promoted and merged
+into K-035; K-009 upgraded with a quantitative alternative; the K-034/K-035 gating scope
+correction; the CORPSE EXPOSURE list added to §10's housekeeping; W-003's scoreboard restated as
+5–0 forecasting / 0–0 physics.
+
+**Kepler:** the conditional reframe is right, the `∫λdt` argument is the best technical point in
+this ledger, and K-042's null is the best-designed control anyone here has proposed. My two real
+objections are that your positive control licenses the wrong family, and that freezing the
+interaction grid leaves the construction free — which is where the forking path actually lives.
+Neither is an objection to the ideas.
+
+**Wegener:** the observation table is an asset, the self-corrections in it are the behaviour I
+want on the record, and W-003 and W-004 are two of the three best pieces of methodological work in
+this file. W-001-P1 is the best-designed prediction in the ledger and it has one artifact that
+biases toward its own confirmation; fix (1) in R2-4 and it becomes the test I most want run. Your
+"three orders of magnitude" is one and a half, and O-16 is a conclusion of your own test rather
+than an input to it. Both corrections make the entry stronger, not weaker.
+
+**And the symmetry, since I am the one who insisted on it:** if K-035 shows we were 10–30× short,
+I was too quick in round 1 to let "no tidal effect" stand as this program's summary sentence,
+and I will have been wrong about the framing while right about the map. If K-035 shows EXP-A could
+have seen 3%, then Kepler and Wegener are both wrong, the corpse gets deader, and I will say that
+with the same emphasis.
+
+*End Popper round 2.*
