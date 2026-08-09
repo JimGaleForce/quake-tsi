@@ -74,3 +74,30 @@ and checked on test.
 exp_h_etas.py / exp_f_periodicity.py / exp_g_ratios.py / exp_i_meta.py →
 results_exp_{h,f,g,i}.json. Runtime guards: each worker cuts surrogate counts in half
 (recording it) if projected runtime exceeds 90 min.
+
+## EXP-J (added 2026-08-09, frozen before any computation): the forward stress ledger
+
+Directive (Jim): model the system "from the other side" - stress/loading/triggers - and find
+where the model says events SHOULD fire but do not, then correlate that negative space.
+
+- J1 LEDGER (train period): per 0.2-deg cell in the SoCal box: loading rate
+  Mdot_geo = 2*mu*H*A*max_shear_rate (mu = 30 GPa, seismogenic H = 11 km, A = cell area;
+  max shear from data/socal_strain_grid.npz, true nanostrain/yr) vs seismic release
+  Mdot_seis = sum of Hanks-Kanamori moments (original catalog, train period, M >= 2.5) / 29 yr.
+  Coupling chi = Mdot_seis / Mdot_geo. Classes frozen in advance: SILENT-LOADING
+  (loading in top quartile, chi < 0.01), COUPLED (chi in [0.01, 1]), OVERSHOOT (chi > 1,
+  possible aftershock transients). Requires >= 20 train events per cell for a chi estimate;
+  cells below that with top-quartile loading are SILENT-LOADING by definition.
+- J2 PREDICTION (single test unblinding): two rival frozen hypotheses about the negative
+  space: (a) CATCH-UP - train silent-loading cells have elevated test-period event rates
+  relative to their train rates (vs coupled cells, Mann-Whitney on rate ratios);
+  (b) PERSISTENCE - cell character (chi quartile) persists train -> test (Spearman of
+  log-chi train vs test on cells measurable in both). Both scored; the data decides.
+  Stated prior: persistence wins (creep and coupling are material properties), but a
+  catch-up signal in any subset would be the interesting hazard-relevant finding.
+- J3 CORRELATES (exploratory): silent-loading cells vs covariates - distance to the SAF
+  creeping section (approx trace lat 36.0-36.8 along the fault), distance to geothermal
+  fields (tsi_map.GEOTHERMAL), median event depth, b-value, and the round-1 tidal modulation
+  amplitude (exp_a_train_bins.csv where overlapping). Rank correlations, exploratory-labeled.
+- Script exp_j_stress_ledger.py -> results_exp_j.json + maps/exp_j_ledger.png (loading map,
+  release map, log-chi map, class map).

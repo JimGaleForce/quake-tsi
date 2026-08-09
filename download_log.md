@@ -79,3 +79,7 @@ train/test split 2010-01-01 chosen from span/power only)
 
 165527d14b28bd1a0ea1cf5340e6b0252548d0e5ea8c2d33e6f1edca0ad2aa16 *PATTERN_PROTOCOL.md
 Sun Aug 9 2026 (frozen BEFORE any test-window analysis under these definitions)
+
+## EXP-J addendum hash
+1e126abc8a42a1e6ca7e0a5b9a874d83a9084ff9b5496c2bb5d57047ed119a6d *PATTERN_PROTOCOL.md
+Sun Aug 9 2026 (EXP-J frozen before computation)
