@@ -74,3 +74,8 @@ Tue Jul 21 09:30:40 PDT 2026
 62b259286d568a8ef0a446cf9749a8b1850f4ece0a3040fb22b8b02908755adf *OVERNIGHT_PREDICTION_PROTOCOL.md
 Sun Aug 9 2026 (frozen BEFORE any test-window (2010+) analysis under these definitions;
 train/test split 2010-01-01 chosen from span/power only)
+
+## Pattern-experiments protocol freeze record (round 2)
+
+165527d14b28bd1a0ea1cf5340e6b0252548d0e5ea8c2d33e6f1edca0ad2aa16 *PATTERN_PROTOCOL.md
+Sun Aug 9 2026 (frozen BEFORE any test-window analysis under these definitions)
