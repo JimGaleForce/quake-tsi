@@ -5652,3 +5652,789 @@ W-003-P2 was a mis-derived discriminator and is retired. Merton's §M-001 adopte
 To Kepler: the floor did not move as far as the headline suggests — "is there a latent state" is
 answered yes by three prior literatures, and our own run adds a sequence, not a field. The
 unclaimed ground is amplitude, estimator, and bits/event. Riff there.*
+
+---
+
+## PROPOSED (Kepler) — Round 2: K-046..K-058
+
+### Round 2 — 2026-08-09 (Kepler). No new seed from Jim. This round absorbs the team's full cycle
+### — Popper R1/R2 + the K-009 ruling and S-12, Merton's four giants, Wegener's table and six
+### theories, Faraday's register and over-quote audit, EQ18 §18 — and asks what the whole picture
+### implies that no one seat can see. All entries PROPOSED. Popper adjudicates.
+
+**What I read the cycle as saying, before I propose anything.** Three facts, stated flatly because
+the entries below are consequences of them and not of my enthusiasm:
+
+1. **Every finding this program has is either universal physics or a single sequence.** B-1 (p≈1
+   in 11/13, generic shape transfers) and O-24 are universal — true everywhere, therefore local-
+   information-free, which is W-005's whole point. B-3 is n_test=30 in a handful of sequences;
+   B-2's magnitude slope is n=290 events arriving in a few sequences; O-30/Coso is n=113 in one
+   bin; K-009's EOF1 is 90.6% five weeks of El Mayor. **There is no middle.** No finding of this
+   program lives at the scale of "a region, over a decade, across many sequences" — which is
+   exactly the scale a forecast product occupies. That absence is either a fact about the crust
+   or a fact about our estimators, and nobody has asked which. K-051 asks.
+2. **The corpses were re-priced as bounds and the positives were not.** K-035/K-032-item-6 convert
+   nulls into upper bounds at 80% power. The symmetric operation on the *positives* — every one of
+   which was selected by clearing a bar, and is therefore biased upward by exactly the winner's
+   curse — has never been done. K-052 does it, and it makes a numerical prediction about the next
+   holdout that can embarrass me.
+3. **S-12 is now a floor, and floors are objects.** Popper ruled that frozen rules bind status and
+   post-hoc sensitivities bind scope. That is correct and it quietly relocates the decisive
+   authority from the protocol to *whichever sensitivities a competent reviewer happens to think
+   of*. That set is unbounded, socially generated, and drifts. Its miss rate is measurable on this
+   program's own history. K-058 measures it.
+
+And one thing I did before writing, under ground rule 3 (read-only sniff to sharpen a hypothesis).
+It changed the round, so it is K-046 and it is first.
+
+---
+
+**K-046 — THE ACF FLOOR. K-009's surviving excess is a LAG-INDEPENDENT CONSTANT, which is the
+signature of a static per-cell background error, not of weather. One line of code decides it.**
+
+*Lens: fit the SHAPE, not the summary statistic. (Everyone above me consumed acf1, T, L; nobody
+plotted the 52-lag array they were arguing about.)*
+
+- **Claim.** The pooled residual ACF in `results_k009.json` is not a decaying correlation
+  function. It is `A·exp(−k/τ) + C` with **A = 0.0654, τ = 7.16 weeks, C = 0.0382**, and
+  ΔBIC = **+42.2** against the single-exponential form Popper's spec assumed (52 lags, my fit this
+  session, read-only, from the stored array). The flat term C **does not decay out to 52 weeks**
+  (mean of lags 20–52 = 0.0390 ± 0.0057; slope over that range −6.5×10⁻⁵ per lag, i.e. −0.002
+  total). A lag-independent ACF floor is what a **time-invariant per-cell offset in the residual
+  field** produces, and nothing else in the candidate list produces it: a latent slow field decays,
+  a mis-modelled sequence decays, an observer transient decays. **A wrong map does not decay.**
+- **The fingerprint, and it is the reason I am putting this first.** `robustness_excluding_2010`
+  reports acf1 = **0.038166** after dropping the El Mayor year. My fitted floor is **C = 0.0382**.
+  Two independent computations, three significant figures. **What survives the exclusion of the
+  one sequence is exactly, quantitatively, the flat floor** — i.e. the decaying component
+  (A = 0.065, τ = 7 wk) IS El Mayor, and the residue is static. That single coincidence
+  reconciles every disagreement in §P3: Popper's "the temporal excess is one sequence" (the
+  A-term), Merton's "the two headline numbers do not survive" (the e-folding fit was trying to
+  force a single exponential through a curve with a pedestal — which is *why* it saturated at its
+  52-week cap in the real data and in 20/20 null sims), and the executor's "Moran's I is robust"
+  (a static spatial error is present at every time step, so per-time-step spatial dependence is
+  invariant to dropping any year).
+- **Why the code makes this inevitable and invisible.** `exp_k009_residual_whiteness.py::
+  pooled_temporal_acf` computes ρ(k) = Σ r(t)r(t+k) / Σ r² **with no per-cell demeaning**, and
+  says so in its docstring: *"a region-wide offset is signal, not nuisance."* That justification is
+  sound for a **region-wide** (common-mode) offset and does not cover a **per-cell** offset, which
+  is a different object. A static per-cell mean m_i contributes m_i² to the numerator at *every*
+  lag, giving a floor of Σm_i²(T−k) / Σr² — flat, with a slight edge-driven decline of (T−k)/T.
+  With T = 469 weeks that predicts a 11% droop of C across 52 lags (≈0.0042); I measure ≈0.0021.
+  Same sign, same order, within a factor of two. **The one control that would have caught this —
+  subtract each cell's own time-mean before the ACF — is absent from the spec, the code and all
+  three adjudications.**
+- **Why the ETAS-sim null cannot see it either.** The sims are generated from the *same fitted
+  parameters* used to compute the expectation, so their μ map is correct by construction and their
+  per-cell offsets are pure Poisson noise, which the Anscombe transform removes. The null floor is
+  therefore ≈0 **by construction**, and the observed floor measures nothing but *our map minus the
+  Earth's map*. S-1(a) circularity, arriving from the opposite direction than anyone anticipated:
+  not "the sim can only return no-excess", but **"the sim guarantees an excess whenever our static
+  map is wrong, and reports it as dynamics."**
+- **Test (100% on disk, one afternoon, mostly re-running an existing script).**
+  1. **The decisive arm.** Recompute the pooled ACF on the **cell-demeaned** residual field
+     `r'(i,t) = r(i,t) − mean_t r(i,t)`, real and all sims, identical code path. Report ρ'(k).
+  2. **The decomposition.** Report the variance split explicitly:
+     `Var(r) = Var_between-cell(time-means) + Var_within-cell`, and confirm the between-cell
+     fraction equals C (predicted 3.8%).
+  3. **Three-way generator scoring on the shape.** Fit, by ΔBIC, on the real and on each sim:
+     (i) pure exponential; (ii) exponential + constant; (iii) two exponentials. Do the same on the
+     El-Mayor-excluded field.
+  4. **Localise the map error.** Map the per-cell time-mean residual m_i. Regress it on
+     (a) distance to CFM5.3 traces — Bray et al. (2014)'s named on-fault-under/off-fault-over
+     signature, which Merton's takeable 11 says must be tested *by its signature, not generically*,
+     and which the low-power kernel swap (triggered fraction 0.909) could never exclude;
+     (b) the Ross & Cochran 92-swarm labels; (c) ρ_sta once K-031 exists.
+  5. **Re-do the two-exponential fit on the sequence-excluded field** and report τ_slow with a CI.
+     *Only that number* is admissible against the t_a band (13.8–55.3 wk). The 2.42-week integral
+     statistic that Popper and Merton both scored generator B against is an integral over a curve
+     with a pedestal, and is therefore not an estimate of any timescale at all.
+- **Statistic and success rule (frozen form I would propose).** Primary: the demeaned lag-1 excess
+  ρ'(1) − null p97.5. **If ρ'(1) excess < 0.01 while the raw excess is 0.0935, the surviving
+  content of K-009 is "our background map is wrong by 3.8% of residual variance in a spatially
+  organised way", not "there is weather", and the assimilation thread closes on a static finding.**
+  Secondary: ΔBIC preference for the +constant form over pure exponential, real vs sims.
+- **Null.** The identical pipeline on the 20 (→500) ETAS-sim catalogues, demeaned identically.
+  Plus a **map-error injection positive control**: perturb μ(x) by a frozen static multiplicative
+  field of known amplitude, simulate, and confirm the pipeline recovers C = the injected between-
+  cell variance fraction. That control is cheap and it is the one that makes this entry able to
+  fail.
+- **Expected effect if I am right.** ρ'(1) excess falls to ≈0.00–0.015; the +constant model wins
+  by ΔBIC > 20 on the real field and loses on every sim; m_i correlates with distance-to-fault in
+  the Bray direction at |ρ| > 0.2. If I am wrong, the demeaned ACF keeps a decaying excess with a
+  measurable τ and **K-009 becomes much stronger than its current PROVISIONAL**, because the
+  static-map alternative will then have been excluded by measurement rather than by omission.
+- **Cost / prior / decision.** ~2 h compute, no downloads. My honest prior that the floor is
+  static-map error: **0.7**. Decision that changes: whether K-010 Tier 1, K-012, and the whole DA
+  thread are chasing a state or chasing a cartography error — and whether K-002 (the spatial floor,
+  currently ranked 15th) is in fact the highest-value item in the ledger, because under this
+  reading K-009 has been *measuring K-002's absence for a year*.
+- **Why this might be dismissed too quickly.** "A demeaning choice is a detail." It is the
+  difference between a state variable and a static bias, which is the difference between W-001/
+  W-002 and W-003, which is the entire question. Second objection: "post-hoc re-analysis of a
+  scored result." Correct, and S-12(c) governs it: this is not an argument, it is a **frozen rule
+  for the K-009R re-run** — add ρ'(1) to the 2019+ pre-registration in §P3-6 item 2 before that
+  window is read.
+
+---
+
+**K-047 — MAKE THE SEQUENCE THE UNIT. The program keeps discovering that its signal lives inside
+single great sequences and keeps calling that a failure. n = 179, not 1.**
+
+*Lens: promote the nuisance to the sample.*
+
+- **Claim.** Departures from ETAS are **concentrated in, and possibly confined to, the space-time
+  neighbourhoods of the largest events** — and when the great sequence is made the unit of
+  analysis rather than the thing excluded, the effect is well-powered, replicable, and scales with
+  mainshock magnitude. Specifically: in a superposed-epoch analysis over all M≥7.0 sequences, the
+  post-mainshock residual field of a *sequence-specific* frozen ETAS is non-white for a duration
+  τ_ex, and τ_ex and its amplitude are increasing functions of M.
+- **The inversion.** Five independent observations in this record point the same way and each was
+  scored as a weakness: K-009's EOF1 is El Mayor (§P3-2); B-2's magnitude skill is 290 events in a
+  handful of sequences (S-5); B-3 is 30 events, all triggering; K-040 says the tidal SNR lives in
+  Landers/Hector/Ridgecrest; W-002-P2's hysteresis test is defined only on those same three. **Five
+  arrows, one direction. The program read each as low power and none as a pattern.** If the crust
+  is quiescent-and-static except when a great event puts it in an excited state, then averaging
+  over sequences — which every pooled estimator and every sequence-block bootstrap does — is
+  averaging the signal into the noise on purpose. Popper's S-11 (sequence-block CIs) is correct
+  *and* it is the instrument that guarantees the pooled version of this can never be powered. The
+  fix is not to weaken the standard. It is to change the unit so the standard is satisfiable:
+  **the block IS the observation.**
+- **Data (on disk).** `data/comcat_world/*.csv`: **179 M≥7.0 and 517 M≥6.5, 1995–2026, 13 boxes.**
+  SCSN 1981–2018 and `comcat_socal_m25.csv` for the three SoCal sequences at fine scale. Frozen
+  GLOBAL pool (B-1) as the per-sequence generator so nothing is refit per event.
+- **Statistic.** For each mainshock, fit *nothing*: apply the frozen GLOBAL-pool ETAS with local μ,
+  compute the gridded residual field over days 0–730 on a magnitude-scaled grid (rupture-length
+  units, so sequences are comparable), demean per cell (K-046), and form the superposed-epoch mean
+  residual ACF and Moran's I as functions of (lag, time-since-mainshock, mainshock magnitude).
+  Headline: **τ_ex(M)** with a sequence-block bootstrap over the 179, and the slope dτ_ex/dM.
+- **Null.** ETAS-sim of each sequence from its own frozen parameters, passed through the identical
+  superposition; plus the **magnitude-shuffled control** (assign each mainshock another's
+  magnitude when building the scaled grid) which destroys the M-dependence and keeps everything
+  else; plus S-1(b): a detection function Mc(t | M_main) is mandatory here because coda blindness
+  scales with mainshock size and is *the* competing explanation (this is K-015's subject and this
+  entry should not run before K-015 delivers).
+- **Expected effect if real.** τ_ex of order 10–40 weeks for M7–7.5, rising with M; amplitude
+  excess 0.03–0.10 in ACF1 terms; the M-shuffled control flat. Effective n = 179 blocks, which is
+  the first design in this ledger that satisfies S-11 by construction rather than by apology.
+- **Cost / prior / decision.** ~6–10 h compute, no downloads. Prior on the null: **0.45** — high,
+  because K-046 may eat the whole thing (if the SoCal excess is static, the sequence excess may be
+  coda incompleteness). Decision: it tells us **where** the non-ETAS physics is, in one number, and
+  if τ_ex is real it converts operational aftershock forecasting — the one product anybody
+  actually consults — into the place to spend, rather than background forecasting.
+- **Why dismissed too quickly.** "You are proposing to study aftershock-sequence misfit." Yes, and
+  the program has spent two rounds treating aftershock-sequence misfit as the boring branch
+  (generator C) while the interesting branch (a latent field) failed to appear. **Generator C is
+  not a consolation prize; it is a claim with 179 independent instances, a magnitude scaling law,
+  and a deployable payoff, and it is the only one of the three generators that is well-powered on
+  data we already hold.**
+
+---
+
+**K-048 — FRAME-BREAK, LENS WITH NO NAME: UNIVERSALITY LAUNDERING. Test the validated universal
+law on systems that are not the Earth. Whatever transfers there is not geophysics.**
+
+*Lens: I do not have a name for this and I have not seen it done. The nearest neighbours —
+"external validity", "surrogate data", "negative control outcome" — all test whether a result is
+real. This tests whether a real result is ABOUT what it says it is about. Call it a **domain
+subtraction**: the information a model carries about its stated subject equals its performance on
+that subject minus its performance on the least similar system with the same statistical form.*
+
+- **The presupposition attacked.** B-1 is the program's foundation and its content is *"the
+  clustering law is universal; only μ is local."* Everyone — Popper, Wegener (W-005 explicitly),
+  Merton — has read that as a discovery about rock. But ETAS is a self-exciting Hawkes process
+  with a power-law kernel and a power-law mark distribution, and **that same object fits citation
+  cascades, retweet trees, neuronal avalanches, code-commit bursts, email chains, crime, and
+  hospital admissions.** If generic-shape-plus-local-μ transfers to *those* at +0.7 bits/event,
+  then B-1 has not told us the crust is special; it has told us that self-exciting production
+  processes are self-exciting. Universality that spans domains is a statement about the *class*,
+  and Wegener's own W-005 — "universality is precisely insensitivity to local details, therefore
+  a universal quantity carries zero information about local state" — implies this test and stops
+  one step short of it. **This is the strongest available falsifier of B-1's physical
+  interpretation, and no seismologist will ever run it, because it is not seismology.**
+- **Claim.** Let `G` = the frozen GLOBAL-pool ETAS shape (α, c, p) with μ fitted locally. Then
+  bits/event of G over a local-rate-oracle Poisson, measured on **non-geophysical self-exciting
+  streams at matched N, matched base rate and matched mark distribution**, is **within 0.2
+  bits/event of B-1's +0.66..+0.84 on the six holdouts.** The geophysically-specific information in
+  B-1 is the *difference*, and I predict it is small.
+- **Test.** Comparators (all public, free, one download each; pick ≥3): GH Archive public-event
+  streams (issue/PR/commit cascades per repository); Wikipedia revision streams per article;
+  MemeTracker / retweet-cascade benchmark sets used throughout the Hawkes literature; and — free
+  and on this machine — **this repository's own commit and ledger-entry stream** as a fourth,
+  deliberately absurd comparator. Procedure: tokenise each stream into (time, "magnitude") where
+  the mark is a domain-native size variable with an exponential-tailed distribution; fit *nothing*;
+  apply G with local μ only; score bits/event against a local-rate-oracle Poisson exactly as EXP-M
+  did. Report the **domain subtraction**:
+  `Δ_geo = bits(G on crust) − max_domains bits(G on non-crust)`, with a block bootstrap.
+- **Null.** `Δ_geo ≈ bits(G on crust)`, i.e. G fails on non-geophysical streams — which would mean
+  the universality is genuinely crustal and B-1's physical reading is vindicated *for the first
+  time*, by a test it has never faced. **Both outcomes are publishable and one of them is a
+  demolition of our own foundation, which is why it belongs here.**
+- **Mandated control (the one that makes it fair).** Match on N, on the mark distribution's tail
+  exponent, and on the *observed branching ratio* of the comparator stream. An unmatched comparison
+  proves nothing. Also report the shape parameters refitted per domain: if p ≈ 1 in retweets and
+  commits too, that number stops being "Omori is Omori worldwide" and becomes "power-law waiting
+  times are power-law everywhere."
+- **Expected.** Δ_geo between 0.0 and 0.3 bits/event. My honest prior on the null (that G fails
+  off-Earth): **0.3**.
+- **Cost / prior / decision.** ~1 day including downloads. Decision: it sets how much of B-1 may
+  be described as a finding about the Earth in any paper this program writes — and, per Faraday's
+  F-006, B-1 is one of the three entries blocked only on attribution. **This is the attribution
+  question asked from the physics side instead of the citation side, and Merton cannot answer it
+  with a literature search.**
+- **Why dismissed too quickly.** "Hawkes processes fit everything; everyone knows that." Everyone
+  says it; nobody has *subtracted* it, and this program quotes +0.66–0.84 bits/event as a
+  geophysical result in its register today. If the number is 0.6 of those bits are generic, that
+  sentence must change, and it is cheaper to find out from a weekend of downloads than from a
+  referee.
+
+---
+
+**K-049 — LENS WITH NO NAME #2: MARK–RECAPTURE ON OUR OWN ERRORS. Estimate how many material
+errors are still in the record.**
+
+*Lens: the program has, without designing it, run four partially-independent audits over the same
+corpus. Four capture occasions with partial overlap is an ecological census. Nobody has ever
+published a population estimate of the uncaught errors in their own results, and it is the single
+most honest number a research program could carry.*
+
+- **Claim.** The number of **undetected material errors** currently in this program's record is
+  estimable by Lincoln–Petersen / Chao capture–recapture from the four independent audit passes
+  already on disk, and it is **not small** — I predict a point estimate of 3–10 material errors
+  remaining, with an interval that will be embarrassing and useful.
+- **The four capture occasions (all on disk, all dated the same day, all partially independent).**
+  (1) **Faraday's OVER-QUOTE AUDIT** — 5 findings over 11 register entries, 2 material
+  (K-009's El Mayor omission in M-001.0; EXP-M's "0.07–0.15 bits" wrong at both ends), plus the
+  disowned `results_exp_j.json` verdict string, the B-5 "±2×" coinage, and a freeze hash that does
+  not verify (`LONG_VALLEY_PROTOCOL.md`). (2) **The supervisor's EQ18 §18 corrections** — 5 items,
+  overlapping Faraday's on three and adding the p = 0.94–1.08 "11/13 not 12/13" correction.
+  (3) **Popper's own corrections** — S-5 (B-1 quotation), R2-1(b) (Wegener's "three orders" → 1.5),
+  R2-1(d) (the "tidal triggering is null" prose retirement), S-12(e) and S-12(f) (two self-catches).
+  (4) **Merton's dossiers** — the B-3 "any M≥5 vs larger M≥5" definitional trap, the Bettinelli/
+  Heki venue corrections, the db/dσ order-of-magnitude correction, the W-006-P1(a) pre-falsification
+  by Liu et al. (2022). Plus two **worker** catches on the supervisor (the EXP-M K-rescaling sign
+  error; the λ/μ "5.68×" framing).
+- **Test.** Build the incidence matrix: rows = every distinct defect ever recorded in this program;
+  columns = the audit pass(es) that caught it. Compute Lincoln–Petersen for each pair, Chao's
+  lower-bound estimator and a jackknife for the full 4-occasion table, stratified by severity
+  (material / non-material) and by artifact type (arithmetic, over-quote, provenance/hash,
+  attribution, estimator-degeneracy). **Deliverable: N̂_total and N̂_uncaught with CIs, published in
+  the register beside the results.**
+- **Null / falsifier — and this is what makes it science rather than navel-gazing.** The estimate
+  makes a **forward prediction**: the next independent audit pass, of the same scope and by an
+  auditor who has not read the previous four, will find **N̂_uncaught × p_detect** new material
+  defects. Freeze the predicted count and its interval *before* the audit runs. If the next pass
+  finds far fewer, the auditors are not independent (a real and important finding about this
+  program's architecture — five personas sharing a prior is peer review with a shared prior, which
+  is precisely Popper's own R2-1(a) objection turned on the audit function); if far more, the
+  record is worse than we think and the register's tiers must move.
+- **Expected.** Pairwise overlap is high (Faraday ∩ supervisor ≈ 3/5), which will drive p_detect up
+  and N̂_uncaught down — and *that itself* is the interesting reading: high overlap means the
+  auditors are finding the same easy class (arithmetic and quotation) and the hard classes
+  (estimator degeneracy — caught exactly once, by the executor's own saturation diagnostic; and
+  construction-choice forking, S-9, caught zero times) are **uncensused**. My prior: the material
+  count is dominated by classes with zero captures, so the honest deliverable is not a number but a
+  **taxonomy of error classes with zero detections**, which is a statement about where this
+  program's next real mistake will come from.
+- **Cost / prior / decision.** 2–3 h, no compute, no downloads — purely reading the four audit
+  lists already written. Decision: whether the register's PANEL-READY tier is defensible today, and
+  whether the program needs an auditor who has *not* read the ledger.
+- **Why dismissed too quickly.** "Meta-work, not science." Faraday's own charter is built on the
+  claim that this program's discipline is its scarce good (F-010) and Faraday himself says that
+  claim has **no outcome measure** and must stay INTERNAL. **This is the outcome measure.** It is
+  the one number that would let F-010 be a claim rather than a mood, and it costs an afternoon of
+  reading.
+
+---
+
+**K-050 — THE LEDGER IS A BRANCHING PROCESS. Decluster our own idea stream and ask how many
+independent thoughts we have actually had.**
+
+*Lens: apply the program's own validated instrument to the program. If B-1 is universal it applies
+here too — and if it does, that is K-048's answer arriving from inside the building.*
+
+- **Claim.** The program's hypothesis stream is **self-exciting with a branching ratio near 1**:
+  most entries are offspring of a small number of parent results, the descendant-count distribution
+  is heavy-tailed, and the **effective number of independent research directions is an order of
+  magnitude smaller than the 46 K-entries + 6 W-entries + 5 baselines suggest.**
+- **Why nobody could see this from one seat.** Each persona sees its own round as a set of parallel
+  ideas. The dependency structure is only visible in the whole file: K-006R→K-015; K-018/K-021R
+  gated on K-005; the entire K-036/K-039R/K-040/K-041R/K-042/W-001-P1 family is *offspring of
+  K-033*; the six-item K-009R battery is offspring of one run; W-002-P3 is explicitly conditional
+  on W-001-P1. Popper already priced a piece of this correctly in his round-1 amendment-6 ruling
+  ("with two or three outcomes per lens the tally is n-biased noise") but treated it as a
+  bookkeeping caution rather than as a **generative process with a measurable branching ratio.**
+- **Test (100% on disk, it is the ledger).** Build the citation/dependency DAG over all entries
+  (edges: "gated on", "runs after", "credit", "riff off", "offspring of a result"). Statistics:
+  (i) offspring distribution and its tail exponent; (ii) branching ratio n̂ = (triggered
+  entries)/(all entries) — the model-light estimator from K-018(b); (iii) **N_eff = number of
+  Zaliapin-style root clusters**, using the program's own declustering logic on the DAG.
+  (iv) The behavioural arm, which is the falsifiable one: across the **three priority queues on
+  record** (round-1 §7, R2-6, P3-8), regress rank change on (a) recency of the entry's parent
+  result and (b) the entry's own stated decision value / prior-weighted payoff. **Claim: (a) beats
+  (b).**
+- **Null.** Rank changes uncorrelated with parent recency (Spearman CI covering zero); offspring
+  distribution consistent with Poisson. For the DAG, a **label-permuted edge null** preserving
+  in/out degree.
+- **Expected.** N_eff ≈ 8–12 root ideas behind ~57 entries; n̂ ≈ 0.8; rank-vs-recency ρ ≈ 0.4–0.6
+  against rank-vs-stated-value ρ ≈ 0.1–0.3. Small n (three queues, ~30 ranked items) — I flag this
+  as **suggestive-only** for arm (iv) and it becomes confirmatory at five queues, which will exist
+  in two more rounds. Register the prediction now so it can be scored then.
+- **Cost / prior / decision.** ~3 h. Prior on the null: 0.25. Decision: if the queue is driven by
+  recency rather than value, the fix is mechanical and cheap — **rank by the pre-committed
+  prior-weighted payoff written when the entry was proposed, not by the ranking written after the
+  last result.** That is amendment 4 being enforced against the enforcer.
+- **Why dismissed too quickly.** "The ledger is not data." It is a timestamped, append-only,
+  hash-verified event stream with marks and a dependency graph, produced by the exact class of
+  process this program has a validated generative model for. Refusing to point the instrument at
+  ourselves while claiming the instrument is universal is the inconsistency K-048 formalises.
+
+---
+
+**K-051 — REDEFINING SUCCESS AGAIN, HARDER THAN K-032: the binding budget is not bits, it is
+N_eff. Compute the maximum evidence SoCal can ever yield, and publish it as a ceiling.**
+
+*Lens: the program's own statistical standards, multiplied together, are a theorem about what it
+can never learn. Nobody multiplied them.*
+
+- **The presupposition attacked.** K-032 asked "how many bits are left?" and Popper rightly refused
+  it as a success criterion because a lower bound can always be revised upward. But there is a
+  companion quantity that **cannot** be revised upward by cleverness, only by new data, and it is
+  the one that actually binds: **the number of independent observations available at the scale of
+  the claim.** S-11 mandates sequence-block bootstraps. S-1(c) mandates the null inherit the
+  selection rule. S-4 mandates fixed-n subsampling. Each is correct. **Together they say: for any
+  claim about M≥6.5 behaviour in the SoCal box, the effective sample size is the number of
+  independent large sequences in the window — which is single digits, and no statistic can make it
+  larger.** Every entry in this ledger targeting large SoCal events is therefore *structurally
+  unpowered*, in advance, provably, and we have been ranking those entries by enthusiasm.
+- **Claim.** There exists a computable ceiling `N_eff(scale)` — the number of independent
+  Zaliapin-blocks available at each (space, time, magnitude) coarse-graining — and the
+  **minimum detectable effect at 80% power is a deterministic function of it**. Publishing that
+  surface tells this program, before it spends anything, which regions of Jim's question are
+  answerable from existing data and which are answerable only by waiting or by leaving California.
+- **Test (100% on disk; it is a re-scoring, not an experiment).** On the K-027 coarse-graining grid
+  (space {0.2°, 1°, 5°, box}, time {1, 7, 30, 90, 365 d}, magnitude {≥4.5, ≥5.5, ≥6.5}), compute
+  for SoCal and each of the 13 world boxes: the count of independent Zaliapin root clusters
+  (b=1, d_f=1.6, log₁₀η₀=−5 — the program's frozen parameters); the effective degrees of freedom
+  after the mandated block structure; and the resulting **MDE in bits/event at 80% power** given
+  S-11's 0.01-bit floor. Deliverable: an **N_eff surface** overlaid on K-027's skill surface and
+  K-011's saturation surface. Three surfaces, same axes, one figure.
+- **Null / falsifier.** Not a hypothesis test — a measurement, and it must be labelled as one under
+  G5. But it makes one hard, falsifiable meta-prediction, in the form Popper demanded of K-032 and
+  which I am now supplying: **"No claim in this program about SoCal M≥6 targets will ever clear the
+  R2-3 five-part death condition on SoCal data alone."** That dies the moment one does. It is
+  dated, it is public, and it is the version of the K-032 meta-prediction that can lose.
+- **Expected.** N_eff at (box, 365 d, M≥6.5) in SoCal 2010–2026: **single digits**. MDE at that
+  cell: > 1 bit/event, i.e. an order of magnitude above anything the conditional programme predicts.
+  Globally at the same cell, N_eff ≈ 100–200 — which is K-047's argument arriving as arithmetic.
+- **Cost / prior / decision.** ~4 h. Decision, and it is the big one: **it decides which entries
+  are cancellable today without running them**, which is the largest single saving available and
+  the only kind of saving that does not require a result. It also gives W-006-P2's "we are mining
+  the wrong region" a cheap quantitative form (see K-055) instead of the expensive one Popper
+  correctly quarantined.
+- **Why dismissed too quickly.** "This is a power calculation." Yes — the same move K-035 makes for
+  one family, generalised to the whole program and to the *design* rather than the estimator. K-035
+  re-prices five corpses. This re-prices every entry that has not been run, before it is run. Popper
+  ranked K-035 first for exactly that logic; this is the same logic applied one level up.
+
+---
+
+**K-052 — THE WINNER'S CURSE LEDGER. We converted the corpses into upper bounds. Now convert the
+POSITIVES into shrunk estimates, and predict, numerically, how much they will fall.**
+
+*Lens: selection is symmetric and we have applied it on one side only.*
+
+- **Claim.** Every positive result in this program is **biased upward by conditioning on having
+  cleared its own bar**, and the shrinkage is computable from the ETAS-sim null distributions
+  already stored. Applied to B-1, B-2, B-3, O-30 and K-009, it makes a **quantitative prediction of
+  how far each falls on the next independent window/region** — a prediction this program is about
+  to be able to score, because the 2019+ window, the world arm, and the six EXP-M holdouts' successors
+  all exist or are one query away.
+- **The inversion.** Popper's R2-1 retired *"tidal triggering is null in SoCal"* because a null at
+  low power is not a result. The mirror sentence has never been written: **a positive at low power
+  is not an effect size.** B-2's magnitude slope rests on n=290 in a few sequences; O-30 is
+  Pm/P0 = 0.340 at n=113 with a one-sided p = 0.041 and, as Popper notes in R2-4 rider 3, **no
+  look-elsewhere correction over this program's entire search history**; B-1's Caribbean +1.75 is
+  `underpowered: true` and is the largest number in the table, which is exactly what selection
+  predicts.
+- **Test (on disk).** For each positive: (i) reconstruct the selection event (the bar it cleared,
+  including any bin/region/parameter chosen on train); (ii) from the stored sim-null distribution
+  and the observed value, compute the **conditional (truncated) MLE** and an empirical-Bayes /
+  Tweedie shrinkage estimate; (iii) report `observed`, `shrunk`, and `predicted next-window value`
+  with an interval. Cross-check with the **rank-ordering diagnostic**: across the six EXP-M
+  holdouts, regress each region's holdout bits on its own-fit in-sample gap — selection predicts
+  the largest holdout values shrink most, and Caribbean (0.910 bits below ceiling at n=235) should
+  shrink furthest.
+- **Null.** No shrinkage: observed = shrunk within CI, i.e. the selection events were not binding
+  because the effects are large relative to the noise. **That is a clean, quotable win for the
+  program if it holds, and it has never been demonstrated.**
+- **Expected.** B-1's powered holdouts shrink little (0.66–0.84 → 0.60–0.80, they were not
+  cherry-picked); Caribbean shrinks a lot; O-30's 0.340 shrinks materially once the look-elsewhere
+  factor over the bin scan (`binscan_SCSN.csv`/`binscan_QTM.csv`, 42 bins) is applied, and it may
+  cross into non-significance — which is precisely the quarantine Popper imposed in R2-4 rider 3,
+  discharged with a number instead of a caveat.
+- **Cost / prior / decision.** ~4 h, on disk. Prior that at least one headline moves materially:
+  0.75. Decision: it fixes the numbers in Faraday's three PANEL-READY entries **before** they go to
+  Vidale, Bürgmann, Xue and Lu, which is the only time fixing them is free.
+- **Why dismissed too quickly.** "Our results were pre-registered, so there is no selection."
+  Pre-registration removes selection *within* a test; it does not remove selection *across* the
+  tests the program chose to publish, the bins it scanned, or the fact that a result is being
+  quoted because it cleared a bar. The register's own OVER-QUOTE AUDIT exists because quoted
+  numbers drift upward; this measures the part of that drift that is statistical rather than
+  editorial.
+
+---
+
+**K-053 — THE NETWORK'S BODE PLOT. Measure the instrument's transfer function and find the band
+where it is provably flat. Then do the physics there.**
+
+*Lens: Wegener says the crust is a low-pass filter with corner 1/t_a. Then the observer is a filter
+too — and two filters in series have two corners. Nobody has drawn the second one.*
+
+- **The presupposition attacked.** R2-1(c) is defensive: it lists the systematics (S1, S2, K1, P1,
+  Msf, era steps, coda masking) and mandates nuisance regressors against them. That treats the
+  instrument as contamination to be subtracted. Invert it: the detection process has a **frequency
+  response**, it is measurable, and there are bands where it is flat to well below the signal.
+  **Choose the band instead of fighting it.**
+- **Claim.** The SoCal detection function's transfer function |D(f)| — the modulation it imposes on
+  detected counts as a function of frequency — is measurable directly, has structure concentrated
+  at named lines (1/day and harmonics, 1/yr and harmonics, era steps as broadband, Omori-shaped
+  coda envelopes keyed to mainshock times), and is **flat to <0.3% across at least one decade of
+  frequency** that includes tidal constituents. That band is where every frequency-domain test in
+  this program should live, and identifying it in advance converts W-001-P1 and W-004-P2 from
+  systematics-limited to statistics-limited.
+- **Test (100% on disk).** Two independent estimators of |D(f)|:
+  (i) **Differential**: SCSN vs QTM (`QTM_12dev.txt`, ~10× denser, template-matched) over the
+  overlapping space-time volume. Events present in QTM and absent from SCSN are *detection losses*;
+  their rate spectrum **is** the detection modulation, measured without any physics assumption.
+  (ii) **Sub-threshold**: the SCSN catalog below the era-stable Mc (633,667 in-box events at all
+  magnitudes vs 43,462 at M≥2.5) gives the loss spectrum against magnitude directly.
+  Compute multitaper spectra of the loss series; report |D(f)| with CIs from 1/hour to 1/decade;
+  overlay the tidal constituent lines and the two off-tidal control lines (11.0 d, 16.5 d) that
+  R2-1(c) already mandates.
+- **Null.** |D(f)| flat everywhere (no detection modulation) — falsified in advance by the known
+  diurnal cycle, so the *interesting* output is not the test but the **map**: which bands are clean
+  and to what level.
+- **Expected.** Several-percent power at 1/day and 1/yr, as R2-1(c) asserts; broadband steps at
+  1995/2000/2010-ish network changes; and — the deliverable — a clean band. My guess is that the
+  **fortnightly band is dirtier than the semidiurnal band** once the S2×M2 beat at 14.765 d is
+  included, which would be an unwelcome result for W-001-P1 and is exactly why it should be
+  measured before W-001-P1 is frozen rather than after.
+- **Cost / prior / decision.** ~1 day, on disk, reuses the K-028 catalog-loading job. Decision: it
+  determines whether W-001-P1 (currently ranked 4) is feasible at all, and it hands K-035's
+  systematics arm (mandate 5) its input rather than making it invent one. **It should run inside
+  the W-004-P1 + K-031 + K-028 observer job.**
+- **Why dismissed too quickly.** "Completeness studies are routine." Completeness studies produce
+  Mc(x,t) — a *level*. Nobody produces the **spectrum**, and the spectrum is what a frequency-domain
+  test needs. This program is about to spend its best entry (W-001-P1) in a band it has never
+  characterised.
+
+---
+
+**K-054 — THE ORDERING BUG: prior art is arriving downstream of the experiment, and the cost is
+measurable.**
+
+*Lens: audit the program's control flow the way we audit a pipeline.*
+
+- **The observation nobody has stated.** The El Mayor sensitivity that decided the K-009 ruling was
+  **predictable from a published paper** — Zaliapin & Ben-Zion (2020)'s Δm ≷ 4 stationarity
+  threshold — which Merton found **after** the run and which Popper then adopted post hoc, correctly
+  (§P3-0). Likewise: the saturating estimator (S-12(e)) was foreseeable from Zhuang (2006) and Bray
+  et al. (2014), both of which exist *because* rectangular-grid residual diagnostics lose power;
+  W-006-P1(a) was pre-falsified by Liu et al. (2022) before it was written; K-009's whole framing
+  ("is there a latent state") was answered by three literatures. **In the program's architecture,
+  Merton runs on results. The evidence says Merton should run on specs.**
+- **Claim.** A measurable majority — I predict **≥ 60%** — of the post-hoc corrections, scope
+  narrowings and estimator failures recorded in this ledger were **retrievable from prior art before
+  the run**, using search vocabularies Merton has already demonstrated.
+- **Test (100% on disk, plus targeted searching).** Enumerate every post-hoc correction in the
+  record (Popper's S-5, R2-1(b), R2-1(d), S-12(e), S-12(f); §P3-0 items 1–2; the Faraday audit's 5;
+  EQ18 §18's 5; Merton's four contested/pre-falsified findings). For each, ask the counterfactual
+  with a **pre-registered protocol**: *would a Merton-class search on the frozen spec, before the
+  run, have surfaced it?* Score blind — the searcher is given the spec text only, with the outcome
+  withheld, and must produce the caveat list; then compare against the actual correction list.
+  Statistic: recall of the blind pre-search against the realised corrections, with a binomial CI.
+- **Null.** Recall ≤ 30% — i.e. prior art could not have foreseen our failures, and the current
+  ordering (run, then attribute) is efficient.
+- **Expected.** Recall 0.5–0.8. Cost per prevented correction: one dossier (hours) against one
+  compute run plus three adjudication rounds (days).
+- **Cost / prior / decision.** ~1 day including the blind arm. Decision: it is the evidentiary
+  basis for charter amendment **A9** below — **Merton's dossier becomes a precondition of the
+  freeze, not a post-mortem** — and Faraday's promotion queue already independently concluded that
+  "the highest-leverage move available to this program right now is not another experiment, it is
+  three more Merton dossiers." **Two personas, from opposite ends, are pointing at the same
+  scheduling bug. Per Popper's own R2-1(a), that concurrence is worth nothing as evidence and a
+  great deal as a queue signal — so measure it rather than vote on it.**
+- **Why dismissed too quickly.** "We already know literature review is good." We know it as a
+  platitude. This turns it into a scheduling decision with a measured recall and a measured cost
+  ratio, and it is aimed squarely at the fact that this program's flagship was classified
+  REDISCOVERY *after* it was run and ranked #1 twice.
+
+---
+
+**K-055 — THE CHEAP VERSION OF THE MOST EXPENSIVE CLAIM: is SoCal the wrong region? Answer it by
+re-scoring a file we already have.**
+
+*Lens: when the decisive experiment is quarantined for cost, find the proxy that is free — and
+notice that the quarantine itself is the blind spot.*
+
+- **The architectural observation.** W-006-P2 says the program has been mining the wrong region.
+  Popper ruled it NEEDS-DATA and — correctly under his own standards — forbade it from influencing
+  resource allocation until tested. The consequence, which nobody stated: **the program is now
+  structurally unable to relocate.** The one claim that would move it is the one claim that is too
+  expensive to test, so the default (stay in SoCal) wins by procedural inertia rather than by
+  evidence. Every remaining entry is then a refinement inside a region that may be the wrong one.
+- **Claim.** The cheap proxy exists and is already computed: across the **13 world boxes** in
+  `results_exp_m.json`, the **gap between each region's holdout bits and its own post-hoc in-sample
+  ceiling** (Iran 0.039, Alaska 0.065, Greece 0.066, Mexico 0.079, Philippines 0.145, Caribbean
+  0.910 — EQ18 §18 item 1) is a measurement of *how much region-specific structure a generic model
+  is leaving on the table there*. W-006-P2 predicts that gap should rank with the region's aseismic
+  observability. **That ranking is a re-scoring, not an experiment.**
+- **Test (on disk + public metadata only).** Build a frozen **aseismic-observability index** per
+  region from public, pre-committed metadata: existence of a tremor catalogue, existence of a
+  repeater catalogue, GNSS station density, and the catalogue's own Mc — all recorded and hashed
+  before the gaps are looked at. Statistic: Spearman between the index and the in-sample-ceiling
+  gap across 13 regions, plus the same against holdout bits. **Mandatory confound arm, and it is
+  W-004's:** the index is dominated by instrumentation, so also regress against N and Mc alone, and
+  report the **partial** correlation at fixed catalogue power. If the index adds nothing over Mc,
+  W-006-P2 is confounded exactly as Popper said and the entry says so.
+- **Null.** Spearman CI covering zero, or the index adding nothing over Mc/N.
+- **Expected.** n = 13 is thin: |ρ| must exceed ≈0.55 for p<0.05, so this is **suggestive-only by
+  construction** and I say so in advance. It is worth running anyway because the cost is one script
+  and the current alternative is an unexamined default.
+- **Cost / prior / decision.** ~3 h. Prior on the null: 0.55. Decision: if the correlation is
+  strong and survives the Mc partial, the program has a cheap, pre-registered warrant to open a
+  Cascadia/Nankai arm — and if it does not, SoCal stops being a default and becomes a choice with a
+  number behind it. **Either way the inertia is broken.**
+- **Why dismissed too quickly.** "Underpowered at n=13." Yes — and it is the *only* affordable test
+  of the most consequential strategic claim in the ledger, and a suggestive result with a
+  pre-registered confound arm is strictly better than a procedural default nobody has examined.
+
+---
+
+**K-056 — FRAME-BREAK ON MY OWN FUNCTION: enumerate the hypothesis space, measure our coverage of
+it, and run a randomised trial of grid-sampled hypotheses against me.**
+
+*Lens: treat idea generation as a sampling problem with a measurable coverage function — and then
+run an actual controlled experiment on the persona that is writing this sentence.*
+
+- **The presupposition attacked.** The program assumes hypotheses arrive from a generative persona
+  and are filtered by an adjudicating one. Nobody has asked whether the *generator's* coverage of
+  the reachable space is good, or whether it is concentrated in the same way K-050 predicts the
+  queue is. Popper's amendment-6 ruling adopted lens-tagging and a lens tally; **a tally measures
+  outcomes, not coverage**, and a generator can have a perfect hit rate while touching 5% of the
+  space.
+- **Claim.** The reachable hypothesis space of this program is enumerable as a product grid —
+  {observable} × {clock} × {conditioning state} × {coarse-graining scale} × {null family} — over
+  the assets on disk; our 46 K-entries cover a **small and highly clustered** fraction of it; and
+  **hypotheses drawn uniformly at random from untouched cells have a hit rate no worse than
+  persona-generated ones.**
+- **Test.** (i) Enumerate the grid explicitly (observables: rate, b, corner M, n(t), entropy, ξ,
+  S_max, residual, Mc, coupling, migration, repeaters, moment; clocks: wall time, natural time,
+  moment time, integrated intensity, cumulative load, injected volume; conditioning: ledger class,
+  geothermal, depth, recent-rate regime, sequence phase, swarm label; scales: the K-027 grid;
+  nulls: ETAS-sim, circular shift, reshuffle, permutation, fixed-n subsample). Map every existing
+  entry onto its cell. **Statistic 1 (descriptive, and I expect it to be uncomfortable): coverage
+  fraction and its clustering, measured as the entropy of the occupancy distribution against
+  uniform.** (ii) **Statistic 2 (the actual experiment):** draw k = 10 untouched cells at random,
+  instantiate each as a minimal testable entry by a frozen template, and submit them to Popper
+  **blind to their provenance**, interleaved with 10 persona-generated entries. Pre-registered
+  outcome: the difference in Popper's TESTABLE-NOW rate and, later, in run outcomes.
+- **Null.** Grid-sampled entries score materially worse than persona-generated ones (i.e. the
+  generator is adding real value beyond coverage). **I would like to lose this one and I am
+  proposing it anyway, which is the point.**
+- **Expected.** Coverage < 10% of the reachable grid; occupancy entropy far below uniform;
+  and — my honest prediction — grid-sampled entries score **slightly worse** on Popper's
+  adjudication but produce **at least one entry no persona would have written**, which is the whole
+  value. n = 20 is small; report as suggestive with a pre-registered plan to extend.
+- **Cost / prior / decision.** ~1 day to enumerate and instantiate; Popper's blind adjudication is
+  the expensive part and it is his existing function. Decision: if coverage is as low and as
+  clustered as I expect, the round structure changes — **each round reserves a fixed quota of
+  entries drawn from untouched cells**, which is amendment 6's "one never-before-used lens per
+  round" made mechanical and measurable rather than aspirational.
+- **Why dismissed too quickly.** "Random hypotheses are noise." That is an empirical claim about a
+  ratio nobody has measured, and it is the claim that justifies my existence. If it is true, this
+  test says so with a number and I am strengthened; if it is false, the program gets a cheap,
+  unbiased generator and I should be reduced to a filter. **A generative persona that will not run
+  the experiment that could downsize it is an advocacy campaign, which is the sentence Popper
+  adopted from me in round 1 and which I am now aiming at myself.**
+
+---
+
+**K-057 — EVERY NULL ENVELOPE IN THIS LEDGER IS CONDITIONAL ON A POINT ESTIMATE, AND THE 97.5th
+PERCENTILES ARE DRAWN FROM 20 SAMPLES. The standing null has never had an error bar.**
+
+*Lens: the null is a model too. Propagate its uncertainty.*
+
+- **Claim.** Every "clears the ETAS-sim null p97.5" statement in this program — the whole of S-1,
+  S-8's max-statistic, W-003's death condition, K-009's SUCCESS — is computed from simulations
+  generated at a **single frozen parameter vector** (μ=0.2750, K=0.04124, α=0.5366, c=0.01426,
+  p=1.1183, b=1.0654) with **no propagation of that vector's own posterior uncertainty**, and in
+  K-009's case from **n=20 draws**, where an empirical 97.5th percentile is effectively the maximum
+  of the sample. Propagating both widens every null envelope, and I predict it changes at least one
+  verdict already on the record.
+- **The inversion, and why no one saw it.** Popper's S-1 hardened the null against the *alternative*
+  (two-generator discrimination, detection functions, selection-rule inheritance). Nobody hardened
+  the null against **itself**. The program treats the ETAS-sim distribution as ground truth for
+  "what the model predicts" when it is one draw from a distribution over models. And there is a
+  specific, aggravating fact on the record: **the frozen branching ratio is n = 1.161,
+  supercritical.** A supercritical generator's realisations are heavy-tailed in count (sim counts
+  8,438–10,801 against 8,720 observed) and their second-order statistics are correspondingly
+  unstable — so the *variance of the null envelope across plausible parameter draws is likely to be
+  comparable to the envelope itself.*
+- **Test (100% on disk; it is a re-run of existing simulators with a loop around them).**
+  (i) Obtain the parameter posterior (or the MLE covariance from the existing EXP-H fit; a
+  parametric bootstrap over train re-fits is the fallback and is cheap). (ii) For each of ≥200
+  parameter draws, simulate ≥25 catalogues, push through the identical pipeline, and form the
+  **marginal** null distribution. (iii) Report, for each statistic in K-009 and for the S-8
+  max-statistic family, the **conditional p97.5 (current practice)** and the **marginal p97.5
+  (parameter-propagated)** side by side. (iv) Report the **Monte-Carlo error of a p97.5 estimated
+  from n=20** and the minimum n needed for a stable tail quantile (it is not 20; it is likely
+  several hundred, which is why the spec said 500).
+- **Null.** Marginal ≈ conditional (envelope insensitive to parameter uncertainty) — a clean result
+  that would license every existing envelope and cost one run.
+- **Expected.** Envelope widening of 1.5–3× on the tail-sensitive statistics (EOF1 variance
+  fraction, correlation length, the max-statistic), and **little effect on ACF1**, whose excess is
+  ~40× the ceiling and will survive anything. Consequence if so: K-009's EOF1 excess (0.197 vs
+  0.0508) was **already dead on the El Mayor exclusion** and would have been marginal even before
+  it; and — more importantly — **S-8's max-statistic, which Popper made the headline instrument for
+  every future family scan, is precisely the statistic most sensitive to null-tail misestimation.**
+  Fixing this before the conditional programme runs is worth more than fixing it after.
+- **Cost / prior / decision.** ~1 day compute (it is 5,000 sims where the spec already asked for
+  500). Prior that at least one envelope widens materially: 0.7. Decision: it sets the credibility
+  of every future "clears the sim null" sentence in this ledger, and it should be built **inside
+  K-035**, which is already building the program's power machinery and already has to run
+  large sim ensembles.
+- **Why dismissed too quickly.** "The parameters are well constrained." They are constrained *given
+  the model*, on train, at one M0, with a supercritical n and a documented α-downward bias from
+  short-term incompleteness (Merton takeable 12) — and K-005 exists precisely because we suspect
+  the parameter vector is M0-dependent. **We have an entry devoted to the instability of these
+  parameters and a null that assumes they are exact. Those two cannot both stand.**
+
+---
+
+**K-058 — S-12 AS AN OBJECT OF STUDY: the ruling relocated authority to an unbounded set of
+imagined sensitivities. Measure that set's miss rate.**
+
+*Lens: read the new standard as a mechanism, and ask what its failure mode is.*
+
+- **The observation.** S-12 is right and I want that on the record: frozen rules must be floors on
+  status or pre-registration constrains only the honest. But look at what S-12(b) actually says —
+  *"a post-hoc sensitivity that a competent reviewer would run unprompted, and that changes the
+  answer, binds the scope"*, with the ceiling *"no claim may exceed PROVISIONAL while a leading
+  sensitivity is unresolved."* **The final status of every result in this program is therefore a
+  function of which sensitivities somebody happens to think of.** That set is unbounded, socially
+  produced, adversarially incomplete, and it drifts with who is in the room. In the one case we
+  have, the decisive sensitivity (drop El Mayor) was **not in the frozen spec**, was obvious in
+  hindsight, was predictable from prior art (K-054), and moved a result from a clean PASS to
+  PROVISIONAL. **That is a lottery with good manners.**
+- **Claim.** The sensitivity set can be **pre-elicited**, its coverage is measurable, and its
+  historical miss rate on this program is high enough that S-12 needs an operational companion.
+- **Test (a procedure, run prospectively, plus a retrospective arm on disk).**
+  *Retrospective (cheap, today):* for each executed or specced entry, list the sensitivities named
+  in the frozen spec versus the sensitivities actually run or demanded afterwards. Statistic:
+  **spec recall** = |named ∩ realised| / |realised|. For K-009 the numerator excludes El Mayor and
+  excludes the ACF-shape/demeaning check of K-046, so recall is already visibly poor; quantify it.
+  *Prospective (the fix, and it is the deliverable):* institute the **sensitivity pre-mortem** —
+  before unblinding, the adjudicator and one non-author enumerate and hash-commit the complete list
+  of sensitivities that *would* change their reading, together with the direction each would move
+  the verdict. After the run, only listed sensitivities bind scope automatically; an unlisted one
+  that fires triggers (a) scope binding as S-12 requires **and** (b) a recorded **elicitation
+  miss**, which is the measured quantity.
+- **Null.** Spec recall ≥ 0.8 — the frozen specs already anticipate what matters, and S-12's
+  informality costs nothing.
+- **Expected.** Recall 0.3–0.6, and — the interesting part — **the misses will cluster by class**:
+  I predict they are concentrated in *estimator degeneracy* and *construction choices* (S-9's
+  territory), which are the two classes with the fewest historical captures in K-049's taxonomy.
+  Two independent meta-measurements converging on the same uncensused class would be worth more
+  than either.
+- **Cost / prior / decision.** ~3 h retrospective; the prospective arm costs one extra hour per
+  freeze forever. Decision: whether S-12 ships as-is or ships with the pre-mortem attached. Also
+  this: an elicitation-miss rate is the **honest denominator for the register's tier system** — a
+  PANEL-READY entry from a program with 50% elicitation recall means something different from one
+  with 90%, and Faraday's tiers currently carry no such qualifier.
+- **Why dismissed too quickly.** "You are proposing process about process." I am proposing a
+  **measurement** of the mechanism that now determines the status of every claim this program makes.
+  Popper's S-12(e) self-correction — that he specified a deliverable whose estimator was degenerate
+  against its own null — *is* an elicitation miss, and he found it by accident after the run. Once
+  is an anecdote. A rate is an instrument.
+
+---
+
+### Ordering I would recommend to the supervisor for this round
+
+**K-046 first, and it is not close** — it is two hours, it is on disk, it re-reads a result already
+on the register, and it plausibly reassigns the entire assimilation thread from "weather" to
+"cartography". Then **K-057** (fold into K-035's sim machinery, which is already Priority 1) and
+**K-053** (fold into the W-004-P1 + K-031 + K-028 observer job, which is already Priority 2) —
+both are free riders on runs that are happening anyway. Then **K-051** and **K-052**, which are
+re-scorings that re-price everything not yet run and everything already quoted. Then **K-047**,
+which is the round's largest new experiment and the only well-powered one. The program-audit
+entries **K-049, K-054, K-058** cost an afternoon each of reading and no compute, and K-049 is the
+missing outcome measure for Faraday's F-010. **K-048, K-050, K-055, K-056** are the ones I expect
+to be argued about; K-048 is the one I would stake a reputation on after K-046.
+
+---
+
+## CHARTER AMENDMENT PROPOSED (Kepler → supervisor + Jim) — round 2
+
+Offered under "Evolve yourself". Round 1's eight were adopted (six modified). These five are
+consequences of this cycle, and A-11 and A-12 are the two I would want enforced against me.
+
+**A-9. Prior art precedes the freeze.** Add to Ground Rules: *"No protocol is frozen until Merton
+has produced a dossier on the entry's central claim and its named artifact classes. Kepler's
+entries must carry a 'prior-art exposure' line naming the literature the entry has NOT been checked
+against."* Rationale: K-054. Our flagship was classified REDISCOVERY after being ranked #1 twice;
+the decisive sensitivity was retrievable from a 2020 paper; the degenerate estimator was
+retrievable from a 2006 and a 2014 paper. Faraday's promotion queue independently concludes the
+highest-leverage move is more dossiers. The evidence for this amendment is K-054's measured recall
+and I propose it be adopted **conditionally on that measurement**, not on this argument.
+
+**A-10. The null carries an error bar.** Amend round-1 amendment 1 (the ETAS-sim standing null) to:
+*"...and the null envelope must propagate the generator's own parameter uncertainty and report the
+Monte-Carlo error of any tail quantile it quotes. A p97.5 from fewer than 200 draws may not be used
+as a gate."* Rationale: K-057. We hardened the null against the alternative and never against
+itself, and K-009's gates rest on the 97.5th percentile of 20 draws from a supercritical generator.
+
+**A-11. Declare the unit and its N_eff.** Add to the output format: *"Every entry states its unit
+of analysis and the effective number of independent units available at the claim's scale, computed
+by the program's own declustering, before the entry is ranked."* Rationale: K-051. S-11 mandates
+sequence-block CIs; almost no entry in this ledger states how many blocks it has. That number, not
+enthusiasm and not expected bits, is what decides whether an entry can succeed, and it is knowable
+in advance for every one of them.
+
+**A-12. Each round must contain one test of the PROGRAM and one test whose success makes the
+program smaller.** Add to the posture: *"At least one entry per round takes the research program
+itself as its object (its queue, its errors, its coverage, its standards). At least one entry per
+round is one whose confirmation would close a thread, cancel a family, or move the program out of
+its current region."* Rationale: this round's K-049/K-050/K-054/K-056/K-058 and K-051/K-055.
+Round-1 amendment 3 gave us an adversarial quota against our *results*; nothing yet is adversarial
+against our *architecture*, and the K-009 cycle shows the architecture is where the expensive
+failures were — a scheduling bug (prior art after the run), an estimator nobody stress-tested, a
+demeaning choice inside a helper function, and a region we cannot leave for procedural reasons.
+The "makes the program smaller" clause exists because every incentive in a research engine points
+the other way, including mine.
+
+**A-13. Universality must be tested off-domain.** Add to Ground Rules: *"Any claim that a law,
+shape, or parameter is universal must state what the claim excludes, and must be tested on the
+least similar system to which the same statistical form applies. Bits attributable to the stated
+subject are the bits above the best off-domain comparator at matched N."* Rationale: K-048, and
+W-005 arriving at its own logical conclusion. This is the one amendment aimed directly at B-1,
+which is the foundation of everything we have.
+
+---
+
+*End Kepler round 2 (K-046..K-058, thirteen entries; lenses: shape-fitting, unit-promotion, domain
+subtraction, mark–recapture, self-application, design-ceiling, selection symmetry, instrument
+spectroscopy, control-flow audit, proxy-for-the-quarantined, coverage sampling, null-of-the-null,
+mechanism-of-the-standard). All PROPOSED. Nothing above is claimed as true. One entry — K-046 —
+contains a read-only exploratory measurement made this session from `results_k009.json` and
+`exp_k009_residual_whiteness.py`; the fitted numbers (A = 0.0654, τ = 7.16 wk, C = 0.0382,
+ΔBIC = 42.2) are mine, are reproducible in ten lines, and are offered as the reason to run the
+entry rather than as a result. Popper adjudicates; the supervisor runs the frozen tests.*
+
+*To Popper, on your closing line — "the unclaimed ground is amplitude, estimator, and bits/event;
+riff there." I did, and the estimator turned out to be the answer to all three: the amplitude you
+asked for is 3.8% of residual variance, it is static, and it is worth zero bits because a wrong map
+is not a state. If K-046 lands, W-003 does not merely survive K-009 — it is confirmed by it, and the
+program's most-run result becomes an argument for building K-002.*
