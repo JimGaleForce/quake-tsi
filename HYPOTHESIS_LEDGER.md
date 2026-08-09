@@ -6438,3 +6438,579 @@ riff there." I did, and the estimator turned out to be the answer to all three: 
 asked for is 3.8% of residual variance, it is static, and it is worth zero bits because a wrong map
 is not a state. If K-046 lands, W-003 does not merely survive K-009 — it is confirmed by it, and the
 program's most-run result becomes an argument for building K-002.*
+
+---
+
+## Round 2 — 2026-08-09. Assignments: F-005/B-2, F-006/B-1, F-002/B-5.
+*Faraday's promotion queue is blocked on exactly these three, and all three block on me rather than
+on compute. Same format and same rigour as round 1. Where I could verify only an abstract, a
+publisher landing page, or a figure caption rather than a full text, I say so in the entry rather
+than let an unverified claim carry a dossier. Classifications are mine; where Popper reads the
+prior art differently, both positions go in the ledger and the supervisor arbitrates.*
+
+---
+
+## M-004 — PRIMARY DOSSIER: F-005 / B-2 — "SoCal walk-forward temporal ETAS beats Poisson by +1.907 / +1.866 bits/event"
+
+### M-004.0 First: normalising our own number before comparing it to anyone's
+
+This is the whole job on this entry, and it has to be done before a single citation is quoted,
+because the field reports this quantity in at least four mutually incompatible ways.
+
+**What we actually compute.** From `exp_h_etas.py` (verified by reading the code this session,
+not the summary):
+
+```
+LL_p  = n_test*log(lam0) - lam0*D_test              # homogeneous Poisson, temporal only
+gain  = (LL_ETAS - LL_p) / n_test / ln2             # bits per event
+```
+
+`LL_ETAS` is the full continuous-time point-process log-likelihood `sum log lambda - integral
+lambda dt` on the untruncated test window. So our quantity is:
+
+- **continuous-time**, not gridded — no space–time–magnitude bins, no Poisson-per-bin
+  approximation;
+- **temporal only** — neither model has a spatial or magnitude density term, so no spatial
+  information enters either side;
+- **per target earthquake**, normalised by `n_test = 8,722`;
+- **in bits (log2)**, and it **includes the integral (expected-count) term**, i.e. it is a proper
+  entropy score in the Daley & Vere-Jones (2004) sense, not a bare `mean log rate ratio`.
+
+**The conversion table anyone comparing us to the literature must use:**
+
+| our number | bits (log2) | nats (ln) | log10 | probability gain G per event |
+|---|---|---|---|---|
+| vs Poisson(train rate) | **+1.907** | +1.322 | +0.574 | **3.75×** |
+| vs Poisson(test-rate oracle) | **+1.866** | +1.294 | +0.562 | **3.65×** |
+| held-back M≥4 band (n=290) | +2.578 / +2.536 | +1.787 / +1.758 | +0.776 / +0.763 | 5.97× / 5.80× |
+
+**The four conventions in the literature, and the trap in each.**
+
+1. **Probability gain per earthquake** `G = exp[(LL - LL_ref)/N]` — Helmstetter, Kagan & Jackson
+   (2006); Werner et al. (2011). Dimensionless multiplicative factor. `bits = log2 G`.
+   *Trap:* it is quoted as "a gain of 6", which is **not** 6 bits; it is 2.585 bits.
+2. **Information gain per earthquake (IGPE)** in **natural log** — Rhoades et al. (2011);
+   Zechar et al. (2010); pyCSEP's `information_gain`. `bits = nats / ln2 = nats × 1.443`.
+   *Trap:* RELM five-year IGPE values of order 0.1–1 are **nats per earthquake for
+   time-independent five-year forecasts** and have nothing to do with a daily clustering gain.
+   Comparing our 1.907 to a RELM 0.3 is a category error twice over (units, and forecast class).
+3. **Kagan information score** *I*, in **bits per earthquake**, defined against a spatially
+   uniform Poisson of the same total rate. Same units as ours; different reference model.
+4. **Per-bin / per-cell log-likelihood ratios** — the CSEP gridded L-test family. These scale with
+   the number of *bins*, not events, and cannot be compared to a per-event number at all without
+   re-normalising by N.
+
+**Two further axes that must match before any comparison is legitimate**, and which mostly do
+*not* match between us and the published California numbers:
+
+- **What the baseline knows.** Ours is a *stationary rate, no space*. The standard CSEP short-term
+  comparison is against a *time-independent but spatially smoothed* seismicity model. Those
+  baselines are much better informed spatially and much worse informed temporally.
+- **What the forecast adds.** Ours adds *time only*. Theirs adds *time and space*. Aftershock
+  spatial concentration is a large share of ETAS's gain, so a spatio-temporal gain should exceed a
+  purely temporal one measured on the same catalog.
+
+### M-004.1 Search trails run (so a null search is auditable)
+
+`information gain per earthquake ETAS California` · `probability gain per earthquake short-term
+forecast California` · `CSEP one-day California ETAS STEP evaluation` · `Helmstetter Kagan Jackson
+2006 short-term time-independent southern California` · `Werner Helmstetter Jackson Kagan
+high-resolution long- and short-term California forecasts` · `Zechar Schorlemmer Werner
+Gerstenberger Rhoades Jordan RELM first-order results` · `Rhoades RELM II multiplicative hybrids
+information gains` · `Taroni Marzocchi Schorlemmer Werner prospective CSEP Italy 1-day 3-month
+5-yr` · `Zhuang next-day ETAS Japan probability gain` · `Woessner CSEP retrospective Italy` ·
+`Daley Vere-Jones entropy score information gain point process` · `pyCSEP information gain Kagan
+information score` · `benchmark database ten years prospective next-day California CSEP` ·
+`EarthquakeNPP neural point process ETAS benchmark California SCEDC` · `Ward Werner Savran
+Schoenberg point process residuals ETAS STEP California`.
+
+**Trails that returned nothing:** a published, *purely temporal*, continuous-time
+ETAS-vs-homogeneous-Poisson information gain **stated as a number** for a Southern California
+catalog at M≥2.5. Two sources compute exactly that quantity and one of them uses our catalog and
+our magnitude threshold — but publishes it as a **figure**, not a table (see M-004.3, the
+EarthquakeNPP `SCEDC_25` panel). That is not a null result; it is a number I could not read off a
+plot, and I am recording it as such rather than inventing a range.
+
+### M-004.2 CLASSIFICATION: **REDISCOVERY — canonical. Zero novelty in the finding; the value is entirely in the machine.**
+
+Ogata (1988) is the generator; "temporal ETAS beats a stationary Poisson in California" has been
+the field's floor assumption for thirty-eight years and is the *premise* of every CSEP short-term
+experiment rather than one of their results. Faraday's own class line ("REPRODUCTION (presumed)")
+is correct and I confirm it. The dossier's job here is not to decide novelty — there is none — it
+is to answer the question Faraday actually asked: **is +1.87 bits ordinary, high, or suspicious?**
+
+**The citations to attach to B-2 permanently.**
+
+1. **Ogata, Y. (1988), *JASA* 83(401), 9–27** — "Statistical models for earthquake occurrences and
+   residual analysis for point processes." The generator. Our λ(t) is his equation.
+2. **Helmstetter, A., Kagan, Y. Y. & Jackson, D. D. (2006), *BSSA* 96(1), 90–106,
+   doi:10.1785/0120050067** — "Comparison of short-term and time-independent earthquake forecast
+   models for southern California." *Our region.* Reported probability gains per earthquake
+   **above 10** (≥ 3.32 bits/event) for their short-term clustering model over a time-independent
+   smoothed-seismicity forecast, m≥2 targets, 0.05° grid. *Verification status: I have the value
+   "above 10" from Werner et al. (2011) §Supplement 5 quoting them directly (full text read); the
+   BSSA abstract is elided by the publisher and I did not read Helmstetter et al.'s own text.
+   Flag this when citing.*
+3. **Werner, M. J., Helmstetter, A., Jackson, D. D. & Kagan, Y. Y. (2011), *BSSA* 101(4),
+   1630–1648, doi:10.1785/0120090340** (preprint arXiv:0910.4981, **full text read**) —
+   "High-resolution long-term and short-term earthquake forecasts for California." The key
+   sentence, verbatim: *"The ETAS model forecasts outperformed the time-independent forecast with
+   a probability gain per earthquake of about 6."* That is **2.585 bits/event**, for next-day
+   California forecasts at m≥3.95 over a normalised smoothed-seismicity background. Their
+   definition is our equation (9)-equivalent: `G = exp[(LL − LL_ref)/N_t]`.
+   They also record why the number moves: *"the probability gains have universally decreased from
+   the previous values above 10 to values closer to 5"* when the region is expanded from southern
+   California to all of California, because *"Expanding the region to all of California dilutes
+   those gains, as more independent earthquakes are included"*, and separately because their grid
+   is 0.1° rather than Helmstetter et al.'s 0.05°. **This is the single most important sentence in
+   this dossier**: the published gain is not a constant of nature, it is a strong function of
+   region size, grid size, target threshold, and which sequences fall in the window.
+4. **Daley, D. J. & Vere-Jones, D. (2004), *J. Appl. Prob.* 41(A), 297–312** — "Scoring
+   probability forecasts for point processes: the entropy score and information gain." The formal
+   basis for a per-event continuous-time log-likelihood difference. This is the correct citation
+   for *our* metric, and we should use it rather than a CSEP gridded-likelihood citation, because
+   we are not gridded.
+5. **Rhoades, D. A. et al. (2011), *Acta Geophysica* 59, 728–747** — "Efficient testing of
+   earthquake forecasting models." The IGPE convention (natural log) that most CSEP papers report
+   in. Cite when we state units.
+6. **Zechar, J. D., Schorlemmer, D., Werner, M. J., Gerstenberger, M. C., Rhoades, D. A. &
+   Jordan, T. H. (2013), *BSSA* 103(2A), 787–798** — "Regional earthquake likelihood models I:
+   first-order results"; and **Rhoades, D. A. et al. (2014), *BSSA* 104(6), doi:10.1785/0120140035**
+   — "RELM II: information gains of multiplicative hybrids." *Cite only to mark the boundary:*
+   these are five-year time-independent forecasts and their information gains are **not** a
+   comparator for a daily clustering gain. *Both abstracts elided by publisher; I verified
+   citation metadata only.*
+7. **Serafini, F., Bayona, J. A., Silva, F., Savran, W., Stockman, S., Maechling, P. J. &
+   Werner, M. J. (2025), *Scientific Data* 12, 1501, doi:10.1038/s41597-025-05766-3** — "A
+   benchmark database of ten years of prospective next-day earthquake forecasts in California from
+   CSEP." 25 automated M≥3.95 models, nine groups, >50,000 daily forecasts, Aug 2007 – Aug 2018,
+   public on Zenodo, evaluable with pyCSEP. **Full text read: it does not publish
+   information-gain-per-earthquake values against a Poisson baseline** — it publishes the forecast
+   archive and demonstrates the Kagan information score difference between ETAS and STEP. So the
+   "published CSEP range" Faraday asked for does not exist as a table; it exists as *a dataset we
+   could score ourselves.* That is a much better outcome and it is takeable (M-004.4).
+8. **Stockman, S., Lawson, D. & Werner, M. J. (2026), *TMLR*, arXiv:2410.08226v3** —
+   "EarthquakeNPP: a benchmark for earthquake forecasting with neural point processes." **This is
+   the closest thing in print to our exact experiment** and it is the one Faraday should care
+   about most: it defines a `SCEDC_25` dataset — **SCEDC, Southern California, Mw ≥ 2.5** — splits
+   the log-likelihood into an explicit **temporal** and **spatial** component (their eq. 3), and
+   reports **test temporal log-likelihood for ETAS alongside a fitted homogeneous Poisson
+   baseline** (their Figure 2). Same catalog, same magnitude floor, same region, same metric
+   decomposition, same baseline family as B-2. Their headline: *"none of the five NPPs tested
+   outperform ETAS."* **Verification limit, stated plainly: the ETAS-minus-Poisson temporal gap for
+   `SCEDC_25` is plotted in Figure 2, not tabulated, and I could not read a numeric value from the
+   HTML rendering. I am not going to estimate it by eye.** Their code and datasets are public.
+
+### M-004.3 SO WHERE DOES +1.907 SIT? — typical to low. Not high, and not suspicious.
+
+Placing our number against the two published California anchors that are quoted as numbers:
+
+| source | region / target | what the gain measures | G | bits/event |
+|---|---|---|---|---|
+| Helmstetter et al. (2006) | **S. California**, m≥2 | space **and** time added over time-independent smoothed seismicity | **>10** | **>3.32** |
+| Werner et al. (2011) | all California, m≥3.95 | space **and** time added over time-independent smoothed seismicity | **≈6** | **≈2.585** |
+| Werner et al. (2011), all-CA at m≥2 | all California, m≥2 | as above | ≈5 | ≈2.32 |
+| **B-2 (ours)** | **S. California**, M≥2.5 | **time only**, over a stationary-rate Poisson with no spatial term | **3.75** | **+1.907** |
+| **B-2 (ours), test-rate oracle** | as above | as above | **3.65** | **+1.866** |
+
+**Reading.** Our number is **below every published California comparator**, and it should be,
+because ours is the *temporal component alone* while theirs are spatio-temporal. The direction of
+the inequality is the sanity check that matters: had we come in at 6 bits — above the
+spatio-temporal gains — I would be writing a very different dossier. We came in at roughly 60–70%
+of the total published gain, from the temporal half of the model alone. That is exactly where a
+sound temporal-only ETAS should land, and it is a *conservative* result, not an inflated one.
+
+Three further reasons to call it ordinary rather than high:
+
+- **Our target floor is low.** M≥2.5 in SoCal is aftershock-dominated: our own run reports mean
+  triggered fraction **0.915** over test events. A catalog that is 91.5% triggered *must* be
+  strongly forecastable in time; 3.75× is a modest return on that.
+- **Our test window is favourable but not extreme.** 2010–2018 opens with El Mayor–Cucapah (M7.2,
+  4 Apr 2010) and closes before Ridgecrest. Werner et al. document that southern California windows
+  containing Landers/Hector Mine gave gains *above 10* and that diluting the region halved them —
+  our window has one such sequence, not two, in a southern-California-only box. Consistent.
+- **The harsher of our two baselines is the one we quote.** The test-rate oracle removes the
+  "2010s were quieter" freebie and costs us only 0.041 bits — which is itself evidence that
+  essentially none of our gain is rate-level bookkeeping. Werner et al. normalised their background
+  the same way ("we normalized µ(r) so that the total number of expected target events equalled the
+  observed number") and said so for the same reason. We are following an established practice; we
+  should cite it as such rather than present it as our own severity.
+
+**Verdict for Faraday, in one sentence:** *+1.907 / +1.866 bits/event is ordinary — the low end of
+the published California range once the spatio-temporal-vs-temporal-only difference is accounted
+for — and the honest framing is "our temporal-only gain recovers roughly two-thirds of the
+published spatio-temporal gain for California," not "we achieve a large gain."*
+
+**One caution I owe the record.** The published anchors are gridded, Poisson-per-bin, next-day
+forecasts; ours is continuous-time. Harte (2015, *GJI* 201(2), 711–723, "Log-likelihood of
+earthquake models") argues at length that the discrete/gridded and continuous likelihoods are *not
+interchangeable* and constructs an explicit example where a discrete-time likelihood cannot
+distinguish two models that a continuous-time likelihood separates cleanly (his eqs. 15–16). So the
+comparison above is an order-of-magnitude placement, not a like-for-like benchmark, and B-2's text
+must say so. The like-for-like benchmark exists and is listed as takeable #1.
+
+### M-004.4 TAKEABLES (adopt instead of reinventing)
+
+1. **Score ourselves inside EarthquakeNPP's `SCEDC_25` protocol.** Same catalog, same M≥2.5, same
+   temporal/spatial likelihood split, published ETAS and homogeneous-Poisson baselines, public
+   code. This converts "is +1.87 ordinary?" from a literature-placement argument into a measured
+   number, and it does it on *our* catalog. This is a much stronger answer than any citation, and
+   it is the single highest-value follow-up B-2 has.
+2. **Score against the Serafini et al. (2025) CSEP archive.** Ten years of *prospective* daily
+   California forecasts from 25 models on Zenodo. Our EXP-L live forecaster (F-011) could be
+   evaluated against real prospective competitors instead of against a Poisson straw man. This is
+   the bridge from "our machine works" to "our machine is competitive," and it needs no new data.
+3. **Adopt the Daley & Vere-Jones (2004) citation for our metric** and drop any implication that we
+   are using the CSEP gridded L-test. We are not, and Harte (2015) makes the distinction
+   consequential.
+4. **Adopt Werner et al.'s reporting discipline**: they report gain *together with* region size,
+   grid size, target threshold and the identity of the sequences in the window, because they
+   demonstrated the gain moves by a factor of two under those choices. Every future quotation of a
+   bits/event number in this program should carry the same four qualifiers.
+5. **Named pitfall we should check we have not stepped in.** Werner et al. state that because their
+   background model was built from the same data the time-dependent model was tested on, *"the
+   probability gain solely measures the relative increase of the spatio-temporal aspect."* Our
+   test-rate-oracle baseline is likewise fitted on the test window. That is the right choice and
+   for the right reason — but it means our +1.866 is a *within-window* comparison, and the
+   +1.907 (train-rate baseline) is the only genuinely out-of-sample-rate figure. Both should keep
+   being quoted as a pair, which Faraday already does.
+
+### M-004.5 FEEDING THE TRIO
+
+- **Popper.** Nothing here raises the bar on B-2's *validity*; it lowers the replication burden
+  (this is a canonical result reproduced with a frozen protocol) but it **raises the bar on the
+  claim sentence**: "+1.907 bits/event" without the temporal-only qualifier will be read by a
+  seismologist as a spatio-temporal gain and will look implausibly low, not high. The scoping
+  language is now load-bearing in the *opposite* direction from what the program assumed.
+- **Wegener.** One observation-table row is his to take if he wants it (I do not write O-rows):
+  the published California short-term gain is *region-size- and grid-size-dependent by a factor
+  of two* (Werner et al. 2011). That is an observation about the field's instrument, not about the
+  Earth, and it constrains how any of our bits numbers can be compared to anything.
+- **Kepler.** New floor: any future forecast claim in this program must beat **ETAS-temporal at
+  +1.87 bits/event on M≥2.5 SoCal 2010–2018**, and — if it claims spatial skill — must additionally
+  be scored inside EarthquakeNPP's spatial-likelihood split, where the standing result is that five
+  neural point processes failed to beat ETAS.
+
+---
+
+## M-005 — QUICK DOSSIER: F-006 / B-1 — "generic temporal ETAS transfers to never-trained regions; fault-type pooling does not help"
+
+### CLASSIFICATION, split — because our positive and our negative do not have the same standing:
+### **positive (generic parameters transfer): REDISCOVERY — well owned, recently and prospectively.**
+### **negative (type-specific tuning adds little): CONTESTED, leaning CONTRADICTED on productivity — and the reconciliation is ours to make, not to assume.**
+
+Faraday asked the exact right question — *does Page et al. (2016) already own BOTH halves?* — and
+the answer is: **no, it owns the opposite of one of them.** Page et al.'s *first ingredient* is
+tectonic region. That is a published positive for regionalization. We must not walk into a review
+with a negative that a headline paper appears to contradict, without the reconciliation written
+down first. The reconciliation is real and it is defensible; it just has to be *in the text*.
+
+**A. The positive — generic/global parameters transfer. Prior art owns this.**
+
+1. **Bayona, J. A., Savran, W. H., Iturrieta, P., Gerstenberger, M. C., Graham, K. M.,
+   Marzocchi, W., Schorlemmer, D. & Werner, M. J. (2023), *The Seismic Record* 3(2), 86–95,
+   doi:10.1785/0320230006** — "Are regionally calibrated seismicity models more informative than
+   global models? Insights from California, New Zealand, and Italy." **This is the paper that owns
+   our positive**, and Faraday's entry does not cite it. Abstract verified verbatim. They
+   *prospectively* tested the global GEAR1 model against **19 time-independent regional models** in
+   three regions, 2014–2021, under CSEP metrics, and found: *"GEAR1, based on global seismicity and
+   geodesy datasets, performs surprisingly well across all testing regions, ranking first in New
+   Zealand, second in California, and third in Italy,"* concluding with *"preliminary support for
+   using GEAR1 as a global reference M 4.95+ seismicity model."* Note the framing of their opening:
+   *"An implicit assumption is that the comparatively higher spatiotemporal resolution datasets
+   from which regional models are generated lead to more informative seismicity forecasts than
+   global models"* — they set up and knock down exactly the assumption our B-1 sets up and knocks
+   down. **Different model class (time-independent rate models, not temporal ETAS) and different
+   magnitude floor (M≥4.95 vs our M≥4.5), so it is not our experiment — but it is our thesis, in
+   print, prospectively tested, at a scale we cannot match.**
+2. **Chu, A., Schoenberg, F. P., Bird, P., Jackson, D. D. & Kagan, Y. Y. (2011), *BSSA* 101(5),
+   2323–2339, doi:10.1785/0120100115** — "Comparison of ETAS parameter estimates across different
+   global tectonic zones." Abstract verified verbatim. Fits ETAS per Bird (2003) plate-boundary
+   zone globally. Concluding sentence, verbatim: *"Despite the pronounced differences between the
+   seismicity patterns and parameter estimates in the different zones, the ETAS model with few
+   parameters and with the same functional form seems to fit reasonably well to the seismicity in
+   each zone."* **That is our positive — "the transferable object is the clustering law" — stated
+   in 2011, globally, by tectonic zone.**
+3. **Utsu, Ogata & Matsu'ura (1995), *J. Phys. Earth* 43, 1–33; Ogata (1988), *JASA* 83, 9–27** —
+   the universality of the Omori–Utsu form. Already in Wegener's O-table; I do not duplicate.
+4. **Page, M. T., van der Elst, N., Hardebeck, J., Felzer, K. & Michael, A. J. (2016), *BSSA*
+   106(5), 2290–2301, doi:10.1785/0120160073** — "Three ingredients for improved global aftershock
+   forecasts: tectonic region, time-dependent catalog incompleteness, and intersequence
+   variability." **Citation verified against Crossref (authors, venue, 106(5), 2290–2301, DOI) and
+   against the USGS publications record.** *Verification limit: the verbatim abstract is elided by
+   the publisher, is not on Unpaywall (OA status: closed, zero OA locations), and I did not read
+   the full text. Everything below is from the USGS publication record and the USGS OAF scientific
+   background page, both of which I read.* Its role in the positive: it is the paper that made
+   **generic, non-locally-fitted aftershock parameters the global operational default** — the USGS
+   Operational Aftershock Forecast system uses Page et al. (2016) parameters everywhere outside
+   California, and Hardebeck et al. (2019) parameters inside it. Generic-parameter transfer is not
+   a hypothesis in this literature; it is shipped software.
+
+**B. The negative — and why Page et al. (2016) is a problem for it, and why the problem dissolves.**
+
+Page et al.'s finding, from the USGS record: they estimate regional aftershock parameters across
+tectonic zones and find **"regional variations for mean aftershock productivity reach almost a
+factor of 10."** Chu et al. (2011) independently find the ETAS productivity parameter **"ranges by
+a factor of more than five"** across zones. Hardebeck, J. L., Llenos, A. L., Michael, A. J.,
+Page, M. T. & van der Elst, N. (2019), *SRL* 90(1), 262–270 — "Updated California aftershock
+parameters" — find productivity variation *within California*: southern California sequences more
+productive than northern, Mendocino much less, and Long Valley / Coso / Salton Sea hydrothermal
+areas much more. **Three independent published results say aftershock productivity is
+regionally/tectonically variable at factors of 5–10. Our frozen sign test concluded that pooling
+ETAS parameters by fault type does not help. Read naively, we are contradicted.**
+
+**The reconciliation, which is sound and must be written into F-006 before it is shown to anyone:**
+
+1. **They regionalize productivity; we pooled a background rate.** Our own diagnosis already says
+   this: the TYPE pools differed from GLOBAL *mainly through μ*, and the subduction pool's
+   μ = 0.310/d (Chile/Indonesia-dominated) wrecked Alaska and Mexico. Chu et al. measured exactly
+   this quantity and found **background seismicity rates "range by a factor of nearly 500"** across
+   zones — a hundredfold larger spread than the productivity spread they measured in the same
+   study. Our failure is therefore not a finding about tectonic regionalization; **it is a
+   rediscovery of Chu et al.'s 500× background-rate spread, arriving through a forecast score
+   instead of a parameter table.**
+2. **The Reasenberg–Jones/Page framework has no μ to pool.** It forecasts *aftershocks of an
+   identified mainshock*; there is no background term. So the failure mode that killed our TYPE
+   pools is structurally impossible in the model where "tectonic region helps" was demonstrated.
+   The two results are not in contact.
+3. **Their positive is about *productivity*; ours pooled the whole parameter vector.** Our design
+   confounded the transferable part (K, α, c, p) with the untransferable part (μ). A published
+   negative on *productivity* regionalization does not exist as far as I can find; we did not test
+   for one; and F-006 must not be read as having produced one.
+4. **Intersequence variability.** Page et al.'s third ingredient, and Hardebeck et al.'s Bayesian
+   treatment, both exist because *sequence-to-sequence* parameter scatter is large enough that
+   regional means are used as *priors* rather than as forecasts. That is a published statement that
+   regional tuning buys less than one would hope — which is adjacent to our negative and is the
+   nearest thing to prior art for it — but it is about sequences within a region, not about
+   fault-type pools across regions. *Verification limit: I have this from the USGS OAF background
+   page's description of the Bayesian generic-to-sequence-specific transition, not from Page et
+   al.'s own text.*
+
+**Consequence: our frozen negative survives, but its permitted claim shrinks.** The defensible
+sentence is: *"pooling the full temporal-ETAS parameter vector by fault type, including μ, does not
+transfer better than a single global pool — because μ is not a pooled quantity."* The sentence
+"regional/type-specific tuning adds little" is **not** supportable and would be shot down by Page
+et al. (2016), Chu et al. (2011) and Hardebeck et al. (2019) in the same paragraph. Faraday's
+current CANDIDATE EXTENSION line — *"the transferable object is the universal clustering law plus a
+locally estimated μ"* — is the right sentence, and it is now attributable: it is Chu et al.'s 2011
+conclusion, quantified by a forecast score in six never-trained regions instead of by a parameter
+table in eight tectonic zones. **That is a real delta and it is a small one.**
+
+### What our version actually adds (the honest delta list)
+
+- **A prospective-style transfer test rather than a parameter comparison.** Chu et al. compared
+  fitted parameters across zones; they did not take one zone's parameters, apply them unrefitted to
+  another zone, and score the result. We did, in six holdouts, against a local-oracle Poisson.
+- **A pre-registered sign test with a stated failure threshold (5 of 6), frozen before the global
+  data were downloaded**, with the protocol hash in `download_log.md` and verified at commit
+  `a45ca8d`. Chu et al. and Page et al. are not pre-registered; almost nothing in this literature
+  is. This is our strongest procedural delta and it is worth more than the result.
+- **Bayona et al. (2023) is the global-vs-regional test at scale but in the time-independent
+  class.** Ours is the temporal-clustering analogue. That is a genuine gap-filling contribution
+  and it should be framed as "the ETAS-temporal counterpart to Bayona et al. (2023)" — which both
+  credits them and states our niche in one clause.
+- **What we do NOT add:** any evidence that tectonic regionalization is useless. Say so explicitly.
+
+### TAKEABLES
+
+1. **Adopt the μ/clustering split as a design, not a finding.** Chu et al. (2011) already tells us
+   μ varies ~500× and productivity ~5×. The next transfer experiment should pool (K, α, c, p) by
+   type and estimate μ locally *by construction* — the current design's confound is avoidable and
+   was avoidable before we ran it.
+2. **Adopt García et al. (2012) tectonic regionalization** (the scheme Page et al. use) or
+   **Bird (2003) plate-boundary zones** (the scheme Chu et al. use) instead of our home-made fault
+   types. Our n = 1 pools for collision and rift are a direct consequence of an ad-hoc taxonomy;
+   both published schemes have populated classes and are what reviewers will expect.
+3. **Adopt Hardebeck et al. (2019)'s within-region result as a positive control**: SoCal vs NoCal
+   vs Mendocino vs hydrothermal productivity differences are published and measurable. If our
+   pipeline cannot recover *that*, our null on fault-type pooling is uninformative rather than
+   negative. **This is a cheap, decisive positive control we do not currently have.**
+4. **Cite Bayona et al. (2023) in the same sentence as our positive, permanently.**
+
+### FEEDING THE TRIO
+
+- **Popper.** The bar goes **up**, not down. The frozen sign test passed its own rule, but the
+  claim sentence it licenses is narrower than the one in the register, and there is a published
+  result pointing the other way on the neighbouring quantity (productivity). I recommend F-006's
+  negative be restated as scoped above before promotion, and that the Hardebeck-2019 positive
+  control be required before the word "little" is used about regional tuning anywhere.
+- **Wegener.** Two O-rows available to him (his to write): Chu et al.'s 500× background-rate /
+  5× productivity spread across plate-boundary zones; Page et al.'s ~10× productivity spread
+  across tectonic regions.
+- **Kepler.** New floor: a transfer claim must now beat *global-pool ETAS with locally estimated μ*
+  — not global-pool ETAS — because the literature already predicts the latter loses.
+
+---
+
+## M-006 — QUICK DOSSIER: F-002 / B-5 — "site dilatation is unreliable to worse than 2×, up to sign flips, across velocity solutions"
+
+*Attributed against the corrected wording in `EQ18_FULL_NOTES.md` §18 item 2, not the retired
+"±2×". The corrected claim is a stronger and more honest statement — and it is also, unfortunately
+for us, the more thoroughly pre-owned one.*
+
+### CLASSIFICATION: **REDISCOVERY — comprehensively, in our region, in a paper we have had on disk since 2026-08-06.**
+### The finding is owned. Only the *axis of variation* is unowned, and that is a methods note, not a result.
+
+**The paper that owns it outright: Maurer, J. & Materna, K. (2023), *GJI* 234(3), 2128–2142,
+doi:10.1093/gji/ggad191** — "Quantification of geodetic strain rate uncertainties and implications
+for seismic hazard estimates." **Full text read this session from `../attach/Maurer_GJI_2023.pdf`.**
+Southern California, five strain-rate methods (`gpsgridder`, VISR, local average gradient,
+wavelets, geostats-Gaussian) on one merged 1,688-station GNSS field (UNR/MIDAS + SCEC CGM v1,
+Helmert-transformed), 0.02° grid, parameters selected per method by L-curve.
+
+What they report, verbatim, and what it does to each clause of our claim:
+
+| our clause | their result |
+|---|---|
+| dilatation is the fragile component | *"The maximum shear strain rate, dilatation and I2 rates are much more variable between methods… The standard deviation of the dilatation rate is as large or larger than the signal in many places."* (p. 2132) |
+| unreliable to worse than 2× | SD ≥ signal **is** worse than 2×, stated as a field rather than a site list. Their Fig. 5 right column masks the mean dilatation wherever *"the standard deviations… are larger than the mean values themselves, making them statistically indistinguishable from zero."* |
+| up to sign flips | A quantity whose SD exceeds its mean has an unresolved sign, by construction. Their Fig. 8 epistemic-uncertainty map for dilatation exceeds 100 nstrain/yr in the Imperial Valley / northern Baja corner. |
+| our worst sites (Cerro Prieto, Brawley, Salton Sea) | **They name Cerro Prieto specifically**: *"some of the large epistemic strain rate discrepancies occur on areas with sparse station spacing and highly variable or noisy data (e.g. Cerro Prieto in northern Mexico)"*, and attribute the large dilatation feature there to the Cerro Prieto Geothermal Field — geothermal fluid extraction (Sarychikhina et al. 2011) or a cooling shallow magma body (Hamling et al. 2022). **Our single most dramatic number — the −52.9 → +10.7 sign flip at Cerro Prieto — is at the exact location the literature already flags as the region's worst-conditioned dilatation.** |
+| max shear is robust; dilatation is not | *"Maximum shear strain rates are generally consistent across all models, with differences mainly in the degree of smoothness."* Our r = 0.934 (shear) vs r = 0.782 (dilatation) is the same contrast. |
+
+**Corroborating prior art, each of which independently pre-empts part of the claim:**
+
+- **Hearn, E., Johnson, K. & Thatcher, W. (2010), *Eos Trans. AGU* 91(38), 336** — the UCERF3
+  geodetic-deformation workshop report. Compared ~17 strain-rate methods in southern California and
+  found **between-method variability up to 100% of the signal in some places** (as quoted by Maurer
+  & Materna). Thirteen years before us, in our region. *Verified via Maurer & Materna's citation
+  and text; I did not read the Eos item itself.*
+- **Xu, X., Sandwell, D., Klein, E. & Bock, Y. (2021), *JGR Solid Earth* 126(11), e2021JB022579** —
+  strain-rate models are highly correlated at wavelengths > 100 km and **approach zero correlation
+  at ~30 km**. **This is the direct prior art for our correlation numbers**: a published statement
+  that cross-solution strain-rate correlation is a function of length scale, with a named scale at
+  which it vanishes. Our single-number r = 0.782 on a 4,679-node grid is a scale-averaged version
+  of a result they resolved as a function of wavelength. *Verified via Maurer & Materna; not read.*
+- **Wu, Y., Jiang, Z., Yang, G., Wei, W. & Liu, X. (2011), *GJI* 185(2), 703–717** — "Comparison of
+  GPS strain rate computing methods and their reliability." The genre exists and is fifteen years
+  old.
+- **Hackl, M., Malservisi, R. & Wdowinski, S. (2009), *NHESS* 9(4), 1177–1187** — "Strain rate
+  patterns from dense GPS networks." Southern California, SCEC and UNAVCO velocity fields,
+  dilatation and max-shear treated separately, with the network-induced artifact problem named.
+- **Baxter, S. C., Kedar, S., Parker, J. W., Webb, F. H., Owen, S. E., Sibthorpe, A. & Dong, D.
+  (2011), *GRL* 38(1), L01305, doi:10.1029/2010GL046028** — "Limitations of strain estimation
+  techniques from discrete deformation observations." The title is our claim.
+- **Titus, S. J. et al. (2011)** — cited by Kreemer & Young for the result that **alternating
+  positive/negative dilatation along strike-slip zones is an artifact of heterogeneous GPS station
+  distribution**. *This is prior art for the sign flip specifically.* *Verification limit: I have
+  this via Kreemer & Young's citation and secondary summaries; I did not obtain the primary text
+  and could not confirm the exact venue/pages (most likely Titus et al., "Geologic versus geodetic
+  deformation adjacent to the San Andreas fault, central California," GSA Bulletin 123). **Do not
+  cite this one without checking the reference.***
+- **Pagani, C., Bodin, T., Métois, M. & Lasserre, C. (2021), *JGR Solid Earth* 126(6),
+  e2021JB021905** — Bayesian strain-rate estimation for the southwestern US, motivated explicitly
+  by suppressing spurious dilatation.
+- **Kreemer, C. & Young, Z. M. (2022), *SRL*, doi:10.1785/0220220153** — our own comparison
+  partner, **full text read from `../attach/Kreemer_SRL_2022.pdf`**, and they say it about their own
+  model: *"even a dense network can yield artifacts; e.g., artificial dilatational strain around the
+  SAFS (Hackl et al., 2009; Baxter et al., 2011; Titus et al., 2011; Pagani et al., 2021)"* and
+  *"Previous models probably suffered from data overfitting, which not only results in more
+  variability in strain rate magnitude but also (more troubling) yields more spurious dilatational
+  strain rates. In our model, there are arguably still some spurious dilatational features along
+  the SAFS."*
+
+**Faraday's own honest prior — *"this lands as REDISCOVERY with a small delta, and I would rather
+say so before a reviewer does"* — is correct. I confirm it.**
+
+### The one thing that is NOT owned, and it is an axis, not a finding
+
+Every study above varies the **estimator/method** (or the parameterisation) and holds the velocity
+field fixed — Maurer & Materna explicitly merge UNR/MIDAS and SCEC CGM into *one* field precisely so
+that method is the only variable. **We did the transpose: one estimator, two velocity solutions.**
+And Maurer & Materna flag that axis as unquantified, in the same breath as the number Faraday wants
+to compare against: their 40% total variability versus Hearn et al.'s ~100% *"could be due in part
+to different underlying GNSS velocity fields, the inclusion of strain rate models based on elastic
+fault models, or to independent parameter tuning by each individual researcher who produced the
+models."* Three candidate causes, none isolated. Our experiment isolates the first one.
+
+**How much credit that is worth: a methods footnote, not a claim.** Three reasons to keep it small:
+
+1. **The conclusion it supports is already published.** Isolating a cause of a known effect is
+   worth something; it is not worth a finding when the effect, its component-selectivity
+   (dilatation fragile / shear robust), its geography (Imperial Valley, Cerro Prieto), and its
+   magnitude (SD ≥ signal) are all in Maurer & Materna 2023.
+2. **Our two velocity solutions are not independent.** NGL MIDAS and the Kreemer & Young
+   compilation both draw heavily on the NGL/UNR processing of continuous GNSS; K&Y describe adding
+   stations to *complement* the NGL data set. **Our contrast is therefore a lower bound on
+   velocity-solution variability, and F-002 must say so.** *(This is my reading of K&Y's data
+   section, which I read; it is not a statement they make about our comparison.)*
+3. **n = 5 sites.** The site table is five points chosen for programmatic relevance, not a sample.
+   The defensible field-level numbers are the correlations and the median |Δ|; the site ratios
+   (2.0× / 2.6× / 6.4× / 83× / sign flip) are illustrations, and 83× is a ratio against
+   +0.29 nstrain/yr — a near-zero denominator, which is a statement about Brawley's denominator,
+   not about a measurement bound. **I recommend the corrected §18 wording keep "worse than 2×, up
+   to sign flips" and drop the 83× entirely; it will not survive a referee.**
+
+### One attribution debt the program has not paid
+
+The high-strain mask criterion **ε̇_min ≥ 47 × 10⁻⁹ /yr is Kreemer & Young's**, from their Fig. 8
+and their break-in-slope analysis (they fit separate lines below 20 and above 47 nstrain/yr and
+find a factor 4–7 lower slope in the high-strain regime). Our Jaccard = 0.830 is computed on *their*
+criterion. It must be cited as theirs every time it appears. It is not ours to own and the register
+currently lists "whether the 47 nstrain/yr mask criterion is theirs to own" as an open question —
+**it is theirs; question closed.**
+
+### TAKEABLES
+
+1. **Use `Strain_2D` (Materna, Maurer & Sandoe 2021; github.com/kmaterna/Strain_2D).** Five
+   published methods, one grid, one input format, built for exactly this comparison. Running our
+   two velocity sets through *five* estimators instead of one turns F-002 from a rediscovery with a
+   thin axis into the first study that separates **velocity-solution variance from method
+   variance** on a common grid — which is the study Maurer & Materna say has not been done. That is
+   the only version of F-002 worth promoting, and it is maybe a day of work with their package.
+2. **Adopt their uncertainty taxonomy and report both**: *epistemic* (spread across methods/models)
+   vs *aleatoric* (propagated velocity noise). Ours is neither, currently — it is a two-sample
+   spread with no error model. Their Fig. 8 gives us the shape of the answer to compare against.
+3. **Adopt the "nonzero mask" presentation** (their Fig. 5, right column): show dilatation masked
+   wherever the between-solution spread exceeds the value. It is the honest figure, it is the
+   published convention, and it makes our point better than a five-row site table does.
+4. **Adopt the L-curve parameter-selection discipline** for our estimator's smoothing, which is
+   currently an unjustified choice — and Maurer & Materna show parameter choice moves total moment
+   by ~40% and misfit by ~50% within a single method.
+5. **Named pitfall we may have stepped in:** they warn that much of the between-model variability
+   occurs *at or below the station spacing*, and that **more data does not automatically improve
+   resolution** because the methods do not adapt their correlation length. Our 4,679-node grid
+   almost certainly resolves below station spacing in places; the correlations we report are
+   therefore partly a comparison of interpolation noise. Worth one sensitivity run at coarser
+   node spacing before anything is promoted.
+
+### FEEDING THE TRIO
+
+- **Popper.** This is a *measurement*, not a hypothesis test, and it is a rediscovery — the
+  replication burden is low, but the **novelty burden is now zero** and the entry may not be
+  presented as an EXTENSION without takeable #1 being executed first. My recommendation to the
+  supervisor: **F-002 is promotable to PANEL-READY as a REDISCOVERY that cites Maurer & Materna
+  (2023) as prior art and Kreemer & Young (2022) for both the caution and the 47 nstrain/yr
+  criterion — or it waits for the Strain_2D run and is promoted as an EXTENSION.** It should not be
+  promoted as an EXTENSION on the current evidence.
+- **Wegener.** O-row available (his to write): dilatation-rate epistemic uncertainty equals or
+  exceeds the signal over much of southern California, and the worst-conditioned area coincides
+  with the Cerro Prieto geothermal field — which is a *non-tectonic* strain source, and therefore
+  bears on any program hypothesis that reads dilatation as tectonic loading.
+- **Kepler.** New floor, and a hard one: **no hypothesis in this program may rest on the magnitude
+  or the sign of site-level GNSS dilatation.** Not "should be careful with" — may not rest on. The
+  TSI retirement survives because it rests on the *sign of a ratio at two sites where both solutions
+  agree*, and that is the only reason it survives. Any successor hypothesis needs the same property
+  stated in advance.
+
+---
+
+*End Merton round 2. Counts: 1 primary + 2 quick dossiers. **REDISCOVERY 3** (B-2 canonical,
+B-1 positive half, B-5 comprehensive); **CONTESTED 1** (B-1's fault-type negative, leaning
+CONTRADICTED on the adjacent productivity question, with a reconciliation supplied);
+**NOVEL 0**. Running program totals after two rounds: REDISCOVERY 6, CONTESTED 3, NOVEL 0,
+CONTRADICTED 0.*
+
+*The one thing round 2 genuinely establishes that the program did not have: **+1.907 bits/event has
+a place to stand.** It is 3.75× probability gain per event; the published California comparators are
+≈6× (Werner et al. 2011, all-CA, spatio-temporal) and >10× (Helmstetter et al. 2006, SoCal,
+spatio-temporal); ours is temporal-only and therefore lands below both, exactly as it should. The
+number is ordinary. That is the right answer and it is the answer that lets Faraday ship it.*
+
+*Verification honesty, consolidated: full texts read — Werner et al. (2011) preprint, Maurer &
+Materna (2023), Kreemer & Young (2022), Stockman et al. (2026) HTML, Serafini et al. (2025).
+Abstracts verified verbatim — Chu et al. (2011), Bayona et al. (2023). Citation metadata only
+(abstract elided by publisher or paywalled, full text not read) — Page et al. (2016),
+Helmstetter et al. (2006), Zechar et al. (2013), Rhoades et al. (2014), Hardebeck et al. (2019).
+Known only via another paper's citation — Hearn et al. (2010), Xu et al. (2021), Titus et al.
+(2011); the last of these I could not pin to a venue and it must be checked before use.*

@@ -22,20 +22,22 @@ round; two of them are material.
 | id | claim (short) | class | Popper standing | Merton standing | tier |
 |---|---|---|---|---|---|
 | F-001 | Coso Fig 4c independent reproduction | REPRODUCTION | validated (frozen rule met) | attributed (direct) | **PANEL-READY** |
-| F-002 | Strain-field two-velocity-set comparison; dilatation fragility | EXTENSION (candidate) | provisional | **PENDING-ATTRIBUTION** | INTERNAL |
+| F-002 | Strain-field two-velocity-set comparison; dilatation fragility | EXTENSION (candidate) → **REDISCOVERY** | provisional | attributed — REDISCOVERY (M-006) | INTERNAL |
 | F-003 | Tidal-prediction null suite (forecast skill), SoCal | NEW APPLICATION (falsification) | validated + re-scoped R2-1(d) | attributed (own prior work) | **PANEL-READY** |
 | F-004 | Pure-math temporal-pattern null suite (periodicity / ratios / shape transfer) | NEW APPLICATION (falsification) | mixed: G stands, F is weak | **PENDING-ATTRIBUTION** | INTERNAL |
-| F-005 | B-2 SoCal walk-forward ETAS skill | REPRODUCTION (presumed) | validated | **PENDING-ATTRIBUTION** | INTERNAL |
-| F-006 | B-1 generic-ETAS cross-region transfer | REPRODUCTION + candidate EXTENSION | validated (with S-5 correction) | **PENDING-ATTRIBUTION** | INTERNAL |
+| F-005 | B-2 SoCal walk-forward ETAS skill | REPRODUCTION (confirmed) | validated | attributed — REDISCOVERY (M-004) | INTERNAL |
+| F-006 | B-1 generic-ETAS cross-region transfer | REPRODUCTION + candidate EXTENSION | validated (with S-5 correction) | attributed — REDISCOVERY (positive) + CONTESTED (negative) (M-005) | INTERNAL |
 | F-007 | B-3 seven-day M≥5 conditional rule | REPRODUCTION | validated | attributed (M-003) | **PANEL-READY** |
 | F-008 | B-4 stress-ledger negative space recovers known aseismic geology | REDISCOVERY + methods delta | validated, AUTO-FLAGGED | attributed (M-002) | INTERNAL |
 | F-009 | K-009 ETAS residual field is not white in SoCal | REPRODUCTION + 1 candidate methods delta | success rule met, partial vs spec | attributed (M-001) | INTERNAL |
 | F-010 | The research engine itself (frozen protocols, personas, ledger) | METHODS/PROCESS (candidate) | n/a — not a hypothesis | **PENDING-ATTRIBUTION** | INTERNAL |
 | F-011 | Live ETAS forecaster + globe layer | ENGINEERING ARTIFACT (not a claim) | n/a | n/a | INTERNAL |
 
-Six of eleven entries are PENDING-ATTRIBUTION or attribution-thin. That is expected and it is not a
-failure: Merton has produced three dossiers (K-009, B-4, B-3) out of a much longer list. It is
-recorded here so nobody mistakes an un-searched entry for an original one.
+Six of eleven entries were PENDING-ATTRIBUTION or attribution-thin at open. **Merton round 2
+(2026-08-09) cleared three of them — F-005 (M-004), F-006 (M-005), F-002 (M-006) — leaving F-004
+and F-010 as the remaining PENDING-ATTRIBUTION entries.** Merton has now produced six dossiers
+(K-009, B-4, B-3; B-2, B-1, B-5). It is recorded here so nobody mistakes an un-searched entry for
+an original one.
 
 ---
 
@@ -145,14 +147,22 @@ version of that caution — a same-estimator, two-velocity-set contrast with a n
 table on a fixed 4,679-node grid, plus the site-level fragility list. Whether that is a real delta
 or a rediscovery of a known result is **Merton's to rule**, and he has not.
 
-**ATTRIBUTION — PENDING-ATTRIBUTION.** What Merton must search: (i) Kreemer & Young (2022) and the
-GSRM/MELD/Haines–Holt line — is the dilatation-fragility caution already quantified in a published
-two-solution contrast? (ii) Prior GNSS strain-rate intercomparison literature (the SCEC
-Community Geodetic Model strain-rate comparison exercises; Hearn et al.; Maurer & Johnson) —
-formal strain-estimator/velocity-solution intercomparisons are an established genre and almost
-certainly contain this result. (iii) Whether the ε_min ≥ 47 nstrain/yr mask criterion is theirs to
-own. My honest prior: this lands as REDISCOVERY with a small delta, and I would rather say so
-before a reviewer does.
+**ATTRIBUTION — RESOLVED: REDISCOVERY. Merton dossier M-006 (`HYPOTHESIS_LEDGER.md`).** My prior
+was right and Merton confirms it. The corrected claim (§18 wording: "site dilatation unreliable to
+worse than 2×, up to sign flips") is owned outright by **Maurer & Materna (2023), *GJI* 234(3),
+2128–2142, doi:10.1093/gji/ggad191** — five strain methods on one SoCal GNSS field: *"The standard
+deviation of the dilatation rate is as large or larger than the signal in many places"*, with
+dilatation masked to "indistinguishable from zero" over much of the map, and **Cerro Prieto named
+as the worst-conditioned area** — the exact site of our sign flip. Corroborated by Hearn et al.
+(2010) (~100% between-method variability, SoCal), Xu et al. (2021) (cross-model strain correlation
+→ 0 at ~30 km), Hackl et al. (2009), Baxter et al. (2011), Titus et al. (2011) (alternating-sign
+dilatation as a known network artifact), Pagani et al. (2021), and by Kreemer & Young's own
+spurious-dilatation caution. **The ε_min ≥ 47 nstrain/yr criterion is theirs — question closed,
+cite every time.** The only unowned element is the *axis*: all prior work varies the estimator on a
+fixed velocity field, we varied the velocity field on a fixed estimator — an axis Maurer & Materna
+explicitly flag as an unquantified contributor. Merton rules that a methods footnote, not a
+finding, and notes our two velocity sets share NGL/UNR processing (so our contrast is a **lower
+bound**) and that the 83× Brawley ratio should be dropped (near-zero denominator).
 
 **PROOF CHAIN.**
 - Code: `strain_comparison.py`; result `results_strain_comparison.json`; figure
@@ -177,11 +187,17 @@ before a reviewer does.
 and where. It does not bound dilatation error generally; the 4,679 nodes are one region, one
 estimator, two solutions. It says nothing about time-dependent strain.
 
-**TIER: INTERNAL.** Blocked on: (a) Merton's dossier; (b) the B-5 headline restatement above.
+**TIER: INTERNAL.** Blocked on: (a) ~~Merton's dossier~~ **cleared, M-006**; (b) the B-5 headline
+restatement above; (c) **a class decision that is now the supervisor's**: M-006 rules F-002 is
+promotable to PANEL-READY **as a REDISCOVERY** citing Maurer & Materna (2023) and Kreemer & Young
+(2022), *or* it waits for the `Strain_2D` five-estimator × two-velocity-solution run and is
+promoted as an EXTENSION. It may not be promoted as an EXTENSION on the current evidence.
 
-**SINGLE MISSING VERIFICATION TO REACH PANEL-READY.** Merton's prior-art dossier on GNSS
-strain-rate solution intercomparison. (The claim-text fix is mine to make and is already drafted
-above.)
+**SINGLE MISSING VERIFICATION TO REACH PANEL-READY.** ~~Merton's prior-art dossier~~ — delivered
+(M-006). Remaining: the claim-text fix (mine, drafted above) plus the prior-art citation block,
+after which this ships as a rediscovery. To ship as an EXTENSION instead, run the two velocity sets
+through `Strain_2D` (Materna, Maurer & Sandoe 2021) to separate velocity-solution variance from
+method variance — Merton's takeable #1, about a day of work.
 
 ---
 
@@ -371,14 +387,24 @@ Ogata's result and CSEP's daily bread. Our contribution is a clean, frozen-param
 harsh-baseline instance of it that establishes our machinery works — and it is the backbone every
 other claim in this program is scored against. That is exactly what a reproduction is for.
 
-**ATTRIBUTION — PENDING-ATTRIBUTION.** Merton has not written a B-2 dossier. What he must search:
-Ogata (1988, JASA 83, 9–27) as the generator; the CSEP California experiments and their
-information-gain-per-earthquake reporting conventions (Schorlemmer, Zechar, Werner, Rhoades,
-Gerstenberger); Helmstetter, Kagan & Jackson short-term California forecasts; Rhoades et al. on
-information gain per earthquake as the standard metric; Woessner et al. (2011) CSEP evaluation.
-**Specifically: what is the published information-gain-per-event range for temporal-only ETAS vs
-a rate-matched Poisson in California, and is +1.87 bits inside it?** Until that number exists we
-cannot say whether our result is ordinary, high, or suspiciously high — and a reviewer will ask.
+**ATTRIBUTION — RESOLVED: REDISCOVERY (canonical). Merton dossier M-004 (`HYPOTHESIS_LEDGER.md`).**
+Zero novelty in the finding — Ogata (1988, *JASA* 83, 9–27) is the generator and this is the
+premise, not a result, of every CSEP short-term experiment. **The question Merton was asked is
+answered: +1.907 bits/event = a probability gain of 3.75× per event (1.322 nats; 0.574 log10);
++1.866 = 3.65×. The published California comparators are ≈6× (Werner, Helmstetter, Jackson &
+Kagan 2011, *BSSA* 101(4), 1630–1648: "a probability gain per earthquake of about 6" = 2.585
+bits/event, all-CA, m≥3.95) and >10× (Helmstetter, Kagan & Jackson 2006, *BSSA* 96(1), 90–106,
+SoCal, m≥2 = >3.32 bits/event). Ours sits BELOW both — and must, because theirs are
+spatio-temporal gains over a spatially smoothed time-independent model while ours is temporal-only
+over a stationary rate with no spatial term. Verdict: ORDINARY, on the conservative side. Not
+high, not suspicious.** Two mandates follow. (i) **Units discipline:** the field reports this in
+four incompatible conventions (probability gain factor; IGPE in nats; Kagan score in bits; per-bin
+log-likelihood). "1.907 bits" must never be set beside a RELM "0.3" — that is a category error in
+both units and forecast class. (ii) **The temporal-only qualifier is load-bearing in the opposite
+direction from what we assumed:** without it a seismologist reads our number as spatio-temporal and
+judges it implausibly *low*. Merton also notes the published gain is not a constant of nature —
+Werner et al. document it moving by a factor of two with region size, grid size and target
+threshold — so every bits/event quotation in this program must carry those four qualifiers.
 
 **PROOF CHAIN.**
 - Protocol: `PATTERN_PROTOCOL.md` §EXP-H, SHA-256
@@ -403,11 +429,19 @@ exists (Popper G4: no spatial entry may quote bits until K-002 exists). Not dete
 untested. The M ≥ 4 rise is held back as above. It does not show ETAS is *correct*, only that it
 is much better than Poisson: K-009 (F-009) shows its residuals are not white.
 
-**TIER: INTERNAL.** Blocked solely on attribution. The science is done and verified.
+**TIER: INTERNAL → PANEL-READY on my next pass.** The attribution block is cleared (M-004); what
+remains is mine and is editorial: rewrite the CLAIM sentence to carry "temporal-only", add the
+conversion to probability gain (3.75× / 3.65×), and attach the Ogata / Werner / Helmstetter /
+Daley–Vere-Jones citation set. No compute.
 
-**SINGLE MISSING VERIFICATION TO REACH PANEL-READY.** Merton's B-2 dossier, specifically the
-published CSEP information-gain range for temporal ETAS in California, so +1.87 bits can be placed
-against it rather than floated.
+**SINGLE MISSING VERIFICATION TO REACH PANEL-READY.** ~~Merton's B-2 dossier~~ — delivered (M-004).
+Nothing blocks promotion but the claim-text edit above. **Next-level verification, optional and
+strongly recommended (Merton takeable #1):** score B-2 inside the `SCEDC_25` protocol of
+Stockman, Lawson & Werner (2026, *TMLR*, arXiv:2410.08226) — same SCEDC catalog, same Mw≥2.5, same
+temporal/spatial likelihood split, published ETAS **and homogeneous-Poisson** baselines, public
+code. That converts "is +1.87 ordinary?" from a literature-placement argument into a measured
+number on our own catalog. (Merton flags that their ETAS-minus-Poisson temporal value for
+`SCEDC_25` is plotted, not tabulated, and declined to read it off the figure.)
 
 ---
 
@@ -432,14 +466,42 @@ law plus a locally estimated μ" is a quantified six-holdout demonstration of a 
 field broadly assumes. Whether the *quantification* is a delta over known ETAS universality is
 **Merton's to rule**.
 
-**ATTRIBUTION — PENDING-ATTRIBUTION.** What Merton must search: Utsu, Ogata & Matsu'ura (1995) and
-Ogata (1988) for the universality of the Omori–Utsu law (already cited in Wegener's O-table at
-§W-OBS); the global-aftershock-parameter literature — **Page, van der Elst, Hardebeck, Felzer &
-Michael (2016), BSSA 106, 2290 "Three ingredients for improved global aftershock forecasts"** is
-the single most dangerous neighbor and it is *already sitting in Merton's own M-003 dossier*;
-Hardebeck's regional aftershock-parameter compilations; the tectonic-regime-dependence literature
-(Garcia, Wiemer; the question of whether ETAS productivity varies by faulting style has certainly
-been asked). **Our sign-test failure may itself be a rediscovery of a published negative.**
+**ATTRIBUTION — RESOLVED, SPLIT. Merton dossier M-005 (`HYPOTHESIS_LEDGER.md`).**
+*The positive is a* **REDISCOVERY**; *the negative is* **CONTESTED, leaning CONTRADICTED on the
+adjacent quantity.** Page et al. (2016) does **not** own both halves — **it owns the opposite of
+one of them**, and that had to be found before a reviewer found it.
+
+- **Positive (generic parameters transfer) — REDISCOVERY, and the owning paper was missing from
+  this entry: Bayona, Savran, Iturrieta, Gerstenberger, Graham, Marzocchi, Schorlemmer & Werner
+  (2023), *The Seismic Record* 3(2), 86–95, doi:10.1785/0320230006**, "Are regionally calibrated
+  seismicity models more informative than global models?" — global GEAR1 vs **19** regional models,
+  **prospectively**, 2014–2021, CSEP metrics, three regions: GEAR1 ranks 1st in New Zealand, 2nd in
+  California, 3rd in Italy. Same thesis, larger scale, already in print (time-independent M≥4.95
+  class, not temporal ETAS — which is our niche). Add **Chu, Schoenberg, Bird, Jackson & Kagan
+  (2011), *BSSA* 101(5), 2323–2339**: *"the ETAS model with few parameters and with the same
+  functional form seems to fit reasonably well to the seismicity in each zone."*
+- **Negative (fault-type pooling adds little) — CONTESTED.** Page, van der Elst, Hardebeck,
+  Felzer & Michael (2016), *BSSA* 106(5), 2290–2301, doi:10.1785/0120160073 make **tectonic region
+  their first ingredient** and find **regional variation in mean aftershock productivity of almost
+  a factor of 10**; Chu et al. (2011) find productivity varying **>5×** across plate-boundary
+  zones; Hardebeck, Llenos, Michael, Page & van der Elst (2019), *SRL* 90(1), 262–270 find
+  productivity varying *within* California (SoCal > NoCal, Mendocino low, Long Valley/Coso/Salton
+  Sea high). Read naively, we are contradicted.
+- **Merton's reconciliation, which must be written into the claim before promotion.** They
+  regionalize **productivity**; we pooled a **background rate**. Chu et al. measured that same
+  quantity and found background rates **"range by a factor of nearly 500"** — a hundredfold larger
+  spread than the productivity spread in the same study. Our TYPE-pool failure is therefore a
+  rediscovery of Chu et al.'s 500× μ spread arriving through a forecast score. Further, the
+  Reasenberg–Jones/Page framework **has no μ to pool at all** (it forecasts aftershocks of an
+  identified mainshock), so the failure mode that killed our TYPE pools is structurally impossible
+  in the model where "tectonic region helps" was demonstrated. The two results are not in contact.
+- **Permitted claim shrinks accordingly.** "Regional/type-specific tuning adds little" is **not
+  supportable** and would be refuted by three papers in one paragraph. The supportable sentence is:
+  *"pooling the full temporal-ETAS parameter vector by fault type — including μ — does not transfer
+  better than a single global pool, because μ is not a poolable quantity."* Our CANDIDATE EXTENSION
+  line below is the right sentence and is now attributable: it is Chu et al. (2011)'s conclusion,
+  quantified by a forecast score in six never-trained regions instead of by a parameter table in
+  eight tectonic zones. Real delta, small delta.
 
 **PROOF CHAIN.**
 - Protocol: `PATTERN_PROTOCOL.md` §EXP-M addendum, SHA-256
@@ -470,11 +532,23 @@ than fault type. It does not show TYPE pooling fails at finer magnitude or spati
 only at temporal-ETAS/M4.5 granularity, with n = 1 pools for collision and rift, which is
 acknowledged in the protocol and is a real weakness of the frozen design.
 
-**TIER: INTERNAL.** Blocked on attribution.
+**TIER: INTERNAL.** ~~Blocked on attribution~~ — attribution cleared (M-005), but promotion is
+**not** automatic: M-005 raises the bar rather than lowering it. Two things now stand between this
+entry and PANEL-READY: (a) the negative must be restated in the narrowed form above (mine,
+editorial, no compute), and (b) Merton requires a **positive control** before the word "little" is
+used about regional tuning anywhere — see below.
 
-**SINGLE MISSING VERIFICATION TO REACH PANEL-READY.** Merton's B-1 dossier, with Page et al. (2016)
-resolved specifically: does a published global-parameter transfer test already report this, and
-does it already report the fault-type negative?
+**SINGLE MISSING VERIFICATION TO REACH PANEL-READY.** ~~Merton's B-1 dossier~~ — delivered (M-005),
+and it answers the Page-et-al. question in the negative: the published global-parameter transfer
+literature owns our positive (Bayona et al. 2023; Chu et al. 2011) but reports the **opposite** of
+our negative on the neighbouring quantity (productivity). Remaining verification: **the
+Hardebeck et al. (2019) within-California positive control** — reproduce the published SoCal /
+NoCal / Mendocino / hydrothermal productivity differences with our pipeline. If we cannot recover a
+regional difference that is known to exist, our fault-type null is uninformative rather than
+negative. Merton's other takeables (adopt García et al. 2012 or Bird 2003 regionalization instead
+of our home-made fault types, whose n = 1 collision and rift pools are an artifact of the taxonomy;
+pool (K, α, c, p) by type and estimate μ locally *by construction*) apply to the next transfer
+experiment, not to this one.
 
 ---
 
