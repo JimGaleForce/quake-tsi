@@ -101,3 +101,35 @@ where the model says events SHOULD fire but do not, then correlate that negative
   amplitude (exp_a_train_bins.csv where overlapping). Rank correlations, exploratory-labeled.
 - Script exp_j_stress_ledger.py -> results_exp_j.json + maps/exp_j_ledger.png (loading map,
   release map, log-chi map, class map).
+
+## EXP-K (added 2026-08-09, frozen before computation): style-stratified fault-resolved ledger
+
+Upgrades EXP-J's style-blind ledger. Per 0.2-deg cell:
+- Full strain-rate tensor (exx, eyy, exy) recomputed from NGL MIDAS via
+  strain_comparison.strain_grid_full (nanostrain/yr), aggregated 2x2 to 0.2 deg.
+- STYLE class (frozen): styleness s = dilatation / (2*max_shear); TRANSTENSIONAL s > 0.25,
+  CONTRACTIONAL s < -0.25, STRIKE-SLIP otherwise.
+- FAULT GEOMETRY: CFM5.3 traces (data/xue_lu_zenodo/CFM5.3_traces.lonLat + the fault-geometry
+  file); per cell: distance to nearest trace and that trace's local strike; fault-resolved
+  loading = shear strain rate resolved onto the local strike (tensor rotation); ON-FAULT if
+  distance < 10 km.
+- VARIABLE H (frozen coarse model): H = 6 km within 0.35 deg of a tsi_map.GEOTHERMAL field;
+  H = 25 km inside the Transverse Ranges box lat [34.0, 34.8], lon [-119.8, -117.3];
+  H = 11 km elsewhere. Sensitivity of the silent list to H reported (flat-11 vs variable).
+- Outputs: chi and class per cell as in EXP-J but per (style x on/off-fault) stratum;
+  Kruskal-Wallis of log-chi across styles; within-stratum J2-persistence (Spearman train/test
+  log-chi, >= 20 events both periods); revised silent-loading list EXCLUDING cells within
+  25 km of the SAF creeping segment and cells within 0.35 deg of geothermal fields
+  ("unexplained silent" = the hazard-candidate list, reported with fault distance/strike).
+- Script exp_k_stratified_ledger.py -> results_exp_k.json + maps/exp_k_stratified.png.
+
+## EXP-L (application, not a hypothesis test): live 7-day forecast from frozen ETAS
+
+Uses results_exp_h.json frozen params (mu, K, alpha, c, p, M0=2.5) and train b=1.0654 -
+NO refitting (the pre-registered parameters are the point). Fresh catalog: USGS ComCat FDSN
+(earthquake.usgs.gov/fdsnws/event/1/), SoCal box, M >= 2.5, 2010-01-01 -> now (paged);
+retrieval logged. Forecast: lambda(now) from full history; next-7-day M >= 5 and M >= 4
+probabilities via 1,000 forward ETAS simulations (thinning, GR magnitudes b=1.0654, cap
+horizon 7 d); also the no-future-triggering analytic lower bound. Output: results_forecast_
+<date>.json + console statement with honest framing (probability forecast, conditional
+skill, not an event prediction). Script: etas_forecast.py (reusable daily).

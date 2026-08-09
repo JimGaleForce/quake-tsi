@@ -83,3 +83,7 @@ Sun Aug 9 2026 (frozen BEFORE any test-window analysis under these definitions)
 ## EXP-J addendum hash
 1e126abc8a42a1e6ca7e0a5b9a874d83a9084ff9b5496c2bb5d57047ed119a6d *PATTERN_PROTOCOL.md
 Sun Aug 9 2026 (EXP-J frozen before computation)
+
+## EXP-K/L addendum hash
+4b347599113aca2dd7ae6313c178f2e142d3fc31e0632e8e82b81a33fa581e54 *PATTERN_PROTOCOL.md
+Sun Aug 9 2026
