@@ -1,0 +1,8 @@
+{
+  "protocol": "OVERNIGHT_PREDICTION_PROTOCOL.md#EXP-D",
+  "exp_a_success_rule_passed": false,
+  "exp_a_test_p": 0.9423525491502832,
+  "exp_a_pooled_S": -0.10002079442422643,
+  "forward_windows": [],
+  "statement": "No validated basis for a forward statement: EXP-A's out-of-sample phase-skill test failed its pre-registered success rule (train-selected bin anti-aligned in the test window; anti-leak control clean). Under the frozen protocol, no favorable-phase windows are issued."
+}

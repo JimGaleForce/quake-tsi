@@ -1,0 +1,595 @@
+{
+  "protocol": "OVERNIGHT_PREDICTION_PROTOCOL.md#EXP-C",
+  "exploratory": true,
+  "window_years": 3,
+  "step_years": 1,
+  "min_events_per_window": 60,
+  "bins": [
+    {
+      "ilat": 6,
+      "ilon": 12,
+      "lat_center": 34.1,
+      "lon_center": -117.0,
+      "n_total_fm_matched": 2304,
+      "n_total_declustered": 2984,
+      "spearman_rho_pmp0_vs_next_year_count": -0.2316424130729855,
+      "spearman_p_exploratory": 0.18059005989349397,
+      "n_windows_valid": 35,
+      "series": [
+        {
+          "window_start": 1981,
+          "n_fm": 187,
+          "next_year_count": 144,
+          "next_year_m4": false,
+          "pm_p0": 0.13426858328752053,
+          "phi": 18.995059689247622
+        },
+        {
+          "window_start": 1982,
+          "n_fm": 269,
+          "next_year_count": 143,
+          "next_year_m4": false,
+          "pm_p0": 0.06222244932804288,
+          "phi": 119.6386910322694
+        },
+        {
+          "window_start": 1983,
+          "n_fm": 295,
+          "next_year_count": 101,
+          "next_year_m4": false,
+          "pm_p0": 0.06447187659259752,
+          "phi": 137.41841580158388
+        },
+        {
+          "window_start": 1984,
+          "n_fm": 277,
+          "next_year_count": 104,
+          "next_year_m4": false,
+          "pm_p0": 0.08622169388386693,
+          "phi": 134.84957274012552
+        },
+        {
+          "window_start": 1985,
+          "n_fm": 226,
+          "next_year_count": 84,
+          "next_year_m4": false,
+          "pm_p0": 0.017390382719268963,
+          "phi": -135.8803743962795
+        },
+        {
+          "window_start": 1986,
+          "n_fm": 175,
+          "next_year_count": 79,
+          "next_year_m4": false,
+          "pm_p0": 0.13405381051410076,
+          "phi": -147.46086022227936
+        },
+        {
+          "window_start": 1987,
+          "n_fm": 177,
+          "next_year_count": 76,
+          "next_year_m4": false,
+          "pm_p0": 0.2581771945670197,
+          "phi": -160.9921600983417
+        },
+        {
+          "window_start": 1988,
+          "n_fm": 174,
+          "next_year_count": 72,
+          "next_year_m4": true,
+          "pm_p0": 0.1330015244294113,
+          "phi": -122.48936360403471
+        },
+        {
+          "window_start": 1989,
+          "n_fm": 161,
+          "next_year_count": 132,
+          "next_year_m4": false,
+          "pm_p0": 0.12550620739706966,
+          "phi": -126.92191678455103
+        },
+        {
+          "window_start": 1990,
+          "n_fm": 190,
+          "next_year_count": 92,
+          "next_year_m4": false,
+          "pm_p0": 0.09416165168321515,
+          "phi": -53.066722428466456
+        },
+        {
+          "window_start": 1991,
+          "n_fm": 207,
+          "next_year_count": 92,
+          "next_year_m4": true,
+          "pm_p0": 0.06952846021552954,
+          "phi": -151.18362949792532
+        },
+        {
+          "window_start": 1992,
+          "n_fm": 221,
+          "next_year_count": 78,
+          "next_year_m4": false,
+          "pm_p0": 0.01310520840334766,
+          "phi": 132.38676712001623
+        },
+        {
+          "window_start": 1993,
+          "n_fm": 197,
+          "next_year_count": 84,
+          "next_year_m4": false,
+          "pm_p0": 0.07556730497588447,
+          "phi": -131.57914045451088
+        },
+        {
+          "window_start": 1994,
+          "n_fm": 187,
+          "next_year_count": 65,
+          "next_year_m4": false,
+          "pm_p0": 0.18194927598818592,
+          "phi": -143.55916601495653
+        },
+        {
+          "window_start": 1995,
+          "n_fm": 179,
+          "next_year_count": 76,
+          "next_year_m4": false,
+          "pm_p0": 0.21904339603797823,
+          "phi": -124.85914895520706
+        },
+        {
+          "window_start": 1996,
+          "n_fm": 160,
+          "next_year_count": 104,
+          "next_year_m4": false,
+          "pm_p0": 0.24081546688247063,
+          "phi": -151.7279811093166
+        },
+        {
+          "window_start": 1997,
+          "n_fm": 151,
+          "next_year_count": 106,
+          "next_year_m4": false,
+          "pm_p0": 0.03337452813842437,
+          "phi": -130.75467235622028
+        },
+        {
+          "window_start": 1998,
+          "n_fm": 161,
+          "next_year_count": 125,
+          "next_year_m4": false,
+          "pm_p0": 0.03844329602092879,
+          "phi": 89.38001602909296
+        },
+        {
+          "window_start": 1999,
+          "n_fm": 198,
+          "next_year_count": 84,
+          "next_year_m4": false,
+          "pm_p0": 0.11699871686275103,
+          "phi": 54.312345759246334
+        },
+        {
+          "window_start": 2000,
+          "n_fm": 209,
+          "next_year_count": 83,
+          "next_year_m4": false,
+          "pm_p0": 0.09335076378459235,
+          "phi": -163.37127973050733
+        },
+        {
+          "window_start": 2001,
+          "n_fm": 221,
+          "next_year_count": 74,
+          "next_year_m4": false,
+          "pm_p0": 0.15665649444856683,
+          "phi": -170.5552927306586
+        },
+        {
+          "window_start": 2002,
+          "n_fm": 208,
+          "next_year_count": 66,
+          "next_year_m4": true,
+          "pm_p0": 0.22596284103376757,
+          "phi": -122.43246055303116
+        },
+        {
+          "window_start": 2003,
+          "n_fm": 207,
+          "next_year_count": 63,
+          "next_year_m4": false,
+          "pm_p0": 0.09290715647361227,
+          "phi": -99.69875374300686
+        },
+        {
+          "window_start": 2004,
+          "n_fm": 195,
+          "next_year_count": 52,
+          "next_year_m4": false,
+          "pm_p0": 0.17189963518246315,
+          "phi": -63.61513744553166
+        },
+        {
+          "window_start": 2005,
+          "n_fm": 174,
+          "next_year_count": 51,
+          "next_year_m4": true,
+          "pm_p0": 0.044383226248469396,
+          "phi": -114.77524011663394
+        },
+        {
+          "window_start": 2006,
+          "n_fm": 160,
+          "next_year_count": 57,
+          "next_year_m4": false,
+          "pm_p0": 0.10363607653287048,
+          "phi": -46.24227235077082
+        },
+        {
+          "window_start": 2007,
+          "n_fm": 152,
+          "next_year_count": 58,
+          "next_year_m4": true,
+          "pm_p0": 0.1311964409682989,
+          "phi": -159.55827549201194
+        },
+        {
+          "window_start": 2008,
+          "n_fm": 158,
+          "next_year_count": 44,
+          "next_year_m4": false,
+          "pm_p0": 0.12791877312579536,
+          "phi": -103.20029346648263
+        },
+        {
+          "window_start": 2009,
+          "n_fm": 151,
+          "next_year_count": 62,
+          "next_year_m4": false,
+          "pm_p0": 0.11961981060143075,
+          "phi": -142.24642203877465
+        },
+        {
+          "window_start": 2010,
+          "n_fm": 150,
+          "next_year_count": 40,
+          "next_year_m4": false,
+          "pm_p0": 0.029011118982151456,
+          "phi": -147.38739477515577
+        },
+        {
+          "window_start": 2011,
+          "n_fm": 132,
+          "next_year_count": 54,
+          "next_year_m4": false,
+          "pm_p0": 0.1220771343707181,
+          "phi": 128.28412007484792
+        },
+        {
+          "window_start": 2012,
+          "n_fm": 142,
+          "next_year_count": 39,
+          "next_year_m4": false,
+          "pm_p0": 0.13847699404468275,
+          "phi": 128.3932974136436
+        },
+        {
+          "window_start": 2013,
+          "n_fm": 125,
+          "next_year_count": 60,
+          "next_year_m4": true,
+          "pm_p0": 0.12413290103532472,
+          "phi": 70.68518004431209
+        },
+        {
+          "window_start": 2014,
+          "n_fm": 147,
+          "next_year_count": 58,
+          "next_year_m4": false,
+          "pm_p0": 0.08871689849637036,
+          "phi": 112.4603059557614
+        },
+        {
+          "window_start": 2015,
+          "n_fm": 147,
+          "next_year_count": 47,
+          "next_year_m4": false,
+          "pm_p0": 0.1662021747857175,
+          "phi": 106.70782613310871
+        }
+      ]
+    },
+    {
+      "ilat": 6,
+      "ilon": 11,
+      "lat_center": 34.1,
+      "lon_center": -117.39999999999999,
+      "n_total_fm_matched": 1719,
+      "n_total_declustered": 2334,
+      "spearman_rho_pmp0_vs_next_year_count": -0.26511463738071206,
+      "spearman_p_exploratory": 0.12376337797370107,
+      "n_windows_valid": 35,
+      "series": [
+        {
+          "window_start": 1981,
+          "n_fm": 169,
+          "next_year_count": 127,
+          "next_year_m4": false,
+          "pm_p0": 0.16677782634606397,
+          "phi": 32.95686751013728
+        },
+        {
+          "window_start": 1982,
+          "n_fm": 223,
+          "next_year_count": 101,
+          "next_year_m4": true,
+          "pm_p0": 0.14416177571004127,
+          "phi": 16.091093384284765
+        },
+        {
+          "window_start": 1983,
+          "n_fm": 221,
+          "next_year_count": 98,
+          "next_year_m4": false,
+          "pm_p0": 0.10101681414083159,
+          "phi": -46.23710706034219
+        },
+        {
+          "window_start": 1984,
+          "n_fm": 231,
+          "next_year_count": 83,
+          "next_year_m4": false,
+          "pm_p0": 0.12308236256079957,
+          "phi": -89.46730111056729
+        },
+        {
+          "window_start": 1985,
+          "n_fm": 189,
+          "next_year_count": 59,
+          "next_year_m4": false,
+          "pm_p0": 0.12720502964780508,
+          "phi": -100.37267169297297
+        },
+        {
+          "window_start": 1986,
+          "n_fm": 160,
+          "next_year_count": 60,
+          "next_year_m4": false,
+          "pm_p0": 0.15287154885805151,
+          "phi": 122.13656952877147
+        },
+        {
+          "window_start": 1987,
+          "n_fm": 133,
+          "next_year_count": 65,
+          "next_year_m4": false,
+          "pm_p0": 0.2850095302169776,
+          "phi": 127.37394754087045
+        },
+        {
+          "window_start": 1988,
+          "n_fm": 130,
+          "next_year_count": 62,
+          "next_year_m4": false,
+          "pm_p0": 0.2028225649039071,
+          "phi": 98.58478050145524
+        },
+        {
+          "window_start": 1989,
+          "n_fm": 133,
+          "next_year_count": 65,
+          "next_year_m4": false,
+          "pm_p0": 0.1277975904968116,
+          "phi": 35.350377097456665
+        },
+        {
+          "window_start": 1990,
+          "n_fm": 135,
+          "next_year_count": 50,
+          "next_year_m4": false,
+          "pm_p0": 0.19518957343034807,
+          "phi": -0.6549058694153952
+        },
+        {
+          "window_start": 1991,
+          "n_fm": 130,
+          "next_year_count": 67,
+          "next_year_m4": false,
+          "pm_p0": 0.07736181520320255,
+          "phi": 60.70632685207004
+        },
+        {
+          "window_start": 1992,
+          "n_fm": 128,
+          "next_year_count": 58,
+          "next_year_m4": false,
+          "pm_p0": 0.05617882179287936,
+          "phi": 13.935964426219254
+        },
+        {
+          "window_start": 1993,
+          "n_fm": 123,
+          "next_year_count": 45,
+          "next_year_m4": false,
+          "pm_p0": 0.133081429869607,
+          "phi": 126.77543514080986
+        },
+        {
+          "window_start": 1994,
+          "n_fm": 115,
+          "next_year_count": 38,
+          "next_year_m4": false,
+          "pm_p0": 0.13616162974867943,
+          "phi": 127.47795149634884
+        },
+        {
+          "window_start": 1995,
+          "n_fm": 108,
+          "next_year_count": 72,
+          "next_year_m4": false,
+          "pm_p0": 0.29887539797348656,
+          "phi": 131.34021800374182
+        },
+        {
+          "window_start": 1996,
+          "n_fm": 112,
+          "next_year_count": 100,
+          "next_year_m4": false,
+          "pm_p0": 0.12471010452968431,
+          "phi": 110.82314464954439
+        },
+        {
+          "window_start": 1997,
+          "n_fm": 132,
+          "next_year_count": 79,
+          "next_year_m4": false,
+          "pm_p0": 0.04722332125310552,
+          "phi": -97.69528072532057
+        },
+        {
+          "window_start": 1998,
+          "n_fm": 147,
+          "next_year_count": 90,
+          "next_year_m4": false,
+          "pm_p0": 0.04245558031200435,
+          "phi": -129.17366369596158
+        },
+        {
+          "window_start": 1999,
+          "n_fm": 149,
+          "next_year_count": 75,
+          "next_year_m4": false,
+          "pm_p0": 0.09147418202697699,
+          "phi": 153.52121059457548
+        },
+        {
+          "window_start": 2000,
+          "n_fm": 137,
+          "next_year_count": 66,
+          "next_year_m4": false,
+          "pm_p0": 0.13166272818026972,
+          "phi": 106.02974115156614
+        },
+        {
+          "window_start": 2001,
+          "n_fm": 131,
+          "next_year_count": 64,
+          "next_year_m4": false,
+          "pm_p0": 0.21713198394710725,
+          "phi": 110.84927283855414
+        },
+        {
+          "window_start": 2002,
+          "n_fm": 134,
+          "next_year_count": 45,
+          "next_year_m4": false,
+          "pm_p0": 0.19755309721609068,
+          "phi": 78.30422743115113
+        },
+        {
+          "window_start": 2003,
+          "n_fm": 128,
+          "next_year_count": 34,
+          "next_year_m4": false,
+          "pm_p0": 0.17723974509297588,
+          "phi": 80.89530919088811
+        },
+        {
+          "window_start": 2004,
+          "n_fm": 117,
+          "next_year_count": 45,
+          "next_year_m4": false,
+          "pm_p0": 0.15721264107566452,
+          "phi": 75.16634936476332
+        },
+        {
+          "window_start": 2005,
+          "n_fm": 107,
+          "next_year_count": 48,
+          "next_year_m4": false,
+          "pm_p0": 0.1833283520436576,
+          "phi": 106.78863693951199
+        },
+        {
+          "window_start": 2006,
+          "n_fm": 113,
+          "next_year_count": 33,
+          "next_year_m4": false,
+          "pm_p0": 0.2031468772671678,
+          "phi": 66.92167521642413
+        },
+        {
+          "window_start": 2007,
+          "n_fm": 112,
+          "next_year_count": 47,
+          "next_year_m4": false,
+          "pm_p0": 0.1377228200213535,
+          "phi": 52.74661504237094
+        },
+        {
+          "window_start": 2008,
+          "n_fm": 118,
+          "next_year_count": 45,
+          "next_year_m4": false,
+          "pm_p0": 0.11396386286661907,
+          "phi": -142.74998666696249
+        },
+        {
+          "window_start": 2009,
+          "n_fm": 110,
+          "next_year_count": 42,
+          "next_year_m4": false,
+          "pm_p0": 0.3273750832932941,
+          "phi": -161.90568570913604
+        },
+        {
+          "window_start": 2010,
+          "n_fm": 115,
+          "next_year_count": 46,
+          "next_year_m4": false,
+          "pm_p0": 0.22077602346562877,
+          "phi": -156.1433024167019
+        },
+        {
+          "window_start": 2011,
+          "n_fm": 113,
+          "next_year_count": 36,
+          "next_year_m4": false,
+          "pm_p0": 0.043350882396839575,
+          "phi": -106.48128005976524
+        },
+        {
+          "window_start": 2012,
+          "n_fm": 110,
+          "next_year_count": 40,
+          "next_year_m4": true,
+          "pm_p0": 0.08741859080474494,
+          "phi": -4.877969548327703
+        },
+        {
+          "window_start": 2013,
+          "n_fm": 110,
+          "next_year_count": 35,
+          "next_year_m4": false,
+          "pm_p0": 0.18327708805073017,
+          "phi": 23.776043970273875
+        },
+        {
+          "window_start": 2014,
+          "n_fm": 104,
+          "next_year_count": 45,
+          "next_year_m4": false,
+          "pm_p0": 0.2725365655085181,
+          "phi": 23.657758516173406
+        },
+        {
+          "window_start": 2015,
+          "n_fm": 113,
+          "next_year_count": 50,
+          "next_year_m4": false,
+          "pm_p0": 0.10826352500420819,
+          "phi": 20.546018327368365
+        }
+      ]
+    }
+  ]
+}

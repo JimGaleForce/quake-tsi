@@ -1,0 +1,430 @@
+{
+  "exploratory_supplement": true,
+  "not_in_frozen_protocol": true,
+  "window_years": 5,
+  "min_fm_per_window": 40,
+  "regions": {
+    "Anza (EXP-A selected)": {
+      "n_fm_total": 314,
+      "windows": [
+        {
+          "window_start": 1981,
+          "n": 73,
+          "pm_p0": 0.262,
+          "phi": -23.8
+        },
+        {
+          "window_start": 1982,
+          "n": 71,
+          "pm_p0": 0.258,
+          "phi": -36.2
+        },
+        {
+          "window_start": 1983,
+          "n": 67,
+          "pm_p0": 0.241,
+          "phi": -36.4
+        },
+        {
+          "window_start": 1984,
+          "n": 64,
+          "pm_p0": 0.32,
+          "phi": -15.5
+        },
+        {
+          "window_start": 1985,
+          "n": 62,
+          "pm_p0": 0.343,
+          "phi": -8.9
+        },
+        {
+          "window_start": 1986,
+          "n": 58,
+          "pm_p0": 0.23,
+          "phi": -15.4
+        },
+        {
+          "window_start": 1987,
+          "n": 48,
+          "pm_p0": 0.059,
+          "phi": 28.7
+        },
+        {
+          "window_start": 1988,
+          "n": 45,
+          "pm_p0": 0.077,
+          "phi": -165.1
+        },
+        {
+          "window_start": 1989,
+          "n": 40,
+          "pm_p0": 0.029,
+          "phi": -31.0
+        },
+        {
+          "window_start": 1990,
+          "n": 35,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1991,
+          "n": 33,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1992,
+          "n": 35,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1993,
+          "n": 28,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1994,
+          "n": 26,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1995,
+          "n": 22,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1996,
+          "n": 22,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1997,
+          "n": 19,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1998,
+          "n": 20,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1999,
+          "n": 26,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2000,
+          "n": 30,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2001,
+          "n": 30,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2002,
+          "n": 37,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2003,
+          "n": 41,
+          "pm_p0": 0.292,
+          "phi": 72.5
+        },
+        {
+          "window_start": 2004,
+          "n": 37,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2005,
+          "n": 34,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2006,
+          "n": 36,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2007,
+          "n": 31,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2008,
+          "n": 31,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2009,
+          "n": 29,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2010,
+          "n": 31,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2011,
+          "n": 33,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2012,
+          "n": 40,
+          "pm_p0": 0.313,
+          "phi": 138.7
+        },
+        {
+          "window_start": 2013,
+          "n": 40,
+          "pm_p0": 0.326,
+          "phi": 162.9
+        },
+        {
+          "window_start": 2014,
+          "n": 44,
+          "pm_p0": 0.299,
+          "phi": 174.4
+        }
+      ],
+      "n_valid_windows": 13,
+      "phase_concentration_R": 0.296
+    },
+    "Coso Fig4c (Weifan)": {
+      "n_fm_total": 113,
+      "windows": [
+        {
+          "window_start": 1981,
+          "n": 16,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1982,
+          "n": 20,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1983,
+          "n": 21,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1984,
+          "n": 20,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1985,
+          "n": 17,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1986,
+          "n": 15,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1987,
+          "n": 13,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1988,
+          "n": 11,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1989,
+          "n": 12,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1990,
+          "n": 11,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1991,
+          "n": 7,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1992,
+          "n": 6,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1993,
+          "n": 6,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1994,
+          "n": 6,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1995,
+          "n": 8,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1996,
+          "n": 8,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1997,
+          "n": 9,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1998,
+          "n": 11,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 1999,
+          "n": 16,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2000,
+          "n": 16,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2001,
+          "n": 20,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2002,
+          "n": 21,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2003,
+          "n": 23,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2004,
+          "n": 21,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2005,
+          "n": 24,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2006,
+          "n": 25,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2007,
+          "n": 23,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2008,
+          "n": 18,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2009,
+          "n": 14,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2010,
+          "n": 11,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2011,
+          "n": 11,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2012,
+          "n": 13,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2013,
+          "n": 15,
+          "pm_p0": null,
+          "phi": null
+        },
+        {
+          "window_start": 2014,
+          "n": 19,
+          "pm_p0": null,
+          "phi": null
+        }
+      ],
+      "n_valid_windows": 0,
+      "phase_concentration_R": null
+    }
+  }
+}
