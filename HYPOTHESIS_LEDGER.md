@@ -7014,3 +7014,1098 @@ Abstracts verified verbatim — Chu et al. (2011), Bayona et al. (2023). Citatio
 Helmstetter et al. (2006), Zechar et al. (2013), Rhoades et al. (2014), Hardebeck et al. (2019).
 Known only via another paper's citation — Hearn et al. (2010), Xu et al. (2021), Titus et al.
 (2011); the last of these I could not pin to a venue and it must be checked before use.*
+
+---
+
+### Wave-interference seed (Jim)
+
+**Jim's seed, stated as I understand it:** earthquakes may be indicative of spherical waves bouncing
+through the Earth, amplified where they OVERLAY; the job is finding the multiphasic interference
+pattern. **The supervisor's framing, which I adopt and build from:** the physics core is real and
+documented (surface-wave trains circle the globe for days after great events; normal modes ring for
+weeks; antipodal focusing is a genuine geometric consequence; single-source dynamic triggering by
+passing surface waves is REPLICATED — O-1, O-2, O-3, O-6, and our own K-034/K-038 family). **The
+differentiator Jim adds is the superposed field from MULTIPLE sources and MULTIPLE orbits — an
+object that is computable like an ephemeris, from a catalogue, with no waveform data.**
+
+Before any entry, five things I want on the record, because three of them constrain this family
+hard and two of them make it better than the seed as handed to me.
+
+**(i) The gate structure is inherited and I do not get to relax it.** This is the
+dynamic-triggering family, so **K-034 is its licensing gate** (Popper, R2-2: K-034 licenses
+K-038/K-043/W-002-P2 — *"at the amplitude, duty cycle and bandwidth where it fired, and nowhere
+else"*). Every entry below is gated on K-034 firing on ≥2 of {Landers 1992, Hector Mine 1999,
+Ridgecrest 2019, Denali 2002} with sealed literature values and a pre-registered ranked cell list.
+**No null from this family is interpretable before that.** And K-034's licence has a *ceiling*:
+it certifies detection of a 10–100 kPa transient. Entries below that amplitude are licensed by
+nothing yet and must carry their own injection-recovery arm, per K-035's lesson.
+
+**(ii) The honest amplitude ladder, computed rather than asserted.** Dynamic strain ε ≈ PGV/c with
+c ≈ 4 km/s; shear stress τ = με with μ = 30 GPa. Surface-wave amplitude decays per orbit as
+exp(−πL/(U·T·Q)) with L = 40,030 km. At T = 100 s, Q ≈ 250, U = 3.8 km/s: **one orbit costs a
+factor ≈ 3.9.** At T = 200 s, Q ≈ 350: one orbit costs ≈ 1.6. So:
+
+| configuration | typical Δτ | rate-state ΔR/R at Aσ = 0.03 MPa | verdict |
+|---|---|---|---|
+| R1/R2, Δ < 3,000 km, M ≥ 7.5 | 10–100 kPa | 40% – ×28 | **power exists; this is Landers** |
+| R1/R2, teleseismic, M ≥ 8 | 1–10 kPa | 3% – 40% | marginal-to-good |
+| R3/R4 (one extra orbit) | 0.3–3 kPa | 1% – 11% | **at/below our ~3% floor** |
+| R5+ | < 1 kPa | < 3% | **bound-producing only** |
+| normal modes, days after M9 | 0.01–0.1 kPa | 0.03% – 0.3% | **10–100× below floor** |
+| Earth's hum (continuous) | ~10⁻⁵ kPa | ~10⁻⁵ | **not an amplitude test at all** |
+
+Minimum detectable fractional modulation ≈ 2.8·√(2/N): 4% at N = 10⁴, 1.3% at N = 10⁵. **Every
+entry below carries a POWER-STATE line in these units, and where the predicted effect is under the
+floor the entry says "bound-producing only" in its own text rather than in a footnote.**
+
+**(iii) The design contribution I am adding to the seed, and it is the one that decides whether
+this family is fundable: MULTIPHASIC DOES NOT REQUIRE MULTIPLE SOURCES.** One great earthquake
+already emits a *comb* of arrivals at every point on Earth — R1, R2, R3, … on the Rayleigh clock
+(orbit ≈ 40,030/3.8 = 2.93 h) **and** G1, G2, G3, … on the Love clock (orbit ≈ 40,030/4.4 =
+2.53 h), plus dispersion spreading each into a band. Two combs with incommensurate spacing from a
+single source is already an interference pattern with a beat, and it has **hundreds of instances in
+the 179 M≥7 events on disk** rather than the handful of instances multi-source co-arrival provides.
+**So the family splits into a well-powered tier (single-source multiphasic: many events, large
+amplitudes, R1–R4) and a rare high-value tier (multi-source overlay: few configurations, and the
+place Jim's novel claim actually lives).** Run the powered tier first — not because it is the
+question, but because it is the only way the rare tier's null will mean anything. That is K-035's
+logic applied to geometry instead of to amplitude.
+
+**(iv) The hard scoping limit nobody would find until they tried to code it, so I state it now.**
+Phase-coherent interference is only computable from a catalogue where we can predict phase to
+better than ~1 radian. Phase error ≈ 2π·(L/λ)·(δc/c). At T = 100 s, λ ≈ 400 km, one orbit is
+~100 wavelengths, and 3-D structure gives δc/c ≈ 1–2% → phase error of several radians after one
+orbit. At T = 200–300 s, λ ≈ 800–1,200 km, ~35 wavelengths per orbit → phase is usable for ~2–3
+orbits. **Therefore: the phase-resolved (interference) field is computable only at T ≳ 150 s and
+R1–R4. Beyond that only the energy envelope is computable, and any "interference" claimed there is
+an artifact of pretending we know a phase we do not.** This is not a caveat — it is a *built-in
+internal negative control*: the coherent increment of K-060 **must vanish** at short period and
+high orbit number, and if it does not, the result is spurious by construction.
+
+**(v) The clock ruling applies and I pre-comply with it (S-7).** The orbit comb is an **exogenous**
+clock in S-7(a)'s sense with one named caveat: it is built from *earthquakes*, so it is exogenous
+to the target cell's own catalogue (distant sources, source aftershock zones excluded) but not to
+global seismicity. Declared. The S-7(d) clock-specific null — circular shift of the clock series
+against the target catalogue — is exactly the right null here and is adopted family-wide, together
+with a second null that is stronger and is mine: **the group-velocity scan (K-063).**
+
+**Family death condition, declared before any entry (so the seed can lose as a family, per
+R2-3's example).** The interference programme is CLOSED, with a published bound, if all three of:
+(a) K-060's coherent field adds < 0.01 bits/event over the energy-envelope field on the holdout;
+(b) K-061's destructive-interference deficit is null at demonstrated power; (c) K-063's
+group-velocity scan shows no peak within ±5% of the true U. If those three land, the honest
+statement is *"the superposed wavefield carries no forecasting information above the single-source
+envelope, at |effect| < X% modulation at 80% power"*, and it may be reopened only by new data
+(waveform-based fields, denser catalogues), never by a new statistic — R2-1(e)'s anti-ratchet,
+adopted here voluntarily and in advance.
+
+**All entries below carry: GATE K-034; A-9 MERTON-BEFORE-FREEZE with nominated searches; a
+POWER-STATE line; declared unit and N_eff (A-11); S-8 max-statistic over the declared family
+{orbits × bands × Aσ × configurations}; S-9 one frozen value per construction choice; S-10 one
+model crosses; S-11 ≥ 0.01 bits with a sequence-block CI.**
+
+---
+
+**K-059 — THE FRAMEWORK: build the TELESEISMIC STRESS EPHEMERIS. A deterministic, waveform-free,
+global dynamic-stress field, computed like an almanac and shipped as a covariate.**
+
+*Lens: turn a phenomenon into an ephemeris. (The tides became science when they became computable
+in advance from geometry; the dynamic wavefield has never been tabulated that way.)*
+
+- **Claim (and it must be able to lose).** A field `T(x, t)` — the superposed surface-wave dynamic
+  stress at every point on Earth, from all sources, summed over orbits — is computable to useful
+  accuracy from a catalogue alone, and **adds ≥ 0.01 bits/event over frozen ETAS** as a covariate
+  in the K-033 Cox-ETAS engine. If it does not, the whole family is scored as a LOSS and a win for
+  W-003, and the bound goes in the corpse-to-bound table. I am writing that in now so the engine
+  cannot become another instrument that only reports discoveries (Popper's K-033 objection,
+  pre-applied).
+- **Construction (S-9: one frozen value each, named here).** For every source j with origin time
+  t_j, epicentre, depth and GCMT moment tensor: compute great-circle distance Δ to each target
+  cell; arrivals **R_{2n+1} at (Δ + nC)/U** and **R_{2n+2} at ((n+1)C − Δ)/U**, C = 40,030 km,
+  n = 0…3; the same for Love with its own U. Amplitude: `A = A₀(M, T)·(sin Δ)^(−1/2)·
+  exp(−πL/(U·T·Q))·F(azimuth, mechanism)`, where the geometric-spreading term is the one that
+  **diverges at Δ → 0 and Δ → 180°** (this is antipodal focusing, and it falls out of the algebra
+  rather than being added — see K-062), F is the double-couple Rayleigh/Love radiation pattern from
+  GCMT, and A₀ uses the frozen PGV attenuation relation already specified in K-038. Convert to
+  dynamic Coulomb stress on the local CFM/plate-boundary-derived receiver plane. Frozen choices:
+  U_R = 3.80 km/s, U_L = 4.40 km/s, Q(T) from PREM, bands {50–100 s, 100–200 s, 200–300 s},
+  n_max = 3, radiation pattern ON, distance gate 2 rupture lengths, source floor M ≥ 6.5.
+- **Data.** `data/comcat_world/*.csv` (517 M≥6.5, 179 M≥7.0, 1995–2026) as both source and target;
+  **one download** for a global ComCat M ≥ 5.5 1980–now source catalogue (~30k events, the same
+  query K-038 already needs) and **one download** for GCMT moment tensors (globalcmt.org, 1976–now,
+  free). PREM dispersion/Q are published constants, not data. Targets: SoCal M≥2.5 on disk, plus
+  the 13 boxes.
+- **Statistic / null.** Bits/event over frozen ETAS with `T(x,t)` as a multiplicative covariate;
+  S-8 max-statistic over the declared family. Nulls: (1) **independent circular time shifts of the
+  source catalogue** (K-042's null, which Popper called the best-designed control anyone here has
+  proposed — it preserves every source's amplitude statistics and every cell's exposure
+  distribution and destroys only the alignment); (2) ETAS-sim targets with the real field left in
+  place; (3) exclusion of each source's own aftershock zone and of same-region sources.
+- **POWER-STATE.** Dominated by the R1/R2 near-teleseismic term at 1–100 kPa: predicted 3%–×28
+  rate modulation during passage at Aσ = 0.03 MPa. Exposure duty cycle is the limiting quantity,
+  not amplitude: a 30-minute wavetrain × ~500 M≥6.5 sources × 4 orbits ≈ 10³ exposed hours per
+  cell-decade. **Unit = source-target passage; N_eff = number of independent source events
+  (≈ 500 globally, ≈ 180 at M≥7), not number of target earthquakes.** That is the number that
+  governs the CI and it must be stated in the protocol per A-11.
+- **Expected.** +0.01 to +0.08 bits/event, dominated by the near-field term — i.e. **mostly a
+  re-derivation of documented single-source triggering**, which is the point: K-059 is
+  infrastructure and a positive control, and its value is that it makes K-060–K-063 possible.
+  Honest prior on its own claim's null: 0.35.
+- **Cost / decision.** ~3 days build (shared with K-033/K-038, so most of it is already owed).
+  Decision: it produces the first *tabulated, prospective, waveform-free* dynamic-stress field, and
+  everything else in this seed is a query against it.
+- **GATE: K-034. MERTON-BEFORE-FREEZE — nominated searches:** `remote dynamic triggering global
+  statistics` (Parsons & Velasco 2011, Nat. Geosci. — the "no large-event remote triggering" null);
+  **Pollitz et al. 2012, Nature 490, 250 — the 2012 M8.6 Indian Ocean event followed by a global
+  M≥5.5 rate increase for ~6 days**, which is the single most important prior-art row in this seed
+  and is in direct tension with Parsons & Velasco; `delayed dynamic triggering` (Brodsky);
+  `triggering threshold dynamic strain` (van der Elst & Brodsky 2010, our O-3); `surface wave
+  dispersion global phase velocity maps` (Ekström GDM52); `teleseismic wavefield prediction from
+  catalogues`. **Merton must classify before this freezes; if Pollitz is what it appears to be,
+  K-059's headline is a REDISCOVERY and only K-060–K-062 can be novel.**
+- **Why dismissed too quickly.** "This is K-038 with extra steps." K-038 is a scalar PGV proxy at
+  the direct arrival. This is a *phased, multi-orbit, radiation-pattern-resolved field with a
+  computable arrival calendar*, and the difference between those two objects is exactly the
+  difference between a tide table and "the moon is up".
+
+---
+
+**K-060 — THE NOVEL CLAIM, AND THE ONLY ONE THAT IS: COHERENT MINUS ENVELOPE. Interference is
+precisely the increment of the phase-resolved field over the energy-envelope field.**
+
+*Lens: reduce a picture to a nested model comparison. If overlay is real it is one number.*
+
+- **The reduction.** Build two fields from the identical source list and identical geometry:
+  **E(x,t)** = the *energy envelope* — sum of squared amplitudes, phase discarded (this is what
+  single-source additive dynamic triggering predicts, extended over many sources and orbits);
+  **C(x,t)** = the *coherent sum* — complex amplitudes added with predicted phase, then
+  |·| (this is Jim's overlay). E and C have the same mean energy and **different variance**: the
+  coherent sum can reach 2A where the envelope gives √2·A, and can reach 0 where the envelope
+  cannot. **The entire interference hypothesis is the statement that C adds forecasting information
+  over E.** Nothing else about it is novel; this is.
+- **Claim.** `bits(ETAS + E + C) − bits(ETAS + E) ≥ 0.01 bits/event`, out of sample, with a
+  sequence-block CI excluding zero, clearing the S-8 max-statistic over the declared family.
+- **The built-in internal control that makes it hard to fake (per (iv) above).** The increment
+  **must be present at T = 200–300 s / R1–R4 and absent at T = 50–100 s / R5+**, because our phase
+  prediction is good in the first regime and meaningless in the second. **Pre-register that
+  pattern as part of the success rule.** A coherent increment that is *equally strong* where we
+  cannot know the phase is a proof that the statistic is measuring something else — probably
+  residual amplitude leakage between the two nested fields, which is the artifact class here.
+- **Test / null.** Nested Cox-ETAS comparison on SoCal M≥2.5 (train < 2010, holdout 2010–2026) and
+  the 13 boxes at M≥4.5. Nulls: **(1) the phase-scramble null, and it is the exact one** — recompute
+  C with each source's phase randomised while keeping every amplitude, arrival time and geometry
+  identical. This destroys interference and *nothing else*, which is a cleaner surgical cut than
+  even K-042's circular shift. (2) ETAS-sim targets with the real C in place. (3) The
+  velocity-scan of K-063 as a physics fingerprint.
+- **POWER-STATE.** The coherent-vs-incoherent difference in Δτ is a factor ≤ √2 in the constructive
+  tail, i.e. at Aσ = 0.03 MPa a 3 kPa envelope → 11% and a 4.2 kPa coherent peak → 15%. **The
+  increment being sought is ~4 percentage points of modulation, in the constructive tail only.**
+  With the tail being ~1% of exposed hours, this needs pooling over the full global source list to
+  reach N_exposed ≳ 10⁴. **Honest verdict: marginal at SoCal alone; runnable globally. Declared
+  bound-producing if the global pooling does not reach N = 10⁴.**
+- **Expected.** +0.00 to +0.03 bits. Honest prior on the null: **0.7.** I would rather say that now
+  than after.
+- **Cost / decision.** ~1 day on top of K-059. Decision: **this is the seed's verdict.** If the
+  increment is null at demonstrated power, Jim's overlay hypothesis is closed with a number and the
+  documented single-source physics keeps everything it had.
+- **GATE: K-034 + K-059's own positive result on E. MERTON-BEFORE-FREEZE:** `interference of
+  seismic surface waves triggering`, `multiple mainshock wavefield superposition`, `constructive
+  interference dynamic triggering`, `stacked teleseismic triggering multiple sources`. My prior
+  that this specific nested comparison exists in the literature: low, ~0.2 — but that is exactly the
+  kind of prior A-9 exists to stop me acting on.
+- **Why dismissed too quickly.** "You cannot know the phase without waveforms." Correct beyond
+  ~3 orbits and short periods, and that limitation is *written into the success rule as a required
+  null region*. Within its stated regime the phase is an ephemeris calculation, and refusing to do
+  it because it is hard everywhere is how a computable prediction stays unmade.
+
+---
+
+**K-061 — THE HOLE. Destructive interference predicts a rate DEFICIT, and single-source dynamic
+triggering cannot predict a deficit at all. This is the sharpest discriminator in the seed.**
+
+*Lens: model the negative space (B-4's move) applied to a wavefield. Everyone hunts the antinode;
+nobody has ever looked for the node.*
+
+- **The differentiator, stated plainly because it is what Jim's seed is worth.** Single-source
+  triggering is a monotone, non-negative response to amplitude: more shaking, more events, never
+  fewer. **Superposition is the only mechanism in this family that predicts a place where the
+  expected shaking is high and the realised shaking is near zero** — a destructive node. So:
+  cells at predicted destructive minima should show a rate **at or below** their unperturbed ETAS
+  expectation *while their envelope-predicted exposure is high*. A deficit conditioned on high
+  envelope exposure is unforgeable by any additive model, by any detection artifact (which would
+  suppress counts at high amplitude everywhere, not selectively at predicted nodes), and by
+  clustering.
+- **Claim.** Conditional on being in the top decile of envelope exposure E, cells in the bottom
+  decile of coherent amplitude C show a rate ratio **< 1** against the frozen-ETAS expectation,
+  while the top decile of C shows > 1, with the contrast clearing the phase-scramble null.
+- **Test / null.** The K-059 field; statistic = the **C-conditioned rate ratio within
+  E-matched strata** (the matching is the whole design — it holds shaking energy constant and
+  varies only phase alignment). Poisson CI on the ETAS-expected counts. Nulls: phase-scramble
+  (which sends both deciles to 1.0); circular shift; ETAS-sim.
+- **POWER-STATE.** The predicted deficit is the mirror of the enhancement, so at Aσ = 0.03 MPa and
+  a 3 kPa envelope the node predicts a **−8% to −11%** rate. Deficits are harder than excesses at
+  the same N because the variance floor is the expectation itself, but they are also *cheaper to
+  believe*. Requires N_exposed ≳ 10⁴ in the matched top-E stratum → **global targets only**;
+  SoCal alone cannot do this and I say so.
+- **Expected.** Rate ratio 0.90–0.97 at nodes vs 1.05–1.15 at antinodes. Honest prior on the null:
+  0.65.
+- **Cost / decision.** ~1 day on K-059. Decision: **a confirmed deficit would be the first result
+  in this program that a single-source model structurally cannot produce**, which is worth more
+  than any amount of additional enhancement evidence. It is also the arm that would survive if
+  K-060's bits are too small to clear S-11 — a pattern claim rather than a skill claim.
+- **GATE: K-034. MERTON-BEFORE-FREEZE:** `seismic quiescence dynamic waves`, `suppression of
+  seismicity by dynamic stress`, `clamping remote triggering`, plus the stress-shadow contest rows
+  (O-23: Harris & Simpson for, Mallman & Zoback against) since "does the crust ever show a
+  suppression signal at all" is a live contested question this entry inherits.
+- **Why dismissed too quickly.** "Absence of triggering is not evidence." It is when the *expected*
+  triggering is computed, matched on energy, and the comparison is between two decile groups that
+  differ only in predicted phase. This is K-041's `∫λ dt` argument — the silence is half the
+  likelihood — pointed at a probe whose amplitude we can calculate.
+
+---
+
+**K-062 — ANTIPODAL FOCUSING: the geometry predicts a NON-MONOTONE distance law, with a bump at
+Δ → 180°. Every triggering study ever run assumed monotone decay.**
+
+*Lens: read the falloff law as a physical prediction rather than as a nuisance to fit.*
+
+- **Claim.** Surface-wave geometric spreading on a sphere goes as (sin Δ)^(−1/2), which **diverges
+  at both Δ → 0 and Δ → 180°**, and both arcs (R1 and R2) arrive at the antipode simultaneously by
+  symmetry. Therefore triggered-rate excess versus epicentral distance is **U-shaped, not
+  decaying**, with a measurable upturn inside Δ ≳ 160° that survives attenuation. Every remote-
+  triggering study fits a monotone decay and therefore *cannot see this even if it is there*.
+- **Test.** Pool over all 179 M≥7 sources on disk (and M≥7.5 as the frozen primary): for each
+  source, stack the ETAS-normalised target rate in the 0–6 h after the predicted R1/R2 arrival, in
+  10° bins of Δ from 0° to 180°, over the 13 boxes + global M≥4.5 targets. Statistic: the fitted
+  coefficient on (sin Δ)^(−1/2) against a monotone-decay-only model, by ΔBIC and by nested
+  likelihood; plus the antipodal-bin rate ratio with a Poisson CI.
+- **Null.** Circular shift of the source catalogue; **and the essential geometric control — the
+  "wrong-antipode" null**: recompute Δ from a randomly relocated pseudo-source with the same
+  latitude band (preserving the land/ocean and station-density geography of the target set,
+  destroying the true antipodal alignment). Also required: the antipode of most large earthquakes
+  is ocean, so the target set at Δ ≈ 180° is small and non-random — **the exposure map must be
+  reported per bin and the analysis restricted to bins with N_target > 0 in the pre-registration.**
+- **POWER-STATE.** Focusing gain at Δ = 175° is (sin 175°)^(−1/2) ≈ 3.4 over the Δ = 90° value,
+  but attenuation over the ~20,000 km path removes a factor of ~2–4 at T = 100 s. **Net antipodal
+  Δτ ≈ 0.3–3 kPa: 1%–11% modulation.** The binding constraint is the *number of target earthquakes
+  near the antipode of large sources*, which is geographically sparse. **Unit = source; N_eff ≈ 179
+  at M≥7; usable antipodal bins likely far fewer. Bound-producing unless the global M≥4.5 target
+  set supplies N_exposed > 3×10³ in the Δ > 160° bins — compute that number before freezing, not
+  after.**
+- **Expected.** A detectable upturn is a genuine coin-flip. Honest prior on the null: 0.6.
+- **Cost / decision.** ~1 day, mostly on disk. Decision: a confirmed non-monotone distance law
+  **rewrites the functional form used by every dynamic-triggering study including our own K-038**,
+  and it is the cheapest pure-geometry prediction in the seed.
+- **GATE: K-034. MERTON-BEFORE-FREEZE — this one has a real literature and I will not guess at
+  it:** `antipodal focusing seismic waves`, `antipodal seismicity triggering`, `antipode great
+  earthquake volcanic response`, `PKP antipodal amplification`, and the older "antipodal volcanism"
+  claims, which I expect to be CONTESTED or worse. **If the antipodal-triggering claim is already
+  in the literature as a failed one, this entry must be re-scoped to the functional-form question
+  (monotone vs U-shaped) rather than the antipode claim, and I would still want it run.**
+- **Why dismissed too quickly.** "Antipodal effects are a crank magnet." They are, which is why the
+  entry is framed as a *functional form* test with a geometric control and a computed exposure map,
+  and why its prior is stated at 0.4. The (sin Δ)^(−1/2) term is not speculative — it is in every
+  surface-wave textbook and it is silently dropped by every triggering regression.
+
+---
+
+**K-063 — THE ORBIT COMB AS A CLOCK, AND THE GROUP-VELOCITY SCAN AS THE BEST NULL IN THIS SEED.**
+
+*Lens: S-7's clock directive, plus the matched-filter move — if the alignment is real, the signal
+must peak at the true propagation speed and nowhere else.*
+
+- **Claim.** At any target cell, a great earthquake writes a *comb* of exposure pulses spaced by
+  the Rayleigh orbit (2.93 h) and a second comb spaced by the Love orbit (2.53 h). Seismicity rate
+  after great events, folded on that comb's phase, is modulated — **and the modulation is maximised
+  when the comb is built with the true group velocity**.
+- **Why the velocity scan is the strongest control anyone has proposed in this family.** Recompute
+  the entire field over a grid of assumed group velocities U ∈ [2.5, 5.5] km/s in 0.05 km/s steps
+  and measure the statistic at each. **A real alignment produces a sharp peak at U ≈ 3.8 (Rayleigh)
+  and a second at ≈ 4.4 (Love), with a width set by the path length and the record duration. No
+  confounder — not seasonality, not detection cycles, not clustering, not catalogue inhomogeneity —
+  knows the group velocity of Rayleigh waves.** This is the same class of argument as our Coso
+  shear-positive/σ_n-null contrast (O-30), which Wegener rightly called a mechanism signature
+  rather than a p-value, and it is stronger, because it is a one-dimensional scan with a
+  theoretically-fixed peak location declared before looking. **The scan is a declared family and
+  enters the S-8 max-statistic; the confirmatory statistic is not "there is a peak" but "the
+  max-statistic peak lies within ±5% of 3.80 or 4.40 km/s".**
+- **Test / null.** Superposed-epoch on the 179 M≥7 sources; targets global M≥4.5 and SoCal M≥2.5.
+  Statistic: modulation amplitude and Schuster-type phase concentration on the comb, as a function
+  of assumed U. Nulls: circular shift; phase-scramble; ETAS-sim; **and the off-velocity bands
+  themselves, which are a built-in continuum of negative controls** — the same role the off-tidal
+  control lines (11.0 d, 16.5 d) play under R2-1(c), and I adopt that mandate here in its
+  velocity-space form.
+- **S-7 compliance, itemised.** (a) Exogenous clock, with the named caveat that its source stream
+  is also seismicity — mitigated by the distance gate and same-region exclusion. (b) The success
+  statistic is bits/event in wall time, not "the process is simpler in τ". (c) Every U tried is
+  declared and counted. (d) Clock-specific circular-shift null: present. (e) **EXP-F's mandatory
+  injection-recovery arm: inject a known comb-phased modulation of amplitude 3% and 10% into an
+  ETAS-sim and confirm recovery at the true U** — EXP-F's 7-day method check failed to fire and
+  correctly downgraded that whole null; this family will not inherit that.
+- **POWER-STATE.** The comb's later teeth are the weak ones: R3 at 0.3–3 kPa (1–11%), R5 below the
+  floor. The powered version is **R1–R4 within 6 h of a great event**, where the exposed target
+  count over 179 sources × 13 boxes is order 10³–10⁴ → MDM 4–12%. **Marginal. Declared
+  bound-producing at R5+.**
+- **Expected.** If anything is there, a peak at 3.8 km/s with 3–8% modulation. Honest prior on the
+  null: 0.6.
+- **Cost / decision.** ~1 day on K-059. Decision: the velocity scan is what converts any positive
+  in this entire family from "a correlation" into "a propagating elastic wave", and I would run it
+  as the confirmatory arm of K-060 and K-061 as well.
+- **GATE: K-034. MERTON-BEFORE-FREEZE:** `R2 R3 later orbit triggering`, `multiple orbit surface
+  wave seismicity`, `superposed epoch analysis surface wave arrival triggering`, `Love vs Rayleigh
+  triggering efficiency`.
+- **Why dismissed too quickly.** "A period comb wearing a costume" — Popper's own S-7(c) warning,
+  and it is fair. The answer is that this comb's spacing is **not a free parameter**: it is fixed by
+  a measured physical constant, its peak location is declared in advance, and the off-peak
+  velocities are a dense negative-control continuum. EXP-F scanned 60 free periods; this scans one
+  quantity whose true value is known to 2%.
+
+---
+
+**K-064 — SUPERADDITIVITY: interference converts VARIANCE into RATE, and rate-and-state says by
+exactly how much. A zero-free-parameter prediction, and it measures Aσ a third way.**
+
+*Lens: Jensen's inequality as a physical mechanism. (Nobody in triggering treats the convexity of
+the response function as the observable.)*
+
+- **The physics in one line.** Rate-state gives `R = exp(Δτ/Aσ)`, which is convex. For a
+  fluctuating stress with mean zero and variance σ², the time-averaged rate is
+  `⟨R⟩ ≈ exp(σ²/2Aσ²)` — **the rate depends on the VARIANCE of the wavefield, not its mean.**
+  Coherent superposition and incoherent superposition have the same mean energy and different
+  variance. So: **overlay's effect on seismicity is a Jensen term, its size is fixed by Aσ alone,
+  and Aσ is independently estimable from aftershock relaxation (t_a = Aσ/τ̇, W-001) and from the
+  summed-load fit (K-036).** Three independent routes to one constant, and W-001-P1 already
+  established that this program values exactly that kind of collapse.
+- **Claim.** The excess rate during high-variance (coherent-constructive) windows over
+  energy-matched low-variance windows equals `exp(Δσ²/2Aσ²) − 1` with **no fitted parameter**, using
+  the Aσ obtained from that cell's own Omori decay.
+- **Test / null.** Bin exposed windows by (energy E, coherent variance V) on the K-059 field; within
+  E-matched strata compare rates across V; fit the implied Aσ per cell and correlate it against the
+  t_a-derived Aσ (Spearman, at fixed n per S-4 — **fixed-n subsampling, not N as a covariate**, per
+  Popper's R2-4 mandate (4) which applies verbatim here). Nulls: phase-scramble (which equalises V
+  at fixed E and must send the excess to zero — this is the cleanest possible null for a
+  variance-driven claim); ETAS-sim; circular shift.
+- **POWER-STATE, and it is unflattering.** At Aσ = 0.03 MPa and Δτ ≈ 5 kPa, the coherent-vs-
+  incoherent excess is ≈ 4 percentage points (15% vs 11%). At Aσ = 0.01 MPa (fluid-rich cells) it
+  is ≈ 25 points and easily detectable — **so this entry's power lives entirely in low-Aσ cells,
+  which is a spatial prediction, not just a sensitivity note: the superadditive signal must appear
+  in geothermal/high-Pp/swarm cells first and be absent in ordinary crust.** That conditional
+  pattern is a stronger claim than the pooled effect and it is what I would score.
+- **Expected.** Aσ agreement across the two routes at |ρ| = 0.3–0.5 if real. Honest prior on the
+  null: 0.6.
+- **Cost / decision.** ~1 day on K-059 + K-036's machinery. Decision: it is the third independent
+  measurement of Aσ, and a three-way agreement would be the strongest physical result available to
+  this program by a wide margin — far stronger than any single bits number.
+- **GATE: K-034 for the family; **K-035 additionally**, because the amplitudes here (1–5 kPa) are
+  in the tidal regime and K-034's 10–100 kPa licence does not reach them. **MERTON-BEFORE-FREEZE:**
+  `nonlinear rate-state response to oscillatory stress`, `Jensen inequality seismicity rate
+  fluctuating stress`, `stress variance triggering rate-and-state`, `Ader/Ampuero tidal rate-state
+  modelling`, `Dieterich 1994 periodic loading`.
+- **Why dismissed too quickly.** "The convexity correction is second-order." It is second-order and
+  it is the *only* term by which coherent and incoherent superposition differ at matched energy —
+  which makes it not a correction but the entire signal. And it comes with a spatial pattern
+  prediction that a detection artifact cannot imitate.
+
+---
+
+**K-065 — NORMAL MODES: a global STANDING wave with fixed nodal geometry. Bound-producing only,
+and I say so in the claim.**
+
+*Lens: the Earth as a struck bell — and then the honest arithmetic about how loud the bell is.*
+
+- **Claim as it should be stated.** After an M ≥ 8.8, the fundamental spheroidal modes (₀S₀ at
+  20.46 min, ₀S₂ at 53.9 min, ₀S₃ at 35.6 min) ring for weeks, forming a **standing** pattern whose
+  nodal geometry is a spherical harmonic fixed by the source mechanism and Earth rotation. If
+  seismicity responded, we would see modulation at those periods with a *spatial* pattern matching
+  the mode's antinodes. **At the amplitudes involved (0.01–0.1 kPa, i.e. 0.03%–0.3% modulation at
+  Aσ = 0.03 MPa) this is 10–100× below our measured sensitivity floor. The deliverable is
+  therefore an upper bound, not a detection, and the entry exists to produce a quotable number and
+  close the branch.**
+- **Test.** Post-Sumatra 2004 and Tohoku 2011 windows (both are in `data/comcat_world`; Tohoku is
+  also in the SoCal-era ComCat as a source). Global M≥4.5 targets, folded on each mode period with
+  the mode's own phase, in latitude bands corresponding to predicted antinodes. Statistic:
+  Schuster/Rayleigh on the folded phase and the antinode-vs-node rate ratio; **the headline is the
+  80%-power upper bound on modulation amplitude**, computed by injection-recovery before unblinding
+  (K-035's machinery, directly reused).
+- **Null.** Off-mode control periods (declared: 27 min and 45 min, both free of fundamental-mode
+  lines); circular shift; ETAS-sim. **And the systematic that will dominate: ₀S₀ at 20.46 min and
+  ₀S₂ at 53.9 min are close to nothing in the detection spectrum, which is a genuine advantage over
+  the tidal bands** — a point in this entry's favour and the only one it has.
+- **POWER-STATE.** N_exposed: global M≥4.5 in the 30 days after an M9 ≈ 1,500–3,000 events per
+  event, two events → N ≈ 5×10³ → **MDM ≈ 5.6%, against a predicted 0.03%–0.3%. Short by a factor
+  of ~20–200.** Stated in the entry, not discovered afterwards.
+- **Expected.** Null, with a bound of order "|modulation| < 5% at 80% power, ₀S₀/₀S₂/₀S₃, global
+  M≥4.5, post-Sumatra and post-Tohoku". Honest prior on the null: **0.93.**
+- **Cost / decision.** ~4 h. Decision: it closes the normal-mode branch of Jim's seed with a
+  quotable number instead of leaving it open as an intuition, which is worth four hours precisely
+  because the branch is attractive and unfalsifiable-looking.
+- **GATE: K-035 (not K-034 — wrong amplitude and wrong bandwidth entirely).
+  MERTON-BEFORE-FREEZE:** `normal mode triggering seismicity`, `free oscillations earthquake
+  triggering`, `0S0 seismicity modulation`, `post-Sumatra global seismicity rate change`. **This
+  has a literature and my prior is that it contains at least one enthusiastic claim and at least
+  one refutation; Merton must lay both out before the protocol is written.**
+- **Why dismissed too quickly.** It should not be *dismissed*, it should be *bounded* — that is
+  literally what the entry proposes. A program that has adopted corpse-to-bound conversion as
+  policy (K-032 item 6, promoted into K-035) should be willing to spend four hours pre-emptively
+  bounding an attractive idea before anyone builds on it.
+
+---
+
+**K-066 — FRAME-BREAK: THE PERMANENT STANDING FIELD. The Earth hums continuously. Does the
+geometry of seismicity know about the geometry of the modes?**
+
+*Lens: stop asking whether waves trigger events and ask whether the long-run GEOMETRY of the
+seismic system carries the imprint of a standing field. This is a question about a map, not about a
+time series, and it is the only entry here with no clock in it at all.*
+
+- **The setup.** Earth's hum — continuous fundamental-mode oscillation at 2–7 mHz, excited by ocean
+  infragravity waves — is documented and permanent. Its amplitude is minuscule (strains ~10⁻¹³;
+  **this entry makes no amplitude-based triggering claim whatever and I state that first**). But a
+  permanent standing field has a *fixed nodal geometry*, and a geometry can leave an imprint over
+  geological time even when its instantaneous amplitude is irrelevant.
+- **Claim (deliberately the weakest testable version).** The spherical-harmonic spectrum of the
+  global seismicity-density field has excess power, relative to a plate-boundary-matched null, at
+  the degrees corresponding to the lowest-order fundamental modes.
+- **The confound that will most likely kill it, named first, because it is fatal if unhandled.**
+  Global seismicity density is dominated by plate boundaries, plate boundaries are organised by
+  mantle convection, and mantle convection has strong degree-2 structure — **so degree-2 agreement
+  is expected under the null and proves nothing.** The test is therefore *only* meaningful (a) at
+  degrees ≥ 3 and (b) against a null that preserves plate geometry. **Null: shuffle seismicity
+  within plate-boundary-distance strata**, which keeps the tectonic geometry and destroys any
+  additional harmonic organisation. Also a rotation null: rigidly rotate the mode frame and
+  recompute.
+- **Test.** Global ComCat M≥5.5 1980–now (one download, shared with K-059) binned on an equal-area
+  global grid; spherical-harmonic decomposition to degree 12; cross-power against the analytic
+  mode eigenfunctions; report per-degree excess with the stratified-shuffle null envelope.
+- **POWER-STATE.** Not amplitude-limited (no triggering claimed); limited by the number of
+  independent spatial patches, ≈ 10²–10³. **Unit = spatial patch, not event.**
+- **Expected.** Null. Honest prior on the null: **0.9**, and I am proposing it anyway for two
+  reasons: it costs half a day on a download we already need, and **the by-product is a
+  plate-geometry-controlled spherical-harmonic description of global seismicity that this program
+  does not have and that K-002's global spatial floor will want.**
+- **Cost / decision.** ~0.5 day. Decision: it either closes the "standing-wave geometry vs plate
+  geometry" question Jim raised, with a bound, or it produces the strangest result in the program's
+  history; either way the by-product is reusable.
+- **GATE: none needed (no triggering claim). MERTON-BEFORE-FREEZE:** `Earth's hum continuous free
+  oscillations` (Nawa; Suda; Rhie & Romanowicz), `spherical harmonic analysis global seismicity
+  distribution`, `degree-2 mantle structure seismicity correlation`.
+- **Why dismissed too quickly.** Because it sounds like numerology, and 90% of the time that
+  instinct is right. The discipline that makes it admissible is the plate-stratified null and the
+  degree ≥ 3 restriction, both declared before the data is touched, plus a stated prior of 0.9 on
+  the null so nobody mistakes my willingness to test it for a belief in it.
+
+---
+
+**K-067 — THE ILLUMINATION LEDGER: the wavefield is a free global sounding with a COMPUTABLE probe
+amplitude, so "didn't fire" finally becomes a calibrated strength measurement.**
+
+*Lens: K-041's non-firing ledger and K-043's ping map, fused — and upgraded by the one thing
+neither had, which is a known probe amplitude at every point and every moment.*
+
+- **The upgrade over K-043.** K-043 treats each teleseismic ping as an event-study exposure. The
+  ephemeris turns that into a **continuous, calibrated illumination history**: for every cell we can
+  state the full distribution of dynamic stress it has experienced over 45 years, including the
+  multi-orbit tail. That converts K-041's responsiveness index ρ from "coupling to an uncertain
+  load" into **"number of exceedances of a known stress level survived without firing"**, which is a
+  survival-analysis quantity with a clean likelihood and no free amplitude parameter.
+- **Claim.** (i) The per-cell **triggering threshold** τ*(x) — the dynamic stress above which that
+  cell's rate departs from ETAS — is estimable, spatially organised, and predictable out of sample
+  from the B-4 ledger class and geothermal proximity. (ii) **The payoff arm:** cells with high
+  survived-exceedance counts (illuminated hard, never responded) host **larger** eventual events
+  than matched cells that respond readily — "quiet under load" as a predictor of *size*, not
+  timing. This is K-041(iii) with the load finally measured rather than assumed.
+- **Test / null.** Survival model with time-varying covariate T(x,t) (equivalently the Cox-ETAS
+  `∫λ dt` term); τ* by profile likelihood per cell at fixed n (S-4 subsampling — unresponsive must
+  not be allowed to mean low-n, which is the failure mode Popper named in K-041). Payoff:
+  Mann-Whitney on per-cell test-period Mmax, count-matched. Nulls: ETAS-sim, where τ* is pure noise
+  and must not persist train→test; circular shift; count-matched permutation.
+- **POWER-STATE.** Exceedance counts above 10 kPa per cell over 45 years are order 10–10² globally;
+  above 1 kPa, order 10³. **Unit = cell; N_eff = number of cells with ≥ 30 exceedances, which must
+  be computed and reported before freezing.** Persistence train→test is the arm most likely to fail
+  — EXP-J's χ persistence was null (ρ = −0.13, n = 64) and I expect the same shape here.
+- **Expected.** τ* recoverable in geothermal cells, noise elsewhere; persistence prior on the null
+  0.7; the Mmax arm prior on the null 0.75 but it is the one worth the compute.
+- **Cost / decision.** ~2 days on K-059. Decision: it is the first version of "the crust's strength
+  map" this program could actually build, and it is built from a probe nobody has to pay for.
+- **GATE: K-034. MERTON-BEFORE-FREEZE:** `dynamic triggering threshold spatial variation`,
+  `triggering susceptibility map`, `peak dynamic stress threshold statistics` (van der Elst &
+  Brodsky), `non-triggered survival analysis seismicity`.
+- **Why dismissed too quickly.** "Most cells never respond, so τ* is unidentified." Then τ* has a
+  *lower bound* everywhere it is unidentified, and a map of lower bounds on crustal triggering
+  thresholds is a new global product. Non-identification with a bound is a result; this program has
+  written that sentence about its own corpses and should apply it to its instruments.
+
+---
+
+**K-068 — FRAME-BREAK, AND THE INVERSION ONLY THIS SEAT WOULD WRITE: stop predicting the response
+from the wavefield. USE THE SEISMICITY TO MEASURE THE WAVEFIELD — and the closure error is the
+gain map.**
+
+*Lens: read the crust as a distributed instrument rather than as a subject. Every entry above asks
+"does the wave move the seismicity"; this one asks "given that it does, what does the seismicity
+tell us about the wave — and where does the answer come out wrong?"*
+
+- **The move.** If dynamic triggering is real at some amplitude (K-034 will establish that it is),
+  then the post-arrival rate excess at a cell is a **noisy measurement of the local dynamic strain
+  at that cell**. There are ~10⁵ cells and ~500 great sources. That is a globally distributed,
+  free, 45-year-long strain sensor array with terrible per-sample SNR and enormous redundancy. So:
+  **invert the seismicity for the wavefield**, then compare the reconstruction against the real
+  thing — actual seismogram amplitudes at co-located IRIS/FDSN stations, which are downloadable and
+  are ground truth.
+- **Why this is worth more than another triggering test.** The comparison closes a loop no one
+  closes. And the **residual of the closure is not noise — it is the local gain**: if a cell's
+  seismicity says "the wave here was twice as strong as the seismometer next door recorded", the
+  extra factor is that cell's response gain, i.e. `1/Aσ`. **This produces an Aσ map from
+  seismicity + seismograms with no tidal data, no aftershock fitting, and no assumption about
+  fluids** — a fourth independent route to the constant W-001 is built on, and the only one that is
+  spatially dense.
+- **Claim.** The seismicity-inferred dynamic-amplitude field correlates with measured
+  seismogram-derived amplitudes at co-located stations (Spearman > 0, CI excluding zero, at fixed
+  exposure count), and the residual gain field correlates with independently estimated Aσ
+  (from t_a, K-036 and K-064) better than chance.
+- **Test / data.** Reconstruction: per (cell, source-arrival) pair, the ETAS-normalised rate excess;
+  invert by weighted stacking over sources for a per-cell amplitude scaling. Ground truth: **one
+  FDSN query** for surface-wave amplitudes at stations inside the 13 boxes for the same source list
+  (peak filtered velocity in the 100–300 s band; this is a metadata-light request and does not
+  require full waveform analysis if station-level PGV products are used). Null: cell-label
+  permutation within exposure-count strata; and the phase-scramble field, which must degrade the
+  reconstruction.
+- **POWER-STATE.** Per-pair SNR is dreadful (a few percent rate modulation on a handful of events);
+  the design is entirely redundancy-driven. **Unit = cell; requires ≥ 100 source exposures per cell,
+  which the 45-year global source list supplies for most of the 13 boxes. Compute and report the
+  per-cell exposure histogram before freezing.**
+- **Expected.** A weak but real correlation with seismogram amplitude (this is close to a positive
+  control — if it fails, the reconstruction is broken, not the crust); the gain-residual arm is the
+  speculative one. Honest prior on the null for the gain arm: 0.7.
+- **Cost / decision.** ~3 days including one FDSN query. Decision: it converts a triggering
+  programme into a *measurement* programme, and it is the only design in this ledger that produces
+  a spatially dense estimate of the constant on which W-001, W-002, K-036, K-064 and half of
+  Wegener's table all depend.
+- **GATE: K-034 (the reconstruction is meaningless if single-source triggering has not been
+  demonstrated in our own engine). MERTON-BEFORE-FREEZE:** `seismicity as strain sensor`,
+  `earthquake catalog inversion for ground motion`, `triggering response as amplitude proxy`,
+  `ambient noise / seismicity cross-calibration`. My prior that the *forward* direction has been
+  done and the *inverse* has not: 0.6, and A-9 exists because that prior is worth nothing.
+- **Why dismissed too quickly.** "You have seismometers; why infer amplitude from earthquakes?"
+  Because the *discrepancy* is the product. The seismometer measures the wave; the seismicity
+  measures the wave times the crust's willingness to respond. Their ratio is the thing we actually
+  want and have never had.
+
+---
+
+**K-069 — THE PROSPECTIVE ARM: an ephemeris makes predictions in advance, so make them in advance.
+Pre-register the constructive maxima for the next 24 months and score them.**
+
+*Lens: the one property of an ephemeris that no retrospective statistic can imitate.*
+
+- **Claim.** Because T(x,t) is deterministic given the source catalogue, the top-N predicted
+  constructive (place, time) windows can be **published before they occur**, and the realised
+  seismicity in them will exceed the frozen-ETAS expectation.
+- **Design.** A rolling protocol: each time a global M ≥ 7.0 occurs, the ephemeris emits, within
+  the hour, its ranked list of the top 100 (0.5° cell × 3 h window) constructive maxima over the
+  following 10 days, hash-committed to `download_log.md` before the windows open. After 24 months,
+  score: observed vs frozen-ETAS-expected counts in the committed windows, in bits/event and as a
+  rate ratio, with a matched set of committed *destructive* windows (K-061) as the paired control.
+- **Null / success.** Expected counts from the frozen ETAS. Success: rate ratio CI excluding 1 in
+  the constructive set **and** ≤ 1 in the destructive set. **Failure is publishable and is the
+  likelier outcome; the design's value is that it cannot be re-scored, re-binned or re-framed after
+  the fact.**
+- **POWER-STATE.** ~15 M≥7 per year × 24 months × 100 windows = 3,000 committed windows; expected
+  target counts inside them are small, so the pooled test is Poisson-limited. **Compute the
+  expected total ETAS count in the committed set at design time; if it is below ~300, the horizon
+  extends rather than the claim weakening.** Unit = committed window; N_eff = number of independent
+  source events (~30), **not** 3,000 — and that is the number the CI must use.
+- **Cost / decision.** Build ~1 day on K-059, then near-zero marginal cost forever. Decision: this
+  is the only **prospective** test in the entire ledger, and Faraday's F-011 already names exactly
+  this gap — *"a prospective scoring log ... is the only thing that turns a forecaster into
+  evidence."* It is also the cheapest available answer to O-26 (no precursor has ever passed a
+  prospective CSEP-style test): if this family is going to make a claim, let it make it in the one
+  format the field respects.
+- **GATE: K-034 before any interpretation; but the *commitment log itself* may start immediately,
+  because committing predictions costs nothing and un-committing them is impossible.**
+  **MERTON-BEFORE-FREEZE:** `CSEP prospective testing protocol`, `operational aftershock forecast
+  scoring`, `prospective dynamic triggering forecast`.
+- **Why dismissed too quickly.** "Two years is slow." It is, and it is running in the background
+  while everything else runs in the foreground, and in two years this program will either have the
+  only prospective interference result in existence or a clean prospective null with 3,000
+  committed windows behind it. Both are worth more than any retrospective version of the same test.
+
+---
+
+**K-070 — THE LARGE-EVENT ARM: overlay is the specific rescue for the strongest null in the
+dynamic-triggering literature, and it makes a risky prediction rather than an excuse.**
+
+*Lens: when a documented null bounds your hypothesis, do not explain it away — derive the
+conditions under which the null must break, and go look there.*
+
+- **The tension, stated fairly.** O-1/Parsons & Velasco (2011) is REPLICATED: remote dynamic
+  triggering of **large** events is essentially absent — the far field triggers small events only.
+  That is the strongest constraint on this whole family. But **Pollitz et al. (2012)** report a
+  global M ≥ 5.5 rate increase for ~6 days after the 2012 M8.6 Indian Ocean event, which is a
+  direct counter-instance at moderate magnitude. Overlay supplies a specific reconciliation:
+  large events require a large stress excursion, which requires *coincident constructive
+  superposition*, which is rare — so remote triggering of large events should be absent **on
+  average** and present **in the rare top-percentile configurations of the coherent field.**
+- **Claim (and it is risky, which is the point).** Conditional on being in the **top 0.1% of the
+  coherent field C(x,t)**, the rate of M ≥ 5.5 targets exceeds the frozen-ETAS expectation by a
+  factor > 1, while the marginal effect of envelope exposure on M ≥ 5.5 is ≈ 1 — i.e. the
+  Parsons & Velasco null is reproduced marginally and broken conditionally. **If Pollitz's event
+  turns out to sit in the top 0.1% of C, that is a genuine retrodiction; if it sits at the median,
+  this entry is badly wounded and I will say so.** Score that check first, and score it before
+  anything else in the entry.
+- **Test / null.** K-042's design transplanted: threshold defined on the covariate alone, frozen
+  before unblinding, pre-specified subgroup not a cherry-pick. Targets: global M ≥ 5.5 from the
+  downloaded catalogue and M ≥ 6.5 from `data/comcat_world`. Nulls: independent circular shifts;
+  phase-scramble; ETAS-sim; and mandatory exclusion of each source's own aftershock zone and of
+  Δ < 2 rupture lengths, because "big events follow big events nearby" is the artifact that will
+  otherwise carry this entirely.
+- **POWER-STATE.** Top-0.1% windows over 45 years and global coverage give order 10²–10³
+  cell-hours; expected M≥5.5 counts inside them are order 10–10². **MDM is therefore a factor, not
+  a percent: this entry can detect a rate ratio ≳ 1.5 and cannot detect 1.1.** Stated up front.
+  Unit = source-configuration; N_eff = number of distinct top-0.1% configurations, ≈ 20–50.
+- **Expected.** Rate ratio 1.0–2.0. Honest prior on the null: 0.65.
+- **Cost / decision.** ~1 day on K-059. Decision: it is the only arm of this family that speaks to
+  the magnitude range anyone funds, and it is framed so that the field's strongest existing null is
+  the thing it must reproduce marginally in order to be believed conditionally.
+- **GATE: K-034. MERTON-BEFORE-FREEZE, and this is the highest-priority dossier in the seed:**
+  **Parsons & Velasco 2011** and **Pollitz et al. 2012** must be read against each other and
+  classified before this or K-059 freezes, together with `global earthquake triggering large
+  events`, `earthquake doublets global correlation` (Bufe & Perkins — CONTESTED), and
+  `Sumatra 2012 global aftershocks`. **If Pollitz already demonstrates a multi-day global rate
+  increase, then K-059's headline is a rediscovery and K-070's conditional version is the only
+  novel content in this arm — which is precisely the classification A-9 was adopted to obtain
+  before we spend the compute, not after.**
+- **Why dismissed too quickly.** "You are rescuing a hypothesis from a null with a rare-condition
+  escape." That is exactly what it is, and it is legitimate **only** because the rare condition is
+  defined on a covariate computed without reference to seismicity, frozen in advance, and paired
+  with a marginal arm that must reproduce the original null. Without those three, it would be an
+  excuse; with them, it is a prediction that can lose in two directions.
+
+---
+
+### Ordering, and the honest summary of what this seed is worth
+
+**Run order.** K-034 (already in the queue at #7 — it must move up, because it now gates twelve
+entries instead of three). Then **K-059** as infrastructure with its own losable claim. Then
+**K-063's velocity scan**, because it is the control that makes every subsequent positive
+interpretable, and it should be built into K-059 rather than bolted on. Then the three that carry
+the novel content in order of discriminating power: **K-061** (the deficit — the only prediction a
+single-source model structurally cannot make), **K-060** (coherent-minus-envelope — the seed
+reduced to one number), **K-064** (the Jensen term, and a third route to Aσ). **K-069's commitment
+log starts on day one at zero cost.** **K-062** is a cheap pure-geometry side bet. **K-065** and
+**K-066** are bound-producers and should be run precisely because they are attractive.
+**K-067** and **K-068** are the two that outlive the seed even if the interference claim dies —
+they are instruments, not hypotheses.
+
+**And the summary I owe Jim, stated without softening.** The core physics of this seed is real and
+documented, and this program has already scheduled the entries that exploit it (K-034, K-038,
+K-043). **The novel part — that the OVERLAY of multiple sources and multiple orbits carries
+information beyond the sum of the single sources — is a real, sharp, falsifiable claim, and it is
+also a small one in amplitude.** Everything above R1/R2 near-field decays toward and through the
+tidal band, which is where this program has already measured that it cannot see. So my honest
+expectation is: the powered tier (single-source multiphasic, R1–R4, near-teleseismic) will
+reproduce known triggering and produce a usable ephemeris; the overlay increment will be small or
+null; and the durable products will be **the ephemeris itself (K-059), the illumination ledger
+(K-067), the inverse map (K-068), and a prospective log (K-069)**. I put the family's chance of
+producing a validated overlay-specific result at roughly **1 in 4** — which, for a family whose
+infrastructure is owed to three other entries anyway and whose failure produces four reusable
+instruments and a published bound, is a good bet. **The reason to run it is not that overlay is
+likely. It is that the deficit test (K-061) and the velocity scan (K-063) are the two cleanest
+mechanism discriminators anyone has proposed in this ledger, and neither of them requires the
+overlay hypothesis to be true in order to be worth having.**
+
+*Kepler, wave-interference seed. Twelve entries, K-059..K-070. All PROPOSED, all gated on K-034,
+all POWER-STATED, all tagged MERTON-BEFORE-FREEZE with nominated searches per amendment A-9, all
+carrying a declared unit and N_eff per A-11. A family-level death condition is declared above,
+before any test, with R2-1(e)'s anti-ratchet clause adopted voluntarily: if the coherent increment,
+the deficit, and the velocity scan all null at demonstrated power, this family closes with a bound
+and reopens only on new data. Popper adjudicates; Merton classifies before anything freezes; the
+supervisor runs.*
+
+---
+
+#### Addendum to the wave-interference seed (Jim): COMPOUND THE FIELD WITH THE STATE
+
+Jim's addendum: the full hypothesis is the **interaction**, not the marginal — triggering
+concentrates where computable interference maxima *coincide with high accumulated-strain state*.
+The overlay is the match; the ledger (EXP-J/K χ and class, fault-resolved loading, or K-018's
+n(t)) is the dryness. He is right that this is the conditional-triggering reframe with a
+deterministic trigger, and right that it is better-powered than the tidal version. **But there is
+an analytical problem in the framing that will sink these entries if it is not fixed first, and
+fixing it is my main contribution to this addendum.**
+
+**"Dryness" is being asked to do two jobs that have different observables and OPPOSITE signs.**
+Rate-and-state gives the triggered response as `ΔR/R₀ = exp(Δτ/Aσ) − 1`. Read it carefully:
+
+- the **fractional** response depends on **Aσ only** — the effective-normal-stress/sensitivity
+  axis. Wet, fluid-rich, high-pore-pressure, creeping rock has *small* Aσ and therefore *large*
+  fractional response.
+- the **absolute number** of triggered events is `R₀ · (exp(Δτ/Aσ) − 1)` — it also needs a
+  background rate to multiply.
+- the ledger's **χ** is neither of those. χ is a loading-minus-release ratio; it is a proxy for
+  **stored moment**, which governs the eventual **size** of what fails, not the rate at which
+  patches trip.
+
+So a locked, late-cycle, "dry" 1857-strand cell is **high χ and high Aσ**: maximally charged and
+minimally sensitive, with a low background rate. A creeping Parkfield/Imperial cell is **high χ by
+the ledger's own accounting and low Aσ**: highly sensitive and storing nothing. **The marginal
+effect of "silent-loading" on triggered response is therefore a fight between two terms of opposite
+sign, which is very likely why nobody has ever reported it — and it is exactly the W-006 degeneracy
+that Wegener filed as a formal CHALLENGE to B-4.** The fix is not to pick one variable; it is to
+**split the observable in two**:
+
+> **Prediction A — the RATE response tracks 1/Aσ.** Fractional rate excess during a computable
+> transient is largest in low-Aσ (creeping / geothermal / high-Pp / swarm) cells.
+> **Prediction B — the SIZE response tracks χ.** The *magnitude distribution* of what gets
+> triggered is shifted upward in high-χ locked cells, even where the fractional rate response is
+> small.
+
+Two orthogonal signatures from one probe. **That is the compound hypothesis stated so it can lose,
+and it turns the wave field into the degeneracy discriminator B-4 has been waiting for.**
+
+All five entries below inherit the seed's gates verbatim: **GATE K-034**; POWER-STATE lines;
+**A-9 MERTON-BEFORE-FREEZE** with nominated searches; declared unit and N_eff (A-11); S-8
+max-statistic over the declared family; S-9 one frozen value per construction choice; S-10 one
+model crosses; S-11 ≥ 0.01 bits with a sequence-block CI. Two additional standing mandates apply to
+every entry here and I write them once:
+
+**(M1) The n-trap, and it points at the hypothesis.** 158 of 200 unexplained-silent cells have
+n_train < 20 and 95 have n_test = 0 (EXP-K). Triggering-response estimates are n-biased upward at
+small n (EXP-B's exact failure mode). **The compound hypothesis predicts the largest effect in the
+cells where it is least measurable, which is the same structural problem Popper named in
+W-001-P1(5).** Mandate: **fixed-n subsampling across strata (S-4), never n-as-covariate**; and the
+count of silent cells with adequate *exposure* is computed and reported **before** freezing — if
+fewer than ~30 clear it, the entry runs as a pooled hierarchical model with cells as random
+effects, or it does not run.
+
+**(M2) Ledger class is not a state variable until it survives K-031 and W-006-P1(b).** B-4 is
+auto-flagged for challenge and its silent list may be substantially a station-density map. Every
+entry below must be run **twice** — once on all silent cells, once on the 42 measured-low-χ cells
+(n_train ≥ 20) only — and if the effect lives only in the detection-limited set it is K-031's
+finding, not this seed's. That is Popper's own K-003 mandate transplanted, and it applies here with
+more force because our conditioning variable is the suspect one.
+
+---
+
+**K-071 — THE DRY-LOG TEST WITH A DETERMINISTIC MATCH: interference maxima × ledger class, and the
+reason this succeeds where the tidal version could not is one line of arithmetic.**
+
+*Lens: K-039's conditional design, re-run with a probe two orders of magnitude louder.*
+
+- **Claim.** The fractional rate response to a computable near-field dynamic transient is
+  **not uniform across ledger classes**, and the interaction term (transient × class) clears the
+  ETAS-sim max-statistic and adds ≥ 0.01 bits/event, while the marginal effect of class on
+  background rate is already absorbed by μ(x).
+- **The arithmetic that justifies the entry, stated before anything else.** Tidal amplitude in
+  ordinary crust: 1–3 kPa → predicted 3–10% fractional modulation at Aσ = 0.03 MPa, against a
+  pooled detection resolution of ~1.3% at N = 10⁵ and ~4% at N = 10⁴ — i.e. the tidal conditional
+  test lives *at* its own floor, which is why K-035 exists. **Near-field R1/R2 from M ≥ 7.5 inside
+  ~3,000 km: 10–100 kPa → 40% to ×28.** That is a factor of 10–100 in amplitude, and the response
+  is exponential in it, so the *predicted effect* rises by far more than the *exposure* falls.
+  Required expected background count inside exposed windows to resolve a rate ratio of 1.4 at 3σ:
+  `N_exp > (3/0.4)² ≈ 56`. **Per stratum.** With four ledger strata that is ~224 expected events
+  inside exposed windows — reachable pooled globally, **not reachable in SoCal alone**, and I say
+  so rather than discover it later.
+- **Test.** Targets: the 13 boxes at M ≥ 4.5 plus SoCal M ≥ 2.5; conditioning: EXP-J/K ledger class
+  and log χ on disk for SoCal, and the K-003 global ledger where it exists (NEEDS-DATA there —
+  the global arm waits on GSRM v2.1/ISC-GEM/Slab2). Covariate: the K-059 ephemeris field, restricted
+  to the **powered tier** (R1/R2, Δ predicted stress ≥ 5 kPa). Statistic: the interaction
+  coefficient in Cox-ETAS with the frozen B-2/B-1 parameters held fixed, reported with the marginal
+  alongside it as the seed's standing discipline requires; headline = S-8 max-statistic over
+  {classes × orbits × bands}.
+- **Null.** ETAS-sim with the real field in place and the crust indifferent to it; **independent
+  circular shifts of the source catalogue**; class-label permutation **within loading-and-n-matched
+  strata** (the doubly-matched permutation of K-003, which is the load-bearing one here because
+  silent class is defined by low release, and low release is low count); and the K-063
+  group-velocity scan as the physics fingerprint.
+- **POWER-STATE.** Unit = (cell × transient exposure). N_eff = number of independent **source
+  events** contributing ≥ 5 kPa to at least one target cell — order 10²–10³ globally, order 10–30
+  for SoCal. **SoCal-only: bound-producing. Global: powered for rate ratios ≳ 1.4 pooled, ≳ 1.8 per
+  stratum.** Compute both numbers into the protocol before freezing.
+- **Expected.** Interaction of 1.5–3× in fractional response between the extreme classes if
+  Prediction A is right — but see K-072: **I expect the raw class contrast to be muddy precisely
+  because silent-loading is a mixture**, and the clean version of this entry is K-072.
+  Honest prior on the null for the class interaction as posed: **0.6**.
+- **Cost / decision.** ~1 day on K-059. Decision: it is the first well-powered conditional-load test
+  this program can run, and per R2-1(e) it is the kind of test that makes the whole conditional
+  programme's nulls quotable rather than shrugs.
+- **GATE: K-034 (in scope — this is a 10–100 kPa transient, exactly the amplitude Landers
+  licenses). MERTON-BEFORE-FREEZE:** `state-dependent dynamic triggering`, `dynamic triggering
+  conditioned on tectonic loading rate`, `triggering susceptibility and fault maturity`,
+  `Brodsky & van der Elst annual-review dynamic triggering`, `remote triggering geodetic strain
+  rate correlation`.
+- **Why dismissed too quickly.** "Remote triggering only happens in geothermal areas, so the ledger
+  interaction will be null and the geothermal one positive." That is K-038's stated expectation and
+  it is a *result*, not an objection — and the hypothesis worth money is precisely that "geothermal"
+  is a low-resolution proxy for "low Aσ", which the ledger measures everywhere including where
+  there is no hot water.
+
+---
+
+**K-072 — THE DEGENERACY BREAKER, AND THE BEST ENTRY IN THIS ADDENDUM: the wave probe separates
+creeping from locked silent cells because they have OPPOSITE predicted responses — rate one way,
+magnitude the other.**
+
+*Lens: when a variable is a mixture of two populations with opposite physics, find the probe whose
+response has opposite sign in the two. (B-4's silent list is such a mixture; W-006 filed the
+challenge; the discriminator was assumed to require geodesy. It does not.)*
+
+- **The setup.** W-006-P1 says the silent list mixes creeping cells (aseismic, safe) and locked
+  cells (storing elastic strain, dangerous), that they are degenerate in catalogue space by
+  construction, and that only geodesy can separate them. Merton then showed W-006-P1(a) is close to
+  pre-falsified — Liu et al. (2022) separate them with a catalogue statistic (non-clustered
+  fraction ∝ creep rate on the central SAF). **Both of those miss a third route, and it is an
+  external probe with a computable amplitude.**
+- **The claim, in two orthogonal parts.**
+  **(A) RATE:** creeping/low-Aσ silent cells show a **large fractional rate response** to a
+  computable ≥ 5 kPa transient; locked/high-Aσ silent cells show a **small** one.
+  **(B) SIZE:** conditional on responding at all, locked/high-χ silent cells produce a
+  **magnitude distribution shifted upward** (larger Mmax, lower local b in the triggered
+  population) relative to creeping cells, which produce many small events.
+  **A cell that is loud-and-small is creeping; a cell that is quiet-and-large is locked. That is a
+  two-dimensional signature no single catalogue statistic and no single geodetic covariate
+  provides, and it comes from a probe that costs nothing.**
+- **Test.** Restrict to the EXP-K silent list, run twice per (M2) (all cells; measured-low-χ n≥20
+  only). For each cell, over all exposures ≥ 5 kPa from the K-059 field: (i) fractional rate excess
+  vs frozen ETAS, fixed-n subsampled; (ii) the triggered-population magnitude distribution — mean
+  magnitude, fitted b, and Mmax — count-matched across cells. Statistic: the 2-D separation, scored
+  as the AUC of a two-feature classifier (rate response, size response) against **independent
+  creeping/locked labels**. **Mandate, and Wegener did not state it: the labels must come from an
+  independent published source — creepmeter/alignment-array compilations, or the published InSAR
+  coupling models Merton names (Jolivet et al. 2015; Ryder & Bürgmann 2008; Tong et al. 2013) — and
+  NOT from `socal_strain_grid.npz`, which is the covariate.** Head-to-head against the two
+  incumbents: Liu et al.'s non-clustered fraction, and W-006-P1(b)'s single geodetic shear covariate.
+- **Null.** Label permutation within n- and loading-matched strata; ETAS-sim with the field inert
+  (in which both response axes are noise and must not separate anything); circular shift.
+- **POWER-STATE.** The binding constraint is (M1) in its harshest form: silent cells are sparse by
+  construction, and the size arm needs enough *triggered* events per cell to estimate a magnitude
+  distribution. Realistically this is a **pooled two-population comparison, not a per-cell
+  classifier**, and I frame it that way: two groups, matched n, difference in mean triggered
+  magnitude and in fractional rate response, with a group-level CI. **Compute the number of silent
+  cells with ≥ 10 triggered events at ≥ 5 kPa exposure before freezing; if it is under 30 per
+  group, this runs on the global ledger once K-003's downloads land, or not at all.**
+- **Expected.** Rate-response ratio 2–5× (creeping over locked); mean triggered magnitude higher by
+  0.2–0.5 in locked cells. Honest prior on the null: **0.55** — and even a partial result is worth
+  the run, because the *sign pattern* is the claim and it is very hard to fake.
+- **Cost / decision.** ~1.5 days on K-059 + the EXP-K outputs. **Decision: this is a formal response
+  to a standing CHALLENGE against B-4 (W-006-P1, filed by Wegener, currently ranked 5).** If the
+  probe separates the populations, B-4 is NARROWED *and strengthened* into what Wegener himself
+  says is the better claim — a direct detection of the aseismic field through its negative space —
+  and the program gains a hazard-relevant split of a list it currently has to caveat. If it does
+  not separate them, B-4's silent list is closer to a low-count artifact and the app's layer-3
+  candidate is pulled. **Both outcomes discharge a debt.**
+- **GATE: K-034. MERTON-BEFORE-FREEZE — highest priority in the addendum:** `dynamic triggering
+  creeping vs locked fault segments`, `triggering response and interseismic coupling`,
+  **Liu, Ross, Cochran & Lapusta 2022, Sci. Adv. 8, eabk1167** (the incumbent catalogue
+  discriminator, which this must beat or complement), `Jolivet et al. 2015 aseismic slip central
+  SAF`, `magnitude distribution of dynamically triggered events`, `b-value of triggered seismicity`.
+- **Why dismissed too quickly.** "You are using triggering response to infer fault state, which is
+  circular with the hazard claim." It is not circular: the probe amplitude is computed from a
+  *different* catalogue (distant sources), the response is measured against a frozen ETAS fit on a
+  disjoint window, and the labels are external published geodesy. The only thing shared with B-4 is
+  the cell list being tested, which is the point of a challenge.
+
+---
+
+**K-073 — THE WETNESS METER: non-response under a KNOWN, STRONG, computable transient is a
+measurement, and it should predict what the cell does next.**
+
+*Lens: K-041R's non-firing ledger, finally given a probe whose amplitude we know rather than one we
+assume. The `∫λ dt` term with a calibrated forcing.*
+
+- **The formal point, which is what makes this different from "absence of evidence".** A cell that
+  sat through a computable 20 kPa transient without firing has contributed a precise, quantitative,
+  *negative* constraint: under rate-and-state, its expected triggered count was
+  `R₀ · (exp(Δτ/Aσ) − 1) · τ_exposure`, and observing zero bounds Aσ from below. Over many
+  exposures those bounds compound into an estimate. **This is a strength/sensitivity measurement
+  built entirely out of silence, and it is only possible because the ephemeris makes Δτ computable
+  without waveforms.**
+- **Claim.** (i) A per-cell **non-response index** ν — the likelihood-weighted count of survived
+  exceedances, equivalently a lower bound on Aσ — is estimable, persists train→test, and is
+  spatially organised. (ii) **The payoff arm:** high-ν cells (quiet under strong known load) host
+  **larger** eventual events than matched low-ν cells, and their eventual failures are preceded by
+  *falling* ν. This is K-041R(iii) — "quiet under load as a predictor of size, not timing" — with
+  the load measured instead of assumed.
+- **Test.** Survival / point-process formulation on the K-059 exposure history: per cell, the
+  likelihood contribution of every exposure window, fitted for Aσ with profile CIs, at fixed n
+  (S-4). Arms, all frozen: (a) **does ν persist train→test?** — a genuine test, not a formality,
+  because EXP-J's χ persistence was NULL (ρ = −0.131, n = 64) and I expect the same shape;
+  (b) do high-ν cells have lower test-period rates?; (c) **the payoff** — Mann-Whitney on per-cell
+  test-period Mmax, count-matched.
+- **The mandate that decides whether a null means anything.** *"No response" is uninformative
+  unless the expected response was appreciable.* **Report, per cell, the expected triggered count
+  under the alternative (Aσ = 0.03 MPa); cells whose expectation is < 3 are excluded from the
+  non-response set and counted as unmeasured, not as strong.** Without that line this entry
+  measures low-rate cells and calls them tough rock, which is EXP-B's bias wearing new clothes.
+- **Null.** ETAS-sim, where ν is pure noise and must not persist; count-matched permutation;
+  circular shift of the source catalogue.
+- **POWER-STATE.** Unit = cell. Exceedances above 10 kPa per cell over 45 years: order 10–10²
+  globally, single digits in SoCal. Above 1 kPa: order 10³, but at 1 kPa the predicted response is
+  3% and a non-detection bounds nothing useful. **So the informative exposures are the rare loud
+  ones, and the honest form of this entry is a global pooled model, with the SoCal version
+  bound-producing.**
+- **Expected.** Persistence prior on the null 0.7; the Mmax arm prior on the null 0.75 — and the
+  Mmax arm is still the one worth the compute, because "quiet under a known 20 kPa probe" is a
+  physically meaningful strength statement in a way that "quiet under an assumed load" never was.
+- **Cost / decision.** ~1.5 days on K-059 + K-067's machinery (they share the survival model; build
+  once). Decision: it produces a global map of **lower bounds on Aσ** — a crustal property nobody
+  has mapped, and one that W-001, W-002, K-036, K-064 and K-068 all need.
+- **GATE: K-034. MERTON-BEFORE-FREEZE:** `dynamic triggering threshold spatial variation`,
+  `non-triggered regions dynamic stress`, `survival analysis earthquake occurrence time-varying
+  covariates`, `van der Elst & Brodsky 2010 triggering intensity`, `Aσ inversion from aftershock
+  sequences` (Dieterich 1994; the field's standard route, which this must be compared against).
+- **Why dismissed too quickly.** "Most cells never respond, so ν is unidentified." Then ν is a
+  *lower bound* wherever it is unidentified, and a global map of lower bounds on crustal triggering
+  thresholds is a new product. This program converts its own nulls into bounds as policy; it should
+  extend the same courtesy to the crust's.
+
+---
+
+**K-074 — THE PLANETARY PROBE: every M8+ interrogates every charged zone on Earth simultaneously.
+One event, one 13-region × ledger-class response matrix — and the probe is identical across
+regions, which is what no comparative study has ever had.**
+
+*Lens: K-043's spectroscopy, conditioned on state — and the realisation that a single great
+earthquake is a **controlled** comparative experiment, because the *instrument* is the same
+everywhere even though the *rock* is not.*
+
+- **The move.** The chronic problem with comparing triggering susceptibility across regions is that
+  each region is probed by different sources at different amplitudes, so the comparison confounds
+  rock with exposure. **A single M8+ solves that: its wavefield reaches every region on Earth
+  within three hours, with an amplitude at each that is computable from geometry alone.** So each
+  great earthquake yields a *simultaneous, common-probe* measurement of susceptibility across all
+  13 boxes, and — Jim's addendum — that measurement can be **conditioned on each region's own
+  ledger state at that moment**.
+- **Claim.** (i) The region-by-region response to a common probe, normalised by the computed local
+  amplitude, is **reproducible across independent M8+ probes** (this is the measurement).
+  (ii) The residual variance in that response is **explained by ledger state** — regions in a
+  high-χ / late-cycle configuration respond more, at matched probe amplitude and matched catalogue
+  power. (iii) The response varies **in time** within a region beyond estimation noise — which is
+  K-043 arm (ii), the one Popper singled out as *"the cleanest single discriminator against W-003
+  that does not require any forecast to succeed"*, because **a temporally static heterogeneous
+  medium forbids it outright.**
+- **Test.** Probes: all M ≥ 8.0 in `data/comcat_world` 1995–2026 plus Sumatra 2004 / Tohoku 2011 /
+  Maule 2010 (~15–25 events). Targets: the 13 boxes at M ≥ 4.5, SoCal at M ≥ 2.5. Response: rate
+  excess over frozen ETAS in the 0–24 h after each region's predicted R1 arrival, divided by the
+  K-059 computed amplitude at that region. Statistic: (a) inter-probe rank correlation of the
+  response vector across regions (reproducibility); (b) region-level regression of response on
+  ledger state at probe time, **at matched Mc and matched N** (W-004's confound, and it is the
+  dominant one here); (c) within-region ANOVA across probes for temporal variation.
+- **Null.** Circular shift of each probe's time against each target catalogue (exact here, since
+  probes and distant targets are causally independent under the null); ETAS-sim targets; and a
+  **probe-label permutation** for the reproducibility arm.
+- **POWER-STATE.** Unit = (probe × region); N = ~20 probes × 13 regions ≈ 260 cells of the matrix,
+  but N_eff for the reproducibility claim is the **number of probes, ~20**, and for the
+  state-conditioning claim it is the number of **region-probe combinations with distinguishable
+  ledger states**, which is smaller. Teleseismic amplitude from an M8.5 at 8,000 km is order
+  1–5 kPa → 3–18% predicted fractional response — **at or modestly above the floor, with an exposed
+  count per region-probe of order 10¹–10². Pooled across the matrix this is a real test; per cell it
+  is not.** Report as a pooled hierarchical model with probe and region random effects.
+- **Expected.** Reproducibility across probes at ρ = 0.4–0.7 (I expect this to work, and it doubles
+  as K-043's global validation of K-034); the state-conditioning arm at prior-on-null **0.6**; the
+  temporal-variation arm at prior-on-null **0.5** and it is the one that can cost W-003 the round.
+- **Cost / decision.** ~1.5 days on K-059. Decision: it upgrades K-043 from "a susceptibility map"
+  to "a susceptibility map with a state axis", and arm (iii) is a W-003 discriminator that needs no
+  forecast to succeed — the rarest and most valuable kind of test in this ledger.
+- **GATE: K-034 (this is squarely its licensed amplitude and bandwidth). MERTON-BEFORE-FREEZE:**
+  **Pollitz et al. 2012** and **Parsons & Velasco 2011** again, since a global post-M8 response
+  matrix is exactly what those two papers disagree about; `global triggering response comparative
+  regions`, `triggering susceptibility temporal variation`, `Velasco et al. 2008 global triggering
+  12 of 15`.
+- **Why dismissed too quickly.** "Great earthquakes are too rare for a comparative design." Twenty
+  probes × thirteen regions is a bigger comparative dataset than any single-region triggering study
+  in the literature, and it is the only design in which the *stimulus is shared* — which is the
+  property that makes a comparison of rocks a comparison of rocks.
+
+---
+
+**K-075 — FRAME-BREAK ONLY THIS SEAT WOULD WRITE: THE READINESS LEADERBOARD. Forget amplitudes.
+When one probe sweeps every charged zone at once, the ORDER in which regions answer is a state
+measurement immune to every calibration error we have.**
+
+*Lens: replace a measurement with a ranking. Every entry above is fighting an amplitude
+calibration — the attenuation relation, Q, the radiation pattern, Mc, the local rate. A rank
+statistic across regions probed by the same event cancels all of it that is common-mode, and
+a rank's REPRODUCIBILITY across independent probes is a state measurement with no physical
+constants in it at all.*
+
+- **The presupposition attacked.** Everything in this seed, and in K-034/K-038/K-043, is an
+  amplitude test: compute Δτ, predict ΔR/R, compare. Every one of those is limited by our worst
+  constant. But the compound hypothesis has a consequence that needs **no** constant: if regions
+  differ in readiness (χ, Aσ, distance-to-failure), then under a common planetary probe they
+  **answer in an order**, and that order is the readiness ranking. Amplitude errors that are
+  common-mode across regions cannot change a ranking; nor can a global Mc drift; nor can the
+  attenuation relation's absolute scale.
+- **Claim.** (i) **Rank reproducibility:** the readiness ranking of the 13 regions (by response
+  latency and by amplitude-normalised response) derived from probe *i* correlates with the ranking
+  derived from an independent probe *j*, beyond a probe-label-permuted null. **A temporally static
+  medium permits this; a purely noise-driven world does not — so (i) is the measurement.**
+  (ii) **Rank drift:** the ranking changes over time by more than its own reproducibility noise —
+  **which a static heterogeneous medium forbids, so (ii) is a W-003 discriminator.**
+  (iii) **The prize, low prior and stated as such:** a region's rank predicts hosting the next
+  M ≥ 7.0 more often than its long-run base rate does.
+- **Test.** From the K-074 matrix, per probe, rank the 13 regions by amplitude-normalised 0–24 h
+  response and by response latency. Statistics: (a) mean pairwise Kendall τ across the ~20 probes,
+  against a probe-label-permuted null; (b) a rank-drift test — is τ between temporally adjacent
+  probes higher than between distant ones? (an autocorrelation-in-ranks statistic, with the
+  overlapping-window discipline of S-2 not applicable because probes are disjoint events, which is
+  a rare and welcome property); (c) ROC AUC for "this region hosts an M ≥ 7 within 1–2 yr" from its
+  current rank, with the base-rate baseline being each region's own long-run M ≥ 7 frequency —
+  **that baseline is the harsh one and it is the only honest one, because regions differ enormously
+  in base rate and a rank that merely recovers "Japan is busy" is worth nothing.**
+- **Null.** Probe-label permutation (for reproducibility); ETAS-sim targets with the real probes in
+  place (for all three arms); and the **base-rate-only ranking** as the incumbent to beat in (iii).
+- **POWER-STATE, and it is the honest limiter.** N_eff for (i) is the number of **probe pairs** from
+  ~20 probes; for (iii) it is the number of **M ≥ 7 target events in the 13 boxes during the scored
+  period**, which is large in raw count (179 over 31 years) but arrives in far fewer independent
+  region-years. **Arm (iii) is underpowered and I mark it exploratory in advance;** arms (i) and
+  (ii) are the runnable ones and (ii) is the one that matters, because it is a W-003 kill condition
+  that requires no forecast, no amplitude, and no bits.
+- **Expected.** (i) mean Kendall τ of 0.3–0.6 — I think this works and it is worth having on its own
+  as the first reproducible cross-regional susceptibility ranking anyone has published. (ii) prior
+  on the null 0.5. (iii) prior on the null 0.85.
+- **Cost / decision.** ~0.5 day once K-074 exists — it is a re-scoring of the same matrix.
+  Decision: if the ranking is reproducible and drifts, this program has a **non-circular,
+  actively-probed, calibration-free, globally-available state gauge**, which is what K-043 was
+  reaching for and could not get because it was tied to absolute amplitudes. If the ranking is not
+  even reproducible, then every amplitude-based susceptibility claim in this seed is measuring
+  noise, and that is a cheap and decisive thing to learn *before* K-071–K-074 are believed. **For
+  that reason I would run K-075(i) as a gate on the rest of the addendum, not as its dessert.**
+- **GATE: K-034. MERTON-BEFORE-FREEZE:** `relative triggering susceptibility ranking regions`,
+  `rank statistics seismicity response`, `comparative dynamic triggering across tectonic settings`,
+  `Velasco 2008`, `Peng & Gomberg 2010 review`.
+- **Why dismissed too quickly.** "A ranking is weaker than a measurement." A ranking is weaker in
+  information and **stronger in robustness**, and this program's entire corpse list is made of
+  measurements that were destroyed by calibration and selection effects a ranking would have
+  survived. Given a choice between a fragile number and a robust order, in a field with our track
+  record, I take the order.
+
+---
+
+**Where the addendum changes the seed's run order.** **K-075(i) moves to the front of the
+compound family as a gate** — one re-scoring, and it decides whether cross-regional response is
+even reproducible before we spend on amplitude-conditioned interactions. Then **K-072**, because
+it discharges a standing challenge against B-4 and is the entry whose sign pattern is hardest to
+fake. Then **K-074** (which builds the matrix K-075 re-scores, so in practice they are one job and
+should be specced together), then **K-071**, then **K-073** riding on K-067's survival model.
+
+**And the correction I owe Jim, stated plainly.** The addendum's premise — that near-field dynamic
+transients are 10–100× tidal amplitude and therefore beat K-035's floor — is **correct on amplitude
+and incomplete on exposure**. The tidal probe is weak and relentless (10⁵–10⁶ cycles); the dynamic
+probe is strong and rare (10¹–10³ exposures). Power is the product, so the dynamic probe wins
+decisively on *fractional response* (exponential in amplitude) and loses on *sample size*, and the
+net is that **these tests are powered globally and bound-producing in SoCal alone.** That is a
+better position than the tidal family has ever been in, and it is not the same thing as "the floor
+is beaten". The second correction is the analytical one at the top of this addendum: **"dryness" is
+two variables with opposite signs, and the compound hypothesis only becomes falsifiable once the
+rate axis (Aσ) and the size axis (χ) are separated.** Once they are, the same probe that tests
+Jim's interaction also breaks B-4's degeneracy — which is a better payoff than the interaction
+itself, and I would not have found it if the addendum had not forced the two variables into the
+same sentence.
+
+*Kepler, wave-interference addendum. Five entries, K-071..K-075, all PROPOSED, all gated on K-034,
+all POWER-STATED with the exposure arithmetic shown, all tagged MERTON-BEFORE-FREEZE, all carrying
+declared units and N_eff, and all bound by (M1) fixed-n subsampling and (M2) the dual run against
+the 42 measured-low-χ cells. The family death condition declared in the parent seed extends to
+these: if K-075(i) shows the cross-regional response is not even reproducible across independent
+probes, K-071–K-074 close together with a bound and do not reopen without new data.*
