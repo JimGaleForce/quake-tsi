@@ -319,6 +319,17 @@ def simulate(t_now, t_hist, m_hist, par, n_sims=N_SIMS, T=HORIZON_DAYS,
     mu_mean = par["mu"] * T
     counts, max_mags, capped = np.zeros(n_sims, dtype=np.int64), np.full(n_sims, -np.inf), 0
 
+    # ---- per-day / first-hour binning of the SAME simulated events (no extra RNG
+    # draws, no reordering of RNG consumption: this only reads the (t_new, m_new)
+    # arrays that the existing generation loop below already produces).
+    n_days = int(round(T))
+    day_count = np.zeros((n_sims, n_days), dtype=np.int64)
+    day_any4 = np.zeros((n_sims, n_days), dtype=bool)
+    day_any5 = np.zeros((n_sims, n_days), dtype=bool)
+    hour1_any4 = np.zeros(n_sims, dtype=bool)
+    hour1_any5 = np.zeros(n_sims, dtype=bool)
+    hour1_days = 1.0 / 24.0
+
     for i in range(n_sims):
         n_tot = 0
         mmax = -np.inf
@@ -337,6 +348,22 @@ def simulate(t_now, t_hist, m_hist, par, n_sims=N_SIMS, T=HORIZON_DAYS,
                 break
             m_new = sample_mags(rng, t_new.size, par)
             mmax = max(mmax, float(m_new.max()))
+            # ---- bin this generation's events (already generated above; just read)
+            day_idx = np.clip(np.floor(t_new).astype(np.int64), 0, n_days - 1)
+            np.add.at(day_count[i], day_idx, 1)
+            for d in np.unique(day_idx):
+                dm = m_new[day_idx == d]
+                if dm.max() >= 4.0:
+                    day_any4[i, d] = True
+                if dm.max() >= 5.0:
+                    day_any5[i, d] = True
+            h1 = t_new < hour1_days
+            if h1.any():
+                mh1 = m_new[h1]
+                if mh1.max() >= 4.0:
+                    hour1_any4[i] = True
+                if mh1.max() >= 5.0:
+                    hour1_any5[i] = True
             w = 10.0 ** (par["alpha"] * (m_new - par["M0"]))
             mean = par["K"] * w * omori_integral(0.0, T - t_new, par["c"], par["p"])
             k = rng.poisson(mean)
@@ -349,7 +376,15 @@ def simulate(t_now, t_hist, m_hist, par, n_sims=N_SIMS, T=HORIZON_DAYS,
             t_new = np.asarray(child, dtype=float)
         counts[i] = n_tot
         max_mags[i] = mmax
-    return counts, max_mags, capped
+    binned = {
+        "n_days": n_days,
+        "day_count": day_count,
+        "day_any4": day_any4,
+        "day_any5": day_any5,
+        "hour1_any4": hour1_any4,
+        "hour1_any5": hour1_any5,
+    }
+    return counts, max_mags, capped, binned
 
 
 # ========================================================================= main
@@ -450,7 +485,7 @@ def main():
     print(f"\n[sim] {args.nsims} forward ETAS cluster simulations over [now, now+7 d], "
           f"seed={SEED} ...")
     t0 = time.time()
-    counts, mmax, capped = simulate(t_now, t_hist, m_hist, par, n_sims=args.nsims, seed=SEED)
+    counts, mmax, capped, binned = simulate(t_now, t_hist, m_hist, par, n_sims=args.nsims, seed=SEED)
     print(f"[sim] done in {time.time() - t0:.1f} s; sims hitting the "
           f"{MAX_EVENTS_PER_SIM} event cap: {capped}")
 
@@ -468,6 +503,24 @@ def main():
         # binomial 95% Wald-ish interval on the MC estimate itself
         se = float(np.sqrt(max(p * (1 - p), 1e-12) / args.nsims))
         sim[f"P_any_M{int(mth)}_mc_se"] = se
+
+    # ---- per-day / first-hour breakdown, binned from the SAME simulations above
+    per_day = {}
+    for d in range(binned["n_days"]):
+        per_day[f"day_{d + 1}"] = {
+            "range_days_after_origin": [d, d + 1],
+            "P_any_M4": float(binned["day_any4"][:, d].mean()),
+            "P_any_M5": float(binned["day_any5"][:, d].mean()),
+            "expected_N_M2.5_mean": float(binned["day_count"][:, d].mean()),
+        }
+    hour_1 = {
+        "range_days_after_origin": [0.0, 1.0 / 24.0],
+        "P_any_M4": float(binned["hour1_any4"].mean()),
+        "P_any_M5": float(binned["hour1_any5"].mean()),
+    }
+    sim["per_day"] = per_day
+    sim["hour_1"] = hour_1
+
     print(f"[sim] expected M>=2.5 in 7 d: mean {sim['expected_N_M2.5_mean']:.1f}  "
           f"(5th-95th pct {sim['N_M2.5_p05']:.0f}-{sim['N_M2.5_p95']:.0f}, "
           f"median {sim['N_M2.5_p50']:.0f})")
@@ -506,6 +559,15 @@ def main():
         print(f"[sim] P(any M>={mth}) = {p:.4f} "
               f"(+/- {1.96 * sim[f'P_any_M{mth}_mc_se']:.4f} MC)"
               f"  [analytic floor {lo:.4f}]{note}")
+
+    print(f"\n[sim] first-hour: P(any M>=4) = {hour_1['P_any_M4']:.4f}   "
+          f"P(any M>=5) = {hour_1['P_any_M5']:.4f}")
+    print("[sim] per-day breakdown (binned from the same simulations, days after origin):")
+    print(f"   {'day':>5} {'P(M>=4)':>10} {'P(M>=5)':>10} {'E[N M2.5+]':>12}")
+    for d in range(binned["n_days"]):
+        pd_ = per_day[f"day_{d + 1}"]
+        print(f"   {d + 1:>5} {pd_['P_any_M4']:>10.4f} {pd_['P_any_M5']:>10.4f} "
+              f"{pd_['expected_N_M2.5_mean']:>12.2f}")
 
     # ---- output json
     out = {

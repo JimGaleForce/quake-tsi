@@ -3,8 +3,8 @@
   "kind": "application (forecast), NOT a hypothesis test",
   "protocol": "PATTERN_PROTOCOL.md :: EXP-L",
   "state_class": "repeat-run (daily reusable script)",
-  "run_utc": "2026-08-09T17:46:45.551536+00:00",
-  "forecast_origin_utc": "2026-08-09T17:46:45.551536+00:00",
+  "run_utc": "2026-08-09T18:01:52.156385+00:00",
+  "forecast_origin_utc": "2026-08-09T12:00:00+00:00",
   "horizon_days": 7.0,
   "refit": false,
   "frozen_params": {
@@ -32,7 +32,7 @@
     },
     "minmagnitude": 2.5,
     "start": "2010-01-01T00:00:00",
-    "end": "2026-08-09T17:46:45.551536+00:00",
+    "end": "2026-08-09T12:00:00+00:00",
     "n_rows_downloaded": 18389,
     "n_non_earthquake_removed": 7,
     "non_earthquake_types": [
@@ -52,15 +52,15 @@
     "cache_file": "D:\\CODE\\git\\quake\\replication\\data\\comcat_socal_m25.csv"
   },
   "current_state": {
-    "lambda_now_per_day": 1.562673514587235,
+    "lambda_now_per_day": 2.5538861362677157,
     "mu_per_day": 0.27502337126874,
-    "lambda_over_mu": 5.681966253916157,
+    "lambda_over_mu": 9.286069487426134,
     "observed_mean_rate_per_day_2010_now": 3.0311824050158265,
-    "lambda_over_observed_mean_rate": 0.515532655508099,
+    "lambda_over_observed_mean_rate": 0.8425379258079921,
     "mu_as_fraction_of_observed_mean_rate": 0.0907313828470524,
     "ratio_caveat": "lambda/mu is NOT 'x above normal': mu is the background term only and is far below the observed mean rate, most of which is triggering. Compare lambda(now) to the observed mean rate.",
     "history_truncation_days": 1000.0,
-    "n_events_within_truncation": 1950,
+    "n_events_within_truncation": 1952,
     "truncation_note": "contributions from events older than 1000 d are negligible at these params (same truncation EXP-H used for the fit; EXP-H measured delta_LL/event = -0.0093 vs untruncated)",
     "top_contributors": [
       {
@@ -68,90 +68,90 @@
         "time": "2026-08-09T09:45:58.248000+00:00",
         "mag": 2.93,
         "place": "35 km WNW of Indian Springs, Nevada",
-        "days_before_now": 0.33388082796318486,
-        "contribution_per_day": 0.22827980745657803,
-        "pct_of_lambda": 14.608285436825614
+        "days_before_now": 0.09307583333338698,
+        "contribution_per_day": 0.8509654942876246,
+        "pct_of_lambda": 33.32041637264366
       },
       {
         "id": "ci40669178",
         "time": "2026-08-09T06:37:39.650000+00:00",
         "mag": 2.82,
         "place": "12 km SSW of Lompoc, CA",
-        "days_before_now": 0.46465163814900734,
-        "contribution_per_day": 0.1394965797391579,
-        "pct_of_lambda": 8.926789789228915
+        "days_before_now": 0.22384664351920947,
+        "contribution_per_day": 0.30474884792892454,
+        "pct_of_lambda": 11.932750000134645
       },
       {
         "id": "ci40669138",
         "time": "2026-08-09T05:12:24.220000+00:00",
         "mag": 2.51,
         "place": "13 km SSW of Lompoc, CA",
-        "days_before_now": 0.523858003888563,
-        "contribution_per_day": 0.08348706104601514,
-        "pct_of_lambda": 5.342578617137914
-      },
-      {
-        "id": "nc75414312",
-        "time": "2026-08-08T23:58:47.090000+00:00",
-        "mag": 2.77,
-        "place": "5 km NW of Pinnacles, CA",
-        "days_before_now": 0.7416488603712423,
-        "contribution_per_day": 0.07871841207271948,
-        "pct_of_lambda": 5.03741897062306
+        "days_before_now": 0.2830530092587651,
+        "contribution_per_day": 0.16209087838279873,
+        "pct_of_lambda": 6.3468326203328935
       },
       {
         "id": "nc75414402",
         "time": "2026-08-09T02:41:19.560000+00:00",
         "mag": 2.6,
         "place": "11 km SSW of Tres Pinos, CA",
-        "days_before_now": 0.628773050185373,
-        "contribution_per_day": 0.07645473332986434,
-        "pct_of_lambda": 4.892559617615271
+        "days_before_now": 0.3879680555555751,
+        "contribution_per_day": 0.12920107941668296,
+        "pct_of_lambda": 5.05899920837893
+      },
+      {
+        "id": "nc75414312",
+        "time": "2026-08-08T23:58:47.090000+00:00",
+        "mag": 2.77,
+        "place": "5 km NW of Pinnacles, CA",
+        "days_before_now": 0.5008438657414445,
+        "contribution_per_day": 0.1208797811094612,
+        "pct_of_lambda": 4.733170339618844
       },
       {
         "id": "nc75413432",
         "time": "2026-08-07T15:46:44.990000+00:00",
         "mag": 3.26,
         "place": "5 km NW of Pinnacles, CA",
-        "days_before_now": 2.083339832593083,
-        "contribution_per_day": 0.046058411196998515,
-        "pct_of_lambda": 2.947411008572984
+        "days_before_now": 1.842534837963285,
+        "contribution_per_day": 0.05278760735359625,
+        "pct_of_lambda": 2.0669522655673593
       },
       {
         "id": "nc75413352",
         "time": "2026-08-07T14:27:56.560000+00:00",
         "mag": 3.25,
         "place": "5 km NW of Pinnacles, CA",
-        "days_before_now": 2.138067031666651,
-        "contribution_per_day": 0.04420125366271834,
-        "pct_of_lambda": 2.8285661240245483
+        "days_before_now": 1.8972620370368531,
+        "contribution_per_day": 0.05047295413156874,
+        "pct_of_lambda": 1.9763196727842616
       },
       {
         "id": "nc75413392",
         "time": "2026-08-07T15:16:52.040000+00:00",
         "mag": 2.89,
         "place": "6 km NW of Pinnacles, CA",
-        "days_before_now": 2.104091568703552,
-        "contribution_per_day": 0.028840272124179868,
-        "pct_of_lambda": 1.8455724663508963
+        "days_before_now": 1.8632865740737543,
+        "contribution_per_day": 0.03300697750037122,
+        "pct_of_lambda": 1.292421656221842
       },
       {
         "id": "ci40667530",
         "time": "2026-08-06T22:38:38.940000+00:00",
         "mag": 3.01,
         "place": "78 km E of Maneadero, B.C., MX",
-        "days_before_now": 2.7972987446300976,
-        "contribution_per_day": 0.024372190357209503,
-        "pct_of_lambda": 1.559646985099583
+        "days_before_now": 2.5564937500002998,
+        "contribution_per_day": 0.0269389734134868,
+        "pct_of_lambda": 1.0548228063470277
       },
       {
         "id": "nc75413212",
         "time": "2026-08-07T09:40:34.370000+00:00",
         "mag": 2.66,
         "place": "5 km NW of Pinnacles, CA",
-        "days_before_now": 2.3376294159261306,
-        "contribution_per_day": 0.019310719170531534,
-        "pct_of_lambda": 1.2357487978307657
+        "days_before_now": 2.0968244212963327,
+        "contribution_per_day": 0.021790075425139683,
+        "pct_of_lambda": 0.853212487263978
       }
     ]
   },
@@ -168,34 +168,107 @@
     }
   },
   "analytic_lower_bound_no_future_triggering": {
-    "P_any_M4": 0.14569710617008946,
-    "expected_N_M4": 0.1574694714606295,
-    "P_any_M5": 0.013445526815744624,
-    "expected_N_M5": 0.013536736408120618,
-    "P_any_M6": 0.0011558050107403073,
-    "expected_N_M6": 0.0011564734684725174,
-    "expected_N_M2.5": 6.242579860868826,
+    "P_any_M4": 0.15168356451572051,
+    "expected_N_M4": 0.16450155774304903,
+    "P_any_M5": 0.014041726309325764,
+    "expected_N_M5": 0.014141244047101764,
+    "P_any_M6": 0.0012073884185861417,
+    "expected_N_M6": 0.0012081178992195973,
+    "expected_N_M2.5": 6.5213536434905555,
     "background_part": 1.92516359888118,
-    "existing_aftershock_part": 4.317416261987646
+    "existing_aftershock_part": 4.596190044609376
   },
   "simulation": {
     "n_sims": 1000,
     "seed": 20260813,
     "capped_sims": 0,
-    "expected_N_M2.5_mean": 12.892,
+    "expected_N_M2.5_mean": 13.504,
     "N_M2.5_p05": 3.0,
     "N_M2.5_p50": 11.0,
-    "N_M2.5_p95": 29.0,
-    "N_M2.5_max": 112,
-    "P_any_M4": 0.227,
-    "P_any_M4_mc_se": 0.013246546719805883,
-    "P_any_M5": 0.025,
-    "P_any_M5_mc_se": 0.0049371044145328745,
-    "P_any_M6": 0.002,
-    "P_any_M6_mc_se": 0.0014127986409959489,
+    "N_M2.5_p95": 30.0,
+    "N_M2.5_max": 219,
+    "P_any_M4": 0.248,
+    "P_any_M4_mc_se": 0.01365635383255721,
+    "P_any_M5": 0.028,
+    "P_any_M5_mc_se": 0.005216895628628198,
+    "P_any_M6": 0.003,
+    "P_any_M6_mc_se": 0.001729450779872038,
+    "per_day": {
+      "day_1": {
+        "range_days_after_origin": [
+          0,
+          1
+        ],
+        "P_any_M4": 0.04,
+        "P_any_M5": 0.005,
+        "expected_N_M2.5_mean": 2.18
+      },
+      "day_2": {
+        "range_days_after_origin": [
+          1,
+          2
+        ],
+        "P_any_M4": 0.038,
+        "P_any_M5": 0.005,
+        "expected_N_M2.5_mean": 1.948
+      },
+      "day_3": {
+        "range_days_after_origin": [
+          2,
+          3
+        ],
+        "P_any_M4": 0.049,
+        "P_any_M5": 0.006,
+        "expected_N_M2.5_mean": 2.026
+      },
+      "day_4": {
+        "range_days_after_origin": [
+          3,
+          4
+        ],
+        "P_any_M4": 0.035,
+        "P_any_M5": 0.006,
+        "expected_N_M2.5_mean": 1.862
+      },
+      "day_5": {
+        "range_days_after_origin": [
+          4,
+          5
+        ],
+        "P_any_M4": 0.049,
+        "P_any_M5": 0.002,
+        "expected_N_M2.5_mean": 1.862
+      },
+      "day_6": {
+        "range_days_after_origin": [
+          5,
+          6
+        ],
+        "P_any_M4": 0.036,
+        "P_any_M5": 0.001,
+        "expected_N_M2.5_mean": 1.826
+      },
+      "day_7": {
+        "range_days_after_origin": [
+          6,
+          7
+        ],
+        "P_any_M4": 0.047,
+        "P_any_M5": 0.003,
+        "expected_N_M2.5_mean": 1.8
+      }
+    },
+    "hour_1": {
+      "range_days_after_origin": [
+        0.0,
+        0.041666666666666664
+      ],
+      "P_any_M4": 0.002,
+      "P_any_M5": 0.001
+    },
     "effective_7d_branching_ratio": 0.6025696067893402,
     "cascade_inflation_theory_upper": 2.516163879469443,
-    "cascade_inflation_observed": 2.065171817955041
+    "cascade_inflation_observed": 2.0707357303769807
   },
   "simulation_method": "exact ETAS cluster/branching generation (not thinning): background Poisson(mu*T) + Poisson offspring of every history event and of every simulated event, Omori-density times, i.i.d. truncated-GR magnitudes (b, M0=2.5, cap M8), recursed until a generation is empty",
   "flags": [
@@ -206,6 +279,6 @@
     "Stationary GR with b frozen at the 1982-2010 train value; no time-varying b.",
     "EXP-H's fitted branching ratio n = 1.161 is formally supercritical over infinite time; over a 7-day horizon the effective branching ratio is well below 1, so the simulations terminate, but the parameter set would not be usable for long horizons.",
     "MC uncertainty on each probability is +/- ~1.96*sqrt(p(1-p)/n_sims); for rare classes (M>=6) the simulated estimate is dominated by MC noise and the analytic bound is the more informative number.",
-    "CALIBRATION: the simulated 7-day mean of 12.9 M2.5+ events (1.84/day) sits against an observed ComCat mean of 3.03/day for 2010-now. From a quiet state the frozen model runs below the long-run observed rate; the model's own unconditional mean is undefined (supercritical n), so its stationary rate cannot be checked directly. Treat the absolute counts as less trustworthy than the relative/conditional signal."
+    "CALIBRATION: the simulated 7-day mean of 13.5 M2.5+ events (1.93/day) sits against an observed ComCat mean of 3.03/day for 2010-now. From a quiet state the frozen model runs below the long-run observed rate; the model's own unconditional mean is undefined (supercritical n), so its stationary rate cannot be checked directly. Treat the absolute counts as less trustworthy than the relative/conditional signal."
   ]
 }
