@@ -1,0 +1,748 @@
+{
+  "experiment": "K-035",
+  "protocol": "HYPOTHESIS_LEDGER.md :: R2-2 K-035 verdict (mandates 1-6); R2-1(b) per-bin+pooled; R2-1(c) systematics",
+  "prereg_commit": "05d1e8a",
+  "state_class": "first-run",
+  "run_utc": "2026-08-10T00:14:07.489236+00:00",
+  "runtime_minutes": 12.26,
+  "runtime_guard": {
+    "budget_min": 120,
+    "notes": [],
+    "n_injections_per_amplitude": 200,
+    "n_systematics_realizations": 100
+  },
+  "amplitudes": [
+    0.0,
+    0.005,
+    0.01,
+    0.02,
+    0.03,
+    0.05,
+    0.07,
+    0.1,
+    0.2,
+    0.4,
+    0.8
+  ],
+  "alpha": 0.05,
+  "n_injections_per_amplitude": 200,
+  "etas": {
+    "mu": 0.36628233476465655,
+    "K": 0.039172154875699285,
+    "alpha": 0.5476214485940878,
+    "c": 0.010077317739068625,
+    "p": 1.0734374789444605,
+    "M0": 2.5,
+    "tmax": 1000.0,
+    "b_value": 0.9348837425638282,
+    "pool_mu_scale": 9.983361064891847,
+    "n_pools": 10,
+    "pool_candidates_per_group_per_pool": 4000,
+    "note": "frozen EXP-H parameters; mu scaled only to densify the candidate-time pool, branching ratio and Omori structure unchanged"
+  },
+  "n_orientation_groups": 2332,
+  "occupancy_TV_distance_etas_vs_uniform": 0.020619340530616117,
+  "shift_null_validation": {
+    "expA_reported_null_S_mean": 0.001743733889717438,
+    "expA_reported_null_S_p95": 0.10137774744851648,
+    "k035_reconstructed_null_S_mean": 0.0017437338897174452,
+    "k035_reconstructed_null_S_p95": 0.10137774744851652,
+    "note": "independent shift draws, so agreement is distributional not exact"
+  },
+  "mandate_4_a0_arm": {
+    "rule": "the a = 0 arm must hold its false-positive rate before any other arm is read",
+    "phase_hist_false_positive_rates": {
+      "A1_train_bin245": 0.07,
+      "A3_pooled_test_all_eligible": 0.055,
+      "A3b_pooled_control_bins": 0.055,
+      "C_coso_fig4c": 0.065,
+      "D_full_catalog": 0.035,
+      "A2_end_to_end": 0.075,
+      "A3_pooled_test_all_eligible_pooled_S": 0.05,
+      "A3b_pooled_control_bins_pooled_S": 0.02
+    },
+    "intensity_likelihood_false_positive_rates": {
+      "A1_train_bin245": 0.065,
+      "A3_pooled_test_all_eligible": 0.045,
+      "A3b_pooled_control_bins": 0.055,
+      "C_coso_fig4c": 0.075,
+      "D_full_catalog": 0.035
+    },
+    "binomial_99pct_acceptance_band": [
+      0.015,
+      0.095
+    ],
+    "PASS": true
+  },
+  "configs": {
+    "A1_train_bin245": {
+      "n": 245,
+      "exposure_Cbar_Sbar": [
+        0.0009840176859000158,
+        0.004445098554160793
+      ],
+      "method_phase_hist": {
+        "threshold_a_p95": 0.21991670526862658,
+        "power": [
+          0.07,
+          0.06,
+          0.04,
+          0.065,
+          0.075,
+          0.08,
+          0.125,
+          0.18,
+          0.515,
+          0.99,
+          1.0
+        ],
+        "median_recovered_a": [
+          0.09509958661292463,
+          0.10758326209855494,
+          0.10668104359548423,
+          0.10598910116103197,
+          0.11859156164315021,
+          0.11109195591573551,
+          0.12801924182216082,
+          0.14086662370742192,
+          0.22188730584249902,
+          0.39942961801343013,
+          0.8125143032010753
+        ],
+        "power_at_p97.5_rule": [
+          0.03,
+          0.03,
+          0.015,
+          0.035,
+          0.045,
+          0.045,
+          0.05,
+          0.105,
+          0.4,
+          0.99,
+          1.0
+        ],
+        "mda80": 0.24494313754258987,
+        "mda80_note": "bracketed in [0.2, 0.4] where power = 0.52 -> 0.99"
+      },
+      "method_intensity_likelihood": {
+        "power": [
+          0.065,
+          0.06,
+          0.045,
+          0.055,
+          0.07,
+          0.08,
+          0.13,
+          0.155,
+          0.505,
+          0.99,
+          1.0
+        ],
+        "median_LRT": [
+          1.1698071390593985,
+          1.2630477005714935,
+          1.4337922854955893,
+          1.4207067981578616,
+          1.7312303931593487,
+          1.4004641865122271,
+          2.0528111632879753,
+          2.412364713871444,
+          6.169793704119282,
+          19.783860332003382,
+          89.01097977347423
+        ],
+        "mda80": 0.24599613535046794,
+        "mda80_note": "bracketed in [0.2, 0.4] where power = 0.51 -> 0.99"
+      }
+    },
+    "A3_pooled_test_all_eligible": {
+      "n": 3920,
+      "exposure_Cbar_Sbar": [
+        0.001241284536924128,
+        -0.00020871682436332246
+      ],
+      "method_phase_hist": {
+        "threshold_a_p95": 0.05452394635943958,
+        "power": [
+          0.055,
+          0.06,
+          0.085,
+          0.165,
+          0.175,
+          0.505,
+          0.745,
+          0.975,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "median_recovered_a": [
+          0.026297464553135162,
+          0.025975289710164093,
+          0.026777485508952786,
+          0.03127829761283126,
+          0.03836376812717838,
+          0.054853611963887744,
+          0.07066578762110484,
+          0.10450438853257302,
+          0.20091049594773955,
+          0.39785454955511246,
+          0.7995683769475186
+        ],
+        "power_at_p97.5_rule": [
+          0.025,
+          0.025,
+          0.035,
+          0.1,
+          0.11,
+          0.365,
+          0.655,
+          0.975,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mda80": 0.07309330501410127,
+        "mda80_note": "bracketed in [0.07, 0.1] where power = 0.74 -> 0.97"
+      },
+      "method_intensity_likelihood": {
+        "power": [
+          0.045,
+          0.055,
+          0.065,
+          0.15,
+          0.17,
+          0.49,
+          0.765,
+          0.975,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "median_LRT": [
+          1.3840266093430986,
+          1.3137450480330024,
+          1.499311477642472,
+          1.8267971938392171,
+          2.6937352966016066,
+          5.876996862439068,
+          9.92441287308518,
+          21.441830431537895,
+          79.69256281353938,
+          316.5228695023175,
+          1384.4136979053162
+        ],
+        "mda80": 0.0721021472297901,
+        "mda80_note": "bracketed in [0.07, 0.1] where power = 0.77 -> 0.97"
+      },
+      "method_pooled_S_circular_shift": {
+        "power": [
+          0.05,
+          0.06,
+          0.075,
+          0.17,
+          0.295,
+          0.635,
+          0.855,
+          0.995,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "median_pooled_S": [
+          -0.0010673235834451028,
+          0.0018012398689373741,
+          0.004693739458503194,
+          0.010567507969923375,
+          0.014016813216433667,
+          0.025039969114855287,
+          0.033905661040797425,
+          0.05141708513612206,
+          0.10013158142104145,
+          0.19858681544199405,
+          0.39965259153120425
+        ],
+        "mda80": 0.06289847567086825,
+        "mda80_note": "bracketed in [0.05, 0.07] where power = 0.64 -> 0.85",
+        "n_bins": 42,
+        "null": "EXP-A circular-shift null (3000 shifts of the real test event times)"
+      }
+    },
+    "A3b_pooled_control_bins": {
+      "n": 1906,
+      "exposure_Cbar_Sbar": [
+        0.0011095891784341449,
+        -0.0010711725254401114
+      ],
+      "method_phase_hist": {
+        "threshold_a_p95": 0.07962747839212496,
+        "power": [
+          0.055,
+          0.025,
+          0.08,
+          0.115,
+          0.11,
+          0.235,
+          0.465,
+          0.84,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "median_recovered_a": [
+          0.0376301444224115,
+          0.036877966655653245,
+          0.03854182707185876,
+          0.043320304383463834,
+          0.04565859828085854,
+          0.055669947484564615,
+          0.07819991430927072,
+          0.109745053737317,
+          0.2040263317210148,
+          0.40448629137978254,
+          0.8011299220095423
+        ],
+        "power_at_p97.5_rule": [
+          0.015,
+          0.01,
+          0.04,
+          0.065,
+          0.075,
+          0.17,
+          0.36,
+          0.75,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mda80": 0.0947497831541355,
+        "mda80_note": "bracketed in [0.07, 0.1] where power = 0.47 -> 0.84"
+      },
+      "method_intensity_likelihood": {
+        "power": [
+          0.055,
+          0.03,
+          0.08,
+          0.1,
+          0.11,
+          0.245,
+          0.465,
+          0.85,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "median_LRT": [
+          1.3454756622200195,
+          1.1817893868546163,
+          1.4226871572844986,
+          1.7464293397427553,
+          1.9546526592477576,
+          2.9368423861466213,
+          5.699233210188561,
+          11.376901493229731,
+          40.20407321741925,
+          159.65001194528884,
+          676.4470395501183
+        ],
+        "mda80": 0.09358845025230046,
+        "mda80_note": "bracketed in [0.07, 0.1] where power = 0.47 -> 0.85"
+      },
+      "method_pooled_S_circular_shift": {
+        "power": [
+          0.02,
+          0.1,
+          0.08,
+          0.15,
+          0.245,
+          0.38,
+          0.67,
+          0.93,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "median_pooled_S": [
+          -0.0015803493666614846,
+          0.0045854470107338655,
+          0.005103731908513893,
+          0.009668672171755266,
+          0.01568479790096228,
+          0.022892737095926548,
+          0.03425240693522916,
+          0.051734673713887264,
+          0.10089033472395748,
+          0.2018912374937567,
+          0.4003846890384337
+        ],
+        "mda80": 0.07961870553261585,
+        "mda80_note": "bracketed in [0.07, 0.1] where power = 0.67 -> 0.93",
+        "n_bins": 22,
+        "null": "EXP-A circular-shift null (3000 shifts of the real test event times)"
+      }
+    },
+    "C_coso_fig4c": {
+      "n": 113,
+      "exposure_Cbar_Sbar": [
+        0.0006805483374433861,
+        -0.0025732068478299735
+      ],
+      "method_phase_hist": {
+        "threshold_a_p95": 0.3245924382044469,
+        "power": [
+          0.065,
+          0.04,
+          0.07,
+          0.045,
+          0.055,
+          0.065,
+          0.12,
+          0.105,
+          0.315,
+          0.77,
+          1.0
+        ],
+        "median_recovered_a": [
+          0.16287604591169352,
+          0.14318795573899512,
+          0.16529748162661556,
+          0.1692735209094276,
+          0.1516554666623779,
+          0.17561482932491876,
+          0.17461728094066042,
+          0.18005537695150337,
+          0.2578028374509679,
+          0.4257328668056092,
+          0.8053049181637039
+        ],
+        "power_at_p97.5_rule": [
+          0.035,
+          0.035,
+          0.045,
+          0.02,
+          0.04,
+          0.045,
+          0.07,
+          0.06,
+          0.21,
+          0.7,
+          1.0
+        ],
+        "mda80": 0.40875422520690075,
+        "mda80_note": "bracketed in [0.4, 0.8] where power = 0.77 -> 1.00"
+      },
+      "method_intensity_likelihood": {
+        "power": [
+          0.075,
+          0.04,
+          0.06,
+          0.05,
+          0.055,
+          0.075,
+          0.115,
+          0.11,
+          0.29,
+          0.785,
+          1.0
+        ],
+        "median_LRT": [
+          1.53276382275499,
+          1.1584790371145324,
+          1.5257662944374681,
+          1.5916519360114412,
+          1.311366325580484,
+          1.6943676276928392,
+          1.7321597081976463,
+          1.8387029776245767,
+          3.903101355201656,
+          10.309617969621788,
+          41.98879197004729
+        ],
+        "mda80": 0.40453384414842575,
+        "mda80_note": "bracketed in [0.4, 0.8] where power = 0.79 -> 1.00"
+      }
+    },
+    "D_full_catalog": {
+      "n": 23465,
+      "exposure_Cbar_Sbar": [
+        0.0011873890544456282,
+        -0.0003437833669053738
+      ],
+      "method_phase_hist": {
+        "threshold_a_p95": 0.023441649733341743,
+        "power": [
+          0.035,
+          0.055,
+          0.11,
+          0.45,
+          0.815,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "median_recovered_a": [
+          0.011962814069860331,
+          0.011297032842415993,
+          0.012877880132822414,
+          0.0216378518685097,
+          0.03190402060434552,
+          0.05097614902819875,
+          0.07122998292674047,
+          0.09941065930245069,
+          0.19886614355054866,
+          0.39976185604999476,
+          0.8008902468464454
+        ],
+        "power_at_p97.5_rule": [
+          0.01,
+          0.02,
+          0.05,
+          0.345,
+          0.73,
+          0.995,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mda80": 0.029310523037118397,
+        "mda80_note": "bracketed in [0.02, 0.03] where power = 0.45 -> 0.81"
+      },
+      "method_intensity_likelihood": {
+        "power": [
+          0.035,
+          0.07,
+          0.115,
+          0.49,
+          0.835,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "median_LRT": [
+          1.5915419727337645,
+          1.6199832223443615,
+          1.8781592608944941,
+          5.751781913982387,
+          12.286165526907748,
+          30.714610851580193,
+          58.70256144342231,
+          117.3199609922764,
+          468.7388781108261,
+          1914.946535219573,
+          8316.913428486472
+        ],
+        "mda80": 0.028326617289570703,
+        "mda80_note": "bracketed in [0.02, 0.03] where power = 0.49 -> 0.83"
+      }
+    },
+    "A2_end_to_end": {
+      "n_train": 16985,
+      "n_test": 3920,
+      "n_bins": 42,
+      "method_phase_hist_end_to_end": {
+        "power": [
+          0.075,
+          0.045,
+          0.06,
+          0.075,
+          0.1,
+          0.22,
+          0.415,
+          0.82,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "mean_bins_selected": [
+          2.01,
+          2.135,
+          2.075,
+          2.56,
+          2.715,
+          3.755,
+          5.805,
+          9.785,
+          22.75,
+          39.135,
+          42.0
+        ],
+        "mda80": 0.09753651529752982,
+        "mda80_note": "bracketed in [0.07, 0.1] where power = 0.41 -> 0.82"
+      }
+    }
+  },
+  "systematics_R2_1c": {
+    "S2_artifact_amplitude": 0.03,
+    "nuisance_lines_hours": {
+      "S1": 24.0,
+      "S2": 12.0,
+      "K1": 23.93447,
+      "P1": 24.06589,
+      "Msf": 354.36
+    },
+    "off_tidal_control_lines_hours": {
+      "off_11.0d": 264.0,
+      "off_16.5d": 396.0
+    },
+    "results": {
+      "A3b_pooled_control_bins": {
+        "n": 1906,
+        "n_realizations": 100,
+        "clean_a0": {
+          "phase_hist_reject_rate": 0.02,
+          "IL_no_nuisance_reject_rate": 0.04,
+          "IL_with_S1_S2_K1_P1_Msf_reject_rate": 0.04,
+          "off_tidal_control_line_11.0d_reject_rate": 0.06,
+          "median_fitted_tidal_amplitude_no_nuisance": 0.037242336260116984,
+          "median_fitted_tidal_amplitude_with_nuisance": 0.04060896210346383
+        },
+        "S2artifact_a0": {
+          "phase_hist_reject_rate": 0.04,
+          "IL_no_nuisance_reject_rate": 0.08,
+          "IL_with_S1_S2_K1_P1_Msf_reject_rate": 0.06,
+          "off_tidal_control_line_11.0d_reject_rate": 0.07,
+          "median_fitted_tidal_amplitude_no_nuisance": 0.04321676959045995,
+          "median_fitted_tidal_amplitude_with_nuisance": 0.04365586555558973
+        },
+        "S2artifact_a0.01": {
+          "phase_hist_reject_rate": 0.08,
+          "IL_no_nuisance_reject_rate": 0.09,
+          "IL_with_S1_S2_K1_P1_Msf_reject_rate": 0.1,
+          "off_tidal_control_line_11.0d_reject_rate": 0.05,
+          "median_fitted_tidal_amplitude_no_nuisance": 0.04345729211758191,
+          "median_fitted_tidal_amplitude_with_nuisance": 0.046035450861933905
+        }
+      },
+      "D_full_catalog": {
+        "n": 23465,
+        "n_realizations": 100,
+        "clean_a0": {
+          "phase_hist_reject_rate": 0.04,
+          "IL_no_nuisance_reject_rate": 0.03,
+          "IL_with_S1_S2_K1_P1_Msf_reject_rate": 0.04,
+          "off_tidal_control_line_11.0d_reject_rate": 0.34,
+          "median_fitted_tidal_amplitude_no_nuisance": 0.010956431588792986,
+          "median_fitted_tidal_amplitude_with_nuisance": 0.011039438930415094
+        },
+        "S2artifact_a0": {
+          "phase_hist_reject_rate": 0.06,
+          "IL_no_nuisance_reject_rate": 0.13,
+          "IL_with_S1_S2_K1_P1_Msf_reject_rate": 0.09,
+          "off_tidal_control_line_11.0d_reject_rate": 0.4,
+          "median_fitted_tidal_amplitude_no_nuisance": 0.012957928273421548,
+          "median_fitted_tidal_amplitude_with_nuisance": 0.012898506786181266
+        },
+        "S2artifact_a0.01": {
+          "phase_hist_reject_rate": 0.14,
+          "IL_no_nuisance_reject_rate": 0.17,
+          "IL_with_S1_S2_K1_P1_Msf_reject_rate": 0.16,
+          "off_tidal_control_line_11.0d_reject_rate": 0.37,
+          "median_fitted_tidal_amplitude_no_nuisance": 0.014711900907695787,
+          "median_fitted_tidal_amplitude_with_nuisance": 0.014725190665777587
+        }
+      }
+    },
+    "verdict": {
+      "A3b_pooled_control_bins": {
+        "off_tidal_negative_control_holds_null": true,
+        "off_tidal_control_reject_rate_clean": 0.06,
+        "S2_artifact_inflates_phase_hist": false,
+        "S2_artifact_inflates_IL_without_nuisance": false,
+        "S2_artifact_inflates_IL_with_nuisance": false,
+        "nuisance_lines_reduce_S2_inflation": true,
+        "upper_acceptance_bound_for_a_nominal_0.05_rate": 0.11
+      },
+      "D_full_catalog": {
+        "off_tidal_negative_control_holds_null": false,
+        "off_tidal_control_reject_rate_clean": 0.34,
+        "S2_artifact_inflates_phase_hist": false,
+        "S2_artifact_inflates_IL_without_nuisance": true,
+        "S2_artifact_inflates_IL_with_nuisance": false,
+        "nuisance_lines_reduce_S2_inflation": true,
+        "upper_acceptance_bound_for_a_nominal_0.05_rate": 0.11
+      }
+    },
+    "verdict_note": "R2-1(c) requires the off-tidal negative-control line to return null. It does at n = 1906 but NOT at full-catalogue n, where ETAS clustering deposits power at the 11-day control line faster than the statistical error shrinks. A powered full-catalogue tidal-band test must therefore condition on an ETAS baseline (K-033's Cox-ETAS), not on a stationary lambda0 - the tidal-phase lines themselves stayed calibrated, so this bounds the METHOD, not the tidal result."
+  },
+  "corpse_to_bound_table_K032_item6": [
+    {
+      "corpse": "EXP-A per-bin train statistic (the selected bin, n=245)",
+      "quotable_bound": "static tidal-phase maps, EXP-A per-bin train statistic: |modulation| < 24% at 80% power (n = 245, 36-bin Pm/P0 vs 2000 orientation-preserving synthetics; SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).",
+      "mda80": 0.24494313754258987,
+      "n": 245,
+      "method": "36-bin Pm/P0 vs 2000 orientation-preserving synthetics",
+      "theory_line_pct": 1.0,
+      "mda_over_theory": 24.494313754258986,
+      "contacts_theory": false
+    },
+    {
+      "corpse": "EXP-A end-to-end pipeline (1-of-42 selection + pooled circular-shift test)",
+      "quotable_bound": "static tidal-phase maps, EXP-A end-to-end forecast pipeline: |modulation| < 9.8% at 80% power (n = 3920, train selection p<0.05 then pooled S vs 3000 circular shifts; SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).",
+      "mda80": 0.09753651529752982,
+      "n": 3920,
+      "method": "train selection p<0.05 then pooled S vs 3000 circular shifts",
+      "theory_line_pct": 1.0,
+      "mda_over_theory": 9.753651529752982,
+      "contacts_theory": false
+    },
+    {
+      "corpse": "EXP-A pooled statistic on the 22 train-null CONTROL bins (the quoted corpse: n=1906, S=0.009, p=0.28)",
+      "quotable_bound": "static tidal-phase maps, EXP-A pooled anti-leak control statistic: |modulation| < 8% at 80% power (n = 1906, pooled S vs 3000 circular shifts, phase known (best case); SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).",
+      "mda80": 0.07961870553261585,
+      "n": 1906,
+      "method": "pooled S vs 3000 circular shifts, phase known (best case)",
+      "theory_line_pct": 1.0,
+      "mda_over_theory": 7.961870553261585,
+      "contacts_theory": false
+    },
+    {
+      "corpse": "EXP-A pooled statistic over all 42 eligible bins (upper limit of the design)",
+      "quotable_bound": "static tidal-phase maps, pooled over every eligible bin: |modulation| < 6.3% at 80% power (n = 3920, pooled S vs 3000 circular shifts, phase known (best case); SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).",
+      "mda80": 0.06289847567086825,
+      "n": 3920,
+      "method": "pooled S vs 3000 circular shifts, phase known (best case)",
+      "theory_line_pct": 1.0,
+      "mda_over_theory": 6.289847567086825,
+      "contacts_theory": false
+    },
+    {
+      "corpse": "Coso Fig 4c replication (n=113)",
+      "quotable_bound": "Coso Fig 4c tidal shear-phase modulation: |modulation| < 41% at 80% power (n = 113, 36-bin Pm/P0 vs 2000 orientation-preserving synthetics; SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).",
+      "mda80": 0.40875422520690075,
+      "n": 113,
+      "method": "36-bin Pm/P0 vs 2000 orientation-preserving synthetics",
+      "theory_line_pct": 1.0,
+      "mda_over_theory": 40.87542252069007,
+      "contacts_theory": false
+    },
+    {
+      "corpse": "Full-catalogue intensity likelihood (n=23465)",
+      "quotable_bound": "SoCal FM-matched tidal shear-phase modulation, full catalogue: |modulation| < 2.8% at 80% power (n = 23465, Cox intensity likelihood carrying the int-lambda0-dt term; SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).",
+      "mda80": 0.028326617289570703,
+      "n": 23465,
+      "method": "Cox intensity likelihood carrying the int-lambda0-dt term",
+      "theory_line_pct": 1.0,
+      "mda_over_theory": 2.83266172895707,
+      "contacts_theory": false
+    }
+  ],
+  "theory_line": {
+    "value_pct": 1.0,
+    "source": "Beeler & Lockner (2003) / rate-state: order-1% seismicity-rate modulation at 1-3 kPa tidal stressing amplitudes"
+  },
+  "limitations": [
+    "All four target samples come from the DECLUSTERED SCSN M>=1.5 catalogue, so events are modelled as independent draws from the thinned ETAS intensity. Residual Hawkes clustering with effective cluster size kappa inflates every MDA by sqrt(kappa).",
+    "The intensity likelihood in the power arm is evaluated on the same 36 phase bins as the histogram pipeline, so the comparison isolates the estimator, not the binning.",
+    "The circular-shift null uses the real test event times (as EXP-A did); the injected catalogues reuse the real n and orientation mix per bin.",
+    "The systematics arm's intensity likelihood uses a STATIONARY lambda0 exposure. Its off-tidal control line fails at full-catalogue n (see systematics verdict): that is a property of the stationary baseline, not of the tidal band, whose lines stayed calibrated in the a = 0 arm."
+  ]
+}

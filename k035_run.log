@@ -1,0 +1,97 @@
+D:\CODE\git\quake\replication\exp_k035_power_audit.py:321: Pandas4Warning: Timestamp.utcnow is deprecated and will be removed in a future version. Use Timestamp.now('UTC') instead.
+  "run_utc": pd.Timestamp.utcnow().isoformat()}
+FM-matched in box: 23465  (18982 train / 4483 test);  eligible 0.4 deg bins: 42
+orientation groups (15 deg): 2332
+EXP-A selected bin index 13 -> lat0 33.5, lon0 -116.4
+EXP-A train-null CONTROL bins recovered from exp_a_train_bins.csv: 22
+  config A1_train_bin245: n = 245
+  config A3_pooled_test_all_eligible: n = 3920
+  config A3b_pooled_control_bins: n = 1906
+  config C_coso_fig4c: n = 113
+  config D_full_catalog: n = 23465
+  config A2_end_to_end: 16985 train / 3920 test over 42 bins
+
+ETAS: frozen EXP-H params, b = 0.935, span = 13877 d
+  pilot realization: 12020 events -> mu x10.0 to densify the candidate pool (branching structure unchanged)
+  10 pools, 118191 candidate times each
+tidal series: 2627990 samples @ 600 s
+phase-series check: vectorised implementation == coso_positive_control.phase_series
+
+=== group pass: 2332 groups x 11 amplitudes x 200 injections ===
+  group 0/2332  (0s, total 0.0 min)
+  [runtime guard] projected group pass 12.2 min
+  group 250/2332  (76s, total 1.3 min)
+  group 500/2332  (155s, total 2.6 min)
+  group 750/2332  (226s, total 3.8 min)
+  group 1000/2332  (301s, total 5.0 min)
+  group 1250/2332  (373s, total 6.2 min)
+  group 1500/2332  (452s, total 7.6 min)
+  group 1750/2332  (551s, total 9.2 min)
+  group 2000/2332  (623s, total 10.4 min)
+  group 2250/2332  (691s, total 11.6 min)
+group pass done in 11.9 min
+
+=== cached orientation-preserving nulls (grp_prob, exactly as EXP-A) ===
+  A1_train_bin245: null a_b p95 = 0.2199  p97.5 = 0.2460
+  A3_pooled_test_all_eligible: null a_b p95 = 0.0545  p97.5 = 0.0614
+  A3b_pooled_control_bins: null a_b p95 = 0.0796  p97.5 = 0.0894
+  C_coso_fig4c: null a_b p95 = 0.3246  p97.5 = 0.3614
+  D_full_catalog: null a_b p95 = 0.0234  p97.5 = 0.0259
+mean total-variation distance between ETAS-weighted and uniform occupancy: 0.0206
+shift-null reconstruction (EXP-A selected bin): p95 0.1014 vs published 0.1014
+
+A1_train_bin245 (n=245)
+   hist power [0.07, 0.06, 0.04, 0.065, 0.075, 0.08, 0.125, 0.18, 0.515, 0.99, 1.0]   MDA80 = 0.24494313754258987 (bracketed in [0.2, 0.4] where power = 0.52 -> 0.99)
+   IL   power [0.065, 0.06, 0.045, 0.055, 0.07, 0.08, 0.13, 0.155, 0.505, 0.99, 1.0]   MDA80 = 0.24599613535046794 (bracketed in [0.2, 0.4] where power = 0.51 -> 0.99)
+
+A3_pooled_test_all_eligible (n=3920)
+   hist power [0.055, 0.06, 0.085, 0.165, 0.175, 0.505, 0.745, 0.975, 1.0, 1.0, 1.0]   MDA80 = 0.07309330501410127 (bracketed in [0.07, 0.1] where power = 0.74 -> 0.97)
+   IL   power [0.045, 0.055, 0.065, 0.15, 0.17, 0.49, 0.765, 0.975, 1.0, 1.0, 1.0]   MDA80 = 0.0721021472297901 (bracketed in [0.07, 0.1] where power = 0.77 -> 0.97)
+
+A3b_pooled_control_bins (n=1906)
+   hist power [0.055, 0.025, 0.08, 0.115, 0.11, 0.235, 0.465, 0.84, 1.0, 1.0, 1.0]   MDA80 = 0.0947497831541355 (bracketed in [0.07, 0.1] where power = 0.47 -> 0.84)
+   IL   power [0.055, 0.03, 0.08, 0.1, 0.11, 0.245, 0.465, 0.85, 1.0, 1.0, 1.0]   MDA80 = 0.09358845025230046 (bracketed in [0.07, 0.1] where power = 0.47 -> 0.85)
+
+C_coso_fig4c (n=113)
+   hist power [0.065, 0.04, 0.07, 0.045, 0.055, 0.065, 0.12, 0.105, 0.315, 0.77, 1.0]   MDA80 = 0.40875422520690075 (bracketed in [0.4, 0.8] where power = 0.77 -> 1.00)
+   IL   power [0.075, 0.04, 0.06, 0.05, 0.055, 0.075, 0.115, 0.11, 0.29, 0.785, 1.0]   MDA80 = 0.40453384414842575 (bracketed in [0.4, 0.8] where power = 0.79 -> 1.00)
+
+D_full_catalog (n=23465)
+   hist power [0.035, 0.055, 0.11, 0.45, 0.815, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]   MDA80 = 0.029310523037118397 (bracketed in [0.02, 0.03] where power = 0.45 -> 0.81)
+   IL   power [0.035, 0.07, 0.115, 0.49, 0.835, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]   MDA80 = 0.028326617289570703 (bracketed in [0.02, 0.03] where power = 0.49 -> 0.83)
+
+A3_pooled_test_all_eligible pooled-S (EXP-A confirmatory statistic, phase known, 42 bins)
+   power [0.05, 0.06, 0.075, 0.17, 0.295, 0.635, 0.855, 0.995, 1.0, 1.0, 1.0]   MDA80 = 0.06289847567086825 (bracketed in [0.05, 0.07] where power = 0.64 -> 0.85)
+
+A3b_pooled_control_bins pooled-S (EXP-A confirmatory statistic, phase known, 22 bins)
+   power [0.02, 0.1, 0.08, 0.15, 0.245, 0.38, 0.67, 0.93, 1.0, 1.0, 1.0]   MDA80 = 0.07961870553261585 (bracketed in [0.07, 0.1] where power = 0.67 -> 0.93)
+
+A2_end_to_end: power [0.075, 0.045, 0.06, 0.075, 0.1, 0.22, 0.415, 0.82, 1.0, 1.0, 1.0]
+   mean bins selected [2.01, 2.13, 2.08, 2.56, 2.71, 3.75, 5.8, 9.79, 22.75, 39.13, 42.0]   MDA80 = 0.09753651529752982 (bracketed in [0.07, 0.1] where power = 0.41 -> 0.82)
+
+=== systematics arm (R2-1c): S2 detection artifact + mandated nuisance lines ===
+  A3b_pooled_control_bins / clean_a0:  hist 0.020   IL-bare 0.040   IL+nuisance 0.040   off-tidal ctrl 0.060
+  A3b_pooled_control_bins / S2artifact_a0:  hist 0.040   IL-bare 0.080   IL+nuisance 0.060   off-tidal ctrl 0.070
+  A3b_pooled_control_bins / S2artifact_a0.01:  hist 0.080   IL-bare 0.090   IL+nuisance 0.100   off-tidal ctrl 0.050
+    (elapsed 12.1 min)
+  D_full_catalog / clean_a0:  hist 0.040   IL-bare 0.030   IL+nuisance 0.040   off-tidal ctrl 0.340
+  D_full_catalog / S2artifact_a0:  hist 0.060   IL-bare 0.130   IL+nuisance 0.090   off-tidal ctrl 0.400
+  D_full_catalog / S2artifact_a0.01:  hist 0.140   IL-bare 0.170   IL+nuisance 0.160   off-tidal ctrl 0.370
+    (elapsed 12.3 min)
+
+================ K-035 CORPSE-TO-BOUND TABLE (K-032 item 6) ================
+ * static tidal-phase maps, EXP-A per-bin train statistic: |modulation| < 24% at 80% power (n = 245, 36-bin Pm/P0 vs 2000 orientation-preserving synthetics; SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).
+     -> 24.5x the ~1% theory line; contact with theory: NO
+ * static tidal-phase maps, EXP-A end-to-end forecast pipeline: |modulation| < 9.8% at 80% power (n = 3920, train selection p<0.05 then pooled S vs 3000 circular shifts; SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).
+     -> 9.8x the ~1% theory line; contact with theory: NO
+ * static tidal-phase maps, EXP-A pooled anti-leak control statistic: |modulation| < 8% at 80% power (n = 1906, pooled S vs 3000 circular shifts, phase known (best case); SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).
+     -> 8.0x the ~1% theory line; contact with theory: NO
+ * static tidal-phase maps, pooled over every eligible bin: |modulation| < 6.3% at 80% power (n = 3920, pooled S vs 3000 circular shifts, phase known (best case); SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).
+     -> 6.3x the ~1% theory line; contact with theory: NO
+ * Coso Fig 4c tidal shear-phase modulation: |modulation| < 41% at 80% power (n = 113, 36-bin Pm/P0 vs 2000 orientation-preserving synthetics; SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).
+     -> 40.9x the ~1% theory line; contact with theory: NO
+ * SoCal FM-matched tidal shear-phase modulation, full catalogue: |modulation| < 2.8% at 80% power (n = 23465, Cox intensity likelihood carrying the int-lambda0-dt term; SoCal M>=1.5 FM-matched, 1981-2018, alpha = 0.05).
+     -> 2.8x the ~1% theory line; contact with theory: NO
+
+mandate-4 a=0 arm PASS = True
+-> results_k035.json, maps/k035_power_curves.png (runtime 12.3 min)
