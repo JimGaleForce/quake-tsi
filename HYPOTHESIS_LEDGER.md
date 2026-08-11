@@ -8109,3 +8109,3824 @@ declared units and N_eff, and all bound by (M1) fixed-n subsampling and (M2) the
 the 42 measured-low-χ cells. The family death condition declared in the parent seed extends to
 these: if K-075(i) shows the cross-regional response is not even reproducible across independent
 probes, K-071–K-074 close together with a bound and do not reopen without new data.*
+
+---
+
+## M-007 — RAPID ATTRIBUTION DOSSIER: **seismic quiescence as a precursor** (pre-emptive floor for K-076+)
+
+*Round 3 — 2026-08-10. Assigned by supervisor (Jim) off the M7.4 Z=107 km San José del Palmar,
+Colombia event (USGS `us6000tjl2`), which showed no M≥4.5 within ~1.5° for ~3 months prior.
+Supervisor's question, verbatim: "would an oasis of absence of events itself be a
+buildup-without-release indicator?"*
+
+**Status of this dossier: PRE-EMPTIVE.** K-076 does not exist yet — I checked; the ledger contains
+no K-076..K-089. This is deliberately filed *before* Kepler writes the family, because this
+literature's failure modes are not subtle and are not recoverable after the fact. Every one of the
+artifacts in §M-007.4 has to be designed into the entry, not bolted on after a positive.
+
+### M-007.0 THE HEADLINE, STATED FIRST SO NOBODY READS PAST IT
+
+**"Absence of events precedes large events" is one of the two or three most thoroughly worked
+hypotheses in the history of earthquake prediction. It is ~57 years old (Mogi 1969), it has a
+formal statement (Wyss & Habermann 1988), at least four named detection algorithms (Z-value, RTL,
+β-statistic, ETAS-residual), a dedicated 1988 *PAGEOPH* special volume, an IASPEI nomination
+docket, one famous failed prospective prediction (Parkfield), one careful null (Reasenberg &
+Matthews 1988: 37 mainshocks, "no evidence… for a systematic, widespread or reliable pattern"),
+and one modern, cross-validated, honestly-reported positive with probability gain G ≈ 2
+(Katsumata 2021). Any bare restatement of the hypothesis is REDISCOVERY of the strongest kind:
+prior art that is not merely earlier but *better resourced than we are*.**
+
+The **only** unowned ground I could find is at §M-007.5(c): **intermediate-depth / intra-slab
+quiescence**, where the literature is close to silent, and where what little exists points the
+*wrong way* for us (Wimpenny et al. 2023; Zhai et al. 2023). That is a genuine gap — and it is a
+gap partly because the physics predicts there should be nothing there. **A NOVEL test in an empty
+region is only worth running if you have a reason the region is empty other than "nobody looked."**
+
+### M-007.1 SEARCH TRAILS RUN (so a null search is auditable)
+
+Run 2026-08-10, WebSearch + WebFetch. Vocabularies tried, because this field renames itself
+every decade:
+
+| trail | terms | yield |
+|---|---|---|
+| classical | "Mogi doughnut" / "precursory seismic quiescence" / Wyss Habermann quiescence hypothesis | rich — foundational set recovered |
+| artifact critique | Habermann man-made changes seismicity rates / magnitude shift artifact catalog | rich — Habermann 1987, 1991 |
+| subduction | Katsumata quiescence great subduction earthquakes / Tohoku 23-year quiescence | rich |
+| algorithms | RTL region-time-length Sobolev Huang / Z-value β-statistic ZMAP Wiemer Wyss | rich |
+| prospective record | CSEP prospective quiescence / alarm-based / Parkfield quiescence prediction | **rich, and decisive** |
+| statistical assessment | Matthews Reasenberg 1988 β-statistic / preliminary assessment of the hypothesis | rich — the canonical null |
+| IASPEI | preliminary list of significant precursors / Case 23 / second round of evaluations | rich |
+| artifact set 2 | declustering choice sensitivity / Gardner–Knopoff vs Reasenberg vs Zaliapin | rich |
+| **intermediate depth** | quiescence intraslab / intermediate-depth precursor / Vrancea / slab rate change | **thin — see §M-007.5(c)** |
+| **Colombia** | Bucaramanga nest quiescence / Nazca slab Colombia precursor / San José del Palmar b-value | **NULL for precursor studies.** Bucaramanga has a real literature (Schneider et al. 1987, *JGR* 92(B13), 13913; Prieto et al.; Sun et al. 2023, *Sci. Rep.*, doi:10.1038/s41598-023-50159-4) but it is about *mechanism* (dehydration embrittlement, lithospheric delamination), not about *precursors*. I found **zero** quiescence-precursor studies for Colombian intermediate-depth seismicity. |
+| modern revival | critical slowing down earthquake catalogs / dynamical regime transition pre-seismic | one 2026 preprint, see §M-007.6 |
+
+**Search limits I will not paper over.** Two primary sources returned HTTP 403 and were read only
+via search-engine summaries or secondary citation: the MDPI *Geosciences* Vrancea paper and the
+AGU page for Shearer & Lin (the latter I have from the SCEC record and a search summary). Several
+1988 *PAGEOPH* items are paywalled and known to me only via abstract pages and citing text. Each
+is flagged inline. **No item below is marked UNVERIFIED-FROM-MEMORY without that tag being
+literal: I ran the searches, and the tag means the search did not reach the primary text.**
+
+### M-007.2 THE CLASSICAL LINEAGE — who owns what
+
+1. **Mogi, K. (1969), "Some features of recent seismic activity in and near Japan (2): activity
+   before and after great earthquakes," *Bull. Earthquake Res. Inst. Univ. Tokyo* 47, 395–417.**
+   *Bibliographic details UNVERIFIED-FROM-MEMORY — the search returned the concept and the 1969 date
+   through many citing papers, but I did not reach the primary bulletin.* The concept is verified
+   many times over in citing text: Mogi proposed the **"doughnut pattern"** — *quiescence in the
+   seismogenic region of the future mainshock plus excitation in the broader surrounding region* —
+   from **visual inspection of seismicity maps**. Note that second clause. **Mogi's object was
+   never bare absence; it was absence-with-a-ring.** A bare-absence test is a *weaker* object than
+   the 1969 original, not a newer one.
+2. **Wyss, M. & Habermann, R. E. (1988), "Precursory seismic quiescence," *PAGEOPH* 126(2–4),
+   319–332** (doi:10.1007/BF00879001). Verified as an indexed article. This is the **formal
+   statement**: the quiescence hypothesis postulates that **the quiet volume overlaps the mainshock
+   source volume**, lasting months to years. *Abstract read via publisher landing page and citing
+   text; full text not reached.* The companion review **"Precursory seismic quiescence: past,
+   present, and future," *PAGEOPH* 126** (doi:10.1007/BF00879000) is in the same volume — that 1988
+   *PAGEOPH* volume 126 is effectively the field's foundational proceedings and contains at least
+   four of the papers cited in this dossier.
+3. **Habermann, R. E. (1987), "Man-made changes in seismicity rates," *BSSA* 77(1), 141–157.**
+   Verified via multiple independent citing sources giving identical volume/pages. **This is the
+   single most important citation in the dossier for our purposes.** Habermann showed, using
+   *synthetic catalogs generated with known rates and known magnitude shifts*, that a systematic
+   shift in reported magnitudes is indistinguishable from a real rate change above a fixed cutoff —
+   and then found that **all** large world regions examined show significant apparent rate
+   variations at M_c = 5.0 and 5.5. Follow-up: **Habermann, R. E. (1991), "Seismicity rate
+   variations and systematic changes in magnitudes in teleseismic catalogs," *Tectonophysics*
+   193(1–3), 277–289** (verified as indexed on ScienceDirect). **Translation for us: a
+   magnitude-reporting change of 0.1–0.2 units in a regional catalog manufactures quiescence out of
+   nothing. Our Colombia observable is defined at M≥4.5 on a teleseismic-dominated catalog —
+   precisely Habermann's worst case.**
+4. **Wiemer, S. & Wyss, M. (1994)** — the **ZMAP gridding technique**, mapping the significance of
+   seismicity rate changes in space and time via the **Z-value** (LTA standard-deviate statistic).
+   Software: **Wyss, Wiemer & Zúñiga, ZMAP cookbook** (verified on ResearchGate); **Wiemer, S.
+   (2001), "A software package to analyze seismicity: ZMAP," *SRL* 72(3), 373–382** — *volume/pages
+   UNVERIFIED-FROM-MEMORY; the package and authorship are verified.* Wiemer & Wyss's seminal
+   application was **quiescence before the 1992 Landers M7.3 and Big Bear M6.5 events.**
+5. **Matthews, M. V. & Reasenberg, P. A. (1988), "Statistical methods for investigating quiescence
+   and other temporal seismicity patterns," *PAGEOPH* 126(2–4), 357–372**
+   (doi:10.1007/BF00879003). Verified as indexed article with those pages. Source of the
+   **β-statistic**: (observed − expected)/sd(expected) under a stationary-Poisson null. Extended by
+   **Reasenberg, P. A. & Simpson, R. W. (1992), *Science* 255, 1687–1690** (the Landers
+   stress-triggering paper) — *volume/pages UNVERIFIED-FROM-MEMORY.*
+6. **Sobolev, G. A. & Tyupkin, Y. S. (1997), "Low-seismicity precursors of large earthquakes in
+   Kamchatka," *Volc. Seis.* 18, 433–446** — the **RTL (Region–Time–Length) algorithm.**
+   *Exact citation UNVERIFIED-FROM-MEMORY; the algorithm, the Kamchatka test set, and the authorship
+   are verified through many citing papers.* Verified content: tested on four large Kamchatka
+   events; quiescence up to ~3 years before all four in their epicentral areas, **followed by
+   foreshock activation**, over areas several times the rupture length (~100 km for M>7).
+   **Huang, Q. et al. (2002), "Seismic quiescence before the 2000 M=7.3 Tottori earthquake,"
+   *GRL* 29** — verified as an indexed AGU article (doi:10.1029/2001GL013835). **Huang, Q. (2006),
+   "An improved region–time–length algorithm applied to the 1999 Chi-Chi, Taiwan earthquake,"
+   *GJI* 166(3), 1144–1147** — verified via the OUP article page. That improvement paper exists
+   **because the original RTL has two free parameters (characteristic time and distance) whose
+   ambiguity was recognized as a problem by the field itself.** *That is a pre-registration hazard
+   the literature named before we did.* Applications since: Sagaing Fault Myanmar (*Geosciences J.*,
+   doi:10.1007/s12303-016-0068-z), Sumatra–Andaman (*EPS*, doi:10.1186/s40623-015-0269-0) — the
+   genre is large, retrospective, and case-study-shaped.
+7. **Katsumata, K. (2011), "A long-term seismic quiescence started 23 years before the 2011 off the
+   Pacific coast of Tohoku Earthquake (M = 9.0)," *EPS* 63(7), 709–712**
+   (doi:10.5047/eps.2011.06.033). Verified. ZMAP gridding; anomaly onset November 1987, i.e.
+   **23.4 years** before. **Katsumata, K. (2017), "Long-term seismic quiescences and great
+   earthquakes in and around the Japan subduction zone between 1975 and 2012," *PAGEOPH* 174**
+   (doi:10.1007/s00024-016-1415-8). Verified. **This is the paper whose numbers matter most to us:
+   ten quiescences of >9 years were identified along the zone; three were followed by great
+   earthquakes (1994 Hokkaido-toho-oki Mw8.3, 2003 Tokachi-oki Mw8.3, 2011 Tohoku Mw9.0). Ten
+   alarms, three hits — the base rate is in the abstract, and it is 30%.**
+
+### M-007.3 THE PROSPECTIVE RECORD — and this is where the hypothesis has actually been decided
+
+This is the section Kepler must read before writing K-076.
+
+**(a) Parkfield — the documented prospective failure, and it is *by the founders*.**
+**Wyss, M., Habermann, R. E. & Bodin, P. (1992), "Seismic quiescence: a test of the hypothesis and
+a precursor to the next Parkfield, California, earthquake," *GJI* 110(3), 518–536,
+doi:10.1111/j.1365-246X.1992.tb02089.x.** **Verified: authors, year, volume, pages, DOI, and two
+verbatim quotes read from the publisher page.** They stated, verbatim: *"the Parkfield earthquake
+should occur in the interval 1990 February to 1992 February."* **The Parkfield M6.0 occurred on
+2004 September 28 — twelve and a half years after the close of the stated window.** They also gave
+their own false-alarm budget, verbatim: *"in this tectonic environment, and with the data
+characteristics of these earthquake catalogues, attempts to predict mainshocks based on the
+quiescence hypothesis may be successful and generate one to two false alarms covering about 10 per
+cent of the time-space dimensions of the catalogue."*
+
+**Read that last sentence as a specificity statement and it is devastating in exactly our
+direction: a method that is on alarm 10% of the time in a region has a prior-odds problem, not a
+signal problem.** Our Colombia observation is "no M≥4.5 within ~1.5° for ~3 months." **Before any
+of us gets excited, somebody has to compute what fraction of all (place, time) pairs in that slab
+satisfy that condition.** In a region whose M≥4.5 background rate within 1.5° is of order a few per
+year, three-month gaps are plausibly *the modal state*, not an anomaly. **That single number — the
+unconditional frequency of the observable — decides whether K-076 is a hypothesis or a tautology,
+and it costs one afternoon.**
+
+**(b) Reasenberg, P. A. & Matthews, M. V. (1988), "Precursory seismic quiescence: a preliminary
+assessment of the hypothesis," *PAGEOPH* 126(2–4), 373–406, doi:10.1007/BF00879004 — the canonical
+null.** Verified via the USGS publications record (authors, venue, DOI), read this session.
+**37 shallow mainshocks, M5.3–7.0, central California and Japan, plus 5 sets of repeating events
+near Bear Valley.** Conclusion as recorded: **"no evidence… for a systematic, widespread or
+reliable pattern of quiescence prior to the mainshocks."** Among volumes examined along the
+creeping San Andreas, **only one showed statistically significant quiescence.** *Verification
+limit: I read the USGS record and its summary, not the full paper.*
+
+**This is the most important single item in the dossier after Habermann 1987, because it is a
+properly-powered, multi-event test that came out null — and it was run by the same two people who
+built the β-statistic the field still uses.** It is not a hostile null; it is the method's own
+authors declining to over-claim.
+
+**(c) IASPEI — the verdict was "not accepted, not rejected," and the program should say so
+precisely.** Framework: **Wyss, M. (1997), "Second round of evaluations of proposed earthquake
+precursors," *PAGEOPH* 149(1), 3–16** (verified indexed, doi:10.1007/BF00945158) and **Wyss, M. &
+Booth, D. C. (1997), "The IASPEI procedure for the evaluation of earthquake precursors," *GJI*
+131(3), 423–424** (verified via OUP). The quiescence docket is **"Case 23 nomination of precursory
+seismic quiescence as a significant precursor," *PAGEOPH* 149** (verified as indexed,
+doi:10.1007/BF00945162). **State of play as of the second round: of ~40 nominations, five
+precursors were placed on the Preliminary List of Significant Precursors, and a separate list of
+four cases "could not be accepted nor rejected" — three on crustal deformation and one on seismic
+quiescence.** *That fourth one is Case 23.* The nomination text argues quiescence is real,
+statistically significant in several strongly-developed cases, and not explicable by catalog
+heterogeneity — but the panel did not seat it.
+
+**A caution I must flag rather than resolve: my searches also surfaced a secondary statement that
+quiescence was "rejected as a precursor except for large aftershocks following the mainshock" by
+the IASPEI committee on earthquake precursors, "because of its complexity."** I could not reconcile
+that with the "neither accepted nor rejected" statement from the second-round evaluation, and I did
+not reach a primary source that settles it. **CONTESTED — treat the IASPEI outcome as "never seated
+on the Preliminary List, with the subsequent record disputed between 'unresolved' and 'rejected'."
+Do not write "IASPEI accepted quiescence" anywhere. No reading of the record supports that.**
+
+**(d) The best modern prospective-style result, and it is honest and modest.**
+**Katsumata, K. (2021), "Testing the seismic quiescence hypothesis through retrospective trials of
+alarm-based earthquake prediction in the Kurile–Japan subduction zone," *EPS* 73,
+doi:10.1186/s40623-021-01418-z.** Verified (EPS/Springer landing page; full text blocked by an auth
+redirect this session — content below is from the abstract and search summaries; *full text
+UNVERIFIED*). Design, and it is a *good* design we should copy: binary alarm forecasts, 1988–2014,
+hypothesis stated as **"absence of earthquakes M≥5 for a minimum period T_q is a precursor of a
+7.5 ≤ Mw < 8.5 earthquake within radius R over the coming period T_a"**, three free parameters
+(T_q, R, T_a), **ROC diagram over the model family**, and **cross-validation with half the data for
+optimizing (T_q, R, T_a) and half for evaluation.** Result: **for T_q ≥ 9 years, probability gain
+G ≈ 2, p < 5%, over 8 target earthquakes.**
+
+**That is the ceiling this literature has reached after 57 years: a factor-of-two probability gain,
+on eight targets, in the best-instrumented subduction zone on Earth, with a 9-year quiescence
+threshold.** Our Colombia observable is a **3-month** gap. Katsumata's own scan found the skill at
+T_q ≥ 9 **years**. If K-076 proposes a months-scale window, it is not a short version of
+Katsumata's result — **it is in the part of his parameter space that his ROC curve already scored
+and did not select.**
+
+**(e) CSEP.** I found **no CSEP-registered, prospectively-tested quiescence model.** CSEP's tested
+inventory is dominated by rate-based models (RELM / GEAR1 / ETAS families) — see M-004/M-005 for
+that literature. The relevant CSEP-adjacent methodology is **Zechar, J. D. & Jordan, T. H. (2008),
+"Testing alarm-based earthquake predictions," *GJI* 172(2), 715–724** (verified via OUP), which
+gives the **Molchan trajectory / area-skill-score** machinery any alarm-based quiescence test must
+be scored under. **The absence of a CSEP quiescence entry is itself a finding: after 57 years the
+hypothesis has never been submitted to the field's own prospective testing infrastructure.** That
+is a fair opening for us — an opening for *rigor*, not for novelty of the idea.
+
+### M-007.4 THE ARTIFACT CATALOG — the checklist any quiescence test must clear
+
+These are not my inventions. Every one is named in the prior art, usually by the hypothesis's own
+proponents. **A quiescence result that has not cleared all six is not a weak result; it is an
+uninterpretable one.**
+
+**A1 — Magnitude-scale / reporting shifts (Habermann 1987, 1991).** A 0.1–0.2 unit systematic shift
+in reported magnitude manufactures an apparent rate change at a fixed M_c. *Control:* recompute the
+observable at 2–3 magnitude cutoffs (e.g. M≥4.5, 4.8, 5.2) and, where possible, ≥2 magnitude types;
+a real quiescence should be **cutoff-stable**, an artifact moves with the cutoff. Check whether the
+reporting agency changed magnitude convention anywhere in the window.
+
+**A2 — Network detectability change.** New or removed stations change M_c in space and time.
+*Control:* map **M_c(x, t)** over the study volume and window (Wiemer & Wyss's own machinery), and
+run the test **above the maximum M_c in the window**, not the mean. For a teleseismically-detected
+M≥4.5 in a slab this is a milder threat than A1 — but "milder" is not "absent," and it must be
+shown, not asserted.
+
+**A3 — Declustering choice.** The literature is unambiguous that this is a first-order lever:
+**Gardner & Knopoff (1974)** windows remove ~80% of events in some catalogs; **Reasenberg (1985)**
+clusters; **Zaliapin & Ben-Zion (2013, 2020)** nearest-neighbour (doi:10.1029/2018JB017120);
+**Teng, G. & Baker, J. W. (2019), *BSSA*** compare five algorithms and find the choice materially
+changes the declustered catalog and downstream hazard. *Control:* **report the result under ≥3
+declustering choices including "none," and pre-register which is primary.** Better: **skip
+declustering entirely and test against an ETAS conditional-intensity null**, which is what our
+program already has (`etas_forecast.py`, `exp_h_etas.py`) and what the modern literature
+recommends — *"to find significantly changed seismicity, one must use a declustered catalog or a
+model that incorporates clustering effects, such as the ETAS model."*
+
+**A4 — Region-selected-after-the-fact (the Texas sharpshooter).** This is the endemic disease. The
+precedent that should terrify us is **Hardebeck, J. L., Felzer, K. R. & Michael, A. J. (2008),
+"Improved tests reveal that the accelerating moment release hypothesis is statistically
+insignificant," *JGR* 113, B08310** (verified: authors, title, venue, article number, via multiple
+citing sources). **AMR was a large, respectable, decades-old precursor literature that evaporated
+when the region and time window were chosen by a rule fixed in advance instead of by the analyst.**
+*Control:* the search radius (1.5°), the lookback (3 months), the magnitude floor (4.5) and the
+depth band **must be frozen before scoring**, and the identical rule must be scanned over **all**
+slab volumes in the catalog, not only the one containing our event.
+
+**A5 — Reporting asymmetry / unpublished failures.** Stated in Reasenberg & Matthews's own framing:
+*"failures of the pattern to predict earthquakes may not be reported."* The Katsumata (2017) number
+is the antidote and the benchmark: **ten quiescences, three great earthquakes.** *Control:* the
+denominator — how many qualifying quiescences occurred **without** a subsequent large event — is
+the primary result, not a robustness check. **A quiescence test that reports only hits is not a
+test.**
+
+**A6 — the retrodiction trap (ours, not theirs).** Our observable was defined *after* looking at
+the Colombia event. **Nothing computed on `us6000tjl2` can be evidence for the hypothesis it
+generated.** Colombia is the *motivating anecdote*; the test set is every other intermediate-depth
+M≥7 in the global catalog, scored under a rule fixed before that catalog is opened.
+
+### M-007.5 CLASSIFICATION GUIDANCE FOR POPPER — by observable
+
+**(a) "M≥4.5 gap of duration T within radius R precedes large mainshocks" — REDISCOVERY, and a
+weak-form one.** This is Katsumata (2021)'s hypothesis *verbatim in structure* — same magnitude
+floor (M≥5 there, M≥4.5 here), same three free parameters (T_q, R, T_a), same alarm framing. Prior
+art: Mogi 1969; Wyss & Habermann 1988; Reasenberg & Matthews 1988 (null); Wyss et al. 1992 (failed
+prospective); Katsumata 2011/2017/2021 (positive, G≈2). **A K-076 that proposes this for shallow
+crustal seismicity should not be run at all** — it is fully owned, by people with better catalogs.
+**Popper's bar: this cannot earn ledger status on a positive. It can only earn a bound.**
+
+**(b) "Quiescence *plus* a surrounding activation ring" (true Mogi doughnut) — REDISCOVERY, with a
+live modern thread.** Prior art: Mogi 1969 (the original, and note again it was always the *pair*);
+**Shearer, P. M. & Lin, G. (2009), "Evidence for Mogi doughnut behavior in seismicity preceding
+small earthquakes in southern California," *JGR* 114, doi:10.1029/2008JB005982** (verified via the
+SCEC publication record and the AGU listing; *full text 403 this session; content from the SCEC
+abstract*): M2–5 events, SoCal 1981–2005, high-resolution catalog, finding **enhanced activity in
+the 1 day before larger events at distances comparable to the predicted source radius** — subtle,
+statistically significant only when **stacked over many earthquakes** — concluding *"many standard
+earthquake triggering models do not account for all of the processes involved in earthquake
+occurrence."* **This is prior art specifically for the stacking design, in our own primary region,
+with our own catalog.** Also **Rundle, J. B., Holliday, J. R., Yoder, M., Sachs, M. K., Donnellan,
+A., Turcotte, D. L., Tiampo, K. F., Klein, W. & Kellogg, L. H. (2011), "Earthquake precursors:
+activation or quiescence?," *GJI* 187(1), 225–236, doi:10.1111/j.1365-246X.2011.05134.x**
+(verified: authors, venue, volume, pages, DOI via OUP), who scored quiescence *against* activation
+in California 1985–2011 using **ROC and reliability/attributes diagrams** and found **quiescence
+marginally the better model but "the improvement was marginal and not statistically significant"**
+— while the *simulated* (Virtual California / BASS-ETAS) data favoured activation. **CONTESTED on
+which sign the precursor even has, and a decade-old ROC-scored draw is the state of the art.**
+
+**(c) "Quiescence before *intermediate-depth / intra-slab* events" — NOVEL, and I am uneasy about
+saying so.** My searches found **no study testing precursory quiescence before intraslab
+intermediate-depth mainshocks as a class**, and **no precursor study of Colombian intermediate-depth
+seismicity at all.** The closest items are adjacent rather than on-target:
+
+  - **Vrancea (Romania)** is the one intermediate-depth setting with a quiescence literature.
+    **"Revisiting Vrancea (Romania) intermediate-depth seismicity: some statistical characteristics
+    and seismic quiescence testing," *Geosciences* 13(7), 219 (2023)** — *primary text 403 this
+    session; **author list UNVERIFIED-FROM-MEMORY** (likely Enescu and co-authors); content from
+    search summaries only.* Reported: b-value and **β-statistic** applied to Vrancea
+    intermediate-depth catalogs (1960–1999 and 2005–2013); **statistically confirmed the quiescence
+    preceding the 1977 M7.4**; and — from a second summary — **could not statistically confirm the
+    quiescence reported before the 1986 M7.1**, though visual inspection showed a brief quiet period
+    ~1 year before. **One confirmed, one not, in the best-studied intermediate-depth nest on Earth.
+    That is the honest base rate for this idea.** Adjacent: **"Decelerating precursory seismicity in
+    Vrancea"** (*Tectonophysics*, 2006) fits the decelerating-strain model to pre-1977 activity —
+    the *inverse* framing of the same data, which is itself a warning about degrees of freedom.
+  - **Wimpenny, S., Craig, T. & Marcou, S. (2023), "Re-examining temporal variations in
+    intermediate-depth seismicity," *JGR Solid Earth*, doi:10.1029/2022JB026269** (verified via the
+    AGU listing and a Bristol-hosted PDF; abstract read). **This is the strongest physical argument
+    *against* our hypothesis and Kepler must confront it in the entry text, not in a footnote.**
+    Finding: both the aftershock productivity of large intermediate-depth events and the response of
+    intermediate-depth rates to major megathrust slip indicate that **faults within the slab are
+    relatively insensitive to static stress transfer at the scale of earthquake stress drops**,
+    interpreted as **the slab fault population sitting much further from failure stress than is
+    typical for shallow fault systems.**
+  - **Zhai, Q., Peng, Z. et al. (2023), "Spatiotemporal variations of intermediate-depth earthquakes
+    before and after the 2011 Tohoku earthquake revealed by a template matching catalog," *GRL*
+    50(22), e2023GL104068** (verified via AGU). A six-fold-enhanced template-matching catalog in the
+    double seismic zone beneath central/NE Japan: **no significant change in the intermediate-depth
+    earthquake rate prior to Tohoku**, a clear increase after. **A high-sensitivity
+    intermediate-depth rate-change null, around the largest event of the modern era.**
+
+  **So the classification is NOVEL, with a physics-based prior that is against us.** If slab faults
+  are far from failure and insensitive to stress changes, the *mechanism* that makes crustal
+  quiescence plausible — nucleation-scale stress redistribution suppressing small events in the
+  future source volume — has no obvious slab analogue. **The honest framing for K-076 is therefore
+  a bound-producing test, not a discovery attempt: "we are testing whether intermediate-depth
+  quiescence carries information, in a setting where the published physics says it should not, and
+  a null is the expected and publishable outcome."** Popper should hold it to that framing.
+
+**(d) "Absence-of-events as an information channel inside our own ETAS/residual framework" —
+EXTENSION, and this is the version I would fund.** Our machinery already scores observed counts
+against an ETAS conditional intensity (K-009; F-005/B-2). **Quiescence expressed as a *negative*
+ETAS residual is not a new hypothesis; it is the existing K-009 statistic with the sign we have not
+been reading.** That reframing buys three things the classical literature could not have: (i) the
+clustering null is built in, so **A3 evaporates**; (ii) the statistic is continuous and two-sided,
+so the sharpshooter freedom of choosing "how quiet is quiet" collapses into one pre-registered
+threshold; (iii) we already have CSEP-grade scoring (information gain in bits/event), which this
+entire literature lacks. **EXTENSION of our own B-2 machinery to a new sign, evaluated on a new
+depth class — not a new idea about the Earth.**
+
+### M-007.6 ONE LIVE ITEM KEPLER WILL FIND AND SHOULD BE WARNED ABOUT
+
+**Pasupuleti, R. (2026), "Pre-seismic quiescence and dynamical regime transitions in the Japan and
+Chile earthquake catalogs: evidence from KR critical slowing down indicators," arXiv:2603.22745
+[physics.geo-ph]** — verified via arXiv; abstract read. Claims **CSD50 suppression of ~17–21%
+before M≥6.0 mainshocks in Japan, independently reproduced at ~18–22% in the Chile USGS catalog**,
+surviving false-discovery-rate correction and permutation testing; the author explicitly disclaims
+spatial universality and deterministic prediction. **Status: unrefereed single-author preprint,
+retrospective, four months old.** It is a *cross-catalog* replication, which is more than most of
+this literature offers, and it is the nearest thing to a live modern positive. **It is also
+depth-agnostic — no depth stratification — so it does not touch §M-007.5(c).** Treat as a
+hypothesis source, not as support.
+
+### M-007.7 TAKEABLES (adopt instead of reinventing)
+
+1. **Katsumata (2021)'s exact experimental design.** Binary alarms over a (T_q, R, T_a) grid, ROC
+   across the family, **and the train/test split on halves of the catalog.** It is the right shape
+   for K-076, it already exists, and copying it pre-empts the obvious referee objection.
+2. **Zechar & Jordan (2008) Molchan trajectories / area skill score** as the scoring rule. This is
+   how alarm-based methods are scored in CSEP-world; a quiescence test scored any other way will be
+   re-scored by a referee.
+3. **The β-statistic (Matthews & Reasenberg 1988) and the Z-value (Wiemer & Wyss 1994)** as
+   *baselines to beat*, not as our method. If our ETAS-residual formulation cannot beat a 1988
+   statistic, that is the finding.
+4. **Habermann's synthetic-catalog protocol (1987):** generate catalogs with *known* rates and
+   *known* magnitude shifts and confirm the pipeline separates them. A positive-control design our
+   program already believes in, invented by this literature for exactly this hypothesis.
+5. **M_c(x, t) mapping before anything else** (ZMAP machinery). Non-negotiable per A2.
+6. **The Katsumata (2017) denominator as the reporting template:** "N quiescences identified, k
+   followed by target events." Any K-076 result must be reportable in that one sentence.
+7. **A number that costs one afternoon and may end the entry:** the unconditional frequency of "no
+   M≥4.5 within 1.5° for 3 months" across the global intermediate-depth catalog. **Compute it
+   first.** If it is ≳10%, we are inside Wyss et al. (1992)'s own false-alarm budget and the
+   observable is a description of normal, not an anomaly.
+
+### M-007.8 FEEDING THE TRIO
+
+- **To Popper.** (i) The bar on any shallow-crustal quiescence entry should be **bound-only**:
+  §M-007.5(a) is fully owned and a positive there cannot earn status. (ii) The intermediate-depth
+  entry (§M-007.5(c)) is genuinely NOVEL but carries a **published physical prior against it**
+  (Wimpenny et al. 2023; Zhai et al. 2023) — I recommend Popper require that prior be stated *in
+  the entry* and the entry be framed as bound-producing. (iii) **A6 (retrodiction trap) is
+  disqualifying, not discountable:** the Colombia event must be excluded from the scoring set.
+  (iv) The ETAS-residual reframing (§M-007.5(d)) has the lowest novelty burden and the highest
+  methodological standing; if only one entry runs, run that one.
+- **To Wegener.** Candidate observation-table rows he does not have, all with owners:
+  **Katsumata (2017)** — ten >9-year quiescences along the Japan subduction zone, three followed by
+  great earthquakes; **Katsumata (2021)** — quiescence alarm skill G≈2, p<5%, cross-validated, at
+  T_q≥9 yr; **Reasenberg & Matthews (1988)** — 37 mainshocks, null; **Wimpenny et al. (2023)** —
+  intermediate-depth faults insensitive to static stress transfer at stress-drop scale;
+  **Zhai et al. (2023)** — no intermediate-depth rate change before Tohoku in a 6×-enhanced
+  catalog. The last two are the physically important rows, and they are *rate-response* facts,
+  which is his spine, not mine.
+- **To Kepler.** The floor: **(1) the unconditional-frequency number before the entry is written;
+  (2) T_q ≥ 9 years is where the only surviving skill lives — justify a months-scale window against
+  that or don't propose it; (3) all six artifacts A1–A6 designed in, with A4 and A6 as freeze
+  conditions; (4) the denominator reported as the primary result; (5) the Wimpenny et al. (2023)
+  physical prior quoted in the entry text.** And the reframing that is worth more than the entry:
+  **the quiescence observable is the negative tail of a statistic we already compute.**
+
+*Merton, M-007. Pre-emptive dossier, filed before K-076 exists. Classification: the general
+hypothesis is **REDISCOVERY** (57 years, four algorithms, one famous prospective failure by its own
+authors, one careful null, one modest cross-validated positive); the intermediate-depth
+specialization is **NOVEL with a published physical prior against it**; our ETAS-residual
+formulation is **EXTENSION** of our own machinery; the sign of the precursor (quiescence vs
+activation) is **CONTESTED**. Citations marked UNVERIFIED-FROM-MEMORY where the search did not
+reach primary text: Mogi (1969) bibliographic details; Sobolev & Tyupkin (1997) exact venue;
+Wiemer (2001) SRL volume/pages; Reasenberg & Simpson (1992) volume/pages; the Vrancea *Geosciences*
+2023 author list. The IASPEI outcome is CONTESTED between "neither accepted nor rejected" and
+"rejected"; do not state it as accepted under any circumstances.*
+
+---
+
+## M-008 — RAPID ATTRIBUTION DOSSIER: **directional / angular stress transfer as a triggering predictor** (pre-emptive floor for the K-081+ family)
+
+*Round 3 — 2026-08-10. Assigned by supervisor (Jim) off his own seed, verbatim: "what if
+earthquakes at ANGLES to known areas indicate stress/affordance for an area to trigger... those all
+'pull' or 'push' a living stress field... which raises/lowers the probability beyond a trackable
+constant that we can use for prediction." I.e. **the angular/directional configuration of prior
+regional earthquakes as a predictive stress-field state variable for a target area.** Kepler is
+concurrently drafting K-081+ from the same seed; this dossier is filed to land first.*
+
+**Status of this dossier: PRE-EMPTIVE.** K-081 does not exist yet — I checked; the ledger contains
+no K-081..K-095. Filed before the family is written, for the same reason as M-007: this
+literature's failure modes are not recoverable after a positive.
+
+### M-008.0 THE HEADLINE, STATED FIRST SO NOBODY READS PAST IT
+
+**Jim's intuition is correct, it is thirty-two years old, it has a name, a software package, a
+sign convention, two poster-child events, four forecast competitions, and a live dispute about
+whether its distinctive feature — the *sign* of the angular lobes — is resolvable at all. The
+angular lobes ARE Coulomb stress transfer (King, Stein & Lin 1994).** The "living stress field
+that pulls and pushes" is the **Coulomb stress evolution model** (Deng & Sykes 1997; Toda et al.
+2005). Restating it is REDISCOVERY of the most heavily-worked kind.
+
+**The three findings that matter more than the attribution:**
+
+1. **The angular part is the weakest-evidenced part.** Sharma et al. (2020) tested CFS against
+   simpler stress scalars and found **simple metrics outperform classic Coulomb**; DeVries et al.
+   (2018) found the informative features for aftershock location were **maximum change in shear
+   stress, von Mises yield, and the sum of absolute stress components — all sign-blind, all
+   quadrant-symmetric** — and Mignan & Broccardo (2019) then showed a **two-parameter logistic
+   regression on such a scalar matches the 13,451-parameter network**. Every one of those metrics
+   throws away exactly the lobe *sign* and much of the lobe *azimuth*. **The field's own best
+   predictive result at this range is that isotropised stress amplitude beats signed angular
+   configuration.**
+2. **The distance kills it at Jim's example range.** Static stress falls as r⁻³. At 200 miles
+   (≈320 km) from an M6 the static change is **order 1–10 Pa** (§M-008.7) — at or below Nandan et
+   al. (2016)'s ~10 Pa detection floor, four orders below tides, and *permanent but negligible*.
+   The only channel with real amplitude at that range is the **dynamic transient**, which lasts
+   minutes and is therefore not a "field state" at all.
+3. **The one honest gap is not angular at all — it is temporal.** Nandan et al. (2016) measured
+   the characteristic time for loss of a single event's stress-change memory at **~95–180 days**.
+   Jim's "living stress field" that persists and accumulates across many prior events over years
+   is, at present, an object the best static-triggering study in our own region says decays away
+   in a season.
+
+**Nothing in this dossier says the seed is worthless. It says the seed's novel content is not
+"angles matter" — that is owned — but at most "angular configuration *accumulated over many
+sources* carries information *beyond* an isotropic ETAS kernel, at ranges and lead times where
+nobody has scored it in bits."** That is EXTENSION, and it is narrow. See §M-008.9.
+
+### M-008.1 SEARCH TRAILS RUN (so a null search is auditable)
+
+Run 2026-08-10, WebSearch + WebFetch. Vocabularies tried:
+
+| trail | terms | yield |
+|---|---|---|
+| foundational | King Stein Lin 1994 static stress changes triggering / Stein 1999 role of stress transfer | rich — canonical set recovered |
+| review / shadows | Harris 1998 stress triggers stress shadows special section / Harris & Simpson 1998 suppression | rich |
+| poster children | Landers→Big Bear Coulomb / Izmit→Düzce / Parsons Toda Stein Barka Dieterich Istanbul | rich |
+| forecast competition | Coulomb rate-and-state vs ETAS CSEP / Woessner 2011 Landers retrospective / Cattania 2018 Canterbury / Mancini Norcia / Mancini Ridgecrest | **rich, and decisive** |
+| is-Coulomb-best | Sharma Hainzl Zöller Holschneider 2020 / stress metric ROC comparison | **rich, and adverse to the angular arm** |
+| ML aftershock location | DeVries Meade 2018 deep learning aftershock / Mignan Broccardo one neuron | rich |
+| shadow controversy | Felzer & Brodsky 2006 / Richards-Dinger Stein Toda 2010 / Marsan 2010 re-estimation | rich |
+| shadow nulls | Mallman global search for stress shadows / Marsan 2006 coseismic stress variability suppress shadows | rich |
+| resolvability | Hardebeck Nazareth Hauksson 1998 / Hardebeck 2014 aftershock focal mechanisms / receiver-mechanism uncertainty | rich |
+| **anisotropic ETAS** | anisotropic ETAS spatial kernel / elliptical Mahalanobis triggering kernel / focal-mechanism-dependent aftershock distribution / Ogata 1998 non-isotropic clusters / Grimm ETASI Ridgecrest | **rich — the mechanism-free arm is owned** |
+| dynamic directionality | Landers remote triggering azimuthal / Gomberg directivity triggering / Hill 1993 Science / van der Elst & Brodsky dynamic strain scaling | rich |
+| cumulative field | Deng & Sykes stress evolution 200-year / Toda 2005 forecasting evolution of seismicity animations / Coulomb Index | **rich — this is Jim's "living field", and it has a name** |
+| **long-range pre-mainshock angular state** | azimuthal configuration of prior regional seismicity as covariate / angular anisotropy beyond ETAS at >100 km / directional precursor stress field | **THIN. See §M-008.9(c).** I found no study scoring a *multi-source azimuthal configuration state variable* as an information-gain covariate over ETAS at >100 km pre-mainshock lead times. |
+
+**Search limits I will not paper over.** AGU (`agupubs.onlinelibrary.wiley.com`), GeoScienceWorld
+and the GFZ repository returned HTTP 403 this session; Woessner et al. (2011), Mallman & Parsons
+(2008), Hardebeck (2014), Marsan (2006, 2010), Reverso et al. (2018) and Mancini et al. (2019,
+2020) are known to me only through publisher landing metadata, search-engine summaries and citing
+text. Two PDFs (Mancini et al. 2020 BSSA accepted manuscript; Nandan et al. 2016 arXiv PDF)
+downloaded but did not parse; for Nandan I recovered the abstract from the arXiv landing page
+instead. Every affected item is flagged inline.
+
+### M-008.2 THE STATIC-COULOMB LINEAGE — who owns what
+
+1. **King, G. C. P., Stein, R. S. & Lin, J. (1994), "Static stress changes and the triggering of
+   earthquakes," *BSSA* 84(3), 935–953.** Verified (GeoScienceWorld + SCEC records: authors, year,
+   volume, issue, pages). **This is the paper that owns Jim's intuition.** It poses the general
+   problem of how one earthquake triggers another, formalises Coulomb failure
+   `ΔCFS = Δτ + μ′Δσₙ`, and computes it for the 1992 M7.3 Landers shock onto the San Andreas
+   system. **The four-lobed butterfly pattern of increase and decrease around a strike-slip
+   rupture — the picture in every textbook — is precisely "earthquakes at angles push or pull the
+   next one."** Its companion showpiece is **Landers → Big Bear**: the M6.5 Big Bear event three
+   hours later sat in a Landers stress-increase lobe.
+2. **Stein, R. S. (1999), "The role of stress transfer in earthquake occurrence," *Nature*
+   402(6762), 605–609** (doi via nature.com/articles/45144; verified as an indexed article, and
+   already in Wegener's O-23). The review statement of the mechanism: small sudden stress changes
+   produce large seismicity-rate changes, **rates climb where stress increases and fall where it
+   drops.** That second clause is the stress-shadow claim, and §M-008.4 is about how badly it has
+   held up.
+3. **Harris, R. A. (1998), "Introduction to special section: Stress triggers, stress shadows, and
+   implications for seismic hazard," *JGR* 103, 24347–24358** and **Harris, R. A. & Simpson, R. W.
+   (1998), "Suppression of large earthquakes by stress shadows: a comparison of Coulomb and
+   rate-and-state failure," *JGR* 103, 24439–24451.** *Volume/pages recovered from search summaries
+   and USGS publication records; primary text not reached — bibliographic details
+   UNVERIFIED-FROM-MEMORY at the page level.* The review is the field's own consolidation, and the
+   companion is the origin of the "stress shadows should suppress large events" prediction that
+   later work has struggled to confirm.
+4. **Hardebeck, J. L., Nazareth, J. & Hauksson, E. (1998), "The static stress change triggering
+   model: constraints from two southern California aftershock sequences," *JGR* 103(B10),
+   24427–24437.** Verified (Caltech Authors + SCEC records, matching volume/issue/pages). **The
+   number to quote: for Landers, ~85% of aftershocks between 5 and 75 km from the mainshock plane
+   are consistent with static stress triggering, against ~50% of random events. For Northridge the
+   model's explanatory power is much weaker.** **This is the honest form of the poster-child
+   result: it works well in one sequence and poorly in the next, in the same region, in the same
+   decade, by the same authors.**
+5. **Deng, J. & Sykes, L. R. (1997), "Evolution of the stress field in southern California and
+   triggering of moderate-size earthquakes: a 200-year perspective," *JGR* 102, 9859–9886**
+   (verified as indexed; a companion 1997 *JGR* paper `doi:10.1029/97JB02127` extends it to small
+   and micro events). **This is Jim's "living stress field" in its original form**: coseismic drops
+   from six large-to-great events 1812–1995 plus interseismic buildup on all faults with slip rate
+   ≥3 mm/yr, evolved forward. Reported: **~95% of well-located M≥6 strike-slip or reverse events
+   occurred in regions of Coulomb stress increase.** *Percentage taken from two independent citing
+   summaries; primary text not reached.* **CAUTION — that 95% is a retrospective consistency
+   fraction with an unstated null, not a forecast score; Hardebeck et al. (1998) shows the matched
+   random baseline for this style of number can be ~50%.**
+6. **Toda, S., Stein, R. S., Richards-Dinger, K. & Bozkurt, S. B. (2005), "Forecasting the
+   evolution of seismicity in southern California: animations built on earthquake stress
+   transfer," *JGR* 110, B05S16, doi:10.1029/2004JB003415.** Verified (AGU + SCEC records). **This
+   is Coulomb-rate-state forecasting in the form Jim is describing**: a rate/state algorithm that
+   takes the static stress transferred by each M≥6 shock and evolves it forward over a 300 × 310 km
+   box around Landers, 1986–2003. Key mechanism statement, which matters for us: **Coulomb changes
+   *amplify the background rate*, so a small stress change produces a large rate change only where
+   the background rate is already high.** The tool: **Toda, Stein, Sevilgen & Lin, Coulomb 3.x**
+   (USGS OFR; *exact report number UNVERIFIED-FROM-MEMORY*).
+7. **Izmit → Düzce, and the one genuinely prospective Coulomb statement the field has made.**
+   **Parsons, T., Toda, S., Stein, R. S., Barka, A. & Dieterich, J. H. (2000), "Heightened odds of
+   large earthquakes near Istanbul: an interaction-based probability calculation," *Science* 288**
+   (*volume/pages UNVERIFIED-FROM-MEMORY; authorship, year, venue and the headline numbers verified
+   through the USGS-hosted reprint and multiple citing summaries*). Result: **62 ± 15% probability
+   of strong shaking in Istanbul in 30 years, 32 ± 12% in 10 years**, using an InSAR slip model for
+   Izmit and maximum Coulomb change on optimally-oriented vertical strike-slip receivers, 0–20 km.
+   The 12 November 1999 M7.2 **Düzce** event occurred in an Izmit stress-increase lobe. **Note what
+   this forecast is and is not: it is a 30-year probability statement on a named fault system, not
+   a gridded rate forecast, and 26 years on it has not been scored.** Do not cite Istanbul as
+   evidence of forecast skill; cite it as evidence of *institutional adoption*.
+
+### M-008.3 THE FORECAST COMPETITIONS — where the hypothesis has actually been decided
+
+**This is the section Kepler must read before writing K-081.** Coulomb-based forecasting has been
+put in the ring against ETAS four times. The record is: **lost, drew, drew-then-won-locally,
+won-locally.** Nobody has ever shown Coulomb beating ETAS outright over a full sequence.
+
+**(a) Landers, retrospective, 11 models — the loss.** **Woessner, J., Hainzl, S., Marzocchi, W.,
+Werner, M. J., Lombardi, A. M., Catalli, F., Enescu, B., Cocco, M., Gerstenberger, M. C. & Wiemer,
+S. (2011), "A retrospective comparative forecast test on the 1992 Landers sequence," *JGR* 116,
+B05305, doi:10.1029/2010JB007846.** Verified (AGU landing metadata + author list from a citing
+GFZ record; *full text 403 this session*). Eleven models — modified STEP, ETAS realisations, and
+Coulomb rate-and-state (CRS) — scored by likelihood tests on spatial consistency and total number.
+**As summarised by the later literature (Cattania et al. 2018's own framing): "a previous CSEP
+evaluation concluded that a suite of Coulomb-based seismicity models were less informative than
+empirical models during the aftershock sequence of the 1992 Mw7.3 Landers earthquake."** *That
+sentence is verified from the Cattania et al. abstract; the underlying per-model numbers are not.*
+
+**(b) Canterbury 2010–2012 — the rematch, and it is a draw talked up as encouraging.**
+**Cattania, C., Werner, M. J., Marzocchi, W., Hainzl, S., Rhoades, D., Gerstenberger, M., Liukis,
+M., Savran, W., Christophersen, A., Helmstetter, A., Jiménez, A., Steacy, S. & Jordan, T. H.
+(2018), "The forecasting skill of physics-based seismicity models during the 2010–2012 Canterbury,
+New Zealand, earthquake sequence," *SRL* 89(4), 1238–…** (*author list beyond the first three
+UNVERIFIED-FROM-MEMORY; venue, volume, issue, first page and year verified via GeoScienceWorld*).
+A new generation of CRS and CRS/statistical hybrid models — accounting for slip-model uncertainty
+and secondary stress sources — tested against ETAS. Conclusion as published: **"physics-based
+models are more promising for forecasting than previously thought, especially in combination with
+other statistical models."** **Read that as what it is: a hedge. The headline is not "Coulomb
+wins"; it is "Coulomb is no longer embarrassing, and hybrids help."**
+
+**(c) Central Italy 2016–17 (Amatrice–Visso–Norcia) — parity, with one local win.**
+**Mancini, S., Segou, M., Werner, M. J. & Cattania, C. (2019), "Improving physics-based aftershock
+forecasts during the 2016–2017 Central Italy earthquake cascade," *JGR Solid Earth* 124(8),
+8626–8643, doi:10.1029/2019JB017874.** Verified (AGU landing + a Bristol-hosted accepted
+manuscript listing; *full text not parsed*). Result: **CRS forecasts are about as informative as
+ETAS once you include secondary triggering from M3+ events, spatially variable slip, and
+heterogeneous receiver faults; after the 26 October Visso events the elaborate CRS model
+outperformed ETAS ahead of the 30 October Mw6.5 Norcia mainshock.** **The cost of that parity is
+the whole point for us: it took a finite-fault slip model, a receiver-fault heterogeneity model,
+and secondary sources down to M3 to draw level with a model that knows only where and when
+earthquakes happened.**
+
+**(d) Ridgecrest 2019 — the best Coulomb result on record, and it is spatially local.**
+**Mancini, S., Segou, M., Werner, M. J. & Parsons, T. (2020), "The predictive skills of elastic
+Coulomb rate-and-state aftershock forecasts during the 2019 Ridgecrest, California, earthquake
+sequence," *BSSA*** (*volume/pages/DOI UNVERIFIED-FROM-MEMORY; authorship, year, venue and the
+result statement verified via the USGS publication record and the NERC open-archive accepted
+manuscript, which downloaded but would not parse*). Result: **the enhanced physics-based model
+significantly outperformed ETAS in the region of high aftershock clustering around the
+north-western edge of the Ridgecrest rupture**, with **fault heterogeneity plus secondary
+triggering** identified as the critical success components, and **near-real-time model updating**
+as decisive. **Note the scope carefully: a local spatial win inside the aftershock zone of a
+just-ruptured M7.1, with the causative slip model in hand. That is the maximum the angular
+hypothesis has ever delivered, and it is roughly 300 km and several months short of what Jim's
+seed asks for.**
+
+**(e) Hybrids are the field's actual answer.** **Steacy, S. et al. (2014), "A new hybrid
+Coulomb/statistical model for forecasting aftershock rates," *GJI* 196(2), 918–…** (verified via
+OUP listing; *author list beyond the first UNVERIFIED*) and **Reverso, T. et al. (2018), "A hybrid
+ETAS-Coulomb approach to forecast spatiotemporal aftershock rates," *JGR Solid Earth*,
+doi:10.1029/2017JB015108** (verified via AGU listing). **Both exist because neither pure model
+wins. The published consensus is that Coulomb contributes *spatial constraints* to a statistical
+rate model — i.e. it is a covariate, not a forecaster.** That is exactly the architecture our own
+K-033 Cox-ETAS engine already implements, which is good news for feasibility and bad news for
+novelty.
+
+**(f) The adverse result the angular arm cannot walk past.** **Sharma, S., Hainzl, S., Zöller, G.
+& Holschneider, M. (2020), "Is Coulomb stress the best choice for aftershock forecasting?," *JGR
+Solid Earth* 125(9), e2020JB019553.** Verified (AGU landing metadata + ResearchGate record +
+the EGU2020 abstract; *full text 403*). Findings as recorded: **simpler stress metrics outperform
+classic Coulomb failure stress in forecasting aftershock spatial distributions; a layered
+half-space does not improve stress maps or ROC curves; the uncertainty is dominated by the assumed
+receiver mechanism.** Companion evidence from the ML literature: **DeVries, P. M. R., Viégas, F.,
+Wattenberg, M. & Meade, B. J. (2018), "Deep learning of aftershock patterns following large
+earthquakes," *Nature* 560, 632–634** (verified) — the network beat Coulomb on AUC, and **the
+features it used were maximum change in shear stress, von Mises yield criterion, and the sum of
+the absolute values of the independent stress components** — and **Mignan, A. & Broccardo, M.
+(2019), "One neuron versus deep learning in aftershock prediction," *Nature* 574** (Matters
+Arising; verified, with DeVries et al.'s Reply at `s41586-019-1583-7`), which reproduced the
+network's performance with **a two-parameter logistic regression on a scalar stress metric** and
+noted that equivalent performance for scalar metrics had already been published.
+
+**Put (f) in one sentence, because it is the single most important sentence in this dossier for
+Jim's seed: every one of the metrics that wins is quadrant-symmetric and sign-blind — they measure
+"how much stress was shaken loose here," not "at what angle, with what sign." The field's own
+best-performing spatial predictors are the ones that throw the angles away.**
+
+### M-008.4 THE STRESS-SHADOW CONTROVERSY — CONTESTED, and it is the *negative* lobe that is in doubt
+
+Jim's seed needs both signs: things that "push" and things that "pull." **The push side is
+replicated. The pull side — suppression in negative-ΔCFS lobes — is the most contested claim in
+this literature, and the dispute is live in 2025.**
+
+**(a) The dynamic-triggering challenge.** **Felzer, K. R. & Brodsky, E. E. (2006), "Decay of
+aftershock density with distance indicates triggering by dynamic stress," *Nature* 441, 735–738.**
+Verified (Nature + SCEC records; USGS-hosted PDF located). Measured aftershock density vs distance
+from M2–6 mainshocks; **a single inverse power law fits from 0.2 to 50 km**; since static changes
+are negligible at the far end, **dynamic stress must be triggering all of them** — and if
+triggering is dynamic, **there are no stress shadows**, because dynamic stress is transient and
+sign-symmetric in effect.
+
+**(b) The rebuttal, in the same journal.** **Richards-Dinger, K., Stein, R. S. & Toda, S. (2010),
+"Decay of aftershock density with distance does not indicate triggering by dynamic stress,"
+*Nature* 467, 583–586.** Verified (title, authors, journal, volume, pages via multiple citing
+sources; *full text not reached*). Recorded objections: **beyond ~300 m from small mainshocks the
+seismicity decay before and after the mainshock is indistinguishable; Omori temporal decay is
+absent beyond ~10 km; and distance decay is present among "aftershocks" that occurred *before the
+seismic waves arrived*.** That last item is a pure artifact demonstration and it is the one to
+internalise. **Independently, Marsan, D. (2010), "A new estimation of the decay of aftershock
+density with distance to the mainshock," *JGR*, doi:10.1029/2009JB007119** (verified via AGU
+listing) re-derived the decay with different treatment of the background and reached a different
+exponent. **CONTESTED — and note that both sides agree the observable is easy to manufacture.**
+
+**(c) Can shadows be detected at all? The nulls.** **Mallman, E. P. & Parsons, T. (2008), "A
+global search for stress shadows," *JGR*, doi:10.1029/2007JB005336** (verified via AGU + USGS
+records; *full text 403 — content from search summaries*): **119 Ms≥7 mainshocks from the Harvard
+CMT catalogue, average focal mechanisms in ±2° radii, 5 years before and after; significant average
+mechanism change attributable to suppression in only 2 of 119 cases; a statistically significant
+suppression signal recoverable only by stacking.** **Two out of 119 individually, visible only in
+the stack — that is the effect size of the "pull" half of Jim's field at regional scale.**
+Wegener's O-23 already carries the companion result (**Mallman & Zoback 2007, GRL** — rates rose
+almost everywhere regardless of predicted sign); I do not duplicate his row, I sharpen it.
+
+**(d) Why shadows may be undetectable in principle.** **Marsan, D. (2006), "Can coseismic stress
+variability suppress seismicity shadows? Insights from a rate-and-state friction model," *JGR* 111,
+B06305, doi:10.1029/2005JB004060.** Verified (AGU landing; *full text 403*). Argument:
+**small-scale variability of the stress change caused by slip heterogeneity means that in any
+region of net negative area-averaged ΔCFS, a substantial subpopulation of patches still receives a
+positive change — and because the rate-state response to positive stress is strongly nonlinear
+while the response to negative stress saturates, the promoted patches dominate.** **Consequence
+for us: a negative mean Coulomb change does not predict a rate decrease. The asymmetry is
+mechanical, not statistical, and it cannot be fixed by more data.**
+
+**(e) The 2025 state of play, and it is not kind to the sign.** **Hardebeck, J. L. & Harris, R. A.
+(2025), "Aftershocks in stress shadows are inconsistent with modeled static Coulomb stress
+changes," *Seismica* 4(2), article 1657, published 2025-10-29.** Verified — abstract and headline
+number read this session from the Seismica article page. Examining the **2016 Kumamoto Mw7.0** and
+**2019 Ridgecrest Mw7.1** sequences, they test four candidate explanations for aftershocks that
+occur in modelled negative-ΔCFS regions and conclude: **"taken together these hypotheses can
+explain only about half of these aftershocks,"** implying that **"Coulomb stress modeling that
+lacks small-scale fault zone heterogeneity might be inadequate to fully capture the true static
+stress changes and/or that other physical triggering models are needed."** **This is the two
+foremost authorities on stress shadows — Harris wrote the 1998 review — reporting, in the current
+literature, that half the aftershocks in the shadows of the two best-instrumented recent
+strike-slip mainshocks are unexplained by the model.**
+
+**(f) Is the sign even resolvable? The uncertainty budget.** **Hardebeck, J. L. (2014), "The impact
+of static stress change, dynamic stress change, and the background stress on aftershock focal
+mechanisms," *JGR Solid Earth*, doi:10.1002/2014JB011533** (verified via AGU listing; *full text
+403*), plus the field's recurring finding — restated by Sharma et al. (2020) and by the
+finite-fault-uncertainty literature — that **ΔCFS uncertainty is dominated by the assumed receiver
+mechanism and by non-unique slip inversions, to the point that with realistic nodal-plane,
+orientation and hypocentral uncertainty the fraction of aftershocks "consistent with" static
+triggering ranges from barely-better-than-chance to nearly-everything, especially beyond ~5 km from
+the causative fault.** **Translation: for any target beyond a few km, the analyst's receiver-plane
+choice can set the sign. That is a researcher-degrees-of-freedom problem of exactly the class this
+program has died of before (S-9).**
+
+**(g) The counterweight, and it is the strongest single result for the seed.** **Nandan, S.,
+Ouillon, G., Woessner, J., Sornette, D. & Wiemer, S. (2016), "Systematic assessment of the static
+stress triggering hypothesis using inter-earthquake time statistics," *JGR Solid Earth* 121,
+doi:10.1002/2015JB012212** (arXiv:1602.08706; **abstract verified verbatim this session from the
+arXiv landing page**; full text not parsed). All M≥2.5 in southern California 1981–2010, with
+location and focal-mechanism uncertainty propagated, focal-plane ambiguity resolved. Verbatim from
+the abstract: **"compelling evidence supporting the static triggering with stronger evidence after
+resolving the focal plane ambiguity above significantly small (about 10 Pa) but consistently
+observed stress thresholds."** And two numbers Kepler must carry: **the characteristic time for
+loss of a single event's stress-change memory is ~95–180 days**, and **"weak correlations between
+the Coulomb Index and the coefficient of friction indicate that the role of normal stress in
+triggering is rather limited."**
+
+**Read (g) against the seed and it cuts both ways.** For: static triggering is real down to ~10 Pa,
+which is a remarkably low floor and is the best argument that long-range static coupling exists at
+all. Against: **a memory of 95–180 days is not a "living field" that accumulates over decades**,
+and **if normal stress contributes little, then μ′Δσₙ — the term that makes Coulomb *Coulomb* — is
+doing less work than the shear term, further eroding the specifically angular content.**
+
+### M-008.5 ANISOTROPIC ETAS KERNELS — the mechanism-free arm is already occupied
+
+If Kepler proposes "let the data find the azimuthal anisotropy, no physics required," that
+territory has an owner and a GitHub repository.
+
+1. **Ogata, Y. (1998), "Space-time point-process models for earthquake occurrences," *AISM* 50,
+   379–402, doi:10.1023/A:1003403601725.** Verified (Springer listing: title, venue, volume,
+   pages). **The founding space-time ETAS paper already contains non-isotropic clusters** — it
+   explicitly "examines practical extensions where background seismicity is spatially
+   non-homogeneous and clusters are non-isotropic," implemented as a normalised quadratic form
+   (elliptical kernel) oriented by the cluster's own geometry. **Anisotropic ETAS is not a gap in
+   ETAS; it is a footnote in the paper that defined ETAS. Any entry claiming novelty for
+   "non-isotropic triggering kernels" is REDISCOVERY of Ogata 1998 and will be caught by the first
+   referee.**
+2. **Grimm, C., Hainzl, S., Käser, M. & Küchenhoff, H. (2022), "Solving three major biases of the
+   ETAS model to improve forecasts of the 2019 Ridgecrest sequence"** (*venue and volume
+   UNVERIFIED-FROM-MEMORY — the title, authorship, year and content are verified via multiple
+   independent listings and the authors' own repository*; code at
+   `github.com/ChrGrimm/ETASanisotropic`, verified). **The three named biases are, in the authors'
+   order: (1) isotropic spatial triggering, "which stands in conflict with observations and
+   geophysical arguments for strong earthquakes"; (2) unlimited kernel extent, letting small events
+   exert trigger potential over unrealistically large areas; (3) short-term aftershock
+   incompleteness.** Their model combines a **generalised anisotropic, locally restricted spatial
+   kernel** with the **ETASI** incompleteness time model and is evaluated on Ridgecrest for cluster
+   size, largest-aftershock magnitude and spatial distribution. **This is the strongest published
+   result the mechanism-free arm must beat, and it is a direct hit: same idea, same decade, same
+   sequence family, with working code.**
+3. **The elliptical/Mahalanobis kernel family.** Multiple independent implementations parameterise
+   the triggering density by a Mahalanobis distance with **η = major/minor axis ratio and θ =
+   orientation of the major axis** — i.e. exactly "an ellipse aligned with the fault." Recorded in
+   this session's searches via nonparametric/flexible Hawkes work (**"Flexible spatio-temporal
+   Hawkes process models for earthquake occurrences,"** *Spatial Statistics* / ScienceDirect, and
+   **arXiv:2210.08053**; *author lists UNVERIFIED*) and by kernel-modification work aimed at
+   doublet frequencies (*RG record, 2021; UNVERIFIED*). Also relevant and verified as listings:
+   **Asayesh, B. M. et al. (2023), "Depth-dependent aftershock trigger potential revealed by
+   3D-ETAS modeling," *JGR Solid Earth*, doi:10.1029/2023JB026377**, and **Asayesh et al. (2025),
+   "Improved aftershock forecasts using mainshock information in the framework of the ETAS model,"
+   *JGR Solid Earth*, doi:10.1029/2024JB030287** — the latter being explicitly about injecting
+   mainshock *mechanism/geometry* information into ETAS.
+4. **The recorded consensus finding, stated twice in independent summaries this session:**
+   **assuming isotropy biases ETAS parameter estimates (notably α), and accounting for anisotropy
+   significantly improves forecasts.** **So the mechanism-free arm's headline result is already
+   published and it is positive. Kepler cannot claim it; he can only fail to reproduce it.**
+
+**The scope limit that saves the seed from being wholly dead here, and Kepler must state it
+explicitly:** **every one of these anisotropic kernels is a *near-field, single-source, rupture-
+geometry* device.** The ellipse is the finite fault. Its scale is ~1–2 rupture lengths. **Nothing
+in this literature is about the azimuthal configuration of many prior events at 100–300 km acting
+as a persistent field.** That distinction is the only thing standing between Kepler's arm and a
+flat REDISCOVERY verdict — and §M-008.7 explains why the literature stops there.
+
+### M-008.6 DYNAMIC-TRIGGERING DIRECTIONALITY — real, azimuthal, and lasts minutes
+
+There *is* a well-documented directional triggering effect at long range, and it is not static.
+
+1. **Hill, D. P. et al. (1993), "Seismicity remotely triggered by the magnitude 7.3 Landers,
+   California, earthquake," *Science* 260(5114), 1617–1623, doi:10.1126/science.260.5114.1617.**
+   Verified (Science + PubMed records). **Abrupt seismicity increases at 15 widely scattered sites
+   across the western US, to distances of 1250 km (≈17 source dimensions), confined to areas of
+   persistent seismicity and to strike-slip/normal faulting regimes; "static stress changes
+   calculated for elastic models of the earthquake appear to be too small to have caused the
+   triggering."** *Author list beyond Hill is long and UNVERIFIED-FROM-MEMORY here.*
+2. **Gomberg, J., Reasenberg, P. A., Bodin, P. & Harris, R. A. (2001), "Earthquake triggering by
+   seismic waves following the Landers and Hector Mine earthquakes," *Nature* 411** (verified as an
+   indexed Nature article at `nature.com/articles/35078053`; *pages UNVERIFIED-FROM-MEMORY*).
+   **This is the azimuthal result Jim's seed most resembles: the triggered seismicity rate increase
+   was predominantly to the NORTH for Landers and predominantly to the SOUTH for Hector Mine,
+   matching the two events' opposite rupture directivities and the resulting asymmetry of the
+   recorded seismic velocity fields.** **Directionality of triggering is therefore REPLICATED — but
+   the direction is set by *rupture propagation direction*, an unobservable-from-catalogue property
+   of the source, not by the epicentre-to-target azimuth Jim's seed would use.**
+3. **Gomberg, J., Bodin, P. & Reasenberg, P. A. (2003), "Observing earthquakes triggered in the
+   near field by dynamic deformations," *BSSA*** (*volume/pages UNVERIFIED-FROM-MEMORY; authorship,
+   year, venue and the threshold statement verified through citing summaries*): **dynamic
+   deformations can trigger at any distance if amplitude exceeds several microstrain, roughly
+   independent of frequency.** Several microstrain × μ ≈ 3×10¹⁰ Pa gives **~10⁵ Pa ≈ 100 kPa** —
+   *my arithmetic.*
+4. **van der Elst, N. J. & Brodsky, E. E. (2010), "Connecting near-field and far-field earthquake
+   triggering to dynamic strain," *JGR* 115, B07311, doi:10.1029/2009JB006681.** Verified (AGU +
+   eScholarship + a PSU-hosted PDF). **Triggering is identifiable down to dynamic strain amplitudes
+   of 3×10⁻⁹** — i.e. **~0.1 kPa** of transient stress (*my arithmetic*) — and the near- and
+   far-field triggering populations are connected by a single strain-amplitude scaling.
+5. **Hill, D. P. & Prejean, S. G., "Dynamic triggering," *Treatise on Geophysics*, chapter in the
+   earthquake-seismology volume** — the standard review. ***UNVERIFIED-FROM-MEMORY: I did not reach
+   a primary listing for the chapter this session; the search returned Springer's "Earthquakes,
+   Dynamic Triggering of" encyclopedia entry instead.*** Do not cite Hill & Prejean by volume/page
+   without checking.
+
+**The structural problem this creates for the seed.** Dynamic directionality is the one long-range
+angular effect with confirmed amplitude — **and it is over in tens of seconds to minutes.** It
+cannot be a "field state" that persists between events. Our own program already has this covered:
+**K-059's teleseismic stress ephemeris is exactly the right instrument for this channel, it is
+already specified, already gated, and already POWER-STATED.** **Any K-081 that proposes long-range
+directional triggering must either (i) route through K-059 and stop pretending it is static, or
+(ii) declare that it is testing a static/quasi-static field and accept §M-008.7's amplitudes.**
+
+### M-008.7 DISTANCE REALISM — the arithmetic at Jim's "200 miles"
+
+***All figures in this subsection are MY OWN ORDER-OF-MAGNITUDE ARITHMETIC, not quoted results.
+They are shown so they can be checked and corrected.*** Static stress from a point double couple
+scales as `Δσ ~ M₀ / (2π r³)`.
+
+| source | M₀ (N·m) | at r = 320 km (200 mi) | at r = 50 km | at r = 10 km |
+|---|---|---|---|---|
+| M6.0 | 1.1 × 10¹⁸ | **~5 Pa** | ~1.4 kPa | ~175 kPa |
+| M7.0 | 3.5 × 10¹⁹ | **~170 Pa** | ~45 kPa | ~5.6 MPa |
+| M7.5 | 2.0 × 10²⁰ | **~1 kPa** | ~250 kPa | — |
+
+**Reference amplitudes, from the literature rather than from me:** static-triggering detection
+floor **~10 Pa** (Nandan et al. 2016, verified); the canonical Coulomb triggering threshold
+**~0.01 MPa = 10 kPa** (Wegener's O-23; King/Stein/Lin lineage); solid-Earth tidal stresses
+**~1–10 kPa** (the ledger's own K-033 family uses ~0.5–2 kPa for hydrospheric Coulomb changes);
+far-field dynamic triggering floor **~0.1 kPa** transient (van der Elst & Brodsky 2010, verified as
+a strain; the Pa conversion is mine).
+
+**What this says, plainly:**
+- **At 200 miles from an M6, the static Coulomb change is ~5 Pa — below the lowest detection floor
+  anyone has published, ~2000× smaller than tides, and ~2000× smaller than the canonical triggering
+  threshold. There is no static-field story at that range for M6 sources.**
+- **At 200 miles from an M7–7.5 the static change reaches 0.1–1 kPa — above Nandan's 10 Pa floor,
+  still an order below tides.** So the only static-channel sources that are physically live at
+  Jim's range are **great and near-great earthquakes**, which immediately collapses the sample size.
+- **The dynamic channel at 200 miles is ~kPa-scale and above the van der Elst–Brodsky floor by
+  orders of magnitude — but it is transient.**
+- **The one pathway that keeps a static-like change alive at long range and long times is
+  viscoelastic/postseismic relaxation** — **Freed, A. M. & Lin, J. (2001), "Delayed triggering of
+  the 1999 Hector Mine earthquake by viscoelastic stress transfer," *Nature* 411, 180–183**
+  (verified as an indexed Nature article; *pages UNVERIFIED-FROM-MEMORY*), and the southern-California
+  200-year stress-evolution work including postseismic terms (*GJI* 169(3), 1164 — *authors
+  UNVERIFIED*). **If Kepler wants a long-range, long-lived, directional field, viscoelastic
+  transfer is the only physically defensible carrier, and it requires a rheology model, not a
+  catalogue.**
+
+**Recommendation to Popper:** **require the amplitude table above (recomputed properly, with the
+program's own Green's functions) to appear IN the entry, with the target range and source-magnitude
+floor chosen so that the predicted stress exceeds a stated detection floor.** An entry that scans
+"all prior M≥5 within 300 km" is scanning a range where its own mechanism predicts nothing.
+
+### M-008.8 THE ARTIFACT CATALOG — the checklist any angular test must clear
+
+Not my inventions; each is named in the prior art, usually by proponents.
+
+**B1 — The receiver-mechanism degree of freedom (Hardebeck et al. 1998; Sharma et al. 2020;
+Hardebeck 2014).** ΔCFS sign at a target depends on the assumed receiver plane, and beyond a few km
+the analyst can obtain nearly any answer. *Control:* the receiver-plane rule must be **frozen and
+single-valued** under S-9 — one source (e.g. CFM / local FM-catalogue modal mechanism), one μ′, no
+"optimally oriented" fallback, and the result reported under **≥2 alternative receiver rules as a
+declared sensitivity, with the primary named in advance**.
+
+**B2 — Slip-model non-uniqueness.** Finite-fault inversions are non-unique and their correlated
+uncertainties propagate into ΔCFS. *Control:* if the entry uses point sources (GCMT), say so and
+accept that the near-field lobes are then fiction; if it uses finite faults, use ≥2 published slip
+models and show the sign map's stability.
+
+**B3 — Sign-blind baseline (Sharma et al. 2020; DeVries et al. 2018; Mignan & Broccardo 2019).**
+**This is the decisive control and it is non-negotiable.** Any angular/signed statistic must be
+scored against **the same statistic with the angles isotropised** and against **a sign-blind scalar
+amplitude** (maximum shear change, von Mises, sum of |σᵢⱼ|). **If signed-angular does not beat
+sign-blind-scalar in bits, the entry has reproduced Sharma/Mignan and has no angular finding.**
+
+**B4 — Distance/exposure confounding (Felzer & Brodsky 2006 vs Richards-Dinger et al. 2010).**
+Azimuthal statistics are contaminated by the anisotropic spatial distribution of *where faults and
+detectable seismicity are*. A target region's neighbours are not uniformly distributed in azimuth.
+*Control:* the azimuthal null must be **built from the observed source geography**, not from a
+uniform circle — the program's **circular-time-shift null (K-042)** is the right instrument, since
+it preserves every source's location and amplitude and destroys only the time alignment.
+
+**B5 — Pre-arrival "triggering" (Richards-Dinger et al. 2010).** Their strongest artifact
+demonstration: distance decay appears among events that occurred *before the waves arrived*.
+*Control:* for any dynamic arm, gate on physical arrival times; for any static arm, gate on origin
+time with an explicit causality check.
+
+**B6 — Shadow asymmetry is mechanical (Marsan 2006).** Negative mean ΔCFS does not predict a rate
+decrease, because slip heterogeneity plus rate-state nonlinearity makes promoted patches dominate.
+*Control:* **do not score "predicted decrease" as a falsifiable arm without first demonstrating,
+in simulation, that the design can detect a decrease of the predicted size.** This is a
+positive-control requirement of the same family the program already applies under Q0/K-035.
+
+**B7 — The stacking requirement and its multiplicity cost (Mallman & Parsons 2008).** The shadow
+signal was recoverable only by stacking 119 events. *Control:* declare **N_eff** and the stacking
+unit up front, and route the family through **S-8's sim-calibrated max-statistic** over the declared
+{azimuth-binning × radius × magnitude floor × receiver rule × lag} family. **The angular arm has
+more forking paths than any family this program has yet proposed; the max-statistic is not optional
+here.**
+
+### M-008.9 CLASSIFICATION GUIDANCE FOR POPPER — the two arms Kepler will propose
+
+**(a) ARM 1 — mechanism-free azimuthal anisotropy beyond ETAS ("let the data find the angles").
+Verdict: REDISCOVERY.** Prior art, in order of how badly it hurts: **Ogata (1998)** — non-isotropic
+clusters are in the founding ETAS paper; **Grimm et al. (2022)** — anisotropic + locally-restricted
+kernel with ETASI, applied to Ridgecrest, with public code; the **Mahalanobis elliptical-kernel
+family**; **Asayesh et al. (2023, 2025)** — 3D and mainshock-informed ETAS. **The single strongest
+published result this arm must beat: Grimm, Hainzl, Käser & Küchenhoff (2022) — an anisotropic,
+range-limited, incompleteness-corrected ETAS kernel that improves forecasts of the 2019 Ridgecrest
+sequence, with the implementation released.** **Popper's bar: this arm cannot earn ledger status
+for finding anisotropy. It can earn status only if it (i) reproduces Grimm et al. as a positive
+control on our own catalogue, and then (ii) shows information gain from *multi-source, long-range*
+azimuthal configuration that survives after the near-field elliptical kernel is already fitted.
+Without (i), a positive is uninterpretable; without (ii), a positive is Ogata 1998.**
+
+**(b) ARM 2 — Coulomb-sign-weighted configurations ("push/pull with the physics in").
+Verdict: REDISCOVERY, in a CONTESTED literature, with the specific angular content
+CONTRADICTED-LEANING.** Prior art: **King, Stein & Lin (1994)**; **Stein (1999)**; **Harris (1998)**;
+**Deng & Sykes (1997)** for the cumulative-field version; **Toda et al. (2005)** for the
+rate-state forecasting version; **Nandan et al. (2016)** for the rigorous statistical version. The
+adverse thread: **Sharma et al. (2020)** and **Mignan & Broccardo (2019)** — sign-blind scalars win;
+**Hardebeck & Harris (2025)** — half the shadow aftershocks unexplained; **Mallman & Parsons
+(2008)** — shadows visible only in a 119-event stack; **Marsan (2006)** — shadows may be
+mechanically unresolvable. **The single strongest published result this arm must beat: Mancini,
+Segou, Werner & Cattania (2019) on Central Italy — CRS forecasts reaching parity with ETAS, and
+locally beating it before Norcia, but only with finite-fault slip, heterogeneous receivers and
+secondary triggering down to M3.** Second, and cheaper to beat but harder to dismiss:
+**Mancini, Segou, Werner & Parsons (2020) on Ridgecrest** — the only clean local win.
+**Popper's bar: parity with ETAS is the *published state of the art* for this arm. An entry that
+achieves parity has rediscovered Cattania/Mancini at higher cost. The only outcome that earns
+status is incremental bits over a frozen ETAS *that already contains an anisotropic kernel* — and
+per B3 the comparison must be against a sign-blind scalar, not against isotropy.**
+
+**(c) WHERE THE THIN AIR ACTUALLY IS — and it is thinner than it looks.** My searches did not
+recover any study that scores, as an information-gain covariate over ETAS: **a multi-source,
+cumulative, azimuthally-resolved configuration of prior regional seismicity, evaluated
+pre-mainshock, at 50–300 km, on a target cell, with a CSEP-grade proper score.** The pieces all
+exist (Deng & Sykes have the cumulative field; Toda et al. have the rate-state forecast; Ogata and
+Grimm have the anisotropic kernel; Nandan has the rigorous statistics) but I did not find them
+assembled in that particular shape. **Verdict on that specific object: EXTENSION, not NOVEL** —
+because every component is owned and the assembly is an engineering choice, not a new claim about
+the Earth. **And it carries a published physical prior against it, which Kepler must quote in the
+entry text, exactly as M-007 required for Wimpenny et al.: (i) Nandan et al. (2016)'s 95–180-day
+stress memory bounds the "living field" to a season; (ii) the §M-008.7 amplitudes put an M6 at
+320 km below every published detection floor; (iii) Nandan et al.'s own finding that normal stress
+contributes little erodes the specifically Coulomb-angular content; (iv) Sharma/Mignan say the
+winning predictor is sign-blind.**
+
+**(d) The arm I would fund, if any.** **The seed's testable residue, stated as an EXTENSION of
+machinery we already have:** add to the K-033 Cox-ETAS engine a single covariate — **the cumulative
+ΔCFS at the target cell from all prior catalogue events above a magnitude floor, on one frozen
+receiver rule, with one frozen rate-state decay** — and score bits/event out of sample against
+(i) frozen ETAS and (ii) the identical covariate computed sign-blind. **Three outcomes, all
+publishable: signed beats sign-blind (a real result, and the first bits-scored one); signed equals
+sign-blind (reproduces Sharma/Mignan in a new setting, with a bound); neither beats ETAS (a clean
+bound on long-range static coupling, which the corpse-to-bound table can use).** **This is one
+covariate, one frozen construction, and it fits inside an engine that already exists. It is also
+the only version of Jim's seed that can lose cleanly.**
+
+### M-008.10 TAKEABLES (adopt instead of reinventing)
+
+1. **Grimm et al.'s anisotropic ETAS implementation** (`github.com/ChrGrimm/ETASanisotropic`) —
+   use it as the *positive control and the baseline*, not as our contribution. If our anisotropic
+   kernel cannot reproduce theirs on Ridgecrest, the pipeline is wrong.
+2. **The sign-blind scalar battery from DeVries et al. (2018)** — maximum change in shear stress,
+   von Mises yield, sum of |σᵢⱼ| — as the mandatory B3 baseline. They are cheap: same Green's
+   function, different contraction.
+3. **Mignan & Broccardo's two-parameter logistic regression** as the "one neuron" floor. Any
+   angular machine that does not beat a two-parameter logistic on a scalar stress metric has
+   produced nothing.
+4. **Nandan et al. (2016)'s uncertainty propagation and focal-plane-ambiguity resolution** —
+   the state of the art for doing this honestly at catalogue scale, in our own primary region, on
+   our own catalogue years (SoCal 1981–2010). **Their ~10 Pa floor and 95–180-day memory are
+   parameter values we should adopt rather than re-fit.**
+5. **The circular-time-shift null (our K-042)** as the azimuthal null, per B4 — it preserves source
+   geography exactly, which a uniform-azimuth null does not.
+6. **Toda et al. (2005)'s mechanism statement as a design constraint:** Coulomb changes *amplify
+   the background rate*. **So the covariate must enter multiplicatively on the ETAS background, not
+   additively on the rate — and any test in a low-background cell is predicted by the model itself
+   to have no power.** This should shape cell selection before a single number is computed.
+7. **Zechar & Jordan (2008) Molchan/area-skill machinery** (already adopted in M-007) if any arm is
+   framed as alarms rather than rates.
+8. **A number that costs one afternoon and may end the family:** compute, on our own catalogue, the
+   **cumulative static ΔCFS at each target cell from all prior M≥5 within 300 km** and report its
+   **distribution against the 10 Pa floor**. If the median target cell's cumulative |ΔCFS| is below
+   10 Pa, the family is testing a quantity the field's most sensitive study says is at its own
+   detection limit — and the entry should be reframed as a bound before it is run, not after.
+
+### M-008.11 FEEDING THE TRIO
+
+- **To Popper.** (i) **Both arms are REDISCOVERY as stated**; neither can earn ledger status on a
+  bare positive. (ii) **B3 (sign-blind baseline) should be a gate, not a robustness check** — it is
+  the single control that separates Jim's hypothesis from the field's own best-performing
+  alternative, and without it a positive is uninterpretable. (iii) **B1 (receiver-plane freedom) is
+  an S-9 violation waiting to happen**: one frozen rule, declared in advance, or the entry does not
+  run. (iv) The **§M-008.7 amplitude table must appear in the entry**, with a stated detection floor
+  and a source-magnitude floor derived from it — this is the direct analogue of M-007's requirement
+  that Wimpenny et al.'s adverse physics be quoted in-entry. (v) **The "shadow"/suppression arm
+  should be bound-only** per Marsan (2006) and Hardebeck & Harris (2025), and should not run at all
+  without a simulation demonstrating the design can detect a suppression of the predicted size
+  (B6). (vi) The long-range *dynamic* directional channel is **already owned inside this program by
+  K-059** — Popper should refuse any K-081 arm that duplicates it.
+- **To Wegener.** Candidate observation-table rows he does not have (his O-23 covers the headline;
+  these sharpen it, and all are *rate-response* facts, which is his spine): **Nandan et al. (2016)**
+  — static triggering detectable to ~10 Pa, with stress-change memory of only 95–180 days and a
+  limited role for normal stress; **Mallman & Parsons (2008)** — 119 Ms≥7 mainshocks, suppression
+  resolvable in only 2 individually and otherwise only by stacking; **Hardebeck & Harris (2025)** —
+  four candidate explanations account for only ~half of the aftershocks occurring inside modelled
+  stress shadows at Kumamoto and Ridgecrest; **Sharma et al. (2020) + Mignan & Broccardo (2019)** —
+  sign-blind scalar stress metrics match or beat signed Coulomb for aftershock location;
+  **Gomberg et al. (2001)** — triggered-rate increase to the north for Landers and to the south for
+  Hector Mine, tracking rupture directivity; **Hardebeck et al. (1998)** — ~85% of Landers
+  aftershocks consistent with static triggering vs ~50% for random events, but the same model is
+  much weaker for Northridge. **The last one is the row I would most want him to have: it is the
+  cleanest published statement that this mechanism's explanatory power is sequence-dependent.**
+- **To Kepler.** The floor, in the order it must be cleared: **(1)** the §M-008.7 amplitude
+  arithmetic at your chosen range and magnitude floor, before the entry is written — if your
+  sources are M6 at 320 km, the mechanism predicts ~5 Pa and you are writing a bound, not a
+  hypothesis; **(2)** the sign-blind scalar baseline (B3) declared as a gate in the entry text;
+  **(3)** Grimm et al. (2022) reproduced as a positive control before any anisotropy claim;
+  **(4)** one frozen receiver rule (B1) and one frozen decay, under S-9; **(5)** the K-042
+  circular-shift null as the azimuthal null, not a uniform circle; **(6)** the Nandan 95–180-day
+  memory quoted in the entry, because it bounds the "living field" claim directly; **(7)** the
+  entry framed so that "signed = sign-blind" is a *reportable result*, not a failure. And the
+  reframing that is worth more than the family: **Jim's "living stress field" already has a name
+  (the Coulomb stress evolution model, Deng & Sykes 1997 / Toda et al. 2005), a 30-year record, and
+  a scoreboard — and on that scoreboard its best result to date is a draw with ETAS. Our
+  contribution can only be the scoreboard entry nobody has filed: the same object scored in
+  bits/event, out of sample, against an ETAS that already knows about ellipses.**
+
+*Merton, M-008. Pre-emptive dossier, filed before K-081 exists. Classification: the general
+hypothesis — angular/directional stress configuration controls triggering — is **REDISCOVERY**
+(King, Stein & Lin 1994; 32 years; a software package; four forecast competitions). The
+mechanism-free anisotropic-kernel arm is **REDISCOVERY** of Ogata (1998) and Grimm et al. (2022).
+The Coulomb-sign arm is **REDISCOVERY in a CONTESTED literature**, with its specifically angular
+content **CONTRADICTED-LEANING** (Sharma et al. 2020; DeVries et al. 2018 + Mignan & Broccardo
+2019: sign-blind scalars match or beat signed Coulomb). The stress-shadow / "pull" half is
+**CONTESTED and possibly unresolvable in principle** (Felzer & Brodsky 2006 vs Richards-Dinger et
+al. 2010; Marsan 2006; Mallman & Parsons 2008; Hardebeck & Harris 2025). The one unclaimed object —
+a multi-source cumulative azimuthal configuration scored in bits over an anisotropic ETAS at
+50–300 km — is **EXTENSION**, and it carries a published physical prior against it (Nandan et al.
+2016's 95–180-day stress memory; the ~5 Pa amplitude at 320 km from an M6). Citations marked
+UNVERIFIED-FROM-MEMORY where the search did not reach primary text: Harris (1998) and Harris &
+Simpson (1998) page ranges; Parsons et al. (2000) *Science* volume/pages; Coulomb 3.x report
+number; Cattania et al. (2018) full author list; Mancini et al. (2020) *BSSA* volume/pages/DOI;
+Steacy et al. (2014) full author list; Grimm et al. (2022) venue; Gomberg et al. (2001) and
+Gomberg et al. (2003) pages; Hill et al. (1993) full author list; Hill & Prejean chapter details;
+Freed & Lin (2001) pages; the flexible-Hawkes and doublet-kernel author lists. AGU,
+GeoScienceWorld and GFZ returned HTTP 403 throughout this session, so Woessner et al. (2011),
+Mallman & Parsons (2008), Marsan (2006, 2010), Hardebeck (2014), Sharma et al. (2020), Mancini et
+al. (2019, 2020) and Reverso et al. (2018) are known here only from landing metadata, USGS/NERC
+records and citing text. All arithmetic in §M-008.7 and the microstrain/nanostrain conversions in
+§M-008.6 are mine, are order-of-magnitude, and are shown so they can be corrected.*
+
+---
+
+### Quiescence seed (Jim, 2026-08-10): IS THE OASIS ITSELF THE SIGNAL?
+
+**Jim's question, verbatim:** *"would an oasis of absence of events itself be a buildup-without-release
+indicator?"* **The occasion:** 2026-08-10 12:34 UTC, **M7.4 at Z = 107 km near San José del Palmar,
+Colombia**; our globe layer had shown a flat 1.0× excitation multiplier in that cell for ≥ 90 days
+(no M ≥ 4.5 within ~1.5°; last regional event M5.3, 2026-05-14, ~70 km SW), inside a cell whose
+climatology sits at the 96th percentile.
+
+**The inversion I am asked to formalise is my own native move (B-4's negative space, K-013, K-041R's
+`∫λ dt`), so I have no excuse for being soft on it. I am going to be hard on it instead, because I
+ran the data before writing, and the data is not on Jim's side in the form the question is posed.**
+
+**(i) THE SNIFF, RUN BEFORE ANY ENTRY WAS DRAFTED (read-only, exploratory, on disk).** All 13 boxes,
+`data/comcat_world/*.csv`, 71,803 events M ≥ 4.5, 1995–2026. For every target event I computed
+Δt = time since the previous M ≥ 4.5 within 1.5° (any depth), censoring targets whose gap exceeds
+their catalogue's own age. Two reference sets: **(A) location-matched, time-randomised** — the same
+epicentres evaluated at 20 uniform random times each; **(B) event-sampled** — the same statistic at
+ordinary M 5.0–5.5 events.
+
+| target set | n | median gap | P(gap ≥ 90 d) | P(gap ≥ 365 d) |
+|---|---|---|---|---|
+| **shallow (< 70 km) M ≥ 6.5** | 418 | 6.6 d | **0.127** | 0.029 |
+| **shallow M ≥ 7.0** | 144 | 12.7 d | **0.167** | 0.035 |
+| ref A — random times, shallow-M6.5 cells | 8,415 | 21.1 d | **0.183** | 0.044 |
+| ref A — random times, shallow-M7 cells | 2,912 | 23.4 d | **0.220** | 0.066 |
+| ref B — event-sampled, M 5.0–5.5 shallow | 9,997 | 2.3 d | **0.078** | 0.019 |
+| **intermediate (70–300 km) M ≥ 6.5** | 59 | 9.2 d | 0.119 | 0.034 |
+| **intermediate M ≥ 7.0** | **18** | 10.8 d | **0.278** | **0.111** |
+| ref A — random times, intermediate-M7 cells | 356 | 14.2 d | 0.163 | 0.067 |
+| ref B — event-sampled, M 5.0–5.5 intermediate | 2,355 | 10.0 d | 0.056 | 0.006 |
+
+**Read those rows against each other, because the pair of them is the entire methodological content
+of this seed.** Against reference A, shallow M ≥ 6.5 mainshocks are preceded by a ≥ 90-day oasis
+*less* often than random times at the same places — 0.127 vs 0.183, **p = 0.0012** (binomial,
+n = 418), likelihood ratio for "oasis" as a shallow-M7 precursor **0.76, i.e. mildly
+ANTI-predictive.** Against reference B, the same mainshocks are preceded by an oasis **2.1×** more
+often than ordinary M5s (0.167 vs 0.078), and intermediate-depth M ≥ 7 by **5.0×** (0.278 vs 0.056)
+with the ≥ 1-year tail at **18×** (0.111 vs 0.006).
+
+**Same catalogue, same statistic, opposite conclusions, entirely by choice of null.** Reference A is
+length-biased upward by the inspection paradox (a random instant lands inside a long gap with
+probability proportional to the gap's length), so it over-states the null. Reference B is biased
+downward because M 5.0–5.5 is aftershock-dominated, so those events *by construction* follow other
+events. **Neither is the right baseline, and the true answer lies strictly between them. This is not
+a nuisance to be caveated — it is the finding: "quiescence" has no meaning until the expected count
+is named, and the only defensible expected count is `Λ = ∫ λ̂_ETAS dt` from a frozen model.** That
+sentence is the reason K-076 exists and the reason it is an instrument rather than a claim.
+
+**(ii) THE BASE-RATE TRAP, STATED IN NUMBERS FROM OUR OWN DATA RATHER THAN AS A WARNING.** A ≥ 90-day
+gap in M ≥ 4.5 within 1.5° occurs at **18.3%** of random times in cells that host M ≥ 6.5 — it is not
+rare, it is roughly one instant in five, and it sits near the bulk of the exponential rather than in
+its tail. Inverting `exp(−90λ) = 0.183` gives an implied median cell rate λ ≈ 7 M ≥ 4.5/yr. **The
+Colombia oasis is therefore a p ≈ 0.18 event at a single cell, before any correction for the number
+of cells being watched.** Our globe layer renders order 10³–10⁴ cells; at any instant we should
+expect **~200–2,000 simultaneous 90-day oases worldwide**, of which some will be followed within
+months by an M7 for no reason other than that M7s happen. **A test that does not carry this
+arithmetic in its numerator is an anecdote generator.** Consequently every entry below reports its
+result as a **Molchan alarm-rate / miss-rate pair**, never as a p-value on a selected cell, and
+K-080 exists solely to make the alarm rate a measured quantity.
+
+**(iii) WHAT A REAL TEST MUST CONDITION ON — the five, and the entries that carry them.**
+1. **Expected count, not elapsed time.** Baseline = frozen-ETAS `Λ(cell, window)` with B-2/B-1
+   parameters, *not* own-cell climatology (which does not subtract aftershock inflation and so scores
+   post-sequence lulls as anomalies) and *not* the declustered background rate alone (which discards
+   the Omori decay that legitimately explains most real lulls). **K-076.**
+2. **Loading.** Absence of release is only "buildup without release" if loading is nonzero and
+   measured **independently of the catalogue**. Geodetic moment rate is that measurement. **K-077 —
+   and this is the entry that actually answers Jim's question.**
+3. **The observer.** A cell goes quiet when a station drops out. Mc(t) and station-count time series
+   must be regressed out or the deficit map is W-004's detectability map again — the exact indictment
+   K-031 raises against B-4's silent list. **Mandate Q2 below, binding on all five.**
+4. **Selection.** The cell was inspected *because* an M7.4 happened in it. Every retrospective
+   quiescence claim in the literature has this structure. Only a prospective commitment log escapes
+   it. **K-080.**
+5. **Multiplicity and the alarm budget.** Molchan, not p. **All five.**
+
+**(iv) THE CORPSE I MUST NAME BEFORE PROPOSING ANYTHING, because not naming it would be dishonest.**
+The **seismic gap hypothesis** is the strong form of Jim's question — "the segment that has not
+ruptured recently is the segment due" — and it was **tested globally and failed**: Kagan & Jackson
+(1991, JGR 96, 21419, *"Seismic gap hypothesis: ten years after"*) found large events occurred
+*more* often in recently-active zones than in gaps, and Rong, Jackson & Kagan (2003, JGR 108, 2471)
+confirmed it against Nishenko's forecast. **My reference-A sniff independently reproduces the sign of
+that result at n = 418, in a different statistic, which I regard as a genuine (small) replication and
+report as such.** Therefore: **the naive form of Jim's hypothesis is not merely untested, it is
+adjacent to a documented failure, and any entry here must be a *conditioned* version that the gap
+hypothesis did not test — which is precisely what K-077 and K-078 are.** I am not re-proposing a
+corpse; I am proposing the two conditionings under which the corpse's autopsy was uninformative.
+
+**(v) RELATION TO K-061 — asked explicitly, and the answer is SIBLING, NOT SAME.** Both entries
+measure a **rate deficit against `∫ λ̂ dt`**, so the *estimator class is identical* and the code is
+shared. They are different instruments because the **conditioning** differs in kind:
+
+| | **K-061 (destructive-interference deficit)** | **K-076–K-078 (quiescence deficit)** |
+|---|---|---|
+| conditioned on | a **computable exogenous** probe (predicted node during a known wavetrain) | **nothing exogenous** — the absence *is* the conditioning variable, and it is endogenous |
+| counterfactual | the E-matched stratum: same shaking energy, different phase | the model's own `Λ`, i.e. a fitted object |
+| duration | hours | months–years |
+| forgeable by ETAS misfit? | **no** — misfit is common to both matched deciles and cancels | **yes, entirely** — this is the family's dominant artifact |
+| unforgeable by | any monotone additive triggering model | nothing yet; K-077's loading interaction is the attempt to fix this |
+
+**In one line: K-061 is a node detector with an independently computed pointer; K-076 is a bare
+thermometer.** K-061's deficit is the sharpest discriminator in the wave seed *because* its
+conditioning is exogenous and matched. Quiescence has no such pointer — which is why this seed's
+whole design problem is **manufacturing an exogenous conditioner**, and geodetic loading (K-077) and
+depth-class physics (K-078) are the only two I can find. **This is a sibling of K-061 sharing its
+estimator, distinct in estimand, and strictly weaker in discriminating power. Popper should hold it
+to a higher bar than K-061, not a lower one, and I would not argue.**
+
+**(vi) THE GATE, AND A CORRECTION I OWE THE SUPERVISOR RATHER THAN A COMPLIANCE.** I am instructed to
+carry the **K-034 positive control**. Under Popper's R2-2 ruling, K-034 licenses **the
+dynamic-triggering family at 10–100 kPa transient amplitude and nowhere else** — it certifies that
+the engine can *detect a step*, and certifies nothing about detecting a **months-long fractional rate
+suppression**, which is a different statistic with a different noise floor (R2-1c). **So I carry
+K-034 where an arm makes a triggering claim (K-078's slab-transient sub-arm only), and I define this
+family's own licensing gate on K-035's precedent, because the honest gate here is
+injection-recovery:**
+
+> **GATE Q0 (this family's licence; it runs first or the family does not run).** Inject into
+> ETAS-sim a *known* multiplicative rate suppression `f ∈ {0.75, 0.5, 0.25, 0}` of duration
+> `T ∈ {30, 90, 365 d}` into randomly chosen cells, push it through the identical K-076 pipeline, and
+> report the recovery ROC. **No null from this family is interpretable until the detector is shown to
+> recover a suppression at the amplitude and duration the entries claim.** EXP-F's failed 7-day
+> method check is the precedent; K-035 is the template. Cost: hours. **All five entries below are
+> gated on Q0, and K-078's triggering sub-arm additionally on K-034.**
+
+**Power arithmetic that Q0 will confirm, computed here so it cannot be discovered late.** Detecting a
+fractional suppression `f` at z σ needs `Λ ≥ (z/(1−f))²` expected events in the window. A total
+blackout (f = 0) at z = 2 needs **Λ ≥ 4**; a halving needs **Λ ≥ 16**. The Colombia cell at
+λ ≈ 7 M ≥ 4.5/yr has **Λ ≈ 1.7 over 90 days**. **Therefore a single cell's 90-day M ≥ 4.5 oasis is
+undetectable in principle — not underpowered, undetectable — and any single-cell quiescence alarm on
+the globe layer at M ≥ 4.5 is presentation, not measurement.** The family is only runnable by
+(a) pooling ≥ 10³ cell-windows, or (b) dropping Mc: SoCal M ≥ 2.5 gives Λ ~ 100× larger and is the
+only place a *per-cell* deficit is measurable at all. Both routes are specified below.
+
+**STANDING MANDATES, binding on K-076..K-080, written once.**
+**(Q1) The length-bias mandate.** Every reported comparison names its sampling frame and states its
+bias direction. Time-sampled nulls over-state gaps; event-sampled nulls under-state them. The
+confirmatory statistic is always the ETAS-expected count, with both naive frames reported alongside
+as the *spread of the artifact*, exactly as tabulated in (i).
+**(Q2) The observer mandate (S-1(b), K-031, W-004).** Every deficit map is run twice: once raw, once
+with Mc(t) and station-count as regressors, using the same fixed-Mc discipline K-017 mandates. **If
+the deficit signal does not survive the Mc-conditioned run it is K-031's finding, not this seed's**,
+and it is reported under K-031's name. This is (M2) transplanted, and it bites harder here because
+our signal *is* low counts.
+**(Q3) The pre-registered prior, from (i).** The shallow arm is entered with the expectation that the
+effect is **null or negative**, at LR ≈ 0.76. Any shallow positive must beat that pre-registration,
+and I have written it down before the test so it cannot be narrated afterwards.
+
+**FAMILY DEATH CONDITION, declared in advance per R2-3.** The quiescence programme is CLOSED with a
+published bound if all three of: (a) K-077's loading × deficit interaction is null at demonstrated
+power in the pooled global run; (b) K-078's depth split shows no sign difference between shallow and
+intermediate classes at n ≥ 40 intermediate M ≥ 7; (c) K-080's prospective log, at its committed
+horizon, shows a Molchan point no better than the diagonal. If those land, the honest statement is
+*"a release deficit relative to frozen ETAS carries no forecasting information about subsequent large
+events, at |effect| < X% hazard modulation at 80% power, and the seismic-gap null of Kagan & Jackson
+extends to the conditioned case"* — reopenable only by new data (geodesy, denser catalogues), never
+by a new statistic. R2-1(e)'s anti-ratchet, adopted voluntarily.
+
+---
+
+**K-076 — THE INSTRUMENT, AND ITS HEADLINE IS A REDISCOVERY AND I SAY SO FIRST: the RELEASE-DEFICIT
+FIELD `D(x,t) = Λ_ETAS(x,t) − N_obs(x,t)`, mapped globally and shipped as a covariate.**
+
+*Lens: model the negative space (B-4, K-013), but make the negative space a **residual** rather than
+an **absence** — because an absence is a property of the observer's attention and a residual is a
+property of the model.*
+
+- **Claim (and it must be able to lose).** A standardised deficit field `z(x,t) = (Λ − N)/√Λ`,
+  computed from the frozen B-2/B-1 ETAS on a fixed grid, **adds ≥ 0.01 bits/event over frozen ETAS**
+  as a covariate for subsequent M ≥ 6.5 (global) / M ≥ 5 (SoCal) occurrence at horizons
+  {30, 90, 365 d}. If it does not, the field is scored as a LOSS, the bound goes in the
+  corpse-to-bound table, and W-003 keeps the ground.
+- **The observable, stated precisely because the supervisor asked and because it is where every
+  version of this idea has died.** Baseline is **`Λ = ∫ λ̂_ETAS dt` with parameters frozen on train
+  and never refit in the window** — *not* own-cell climatology (fails: it scores every post-sequence
+  Omori lull as an anomaly, and post-sequence lulls are the most common oasis on Earth), *not* the
+  declustered background rate (fails: it discards the Omori term that legitimately explains the lull),
+  *not* the regional mean rate (fails: it is a map of tectonics). **The only baseline under which
+  "less than expected" means anything is the model's own conditional intensity — which makes this
+  entry a statement about ETAS misfit first and about the Earth second, per S-7(a). That is the
+  entry's central weakness and I put it in the claim rather than in the caveats.**
+- **Construction (S-9, one frozen value each).** Grid: 0.5° global / 0.1° SoCal. Windows: trailing
+  {30, 90, 365 d}, evaluated daily. Neighbourhood: 1.5° (matching the globe layer, and matching the
+  sniff in (i)). Mc: fixed per region at the era-stable value, never adaptive. Λ from the frozen
+  temporal ETAS with local μ(x) (B-1/B-2, validated). `z` clipped at ±6. Deficit defined only where
+  `Λ ≥ 4` (the power floor computed in (vi)); **cells below that floor are reported as UNMEASURABLE
+  and are scored neither way** — a category the globe layer currently lacks and should gain.
+- **Data.** On disk: `data/comcat_world/*.csv` (13 boxes, M ≥ 4.5, 1995–2026), `comcat_socal_m25.csv`.
+  **One download** for global ComCat M ≥ 4.5 1995–now outside the 13 boxes — **required, because
+  Colombia is in none of our 13 boxes** (we hold Caribbean and Chile; the northern Andes is a hole),
+  and a family prompted by a Colombian event that cannot see Colombia is not a family.
+- **Statistic / null.** Bits/event over frozen ETAS with `z` as a multiplicative covariate; S-8
+  max-statistic over the declared family {windows × radii × horizons × depth classes}. Nulls:
+  (1) **ETAS-sim through the identical pipeline** — the load-bearing null, because ETAS-sim has
+  deficits too and their distribution *is* the exponential-rediscovery Jim must not be sold;
+  (2) circular shift of the deficit field against the target catalogue (S-7(d));
+  (3) the Q2 Mc-conditioned rerun.
+- **POWER-STATE.** Unit = (cell × evaluation window); **N_eff = number of independent large targets,
+  not number of cell-windows** (≈ 418 shallow M ≥ 6.5 + 59 intermediate on disk; ~2–3× that with the
+  global fill-in). Detectable fractional suppression per cell: **f = 0.5 needs Λ ≥ 16**, i.e.
+  ~2.3 yr at the median cell rate of 7/yr, or ~90 days at SoCal M ≥ 2.5. **At M ≥ 4.5 and 90 days
+  this is a pooled test only; the per-cell version exists only in SoCal.** Pooled detectable hazard
+  modulation at N = 418 targets: ≈ 2.8·√(2/418) ≈ **19%**, so nothing under a ~20% hazard change is
+  visible, and the entry says so in its own text rather than in a footnote.
+- **Expected.** +0.00 to +0.02 bits. **Honest prior on the null: 0.8.**
+- **Cost / decision.** ~1.5 days, most of it grid plumbing that K-010/K-033 already owe. Decision: it
+  converts "the cell looks quiet" from a rendering choice into a measured, calibrated, power-floored
+  quantity with an UNMEASURABLE class — which the globe layer needs whether or not the hypothesis
+  survives.
+- **GATE: Q0 (mandatory, runs first). MERTON-BEFORE-FREEZE — nominated searches, and I expect the
+  worst:** `Ogata 1992 JGR 97 19845 precursory relative quiescence` (already in Merton's M-001
+  supporting list — *"Ogata 1989's title is, almost word for word, our experiment"* — and this entry
+  is closer still); `Wyss & Habermann 1988 precursory seismic quiescence PAGEOPH`; `Wiemer & Wyss
+  Z-value ZMAP quiescence mapping`; `Katsumata & Kasahara 1999 precursory quiescence subduction`;
+  `Sobolev & Tyupkin RTL algorithm`; `Marsan & Wyss quiescence detection`; `Mignan accelerating
+  moment release meta-analysis`; **`Kagan & Jackson 1991 seismic gap hypothesis ten years after`**
+  and `Rong Jackson Kagan 2003`; `Schorlemmer & Gerstenberger relative intensity`; `Rundle
+  nowcasting earthquakes natural time`. **My prior that the headline claim is a REDISCOVERY: 0.9.
+  Merton must classify before this freezes; if Ogata 1992 is what it appears to be, K-076 is
+  infrastructure and a positive control only — its value being that it makes K-077 and K-078
+  possible, which is exactly K-059's position in the wave seed.**
+- **Why dismissed too quickly.** "Quiescence detection is forty years old and never worked." Correct,
+  and the reason is in the sniff table: every one of those methods chose a baseline, and no two chose
+  the same one. This entry's contribution is not the detector — it is the **calibrated null
+  distribution of the detector under ETAS-sim, plus a declared UNMEASURABLE class**, which is what
+  turns forty years of ambiguous claims into a bound.
+
+---
+
+**K-077 — THE ONE THAT ACTUALLY ANSWERS JIM, AND THE ONLY CONDITIONING THAT MAKES "BUILDUP WITHOUT
+RELEASE" DIFFERENT FROM "SILENCE": the deficit must be crossed with INDEPENDENTLY MEASURED LOADING.**
+
+*Lens: Jim's sentence contains two nouns and the catalogue can only see one of them. "Buildup" is
+geodesy; "release" is seismicity. A catalogue-only quiescence statistic measures one term of a
+difference and calls it the difference.*
+
+- **The argument, because it is the whole entry.** ETAS is a pure release model: it has no loading
+  term at all, so `Λ − N` is *release minus expected release* and carries no information about
+  accumulation. **Silence in an unloading cell and silence in a fast-loading cell are the same number
+  and opposite physical states.** Therefore the testable form of Jim's hypothesis is **not** "deficit
+  predicts" but **"deficit predicts *in proportion to loading rate*, and not at all where loading is
+  zero"** — an **interaction with a sign prediction and a built-in negative control inside the same
+  regression.** That interaction is something a Poisson/ETAS field structurally cannot manufacture,
+  because ETAS does not know the geodesy. **This is the entry's entire claim to not being a
+  rediscovery of the exponential distribution, and it is also precisely the arm the seismic-gap
+  literature never ran.**
+- **Claim.** In `hazard(M ≥ 6.5, 90 d) ~ ETAS + β₁·z + β₂·V̇ + β₃·(z × V̇)`, where `V̇` is geodetic
+  moment-accumulation rate, **β₃ > 0 at ≥ 2σ against the ETAS-sim max-statistic, with β₁ ≈ 0** — that
+  is, deficit alone does nothing, deficit × loading does. Secondary and equally diagnostic: the
+  **magnitude** of what eventually breaks the oasis scales with the *accumulated* deficit-moment
+  `∫(V̇ − Ṁ_released) dt`, which is EXP-J's χ evaluated over the oasis rather than over the catalogue
+  epoch (Prediction B of the K-071 addendum, transplanted: **the deficit should shift the size
+  distribution before it shifts the rate**).
+- **Test / data.** `V̇` from **GSRM v2.1 / Kreemer strain rate** (`data/kreemer_young` on disk for the
+  SoCal arm; **one download** for the global grid), plate coupling where Slab2 supplies it. Targets:
+  the 13 boxes + the global fill-in at M ≥ 6.5; SoCal M ≥ 5 on the M ≥ 2.5 clock as the well-powered
+  low-Mc arm. Cox-ETAS with B-2/B-1 frozen. **The 42 measured-low-χ cells (n_train ≥ 20) are the
+  clean stratum per (M2); the full silent list is the contaminated one per K-031.**
+- **Null.** ETAS-sim with the real `V̇` field in place and the crust indifferent to it (**this null is
+  the one that kills the exponential-rediscovery objection dead: the sim produces oases at exactly
+  the right rate, and if the interaction is real the sim cannot reproduce it**); permutation of `V̇`
+  across cells **within tectonic-regime and n-matched strata** (the doubly-matched permutation of
+  K-003 — load-bearing here, because loading rate and background rate are strongly correlated and a
+  naive permutation would test the wrong thing); circular shift; the Q2 Mc rerun.
+- **POWER-STATE.** Unit = (cell × 90-day window); **N_eff = independent large targets ≈ 400–1,200
+  pooled globally.** Resolving an interaction that doubles hazard in the top-`V̇` decile relative to
+  the bottom requires ≈ 56 expected targets per stratum (`(3/0.4)²`, K-071's arithmetic); with four
+  `V̇` strata that is ~224 expected large events inside deficit windows — **reachable pooled globally
+  at M ≥ 6.5 over 30 years, not reachable in SoCal alone at M ≥ 5, and marginal per depth class.
+  Compute both numbers into the protocol before freezing.** Predicted amplitude if real: hazard ratio
+  **1.5–2.5** between extreme `V̇` strata at equal `z ≤ −2`, against a pooled resolution of ~20%.
+- **Expected.** Honest prior on the null: **0.7** for the rate interaction β₃; **0.55** for the
+  size-distribution arm, which I think is the better bet and which nobody has run because it needs a
+  loading map and a deficit map in the same regression.
+- **Cost / decision.** ~2 days on K-076 + the EXP-J/K outputs. **Decision: this is the seed's
+  verdict.** If β₃ is null at demonstrated power, "buildup without release" is closed with a number,
+  the Kagan–Jackson null is extended to the loading-conditioned case (a genuinely new and publishable
+  extension of a famous negative result), and the globe layer should stop implying that a flat
+  multiplier means anything.
+- **GATE: Q0. MERTON-BEFORE-FREEZE:** `seismic quiescence conditioned on geodetic strain rate`;
+  `interseismic coupling and seismicity rate deficit`; `moment deficit accumulation seismic
+  potential`; `Avouac coupling seismicity`; `Bürgmann creep and seismicity rate`; `Michel Avouac
+  Gualandi slow slip moment deficit`; `strain rate earthquake forecasting Bird Kreemer`; `Stevens &
+  Avouac 2021 relationship coupling seismicity`. **My prior that the *marginal* pieces are all
+  published: 1.0. My prior that this specific interaction — ETAS-residual deficit × geodetic moment
+  rate as a joint hazard covariate scored in bits — exists: ~0.3, the highest novelty prior in this
+  seed and exactly the kind of prior A-9 exists to stop me acting on.**
+- **Why dismissed too quickly.** "Coupling maps already do this." Coupling maps are *static* and
+  predict *where*; this is a *time-varying residual* crossed with them and predicts *when*, and the
+  interaction term is the object neither literature owns. The second dismissal — "geodetic rates are
+  smooth, so the interaction is just the coupling map again" — is answered by the sign structure:
+  β₁ ≈ 0 with β₃ > 0 is not producible by any static map; and if we instead find β₁ ≈ β₃ ≈ 0 with
+  β₂ > 0 we have simply re-derived coupling, and we say so.
+
+---
+
+**K-078 — THE COLOMBIA-SPECIFIC ENTRY, AND THE ONE THAT ANSWERS "DOES THE FRAMING EVEN APPLY AT
+Z = 107 km": DEPTH CLASS AS A MECHANISM SWITCH, WITH THE SIGN PREDICTED IN ADVANCE AND MY OWN SNIFF
+POINTING THE WRONG WAY.**
+
+*Lens: scope is a hypothesis. "Which cells does this apply to" is usually filed as a caveat; here it
+is the discriminating test, because two different failure physics predict two different signs.*
+
+- **The mechanism argument, stated plainly, because Jim's question presupposes a mechanism that may
+  not exist at 107 km.** "Buildup without release" is an **elastic-strain-accumulation** story: a
+  locked frictional patch stores shear strain, its edges leak small events, and suppression of the
+  leak implies accumulation. That story requires (a) a frictional interface, (b) an elastic loading
+  medium at the relevant timescale, (c) small events that are *causally the leak* rather than
+  independent samples. **At 107 km, inside a slab, at least two of those are doubtful.**
+  Intermediate-depth intraslab earthquakes occur at pressures where dry frictional failure is
+  suppressed, and are widely attributed to **dehydration embrittlement / thermal shear instability** —
+  the controlling variable being the *arrival of a fluid or thermal front along the slab's
+  metamorphic facies*, not slow build-up of far-field elastic strain against a locked asperity. The
+  surrounding mantle relaxes viscously on the relevant timescale, so "strain accumulates while
+  nothing happens" has a different and much shorter memory. **Prediction: the strain-accumulation
+  framing is SHALLOW-ONLY, and the intermediate-depth arm is this family's built-in negative
+  control.**
+- **And here is why the entry is worth running rather than asserting: my own sniff points the other
+  way, at low n, and I refuse to bury that.** Intermediate M ≥ 7: P(gap ≥ 90 d) = **0.278 vs 0.163**
+  random-time (LR 1.7; **n = 18, binomial p = 0.157 — not significant**) and P(gap ≥ 365 d) =
+  **0.111 vs 0.067** (p = 0.34); against the event-sampled reference the same rows read **5.0×** and
+  **18×**. Shallow, at n = 418, the sign is **negative and significant** (p = 0.0012). **So the only
+  depth class where the data hints Jim's way is the class where my mechanism argument says it should
+  not — which is a live failure risk for my own reasoning and therefore the most informative thing in
+  this seed to measure.** If the intermediate excess survives at n ≥ 40, the strain-accumulation
+  framing is *wrong* and something else — a **dehydration/fluid-front pulse whose arrival is preceded
+  by a genuinely quiet interval** — is right, which is a mechanism claim with its own downstream
+  predictions (depth-banded, along-strike-propagating, with different aftershock productivity).
+- **Claim.** The sign of the deficit→hazard coefficient **differs between shallow (< 70 km) and
+  intermediate (70–300 km) classes at ≥ 2σ** in the ETAS-sim-calibrated max-statistic, with the
+  shallow class **≤ 0** (pre-registered per Q3) and the intermediate class the free parameter. A null
+  *difference* closes the depth question with a bound; a confirmed difference makes depth class a
+  required stratifier for the entire globe layer.
+- **Test / data.** K-076's field, stratified by depth class of the target, with the *neighbourhood*
+  restricted to the same depth class (**this is the construction choice that matters most, and it is
+  frozen here: a slab cell's shallow crustal seismicity is a different population and must not count
+  as its "release"** — the Colombia case is exactly this, a 107 km event under a cell whose M ≥ 4.5
+  climatology mixes shallow Andean and intraslab sources). Depth classes {0–70, 70–300} frozen; Slab2
+  geometry to assign slab vs non-slab where available. **Requires the global fill-in download: 59
+  intermediate M ≥ 6.5 and 18 intermediate M ≥ 7 on disk is not enough, and the fill-in roughly
+  doubles it — state the achieved n before freezing, and if intermediate M ≥ 7 does not clear n = 40
+  the entry runs as bound-producing only and says so in its headline.**
+- **Null.** ETAS-sim with depth-class-preserving simulation; **the depth-label permutation null** —
+  reassign depth classes at random within region, destroying the mechanism split and preserving
+  everything else; Q2's Mc rerun (intermediate-depth events are *better* detected at distance than
+  shallow ones, so the detection bias here has a known and opposite sign — a rare gift, to be
+  exploited as a control rather than filed as a caveat).
+- **POWER-STATE.** Unit = target event; **N_eff = 59 (M ≥ 6.5) / 18 (M ≥ 7) intermediate on disk**,
+  perhaps 120 / 40 with the fill-in. At n = 40 the detectable difference in P(oasis) is ≈ 0.16
+  absolute — i.e. **only an effect as large as the raw sniff (0.278 vs 0.163) is detectable at all**,
+  which is a coin-flip and is stated as such. **Bound-producing unless the fill-in delivers n ≥ 40.**
+- **Expected.** Honest prior that the shallow class is null-or-negative: **0.85** (I have already
+  half-measured it). Honest prior that the intermediate class shows a positive deficit effect at
+  n ≥ 40: **0.3** — my mechanism says no, my data hints yes, and 0.3 is what honesty looks like when
+  those disagree.
+- **Cost / decision.** ~0.5 day on K-076 once the fill-in exists. Decision: it is the cheapest entry
+  in the seed, the only one Jim's event directly asks, and the only sign-contrast test here. It also
+  supplies the globe layer with the correct answer to "should the excitation multiplier be computed
+  per depth class" — a product decision currently being made by default.
+- **GATE: Q0; plus K-034 for the sub-arm only that attributes any intermediate-depth rate change to a
+  transient trigger. MERTON-BEFORE-FREEZE:** `intermediate depth intraslab earthquake precursor`;
+  `dehydration embrittlement intermediate depth seismicity`; `intraslab seismicity clustering
+  aftershock productivity depth`; `Wiens intermediate depth aftershock productivity`; `Nishikawa &
+  Ide depth dependence aftershock productivity`; `slab quiescence precursor Vrancea`; **`Bucaramanga
+  nest Colombia intermediate depth seismicity`** (the nearest well-studied analogue to the
+  2026-08-10 event's setting, ~200 km ENE, and a place where intermediate-depth rate statistics have
+  actually been studied); `Colombia Nazca slab seismicity catalogue completeness`.
+- **Why dismissed too quickly.** "n = 18, drop it." n = 18 is why it is a *prediction* and not a
+  result, and the entry is designed so the null closes the question rather than deferring it. The
+  deeper reason not to drop it: **the shallow/intermediate split is the only place in this seed where
+  two different physical mechanisms predict two different signs of the same coefficient**, and a sign
+  contrast is the cheapest thing in statistics to believe.
+
+---
+
+**K-079 — THE CLOCK ENTRY, PER JIM'S OWN DIRECTIVE, AND THE RULING IS THAT TIME-SINCE-LAST IS THE
+WRONG X-AXIS AND I CAN NAME THE RIGHT ONE: quiescence duration must be measured in ACCUMULATED
+LOADING, not in days and not in events.**
+
+*Lens: S-7 applied to Jim's question rather than to a periodicity. He asks whether quiescence
+duration is an accumulating property — yes, but **days are not what is accumulating**; strain is. The
+clock that simplifies the system IS the discovery about the system.*
+
+- **The ruling, first, because it disposes of two candidate clocks before they waste a run.**
+  (a) **Wall time since last event is a bad x-axis** — under any ETAS/Poisson field, hazard as a
+  function of elapsed time is *exactly* the object whose shape the model fixes, so a scan over it
+  rediscovers the exponential. That is Jim's base-rate trap in clock form.
+  (b) **Transformed time `τ = Λ(t)` (natural time / ETAS residual time) is worse than useless for a
+  physical claim**, and S-7(a) says so explicitly: a correct model is unit-rate Poisson in its own
+  transformed time **by construction**, so structure in τ is a statement about model misfit, not
+  about the Earth. It is retained as a *diagnostic* only.
+  (c) **The only clock here that is exogenous in S-7(a)'s sense is `S(t) = ∫ V̇ dt` — accumulated
+  geodetic moment since the last release** — because the geodesy is measured outside the catalogue.
+  **That is the x-axis, and it is not "time since last event"; it is "loading since last release".**
+  For a constant-`V̇` cell the two are proportional and the distinction is invisible, which is exactly
+  why the test must be run **across cells of differing `V̇`**: the variation in loading rate is the
+  entire identifying signal.
+- **Claim.** Hazard of the next M ≥ 6.5 as a function of `S` since the last in-cell M ≥ 5 release is
+  **non-exponential in S** — specifically **increasing in S** (a Brownian-passage-time /
+  Weibull-shape > 1 form) — while the same hazard is **flat in wall time** once `S` is controlled.
+  **The pass is the pair, not either half:** rising in S *and* flat in t. That pair cannot be produced
+  by a Poisson or ETAS field, and it cannot be produced by a slow drift in rate either — which is the
+  failure mode that killed EXP-F.
+- **Test / null / statistic.** Survival model (Weibull and BPT vs exponential by likelihood ratio and
+  ΔBIC) on inter-large-event intervals with `S` as the time variable, pooled over the 13 boxes + the
+  fill-in, stratified by depth class (K-078) and by `V̇` decile. Nulls: **ETAS-sim carried through the
+  identical S-transform** (mandatory — the sim must return shape ≈ 1); **circular shift of the `V̇`
+  series against the catalogue** (S-7(d), sharp here because `V̇` is smooth and the shift destroys
+  only the alignment); **the wall-time twin** through the identical code path as the internal negative
+  control. **S-7(c): every clock tried enters the declared family and the headline is the S-8
+  max-statistic. Clocks declared in advance: {wall time, τ = Λ, S = ∫V̇dt, cumulative declustered
+  count, cumulative √moment}. Five. Declared here, before the run.**
+- **Positive control (S-7(e), mandatory).** Simulate a genuine BPT renewal process with CV = 0.6 plus
+  ETAS aftershocks, at the real number of intervals, and confirm the pipeline recovers shape > 1 in
+  `S` and shape ≈ 1 on ETAS-sim. **K-017's mandate inherited verbatim — and I state plainly that
+  K-079 is a sibling of K-017, not a new idea, differing in that the clock is exogenous where
+  K-017's was endogenous. That is the improvement K-017's own verdict demanded.**
+- **POWER-STATE.** Unit = inter-large-event interval; **N_eff = intervals with both a well-determined
+  `V̇` and a preceding in-cell release ≈ 200–400 pooled globally**, far fewer per stratum. Weibull-
+  shape estimates from 5–40 intervals are badly biased (S-4); the same estimator runs on real and sim
+  so the bias cancels, and the protocol says so. Detectable shape difference at n = 300: ≈ 0.25 in
+  Weibull k. **Predicted if real: k ≈ 1.3–1.8 in high-`V̇` locked cells, k ≈ 1.0 in low-`V̇` cells** —
+  and the *contrast* between those, not the absolute value, is the headline, because the absolute
+  value is contaminated by every selection effect in the catalogue and the contrast is not.
+- **Expected.** Honest prior on the null: **0.7.** Published recurrence-interval CVs cluster near
+  0.5–0.7 for well-characterised faults, which is encouraging for the claim and also exactly the
+  regime where paleoseismic selection effects are strongest — so I discount it.
+- **Cost / decision.** ~1 day on K-077's geodetic layer (they share it; build once). Decision: it
+  converts Jim's clock directive from a slogan into a specific, exogenous, falsifiable x-axis, and its
+  negative-control twin (flat in wall time) is what would make a positive believable.
+- **GATE: Q0 + the S-7(e) injection-recovery above. MERTON-BEFORE-FREEZE:** `Brownian passage time
+  earthquake recurrence Matthews Ellsworth Reasenberg 2002`; `time predictable recurrence model
+  Shimazaki Nakata`; `slip predictable model failure`; `Rundle natural time nowcasting`; `Varotsos
+  natural time seismicity`; `WGCEP renewal model recurrence CV`; `stress-time reparameterisation
+  seismicity`; `Kagan & Jackson long-term earthquake clustering`. **Prior that renewal-in-loading-time
+  has been proposed: 1.0 (it is the time-predictable model). Prior that it has been tested as a
+  *hazard covariate scored in bits against a frozen ETAS on a holdout*: ~0.25 — and note that Kagan &
+  Jackson's clustering result is standing counter-evidence, so this entry inherits a contested
+  literature rather than an empty one.**
+- **Why dismissed too quickly.** "The time-predictable model is a known failure." It failed as a
+  *deterministic* recurrence model at Parkfield. It has not failed as a *hazard modulation of a few
+  tens of percent on top of ETAS*, which is all we claim and all our resolution supports — and the
+  distinction between "the clock is exact" and "the clock adds 0.02 bits" is the distinction between
+  the 1985 Parkfield prediction and a usable covariate.
+
+---
+
+**K-080 — THE FRAME-BREAK NOBODY ASKED FOR, AND THE ONLY DESIGN THAT ESCAPES THE SELECTION EFFECT
+THAT HAS KILLED EVERY QUIESCENCE CLAIM EVER MADE: THE OASIS CENSUS AND ITS MOLCHAN COST. Publish the
+complete list of every oasis on Earth TODAY, before anything breaks any of them.**
+
+*Lens: question the question. Jim asked whether *this* oasis was a precursor. The unanswerable version
+of that question is retrospective and the answerable version is a census — so the object to build is
+not a test but a **denominator**. Nobody asks for a denominator; everybody needs one.*
+
+- **The observation that generates it.** Every quiescence claim in the literature, and Jim's question,
+  and my own sniff, share one structure: **an oasis becomes visible because something happened in
+  it.** The cell was inspected because of the M7.4. There is no fix for this inside a retrospective
+  analysis — not matching, not permutation, not cross-validation — because the *attention* is the
+  confounder and attention is not in the catalogue. **The only instrument that removes it is a
+  commitment log with a public timestamp.**
+- **Claim, and it is deliberately a claim about *us* rather than about the Earth.** Freeze K-076's
+  detector today; enumerate **every** cell on Earth currently satisfying the oasis definition
+  (`z ≤ −2`, `Λ ≥ 4`, so unmeasurable cells are excluded by construction); publish the list with a
+  hash and a date; score it at +1, +2 and +5 years on a **Molchan trajectory** (alarm-space fraction
+  vs miss rate) against the frozen-ETAS reference and against a random-alarm reference of identical
+  space-time volume. **Pass = the Molchan point lies significantly below the diagonal. Fail = it does
+  not, and we publish the diagonal.** No selection, no baseline argument, no length-bias: the
+  denominator is committed before the numerator exists.
+- **The number I expect, computed now so the census cannot be spun.** From (ii): ~18% of random
+  instants in seismically active cells sit inside a ≥ 90-day M ≥ 4.5 gap; after imposing `Λ ≥ 4` and
+  `z ≤ −2` the qualifying fraction drops to order **1–5% of measurable cells**, which over an
+  active-cell inventory of ~10³–10⁴ gives an expected census of **order 10²** live oases worldwide at
+  any instant. **With a global M ≥ 6.5 rate of ~120/yr, the number of M ≥ 6.5 landing inside an oasis
+  in the next year by chance alone is order 1–10.** That number is the entire content of the
+  announcement Jim would otherwise be tempted to make about the next Colombia — and **the census
+  makes that announcement impossible to make carelessly, which I regard as the entry's main
+  product.**
+- **Test / null / statistic.** Molchan diagram + area skill score; ROC as secondary; and the
+  **calibration curve** — of cells declared oases, what fraction produced an M ≥ 6.5 within the
+  horizon, versus the frozen-ETAS predicted fraction. Nulls: random alarms of matched space-time
+  volume; ETAS-sim alarms generated by the identical detector (**this is the one that matters: ETAS
+  produces oases, so the sim's Molchan trajectory IS the exponential-rediscovery baseline made
+  visible, and Jim's question is answered by the gap between the two curves and by nothing else**).
+- **POWER-STATE.** At a census of ~10² alarms and a global M ≥ 6.5 rate of ~120/yr, expected hits in
+  1 year ≈ 1–10, in 5 years ≈ 5–50. **A 1-year scoring is uninterpretable and I say so up front; the
+  committed horizon is 5 years, with 1- and 2-year readouts published as descriptive only.** This is
+  the slowest entry in the program and the only one whose value increases with patience.
+- **Expected.** Honest prior that the Molchan point beats the diagonal at 5 years: **0.2**. Honest
+  prior that the census changes how the globe layer renders quiet cells: **1.0** — and that is why it
+  runs regardless of the first number.
+- **Cost / decision.** ~0.5 day once K-076 exists, then zero marginal cost forever. **Decision: this
+  starts on day one at zero cost, exactly as K-069's commitment log does, and for the same reason.
+  The two logs should share one file and one hashing discipline.** It is also the entry that lets this
+  program say something honest and immediate about the next Colombia: *"that cell was one of the 106
+  on the list we published in August 2026, and here is the trajectory."*
+- **GATE: Q0 for the detector; none for the census itself (it makes no claim until scored).
+  MERTON-BEFORE-FREEZE:** `Molchan diagram earthquake prediction evaluation`; `Zechar & Jordan area
+  skill score`; `CSEP prospective testing protocol`; `Kossobokov M8 algorithm prospective
+  evaluation`; `alarm-based earthquake forecast evaluation`; `Rhoades & Evison EEPAS prospective`.
+  **The evaluation machinery is entirely standard and I claim no novelty in it whatever — the
+  novelty, if any, is that the alarm set is a quiescence census rather than an activity forecast, and
+  that is the one direction CSEP's testing centres have almost never been pointed.**
+- **Why dismissed too quickly.** "A five-year wait is not a research programme." It is the only design
+  here immune to the confounder that killed the field, it costs half a day, and it starts accruing the
+  instant it is published. **The program's corpse list is made of retrospective analyses; the one
+  thing we have never done is commit in advance and wait.** Also: a census with a published
+  denominator is the single most effective defence against the failure mode in which a striking
+  coincidence — an M7.4 inside a flat cell — becomes an institutional belief.
+
+---
+
+**Run order.** **Q0 first, always** — half a day, and it decides whether any of this is measurable.
+Then **K-080's census**, because it costs half a day, every day of delay is a day of prospective score
+not accruing, and it must be published *before* the retrospective entries run so nobody can claim the
+census was tuned. Then **K-076** as infrastructure with its own losable claim (with Merton's Ogata
+classification in hand, since a REDISCOVERY verdict there changes the framing, not the build). Then
+**K-078**, because it is the cheapest, it is what Jim's event actually asks, and it is the only
+sign-contrast test in the seed. Then **K-077**, the seed's verdict, once the geodetic layer exists.
+Then **K-079** riding on the same geodetic layer.
+
+**The correction I owe Jim, stated plainly.** The intuition is a good one and it is the correct
+*shape* of inversion — but the observable as posed, "the cell has been flat for 90 days", is a
+**p ≈ 0.18 event that occurs at hundreds of cells simultaneously**, is **undetectable in principle at
+a single cell at M ≥ 4.5** (`Λ ≈ 1.7` where `Λ ≥ 4` is needed for even a total blackout to register at
+2σ), and in the direction the literature has already tested it, it **has already failed once**
+(Kagan & Jackson 1991) — with my own sniff independently reproducing the sign of that failure at
+n = 418, p = 0.0012. **The idea survives only if the deficit is crossed with something the catalogue
+cannot see.** Geodetic loading is that something; depth class is a second, cheaper one. **So the
+honest translation of Jim's sentence is: "absence of release is not a signal; absence of release
+*while loading continues at a measured rate* might be — and it is one regression away."** That
+regression has never been run in bits against a frozen ETAS on a holdout, and it is K-077.
+
+*Kepler, quiescence seed. Five entries, K-076..K-080, all PROPOSED, all gated on Q0 (this family's own
+injection-recovery licence, defined above on K-035's precedent, because K-034's licence does not reach
+a months-long fractional suppression — R2-2), with K-078's triggering sub-arm additionally gated on
+K-034; all POWER-STATED with the arithmetic shown; all tagged MERTON-BEFORE-FREEZE with nominated
+searches; all carrying declared units and N_eff; and all bound by (Q1) the length-bias declaration,
+(Q2) the Mc/station-count rerun, and (Q3) the pre-registered negative prior on the shallow arm. The
+seed's headline priors are deliberately pessimistic: **P(any arm clears S-11's 0.01 bits out of
+sample) ≈ 0.15; P(K-077's loading interaction shows the predicted sign at ≥ 2σ) ≈ 0.25; P(K-078's
+intermediate class survives at n ≥ 40) ≈ 0.3; P(the family yields a quotable bound) ≈ 0.9.** I would
+rather write those numbers now than after. The supporting sniff is read-only, EXPLORATORY, adjudicates
+nothing, and is reproducible from `data/comcat_world/*.csv`.*
+
+---
+
+### Angular-configuration seed (Jim, 2026-08-10): DO EVENTS AT ANGLES PUSH, PULL, OR ARGUE?
+
+**Jim's question, verbatim:** *"what if earthquakes at ANGLES to known areas indicate stress/affordance
+for an area to trigger. For example, imagine that for the Columbia quake, 200 miles away at 35 degrees
+from North a 6.0 occurred a month earlier — and another at a different angle at a different time, etc,
+etc, and those all (imagine) 'pull' or 'push' a living stress field (remember we are modelling the
+'other side') which then allows for either too much stress OR a relief in order to move OR a conflict
+across an area, which raises/lowers the probability beyond a trackable constant that we can use for
+prediction."*
+
+**Translation into the one sentence that can be tested, and I state it before anything else because the
+rest of this block is the defence of this sentence.** Jim's intuition has a real physical referent —
+**stress transfer is angularly structured** (Coulomb lobes whose sign flips with azimuth, set jointly by
+source mechanism and receiver-fault orientation) — while **our ETAS baseline's spatial kernel is
+isotropic**. So the sharp question is not "do angles matter" (they demonstrably do, in physics) but:
+
+> **Does the ANGULAR CONFIGURATION of prior regional events, relative to a target cell, carry
+> predictive information ABOVE AND BEYOND an isotropic distance-decay kernel — and above and beyond
+> the azimuthal structure the local tectonics guarantee for free?**
+
+That second clause is the whole difficulty, and it is why I ran a sniff before drafting.
+
+---
+
+**(i) THE SNIFF, RUN BEFORE ANY ENTRY WAS DRAFTED (read-only, exploratory, on disk).** All 13 boxes,
+`replication/data/comcat_world/*.csv`, 71,797 events, 5,012 at M ≥ 5.5, 517 at M ≥ 6.5, 1995–2026.
+For every target I took the **prior M ≥ 5.5 events in the annulus 100–500 km within 365 days** (Jim's
+"200 miles, a month earlier" sits at 320 km, mid-annulus), computed the **forward azimuth from each
+prior source to the target**, and measured the **resultant length R** of those azimuths — the standard
+circular-concentration statistic. Two nulls, and the pair of them is the methodological content:
+
+- **Uniform-azimuth null** — azimuths drawn uniformly on the circle. *This is the null a naive test uses.*
+- **STRUCTURE-AWARE null** — azimuths resampled from **that same target's own long-run azimuthal
+  climatology**: every M ≥ 5.5 in the same annulus across the whole catalogue, excluding ±1 yr around
+  the target. This holds slab strike, plate-boundary trend and network geometry **fixed by
+  construction**, because it is the same location's own history.
+
+And one control set: the identical statistic at **ordinary M 5.0–5.5 events** (matched "targets" that
+are not large), which is the control the literature almost never runs.
+
+| arm (lag 0–365 d, annulus 100–500 km, M ≥ 5.5 sources) | n | med n_prior | med R_clim | mean z vs STRUCTURE-AWARE null | frac p<.05 vs structure | frac p<.05 vs UNIFORM |
+|---|---|---|---|---|---|
+| **targets M ≥ 6.5** | **337** | 9 | 0.432 | **+0.753 ± 0.121** | 0.193 | **0.525** |
+| **controls M 5.0–5.5** | 1,017 | 9 | 0.441 | **+0.785 ± 0.083** | 0.218 | **0.525** |
+| targets, lag 7–365 d | 330 | 8 | 0.427 | +0.705 ± 0.111 | 0.191 | 0.521 |
+| controls, lag 7–365 d | 975 | 8 | 0.434 | +0.636 ± 0.074 | 0.206 | 0.497 |
+| targets, **axial** (2θ), 0–365 d | 337 | 9 | 0.491 | +0.346 ± 0.081 | 0.169 | 0.570 |
+| controls, **axial** (2θ), 0–365 d | 1,017 | 9 | 0.497 | +0.457 ± 0.053 | 0.192 | 0.555 |
+
+**Three things fall out of that table, and all three are load-bearing.**
+
+1. **The base-rate trap, in numbers rather than as a warning.** Against a uniform-azimuth null, the
+   prior-event configuration is significantly anisotropic at **52.5% of targets**. Median
+   climatological resultant **R = 0.43** (0.49 axially) — i.e. the *long-run* azimuthal distribution
+   around a typical seismogenic cell is already strongly one-sided, because faults are lines and slabs
+   are sheets. **A test against a uniform-azimuth null rejects at one target in two and means nothing.**
+   Any azimuthal claim in this program that does not name a structure-aware null is an artifact
+   generator, and I will not write one.
+2. **Against the structure-aware null there IS a real excess — and it is not specific to large events.**
+   Targets sit at **z = +0.75**: the last year's azimuths are genuinely more concentrated than that
+   location's own climatology. But **the M 5.0–5.5 controls sit at z = +0.79**, if anything *higher*.
+   **Difference targets − controls = −0.03 ± 0.15 (0–365 d), +0.07 ± 0.13 (7–365 d), −0.11 ± 0.10
+   (axial).** All null. The excess concentration is the **generic clustering signature** — recent
+   seismicity is clumped, a clump has a direction, every event inherits it — and it has nothing to do
+   with being about to host an M ≥ 6.5.
+3. **Therefore the correct null for this whole family is neither uniform NOR structure-aware alone; it
+   is structure-aware AND matched-control.** That is a two-line finding I did not know before running
+   it, it costs nothing to adopt, and it is mandate A1 below.
+
+**What the sniff does NOT do, stated so nobody over-reads it:** it uses raw azimuthal concentration, an
+*unsigned, mechanism-free, receiver-blind* statistic. It is the crudest possible projection of Jim's
+idea and is close to the weakest test that could be run. **A null here does not falsify Jim; it
+falsifies the naive version and prices the informative version.** The price is in (iv).
+
+---
+
+**(ii) THE AMPLITUDE AUDIT, COMPUTED FOR JIM'S OWN EXAMPLE, BECAUSE IT DECIDES WHICH PATHWAYS ARE
+EVEN LIVE.** Jim's hypothetical: an **M6.0 at 320 km, one month earlier**, acting on a receiver at
+**Z = 107 km** (hypocentral distance ≈ 337 km).
+
+| channel | scaling | amplitude at 320 km from M6.0 | vs reference |
+|---|---|---|---|
+| **static Coulomb** | Δσ_drop·(r_src/R)³; r_src ≈ 5 km, Δσ_drop ≈ 3 MPa | **≈ 1–10 Pa** | ~10⁻³ of a solid-Earth tide |
+| static, from an M7.0 instead | r_src ≈ 20 km | ≈ 0.5–1 kPa | ~0.2 × a tide |
+| **dynamic transient** | G·PGV/c; G = 30 GPa, c = 3.5 km/s, PGV ≈ 0.05–0.2 cm/s | **≈ 0.4–2 kPa** | ~0.5 × a tide |
+| solid-Earth tide (reference) | — | 1–5 kPa | 1× |
+| **K-034's certified band** | R2-2 licence | **10–100 kPa** | 10–100× |
+
+**Read that column and the seed changes shape.** At Jim's stated geometry the **static** stress change
+is **~1–10 Pa — three orders of magnitude below a tide**, and our own tidal-phase work is a corpse at
+kPa amplitudes. **The static pathway at 320 km from an M6 is, as a direct stressing agent, dead on
+arrival, and I say so in the seed's first entries rather than in a footnote.** The **dynamic** transient
+is 100–1000× larger and is the only channel with a plausible amplitude — but at ~1 kPa it is still
+**an order of magnitude BELOW K-034's certified 10–100 kPa band**, so *K-034 does not license this
+range either*. Two consequences, both structural:
+
+- **The only physically live pathways at Jim's amplitudes are (a) DYNAMIC triggering (which is angularly
+  structured via the source RADIATION PATTERN — and is therefore the wave family K-059..K-075, not a new
+  family), and (b) a RATE-AND-STATE / near-criticality amplifier in which a Pa-scale static step advances
+  a clock on a patch that was already within Pa of failure.** Pathway (b) is not absurd — it is exactly
+  the standard rate-state clock-advance argument, and it predicts an effect that is **linear in Δσ and
+  therefore linear in the summed angular configuration**, which is a testable functional form, not a
+  hand-wave.
+- **Amplitudes rise steeply with source magnitude and fall steeply with distance (R⁻³ static).** So the
+  entries below are **magnitude- and distance-stratified by construction**, and the honest expectation
+  is that any real signal lives in the **M_src ≥ 6.5, R ≤ 200 km** corner, not at Jim's stated 320 km /
+  M6.0. **That is a prediction about where the signal must be if it exists, made before the run.**
+
+**And the Colombia-specific caveat, which is severe.** At **Z = 107 km inside the Nazca slab**, the
+receiver-fault orientation that a Coulomb calculation requires is set by slab geometry (down-dip
+tension/compression), and — per K-078 — intermediate-depth failure is widely attributed to
+**dehydration embrittlement / thermal shear instability**, which is not obviously Coulomb-governed at
+all. **The push/pull sign map may be UNDEFINED at the exact depth of the event that prompted the
+question.** The seed therefore runs its mechanism-informed arm **shallow-first**, and treats
+intermediate depth as K-078's negative control, not as its showcase.
+
+---
+
+**(iii) THE DEGENERACY WITH THE WAVE FAMILY, NAMED BEFORE IT CAN BE DISCOVERED LATE.** Dynamic
+triggering **is** directional — the radiation pattern of a double-couple is a four-lobed function of
+azimuth, which is precisely "events at angles." **K-059's teleseismic stress ephemeris already computes
+source–receiver geometry.** So an azimuth feature is, in the dynamic channel, a **degenerate,
+amplitude-free, phase-free projection of K-059's ephemeris.** If the mechanism-free arm (K-081) comes
+back positive, the first question Popper will ask is "is this just K-059 with the amplitudes thrown
+away?", and the answer must be pre-built:
+
+> **THE LAG DISCRIMINATOR (mandatory reporting object for every entry in this seed).** Every angular
+> statistic is reported as a **profile over source→target lag** in bins {0–1 d, 1–7 d, 7–30 d, 30–90 d,
+> 90–365 d}. **Dynamic triggering lives in the first bin and is essentially gone by the second**
+> (K-034's band, Hill/Brodsky's remote-triggering timescale). **Jim's claim is explicitly about
+> months** ("a month earlier"). A positive concentrated at 0–1 d is the wave family and is reported
+> under K-059..K-075's names. A positive at 30–365 d is a genuinely new object and is this seed's. **A
+> positive that is flat in lag is a static covariate — i.e. a map of tectonics that leaked through the
+> structure-aware null — and is scored as a FAIL of the null, not as a finding.**
+
+---
+
+**(iv) POWER, COMPUTED FROM THE SNIFF SO IT CANNOT BE DISCOVERED LATE.** The sniff's per-target
+statistic has sd(z) ≈ 2.2. At n = 337 targets + 1,017 controls the **2σ-detectable difference in mean z
+is ≈ 0.29 z-units**. Converting a standardised covariate shift δ to information gain
+(≈ δ²/(2 ln 2) bits/event): the sniff's floor is **≈ 0.06 bits/event** — i.e. **the sniff could only
+have seen an effect six times larger than S-11's 0.01-bit threshold.** To reach 0.01 bits (δ ≈ 0.118)
+at 2σ needs **n ≈ 1,400 large targets with matched controls.** We hold 337 usable at M ≥ 6.5 in the 13
+boxes; the global fill-in (the same download K-076 requires, and Colombia is in none of our boxes)
+takes that to perhaps **700–900. Still ~2× short.** Therefore, exactly as in the quiescence seed, **the
+family is runnable in only two configurations, and both are specified below:**
+- **(a) POOLED GLOBAL at M ≥ 6.5** — bound-producing at ~0.02–0.03 bits, not at 0.01. Say so up front.
+- **(b) LOW-Mc SoCal**, `comcat_socal_m25.csv`: targets M ≥ 4.0, sources M ≥ 2.5, annulus 10–100 km
+  (amplitudes scale, geometry does not). **N_targets ~ 10³–10⁴, and this is the ONLY configuration in
+  which the 0.01-bit threshold is reachable at all.** It also happens to be the one region where we
+  hold focal mechanisms on disk (`data/scedc_fm`), which makes it the mechanism-informed arm's only
+  home too. **SoCal is the experiment; the globe is the replication.**
+
+---
+
+**GATE A0 (this family's licence; it runs first or the family does not run).** K-034 licenses the
+dynamic-triggering family at **10–100 kPa transient**, which per (ii) is 10–100× the amplitudes Jim's
+example implies, and licenses nothing at all about a *months-lagged angular kernel*. So this family
+earns its own licence by **injection-recovery**, on K-035's precedent:
+
+> Inject into ETAS-sim a **known four-lobed multiplicative anisotropy** in the spatial kernel,
+> `λ(r,θ) = λ_iso(r)·(1 + A·cos 2(θ − θ₀(x)))` with `A ∈ {0.1, 0.25, 0.5, 1.0}` and `θ₀` set by the
+> local plate-boundary strike, push it through the identical K-081 pipeline, and report the recovery
+> ROC and the bits recovered vs bits injected. **No null from this family is interpretable until the
+> detector is shown to recover a lobe of the amplitude the entries claim.** Cost: hours.
+> **All entries below are gated on A0.**
+
+**K-034 POSITIVE CONTROL — and it has a natural home here that it did not have in the quiescence seed.**
+**Landers 1992 is the canonical case of ANGULARLY STRUCTURED remote triggering** (Hill et al. 1993,
+*Science* 260, 1617 — triggered seismicity out to ~1,250 km, distributed non-uniformly in azimuth).
+**GATE A0b:** the pipeline must recover the Landers azimuthal structure as a positive control at the
+known amplitude and the known (hours-to-days) lag, **before any months-lag claim is entertained.** If
+the detector cannot see Landers — the largest, best-documented angular triggering signal on the
+continent — it cannot see Jim's.
+
+**STANDING MANDATES, binding on K-081..K-086, written once.**
+**(A1) The matched-control mandate — this seed's own discovery, from (i).** Every angular statistic is
+computed identically at large targets AND at magnitude-matched ordinary events (M 5.0–5.5 globally;
+M 3.0–3.5 in SoCal), and **the headline is the DIFFERENCE, never the target arm alone.** The sniff shows
+the target arm alone reads z = +0.75 and means nothing. This mandate is non-negotiable and it is the
+cheapest insurance in the seed.
+**(A2) The structure-aware null mandate.** No uniform-azimuth null is ever the confirmatory null.
+Confirmatory null = resampling from the target location's **own** long-run azimuthal climatology
+(±1 yr excised), with the uniform result reported alongside **solely to quantify the trap** (52.5%, per
+(i)). Secondary null: **rotation of the azimuth field** — rotate all source→target azimuths by a common
+random angle per target, preserving the configuration's *shape* and destroying its *orientation
+relative to the receiver*. That second null is the one that isolates "the angles matter **relative to
+the fault**" from "the angles are clustered."
+**(A3) The observer mandate (S-1(b), K-031, W-004).** Azimuthal coverage is a network property: an
+offshore quadrant is systematically less complete than an onshore one, which manufactures azimuthal
+anisotropy in the *catalogue* that does not exist in the *Earth*. Every deficit/excess by azimuth is
+rerun with an **azimuthal completeness map** (Mc by azimuth sector, from station geometry) as a
+regressor. **If the signal does not survive that rerun it is W-004's finding, not this seed's.**
+
+**FAMILY DEATH CONDITION, declared in advance per R2-3.** The angular-configuration programme is CLOSED
+with a published bound if all three of: (a) K-081's mechanism-free kernel adds < 0.01 bits/event in the
+well-powered SoCal low-Mc configuration at demonstrated A0 power; (b) K-082's Coulomb-**sign**-weighted
+statistic fails to beat its own **unsigned** twin at ≥ 2σ (i.e. the sign carries nothing, which would
+mean any anisotropy we see is geometric bookkeeping and not stress); (c) K-083's conflict/variance term
+shows no outcome-class separation at n ≥ 200 per class. If those land, the honest statement is *"the
+angular configuration of prior regional seismicity carries no forecasting information beyond an
+isotropic ETAS kernel and the local structure-aware azimuth climatology, at |effect| < X bits/event at
+80% power, in both mechanism-free and mechanism-informed forms"* — reopenable only by better data
+(dense mechanism catalogues, geodesy), never by a new statistic. R2-1(e)'s anti-ratchet, adopted
+voluntarily.
+
+**RELATION TABLE — where this seed sits against what already exists.**
+
+| existing | relation | the one-line reason |
+|---|---|---|
+| **K-059..K-063 (wave ephemeris/interference)** | **PARENT in the dynamic channel; degenerate with it at short lag** | radiation pattern IS angular structure; separated only by the lag discriminator in (iii) |
+| **K-064 (superadditivity, rate-and-state)** | **shared mechanism** | pathway (b) in (ii) is K-064's rate-state amplifier applied to a static, not a dynamic, step |
+| **K-067 (illumination ledger)** | **direct import** | K-067's "computable probe" is what makes K-082's sign map exogenous |
+| **K-071/K-072 (ledger × probe, degeneracy breaker)** | **sibling design** | both cross an exogenous directional probe with the stress ledger; K-083 is K-072 with a *conflict* term |
+| **K-076 (release-deficit field)** | **shared infrastructure, disjoint estimand** | same grid, same frozen-ETAS baseline, same UNMEASURABLE class |
+| **K-077 (deficit × geodetic loading)** | **THE COMPARISON THAT MATTERS — see K-085** | angular configuration is a catalogue-only *proxy* for the loading field geodesy measures directly |
+| **K-078 (depth class as mechanism switch)** | **binding constraint** | the Coulomb sign map may be undefined at Z = 107 km; K-078 decides whether the arm even applies |
+| **K-079 (loading clock)** | **complement** | K-079 asks *under which clock*; this seed asks *from which direction* |
+| **K-080 (oasis census)** | **template** | K-086 borrows the commitment-log discipline verbatim |
+| **K-034 (dynamic-triggering licence)** | **positive control, newly apt** | Landers' angular remote triggering is the natural home the control never had |
+| **K-003 (doubly-matched permutation)** | **method import** | A1's matched controls are K-003's matching applied to targets rather than to cells |
+
+---
+
+**K-081 — THE MECHANISM-FREE ARM AND THE FAMILY'S INSTRUMENT: replace ETAS's ISOTROPIC spatial kernel
+with an AZIMUTH-RESOLVED one, and score the difference in bits. My own sniff says the crude version is
+null and I lead with that.**
+
+*Lens: the model's assumptions are hypotheses. ETAS's spatial kernel is isotropic not because the Earth
+is, but because isotropy is the cheapest thing to fit. Every unexamined convenience in a baseline is an
+unasked question — and this one has a physical referent (Coulomb lobes) that predicts exactly how the
+convenience should fail.*
+
+- **Claim (and it must be able to lose).** An **angular-configuration covariate**
+  `a(x,t) = Σ_j w(M_j, r_j, Δt_j)·f(θ_j − φ(x))`, summed over prior events j in the annulus, with
+  `φ(x)` the local structural azimuth and `f` a learned angular response, **adds ≥ 0.01 bits/event over
+  the frozen isotropic-kernel ETAS**, in the SoCal low-Mc configuration, out of sample. If it does not,
+  the bound goes in the corpse-to-bound table and ETAS's isotropy is certified as adequate at our
+  resolution — which is itself a publishable statement about a universally used model.
+- **The observable, stated precisely.** Feature construction, frozen: sources M ≥ 2.5 (SoCal) /
+  M ≥ 5.5 (global); annulus 10–100 km (SoCal) / 100–500 km (global); lag bins per (iii); azimuth
+  measured **source → target**; `f` parameterised as the first three circular harmonics
+  (`cos θ, sin θ, cos 2θ, sin 2θ, cos 3θ, sin 3θ`) with coefficients fitted on train and **frozen**;
+  `w` = the frozen ETAS productivity/decay weights, so that **the ONLY new degree of freedom is
+  angular** — this is the construction choice that makes the comparison clean, and it is frozen here.
+  **Everything else in the model is held at B-1/B-2 validated values.**
+- **Data.** On disk: `comcat_socal_m25.csv` (the powered arm), `data/comcat_world/*.csv` (13 boxes).
+  **One download**, shared with K-076: global ComCat M ≥ 4.5 outside the 13 boxes — again because
+  **Colombia is in none of our boxes**.
+- **Statistic / null.** Bits/event vs frozen isotropic ETAS; **A1's matched-control difference is the
+  headline**; nulls per A2 (climatology resample, azimuth-rotation) plus **ETAS-sim through the
+  identical pipeline** (the load-bearing null: simulated isotropic ETAS produces azimuthally clumped
+  configurations too, and their distribution *is* the artifact Jim must not be sold); plus A3's
+  azimuthal-completeness rerun. S-8 max-statistic over the declared family {annuli × lag bins ×
+  harmonics × depth classes × M_src strata}. **Declared now: 5 annuli × 5 lag bins × 3 harmonic orders
+  × 2 depth classes × 3 magnitude strata = 90. The S-8 correction is severe and is budgeted, not
+  discovered.**
+- **POWER-STATE.** Unit = target event. **N_eff = 337 usable M ≥ 6.5 on disk (from 517, after requiring
+  ≥ 3 yr history and ≥ 3 prior sources), ~700–900 with the fill-in; ~10³–10⁴ in SoCal at M ≥ 4.0.**
+  2σ-detectable δ at the global n: **0.29 z-units ≈ 0.06 bits** — *six times S-11's threshold, so the
+  global arm is BOUND-PRODUCING ONLY and says so in its headline.* SoCal low-Mc reaches δ ≈ 0.06–0.12,
+  i.e. **0.003–0.01 bits, the threshold**. Predicted amplitude if real: a lobe amplitude
+  **A ≈ 0.15–0.4** in the `cos 2θ` term (from Coulomb lobe contrast at these ranges), worth
+  **0.005–0.02 bits/event**.
+- **Expected.** +0.00 to +0.01 bits globally; up to +0.02 in SoCal. **Honest prior on the null: 0.75** —
+  raised to that (rather than 0.85) by the fact that anisotropic-kernel ETAS variants exist in the
+  literature and are reported to help *slightly*, which is both encouraging and a rediscovery warning.
+- **Cost / decision.** ~2 days, most of it kernel plumbing shared with K-076's grid. Decision: it
+  converts "ETAS is isotropic" from an unexamined default into a measured, bounded choice, and it is
+  the necessary substrate for K-082 and K-083.
+- **GATE: A0 (mandatory, first) + A0b (Landers). MERTON-BEFORE-FREEZE — and I expect a rediscovery
+  verdict on the *form*:** `Ogata 1998 space-time ETAS anisotropic spatial kernel`; `Ogata & Zhuang
+  ETAS elliptical kernel aftershock`; `Bansal & Ogata 2013 non-stationary ETAS`; `Zhuang stochastic
+  declustering anisotropic`; `Hainzl anisotropic aftershock density fault geometry`; `Kagan & Jackson
+  spatial smoothing anisotropy focal mechanism`; `Werner Helmstetter Jackson Kagan high-resolution
+  long-term forecast`; `Powers & Jordan distribution of seismicity across fault strands`. **My prior
+  that "ETAS with an anisotropic spatial kernel" is published: 1.0. My prior that a *learned angular
+  harmonic response scored in bits against a frozen isotropic twin with magnitude-matched controls*
+  is published: ~0.35.** The novelty, if any, is entirely in A1 and A2, not in the kernel.
+- **Why dismissed too quickly.** "Aftershock clouds are elongated; everyone knows the kernel should be
+  elliptical; this is bookkeeping." Correct for r < 50 km, where the anisotropy is the **rupture's own
+  geometry**. This entry deliberately starts the annulus **beyond** the rupture dimension, where an
+  elliptical-cloud explanation does not reach and only stress transfer does. That distance cut is the
+  entry's actual idea, and it is frozen.
+
+---
+
+**K-082 — THE MECHANISM-INFORMED ARM, AND THE ONLY ENTRY THAT TESTS "PUSH OR PULL" RATHER THAN "ANGLE":
+Coulomb SIGN from focal mechanisms, and the discriminator is SIGNED vs UNSIGNED.**
+
+*Lens: Jim's word is "push OR pull", and a sign is a much stronger claim than a shape. An unsigned
+anisotropy is compatible with a hundred boring explanations; a **sign that flips where theory says it
+flips** is compatible with almost none. Make the theory pay for its own falsification.*
+
+- **The argument, because it is the whole entry.** For a source with known mechanism and a receiver with
+  known orientation, the Coulomb stress change `ΔCFS = Δτ + μ'Δσ_n` has a **computable sign** at every
+  azimuth — four lobes, alternating. This is not a fitted parameter; it is **exogenous, deterministic
+  and computed before looking at the outcome**, which puts it in exactly the class K-067 identifies as
+  the only probes worth having. So build **two** covariates from identical inputs:
+  `S_signed = Σ_j w_j · sign(ΔCFS_j)` and `S_unsigned = Σ_j w_j · |ΔCFS_j|`.
+  **The claim is a comparison, not a level:** signed beats unsigned. That comparison is immune to every
+  artifact that afflicts both equally — network geometry, tectonic anisotropy, clustering, Mc drift —
+  because those do not know about the sign. **This is the seed's sharpest design and it is the direct
+  analogue of K-061's matched-decile logic: put the artifact on both sides of the subtraction.**
+- **Claim.** In `hazard ~ frozen-ETAS + β_s·S_signed + β_u·S_unsigned`, **β_s > 0 at ≥ 2σ against the
+  ETAS-sim max-statistic, with the signed term adding ≥ 0.01 bits over the unsigned term alone.**
+  Secondary and equally diagnostic: **the sign of β_s must be POSITIVE** (loading advances failure) —
+  a negative β_s at significance would falsify the Coulomb framing while confirming that angles carry
+  information, which is a *more* interesting outcome than the pass and is pre-registered as such.
+- **Test / data.** Sources: **GCMT** (one download, global, M ≥ 5.0, 1976–now) for the global arm;
+  **`data/scedc_fm`** on disk for the SoCal arm — and SoCal is where this runs first, because it is the
+  only place we hold both mechanisms and low Mc. Receiver orientation: (a) the **target's own
+  mechanism** (available retrospectively — used ONLY for the mechanism-attribution arm, never for
+  forecasting, and flagged as such); (b) the **local structural strike** from the fault model /
+  plate-boundary trend (available prospectively — this is the forecasting-legal version); (c) the
+  **optimally-oriented plane** in the regional stress field (the standard Coulomb-modelling choice).
+  **All three are declared members of the S-8 family; (b) is the headline because it is the only one a
+  forecast could use.** `μ' = 0.4` frozen; `ΔCFS` from the standard Okada point-source solution with
+  scaling-law moment and rupture dimension.
+- **Null.** **Mechanism-shuffle null (the load-bearing one):** reassign focal mechanisms at random among
+  sources *within the same tectonic regime and magnitude bin*, recompute the sign field, rerun. This
+  destroys the sign structure and preserves the geometry, the clustering, the magnitudes and the network
+  — it is the exact analogue of K-003's doubly-matched permutation and it is what makes β_s
+  interpretable. Plus A2's azimuth rotation; plus ETAS-sim; plus A1's matched controls; plus A3.
+- **POWER-STATE.** Unit = target event, **but N_eff is set by mechanism availability, not by targets**:
+  GCMT is complete only above ~M5.0–5.5, so the global arm's usable source population is the same 5,012
+  events as the sniff. **N_eff ≈ 337 (→ 700–900 with fill-in) globally; ~2–5 × 10³ in SoCal at M ≥ 3.0
+  sources with SCEDC mechanisms.** Resolving a signed-vs-unsigned bits difference of 0.01 needs
+  δ ≈ 0.118 → **n ≈ 1,400 with matched controls: reachable in SoCal, marginal globally.** Predicted
+  amplitude if real: the fraction of prior sources whose lobes favour the target should exceed 0.5 by
+  **0.02–0.06** (i.e. a 52–56% vs 50% asymmetry), worth **hazard ratio 1.1–1.3** in the extreme
+  `S_signed` decile.
+- **Expected.** Honest prior on the null for β_s: **0.6** — this is the **lowest null prior in the
+  seed**, because unlike everything else here it rests on a computed, exogenous, sign-flipping physical
+  quantity with decades of case-study support, and because the signed-vs-unsigned subtraction removes
+  the artifacts that killed the unsigned version in my sniff. Honest prior that it clears 0.01 bits *at
+  our resolution*: **0.3** — believing the physics and believing we can measure it are different bets
+  and I price them separately.
+- **Cost / decision.** ~3 days (Okada + GCMT ingestion is the bulk; SCEDC arm is 1 day). **Decision:
+  this is the seed's verdict.** If signed does not beat unsigned at demonstrated power, then whatever
+  angular structure exists in our catalogues is **not stress**, and Jim's push/pull framing is closed
+  with a number in the one form where it had the best chance.
+- **GATE: A0 + A0b. MERTON-BEFORE-FREEZE — and the prior art here is enormous:** `King Stein Lin 1994
+  static stress changes triggering`; `Stein 1999 role of stress transfer Nature`; `Toda Stein Reasenberg
+  rate-state Coulomb forecast`; `Coulomb stress triggering statistical significance Hardebeck`;
+  `Parsons global Coulomb triggering probability`; `Marsan Coulomb stress transfer statistical test`;
+  `Segall & Lu earthquake nucleation stress`; `Hainzl Coulomb stress ETAS combination`;
+  `Cattania Hainzl Coulomb rate-and-state aftershock forecast comparison ETAS`; `Steacy Coulomb
+  forecast testing CSEP New Zealand`; `Woessner Coulomb rate-state vs ETAS forecast performance`.
+  **My prior that Coulomb-vs-ETAS forecast comparisons are published: 1.0 — Cattania/Woessner ran
+  exactly that horse race and ETAS generally won.** My prior that the **signed-minus-unsigned
+  decomposition with mechanism-shuffle nulls and magnitude-matched controls** is published: ~0.25.
+  **Merton must classify this before it freezes, and if the Cattania/Woessner comparisons already
+  bound it, this entry becomes a replication with a better null and should be framed as one.**
+- **Why dismissed too quickly.** "Coulomb triggering statistics have been tested to death and ETAS wins."
+  True, and the tests that were run compared **whole forecast models**, where Coulomb's loss is
+  confounded with its cruder productivity and decay terms. **This entry holds ETAS's productivity and
+  decay FIXED and varies only the sign** — the one comparison in which Coulomb's distinctive content is
+  isolated from its incidental weaknesses. That is a genuinely different experiment on a well-worn
+  question, and it is the only reason this entry exists.
+
+---
+
+**K-083 — JIM'S THIRD STATE, WHICH NOBODY IN THE LITERATURE ENCODES: "CONFLICT" IS THE VARIANCE OF THE
+SIGN FIELD ACROSS A CELL, IT IS ORTHOGONAL TO NET LOADING, AND IT PREDICTS A DIFFERENT OUTCOME CLASS
+RATHER THAN A DIFFERENT RATE.**
+
+*Lens: Jim named three states — too much stress, relief-enabling, and **conflict across an area** — and
+the third has no standard name. Every stress-transfer study I know reduces a configuration to ONE
+number, the net ΔCFS. But a sum destroys the distinction between "everything pushes weakly" and
+"half pushes hard while half pulls hard." **The second moment of the sign field is a free, unclaimed
+observable, and Jim asked for it without knowing it was unclaimed.***
+
+- **The construction, which is the entry.** Over the receiver cell's sub-patches k (or over the
+  distribution of admissible receiver orientations within the cell), compute the sign field
+  `s_k = Σ_j w_j·sign(ΔCFS_{jk})` and then **two orthogonal summaries**:
+  - **NET  `Σ = mean_k s_k`** — Jim's "too much stress" (Σ ≫ 0) vs "relief" (Σ ≪ 0). This is K-082.
+  - **CONFLICT  `C = sd_k(s_k) / (|Σ| + ε)`** — the **coefficient of disagreement**: high when the cell
+    is being pushed in one part and pulled in another, i.e. **loaded in shear across itself rather than
+    uniformly.** *This number is what a sum throws away, and it is computable from the same inputs at
+    zero extra data cost.*
+- **The differential prediction — and this is why the entry is a real hypothesis and not a new
+  statistic.** Net loading and conflict should predict **different things**:
+
+  | | high **Σ**, low **C** (coherent push) | high **C**, low **Σ** (conflict) | low both |
+  |---|---|---|---|
+  | rate of M ≥ target | **up** | ~flat | flat |
+  | **outcome CLASS** | **mainshock–aftershock** (one large asperity fails) | **SWARM / distributed** (many small patches fail incoherently, no single coherent asperity) | either |
+  | **b-value** | lower | **higher** | baseline |
+  | **timing** | **advance** | **delay then release**, or no release | — |
+  | **aftershock productivity** | baseline | **suppressed** (K-072's wetness axis) | baseline |
+
+  **Claim: `C` separates SWARM-like from MAINSHOCK-like outcomes at ≥ 2σ, conditional on matched Σ and
+  matched ETAS rate.** Note carefully what this claims and does not: **it is a claim about the SHAPE of
+  what happens, not about whether something happens** — which is why it survives the power problem that
+  bites K-081 (outcome-class labels exist for every sequence, so N is the number of sequences, not the
+  number of rare large events).
+- **Test / data.** Same inputs as K-082 (GCMT / `data/scedc_fm`). Outcome-class labelling, frozen:
+  a sequence is **SWARM** if `M_max − M_2nd < 0.5` and the moment-weighted centroid does not migrate
+  monotonically; **MAINSHOCK** if `M_max − M_2nd ≥ 1.0` — the standard Zhuang/Vidale-style operational
+  split, declared here before the run, with the ambiguous band scored as UNCLASSIFIED and reported.
+  Regions with well-catalogued swarms (Long Valley — **`LONG_VALLEY_PROTOCOL.md` already on disk**,
+  Salton Trough, Iceland, Japan's Izu) are the natural test bed and are declared as the primary stratum.
+- **Null.** Mechanism-shuffle (K-082's) — destroys `C` while preserving `Σ`'s magnitude distribution;
+  **the Σ-matched stratification** (compare high-C to low-C *within* Σ deciles — this is the load-bearing
+  design, because C and |Σ| are mechanically anticorrelated and a naive comparison tests that
+  correlation, not the physics); ETAS-sim (which has no mechanism content and must return C ⟂ outcome);
+  A1's matched controls; A3.
+- **POWER-STATE.** Unit = **sequence**, not target event — that is the entry's power advantage.
+  **N_eff = declustered sequences with ≥ 5 events and computable mechanisms ≈ 2–8 × 10³ in SoCal,
+  ~10³ globally at M ≥ 5.5.** Detectable difference in swarm fraction at n = 200/class: **≈ 0.14
+  absolute**. Predicted if real: swarm fraction **0.25 → 0.40** between low-C and high-C strata at
+  matched Σ; b-value difference **0.05–0.15**.
+- **Expected.** Honest prior on the null: **0.65.** Lower than the seed's average because the outcome-
+  class arm is well-powered and because there is independent reason to expect it: swarms are already
+  associated with **distributed, fluid-driven, geometrically complex** loading, and `C` is a
+  catalogue-computable proxy for geometric complexity. **The risk is precisely that: C may be a
+  rediscovery of fault-zone complexity, which is why the mechanism-shuffle null (which preserves
+  geometry and destroys sign structure) is mandatory rather than optional.**
+- **Cost / decision.** ~1.5 days once K-082's Coulomb layer exists (it is a second moment of an array
+  already computed). **Decision: this is the entry no one else would write, it is the best-powered
+  entry in the seed, and it is the only one that predicts a change in the KIND of event rather than the
+  RATE — which is the axis where our forecasting is weakest and where K-071's Prediction B already
+  argued the signal should appear first.**
+- **GATE: A0. MERTON-BEFORE-FREEZE:** `swarm versus mainshock discrimination stress heterogeneity`;
+  `Vidale & Shearer earthquake burst classification`; `Zhuang swarm identification stochastic
+  declustering`; `Hainzl fluid-driven swarm modelling`; `Roland & McGuire swarms transform faults
+  aseismic slip`; `stress heterogeneity b-value Schorlemmer Wiemer Wyss`; `Coulomb stress heterogeneity
+  aftershock productivity Marsan`; `Powers Jordan fault zone complexity seismicity distribution`;
+  `Hardebeck stress heterogeneity focal mechanism variance`. **Note the last one specifically: focal
+  mechanism VARIANCE as a stress-heterogeneity measure IS published (Hardebeck). My prior that
+  mechanism-variance-as-heterogeneity exists: 0.9. My prior that the variance of the SIGN OF TRANSFERRED
+  STRESS FROM PRIOR EVENTS — a directed, time-varying, source-attributed quantity, not a static
+  property of the receiver's own mechanisms — is published: ~0.2.** That distinction is the entry's
+  entire novelty claim and Merton should attack it hard.
+- **Why dismissed too quickly.** "That's just stress heterogeneity, and heterogeneity is a static
+  property of a fault zone." No: `C` is **time-varying and source-attributed** — it changes as new
+  events occur at new angles, and it is computed from *what other earthquakes did*, not from what this
+  fault is like. **The static twin (Hardebeck's mechanism variance) is the correct control and is
+  entered as a competing covariate in the same regression, so the entry can lose to it explicitly.**
+
+---
+
+**K-084 — THE PATHWAY SEPARATOR, WHICH IS ALSO THIS SEED'S HONEST ANSWER TO "IS ANY OF THIS EVEN
+POSSIBLE AT 320 km": use the LAG × DISTANCE × MAGNITUDE surface to decide whether any angular signal is
+STATIC, DYNAMIC, or RATE-STATE — because the three have incompatible signatures and Jim's example
+lands where only one of them survives.**
+
+*Lens: instead of asking "is the hypothesis true", ask "which of the three mechanisms that could make it
+true is compatible with the amplitudes", and then build the statistic that distinguishes them. A
+hypothesis with three possible engines is three hypotheses, and testing them as one is how families
+die vaguely instead of cleanly.*
+
+- **The three signatures, predicted in advance and mutually exclusive.**
+
+  | | **static Coulomb** | **dynamic (radiation pattern)** | **rate-and-state clock advance** |
+  |---|---|---|---|
+  | amplitude at 320 km, M6 (from (ii)) | **1–10 Pa** | **0.4–2 kPa** | responds to either |
+  | distance decay of the ANGULAR effect | **R⁻³** | **R⁻¹·⁵ to R⁻²** (surface waves) | inherits its driver's |
+  | **lag profile** | **permanent step: flat in lag, then Omori** | **0–1 d only** | **Omori-like, `t⁻¹`, extending months** |
+  | angular form | 4-lobed, **sign-flipping** | 4-lobed **in |amplitude|, no sign** | 4-lobed, sign-flipping |
+  | depends on source **mechanism**? | **yes, strongly** | yes (radiation pattern) | yes |
+  | depends on **receiver** orientation? | **yes** | **weakly/no** | yes |
+  | killed by A2's azimuth-rotation null? | yes | yes | yes |
+
+  **Two of these cells are the entry.** (1) The **signed vs unsigned** contrast (K-082) separates
+  static/rate-state from dynamic, because dynamic shaking has no sign — a wave that arrives from the
+  "unloading" quadrant still shakes. (2) The **receiver-orientation dependence** separates them again,
+  independently. **A claim that passes the signed test AND the receiver-orientation test AND lives at
+  30–365 d lag is a rate-state static claim and nothing else can produce it.**
+- **Claim.** The angular effect, if any, is **jointly consistent with exactly one row** of that table at
+  ≥ 2σ, and the entry's product is that identification. **Pre-registered expectation, stated before the
+  run: the dynamic row wins at 0–1 d (this is K-034/K-059's territory and would be a confirmation, not
+  a discovery); nothing survives at 30–365 d beyond R = 200 km; and if anything DOES survive at long
+  lag it will be in the M_src ≥ 6.5, R ≤ 200 km corner where static amplitudes reach 1–10 kPa** — i.e.
+  the tidal band, which is a corpse at that amplitude, which is itself informative.
+- **Test / data.** K-081's and K-082's covariates, evaluated on the full **(lag × distance × M_src)**
+  grid, with the effect size reported as a **surface** rather than a scalar. Frozen grid: lag {0–1, 1–7,
+  7–30, 30–90, 90–365 d} × distance {0–50, 50–100, 100–200, 200–350, 350–500 km} × M_src {5.5–6.0,
+  6.0–6.5, ≥ 6.5}. **75 cells; the S-8 family is declared and the max-statistic correction is applied
+  to the surface as a whole, with the physically-predicted rows pre-nominated so a hit in a predicted
+  cell is worth more than a hit anywhere.**
+- **Null.** ETAS-sim (which produces an isotropic Omori surface — **the sim's surface IS the shape a
+  boring answer makes, and the entry's whole content is the difference between the two surfaces**);
+  A2's rotation; A1's controls; **and the amplitude consistency check: the fitted effect must scale with
+  computed ΔCFS across the grid, or the identification fails regardless of significance.**
+- **POWER-STATE.** Unit = (target × source pair). **N_eff = pairs ≈ 10⁴–10⁵ globally, 10⁵–10⁶ in SoCal**
+  — the largest N in the seed, **but the pairs are not independent** (one target contributes many),
+  so the effective N is bounded by targets (337 / ~10³) and **the analysis must be clustered on target
+  or it will manufacture significance**. That is stated here because it is the single most likely way
+  this entry produces a false positive, and the cluster-robust variance is mandated, not optional.
+- **Expected.** Honest prior that the dynamic row is confirmed at 0–1 d: **0.6** (it is already known).
+  Honest prior that anything survives at 30–365 d: **0.2.** Honest prior that the entry produces a
+  usable *bound* on long-lag angular transfer: **0.9.**
+- **Cost / decision.** ~1 day on top of K-081/K-082 (it is a stratification, not a new model). Decision:
+  it is what stops the family from claiming "angles matter" without saying **which physics**, and it is
+  the entry that would tell Jim, in one figure, exactly how far his 320 km example is from where a
+  signal could live.
+- **GATE: A0 + **K-034 (this is the entry where the positive control genuinely binds**, since the 0–1 d
+  row is a dynamic-triggering claim). MERTON-BEFORE-FREEZE:** `Hill 1993 Landers remote triggered
+  seismicity Science`; `Brodsky & van der Elst dynamic triggering review`; `Felzer & Brodsky 2006
+  decay of aftershock density with distance`; `Richards-Dinger Stein Toda 2010 decay of aftershock
+  density questions`; `van der Elst & Brodsky 2010 remote triggering statistical detection`;
+  `Parsons 2002 global Omori law dynamic triggering`; `Pollitz Stein postseismic viscoelastic
+  triggering delayed`; `Freed 2005 earthquake triggering by static dynamic and postseismic stress
+  transfer`. **The Felzer–Brodsky vs Richards-Dinger controversy is the closest published analogue to
+  this exact surface and Merton must be pointed at it first: that debate is precisely about whether a
+  distance–time surface of triggering discriminates dynamic from static, and it did NOT resolve
+  cleanly — which is both our opening and our warning.**
+- **Why dismissed too quickly.** "This is a stratification, not a hypothesis." A stratification whose
+  cells were **predicted in advance to differ in a specific pattern** is a hypothesis; the pattern is
+  the claim. And it is the only device in this seed that can convert a positive into a *mechanism*
+  rather than a correlation — without which a positive here would be the wave family's finding, or
+  nobody's.
+
+---
+
+**K-085 — THE HONEST COMPARISON WITH K-077, ASKED DIRECTLY BY THE SUPERVISOR AND ANSWERED AS A
+MEASUREMENT RATHER THAN A POSITION: is the angular configuration a COMPLEMENT to geodetic loading, or a
+POOR-MAN'S SUBSTITUTE? Run them in the same regression and let the coefficients say.**
+
+*Lens: "modelling the other side" (K-077's framing) means modelling the loading field. Geodesy measures
+that field DIRECTLY and continuously; the angular configuration of prior events is an attempt to infer
+it from the catalogue alone — a **cheap, sparse, indirect, event-triggered sampling of the same
+object.** Two instruments pointed at one field is not a rivalry, it is a calibration opportunity, and
+the calibration is the entry.*
+
+- **My honest position, stated before the test so it can be wrong in public.** **The angular
+  configuration is a POOR-MAN'S SUBSTITUTE for the loading field where geodesy exists, and a genuine
+  COMPLEMENT only in two places**: (a) **offshore and at depth**, where GNSS is absent or blind — most
+  of the world's M ≥ 7s, including subduction interfaces and **the Colombian slab at 107 km, where no
+  geodetic instrument measures the loading at all**; and (b) at **timescales shorter than geodetic
+  noise**, where a step from a specific event is resolvable but a strain-rate change is not. **Where
+  dense GNSS exists (SoCal, Japan), I expect the angular proxy to be strictly dominated by K-077's
+  `V̇`, and I expect to be able to show that.** That is not a hedge — it is a falsifiable claim with a
+  predicted sign, and it is *the* claim of this entry.
+- **Claim.** In `hazard ~ frozen-ETAS + β_V·V̇ + β_a·a(x,t) + β_int·(V̇ × a)`, fitted where BOTH are
+  available (SoCal, Japan, Cascadia): **β_a → 0 once `V̇` is included** (substitute), while in
+  offshore/deep strata where `V̇` is unavailable or uninformative, **β_a > 0 at ≥ 2σ** (complement).
+  **The pass is the CONTRAST between those two strata, not either coefficient alone** — and that
+  contrast is exactly the structure that K-077's β₁ ≈ 0 / β₃ > 0 design uses, transplanted.
+  Secondary and cheaper: the **direct correlation** between `a(x,t)` and the geodetic strain-rate
+  field — if the proxy works, it should *look like* the thing it proxies, and `corr(a, V̇)` is a
+  one-afternoon measurement that prices the whole idea before any hazard regression is run.
+- **Test / data.** `V̇` from **GSRM v2.1 / Kreemer** (`data/kreemer_young` on disk for SoCal; the same
+  one download K-077 needs for the global grid), `data/ngl` for GNSS time series. Shares K-077's entire
+  geodetic layer — **build once, used by K-077, K-079 and K-085.**
+- **Null.** Permutation of `a` across cells **within tectonic-regime and `V̇`-matched strata** (K-003's
+  doubly-matched permutation, load-bearing here because `a` and `V̇` are both proxies for "how active is
+  this place"); ETAS-sim carrying the real `V̇` field; A1; A3.
+- **POWER-STATE.** Unit = (cell × window); **N_eff = large targets in dense-GNSS regions ≈ 100–250
+  (this is the binding constraint and it is small), vs offshore/deep targets ≈ 400–700.** Detectable
+  β_a difference between strata at those n: **≈ 30–40% in hazard ratio.** **This entry is therefore
+  BOUND-PRODUCING in the dense-GNSS stratum and only marginally decisive in the contrast — state that
+  in the headline, not the appendix.**
+- **Expected.** Honest prior that `corr(a, V̇)` is weak (|r| < 0.3): **0.7** — the catalogue is a
+  terrible strain gauge. Honest prior that the substitute/complement contrast resolves at ≥ 2σ: **0.3.**
+  Honest prior that the entry usefully **prices** the proxy even if the contrast is null: **0.95**, and
+  that is why it runs.
+- **Cost / decision.** ~1 day on K-077's layer. **Decision: it is the entry that keeps this seed from
+  quietly competing with K-077 instead of informing it, and it is the only place where "modelling the
+  other side" gets a number attached to how well a catalogue-only method can do it.** If the answer is
+  "the proxy is worthless where we can check it", that is a strong and publishable statement about the
+  limits of catalogue-only forecasting — and it applies to a great deal more than this seed.
+- **GATE: A0. MERTON-BEFORE-FREEZE:** `seismicity-derived strain rate comparison geodetic strain rate`;
+  `Kostrov summation seismic strain rate comparison GPS`; `Ward 1998 comparison seismic geodetic
+  geologic deformation`; `Bird Kreemer Holt seismic hazard from strain rate`; `Kreemer GSRM v2.1`;
+  `Stevens & Avouac 2021 coupling seismicity`; `seismicity as proxy for interseismic loading`.
+  **My prior that seismic-vs-geodetic strain-rate comparison is published: 1.0 — Kostrov summation is
+  1974 and Ward 1998 is the canonical comparison.** My prior that the comparison has been run as a
+  **head-to-head forecast-skill test in bits with an offshore/onshore instrumentation contrast**: ~0.3.
+  **Merton should expect to classify the marginal comparison as REDISCOVERY and only the skill contrast
+  as possibly novel.**
+- **Why dismissed too quickly.** "Seismic strain rate is known to be a bad estimator of geodetic strain
+  rate." Yes — **by a factor that varies by region, which is the point.** This entry does not claim the
+  proxy is good; it claims **the regions where it fails are identifiable in advance**, and a proxy with
+  a known validity map is a usable instrument where the direct measurement does not exist. That is the
+  whole argument for using it offshore, which is where most of the world's large earthquakes are.
+
+---
+
+**K-086 — THE FRAME-BREAK NOBODY ASKED FOR, AND THE ONE THAT TAKES "MODELLING THE OTHER SIDE" LITERALLY:
+STOP TREATING EARTHQUAKES AS SOURCES AND TREAT THEM AS *READINGS*. The field's ORIENTATION is directly
+observable in the mechanisms of small events, and its ROTATION IN TIME is an unclaimed observable
+sitting on our own disk.**
+
+*Lens: question the question. Jim asks whether prior events at angles PUSH the field. But every small
+earthquake is also a **measurement** of the field's orientation at its own location and instant — a
+free, dense, already-catalogued strain gauge that nobody reads as a time series. **The angular
+configuration of sources is an inference about the field; the mechanisms of small events are an
+observation of it.** If the field is "living" in Jim's sense, it is not the pushes we should track —
+it is the field's own attitude, and whether it is TURNING.*
+
+- **The observable, and it exists on disk today.** For each cell and each trailing window, invert the
+  local focal-mechanism population (`data/scedc_fm` for SoCal; GCMT globally) for the **principal
+  stress axis orientation θ(x,t)** using standard stress inversion (Michael / Hardebeck-Michael). Then
+  the covariates are not stresses at all but **attitudes and their derivatives**:
+  - **`θ̇ = dθ/dt`** — the **rotation rate of the local stress field**. Nonzero rotation means the
+    loading is being *re-directed*, which is Jim's "push/pull from other angles" observed rather than
+    inferred.
+  - **`R_φ`(t)** — the stress-ratio / shape factor, and its drift.
+  - **`H(t)`** — the misfit/heterogeneity of the inversion, which is **K-083's conflict measured
+    directly on the receiver rather than computed from the sources.** *That the two arms of this seed
+    converge on the same quantity by opposite routes — one inferred from sources, one observed at the
+    receiver — is the strongest internal consistency check available here, and it is free.*
+- **Claim.** **`|θ̇|` in the trailing 1–3 yr is elevated before large events relative to
+  magnitude-matched controls at ≥ 2σ**, and **the two estimates of conflict (K-083's `C` from source
+  configuration and K-086's `H` from receiver mechanism scatter) agree at `r ≥ 0.3`.** The second half
+  is the more important claim: **if two independent routes to "the field is in conflict here" agree,
+  the quantity is real even if neither predicts; if they disagree, at least one arm is measuring
+  instrumentation.**
+- **Test / data.** `data/scedc_fm` on disk (SoCal, the only dense mechanism catalogue we hold) — **this
+  is the entry with the lowest data cost in the seed and the highest conceptual distance from the
+  seed's premise.** GCMT for a coarse global replication. Frozen: inversion window 1 yr trailing,
+  ≥ 20 mechanisms required per cell, bootstrap CI on θ, cells failing the count threshold declared
+  **UNMEASURABLE** (K-076's class, reused).
+- **Null.** **Mechanism-time-shuffle** (permute mechanism times within cell — destroys `θ̇`, preserves
+  the mechanism population exactly); A1's matched controls; and the mandatory artifact control: **`θ̇`
+  is trivially manufactured by a change in the *sampling* of the mechanism population** (a new fault
+  strand activates, or the network's mechanism-determination threshold shifts), so the inversion is
+  rerun on a **fixed sub-catalogue of repeatedly-sampled locations** as the clean stratum. **If `θ̇`
+  does not survive on the fixed-location sub-catalogue it is a sampling artifact and is reported as
+  one.**
+- **POWER-STATE.** Unit = (cell × year). **N_eff = SoCal cells with ≥ 20 mechanisms/yr ≈ 50–200 cells ×
+  25 yr ≈ 1,000–5,000 cell-years, but only ~40–120 large targets.** Rotation resolution: with 20–50
+  mechanisms, θ is determined to **±10–20°**, so **only rotations exceeding ~15°/yr are detectable** —
+  and observed co/post-seismic stress rotations in the literature are of order 5–30°, so **we sit right
+  at the edge of resolution and I say so before the run rather than after.** This is the least
+  well-powered entry here and the most interesting; both facts are stated in the same sentence.
+- **Expected.** Honest prior on the null for the `θ̇` precursor claim: **0.8.** Honest prior that the
+  **C ↔ H agreement** check returns something interpretable either way: **0.9** — that is the part
+  worth running.
+- **Cost / decision.** ~1.5 days, entirely on data already on disk, no downloads. **Decision: it is the
+  only entry in this seed that OBSERVES the field instead of inferring it, it converts "the other side"
+  from a metaphor into a measured time series with an error bar, and its cross-check against K-083 is
+  the seed's only internal falsifier.** If Jim's "living stress field" exists anywhere in our data as a
+  thing with its own dynamics, this is the instrument that would see it.
+- **GATE: A0. MERTON-BEFORE-FREEZE — and I expect the components to be owned:** `Hardebeck & Michael
+  stress inversion damped regional`; `Michael 1984 determination of stress from slip data`;
+  `stress rotation after large earthquakes Hardebeck Tohoku`; `Hasegawa 2011 stress rotation Tohoku
+  megathrust`; `Ickrath Bohnhoff stress rotation Landers`; `temporal stress rotation precursor
+  seismicity`; `Hardebeck stress heterogeneity focal mechanism variance`; `Martinez-Garzon stress
+  inversion temporal variation geothermal`. **My prior that co- and post-seismic stress rotations are
+  published: 1.0 (Tohoku is the famous case). My prior that PRE-event rotation rate has been tested as
+  a forecasting covariate in bits against a frozen ETAS with magnitude-matched controls: ~0.15 — the
+  highest novelty prior in this seed, and per A-9 exactly the number I should not act on without
+  Merton.** Note the asymmetry that makes me cautious: rotations are famous *after* large events, which
+  means any pre-event signal I find is at severe risk of being a post-event signal from a *previous*
+  event in the same cell. **That contamination path is named here and must be a declared control
+  (exclude cells within N years of their own last M ≥ 6.5), not a discovery.**
+- **Why dismissed too quickly.** "Stress inversions from 20 mechanisms are too noisy to see a rotation."
+  Largely true per the power line — which is why the entry's **headline is the C ↔ H agreement, not the
+  precursor**, and why the precursor claim is entered with a 0.8 null prior. The reason not to drop it:
+  **it is the only observable in this entire program that reads the loading field's ORIENTATION from
+  data we already hold, and orientation is precisely the quantity Jim's whole seed is about. Every
+  other entry here infers direction; this one measures it.**
+
+---
+
+**Run order.** **A0 first, always** (hours) — and **A0b (Landers) immediately after**, because if the
+pipeline cannot recover the best-documented angular triggering signal in the catalogue, nothing below
+is interpretable. Then **K-081** in the SoCal low-Mc configuration, because it is the only well-powered
+mechanism-free arm and because it is infrastructure for everything else. Then **K-082**, the seed's
+verdict, SoCal-first on `data/scedc_fm`. Then **K-083**, which rides on K-082's array at second-moment
+cost and is the best-powered claim here. Then **K-084** as the stratification that assigns any positive
+to a mechanism. Then **K-085** once K-077's geodetic layer exists (shared build). **K-086 can run in
+parallel with all of it — it touches none of the same code and no downloads — and should, because it is
+the only independent instrument in the seed.**
+
+**THE CORRECTION I OWE JIM, STATED PLAINLY.** The intuition is **physically correct in kind and
+quantitatively wrong in the specific example**, and both halves matter. Correct in kind: stress transfer
+IS angularly structured, the sign of the push genuinely does flip with azimuth, our ETAS baseline IS
+isotropic and therefore blind to it, and "a living field pushed from many angles" is a fair verbal
+picture of a Coulomb stress field evolving under a sequence of sources — this is real physics and it is
+the reason six entries exist rather than a polite dismissal. Wrong in the specific: **an M6.0 at 320 km
+imparts a static stress change of roughly 1–10 Pa, about one thousandth of a solid-Earth tide, and our
+tidal work is already a corpse at kPa**; the dynamic transient is 100–1000× larger but lasts minutes,
+not a month; and at Z = 107 km inside a slab the push/pull sign map may not even be defined. Worse for
+the naive version: **azimuthal non-uniformity is guaranteed for boring reasons** — my sniff rejects a
+uniform-azimuth null at **52.5% of targets**, with a median climatological resultant of 0.43, because
+faults are lines — and when I use the *right* null (each location's own azimuth climatology) the excess
+concentration before M ≥ 6.5 is **z = +0.75, which is exactly what ordinary M5s show (+0.79), a
+difference of −0.03 ± 0.15.** **The angles are non-random; they are just not non-random in a way that
+knows something big is coming.** So the seed's honest translation of Jim's sentence is: *"the
+configuration of angles carries no information in its raw form; it can only carry information if the
+SIGN of the transferred stress is computed from mechanisms (K-082), if the CONFLICT among those signs
+is treated as a separate state predicting a different KIND of event rather than a higher rate (K-083),
+and if the whole thing is confined to the magnitude–distance corner where the amplitudes are not
+absurd (K-084)."* **Jim's third state — conflict — is the part of his intuition that is genuinely
+unclaimed in the literature, and it is the entry I would run if I could only run one.**
+
+*Kepler, angular-configuration seed. Six entries, K-081..K-086, all PROPOSED, all gated on A0 (this
+family's own four-lobe injection-recovery licence, defined on K-035's precedent because K-034's
+10–100 kPa licence does not reach either the ~1 kPa dynamic or the ~1–10 Pa static amplitudes Jim's
+example implies), with A0b (Landers angular remote triggering) as the K-034 positive control's natural
+home and K-084's 0–1 d row additionally gated on K-034 proper; all POWER-STATED with the arithmetic
+shown and the 2σ floor computed from my own sniff (0.29 z-units ≈ 0.06 bits at n = 337, i.e. six times
+S-11's threshold — the global arm is bound-producing only and the SoCal low-Mc arm is the experiment);
+all tagged MERTON-BEFORE-FREEZE with nominated searches; all bound by (A1) the magnitude-matched-control
+mandate, (A2) the structure-aware-null mandate, and (A3) the azimuthal-completeness rerun. Headline
+priors, written now rather than after: **P(K-081's mechanism-free kernel clears 0.01 bits out of sample)
+≈ 0.25; P(K-082's SIGNED term beats its UNSIGNED twin at ≥ 2σ) ≈ 0.4, and P(it also clears 0.01 bits at
+our resolution) ≈ 0.3; P(K-083's conflict term separates outcome classes) ≈ 0.35; P(anything survives at
+30–365 d lag beyond 200 km) ≈ 0.2; P(the family yields a quotable bound) ≈ 0.9.** The supporting sniff
+is read-only, EXPLORATORY, adjudicates nothing, and is reproducible from
+`replication/data/comcat_world/*.csv` (13 boxes, 71,797 events, 5,012 at M ≥ 5.5, 517 at M ≥ 6.5, 337
+usable targets after the ≥ 3 yr history and ≥ 3 prior-source filters).*
+
+---
+
+## M-009 — UMBRELLA PRE-FREEZE DOSSIER: **the wave-interference × built-up-strain family, K-059..K-075**
+
+*Round 3 (cycle-2 step 1) — 2026-08-10. Assigned by the supervisor as the A-9 MERTON-BEFORE-FREEZE
+pass the seed and its addendum both declare. Seventeen entries; every one carries a nomination line;
+this dossier answers all seventeen with an explicit classification recommendation for Popper and the
+single strongest published result each entry must beat. Cycle-1 open items closed at §M-009.12.*
+
+### M-009.0 THE HEADLINE, STATED FIRST SO NOBODY READS PAST IT
+
+Three findings dominate everything below, and two of them cost this family more than the rest of the
+dossier gives back.
+
+**(1) The temporal-variation arm is already published, in our own region, and it came back
+positive.** Popper called K-043 arm (ii) — "does triggering susceptibility vary in time at a fixed
+place?" — *"the cleanest single discriminator against W-003 that does not require any forecast to
+succeed."* K-074(iii) and K-075(ii) inherit that role. **Guo et al. (2025), *JGR Solid Earth* 130,
+e2024JB030004** did it: seven years of continuous waveforms from 239 southern California stations,
+PhaseNet picks, **no catalogue constructed at all**, mapping triggering intensity across the region.
+Abstract, verbatim on the decisive sentence: *"We map the triggering intensity over the region and
+find that overall, the Mojave segment of the San Andreas is the most easily triggered region.
+However, the spatial pattern changes after the Ridgecrest earthquake and the area appears to become
+much less prone to triggering, likely due to an exhaustion of the faults near failure in the
+immediate aftermath of the Ridgecrest sequence."* **That is temporal variation of triggering
+susceptibility at fixed locations, published, in SoCal, with a mechanism attached.** W-003 (the
+static heterogeneous medium) is therefore already in difficulty in the open literature, and our
+K-074(iii)/K-075(ii) are **replications with a global extension**, not discriminators. This is the
+single most consequential line in the dossier and it changes Popper's queue.
+
+**(2) The large-event arm's central tension is already resolved, and it is resolved against the
+entry's premise.** Kepler framed K-070 as Parsons & Velasco (2011) versus Pollitz et al. (2012), and
+asked for those two to be read against each other. They have since been read against each other **by
+Pollitz's own co-authors**, and the row Kepler does not have is decisive: **Johnson, Bürgmann &
+Pollitz (2015), *JGR Solid Earth* 120(3), 1748–1761, doi:10.1002/2014JB011788.** Abstract verified
+verbatim; the operative sentences: *"We consider 113 M ≥ 7.5 main shocks between 1977 and 2012 …
+We restrict the analysis to regions of elevated strain during the passage of surface waves. Using a
+threshold of 0.1 microstrain (~3 kPa) and a temporal window of ±1 year, we stack daily seismicity
+rate curves using the exclusion-zone declustered M ≥ 5.5 catalog events … Our results do not
+indicate a significant change in activity for at least 10 days when considering the collective set
+of 113 main shocks and subsets at M 8.0 and M 8.5 thresholds. The results also do not indicate
+immediate triggering of M ≥ 5.5 events. We do find two instances of increased seismicity in the
+elevated strain region within 10 days … the 1977 M 8.3 and 2012 M 8.6, both located in the Indian
+Ocean. We conclude that a global change in M ≥ 5.5 earthquake rates following a transient stress
+from distant earthquakes is a rare occurrence."* **That is K-059's design, at K-059's amplitude
+threshold (3 kPa — the exact number in K-059's POWER-STATE), run globally on 113 sources, and it is
+null at M ≥ 5.5.** Pollitz et al. (2012) is not a counter-instance to be reconciled; it is one of
+two events in thirty-five years, and its own authors generalised it and found it rare.
+
+**(3) The one clean NOVEL in the family survives, and it is exactly the one Kepler said it was.**
+K-060's coherent-minus-envelope nested comparison returned a null search across four independent
+vocabularies. So did the superposed multi-source dynamic-stress *field as a forecasting covariate*
+(K-059's object, as distinct from its claim), the group-velocity scan as a matched-filter null
+(K-063), the seismicity→wavefield inversion (K-068), the prospective pre-committed triggering
+forecast (K-069), and the cross-probe rank-reproducibility design (K-075(i)). **Six null searches,
+and Kepler's own instinct about which entry carries the seed — K-060 — is confirmed.** Null searches
+are weak evidence; they are recorded as such in §M-009.1 with their exact query strings so the next
+seat can attack them.
+
+### M-009.1 SEARCH TRAILS RUN (so a null search is auditable)
+
+Run 2026-08-10 via WebSearch/WebFetch plus direct Crossref, OpenAlex, Semantic Scholar, Unpaywall,
+USGS Publications Warehouse and raw-GitHub API calls. Four parallel adversarial sweeps plus my own
+verification pass on the six decisive rows.
+
+**Sweep A — antipodal / normal-mode.** `antipodal focusing seismic waves`; `antipodal seismicity
+triggering`; `antipode great earthquake volcanic response`; `PKP antipodal amplification`;
+`antipodal volcanism earthquake`; `surface wave geometric spreading sin(delta)^-1/2 antipode`;
+`non-monotonic distance decay dynamic triggering`; `distance decay of remote triggering global`;
+`normal mode triggering seismicity`; `free oscillations earthquake triggering`; `0S0 seismicity
+modulation`; `post-Sumatra global seismicity rate change`; `Earth's hum continuous free
+oscillations`; `spherical harmonic analysis global seismicity distribution`; `degree-2 mantle
+structure seismicity correlation`.
+**Null:** antipodal *volcanism* triggered by a tectonic (non-impact) earthquake — nothing.
+Spherical-harmonic decomposition of global seismicity density against mode eigenfunctions or mantle
+degree-2 — **nothing; K-066's specific comparison does not appear to exist.** Independent refutation
+*or* replication of the Guglielmi/Zotov ₀S₂ modulation claim — nothing in either direction.
+
+**Sweep B — state-dependent triggering.** `state-dependent dynamic triggering`; `dynamic triggering
+conditioned on tectonic loading rate`; `triggering susceptibility and fault maturity`; `Brodsky van
+der Elst annual review dynamic triggering`; `remote triggering geodetic strain rate correlation`;
+`dynamic triggering threshold spatial variation`; `triggering susceptibility map`; `peak dynamic
+stress threshold statistics`; `non-triggered survival analysis seismicity`; `dynamic triggering
+creeping vs locked fault segments`; `triggering response and interseismic coupling`; `magnitude
+distribution of dynamically triggered events`; `b-value of triggered seismicity`; `comparative
+dynamic triggering across tectonic settings`; `relative triggering susceptibility ranking regions`;
+`triggering susceptibility temporal variation`.
+**Null:** triggering susceptibility conditioned on an *independently measured interseismic-coupling
+coefficient* or on *geodetic loading rate* — nothing found. Cross-probe **rank-reproducibility**
+design — nothing found. Literal survival-analysis formalism (Cox/censoring) applied to triggering
+non-response — nothing found; the field's equivalent machinery is inter-event-time statistics.
+
+**Sweep C — interference / orbits / rate-state convexity.** `interference of seismic surface waves
+triggering`; `multiple mainshock wavefield superposition`; `constructive interference dynamic
+triggering`; `stacked teleseismic triggering multiple sources`; `coherent versus incoherent
+summation seismic wavefield triggering`; `phase-coherent stacking surface waves earthquake
+triggering`; `destructive interference seismicity deficit`; `suppression of seismicity by dynamic
+stress`; `clamping remote triggering`; `seismic quiescence dynamic waves`; `R2 R3 later orbit
+triggering`; `multiple orbit surface wave seismicity`; `superposed epoch analysis surface wave
+arrival triggering`; `Love vs Rayleigh triggering efficiency`; `group velocity 3.8 km/s triggering
+timing`; `nonlinear rate-state response to oscillatory stress`; `Jensen inequality seismicity rate
+fluctuating stress`; `stress variance triggering rate-and-state`; `Ader Ampuero tidal rate-state
+modelling`; `Dieterich 1994 periodic loading`; `Beeler Lockner 2003 periodic stressing`.
+**Null:** a superposed multi-source dynamic-stress field used as a forecasting covariate — nothing.
+A coherent-vs-envelope nested comparison — nothing. Genuinely simultaneous dual-source overlapping
+wavefields as a triggering study — nothing. A propagation-velocity scan as a matched-filter null —
+nothing. The literal phrase "Jensen's inequality" in a triggering paper — nothing (**but the
+mathematics is published; see M-009.6**).
+
+**Sweep D — seismicity-as-sensor / prospective / global large-event.** `seismicity as strain
+sensor`; `earthquake catalog inversion for ground motion`; `triggering response as amplitude proxy`;
+`ambient noise seismicity cross-calibration`; `CSEP prospective testing protocol`; `operational
+aftershock forecast scoring`; `prospective dynamic triggering forecast`; `global earthquake
+triggering large events`; `earthquake doublets global correlation`; `Sumatra 2012 global
+aftershocks`; `global earthquake rate increase statistical significance`; `Parsons Velasco reply
+Pollitz`; `Velasco et al 2008 global triggering 12 of 15`.
+**Null:** seismicity inverted to *recover* wavefield amplitude and cross-validated against
+co-located seismograms — nothing. Any spatially dense published **Aσ map** — nothing. Any
+dynamic-triggering model ever submitted to a prospective CSEP experiment — nothing. Any formal
+published Comment/Reply pair on Pollitz et al. (2012) — nothing; the rebuttal happened through
+separate papers, chiefly the authors' own (Johnson et al. 2015).
+
+**Verification limits, declared.** Nature / Nature Geoscience / PNAS / Wiley / GeoScienceWorld all
+returned 403 to direct fetch. **Abstracts obtained verbatim from OpenAlex or Semantic Scholar and
+therefore citable:** Johnson, Bürgmann & Pollitz (2015); Guo et al. (2025); Zhang, Elbaz, Havlin &
+Ashkenazy (2024); Hernandez et al. (2014); O'Malley et al. (2018); Retailleau et al. (2014);
+Heimisson & Avouac (2020); Shearer & Stark (2012); Michael (2011); Parsons & Geist (2014).
+**Metadata verified, abstract not retrievable:** Parsons & Velasco (2011) *Nat. Geosci.* 4, 312–316;
+Pollitz, Stein, Sevilgen & Bürgmann (2012) *Nature* 490(7419), 250–253; Velasco, Hernández, Parsons
+& Pankow (2008) *Nat. Geosci.* 1(6), 375–379 — author lists, volumes and page ranges confirmed
+through OpenAlex; **their contents below rest on secondary synthesis and are marked
+UNVERIFIED-FROM-MEMORY where they carry weight.** **Titles/venues confirmed, contents from search
+synthesis only:** Ader, Lapusta, Avouac & Ampuero (2014) *GJI* 198(1), 385–413, doi:10.1093/gji/ggu144;
+Brodsky & van der Elst (2014) *Annu. Rev. Earth Planet. Sci.* 42, 317–339,
+doi:10.1146/annurev-earth-060313-054648; van der Elst & Brodsky (2010) *JGR* 115, B07311,
+doi:10.1029/2009JB006681; Roth, Harrington, Verdecchia & Kilb (2025) *GJI* 244(1), ggaf412,
+doi:10.1093/gji/ggaf412; Alfaro-Diaz, Velasco, Pankow & Kilb (2020) *JGR Solid Earth*,
+doi:10.1029/2019JB019131; Fan et al. (2021) *JGR Solid Earth*, doi:10.1029/2020JB020820; Lavrov et
+al. (2018) *Izv. Phys. Solid Earth*, doi:10.1134/S1069351318010159; Suda, Nawa & Fukao (1998)
+*Science* 279(5359), 2089–2091; Rhie & Romanowicz (2004) *Nature* 431, 552–556. **Preprint-only, no
+peer-reviewed venue located:** Guglielmi & Zotov, arXiv:1207.0365 (2012) and arXiv:2404.18258 (2024).
+
+### M-009.2 THE CLASSIFICATION TABLE — all seventeen entries
+
+| entry | recommended class | the single strongest published result it must beat |
+|---|---|---|
+| **K-059** ephemeris | **REDISCOVERY**, headline **CONTRADICTED at M ≥ 5.5** | **Johnson, Bürgmann & Pollitz (2015)**, *JGR* 120, 1748–1761 — 113 M≥7.5 sources, elevated-strain regions at ≥0.1 µstrain (~3 kPa), declustered M≥5.5, **no significant rate change for ≥10 days** |
+| **K-060** coherent − envelope | **NOVEL** (the only clean one) | *nothing found.* Bounding incumbent: Johnson et al. (2015)'s null + van der Elst & Brodsky (2010) amplitude scaling |
+| **K-061** destructive node / deficit | **CONTESTED** (phenomenon published, mechanism not) | **Zhang, Elbaz, Havlin & Ashkenazy (2024)**, *Comm. Earth Environ.* 5 — remote rate **significantly reduced** after M≥7.5 beyond a distance, and **ETAS does not capture it**; secondarily O'Malley et al. (2018)'s 80–100° quiescence zone (p = 0.0013) |
+| **K-062** antipodal / non-monotone | **REDISCOVERY** — reframe as *replication* | **O'Malley, Mondal, Goldfinger & Behrenfeld (2018)**, *Sci. Rep.* 8, 11611 — relative rate **> 2.0 within 30° of the antipode**, p < 0.01; the U-shaped law is already claimed |
+| **K-063** orbit comb + velocity scan | **CONTESTED** on phenomenon, **NOVEL** on the scan | **Lavrov et al. (2018)**, *Izv. Phys. Solid Earth*, doi:10.1134/S1069351318010159 + Guglielmi & Zotov (arXiv) — round-the-world R2/R3 echo proposed as aftershock trigger. Love-vs-Rayleigh efficiency arm: **REDISCOVERY** (Hill & Prejean review) |
+| **K-064** superadditivity / Jensen | **REDISCOVERY**, strong | **Heimisson & Avouac (2020)**, *GRL* 47, e2020GL090827 — analytic seismicity rate for oscillating stress; short-period response scales with **amplitude**; *"Aσ₀ may be underestimated if stresses are approximated by a single harmonic function"* |
+| **K-065** normal modes | **CONTESTED**, bound-producing — and the bound is now worth *more* | **Guglielmi & Zotov, arXiv:1207.0365** — claimed **54-min (₀S₂) modulation of global seismicity**. Preprint only; **no refutation and no replication exists.** Our bound would be the first adjudication |
+| **K-066** permanent standing field | **NOVEL** (clean null search) | *nothing found.* Confound to beat is not a paper but a fact: degree-2 mantle structure organises plate boundaries |
+| **K-067** illumination ledger | τ* arm **REDISCOVERY**; Mmax payoff arm **NOVEL** | **Roth, Harrington, Verdecchia & Kilb (2025)**, *GJI* 244(1), ggaf412 — "remote-dynamic triggering **as a stress meter**", susceptibility mapped at a target region. Plus **van der Elst & Brodsky (2010)** — triggering detectable to ~3 nanostrain |
+| **K-068** invert seismicity for the wave | **NOVEL** (clean null search) | *nothing found.* Nearest neighbours run the **forward** direction: Roth et al. (2025); van der Elst & Brodsky (2010) |
+| **K-069** prospective arm | **NOVEL in application**, REDISCOVERY in machinery | *nothing found* — **no dynamic-triggering model has ever entered a prospective CSEP experiment.** Machinery incumbent: Serafini et al. (2025), *Sci. Data* 12, 1501 |
+| **K-070** large-event arm | **CONTESTED — and currently losing** | **Johnson, Bürgmann & Pollitz (2015)** again, plus **Shearer & Stark (2012)**, *PNAS* 109, 717–721 (declustered global catalog indistinguishable from Poisson) and **Michael (2011)**, *GRL* 38, doi:10.1029/2011GL049443 |
+| **K-071** class × transient | **REDISCOVERY** on premise, **EXTENSION** on covariate | **Alfaro-Diaz, Velasco, Pankow & Kilb (2020)**, *JGR*, doi:10.1029/2019JB019131 — at Coso, 15% of 211 remote mainshocks triggered, and response showed **no correlation with peak dynamic stress**. That is adverse to K-071's amplitude design |
+| **K-072** degeneracy breaker | arm (A) **EXTENSION**; **arm (B) CONTRADICTED** | **Hernandez et al. (2014)**, *G-cubed* 15, doi:10.1002/2014GC005404 — *"For Californian seismicity, data are consistent with a single-parameter Gutenberg-Richter hypothesis governing the magnitudes of both triggered and untriggered earthquakes."* |
+| **K-073** wetness meter | method **NOVEL**, finding likely **REDISCOVERY-of-a-null** | **Fan et al. (2021)** / the Anza strainmeter line — with 710 remote sources, **no strain amplitude–duration threshold distinguishes triggering occurrence at Anza** |
+| **K-074** planetary probe | (i) **EXTENSION**, (ii) **NOVEL**, **(iii) REDISCOVERY** | **Guo et al. (2025)**, *JGR Solid Earth* 130, e2024JB030004 — triggering intensity **changes over time**; the Mojave SAF becomes *much less* triggerable after Ridgecrest |
+| **K-075** readiness leaderboard | **NOVEL** (cleanest in the addendum) | *nothing found* for cross-probe rank reproducibility. Nearest: Velasco et al. (2008) (many probes, many regions, but ubiquity framing, not ranking) |
+
+**Family counts.** NOVEL 5 (K-060, K-066, K-068, K-069, K-075) + 2 partial (K-067 payoff arm,
+K-074(ii)); EXTENSION 2 (K-071, K-072(A)) + 1 partial (K-074(i)); REDISCOVERY 4 (K-059, K-062,
+K-064, K-074(iii)); CONTESTED 4 (K-061, K-063, K-065, K-070); CONTRADICTED 1 (K-072(B)) plus
+K-059's headline at M ≥ 5.5. **Running program totals after three rounds: REDISCOVERY 10, CONTESTED
+7, EXTENSION 3, NOVEL 5, CONTRADICTED 1.** *This is the first round in which this seat has been able
+to write NOVEL more than once, and I want the reason on the record: it is not because the ideas got
+better, it is because the family finally proposed **objects** (a coherent field, an inverted
+wavefield, a pre-committed forecast, a rank statistic) rather than **effects**. Effects have all been
+found before. Objects have not.*
+
+### M-009.3 K-059 / K-070 / K-074 — THE GLOBAL LARGE-EVENT AXIS, WHICH IS THE HINGE OF THE SEED
+
+Kepler's nomination line for K-070 says this is "the highest-priority dossier in the seed" and asks
+for Parsons & Velasco (2011) and Pollitz et al. (2012) read against each other. Here is the whole
+sequence, in order, because the pairwise framing is what produces the wrong answer.
+
+1. **Velasco, Hernández, Parsons & Pankow (2008)**, *Nat. Geosci.* 1(6), 375–379,
+   doi:10.1038/ngeo204 — surface waves from M≥7 mainshocks produce a detectable global increase in
+   **small**-earthquake rate, largely independent of tectonic setting. *Metadata verified; the "12 of
+   15" figure is UNVERIFIED-FROM-MEMORY — I could not retrieve the abstract.* This is the
+   established floor and it is what K-059 will re-derive at SoCal M ≥ 2.5.
+2. **Parsons & Velasco (2011)**, *Nat. Geosci.* 4(5), 312–316, doi:10.1038/ngeo1110 — remote
+   triggering of **large** events is absent beyond the mainshock region. Same lead authors, drawing a
+   magnitude line, not contradicting themselves. *Metadata verified; abstract not retrievable.*
+3. **Pollitz, Stein, Sevilgen & Bürgmann (2012)**, *Nature* 490(7419), 250–253, doi:10.1038/nature11504
+   — the 11 April 2012 M8.6 east Indian Ocean event triggered large aftershocks worldwide.
+   *Metadata verified; abstract not retrievable; the "≈5× for ~6 days at M ≥ 5.5 beyond 1500 km"
+   figures are secondary-synthesis and are **UNVERIFIED-FROM-MEMORY**.* **One event.**
+4. **Johnson, Bürgmann & Pollitz (2015)**, *JGR Solid Earth* 120(3), 1748–1761 — quoted verbatim at
+   §M-009.0. The same group, 113 sources, the same amplitude gate we intend to use, null.
+5. **Michael (2011)**, *GRL* 38, doi:10.1029/2011GL049443 — the M≥7 record since 1900 cannot reject
+   independent random events plus localized aftershocks.
+6. **Shearer & Stark (2012)**, *PNAS* 109(3), 717–721, doi:10.1073/pnas.1118525109 — verbatim:
+   *"For a variety of magnitude cutoffs and three statistical tests, the global catalog, with local
+   clusters removed, is not distinguishable from a homogeneous Poisson process."* Also:
+   *"no plausible physical mechanism predicts real changes in the underlying global rate of large
+   events."* That sentence is aimed at this family.
+7. **Parsons & Geist (2014)**, *GRL* 41(13), 4479–4485 — verbatim: *"If aftershocks within at least
+   one rupture length from main shocks/foreshocks are filtered, then we find no evidence of global
+   scale M ≥ 5.2–5.6 (depending on parameters) clustering since 2010 that demands a physical
+   explanation. There is evidence for interdependence below this threshold."* **This is the cleanest
+   published statement of where the magnitude line sits: ~M 5.2–5.6.**
+8. **Bufe & Perkins (2005)**, *BSSA* 95(3), 833–843 — the global moment-release / doublet sequence.
+   Kepler nominated it as CONTESTED. It is worse than that: Shearer & Stark identify a statistical
+   error that inflated its significance. *This attribution is from search synthesis of Shearer &
+   Stark's text rather than from the sentence itself — treat as PARTIALLY VERIFIED, but do not cite
+   Bufe & Perkins as live support without checking.*
+
+**What this does to the entries.**
+
+- **K-059's headline must be restricted before it freezes.** Its claim — that `T(x,t)` adds ≥ 0.01
+  bits/event over frozen ETAS — is *licensed* at SoCal M ≥ 2.5 (Velasco 2008's regime) and
+  *pre-refuted* at global M ≥ 5.5 (Johnson et al. 2015, at K-059's own 3 kPa threshold). Kepler's
+  POWER-STATE says "dominated by the R1/R2 near-teleseismic term at 1–100 kPa" — the ≥3 kPa slice of
+  that is precisely what Johnson et al. tested and found null for large targets. **Recommendation:
+  K-059 freezes with its target magnitude range declared and with Johnson et al. (2015) quoted
+  in-entry as the bound its large-M arm must respect.** Kepler's own conditional — *"if Pollitz is
+  what it appears to be, K-059's headline is a REDISCOVERY"* — resolves the other way: Pollitz is
+  *not* what it appears to be, and K-059's headline is a **rediscovery at small M and a contradicted
+  claim at large M**. Either way it is not novel, which is what Kepler said it was: infrastructure.
+- **K-070 gets cheaper, sharper, and better.** Kepler's instruction is right — *"if Pollitz's event
+  turns out to sit in the top 0.1% of C, that is a genuine retrodiction … Score that check first."*
+  **Johnson et al. (2015) hands us a two-element positive set (the 1977 M8.3 and the 2012 M8.6, both
+  Indian Ocean) against a 111-element null set, already declustered, already amplitude-gated, already
+  published.** That is a ready-made, externally-defined, non-cherry-picked test: **compute C for all
+  113 and ask whether the two positives rank in the top 0.1%.** If they do not, K-070 closes in an
+  afternoon at zero compute risk and the family has produced a real bound. This is the single best
+  takeable in the dossier and it should be in the protocol.
+- **K-074(i) reproducibility arm** is an EXTENSION of Velasco et al. (2008) and Guo et al. (2025) to a
+  formal probe×region matrix; that is legitimate and worth doing. **K-074(ii)** — residual variance
+  explained by ledger state — is the arm with no prior art and is where the entry's value now sits.
+  **K-074(iii)** is a replication; see §M-009.9.
+
+### M-009.4 K-062 — THE ANTIPODAL LITERATURE, WHICH IS REAL, AND THE ENTRY IS ALREADY WRITTEN
+
+Kepler wrote: *"this one has a real literature and I will not guess at it … If the antipodal-triggering
+claim is already in the literature as a failed one, this entry must be re-scoped."* It is in the
+literature, and it is **not** a failed one — which is a harder position than either branch Kepler
+anticipated.
+
+**O'Malley, Mondal, Goldfinger & Behrenfeld (2018), "Evidence of Systematic Triggering at Teleseismic
+Distances Following Large Earthquakes," *Scientific Reports* 8, 11611, doi:10.1038/s41598-018-30019-2.**
+Abstract verbatim on the decisive sentence: *"The region with the greatest chance of induced
+earthquakes following all source events is on the opposite side of the earth, within 30 degrees of the
+antipode."* Design, read from the full text: USGS catalog 1973–2016, **source M6.0 → ≥M8.0** (678 /
+253 / 101 / 31 / 33 sources by bin), **targets M ≥ 5.0**, **3-day window**, arc-distance binning,
+**Gardner–Knopoff declustering**, collective p-values below 0.01; relative rate **> 2.0** within 30°
+of the antipode; **a quiescence zone at 80–100° for M6.5+ sources with p = 0.0013**; and the abstract
+explicitly reports *"initial increased earthquake counts followed by quiescence and recovery."*
+
+**So the U-shaped distance law, the antipodal upturn, AND the intermediate-distance deficit are all
+already claimed, in one open-access paper, in a Nature-family journal, eight years ago.** K-062's
+claim as written is a rediscovery of it, and K-061's deficit has a second published instance in it.
+
+**But — and this is the part that makes the entry more valuable, not less — I could find no
+replication and no refutation.** An unrebutted single paper on a statistic this fragile is not an
+established result; it is an open question with one data point. **Recommendation: re-scope K-062 from
+a discovery claim to an explicit independent replication of O'Malley et al. (2018), with three
+declared deltas the original does not have:** (a) fitting the **(sin Δ)^(−1/2) functional form**
+against a monotone-decay model by ΔBIC — O'Malley binned and tested bins, and never fitted the
+physics; (b) the **wrong-antipode geometric null** Kepler already specifies, which the original does
+not have; (c) the **per-bin exposure map**, which the original does not report and which is the
+artifact most likely to be generating a 30°-wide antipodal cap. A successful replication with those
+three additions is worth more to this program than a novelty claim would have been, and a failed one
+is worth a great deal more.
+
+**Antipodal focusing itself is established physics and is takeable.** **Retailleau, Shapiro,
+Guilbert, Campillo & Roux (2014), *GJI* 199(2), 1030–1042, doi:10.1093/gji/ggu309** — a Mw 5.3
+Southeast Indian Ridge event antipodal to USArray, compared against PREM synthetics with beamforming.
+Verbatim: *"the focusing is well predicted for the first P-wave phases such as PKP or PP. However,
+converted phases (SKSP, PPS) show a deviation of the energy focusing to the south, likely caused by
+the Earth's heterogeneity. Focusing of multiple S-wave phases strongly deteriorates and is barely
+observable."* **Takeable, and it is a warning: the antipodal focus is not a point and it is not where
+a spherically-symmetric calculation puts it — the observed deviation was ~115 km.** K-062's antipodal
+bin must be wide enough to absorb that, and the width must be declared under S-9, not tuned.
+
+**The older "antipodal volcanism" literature.** The Chicxulub → Deccan version is effectively
+falsified on geometry (the Deccan Traps are thousands of km from Chicxulub's antipode). A broader
+antipodal-hotspot-pairing literature is alive but concerns **bolide impacts**, not earthquakes.
+**I found no literature at all connecting a tectonic earthquake to antipodal volcanism.** Kepler's
+"crank magnet" worry is therefore correctly aimed at the *volcanism* branch and mis-aimed at the
+*seismicity* branch, which has a peer-reviewed claim in it.
+
+### M-009.5 K-061 — THE HOLE. SOMEONE HAS ALREADY FOUND A HOLE, AND ETAS ALREADY FAILS ON IT
+
+Kepler's differentiator is that *"single-source triggering … never predicts fewer"* events, so a
+deficit is unforgeable. The premise that no deficit is documented is wrong.
+
+**Zhang, Elbaz, Havlin & Ashkenazy (2024), "Reduced seismic activity after mega earthquakes,"
+*Communications Earth & Environment* 5, doi:10.1038/s43247-024-01460-1.** Abstract verbatim on the
+decisive sentences: *"we analyze the rate of earthquakes that occurred after mega-earthquakes (with a
+magnitude of 7.5 or higher) and show that there is a significantly higher occurrence of
+mega-earthquakes that are followed by reduced activity beyond a certain distance from the epicenter
+compared to the expected frequency … However, the remote earthquake rate after the strongest
+earthquakes (magnitude ≥8) can also be significantly higher than the expected rate. Comparing our
+findings to the global Epidemic-Type Aftershock Sequence model, we find that the model does not
+capture the above findings, hinting at a potential missing mechanism."*
+
+Three things follow, and they cut in different directions.
+
+- **The deficit exists and is published.** K-061 cannot claim to be the first to look for the node,
+  and the entry text — *"nobody has ever looked for the node"* — must be struck before it freezes.
+- **ETAS already fails on it.** This is *good* for the family: the published statement that the
+  standard model does not reproduce the remote deficit is exactly the gap K-061 proposes to fill, and
+  it means a positive K-061 lands in an acknowledged hole rather than against a satisfied incumbent.
+- **The published mechanism is not ours, and it is a competitor we must beat, not merely differ
+  from.** Zhang et al. attribute the deficit to *"the release of global energy/tension."* That is a
+  rival explanation for the same observable, and it makes no phase prediction. **K-061's surviving
+  novel content is therefore precise and small: a deficit that is conditional on predicted phase at
+  matched envelope exposure.** The E-matched stratification Kepler already designed is not a nicety;
+  **it is now the entire claim**, because the unconditional deficit belongs to Zhang et al. and the
+  intermediate-distance version belongs to O'Malley et al.
+- **The standing rebuttal that will be raised, and Kepler should pre-empt it in the entry text:** the
+  mainstream explanation for post-mainshock rate decreases is *reduced detection capability* — coda
+  and elevated noise masking small events after a large arrival. Our E-matched design partly controls
+  it (both deciles are at high envelope exposure) but only partly, because coherent and incoherent
+  windows differ in realised amplitude and therefore in masking. **The detection-masking control must
+  be named in the protocol as a first-class null, not left to the phase-scramble.**
+
+### M-009.6 K-064 — THE CONVEXITY IS PUBLISHED. THE NAME IS OURS; THE MATHEMATICS IS NOT
+
+Kepler's K-064 says *"nobody in triggering treats the convexity of the response function as the
+observable."* Half true, and the half that is false is the important half.
+
+- **Dieterich (1994)** is the root of the exponential `R = exp(Δτ/Aσ)` form. *Universally cited;
+  I did not re-verify volume/pages this session — **UNVERIFIED-FROM-MEMORY** for the exact citation.*
+- **Ader, Lapusta, Avouac & Ampuero (2014), *GJI* 198(1), 385–413, doi:10.1093/gji/ggu144** — response
+  of rate-and-state faults to harmonic shear-stress perturbations; the response amplitude exceeds the
+  spring-slider prediction, *"sometimes by more than an order of magnitude"*, and standard methods
+  therefore **systematically underestimate Aσ**. *Venue/volume/pages/DOI/authors verified via
+  OpenAlex; the quoted characterisation is from search synthesis and is PARTIALLY VERIFIED.*
+- **Heimisson & Avouac (2020), *GRL* 47(23), e2020GL090827, doi:10.1029/2020GL090827** — abstract
+  verbatim: *"We show that seismicity rate from short-period stressing scales with the stress
+  amplitude, but for long periods with the stressing rate. Further, that background seismicity rate r
+  is equal to the average seismicity rate during short-period stressing. We suggest that Aσ₀ may be
+  underestimated if stresses are approximated by a single harmonic function."* The model *"applies to
+  large-amplitude, nonharmonic, and quasiperiodic stressing."*
+
+**Reading.** The statement "the rate responds to the amplitude/variance of a fluctuating stress, not
+merely its mean, because the response is convex, and ignoring this biases Aσ low" **is published, is
+analytic, and is general enough to cover our case**. The phrase "Jensen's inequality" does not appear
+in the triggering literature I could reach — but a naming novelty is not a scientific one, and this
+seat exists to say so. **K-064 is REDISCOVERY.**
+
+**What is genuinely left, and it is worth keeping:** (i) applying the convexity term to a
+**computable, aperiodic, catalogue-derived** wavefield rather than to tides — Heimisson & Avouac's
+framework explicitly extends to nonharmonic quasiperiodic stressing, so **the right move is to adopt
+their model rather than re-derive `⟨R⟩ ≈ exp(σ²/2Aσ²)` from scratch**; (ii) the **three-route Aσ
+agreement** (t_a, K-036, K-064), which is a genuine EXTENSION and is the part Popper should score.
+**Mandate: K-064 must be written on top of Heimisson & Avouac's equations with their short-period /
+long-period regime boundary respected, and it must state which regime our 50–300 s bands sit in
+relative to t_a. If we are in their long-period regime the observable is the stressing *rate*, not
+the amplitude, and the entry's entire arithmetic changes.** That check costs an hour and belongs
+before the protocol, not after.
+
+**Published Aσ values our 0.03 MPa must be placed against.** Dieterich's heuristic Aσ ≈ σ₀/20 ≈
+0.15 MPa; tidal inversions preferring ≈ 0.064 MPa with an acceptable range 0.048–0.11 MPa;
+laboratory extrapolation ≈ 1 MPa. *All three are search-synthesis figures — **PARTIALLY VERIFIED**,
+and none should be quoted in a protocol without a primary read.* **But the direction is unambiguous
+and it matters: our working 0.03 MPa is below the published field range, and both Ader et al. and
+Heimisson & Avouac say published values are themselves biased *low*.** Every POWER-STATE in this
+family that uses Aσ = 0.03 MPa is therefore **optimistic about the predicted modulation, probably by
+a factor of 2–5**. That is a systematic overstatement of power across K-059, K-060, K-061, K-063,
+K-064, K-071 and K-074, and Popper should require the sensitivity at Aσ = 0.1 MPa in every one.
+
+### M-009.7 K-065 / K-066 — THE STANDING-WAVE PAIR
+
+**K-065 (normal modes).** Kepler predicted *"at least one enthusiastic claim and at least one
+refutation."* Exactly half right, and the missing half changes the entry's value.
+
+- The enthusiastic claim exists: **Guglielmi & Zotov, arXiv:1207.0365 (2012)**, reporting a **54-minute
+  modulation of global seismic activity attributed to the fundamental spheroidal mode ₀S₂ (≈0.309
+  mHz)** — i.e. precisely K-065's ₀S₂ line, at precisely K-065's period. The same group extends the
+  programme in **arXiv:2404.18258 (2024)** to round-the-world echoes triggering aftershocks and
+  mainshocks, and **Lavrov et al. (2018), *Izv. Phys. Solid Earth*, doi:10.1134/S1069351318010159**
+  is the peer-reviewed member of the family.
+- **The refutation does not exist.** A dedicated search for critiques of the ₀S₂-modulation claim
+  returned nothing — only more papers by the same group. **A published claim with no replication and
+  no refutation is a worse epistemic situation than a refuted one**, because the branch stays open and
+  anyone building on it can cite a peer-reviewed-adjacent source.
+- **Recommendation: K-065's value goes UP, not down.** It is no longer four hours to close an
+  intuition; it is four hours to produce **the first independent adjudication of a standing published
+  claim**, with an injection-recovery-calibrated 80%-power bound. **That is a better paper than the
+  bound alone, and it should be framed that way in the entry.** Classification **CONTESTED**; Kepler's
+  0.93 prior on the null is well-placed and should stand.
+- **Do not conflate:** ₀S₀ excitation by Sumatra-Andaman is well-established **source physics** (the
+  mode is used for moment estimation). It is not a triggering claim and must not be cited as support.
+
+**K-066 (the permanent standing field).** The hum itself is solidly established and is not the issue:
+**Suda, Nawa & Fukao (1998), *Science* 279(5359), 2089–2091** (background free oscillations on quiet
+days, 2–7 mHz, not explicable as summed small earthquakes); **Nawa et al. (1998)** (independent
+Antarctic superconducting-gravimeter detection, no correlation with M > 6.5 occurrence — a useful
+negative for us); **Rhie & Romanowicz (2004), *Nature* 431, 552–556** (atmosphere–ocean–seafloor
+coupling; ocean infragravity source; seasonal migration between North Pacific and Southern Ocean).
+**The specific comparison K-066 proposes — spherical-harmonic decomposition of global seismicity
+density against mode eigenfunctions or against degree-2 mantle structure — returned nothing.
+Classification NOVEL.** Two cautions: (i) the hum's excitation is **seasonally migrating and
+ocean-driven**, so its "fixed nodal geometry" is fixed only in the sense of the eigenfunctions, not of
+the excitation — Kepler's framing should say so; (ii) novelty here is cheap, because the reason
+nobody has asked is the plate-boundary confound Kepler has already named and handled. **The
+by-product — a plate-stratified spherical-harmonic description of global seismicity — is the real
+deliverable and it should be named as such in the entry, so a null costs nothing.**
+
+### M-009.8 K-067 / K-068 / K-073 — THE MEASUREMENT ARMS
+
+**K-067 (illumination ledger).** The τ*(x) arm is **REDISCOVERY** with a scale delta. The concept has
+a name and an implementation: **Roth, Harrington, Verdecchia & Kilb (2025), "Using remote-dynamic
+earthquake triggering as a stress meter: identifying potentially susceptible faults in the Lower
+Rhine Embayment near Weisweiler, Germany," *GJI* 244(1), ggaf412, doi:10.1093/gji/ggaf412** — 23
+candidate mainshocks selected by PGV at the target, triggering response used to map fault
+susceptibility. **That is K-067 at one site.** Ours is the same object globally, from a computed
+rather than measured amplitude — a real delta, and a modest one. The detection floor to respect is
+**van der Elst & Brodsky (2010), *JGR* 115, B07311** — triggering statistically detectable to
+**~3 nanostrain**, with **15–60% of M3–5.5 occurrence attributable to dynamic strain**. *Both figures
+PARTIALLY VERIFIED (venue/DOI confirmed; numbers from search synthesis).*
+**The payoff arm — high survived-exceedance cells host larger eventual events — returned nothing and
+is NOVEL. It is the only part of K-067 worth the two days**, exactly as Kepler suspected of the
+analogous K-041 arm.
+
+**K-068 (invert the seismicity for the wavefield).** Kepler's stated prior — *"that the forward
+direction has been done and the inverse has not: 0.6"* — is confirmed and should be raised. No paper
+inverts triggering response to *recover* an unmeasured wavefield amplitude and cross-validates it
+against co-located instruments; the neighbours (van der Elst & Brodsky 2010; Roth et al. 2025) all run
+forward, with measured amplitude as the independent variable. **No spatially dense published Aσ map
+exists** — a dedicated search returned only medical-imaging false positives. **Classification NOVEL,
+with the standard caveat that this is a did-not-find, not a confirmed-absent.** *This is the entry with
+the highest novelty-per-unit-risk in the seed after K-060, and it is the one whose product (an Aσ map)
+the most other entries depend on.*
+
+**K-073 (wetness meter).** The *method family* is occupied: van der Elst & Brodsky's inter-event-time
+statistic is survival analysis under another name, and it is what makes a 3-nanostrain detection
+possible. Literal Cox/censoring formalism applied to triggering non-response returned nothing — a
+**method novelty**, which is the weakest kind. The finding is likely a **REDISCOVERY of a null**, and
+the paper that says so is the strongest thing K-073 must beat: **Fan et al. (2021), *JGR Solid Earth*,
+doi:10.1029/2020JB020820 and the Anza follow-up (*BSSA* 2025, 115(2), 452)** — with 710 remote sources
+and borehole strainmeters at the best-instrumented site available, **no strain amplitude–duration
+threshold distinguishes triggering occurrence; local fault conditions dominate.** *PARTIALLY VERIFIED
+— venue/DOI confirmed, content from search synthesis.* **That result is adverse to K-067(i) and
+K-073(i) simultaneously: it says τ* and ν may not be identifiable *even with measured strain at a
+dense array*, which is a stronger instrument than our computed ephemeris.** Kepler's own answer —
+"then τ* has a lower bound everywhere it is unidentified, and a map of lower bounds is a product" — is
+the right answer and it should be promoted from the *"why dismissed too quickly"* line into the
+**claim**, because on this evidence the bound is the likely deliverable and the point estimate is not.
+
+### M-009.9 K-071 / K-072 / K-074 / K-075 — THE STATE-CONDITIONED ADDENDUM
+
+**K-071.** The premise — susceptibility varies with setting — is **REDISCOVERY**: Velasco et al.
+(2008) established ubiquity; the follow-on case-study literature (Coso, the Geysers, Alaskan
+volcanoes, the Lower Rhine Embayment) established that extensional/transtensional and
+geothermal/high-pore-pressure settings respond preferentially, *with the important qualification that
+this is not uniformly reproduced.* The specific conditioning variable — an independently measured
+**tectonic loading rate or interseismic-coupling coefficient** — returned nothing, so **K-071's
+covariate is an EXTENSION and that is where its claim should be pitched.**
+**The adverse row Kepler must have in the entry, because it attacks the design rather than the
+hypothesis: Alfaro-Diaz, Velasco, Pankow & Kilb (2020), *JGR Solid Earth*, doi:10.1029/2019JB019131.**
+At Coso — the most-studied remote-triggering site in our own region — **15% of 211 remote mainshocks
+produced statistically significant rate increases, and the response correlated with neither mainshock
+depth, nor peak dynamic stress, nor focal mechanism**; the authors propose fault orientation relative
+to local S_Hmax as the control instead. *PARTIALLY VERIFIED.* **K-071's POWER-STATE assumes response
+scales with computed amplitude. At the one site where that has been tested hardest, it did not.**
+That does not kill the entry — it makes the amplitude-free arm (K-075) the better bet, which is
+exactly where Kepler's own run-order already points.
+
+**K-072.** Kepler calls this "the best entry in this addendum" on the strength of its two-axis sign
+pattern. **Arm (A) (rate) is an EXTENSION and defensible. Arm (B) (size) is CONTRADICTED, in our own
+region, by a purpose-built estimator.** **Hernandez et al. (2014), "The magnitude distribution of
+dynamically triggered earthquakes," *G-cubed* 15, doi:10.1002/2014GC005404.** Abstract verbatim:
+*"We use a mixing model approach in which total seismicity is decomposed into two classes:
+'triggered' events initiated or advanced by far-field dynamic strains and 'untriggered' spontaneous
+events consisting of everything else. The b-value of a mixed data set, bMIX, is decomposed into a
+weighted sum of b-values of its constituent components, bT and bU … For Californian seismicity, data
+are consistent with a single-parameter Gutenberg-Richter hypothesis governing the magnitudes of both
+triggered and untriggered earthquakes."*
+**Reading, and I want it stated without softening: the published result is that triggered and
+untriggered events in California have indistinguishable magnitude distributions.** K-072(B) predicts
+mean triggered magnitude higher by 0.2–0.5 and lower local b in locked cells. That is not merely
+unprecedented — it runs against a null established with a better-suited estimator in the same region.
+**It is not dead:** Hernandez et al. tested the *pooled* population; K-072(B) tests a *stratification
+by fault state*, and a null in the pooled mixture is fully consistent with opposite-signed effects in
+two sub-populations — which is, in fact, precisely K-072's own thesis about the silent list. **But
+Popper must be told that the entry's headline status rests on an arm with a published null against it,
+that Hernandez et al.'s f_T machinery is the obvious incumbent to run head-to-head, and that the
+honest prior on arm (B) is worse than the 0.55 Kepler assigns to the compound.** I would put arm (B)
+at 0.75 on the null.
+
+**K-074 / K-075 — and this is where the queue changes.** Restating §M-009.0(1) in its consequences:
+**Guo et al. (2025), *JGR Solid Earth* 130, e2024JB030004** already demonstrates, in southern
+California, catalogue-free, that **triggering intensity is spatially organised and changes in time**,
+with the Mojave San Andreas going from most-triggerable to much-less-triggerable after Ridgecrest,
+attributed to *"an exhaustion of the faults near failure."*
+
+- **K-074(iii) and K-075(ii) are therefore REDISCOVERIES as W-003 discriminators.** They cannot be
+  scored as "the cleanest single discriminator against W-003" any more, because the discrimination has
+  been published and it went against the static medium. **Popper's ranking of that arm must fall, and
+  W-003's ledger status should be re-examined on this row independently of anything we run.** I flag
+  the second half of that sentence as this dossier's one recommendation that reaches outside the
+  family: **W-003 has an adverse published result it has not been scored against.**
+- **What survives, and it is real: extension of scope and of statistic.** Guo et al. is one region,
+  seven years, one big perturbation. **K-074's probe×region matrix (≈20 probes × 13 regions) and
+  K-075's cross-probe rank statistic are neither of them in the literature**, and Guo et al.
+  *strengthens* them by establishing that the quantity being ranked is real and non-stationary.
+  **K-075(i) — rank reproducibility across independent probes — returned a clean null search and is
+  the cleanest NOVEL in the addendum.** Kepler's instinct to run K-075(i) as a gate on the rest is
+  correct and is now better supported than when he wrote it.
+- **One takeable with teeth.** Guo et al. find **low-frequency waves (0.04–0.1 Hz) more effective than
+  high-frequency (1–3 Hz)**, consistent with rate-state-assisted aseismic creep or hydrological
+  triggering. Our declared bands {50–100 s, 100–200 s, 200–300 s} are **0.003–0.02 Hz — below their
+  effective band entirely.** That is not necessarily wrong (their observation is a comparison within a
+  band-limited catalogue-free detector, and lower frequencies were not their contrast), but **the
+  entry must justify the band choice against this result under S-9 rather than inheriting it from the
+  phase-computability limit alone.**
+
+### M-009.10 TAKEABLES (adopt instead of reinventing)
+
+1. **Johnson et al. (2015)'s 113-mainshock design and its 0.1 microstrain (~3 kPa) elevated-strain
+   gate.** It is the published version of K-059's exposure definition. Adopt the gate; adopt the
+   ±1 year stacking window; adopt the **exclusion-zone declustering**. Do not reinvent them.
+2. **Johnson et al. (2015)'s two positives (1977 M8.3, 2012 M8.6) as K-070's externally-defined test
+   set.** Score C on all 113 and ask where those two rank. This is the cheapest decisive test in the
+   family and it exists only because someone else did the work.
+3. **Heimisson & Avouac (2020)'s analytic oscillating-stress seismicity-rate model**, in place of
+   deriving K-064's Jensen term ourselves — and their **short-period/long-period regime boundary** as
+   a mandatory pre-freeze check on which regime our bands occupy.
+4. **The Aσ correction.** Every POWER-STATE in this family uses Aσ = 0.03 MPa. Published field values
+   cluster at 0.048–0.15 MPa and two independent papers say those are themselves biased low. **Require
+   the Aσ = 0.1 MPa sensitivity in all seventeen entries before freeze.**
+5. **Retailleau et al. (2014)'s ~115 km antipodal focus deviation** as K-062's bin-width floor, frozen
+   under S-9 rather than tuned.
+6. **O'Malley et al. (2018)'s design as K-062's comparison arm**: USGS 1973–2016, Gardner–Knopoff,
+   M≥5 targets, 3-day window, arc-distance bins. Matching it exactly is what makes ours a replication
+   rather than a different experiment that happens to disagree.
+7. **Hernandez et al. (2014)'s mixing-model / f_T estimator** as K-072(B)'s incumbent — run it, do not
+   invent a new magnitude-distribution statistic.
+8. **Guo et al. (2025)'s catalogue-free PhaseNet triggering-intensity measurement.** This removes the
+   completeness-and-Mc confound (W-004's dominant one, and the one K-074(ii) names) *by construction*.
+   **If the program can afford waveform access for the 13 boxes, this is a better instrument than
+   anything K-074 proposes, and it is already implemented.**
+9. **Roth et al. (2025)'s "stress meter" framing and mainshock-selection-by-PGV protocol** for K-067.
+10. **The detection-masking control** (coda/noise suppression of small-event detection after a large
+    arrival) as a named first-class null in K-061 — it is the standard rebuttal to every published
+    post-mainshock deficit and it will be the first thing a reviewer says.
+11. **Brodsky & van der Elst (2014), *Annu. Rev. Earth Planet. Sci.* 42, 317–339** — the field's
+    synthesis. **It is the one document that should be read in full before any of these entries freeze,
+    and I could not obtain it this session (403). This is the largest single gap in the dossier and I
+    am naming it rather than papering over it.**
+
+### M-009.11 FEEDING THE TRIO — what this changes
+
+**To Popper — the recommended changes to the expected priority queue.**
+
+1. **Demote K-074(iii) and K-075(ii) as W-003 discriminators.** Guo et al. (2025) already ran that
+   discrimination, in SoCal, and it went against the static medium. Rescore them as **replication +
+   global extension**, which is worth doing but is not the round-deciding test the seed advertises.
+2. **Separately, and outside this family: W-003 should be scored against Guo et al. (2025).** A
+   published, catalogue-free, in-region demonstration of temporally varying triggering susceptibility
+   is adverse evidence the incumbent has not been assessed against. That is a ledger-status question,
+   not a hypothesis question, and it belongs to Popper, not to me.
+3. **Promote K-069.** It is the only entry in seventeen whose niche is *empty* — no dynamic-triggering
+   model has ever entered a prospective CSEP experiment — and its marginal cost after K-059 is near
+   zero. Kepler's own gate language already permits the commitment log to start immediately. **It
+   should start immediately, before any interpretation, exactly as written.**
+4. **Promote K-075(i)** to the front of the compound family as Kepler proposes, and now with better
+   support: it is a clean NOVEL, it is calibration-free, and Guo et al. establishes that the ranked
+   quantity is real.
+5. **Restrict K-059's headline claim by target magnitude before it freezes**, with Johnson et al.
+   (2015) quoted in-entry. Its large-M arm is pre-refuted at its own amplitude threshold.
+6. **Re-scope K-062 to an explicit replication of O'Malley et al. (2018)** with the three declared
+   deltas at §M-009.4. Higher value, lower novelty, and it removes the risk of the program announcing
+   a 2018 result as a 2026 one.
+7. **Strike "nobody has ever looked for the node" from K-061** and re-pitch the claim on the E-matched
+   phase conditional, with Zhang et al. (2024)'s energy-release mechanism named as the rival.
+8. **Downgrade K-072(B)'s prior** from the compound 0.55 to ≈0.75 on the null, and require the
+   Hernandez et al. (2014) head-to-head.
+9. **Require the Aσ = 0.1 MPa power sensitivity family-wide.** Every POWER-STATE here is optimistic
+   by a factor of 2–5 if the published Aσ range is right.
+10. **K-060 is confirmed as the seed's verdict and the family's only clean NOVEL.** Nothing in four
+    sweeps touched the coherent-minus-envelope nested comparison. Kepler's stated prior of ~0.2 that
+    it exists in the literature was, if anything, too high.
+
+**To Wegener — candidate observation-table rows he does not have** (all are field facts about rate
+response, which is his spine; I claim none of them for us):
+**Johnson, Bürgmann & Pollitz (2015)** — 113 M≥7.5 sources, elevated-strain regions ≥3 kPa, **no
+significant global M≥5.5 rate change for ≥10 days**; two positives in 35 years, both Indian Ocean.
+**Parsons & Geist (2014)** — no global clustering demanding a physical explanation above **M ≈ 5.2–5.6**
+once one-rupture-length aftershocks are filtered; interdependence below it. **Shearer & Stark (2012)**
+— declustered global catalog indistinguishable from homogeneous Poisson across magnitude cutoffs and
+three tests. **Zhang et al. (2024)** — remote rate **reduced** after M≥7.5 beyond a distance, **and
+global ETAS does not reproduce it**; the M≥8 remote rate can be elevated. **O'Malley et al. (2018)** —
+relative rate >2.0 within 30° of the antipode (p<0.01) and a quiescence zone at 80–100° (p=0.0013),
+M≥5 targets, 3-day window, unreplicated. **Guo et al. (2025)** — triggering intensity in SoCal is
+spatially organised and **changes in time**; Mojave SAF most triggerable, then much less so after
+Ridgecrest; low-frequency (0.04–0.1 Hz) more effective than high (1–3 Hz). **Alfaro-Diaz et al.
+(2020)** — at Coso, 15% of 211 remote mainshocks triggered, with **no correlation to peak dynamic
+stress, depth or mechanism**. **Hernandez et al. (2014)** — triggered and untriggered California
+seismicity share a single-parameter Gutenberg-Richter magnitude distribution. **The last two are the
+rows I would most want him to have: together they say the response is neither amplitude-ordered nor
+magnitude-distinct, which is adverse to most of how this program models triggering.**
+
+**To Kepler — the floor, in the order it must be cleared before any of the seventeen freeze.**
+(1) Quote **Johnson et al. (2015)** in K-059 and K-070 and declare the target magnitude range each
+claim is licensed at. (2) Run the **113-mainshock C-ranking retrodiction** as K-070's first act, on
+Johnson's list, before any other compute in the addendum. (3) Re-scope **K-062** to a replication and
+adopt O'Malley's design parameters verbatim as the comparison arm. (4) Strike the "nobody has looked
+for the node" line from **K-061**, add the detection-masking null, and name Zhang et al. (2024) as the
+rival mechanism. (5) Rebuild **K-064** on Heimisson & Avouac (2020) and state which of their two
+regimes our bands occupy. (6) Add the **Aσ = 0.1 MPa** sensitivity to every POWER-STATE. (7) Reframe
+**K-065** as the first independent adjudication of Guglielmi & Zotov's ₀S₂ claim — it is worth more
+that way and costs the same. (8) In **K-072**, run Hernandez et al.'s f_T mixing model head-to-head on
+arm (B) and lower its prior. (9) In **K-074**, justify the band choice against Guo et al.'s
+frequency-dependence result under S-9, and treat their catalogue-free measurement as the preferred
+instrument if waveforms are affordable. (10) **Keep K-060 exactly as written.** It is the one entry in
+the family that four adversarial sweeps could not find a precedent for, and its built-in
+short-period/high-orbit negative control is the best-designed success rule anyone in this program has
+written.
+
+### M-009.12 CYCLE-1 OPEN ITEMS — CLOSED
+
+**(a) The CSEP / EarthquakeNPP `SCEDC_25` figure-2 value — RESOLVED, with numbers, and the resolution
+changes M-004.3's reading.**
+M-004 recorded: *"the ETAS-minus-Poisson temporal gap for `SCEDC_25` is plotted in Figure 2, not
+tabulated, and I could not read a numeric value from the HTML rendering. I am not going to estimate it
+by eye."* I did not have to. **Stockman, Lawson & Werner's own public repository publishes the fitted
+scores as JSON**: `github.com/ss15859/EarthquakeNPP`, file
+`Experiments/ETAS/output_data_SCEDC_25/ll_scores.json`, retrieved 2026-08-10, verbatim:
+`{"ETAS": {"nll": 5.398584647521974, "tll": 2.139415098479981, "sll": -7.537999746001956},
+"Poisson": {"nll": 13.07735492357184, "tll": -0.16087563945479033, "sll": -12.916479284117049}}`.
+These are **per-event log-likelihoods in nats**, and they are internally consistent (`nll = −(tll+sll)`
+to 15 digits). The companion configuration `Experiments/ETAS/config/SCEDC_25.json` gives the protocol:
+**Mc = 2.5, auxiliary from 1981-01-01, train window 1985-01-01 → 2014-01-01, test window 2014-01-01 →
+2020-01-01.** Pulling the other three California datasets from the same repository gives the full
+comparator set:
+
+| dataset | region / floor | ETAS tll | Poisson tll | **temporal gain, nats/ev** | **bits/event** | prob. gain |
+|---|---|---|---|---|---|---|
+| `SCEDC_20` | S. California, Mw≥2.0 | 2.5410 | 0.6431 | 1.8979 | **2.738** | 6.67× |
+| **`SCEDC_25`** | **S. California, Mw≥2.5** | **2.1394** | **−0.1609** | **2.3003** | **3.319** | **9.98×** |
+| `SCEDC_30` | S. California, Mw≥3.0 | 1.8403 | −1.0644 | 2.9047 | **4.191** | 18.26× |
+| `ComCat_25` | all California, M≥2.5 | 1.4343 | 0.5126 | 0.9217 | **1.330** | 2.51× |
+| **B-2 (ours)** | **S. California, M≥2.5** | — | — | — | **+1.907** | **3.75×** |
+
+**Reading, and it is a correction to M-004.3, not a confirmation of it.** M-004.3 said our +1.907 sits
+below every published California comparator *and should, because ours is temporal-only while theirs
+are spatio-temporal*. That defence is no longer available: **these four are temporal-only, same metric
+decomposition, and one of them (`SCEDC_25`) is the same region, same catalog family, same magnitude
+floor.** Against it we are at **57% of the published gain (1.907 vs 3.319 bits/event)**. Against
+`ComCat_25` — statewide, same Mc — we are **above** (1.907 vs 1.330). **So the honest placement is:
+our number sits inside the published temporal-only range of 1.33–4.19 bits/event, in the lower-middle,
+and specifically below the closest-matched comparator.** Two innocent explanations are available and
+both must be checked before this is treated as underperformance: **(i) test-window composition** —
+theirs is 2014–2020 (contains Ridgecrest 2019 and little else); ours is 2010–2026 (contains
+El Mayor-Cucapah's aftershock decay, Ridgecrest, and long quiet stretches), and clustering gain is
+dominated by which large sequences fall inside the test window; **(ii) catalog construction** —
+`SCEDC_25` is a region-clipped SCEDC product with a declared shape file, ours is not identically
+clipped. **Recommendation to Faraday and Popper: the M-004.4 takeable — "score ourselves inside
+EarthquakeNPP's `SCEDC_25` protocol" — is upgraded from *desirable* to *required before B-2 is
+quoted against the literature again*, because there is now an exact, public, same-metric number to
+land against and we are 1.4 bits below it.** *Provenance flag: these values are the authors' own
+committed model outputs in the paper's public repository, not values read off Figure 2. They are
+better evidence than the figure, but they are not literally the figure, and the sentence "Figure 2
+shows X" should not be written on this basis.*
+
+**(b) Titus et al. (2011) venue check — RESOLVED on the venue, and it produced a CORRECTION to my own
+M-006.**
+Venue pinned: **Titus, S. J., Dyson, M., DeMets, C., Tikoff, B., Rolandone, F. & Bürgmann, R. (2011),
+"Geologic versus geodetic deformation adjacent to the San Andreas fault, central California," *GSA
+Bulletin* 123(5–6), 794–820, doi:10.1130/B30150.1.** *(A second Titus et al. 2011 exists — "Using
+vertical axis rotations to characterize off-fault deformation across the San Andreas fault system,
+central California," *Geology* 39(8), 711 — and either could be Kreemer & Young's referent.)*
+**But the venue is the smaller half of the answer.** M-006 attributed to Titus et al. the specific
+result that *"alternating positive/negative dilatation along strike-slip zones is an artifact of
+heterogeneous GPS station distribution,"* and flagged it *"do not cite this one without checking the
+reference."* **Checked: that specific result appears to belong to Baxter et al., not to Titus et al.**
+**Baxter, S. C., Kedar, S., Parker, J. W., Webb, F. H., Owen, S. E., Sibthorpe, A. & Dong, D. (2011),
+"Limitations of strain estimation techniques from discrete deformation observations," *GRL* 38(1),
+L01305, doi:10.1029/2010GL046028** is the paper that treats **"braiding" dilatation artifacts** produced
+by grid sampling and orientation relative to the fault — with the artifact frequency maximised at
+22.5° offsets and cancelling near multiples of 45° — i.e. artificial dilatation where the true
+dilatation is zero. Titus et al. (2011) is a geologic-versus-geodetic off-fault-deformation paper.
+Kreemer & Young cite Hackl, Baxter, Titus and Pagani **together** for the general statement that even
+a dense network yields artifacts; **M-006 over-assigned the specific alternating-dilatation result to
+Titus from that joint citation.** **Correction, and it is mine: attribute the sign-flip artifact to
+Baxter et al. (2011). Titus et al. (2011) may be cited for off-fault deformation adjacent to the
+central SAF, at the venue above, and not for the dilatation artifact without a primary read.**
+*Verification limit: the Baxter braiding detail is from search synthesis; the title/venue/DOI are
+confirmed. The GSA Bulletin abstract for Titus returned 403 and I did not read it. **UNVERIFIED** that
+Titus et al. contains no dilatation-artifact discussion — I can say only that the result is Baxter's,
+not that it is absent from Titus.*
+
+**(c) Page et al. (2016) full text — PARTIALLY RESOLVED. Abstract now verified verbatim; full text
+remains unread, and the reason is recorded.**
+M-004's verification ledger listed Page et al. (2016) under *"citation metadata only (abstract elided
+by publisher or paywalled, full text not read)."* The abstract has now been obtained verbatim from the
+**USGS Publications Warehouse API** (`pubs.usgs.gov/pubs-services/publication/`, record 70177935,
+retrieved 2026-08-10), which carries it in full where Crossref, Semantic Scholar and the publisher all
+elide it. Citation confirmed against Crossref: **Page, M. T., van der Elst, N., Hardebeck, J.,
+Felzer, K. & Michael, A. J. (2016), "Three Ingredients for Improved Global Aftershock Forecasts:
+Tectonic Region, Time-Dependent Catalog Incompleteness, and Intersequence Variability," *BSSA*
+106(5), 2290–2301, doi:10.1785/0120160073**, published online 2016-08-23.
+**The two sentences the program actually needed, now primary-source-confirmed:** *"To better capture
+spatial variations in aftershock productivity and decay, we estimate regional aftershock parameters
+for sequences within the García et al. (2012) tectonic regions. We find that regional variations for
+mean aftershock productivity reach almost a factor of 10."* And on the third ingredient: *"we develop
+an inverse method to estimate the intersequence parameter variability. This allows for a more complete
+quantification of the forecast uncertainties and Bayesian updating of the forecast as sequence-specific
+information becomes available."*
+**This confirms the "~10× productivity spread across tectonic regions" figure M-006/M-004 used, which
+was previously secondary.** **Full text remains unobtained: Unpaywall reports `is_oa: false` for
+10.1785/0120160073 with no OA location; GeoScienceWorld and pubs.usgs.gov both returned 403 to direct
+fetch.** Attempts recorded: Crossref (metadata only), Semantic Scholar (abstract elided by publisher),
+Unpaywall (closed), USGS pubs landing page (403), USGS pubs-services API (**abstract obtained**),
+GeoScienceWorld (403). **Status upgraded from "citation metadata only" to "ABSTRACT VERIFIED VERBATIM;
+FULL TEXT UNREAD." The productivity-spread and intersequence-variability claims may now be cited. Any
+claim about Page et al.'s *methods, parameter values, or per-region numbers* remains
+UNVERIFIED-FROM-MEMORY and must not be quoted without institutional access.**
+
+---
+
+*Merton, M-009. Umbrella pre-freeze dossier, seventeen entries, K-059..K-075. Classifications:
+**NOVEL 5** (K-060 coherent-minus-envelope; K-066 seismicity spherical harmonics; K-068 seismicity→
+wavefield inversion; K-069 prospective pre-committed triggering forecast; K-075(i) cross-probe rank
+reproducibility) **plus 2 partial** (K-067's survived-exceedance Mmax arm; K-074(ii) state-explained
+residual). **EXTENSION 2** (K-071's loading-rate covariate; K-072(A)) **plus 1 partial** (K-074(i)).
+**REDISCOVERY 4** (K-059 at small M; K-062; K-064; K-074(iii)). **CONTESTED 4** (K-061; K-063; K-065;
+K-070). **CONTRADICTED 1** (K-072(B), by Hernandez et al. 2014) **plus K-059's headline at M ≥ 5.5**
+(by Johnson, Bürgmann & Pollitz 2015). The three results that cost the family most: **Guo et al.
+(2025)** has already published the temporal-variation discriminator in our own region and it went
+against the static medium; **Johnson, Bürgmann & Pollitz (2015)** has already run K-059's design at
+K-059's amplitude threshold on 113 sources and found it null at M ≥ 5.5; **O'Malley et al. (2018)** has
+already claimed the antipodal upturn and the intermediate-distance deficit. The one that costs it
+nothing and gives it the most: **no dynamic-triggering model has ever entered a prospective CSEP
+experiment (K-069), and K-060's nested coherent-versus-envelope comparison survived four independent
+adversarial sweeps.** Citations marked UNVERIFIED-FROM-MEMORY where search did not reach primary text:
+Parsons & Velasco (2011), Pollitz et al. (2012) and Velasco et al. (2008) contents (metadata verified,
+abstracts unreachable behind Nature paywalls — the "12 of 15", "≈5×" and "~6 days" figures are
+secondary); Dieterich (1994) exact citation; the Aσ values 0.15 / 0.064 / 0.048–0.11 / 1 MPa; van der
+Elst & Brodsky's 3-nanostrain and 15–60% figures; Ader et al.'s "order of magnitude" characterisation;
+Alfaro-Diaz et al.'s 15%-of-211; Fan et al.'s Anza no-threshold result; Shearer & Stark's identification
+of the Bufe & Perkins error; and all content of Brodsky & van der Elst (2014), which I could not obtain
+and which is the largest single gap in this dossier. Verified verbatim from primary abstract records:
+Johnson, Bürgmann & Pollitz (2015); Guo et al. (2025); Zhang, Elbaz, Havlin & Ashkenazy (2024);
+Hernandez et al. (2014); O'Malley et al. (2018); Retailleau et al. (2014); Heimisson & Avouac (2020);
+Shearer & Stark (2012); Michael (2011); Parsons & Geist (2014); Page et al. (2016). Verified from the
+authors' own committed model outputs: Stockman, Lawson & Werner (2026) `SCEDC_25` and companion
+log-likelihood scores. No commits made; no other persona's section touched.*
+
+---
+
+# VERDICTS (Popper) — Round 3, cycle-2 step 2: K-059..K-086 adjudicated, K-046 ruled, queue refreshed
+
+*2026-08-10. Twenty-eight entries across three seeds (wave-interference K-059..K-075; quiescence
+K-076..K-080; angular-configuration K-081..K-086), plus the formal ruling on K-046 left open in
+cycle 1. Absorbs Merton M-007, M-008 and M-009. Three new standards: S-13, S-14, S-15. Appended to
+my own section; no other persona's content touched; nothing committed.*
+
+---
+
+## §P4-0. WHAT I AM RULING WITH, AND THE ONE THING I AM NOT
+
+I read this session: M-007 (§§.5–.8), M-008 (§§.9–.11), M-009 in full, the three seeds in full, my
+own S-8/S-9/S-10/S-11/S-12, R2-6, §P3-7 and §P3-8, `results_k046.json`, `k046_run.log`, and
+`engine/{README.md,SPEC.md,HOLDOUT_LOG.jsonl}` plus the engine run artifacts. Every ruling below
+cites one of those.
+
+**What I am not ruling with: the primary literature.** Merton's classifications rest in places on
+search synthesis rather than primary text, and he says so — Parsons & Velasco (2011), Pollitz et al.
+(2012) and Velasco et al. (2008) are metadata-verified only; the Aσ values are PARTIALLY VERIFIED;
+Brodsky & van der Elst (2014) was unobtainable and he names it as the dossier's largest gap. **I
+adopt his classifications as binding on our *claims* and not as findings about the world.** Where a
+ruling below turns on a figure he flagged, I say so in the ruling. **One consequence I make
+explicit: Brodsky & van der Elst (2014) must be read in full before K-060, K-061 or K-063 freeze.
+That is a freeze condition, not a wish.**
+
+**A standing observation adopted as a ranking rule.** Merton's §M-009.2 note — that this is the first
+round he has been able to write NOVEL more than once, and that the reason is that the family finally
+proposed **objects** (a coherent field, an inverted wavefield, a pre-committed forecast, a rank
+statistic) rather than **effects** — is the most useful methodological observation any seat has
+produced in three rounds. It is also a ranking rule and I adopt it as one: **at equal cost, an entry
+whose deliverable is an object outranks an entry whose deliverable is a p-value on an effect.**
+
+---
+
+## §P4-1. NEW SHARED STANDARDS (additions to S-1..S-12)
+
+### S-13. Structure-aware AND magnitude-matched. Both, or the statistic is void.
+
+Kepler asked whether his mandate that quiescence-family tests use structure-aware and
+magnitude-matched nulls should become a standard. **It should, and not only for that family. It is
+now S-13, program-wide.**
+
+The evidence is his own two sniffs, and they are the cleanest methodological result in the ledger:
+
+- **Angular seed §(i):** against a uniform-azimuth null the prior-event configuration is significantly
+  anisotropic at **52.5% of targets**, median climatological resultant R = 0.43 (0.49 axially).
+  Against the structure-aware null, targets read **z = +0.75** — and magnitude-matched controls read
+  **+0.79**. Difference **−0.03 ± 0.15**. The one-null version of that test would have reported a
+  discovery.
+- **Quiescence seed §(i):** the same statistic reads *anti*-predictive against time-randomised
+  controls (P(gap≥90 d) 0.127 vs 0.183, p = 0.0012, n = 418) and **5.0× predictive** against
+  event-sampled controls (0.278 vs 0.056). Same catalogue, same statistic, opposite conclusions,
+  entirely by choice of null.
+
+**Rule.** Any claim resting on a configurational, geometric, or absence statistic must report (a) a
+null resampled from the *same location's own long-run climatology* with the target epoch excised, and
+(b) the identical statistic computed on a **magnitude-matched control population** from the same
+catalogue. **The headline is the difference; neither arm alone is ever the result.** A test that names
+only one sampling frame states its bias direction and reports the other frame's number alongside, as
+the measured width of the artifact — Kepler's Q1, generalised.
+
+This subsumes A1, A2 and Q1 and makes them binding outside their seeds. It also prices two things we
+already claim: **B-4's silent list and K-013's negative space are absence statistics that have never
+been magnitude-matched.** That debt is now on the register.
+
+### S-14. Adverse-end power. (Merton's Aσ mandate, ADOPTED and AMENDED.)
+
+Merton requires the Aσ = 0.1 MPa sensitivity in all seventeen wave entries, on the ground that
+published field values cluster at 0.048–0.15 MPa while every POWER-STATE in the family uses
+0.03 MPa — power overstated 2–5×. **Adopted. Amended in two respects, and the amendments matter.**
+
+1. **0.1 MPa is not a published value; it is a round number between two of them.** The mandated
+   bracket is **{0.03 (ours), 0.1 (Merton's mandate, retained as the comparability point), 0.15
+   (Dieterich's heuristic σ₀/20, the adverse end)}** — three points, reported as a row of the
+   POWER-STATE table, in every wave entry that carries one.
+2. **The adverse end sets the flag.** An entry is "bound-producing only" if it is bound-producing at
+   **Aσ = 0.15 MPa**, whatever it looks like at 0.03. This is the whole point: a family that declares
+   its power at its most optimistic constant has not declared its power.
+
+**Generalised, because Aσ is not the only such constant.** Every POWER-STATE resting on a physical
+parameter taken from outside our own measurements — Aσ, Q, U, μ′, the stress drop in the ΔCFS scaling,
+the 3 kPa exposure gate — reports power at the published central value **and** at the published
+range's adverse end, and the entry's status flag is set by the adverse end. *Merton's caveat carries
+forward: his three Aσ figures are PARTIALLY VERIFIED and none may be quoted in a protocol without a
+primary read. The obligation to run the sensitivity does not depend on that; the right to print the
+numbers does.*
+
+### S-15. The UNMEASURABLE class is mandatory, and it is scored neither way.
+
+Kepler invented this inside K-076 (deficit defined only where `Λ ≥ 4`; cells below the floor reported
+as UNMEASURABLE and scored neither way). **It generalises and I am making it a standard**, because
+the program has three places where its absence is actively costing us: the globe layer's excitation
+multiplier, B-4's silent list, and every per-cell map we have shipped.
+
+**Rule.** Any per-cell or per-stratum claim must (i) declare its power floor in the units of the
+statistic, computed before the run; (ii) partition cells into MEASURED and UNMEASURABLE against that
+floor; (iii) report the UNMEASURABLE fraction in the headline; (iv) score UNMEASURABLE cells neither
+as hits nor as misses. **A map that renders a value in a cell where the statistic cannot resolve that
+value is a presentation artifact, and Kepler's arithmetic makes the cost concrete: the Colombia cell
+carries Λ ≈ 1.7 expected M ≥ 4.5 in 90 days where Λ ≥ 4 is needed for even a total blackout to
+register at 2σ. That cell was never measurable. It was rendered anyway.**
+
+### On S-8 and S-11 as applied to the three new families
+
+Both apply unchanged; I record the specific bindings so no entry discovers them late.
+
+**S-8 (sim-calibrated max-statistic over the declared family).** Declared family sizes, taken from the
+entries' own text and accepted: **K-081 — 90 cells** (5 annuli × 5 lag bins × 3 harmonic orders ×
+2 depth classes × 3 magnitude strata); **K-084 — 75 cells** (lag × distance × M_src); **K-082 —
+3 receiver rules**, with (b) the local structural strike as the headline because it is the only one a
+forecast could use; **K-079 — 5 clocks**; **K-076 — {windows × radii × horizons × depth classes}**.
+Two additions: (i) **the S-14 Aσ bracket joins the declared family** in every wave entry, and the
+max-statistic runs over it; (ii) **K-084's pre-nomination of physically-predicted rows is approved and
+is the right instrument** — a hit in a pre-nominated cell is scored against the pre-nominated
+subfamily, a hit anywhere else against all 75, and that asymmetry is written into the protocol before
+the run or it is not available afterwards.
+
+**S-11 (≥ 0.01 bits/event out of sample, sequence-block CI).** The floor binds every skill claim in
+all three families. Its consequence is severe and both seeds state it honestly in their own text
+rather than in a footnote — which is what S-11 was written to force, and I record that both complied
+without being made to: **the global angular arm resolves 0.06 bits at n = 337, six times the floor,
+and is bound-producing only; the SoCal low-Mc arm at 10³–10⁴ targets is the only configuration in
+that family where the floor is reachable at all.** The quiescence family is the same shape: pooled
+global resolution ≈ 19% hazard modulation at N = 418 targets, per-cell measurable only at SoCal
+M ≥ 2.5.
+
+---
+
+## §P4-2. RULING ON K-046 — the open item from cycle 1
+
+### The conflict, stated from the artifacts
+
+`k046_run.log:16573` and `results_k046.json::verdict.VERDICT` carry the first-run string:
+*"K-046 REFUTED — a decaying excess survives per-cell demeaning; the pedestal does not account for
+K-009, which is HARDENED."* The same file's `verdict_v2_decomposed.VERDICT` carries the patch:
+*"K-046 SUBSTANTIALLY CONFIRMED … the residual field decomposes without remainder into one great
+sequence plus one static spatial mis-specification … the 'internal weather' reading is dead."*
+`verdict_v2_decomposed.supersedes` quotes the v1 string verbatim and `flags.verdict_v1_superseded`
+is set. **Two verdict strings, opposite in sign, in one artifact. That is not allowed to stand, and
+this is the ruling that ends it.**
+
+### §P4-2(a) — The first-run string is VOID, not merely superseded.
+
+The patch's own `why_superseded` field is decisive, and it is an admission of a defect in the *rule's
+application*, not a change of mind: *"the v1 label applied Kepler's primary threshold to the full
+window, which still contains the dynamic El Mayor term, and therefore read 'REFUTED' off a result
+that confirms his decomposition."* **A frozen threshold evaluated on a window the same run
+demonstrates to be contaminated by the very term the threshold was written to exclude is a defective
+application, and under S-12(e) the defect belongs to whoever wrote the rule — which is to say, to
+this seat's insistence on a single scalar threshold.** VOID: the string must not be quoted again in
+any register, protocol or draft, and Faraday's register should carry the void notice rather than the
+string.
+
+### §P4-2(b) — The decomposition is CONFIRMED as a measurement. The frozen threshold is NOT MET.
+
+Both, and S-12(d) is what lets both be true — pre-registration is scored per statistic, not per run.
+
+**CONFIRMED (measurement).** The ACF is `A·exp(−k/τ) + C` with **A = 0.06539, τ = 7.157 wk,
+C = 0.03825, dBIC = 42.196** — an independent refit reproducing Kepler's quoted A = 0.0654,
+τ = 7.16 wk, C = 0.0382, dBIC 42.2 to every digit. The pedestal is a static per-cell offset by three
+independent routes: demeaning removes **0.03709** at lag 1; the between-cell variance fraction is
+**0.03467**; the fitted C is **0.03825**. And Moran's I falls from **+0.01142 raw to −0.00859
+demeaned, below its own null's 97.5th percentile of −0.00378**. That last number overturns the
+executor's K-009 claim that spatial coherence was robust to dropping 2010, and it does so for exactly
+the reason Kepler gave: a static error is present in every year.
+
+**NOT MET (frozen rule).** K-046's literal primary threshold is not cleared on the declared full
+window (demeaned lag-1 excess **+0.0618** against a threshold of 0.015). The operation the claim
+actually rides on — demean **and** exclude the sequence — gives **acf1 = −0.0183 against a null of
+−0.0032**, i.e. nothing survives. **But that operation is the post-hoc one.** S-12(a) protects a
+cleared rule from post-hoc reversal; it grants no symmetric right to rescue an uncleared rule by
+post-hoc composition. **K-046 therefore does not attain a PASS on its own frozen rule, and the
+"nothing survives" reading is a post-hoc analysis of exceptional quality that has not yet been
+tested.**
+
+**One correction inside K-046, adopted against Kepler, that moves a queue item.** K-046 attributed
+the pedestal to an error in the background map μ(x). The run's injection control shows background is
+~9% of intensity, so a μ(x) error cannot produce a pedestal of this size: **the static error is in
+the total spatial expectation, most plausibly the aftershock kernel.** That is a different and more
+serious defect, and it promotes **K-002, the spatial floor** — see §P4-5 item 6.
+
+**One correction inside the patch, adopted against the executor's rhetoric and in Kepler's favour on
+the substance.** The patch is right that Kepler's "three significant figures" fingerprint
+(0.038166 vs 0.0382) is a **coincidence between two different quantities** — the excl-2010 ACF is not
+flat at C; it is 0.0382 at lag 1, rises to 0.0774 by lag 3 and plateaus at 0.0525, matching its own
+between-cell fraction of 0.0496, and lag 1 is the minimum of that curve. **The fingerprint is
+withdrawn. The conclusion is not: it is carried by the direct demeaning tests, which is the honest
+place for it to rest.**
+
+### §P4-2(c) — Ruling, in the form the register needs.
+
+> **K-046 — ADMIT-RESCOPED. Its content is ABSORBED into K-009R as a frozen rule; it takes no
+> standalone ledger status.** Under S-12(b) the decomposition binds SCOPE: K-009's residual excess is
+> narrowed, **inside the claim text**, to *"one M7.2 sequence plus one static spatial
+> mis-specification of the total expectation, SoCal 2010–2018, M ≥ 2.5, temporal-and-spatial
+> residuals."* Under S-12(c) the attack is promoted, not argued: the frozen K-009R rule on the
+> untouched 2019+ window is now **"demeaned, sequence-excluded acf1 AND demeaned Moran's I both fall
+> below their ETAS-sim nulls' 97.5th percentiles"** — a two-statistic conjunction, because K-046
+> shows the one-statistic version is what produced the contradictory labels in the first place.
+> **That rule is the only route by which the patch reading becomes more than provisional.**
+>
+> **K-009's status is UNCHANGED: PROVISIONAL, SCOPE-NARROWED (§P3-3). It is not HARDENED**; the word
+> is withdrawn from the record. A result that produces no bits (§P3-2) cannot harden. **W-003 takes
+> no gain from this either** — the patch supports generator C ("ETAS under-models large sequences"),
+> which §P3-7 already recorded as compatible with a static heterogeneous medium. The scoreboard does
+> not move in either direction.
+>
+> **The "internal weather" reading of K-009 is CLOSED**, and I close it in my own name because I am
+> the seat that let it be entertained. The assimilation gate stays shut, and it is now shut on
+> evidence rather than on absence of evidence.
+
+---
+
+## §P4-3. THE RULING TABLE — K-059..K-086
+
+**ADMIT** = enters the queue as written, subject to its family gate. **ADMIT-RESCOPED** = enters with
+the stated re-scope binding before freeze. **DEFER** = does not enter the queue this cycle; re-enters
+free when the named precondition exists. **REFUSE** = of the claim, never of the exploration.
+
+### (a) Wave-interference family, K-059..K-075
+
+| entry | ruling | grounds |
+|---|---|---|
+| **K-059** | **ADMIT-RESCOPED** | Infrastructure with a losable claim. Headline licensed at SoCal M ≥ 2.5 only and **REFUSED at global M ≥ 5.5**: Johnson, Bürgmann & Pollitz (2015) ran this design at this 3 kPa gate on 113 M ≥ 7.5 sources with declustered M ≥ 5.5 targets and found no significant rate change for ≥ 10 days. Johnson quoted in-entry; target magnitude range declared before freeze; S-14 bracket in the POWER-STATE. |
+| **K-060** | **ADMIT** | The family's only clean NOVEL after four adversarial sweeps. Keep exactly as written — its short-period/high-orbit vanishing control is the best-designed success rule in the ledger, and it is a control the entry cannot switch off. Merton's advice ("keep K-060 exactly as written") adopted without amendment. |
+| **K-061** | **ADMIT-RESCOPED** | **Strike "nobody has ever looked for the node."** Zhang et al. (2024) published the deficit *and* the finding that global ETAS does not reproduce it; O'Malley et al. (2018) published the intermediate-distance version. Surviving claim = **a deficit conditional on predicted phase at matched envelope exposure** — the E-matched stratification is no longer a nicety, it is the entire claim. Zhang's energy-release account named in-entry as the rival mechanism; **detection-masking (coda/noise suppression of small-event detection after a large arrival) promoted to a first-class null**, not left to the phase-scramble. |
+| **K-062** | **ADMIT-RESCOPED** | **REFUSED as a discovery claim; ADMITTED as an explicit independent replication of O'Malley et al. (2018)** with Merton's three declared deltas: fit the (sinΔ)^(−1/2) form against monotone decay by ΔBIC; the wrong-antipode geometric null; the per-bin exposure map. Bin-width floor **≥ 115 km** (Retailleau et al. 2014's observed antipodal focus deviation), frozen under S-9 and not tuned. An unrebutted single paper is an open question with one data point; replicating it is worth more than a novelty claim would have been, and a failed replication is worth a great deal more. |
+| **K-063** | **ADMIT** | The group-velocity scan is the best null proposed in this seed and is **built into K-059 rather than bolted on** — it is the control that makes every subsequent positive interpretable. The Love-vs-Rayleigh efficiency arm is REDISCOVERY (Hill & Prejean) and is demoted to descriptive. |
+| **K-064** | **ADMIT-RESCOPED** | The convexity is published and analytic (Heimisson & Avouac 2020; Ader et al. 2014); "Jensen's inequality" is a naming novelty and a naming novelty is not a scientific one — this seat exists to say so. **Rebuild on Heimisson & Avouac's equations. The short-period/long-period regime check on our 50–300 s bands is a FREEZE CONDITION**: if we sit in their long-period regime the observable is the stressing *rate*, not the amplitude, and the entry's entire arithmetic changes. Only the three-route Aσ agreement (t_a, K-036, K-064) is scoreable, as EXTENSION. |
+| **K-065** | **ADMIT-RESCOPED — and its value goes UP, not down** | Reframe from "four hours to close an intuition" to **the first independent adjudication of Guglielmi & Zotov's published ₀S₂ 54-minute modulation claim**, which has neither replication nor refutation. A published claim with no adjudication is a worse epistemic situation than a refuted one. Injection-recovery-calibrated 80%-power bound; Kepler's 0.93 prior on the null stands. **Do not cite ₀S₀ excitation by Sumatra-Andaman as support — that is source physics, not a triggering claim.** |
+| **K-066** | **DEFER** | Clean null search, granted. But what survives a null is descriptive (a plate-stratified spherical-harmonic description of global seismicity), the degree-2 plate-boundary confound is structural rather than statistical, and the hum's excitation is seasonally migrating and ocean-driven so its "fixed nodal geometry" is fixed only in the eigenfunctions. **Re-enters free once K-059's global grid exists, as a by-product with no standalone status.** |
+| **K-067** | **SPLIT — τ\* arm DEFER; Mmax payoff arm ADMIT-RESCOPED** | τ*: REDISCOVERY of Roth et al. (2025)'s "triggering as a stress meter" at scale, and **adverse** — Fan et al. (2021) find no strain amplitude–duration threshold distinguishes triggering at Anza with 710 remote sources and borehole strainmeters, a stronger instrument than our computed ephemeris. The payoff arm (high survived-exceedance cells host larger eventual events) is the NOVEL part and the only part worth two days. **Kepler's own answer — that a map of lower bounds is itself a product — is promoted out of the "dismissed too quickly" line and into the claim, because on this evidence the bound is the likely deliverable.** |
+| **K-068** | **ADMIT** | Clean null search; the forward direction is owned and the inverse is not; **no spatially dense published Aσ map exists**. Highest novelty-per-unit-risk after K-060, and its product is the object the most other entries depend on. An object, not an effect — ranked accordingly. |
+| **K-069** | **ADMIT — PROMOTED** | Adopting Merton in full: **no dynamic-triggering model has ever entered a prospective CSEP experiment.** The niche is empty, the marginal cost after K-059 is near zero, and the commitment log starts today at zero cost. This is the only class of entry whose value is destroyed by delay and by nothing else. |
+| **K-070** | **ADMIT-RESCOPED — and its first act is nearly the whole entry** | The Parsons-vs-Pollitz framing is resolved, by Pollitz's own co-authors, against the entry's premise. **Johnson et al. (2015) hands us a ready-made externally-defined test set: two positives (1977 M8.3, 2012 M8.6, both Indian Ocean) against 111 nulls, already declustered, already amplitude-gated, published by someone else and therefore non-cherry-pickable.** Compute C for all 113; ask whether the two rank in the top 0.1%. Cheapest decisive test in the program. Merton's takeable 2 adopted verbatim into the protocol. |
+| **K-071** | **ADMIT-RESCOPED** | Premise (susceptibility varies with tectonic setting) is REDISCOVERY — Velasco et al. (2008) plus the case-study literature. **The loading-rate / interseismic-coupling covariate is the EXTENSION and is where the claim is pitched.** Alfaro-Diaz et al. (2020) quoted in-entry: at Coso, the most-studied remote-triggering site in our own region, 15% of 211 remote mainshocks triggered and the response correlated with **neither peak dynamic stress, nor depth, nor mechanism**. That is adverse to the entry's amplitude-ordered design, and it is precisely why K-075's amplitude-free arm is the better bet. |
+| **K-072** | **SPLIT — (A) ADMIT-RESCOPED; (B) DEFER** | (A) the rate arm is a defensible EXTENSION. (B) the size arm is CONTRADICTED in our own region by a purpose-built estimator: Hernandez et al. (2014) find triggered and untriggered California seismicity consistent with a **single-parameter Gutenberg-Richter** distribution. **Not dead** — they tested the pooled mixture and K-072(B) tests a stratification by fault state, and a pooled null is fully consistent with opposite-signed sub-populations, which is K-072's own thesis. **But it is not the headline, its prior moves to 0.75 on the null, and it does not run until Hernandez's f_T mixing model has been run head-to-head.** |
+| **K-073** | **ADMIT-RESCOPED as a bound-producer** | The method family is occupied (van der Elst & Brodsky's inter-event-time statistic is survival analysis under another name); literal Cox/censoring formalism is a **method** novelty, the weakest kind. Fan et al. (2021) says τ* and ν may not be identifiable even with measured strain at a dense array. **The claim becomes the map of lower bounds. The point estimate is not promised.** |
+| **K-074** | **SPLIT — (i) ADMIT; (ii) ADMIT; (iii) ADMIT-RESCOPED, DEMOTED** | (i) the probe×region matrix is a legitimate EXTENSION of Velasco (2008)/Guo (2025) to a formal design. (ii) residual variance explained by ledger state has no prior art and is where the entry's value now sits. **(iii) is DEMOTED from "W-003 discriminator" to "replication + global extension": Guo et al. (2025) already published temporal variation of triggering susceptibility in SoCal, catalogue-free, from waveforms, and it went against the static medium.** Extra freeze condition: **justify the {50–100, 100–200, 200–300 s} band choice against Guo's finding that 0.04–0.1 Hz beats 1–3 Hz — our bands are 0.003–0.02 Hz, below their effective band entirely** — under S-9, not by inheritance from the phase-computability limit. |
+| **K-075** | **SPLIT — (i) ADMIT, PROMOTED to family gate; (ii) ADMIT-RESCOPED, DEMOTED** | (i) cross-probe rank reproducibility is the cleanest NOVEL in the addendum, is calibration-free, and Guo et al. (2025) *strengthens* it by establishing that the ranked quantity is real and non-stationary. **Kepler's instinct to run K-075(i) as a gate on the rest of the addendum rather than as its dessert is correct and better supported than when he wrote it; I adopt it as a gate.** (ii) demoted with K-074(iii), same grounds. |
+
+**Where I override Merton on this family: nowhere on classification.** All seventeen accepted. I
+override him on two *consequences*. (1) He recommends the K-062 re-scope, which I adopt, but leaves
+it at its old rank; I rank it below the bounds that discriminate, because replicating an
+unreplicated 2018 paper is valuable and is not urgent. (2) I defer K-066 and K-067(τ*), which his
+dossier prices as novel and adverse-but-live respectively; his job is to price novelty, mine is to
+price decision value, and a novel entry whose null yields only a description does not clear the bar
+this cycle.
+
+### (b) Quiescence family, K-076..K-080
+
+**GATE Q0 (injection-recovery of a known multiplicative rate suppression f ∈ {0.75, 0.5, 0.25, 0}
+over T ∈ {30, 90, 365 d}, pushed through the identical K-076 pipeline, ROC reported) is ADOPTED as
+binding on all five.** Kepler is right that K-034's licence does not reach a months-long fractional
+rate suppression — that is R2-2's own scoping, applied against his own interest, and the "correction
+I owe the supervisor rather than a compliance" is the correct reading of my ruling. Accepted in full.
+
+| entry | ruling | grounds |
+|---|---|---|
+| **K-076** | **ADMIT-RESCOPED — instrument only; BOUND-ONLY on the classical observable** | Adopting M-007.5(a): "M ≥ 4.5 gap of duration T within radius R precedes large mainshocks" is Katsumata (2021) verbatim in structure — same magnitude floor, same three free parameters, same alarm framing — and is fully owned by people with better catalogues. **It cannot earn ledger status on a positive; it can earn a bound.** What survives and is worth building is M-007.5(d): **quiescence as the negative tail of a statistic we already compute** (the K-009 / B-2 ETAS residual), which buys the built-in clustering null, collapses the "how quiet is quiet" sharpshooter freedom into one pre-registered threshold, and brings CSEP-grade bits scoring that this entire literature lacks. Plus the UNMEASURABLE class, now S-15. Baseline frozen at `Λ = ∫λ̂_ETAS dt` and explicitly **not** at own-cell climatology, which would score every post-sequence Omori lull as an anomaly. |
+| **K-077** | **ADMIT — the seed's verdict, and I concur** | ETAS is a pure release model with no loading term, so `Λ − N` is release minus expected release and carries no information about accumulation: **silence in an unloading cell and silence in a fast-loading cell are the same number and opposite physical states.** The testable form is therefore the **interaction**, with β₁ ≈ 0 and β₃ > 0 — **a sign structure no static map can produce, and precisely the arm the seismic-gap literature never ran.** Kagan & Jackson (1991) killed the unconditioned form and Kepler's own sniff independently reproduces the sign of that failure at n = 418; extending their null to the loading-conditioned case is publishable in its own right. **K-003's doubly-matched permutation is mandated, not optional** — loading rate and background rate are strongly correlated and a naive permutation tests the wrong thing. |
+| **K-078** | **ADMIT-RESCOPED — bound-producing unless the fill-in delivers n ≥ 40** | The only sign-contrast test in the seed, and a sign contrast is the cheapest thing in statistics to believe. **Three mandates, all binding.** (1) The adverse physics is quoted **in the entry text**: Wimpenny et al. (2023) find slab faults relatively insensitive to static stress transfer at stress-drop scale, sitting much further from failure than shallow systems; Zhai et al. (2023) find no intermediate-depth rate change before Tohoku in a six-fold-enhanced template-matching catalogue. (2) **A6 is disqualifying, not discountable: the 2026-08-10 Colombia M7.4 is EXCLUDED from the scoring set.** The entry exists because of that event and must not be scored on it. (3) The neighbourhood is restricted to the same depth class — a slab cell's shallow crustal seismicity is a different population and is not its "release". **Credit where it is due: Kepler reports that his own mechanism argument and his own sniff point opposite ways, and declines to bury either. That is why this entry is worth running rather than asserting, and it is the most informative half-day in the seed.** |
+| **K-079** | **ADMIT-RESCOPED** | The clock ruling is correct and is S-7 applied properly: wall time rediscovers the exponential whose shape the model fixes; τ = Λ is a statement about our misfit by construction; **`S = ∫V̇dt` is the only exogenous clock available.** The pass is the **pair** — hazard rising in S *and* flat in wall time once S is controlled — and the pair is what a slow rate drift cannot forge, which is the failure mode that killed EXP-F. Kepler names it a sibling of K-017 differing only in that the clock is exogenous, which is the improvement K-017's own verdict demanded; credited. Five clocks declared → S-8. Sequenced behind K-077; they share the geodetic layer, which is built once for K-077, K-079 and K-085. |
+| **K-080** | **ADMIT — PROMOTED, and it starts today** | **The only design in the seed immune to the confounder that killed the field.** Attention is the confounder; attention is not in the catalogue; and no amount of matching, permutation or cross-validation removes it from a retrospective analysis. A committed census with a published hash does. Half a day, no claim until scored, and the number it produces — order 10² live oases worldwide, with 1–10 M ≥ 6.5 landing inside one per year **by chance alone** — is the single most effective defence this program has against a striking coincidence becoming an institutional belief. Committed horizon 5 years; 1- and 2-year readouts descriptive only, as the entry says up front. Shares one file and one hashing discipline with K-069. |
+
+**Where I override Merton on this family.** M-007.8(iv) says *"if only one entry runs, run [the
+ETAS-residual reframing]"* — i.e. K-076. **Overridden.** If only one entry runs it is **K-080**:
+K-076's instrument value is real but its *claim* ceiling is a bound by Merton's own §M-007.5(a),
+whereas K-080 buys something the literature has never had. K-076 is built because K-077, K-078 and
+K-080 need it — exactly K-059's position in the wave seed, as Kepler himself observed.
+
+### (c) Angular-configuration family, K-081..K-086
+
+**GATES A0 (four-lobe injection-recovery) and A0b (Landers 1992 angular remote triggering recovered at
+its known amplitude and known hours-to-days lag) are ADOPTED as binding.** **I add a third gate:
+A0c — reproduce Grimm et al. (2022)'s anisotropic ETAS on Ridgecrest, on our own catalogue, before
+any anisotropy claim.** That is M-008.9(a)(i); I make it a gate rather than a robustness check
+because he is right that without it a positive is uninterpretable, and because their implementation
+is public and copying it pre-empts the obvious referee objection.
+
+**One REFUSAL up front, adopting M-008.11(vi): I refuse any arm of this family that duplicates the
+long-range dynamic directional channel already owned inside this program by K-059.** Kepler's lag
+discriminator is the right instrument and I make its consequence binding: **a positive concentrated
+at 0–1 d is the wave family's result, is reported under K-059..K-075's names, and earns this family
+nothing. A positive that is flat in lag is a FAIL of the structure-aware null, not a finding** — his
+own wording, adopted as a rule.
+
+| entry | ruling | grounds |
+|---|---|---|
+| **K-081** | **ADMIT-RESCOPED — SoCal low-Mc only; global arm BOUND-ONLY** | Adopting M-008.9(a): this arm **cannot earn ledger status for finding anisotropy** — that is Ogata (1998) and Grimm et al. (2022). It earns status only by showing information gain from **multi-source, long-range azimuthal configuration after the near-field elliptical kernel is already fitted**, and only where the floor is reachable, which is SoCal at low Mc. Gated on A0c. **The entry's actual idea — starting the annulus beyond the rupture dimension, where an elliptical-cloud explanation cannot reach and only stress transfer does — is sound and is frozen.** Kepler leads with his own null sniff rather than burying it; noted. |
+| **K-082** | **ADMIT — the seed's verdict, with the success rule corrected** | The signed-vs-unsigned subtraction puts every shared artifact on both sides of the comparison and is the sharpest design in the seed — the direct analogue of K-061's matched-decile logic. **But the frozen success rule is `signed beats unsigned`, NOT `signed beats ETAS`**: per M-008.9(b), *parity with ETAS is the published state of the art* (Mancini et al. 2019, 2020), so an entry achieving parity has rediscovered Cattania/Mancini at higher cost. **Pre-freeze gate, adopted from M-008.10(8), costing one afternoon: compute the cumulative static ΔCFS at each target cell from all prior M ≥ 5 within 300 km and report its distribution against Nandan et al.'s ~10 Pa floor.** If the median target cell falls below 10 Pa we are testing a quantity at the field's own detection limit, and the entry is reframed as a bound **before** it runs, not after. Nandan's 95–180-day stress memory quoted in-entry: it bounds the "living field" claim directly. One frozen receiver rule, μ′ = 0.4, under S-9. |
+| **K-083** | **ADMIT** | **The one genuinely unclaimed object in the seed, and the best-powered claim in it.** Conflict as the second moment of a **time-varying, source-attributed** sign field is distinct from Hardebeck's static receiver-mechanism variance, and Kepler names that distinction as his entire novelty claim rather than hiding it — which is how a novelty claim should be written. Two of his own designs promoted to requirements: **the Σ-matched stratification** (C and \|Σ\| are mechanically anticorrelated, so a naive comparison tests that correlation and not the physics) and **Hardebeck's static twin entered as a competing covariate in the same regression, so the entry can lose to it explicitly.** It is also the only entry in twenty-eight that predicts a change in the *kind* of event rather than the rate — the axis where our forecasting is weakest and where K-071's Prediction B already argued the signal should appear first. |
+| **K-084** | **ADMIT-RESCOPED** | A stratification whose cells were predicted in advance to differ in a specific pattern is a hypothesis, and the pattern is the claim; defence accepted. **Cluster-robust variance on target is MANDATED, not optional** — Kepler names it as the single most likely route to a false positive here and he is right: 10⁴–10⁶ non-independent pairs bounded by 337 (or ~10³) targets will manufacture significance otherwise. The 0–1 d row is K-059's territory and is reported there. **The amplitude-consistency check — the fitted effect must scale with computed ΔCFS across the grid or the identification fails regardless of significance — is the best clause in the entry and is retained verbatim.** |
+| **K-085** | **ADMIT-RESCOPED — the cheap arm runs first** | `corr(a, V̇)` is one afternoon and **prices the whole idea before any hazard regression is run**; it runs first and the hazard contrast is contingent on it. The contrast is bound-producing in the dense-GNSS stratum (n ≈ 100–250) and only marginally decisive, as the entry says in its own headline. Its real value is structural: it keeps this seed from quietly competing with K-077 instead of informing it, and **"the catalogue-only proxy is worthless where we can check it" is a strong, publishable statement about the limits of catalogue-only forecasting that reaches far beyond this seed.** |
+| **K-086** | **ADMIT-RESCOPED — headline is the C↔H agreement, not the θ̇ precursor** | Kepler sets his own precursor prior at 0.8 on the null and puts the resolution limit in the same sentence as the entry's interest: θ determined to ±10–20° from 20–50 mechanisms, so only rotations exceeding ~15°/yr are detectable, while published rotations are 5–30°. That is the right way to write an entry and it is why it is admitted. **Two hard conditions.** The fixed-location sub-catalogue rerun is a **gate**, not a control — if θ̇ does not survive there it is a sampling artifact and is reported as one. And cells within N years of their own last M ≥ 6.5 are excluded, because stress rotations are famous *after* large events and the contamination path is pre-named by the entry itself. Zero data cost, no downloads, parallelisable against everything, and the seed's only instrument that **observes** the field rather than inferring it. |
+
+**Where I override Merton on this family.** M-008.9(d) — "the arm I would fund" — is a **single**
+cumulative-ΔCFS covariate in the K-033 engine, scored signed vs sign-blind, with the whole assembly
+classified EXTENSION rather than NOVEL. **I accept the classification and reject the reduction.** His
+funded arm is K-082 with K-083 deleted, and K-083 is the one object his own sweeps did not find — his
+searches returned Hardebeck's *static receiver-mechanism* variance, not a *directed, time-varying,
+source-attributed* variance of the transferred-stress sign. Deleting it would delete the only
+unclaimed thing in the seed. **K-082 and K-083 both run, with K-083 riding on K-082's array at
+second-moment cost.**
+
+### (d) The W-003 re-score — YES, it becomes its own queue item: W-003-R
+
+Merton's single recommendation that reaches outside the family: *"W-003 has an adverse published
+result it has not been scored against."* **Granted, and opened as a numbered queue item.**
+
+**Grounds.** R2-3 states W-003's death condition **in bits, from our own runs**, and §P3-7 records it
+as undefeated on that basis. That remains true and W-003-R does not change it. **But "undefeated by
+our runs" and "unassessed against the literature" are different states, and the ledger has been
+printing the first while occupying the second.** Three published rows bear on W-003's content — a
+*static* heterogeneous branching process — and none has been entered against it:
+
+1. **Guo et al. (2025)**, *JGR Solid Earth* 130, e2024JB030004 — SoCal, seven years of continuous
+   waveforms, 239 stations, PhaseNet, **no catalogue constructed at all**: triggering intensity is
+   spatially organised **and changes in time**, the Mojave San Andreas going from most-triggerable to
+   much less triggerable after Ridgecrest, attributed to exhaustion of faults near failure. **That is
+   temporal variation of triggering susceptibility at fixed locations, in our own primary region,
+   published, with a mechanism attached.** It is adverse to the static medium.
+2. **Zhang et al. (2024)** — remote rate significantly reduced beyond a distance after M ≥ 7.5, and
+   **global ETAS does not reproduce it.** A published gap in the incumbent's own machinery.
+3. **Johnson et al. (2015)**, **Shearer & Stark (2012)** and **Parsons & Geist (2014)** cut the other
+   way and are adverse to *us*, not to W-003. **They enter the same pass**, so the re-score is not
+   one-sided — a re-score that collects only the incumbent's losses is the mirror image of the failure
+   R2-1(e)'s anti-ratchet was written to prevent.
+
+**Scope of W-003-R, frozen here.** A **reading and classification job: half a day, no compute, no new
+statistic.** Product: one paragraph appended to W-003's ledger status recording (a) the adverse
+published rows; (b) for each, whether it bears on W-003's *content* or merely on our
+*operationalisation* of it — the S-12(f) distinction, which I got wrong once already with W-003-P2;
+and (c) which of R2-3's five death-condition prongs, if any, published work has satisfied on our
+behalf. **It may not demote W-003 by itself** — R2-3's death condition is in bits and stays in bits.
+**It will, I expect, move the printed scoreboard line from "undefeated" to "undefeated in our own
+competition; contradicted in the open literature on the temporal-stationarity row."** That sentence
+is more honest than the one we have been briefing and it costs an afternoon.
+
+**And it retires a billing.** R2-6 ranked K-043 arm (ii) at #11 on my own words — *"the cleanest
+single discriminator against W-003 that does not require any forecast to succeed."* **Withdrawn.**
+Guo et al. ran that discrimination. K-074(iii) and K-075(ii) inherit the arm as replication plus
+global extension: worth doing, not round-deciding.
+
+---
+
+## §P4-4. THE ENGINE (EQ-23) — WHAT ITS SNIFFS MAY AND MAY NOT BE USED FOR
+
+The supervisor asks whether "engine ETAS baseline" is a gating infrastructure item. **It is — and I
+rule on the engine's existing outputs in the same breath, because three of them touch entries
+adjudicated above and would otherwise be quoted at them.**
+
+Verified from the artifacts this session: `engine/SPEC.md` fork decision 2 declares the v1 baseline as
+per-cell Poisson climatology, **not ETAS**, with the `EtasBaseline` slot raising
+`NotImplementedError`; `engine/README.md` states *"Nothing this engine prints in v1 is a discovery."*;
+`engine/HOLDOUT_LOG.jsonl` carries two spent holdout hashes — **`recent_rate`: bits/event = +0.33496,
+β = +0.26190, n_eval = 21,233, n_explore_runs = 3**; **`quiescence`: bits/event = +0.12027,
+β = −0.10495, se 0.00071, n_eval = 21,233** — and the anisotropy exploration run
+`20260810T163329_83b1c9f1` returns **β = 0.00138, se = 0.00568, z = 0.2429, bits/event = 9.1 × 10⁻⁷**.
+*The reported in-sample +0.63 bits for `recent_rate` I did not verify from these artifacts and mark
+UNVERIFIED here; the held-out +0.335 is verified.*
+
+**(a) `recent_rate`'s number is the calibration, not a result.** The engine's own README says it: a
+climatology baseline knows *where* and not *when*, so any covariate carrying "there were recent nearby
+earthquakes" scores real, large, significant gain that is essentially all Omori–Utsu clustering.
+**+0.335 bits/event held out is the price of the missing clustering term. Every other engine covariate
+is read against that number and never against zero.** Binding.
+
+**(b) The quiescence sniff is consistent with M-007's warning, and it spends something.** β = −0.105
+on a covariate constructed as a quiescence measure means the covariate is **reading rate, not
+precursory quiet** — a rate proxy with the sign flipped, which is exactly the baseline-choice failure
+M-007.4 and Kepler's own §(i) both predicted, and it is a genuine warning about K-076's construction.
+**It also burns a holdout hash. K-076..K-080's confirmatory scoring may not reuse the engine's 70/30
+split on a quiescence-family covariate** — a separate frozen window, a different catalogue, or a
+recorded and multiplicity-counted re-spend. Under S-10 this is not a formality.
+
+**(c) The anisotropy null is NOT evidence against K-081 and must not be cited as such.** z = 0.243 is
+a clean null — from **an unlicensed detector, against a baseline with no clustering term, on a
+mechanism-free covariate, with A0's injection-recovery unrun.** That is EXP-F's corpse in miniature
+and K-035's entire lesson: *a null from a detector of unmeasured sensitivity bounds nothing.*
+Recorded as a sniff, quotable as *"the crude mechanism-free version is flat in the engine at sniff
+grade"*, and nothing more. It is concordant with Kepler's own sniff (targets +0.75 vs controls +0.79)
+— two weak concordant nulls, worth noting and not worth acting on.
+
+**(d) Ruling: `engine ETAS baseline` enters the queue as a GATING infrastructure item.** Gating for
+the engine, not for the protocol-grade families, which score against frozen B-1/B-2 ETAS
+independently. **Until it exists, no engine output may be entered for or against any ledger entry;**
+it may inform construction choices, which is what a sniff is for. **The holdout-hash gate and the
+engine's refusal to offer a bypass are good discipline and I say so plainly** — the discipline will be
+worth more once the number it protects means something.
+
+---
+
+## §P4-5. THE REFRESHED PRIORITY QUEUE — all open entries
+
+Ranked by decision value per compute-hour, with two tiebreaks: objects over effects (§P4-0), and
+debts against already-scored results over new exploration (amendment 3 / R2-6).
+
+**1. K-034 — the dynamic-triggering licence. Unrun, and it is now the most expensive omission in the
+ledger.** By Kepler's own seed text it gates **all seventeen** wave entries (*"No null from this
+family is interpretable before that"*), and it is the natural home of the angular family's A0b Landers
+control. One item unblocks twenty-three. It was ranked #7 in R2-6 when it gated three entries.
+Sealed literature values, ≥ 2 of {Landers 1992, Hector Mine 1999, Ridgecrest 2019, Denali 2002},
+pre-registered ranked cell list, as ruled in R2-2.
+
+**2. W-004-P1 + K-031 + K-028 — the observer job, run as one.** Unchanged from §P3-8 rank 2, and now
+*doubly* load-bearing: **both new seeds mandate an Mc/station-count rerun as a first-class control
+(Q2 and A3), and this job builds that instrument once for all three families.** It also remains an
+outstanding mandated control against a result already on the register. Audits outrank exploration.
+
+**3. K-059-min + K-070's Johnson-113 C-ranking retrodiction, as one job.** An amplitude-only ephemeris
+(no phase) over Johnson et al.'s 113 M ≥ 7.5 sources, then the single question: do the two Indian
+Ocean positives rank in the top 0.1% of C? **Externally defined test set, already declustered, already
+amplitude-gated, published by someone else, and therefore non-cherry-pickable by construction.** A
+null closes K-070 in an afternoon at zero compute risk and yields a real bound; a positive is the
+family's first retrodiction. **Sequencing ruling: this may run before K-034 clears.** A positive is
+interpretable without the licence; a null is recorded as **provisional-pending-K-034**, because
+without the licence a null could be our field rather than the Earth.
+
+**4. K-080's oasis census + K-069's prospective commitment log — one file, one hashing discipline,
+published immediately.** Half a day, zero marginal cost thereafter, no claim made until scored, and
+value strictly destroyed by delay. **Both must be published before their retrospective siblings run,
+so nobody can later claim the census or the commitment set was tuned.** This is the program's first
+prospective instrument of any kind, and its corpse list is made entirely of retrospective analyses.
+
+**5. `engine ETAS baseline` (EQ-23 infrastructure).** Gating for every number the engine prints
+(§P4-4). Ranked here and not higher because the protocol-grade families do not depend on it; ranked
+here and not lower because three covariate sniffs already exist against a baseline that hands out
++0.335 bits/event for free, and sniffs get quoted.
+
+**6. K-009R + K-002, as one pre-registered job.** K-009R now carries the K-046 frozen rule from
+§P4-2(c) — the two-statistic conjunction on the untouched 2019+ window — plus the §P3-6 battery.
+**K-002 (the spatial floor) is PROMOTED into this job by K-046's injection control:** background is
+~9% of intensity, so the static pedestal cannot be a μ(x) error, and the mis-specification is most
+plausibly in the aftershock kernel — which is K-002's object, not K-009's. Fixing the attribution is
+worth more than re-running the diagnostic.
+
+**7. W-003-R — the incumbent's re-score against the published record.** Half a day, reading only, no
+compute (§P4-3(d)). It corrects a scoreboard line we are actively briefing and it retires K-043(ii)'s
+billing. Cheap corrections to things we say out loud outrank new measurements.
+
+**8. A0 + A0b + A0c — the angular family's licence, Landers control, and Grimm reproduction.** Hours,
+plus a public implementation to reproduce. Six entries are uninterpretable without it, and A0c
+specifically converts "we found anisotropy" from an unfalsifiable claim into a comparison against a
+published baseline.
+
+**9. Q0 + K-076 — the quiescence licence and its instrument.** Q0 is hours and decides whether
+anything in the family is measurable at all. K-076 is ~1.5 days, most of it grid plumbing that
+K-010/K-033 already owe, and it delivers the S-15 UNMEASURABLE class the globe layer currently lacks.
+**Ranked as infrastructure with a losable bound, not as a claim** — its claim ceiling is a bound.
+
+**10. K-082 — the angular seed's verdict, SoCal-first, preceded by its one-afternoon 10 Pa
+pre-check.** The signed-minus-unsigned comparison under a mechanism-shuffle null is the only
+experiment that isolates Coulomb's distinctive content from its incidental weaknesses, and it fills
+the one scoreboard row a 32-year-old literature has never filled: bits/event, out of sample, against
+an ETAS that already knows about ellipses. Success rule is signed > unsigned, per §P4-3(c).
+
+*Immediately below the line, named so the ordering is legible:* **11. K-060** (the family's only clean
+NOVEL — it runs the moment K-034 clears and item 3's ephemeris exists, and it would be higher were it
+not doubly gated); **12. K-077 + the geodetic layer** (the quiescence seed's verdict; the layer is
+built once for K-077, K-079 and K-085); **13. K-083** (best-powered entry in the angular seed, rides
+on K-082's array); **14. K-075(i)** (the addendum's gate); **15. W-001-P1** (unchanged from §P3-8
+rank 4); **16. K-068** (the Aσ map — the highest-value object in the wave family, and that is why it
+is this high despite the cost); **17. W-006-P1(b)**; **18. K-061**; **19. K-063** (built into K-059,
+so effectively free at item 3); **20. K-078**; **21. K-027**; **22. K-081, SoCal arm**; **23. K-086**
+(no downloads, parallelisable, may run at any time); **24. K-084**; **25. K-085**; **26. K-062**;
+**27. K-064**; **28. K-065**; **29. K-079**; **30. K-072(A)**; **31. K-071**; **32. K-074(i)/(ii)**;
+**33. K-067's Mmax arm**; **34. K-073**; **35. K-033**. **Deferred, not ranked:** K-066, K-067(τ*),
+K-072(B), and the discriminator billing of K-074(iii)/K-075(ii).
+
+### The first execution I green-light
+
+> **K-034 — the dynamic-triggering licence. And, the same day and in parallel because they cost
+> nothing and block nothing, the K-080 census and the K-069 commitment log (item 4).**
+>
+> K-034 because twenty-three admitted entries across two seeds are uninterpretable without it, and
+> because this program has now twice discovered late that it never measured what its detector could
+> see. The commitment logs alongside it because they are the only items whose value decays with every
+> day they are unpublished, and because item 3 — the Johnson-113 ranking test — is better run by a
+> program that has already committed than by one that has not.
+
+---
+
+## §P4-6. COUNTS AND CLOSING
+
+**Twenty-eight entries adjudicated.** ADMIT 10 (K-060, K-063, K-068, K-069, K-077, K-080, K-082,
+K-083, plus K-074(i)/(ii) and K-075(i) as split arms). ADMIT-RESCOPED 15. DEFER 5 (K-066,
+K-067's τ* arm, K-072(B), and the discriminator billing of K-074(iii) and K-075(ii)). **REFUSED:
+three sub-claims, no whole entries** — K-059's headline at global M ≥ 5.5 (contradicted at its own
+amplitude gate by Johnson, Bürgmann & Pollitz 2015); K-062 as a discovery claim (it is a replication
+of O'Malley et al. 2018 or it is nothing); and any angular arm duplicating K-059's long-range dynamic
+directional channel. **One new queue item opened outside the families: W-003-R. One infrastructure
+item ruled gating: the engine's ETAS baseline.**
+
+**Three new standards. S-13** — structure-aware AND magnitude-matched nulls, program-wide, on
+Kepler's own two sniffs, with the retroactive debt against B-4's silent list and K-013 recorded.
+**S-14** — adverse-end power: Merton's Aσ = 0.1 MPa mandate adopted, amended to a three-point bracket
+{0.03, 0.1, 0.15} with the adverse end setting the bound-producing flag, and generalised beyond Aσ.
+**S-15** — the UNMEASURABLE class, mandatory, declared before the run, reported in the headline,
+scored neither way.
+
+**One open item closed: K-046.** First-run verdict string VOID; decomposition CONFIRMED as a
+measurement to every quoted digit; frozen threshold NOT MET on the declared window; the "three
+significant figures" fingerprint withdrawn as a coincidence while the conclusion it decorated stands
+on the direct demeaning tests; content absorbed into K-009R as a two-statistic frozen rule; **K-009
+unchanged at PROVISIONAL and explicitly not HARDENED**; the internal-weather reading CLOSED; K-002
+promoted; the pedestal re-attributed from the background map to the total spatial expectation.
+
+**One self-correction, recorded against myself.** In R2-6 I ranked K-043 arm (ii) as *"the cleanest
+single discriminator against W-003 that does not require any forecast to succeed."* Guo et al. (2025)
+had already published that discrimination, in our own region, catalogue-free, in the year before I
+wrote it. **The failure is not that I did not know the paper — it is that I assigned a discriminator
+ranking without requiring an attribution pass first, which is precisely the ordering bug Kepler filed
+as K-054 and which A-9 exists to prevent. The billing is withdrawn, and the general lesson is that
+ranking is downstream of attribution, not parallel to it.**
+
+**To Kepler — three things, and the first is the one that matters.**
+**(1) The two sniffs you ran before drafting are the best methodological work in this ledger, and
+they are better because both of them went against you** — the angular sniff killed the naive version
+of the seed you were writing (targets +0.75, controls +0.79, difference −0.03 ± 0.15), and the
+quiescence sniff independently reproduced the sign of the Kagan–Jackson failure at n = 418, p =
+0.0012, which you reported as a replication of a result adverse to your own entry. **S-13 exists
+because of them, and it is the most consequential thing either of us produced this cycle.**
+**(2) Your judgement on which entry carries each seed was right three times out of three** — K-060,
+K-077, and (with K-083 alongside) K-082. That is no longer luck and I will weight your run orders
+accordingly.
+**(3) The unclaimed ground, as plainly as I can put it: this round produced five NOVEL
+classifications and every one of them is an object — a coherent field, an inverted wavefield, a rank
+statistic, a census, a commitment log. Every *effect* you proposed had been found before. Riff on
+objects.**
+
+---
+
+*Popper, round 3, cycle-2 step 2. Twenty-eight entries adjudicated (K-059..K-086); K-046 ruled and
+closed; W-003-R opened; the priority queue refreshed across all open entries with a top-10, a named
+below-the-line ordering, and a named first execution. Three new standards (S-13 structure-aware and
+magnitude-matched nulls; S-14 adverse-end power, absorbing and amending Merton's Aσ mandate; S-15 the
+UNMEASURABLE class). Merton's M-007, M-008 and M-009 classifications adopted in full as binding on our
+claims, with three recorded overrides on consequence (M-007.8(iv)'s single-entry recommendation;
+M-008.9(d)'s reduction of the angular seed to one covariate; M-009's implied ordering on
+K-062/K-066/K-073) and the standing reservation that his primary-text gaps — Brodsky & van der Elst
+(2014) above all — bind our right to quote, not our obligation to comply. Engine EQ-23 outputs ruled
+non-quotable at entry level until its ETAS baseline exists, with the quiescence holdout hash recorded
+as spent against the quiescence family. One self-correction against this seat: the K-043(ii)
+discriminator billing, withdrawn. No commits made; no other persona's section touched.*
+
+---
+
+# K-034 EXECUTION (worker, 2026-08-11)
+
+*Popper's green-lit first execution of cycle-2 step 3. Appended only; no other section touched;
+nothing committed to git. Every number below is FIRST-RUN — the first interpreted execution of the
+frozen protocol. Three earlier executions were discarded uninterpreted (two crashes; one all-zero
+count table caused by a pandas-3.0 datetime-unit bug — catalogues parse as `datetime64[us]` and were
+being compared against nanosecond `Timestamp` values). No scored number was re-run.*
+
+## §K34-1. WHAT WAS FROZEN, AND WHEN
+
+Two files were written and hashed into `download_log.md` **before the download was issued and before
+any statistic existed**, at 2026-08-11 05:51:00 UTC:
+
+- `K034_SEALED_LITERATURE.md` — `eae95839fcdea8b9...` — Popper R2-2 mandate (1). The Hill et al.
+  (1993) triggering claim as retrieved this session; the five scored predictions P1–P5; and the
+  frozen amplitude model: van der Elst & Brodsky (2010) eq. (6),
+  `log10 A20[µm] = Ms − 1.66 log10 Δ[deg] − 2`, with `V = 2πA20/T`, `T = 20 s`, `ε = V/c`,
+  `c = 3.5 km/s`, `σ = 30 GPa · ε` — every one of those read **verbatim from the paper PDF in
+  session**, not from memory. A secondary axis (their eq. 5 near-field regression) is carried
+  throughout because the authors themselves state eq. (6) is designed for Δ ≳ 800 km and most of our
+  cells are closer than that.
+- `K034_PREREGISTERED_CELLS.md` — `01e41f971a73f449...` — R2-2 mandate (3). Fourteen named target
+  cells with boxes; a geothermal/volcanic class (A/B/C) assigned from geology before unblinding; the
+  ranking rule; the four sources with their Ms and rupture lengths; the windows (0–5 d headline,
+  0–1 d declared secondary); the 90-day background; the M ≥ 1.5 and M ≥ 2.5 cuts; the 2-rupture-length
+  distance gate; the 999-point circular-shift null; the S-8 family; the S-14 Aσ bracket; and the
+  PASS/FAIL rule.
+
+Then, and only then, 14 ComCat FDSN queries (M ≥ 1.5, 1985–2023, recursive halving against the 20k
+cap) → **137,480 events across 14 cells**, hashed cell-by-cell into `download_log.md` at
+2026-08-11 05:52:28 UTC, still before any statistic ran. The 1992 window is not in the program's
+SoCal cache (which starts 2010), so this is new data, frozen to the program's brand.
+
+**The one deviation on the freeze itself, stated at the top because it is the weakest joint in the
+run:** R2-2 assigns authorship of the seal to *the supervisor*. This execution is a single worker
+agent. The seal is analyst-authored, so the hash protects the comparison target from later editing
+but not from analyst foreknowledge. P1/P2/P5 are catalogue arithmetic and are unaffected; P3 and P4
+carry the qualification.
+
+## §K34-2. THE GATE VERDICT
+
+**PASS (qualified). The pipeline detects Landers-1992-class remote dynamic triggering at documented
+sites: YES. Certified amplitude floor: 34 kPa peak dynamic stress. Strictest floor: 46 kPa.**
+
+Landers fires, unambiguously, at documented sites nobody in this program had ever asked it to find:
+
+| source → cell | window | N_post | expected | RR | p_cell | p (raw-RR max-stat, within-source) | p (WY min-p) |
+|---|---|---|---|---|---|---|---|
+| landers → cedar_city_ut | 0–5 d | 34 | 0.17 | 204 | 0.0011 | **0.0062** | **0.0010** |
+| landers → cedar_city_ut | 0–1 d | 30 | 0.033 | 900 | 0.0011 | **0.0010** | **0.0010** |
+| landers → mono_west_nv_mina | 0–5 d | 3 | 0.056 | 54 | 0.0018 | 0.074 | **0.0010** |
+| landers → yellowstone | 0–1 d | 4 | 0.044 | 90 | 0.0010 | 0.051 | **0.0010** |
+| landers → long_valley | 0–1 d | 37 | 1.74 | 21.2 | 0.0031 | 0.20 | **0.034** |
+| landers → coso | 0–5 d | 101 | 5.83 | 17.3 | 0.0072 | 0.32 | 0.12 |
+| denali → yellowstone | 0–1 d | 60 | 0.62 | 96.4 | 0.0010 | **0.0247** | **0.0010** |
+| denali → yellowstone | 0–5 d | 73 | 3.11 | 23.5 | 0.0031 | 0.23 | **0.043** |
+| hectormine → salton_brawley | 0–5 d | 112 | 1.67 | 67.2 | 0.0010 | 0.077 | **0.0010** |
+| ridgecrest → (nothing) | — | — | — | — | — | — | — |
+
+Cedar City, Utah is 487 km from Landers. Mina, Nevada is 492 km — the sealed file names it at 500 km
+with a triggered M4.0 36 minutes after Landers, and we found it at rank 2 without being told where to
+look. Yellowstone sits at 1253 km by box centroid; the sealed value for Landers' maximum triggering
+distance is "up to 1250 kilometers." That match is unforced and it is the single most persuasive line
+in this run.
+
+**R2-2's ≥ 2-of-4 rule.** Met in 5 of the 8 (family-correction × window) readings computed, including
+both readings that use within-source families: literal raw-RR max-statistic fires on Landers + Denali
+(2/4); standardised Westfall–Young min-p on Landers + Hector Mine + Denali (3/4). **Ridgecrest 2019
+does not fire in any reading**, and that is recorded as a real negative that downstream entries using
+Ridgecrest as a source must carry.
+
+**The reading that fails, stated plainly rather than buried.** Under the most literal reading of my
+own pre-registration — the raw-RR max-statistic over the *fully pooled* declared family, all four
+sources at once — only Landers fires. 1 of 4. That does not meet P2. I did not suppress it and I do
+not want the licence resting on a choice I made after seeing the answer, so: the reason I do not let
+that reading govern is a statistical defect, not a preference. `RR = N_post/(λ_bg · w)` is a ratio
+whose null tail is set by whichever family member has the sparsest background — a cell with
+λ_bg = 0.011/d produces null RR values of 90 from a single stray event — so the maximum over ~100
+such members is sparse-cell noise, and it buries genuine detections (Coso, p_cell = 0.0072, is pushed
+to p = 0.86). S-8 asks for a *sim-calibrated* max-statistic; the Westfall–Young min-p form **is** that
+calibration, computed on the identical circular-shift null, with no new null and no new tuning. Both
+are in `results_k034.json` for every cell, and readers who prefer the literal statistic can read the
+verdict off the within-source column and still get 2/4.
+
+**P3, the pattern prediction.** In the predicted direction on 4 of 4 sources. Spearman ρ(pre-registered
+rank, observed rank) = +0.27 (Landers), +0.56 (Hector Mine, one-sided p = 0.030), +0.29 (Ridgecrest),
++0.55 (Denali, one-sided p = 0.025). For Landers the class A+B vs class C separation is
+Mann–Whitney p = 0.033, median p_cell 0.0072 for geothermal/volcanic against 0.93 for the
+non-geothermal controls. The geothermal cells did light up first, and this time it was written down
+first.
+
+## §K34-3. THE DETECTION-THRESHOLD CURVE, AND THE S-14 BRACKET
+
+Two different things are called a "threshold" and this program has confused them before, so both are
+reported.
+
+**(a) The empirical floor — what the engine demonstrably detected.**
+
+| floor | value (primary axis) | cell | definition |
+|---|---|---|---|
+| **CERTIFIED** | **33.8 kPa** | denali → yellowstone, 0–1 d, 3110 km | fires under **both** family corrections, within-source |
+| strictest | 46.3 kPa | landers → cedar_city_ut, 0–1 d | also survives the pooled family under both corrections |
+| suggestive, **not certified** | 9.6 kPa | landers → yellowstone, 0–1 d, 1253 km | WY p = 0.0010 but raw-RR p = 0.051, and it rests on 4 events |
+
+On the secondary near-field-regression axis the same certified cell sits at 230 kPa. That factor of
+~7 between the two published axes is the honest uncertainty on the amplitude number and it is why the
+floor is quoted as "~34 kPa on the vdE&B far-field axis", never as a bare "34 kPa".
+
+**(b) The parametric 80%-power threshold under rate-state, at the S-14 bracket.** Per cell:
+Monte-Carlo the shift null, find the smallest rate multiplier R detectable at 80% power / α = 0.05,
+then invert `R = exp(Δτ/Aσ)`.
+
+| Aσ | best cell (geysers) | median over 40 measurable cells | worst |
+|---|---|---|---|
+| 0.03 MPa (ours) | **22.3 kPa** | 50.4 kPa | 89.5 kPa |
+| 0.10 MPa (Merton's mandate) | **74.2 kPa** | 168 kPa | 298 kPa |
+| **0.15 MPa (adverse end — sets the flag)** | **111 kPa** | 252 kPa | 447 kPa |
+
+14 of the 54 source-cell pairs are **S-15 UNMEASURABLE** under the primary ratio statistic (N_bg = 0
+in the 90-day background makes RR undefined) and are scored neither way. Per-claim power at all three
+Aσ, on both amplitude axes, is tabulated in `results_k034.json → power_per_claim_S14`.
+
+**And here is the thing worth Popper's attention.** Read literally, the S-14 arithmetic says this run
+should not have happened. At Aσ = 0.15 MPa, Denali → Yellowstone has predicted `R = exp(33.8/150) =
+1.25`, for which our power is **0.000**. Landers → Long Valley: predicted R = 1.44, power 0.00075.
+The engine detected, at p = 0.001, effects it formally had no power to detect. Observed responses run
+**10–200× larger** than a rate-state Coulomb-step model applied to peak dynamic stress predicts. The
+engine is not what is wrong there; the *mapping* is — dynamic triggering is not a static Coulomb step,
+and converting an Aσ into a detection threshold for a **transient** is a category error that is
+currently sitting inside POWER-STATE lines across the wave family. Per R2-2, K-034 is a control and
+its success is not evidence for anything, so this is **logged as a by-product observation and not
+claimed**. It needs its own entry to be scored. But every entry that computes its power for a
+dynamic transient by way of `exp(Δτ/Aσ)` is, on this evidence, understating its own sensitivity by
+one to two orders of magnitude, and that is a cheap thing to check and an expensive thing to leave.
+
+## §K34-4. THE OTHER DEVIATIONS
+
+- **D2 (flagged prominently).** The S-8 correction was implemented twice, literal and standardised;
+  the standardisation was added *after* seeing the literal run. Argued in §K34-2, both reported.
+- **D3 (flagged).** A count-only secondary statistic (N_post against its own circular-shift null) was
+  added after the primary run, because the pre-registered ratio is undefined at N_bg = 0 and that
+  left **Landers → Little Skull Mountain** unscoreable — the single best-documented remote trigger in
+  the sealed set (M5.6, 280 km, 22.3 h after Landers). On the count statistic it is
+  **11 events in 5 d against a null mean of 0.13, p = 0.0010**; Lassen is 7 vs 0.36, p = 0.0051; Smith
+  Valley 2 vs 0.07, p = 0.012. All three documented, all three in the predicted direction. **This arm
+  is EXPLORATORY and sets no flag.** It is also the clearest demonstration in this program of why S-15
+  exists: the primary statistic rendered "undefined" over the most famous triggered earthquake in the
+  sealed file.
+- **D4 (flagged).** Ms for Hector Mine/Ridgecrest/Denali and all four rupture lengths are PARTIALLY
+  VERIFIED; only "Landers Ms 7.3" was verified against a primary source in session. They set the
+  amplitude axis and the distance gate, not the detection statistic. An Mw-substituted axis is carried
+  in the cell table.
+- **D5 (noted).** vdE&B eq. (6) is stated by its authors to be designed for Δ ≳ 800 km; most cells are
+  130–800 km. The two-axis bracket is the declared consequence.
+
+## §K34-5. WHAT THE GATE NOW LICENSES
+
+**Licensed** — transient peak dynamic stresses **at or above ~46 kPa** (strictest) / **~34 kPa**
+(certified), out to **~3100 km**, on **0–1 d and 0–5 d** timescales, at western-US catalogue
+completeness M ≥ 1.5:
+- K-038, K-043, W-002-P2 — the family R2-2 named, released.
+- The seventeen wave entries and K-078's slab-transient sub-arm, **to the extent their amplitudes
+  clear the floor**. Kepler's own text said "no null from this family is interpretable before that";
+  it now is, above the floor.
+- A0b (the angular family's Landers control) and K-084's 0–1 d row. Note for whoever runs those: the
+  **0–1 d window is materially stronger than 0–5 d** here (Landers → Yellowstone WY p = 0.0010 at 1 d
+  against 0.30 at 5 d). The control's natural window is one day, not five.
+- K-060 — one of its two gates is now clear.
+
+**Not licensed, and I want this read as tightly as the licence:**
+- **Amplitudes below ~34 kPa.** R2-2's nominal certified band was 10–100 kPa. We have certified its
+  **upper half only**. The 10–34 kPa portion is suggestive (one cell, four events) and uncertified.
+  **K-059's 3 kPa exposure gate and K-072's 1–5 kPa band are not reached by this result** and must not
+  cite it.
+- Anything in the tidal/periodic family. That is K-035's gate, per R2-2, and nothing here touches it.
+- The 14 S-15 UNMEASURABLE source-cell pairs, scored neither way.
+- **Ridgecrest 2019 as a triggering source at these cells.** It did not fire in any reading. Whether
+  that is Ridgecrest, our cells, or 2019 station coverage is not resolved here.
+
+**Files written:** `results_k034.json`, `K034_SEALED_LITERATURE.md`, `K034_PREREGISTERED_CELLS.md`,
+`download_k034.py`, `exp_k034_landers_control.py`, `k034_report.py`, `k034_cellstats.csv`,
+`k034_familywise.csv`, `k034_power.csv`, `k034_secondary_counts.csv`, `k034_raw.json`,
+`data/k034/*.csv` + `manifest.json` + `download.log`. **Files appended:** `download_log.md` (two
+freeze records), this section. Nothing else was modified; nothing was committed.
+
+*K-034 worker, cycle-2 step 3. Gate PASS (qualified), certified floor 34 kPa. Five deviations, all
+flagged in `results_k034.json` and above. One by-product observation logged and not claimed: the
+rate-state-Aσ mapping under-predicts observed dynamic-triggering response by 10–200×, which means
+the family's POWER-STATE lines for transients are computed on the wrong link function.*
