@@ -11930,3 +11930,455 @@ freeze records), this section. Nothing else was modified; nothing was committed.
 flagged in `results_k034.json` and above. One by-product observation logged and not claimed: the
 rate-state-Aσ mapping under-predicts observed dynamic-triggering response by 10–200×, which means
 the family's POWER-STATE lines for transients are computed on the wrong link function.*
+
+---
+
+# PROPOSED (Kepler) — Offset-lineup seed (Jim, 2026-08-11): K-087..K-091
+
+*Seed, paraphrased as received: the overnight miner returned zero FDR survivors; are "shifts and
+buckets" actually covered — the ability to look AROUND a known trigger for a lineup rather than only
+AT it? Worked example (an example, not the ask): the 2026-08-10 M7.4 Colombia event fell at 0.47 of
+the local solid-tide proxy's min–max range, rising, 92nd percentile of |dS/dt|, 3.1 h after a trough
+(n = 1). Two candidate readings: (1) triggering AT the neutral/zero crossing, where the stressing
+RATE peaks; (2) unlock at some phase in cycle N, release at any phase in cycle N+k — a two-stage
+process with a lag between preparation and failure.*
+
+*Everything below is PROPOSED. I do not adjudicate. Section §K87-0 is an AUDIT of an instrument, not
+a hypothesis, and is written first because three of the five entries only make sense once the audit
+is on the page.*
+
+## §K87-0. AUDIT: WHAT LAST NIGHT'S ZERO-SURVIVOR VERDICT COVERS, AND WHAT IT CANNOT
+
+Artifact audited: `engine/out/mine/session_20260811T022953/report.md` (preset `overnight`,
+engine v1.1.0, baseline `etas-v1`, 50,000 surrogates, elapsed 3638 s), read against
+`engine/mine.py`, `engine/mine_session.py`, `engine/ephemeris.py` and `engine/SPEC.md`.
+
+**The verdict as stated.** 259 tests over the exploration window days [365, 8081) = 7716 days;
+46,585 events at M ≥ 4.5 in a global 1° × 1° domain; target = daily domain-summed counts against
+Σλ_ETAS; BH-FDR at q = 0.10 → **0 survivors**. Best raw p = 0.00114 (`F107_solar_flux`, lag 3 d),
+BH q = 0.161. The report's own bound: a sinusoidal rate modulation is detectable only above roughly
+**5.56%**, and it says in its own text that this is optimistic because it assumes independent days.
+
+**The 259 decomposes exactly, and the decomposition is the audit.** 17 cyclic features (family 1: 9,
+family 2: 8) × **1 lag** + 6 non-cyclic features (family 3: 3, family 4: 3) × 31 lags + 23 features
+× 2 marks + 10 period peaks = 17 + 186 + 46 + 10 = **259**. Every claim below follows from that line.
+
+**(a) Sub-daily phase is invisible — and the supervisor's framing of *why* is half right, in the
+direction that flatters the instrument. CORRECTED.** The seed says "only the mark tests saw sub-daily
+phase." **They did not.** `mine_session.py:245` computes `fe_day = marks["day"] - window.start` and
+line 250 takes `vals = f.values[window][fe_day]` — the feature at an event is the feature's value for
+that event's **calendar day**, evaluated once at 12:00 UTC (`ephemeris.day_grid(..., hour=12.0)`).
+The mark tests are day-resolution too. **There is no sub-daily phase anywhere in the session.** The
+machinery to do better exists and was never reached: `load_event_marks` returns `day_float` (true
+sub-day timestamps, `mine.py:511`) and it is consumed at exactly one call site — the period scan's
+unbinned aliasing audit — which `mine_session.py:318` guards with `if not t["passes_fdr"]: continue`.
+Zero survivors ⇒ **the unbinned code path did not execute once.**
+
+**Two independent annihilations, not one, and both are exact rather than approximate.**
+
+1. **Day-binning.** Summing counts over an exact 24 h window multiplies a sinusoid of period P by
+   |sinc(π·Δt/P)|. Computed this session: M2 (12.4206 h) → **0.0348** (28.7× suppression);
+   O1 (25.819 h) → 0.0752 (13.3×); K1 (23.9345 h) → 0.0027 (366×); **S1 (24.000 h) → 0 exactly;
+   S2 (12.000 h) → 0 exactly**. The fortnightly and monthly lines are untouched (Mf 13.661 d →
+   0.991; Msf 14.765 d → 0.992; synodic 29.531 d → 0.998). So the miner is a **fortnightly/monthly
+   instrument with a hard notch through the entire diurnal–semidiurnal band**, and the notch is
+   deepest precisely at the two lines a solar detection artifact would occupy.
+2. **Global domain summation.** The target is the domain-**sum** over a global 1° × 1° grid
+   (`mine.py:build_target`). Local diurnal and semidiurnal tidal phase is a function of longitude;
+   summing over all longitudes cancels it *before* the day-binning ever applies. Two exact zeros in
+   series.
+
+   *The honest inverse, and it is worth as much as the complaint:* those same two zeros make this
+   instrument **immune** to the S1/S2 detection-cycle systematic that R2-1(c) declares a standing
+   hazard for every high-power tidal-band measurement. The miner's fortnightly numbers are clean of
+   the artifact that would otherwise contaminate them. That is a real property and it should be
+   claimed, not just the loss.
+
+**(b) WITHIN-cycle phase offsets ARE covered, wherever the feature is a `kind='phase'` feature —
+and the seed is right that they are, for a reason sharper than "sin/cos pairs".** `Feature.design`
+(`mine.py:180`) emits `[sin(θ), cos(θ)]` and the GLM score statistic is the 2-df quadratic form over
+that pair. A phase offset φ is an orthogonal rotation of the (sin, cos) basis; the quadratic form is
+**exactly invariant** under it. So for these features the offset scan is not merely covered — it is
+**free and already complete**, and scanning offsets would add multiplicity while adding literally zero
+information. **A zero-crossing-aligned response is the pure-sine component and was fully in the test's
+span.** Jim's reading (1) is, at fortnightly-and-longer periods, **already measured and already null
+at the ~5.6% bound.** That is the strongest single thing the null covers and it should be stated as a
+positive result, not as an absence.
+
+**(b′) But the same is NOT true of the cyclic features entered as `kind='linear'`, and here the
+seed's complaint lands squarely.** `moon_distance`, `moon_declination`, `moon_abs_declination`,
+`sun_declination`, `sun_moon_elongation`, `perigee_syzygy`, `declination_product`,
+`tidal_potential_proxy` are single standardised columns — **1 df, not rotation-invariant** — and
+`ephemeris_features` constructs every family-1/family-2 feature **without a `lags` argument**, so they
+inherit the class default `lags=(0,)`. Confirmed against the report's own table: every family-1/2 row
+reads `lag 0 d`, while family-3/4 rows read lags 0–30. **A response that peaks 3 days after perigee,
+or 5 days after maximum declination, was not tested at all** — not attenuated, not weakly powered,
+*not tested*. This is exactly "look AT, never AROUND", it is present in the current build, and it is
+the cheapest thing on this page to fix.
+
+**(c) A cross-cycle two-stage process is invisible to every statistic in the file, and no amount of
+surrogates fixes it.** If a patch unlocks at phase X in cycle N and releases at an arbitrary phase in
+cycle N+k with k dispersed over even a handful of cycles, the release-phase distribution is the
+unlock-phase distribution convolved with the dispersion of k — which drives the first circular moment
+toward zero geometrically. Every statistic in the session (GLM on [sin, cos], circular-linear mark
+correlation, epoch-folding likelihood ratio) is a **first-moment, single-phase** statistic. It is
+measuring the wrong moment. **Reading (2) was not tested and could not have been.** It needs an
+observable that is second-order in phase — see K-088.
+
+**(d) Four further limits, stated so nobody quotes the null wider than it is.** (i) The bound is
+global-aggregate; a coherent regional signal with region-dependent phase is cancelled by the domain
+sum before any test runs. (ii) The surrogate floor is p = 1/(N+1) = 0.00002 and BH at q = 0.10 over
+259 tests could only reject if a test tied at that floor; the report says so itself. (iii) All effect
+sizes are in-sample exploration-window upper bounds. (iv) Family-1/2 features are **geocentric**:
+`ephemeris_table(t0, n_days)` takes no latitude or longitude, so **no local tidal stress exists
+anywhere in the engine**. The seed's Colombia figure is therefore a hand-built site projection, not
+an engine feature, and cannot be reproduced by any code path currently in `engine/`.
+
+**Verdict of the audit, in one line.** *The null is real and it is narrower than it sounds: it is a
+~5.6% bound on globally-coherent, fortnightly-to-annual, level-or-rate rate modulation of daily
+counts, at lag 0 for cyclic features, with the diurnal and semidiurnal bands notched out exactly, the
+lag axis unscanned for 8 of 23 features, and the second phase moment never computed.*
+
+---
+
+**K-087 — RATE VERSUS LEVEL AS A FIRST-CLASS MINING AXIS: every cyclic feature enters as the pair
+(S, dS/dt), because a sine response and a cosine response are different physics and the current
+design cannot name which one it saw.**
+
+*Lens: interrogate the clock's derivative. We have been asking "where in the cycle" for two years and
+never once asking "how fast was it moving". A pure-sine response and a pure-cosine response have
+identical 2-df test statistics — the omnibus test that makes the offset scan free is exactly the test
+that refuses to tell you which regime produced the signal. Invariance is a gift for detection and a
+tax on inference, and nobody has paid the tax.*
+
+- **Claim.** For every cyclic feature the miner carries, add its analytic time derivative as a
+  separate feature, and report the fitted response as a **phase angle** ψ = atan2(β_sin, β_cos) with a
+  CI, not as a p-value. ψ ≈ 90° ⇒ rate-regime (zero-crossing) triggering, Jim's reading (1);
+  ψ ≈ 0° ⇒ level-regime (peak-stress) triggering. **The claim is that ψ is estimable and that its
+  posterior excludes one of the two regimes**, not that either is true.
+- **The prediction this entry is really for, and it is adverse to reading (1).** Heimisson & Avouac
+  (2020) fix the regime boundary at the nucleation time t_a = Aσ/τ̇. Computed this session across the
+  published bracket (Aσ ∈ {0.03, 0.064, 0.10, 0.15} MPa, τ̇ ∈ {0.001…0.03} MPa/yr): **t_a = 365 to
+  54,800 days.** The entire tidal band sits at P/t_a ≤ 0.081 (M2 at 0.0014 even against the shortest
+  t_a we can justify). That is **deep in their short-period regime, where the response scales with
+  stress AMPLITUDE, not stressing rate.** So rate-and-state predicts **ψ ≈ 0°, level-triggering** —
+  and Jim's reading (1) is the prediction of the regime we are *not* in. **This is what makes the
+  measurement worth making rather than a formality: a measured ψ ≈ 90° in the tidal band falsifies
+  either the published Aσ range by orders of magnitude or the rate-state response function itself.**
+  It also converges with the by-product logged by the K-034 worker — that the rate-state Aσ mapping
+  under-predicts observed dynamic-triggering response by 10–200× — which is the same complaint about
+  the same link function arriving from an unrelated direction.
+- **Relation to K-064 — stated explicitly, as required. This DOES NOT DISCHARGE and DOES NOT
+  DUPLICATE K-064's freeze condition.** K-064's condition is band-specific: *"state which regime our
+  50–300 s bands sit in relative to t_a."* At 50–300 s the ratio P/t_a is ~10⁻⁸ and the answer is
+  trivially "short-period"; the condition is about the seismic **wavefield** family. K-087 is the
+  **tidal-band sibling of the same discrimination**, run at 0.5–29.5 d on a different instrument (the
+  miner) against a different target (daily residual counts). It inherits K-064's mandate to be written
+  on Heimisson & Avouac's equations. It differs in that the tidal band is the only band where ψ is
+  **measurable at useful precision**, which is why the discrimination belongs here and not there.
+  K-064's freeze condition remains open and is untouched by anything in this seed.
+- **Test / data.** No downloads. `engine/ephemeris.py` already returns everything needed; the
+  derivatives are analytic (dθ/dt is the mean motion for a phase; central differences on the day grid
+  for `moon_dist_km`, declinations and the two tidal proxies). Statistic: per feature, the 2-df score
+  test (unchanged, for detection) **plus** the ψ estimate with a bootstrap CI (new, for inference).
+  Null: unchanged — max(circular shift, block bootstrap) with the feature's own `block_days`.
+- **Expected if real.** At the miner's own bound the ψ CI is ±180° and useless; that is the point of
+  K-090. On the SoCal M ≥ 2.5 arm at N ≈ 4 × 10⁴ with a 3% modulation, sd(ψ) ≈ 23° — computed this
+  session as sd(ψ) ≈ 1/(A√(N/2)) — which is a 3σ sine-vs-cosine call. **Honest prior on the null
+  (no measurable ψ at all): 0.75.** Prior that ψ, if measurable, sits nearer 0° than 90°: **0.8**,
+  because that is what rate-and-state says and I am obliged to bet with the published model against
+  my own seed's preferred reading.
+- **Why this might be dismissed too quickly.** "The sin/cos pair already covers it." It covers
+  *detection* and provably cannot cover *identification* — the invariance that makes the offset scan
+  free is the same invariance that destroys the regime information. Detection and identification are
+  different questions and this program has been answering only the first.
+
+---
+
+**K-088 — THE TWO-STAGE UNLOCK–RELEASE MODEL, AND THE FOUR OBSERVABLES THAT CAN ACTUALLY SEE IT:
+if preparation and failure are separated by a lag, the release-phase histogram is the WRONG
+STATISTIC and its null is uninformative by construction.**
+
+*Lens: model the silence between the two events rather than either event. Jim's reading (2) is a
+state-gating model — the K-077 shape (`state × forcing`), transplanted from geodetic loading to
+tidal phase. K-077's argument is that a catalogue-only statistic measures one term of a difference
+and calls it the difference; the phase histogram does exactly that, on a different pair of terms.*
+
+- **The argument, because it is the whole entry.** Under the two-stage model the observed release
+  phase is `X + Φ·k`, k dispersed over cycles. The first circular moment of the observed
+  distribution is the unlock moment multiplied by the characteristic function of k evaluated at the
+  cycle frequency — which for any realistic dispersion of k is small. **A null single-phase histogram
+  is therefore the PREDICTION of the two-stage model, not evidence against it.** Every tidal phase
+  null this program owns, including last night's, is consistent with reading (2) at full strength.
+  That is uncomfortable and it is why the entry exists.
+- **The observables, ranked by how much I believe them.**
+  1. **Initiations versus continuations (the seed's own candidate, and it is the right first move).**
+     Tag every event with a declustering-lite label: an event is an INITIATION if no event of
+     M ≥ M−1 occurred within R km in the preceding T days, otherwise a CONTINUATION. Under a
+     one-stage model both classes carry the same phase response. **Under the two-stage model
+     initiations carry the unlock phase and continuations carry the release phase, and the two
+     distributions differ.** The statistic is the **difference of circular means between classes**,
+     with the class labels — not the phases — permuted under the null, which keeps the marginal phase
+     distribution and the marginal class distribution fixed. This is the cleanest test in the entry
+     because the null is exact and the confound (aftershock sequences inherit their mainshock's phase)
+     is precisely what the statistic measures rather than something it must be protected from.
+  2. **First-of-cluster versus later-in-cluster.** The same idea at sequence resolution: phase of
+     event 1 of a cluster against events 2..n. Cheaper, noisier, and it double-counts with (1); run
+     it as the sensitivity, not the headline.
+  3. **Hazard as a function of time-since-last-favourable-window (my preferred formulation, and the
+     one that turns a phase question into a survival question).** Define a favourable window by a
+     pre-registered rule on the local tidal series (peak, trough, or max |dS/dt| — one rule, declared
+     before the run, and the three are a declared family of 3 under S-8). Then fit
+     `λ(t) = λ_ETAS(t)·exp(g(u))` where u = time since the most recent favourable window. **A
+     one-stage model predicts g periodic with the cycle. A two-stage model predicts g with a HUMP at
+     a lag τ_u > 0 and a decay** — a different functional form, not a different amplitude, which is a
+     much stronger identification than any amplitude test. Kernel-smoothed g with a monotone-versus-
+     humped shape test; null = ETAS simulation with the real tidal series in place and the crust
+     indifferent to it, which is K-077's null construction and it works here for the same reason.
+  4. **THE ONE I THINK IS ACTUALLY NEW, and the one nobody asked for: measure the SECOND phase
+     moment, i.e. the phase-coherence decay across cycle lag.** For each cycle lag k = 0, 1, 2, …, K,
+     compute the resultant length R_k of the **phase differences** between each event and the
+     nearest favourable window k cycles earlier. A one-stage model gives R_k ≈ R_0·1{k = 0}. A
+     two-stage model with unlock lifetime τ_u gives **R_k decaying on a scale of τ_u/P cycles, with
+     R_0 possibly indistinguishable from zero.** *The decay curve is a measurement of τ_u even in the
+     regime where every individual R_k is null* — this is the "model the negative space" move applied
+     to a null we already own: it extracts a physical time constant from the SHAPE of a null rather
+     than from a detection. And it is the only statistic in this seed that survives when the seed's
+     own preferred effect is too small to detect. Null: same ETAS sim; the statistic is compared as a
+     **curve** (max deviation over k, sim-calibrated per S-8) so the K + 1 lags cost one test, not K + 1.
+- **Test / data.** SoCal M ≥ 2.5 (`data/comcat_socal_m25.csv`, 18,389 rows on disk, 2010+; the
+  1981–2026 extension is one ComCat download) for the well-powered arm; the miner's global M ≥ 4.5
+  corpus for the pooled arm. **Blocker, stated as required: observables (3) and (4) need a LOCAL
+  tidal series at each event's lat/lon/time, which the engine does not have** — see K-090's flag.
+  Observables (1) and (2) can run on geocentric phase today and are not blocked.
+- **Expected if real.** Class difference in circular mean of 10–30° at |Δ| resolvable from N ≈ 10⁴
+  initiations; τ_u, if it exists at all, of order 1–10 cycles. **Honest prior on the null: 0.8 for
+  (1), 0.85 for (3), 0.7 for (4)** — (4) gets the friendliest prior not because I expect a discovery
+  but because it produces a *number* (a bound on τ_u) under the null, which the others do not.
+- **Why this might be dismissed too quickly.** "Declustering is unfalsifiable hand-waving." It would
+  be, if the declustering rule were tuned. It is not: the rule is declared before the run, the null
+  permutes labels rather than phases, and the entry's headline is a **difference between classes**,
+  which is invariant to getting the absolute class definition somewhat wrong. A declustering rule
+  that is wrong in the same way for both classes cancels out of the statistic.
+
+---
+
+**K-089 — THE OFFSET-SCAN MANDATE, AS A STANDING MINING RULE: every trigger-alignment test scans the
+full offset/lag space AROUND the trigger, and prices the scan — except where the scan is provably
+free, which must be demonstrated rather than assumed.**
+
+*Lens: Jim's "look around, not at", promoted from a complaint about one run to a rule about all runs.
+The interesting half is that the rule has an exception, the exception is common, and stating the
+exception is what keeps the rule from being a multiplicity disaster.*
+
+- **The rule, in three clauses.**
+  1. **Scan.** Any test that aligns events to a trigger declares and scans a full offset space:
+     phase offsets over [0°, 360°), time lags over a declared window, and the harmonic ladder rungs
+     {P/3, P/2, P, 2P, 3P} the miner already implements. No test may align only at offset 0 unless
+     clause 3 applies.
+  2. **Price it.** The scan enters the S-8 declared family and the max-statistic runs over the whole
+     scan, sim-calibrated. Arithmetic computed this session so nobody discovers it late: 24 phase
+     offsets × 5 ladder rungs × 31 lags × 17 cyclic features = **63,240 tests**, at which BH q = 0.10
+     demands p ≤ 1.6 × 10⁻⁶ for the smallest — **below the 50,000-surrogate resolution floor of
+     2 × 10⁻⁵ by a factor of 13.** *An unpriced scan is not a more sensitive instrument; it is a
+     blind one.* Restricting to 8 lags gives 16,320 tests and p ≤ 6.1 × 10⁻⁶, still below the floor.
+     **A scan of this size therefore requires either ≥ 10⁶ surrogates or a parametric tail, and that
+     requirement is part of the rule, not an implementation detail.**
+  3. **The free-scan exception, which must be PROVED per feature, not assumed.** Where the statistic
+     is the 2-df quadratic form on [sin θ, cos θ], a phase offset is an orthogonal rotation and the
+     statistic is exactly invariant: the scan is complete at offset 0 and costs **zero** extra
+     multiplicity. This covers the miner's `kind='phase'` features and is why last night's run
+     genuinely did cover within-cycle offsets for them (§K87-0(b)). It does **not** cover
+     `kind='linear'` cyclic features, where a lag is a genuinely new 1-df test — the miner's 8 such
+     features are unscanned today (§K87-0(b′)) and are the concrete first application of this rule.
+- **Test / data.** This is a standing rule, so its "test" is a compliance audit: re-run the miner
+  with `lags` supplied to `ephemeris_features` and confirm that (i) the phase features' best-p is
+  **unchanged to numerical precision** across all lags — which is a *falsifiable prediction of clause
+  3 and a unit test of the whole rule* — and (ii) the 8 linear cyclic features move. If (i) fails,
+  clause 3 is wrong and the exception is withdrawn.
+- **Expected if real.** Clause 3's invariance is exact and should hold to ~1e-12; a failure means a
+  bug, not physics. The 8 unscanned features gain ~31× multiplicity for a chance at a lagged
+  response — my prior that any of them clears FDR after the correct pricing is **0.1**, and I would
+  rather have the 0.1 correctly priced than the current 0 silently uncovered.
+- **Why this might be dismissed too quickly.** "This just multiplies tests to no purpose." The
+  purpose is that the current design does not know which of its features it has scanned and which it
+  has not; the rule's real product is the **audit line in every report saying which axes were scanned
+  and which were provably invariant.** That line does not exist today and last night's report would
+  have been read very differently with it.
+
+---
+
+**K-090 — MINER V2: UNBINNED EVENT-TIME SCORING WITH PER-EVENT LOCAL TIDAL FEATURES, WHICH IS THE
+ONLY BUILD IN WHICH ANY OF THE ABOVE IS MEASURABLE — plus the one thing we do not have.**
+
+*Lens: the instrument is the hypothesis. Three of the four entries above are unmeasurable on the
+current build and would be scored as nulls if run there, which is how a program manufactures corpses
+out of its own binning choices.*
+
+- **The build, concretely, in dependency order.**
+  1. **Event-time (unbinned point-process) rate scoring.** Replace the daily Poisson GLM with the
+     inhomogeneous-Poisson log-likelihood `Σ_i log λ(t_i, x_i) − ∫λ dt dx` evaluated at true event
+     timestamps. `datasets.catalog_arrays` already returns float days with sub-day precision and
+     `load_event_marks` already surfaces it as `day_float`; the ETAS baseline already supplies λ on a
+     day grid and can be interpolated within the day. **This removes both sinc notches
+     (§K87-0(a).1) at a stroke and is the single highest-value change on this page.** Null: ETAS
+     simulation of event times — the report's aliasing audit already builds exactly this null for the
+     period scan (`aliasing_audit_period`), so the null is *already written* and needs only to be
+     promoted from an audit to the primary path.
+  2. **Per-event local tidal phase and rate.** Compute, at each event's own (lat, lon, depth, t): the
+     solid-Earth body-tide potential, the resolved Coulomb stress on a declared receiver plane, its
+     phase, and its time derivative. **The engine cannot do this today** —
+     `ephemeris.ephemeris_table(t0, n_days)` takes no coordinates and returns geocentric quantities
+     only. This is a new module, not a parameter.
+  3. **Initiation/continuation tagging.** One pass over the catalogue producing a boolean per event
+     from a declared (M−1, R, T) rule. Cheap, causal, and it unblocks K-088(1) immediately without
+     waiting on (2).
+  4. **The offset scan with K-089 pricing**, wired to a surrogate budget that can actually resolve the
+     multiplicity it creates (≥ 10⁶ shifts via the closed-form all-shifts path the miner already uses,
+     or a parametric tail).
+  5. **A `ψ` (phase-angle) column in the report** for every cyclic feature, with CI — K-087's
+     deliverable and a one-line addition once (1) exists.
+- **WHAT WE DO NOT HAVE, flagged as required.** (i) **No local body-tide code and no ocean-loading
+  model.** Solid-earth body tide is tractable from Love numbers with what is on disk; **ocean tidal
+  loading is not** — it needs SPOTL/TPXO, which is a download and a dependency, and in coastal and
+  subduction settings ocean loading is comparable to or larger than the body tide, so a body-tide-only
+  local feature is a **biased instrument in exactly the regions where most M ≥ 5.5 events occur.**
+  That must be printed in the report, not discovered later. (ii) **No time-of-day Mc curve.** R2-1(c)
+  makes this mandatory for any high-power tidal-band measurement, and the moment v2 removes the
+  day-binning notch it also removes the incidental immunity to the S1/S2 detection artifact that the
+  current build enjoys for free (§K87-0(a)). **Going unbinned is not a pure gain: it trades an exact
+  notch for a systematic that must be measured.** (iii) `data/lunar_grid_1980_2027.npz` exists on
+  disk with 412,009 samples of elongation and normalised distance — roughly hourly, 1980–2027 — which
+  is a ready-made sub-daily geocentric series and a useful cross-check on any new ephemeris path, but
+  it is geocentric and does not substitute for (2).
+- **Test / data.** The build's own acceptance test is a **planted-signal recovery**: inject a known
+  semidiurnal modulation of known amplitude and known phase into a synthetic catalogue, confirm v1
+  recovers ~3.5% of it (the M2 sinc factor, computed above) and v2 recovers ~100%. That is a counted
+  invariant, it is falsifiable, and it belongs in `engine/tests/` beside the existing planted-covariate
+  end-to-end test.
+- **Expected if real.** v2's MDA at the current global corpus (N = 46,585) is ~1.8% by the Schuster
+  arithmetic, against v1's ~5.6% — a factor of ~3 in amplitude, from binning alone, before any new
+  feature. **Honest prior that v2 finds a survivor where v1 found none: 0.25**, and most of that mass
+  is on the semidiurnal band that v1 could not see at all rather than on anything Jim's seed proposes.
+- **Why this might be dismissed too quickly.** "It is engineering, not a hypothesis." It is the
+  hypothesis that our null results are instrument-shaped, and the planted-signal test makes that
+  falsifiable in an afternoon.
+
+---
+
+**K-091 — THE ONE NOBODY ASKED FOR: USE THE SOLAR DETECTION CYCLE AS A FREE, CALIBRATED, ALWAYS-ON
+POSITIVE CONTROL — the artifact we have been subtracting for two years is the only signal in the
+catalogue whose true amplitude and true phase we independently know.**
+
+*Lens: invert the nuisance. R2-1(c) treats the S1/S2 time-of-day Mc modulation as a systematic to be
+suppressed, "ten or more times the signal being sought". Read from the other side: a contaminant of
+known period, known phase (local midnight), and independently measurable amplitude, riding in the
+same catalogue through the same pipeline, is exactly what a calibration source is. We have been
+throwing away the only ground truth we own.*
+
+- **Claim.** The measured recovery of the S1/S2 detection modulation by any given pipeline is an
+  **empirical, non-simulated measurement of that pipeline's minimum detectable amplitude and phase
+  bias** at the diurnal/semidiurnal band. Every power statement this program makes in the tidal band
+  is currently a *simulation* of our own instrument; this replaces it with a measurement.
+- **The three-step test.** (1) Measure the time-of-day detection modulation directly and independently
+  of any tidal question — from the catalogue's own magnitude-of-completeness-versus-hour curve,
+  station-count-versus-hour, or the M ≥ Mc + 1 versus M ≥ Mc count ratio versus hour. That gives a
+  reference amplitude A_ref and phase φ_ref. (2) Run the *full analysis pipeline*, unmodified,
+  treating "hour of local solar day" as if it were a tidal feature. (3) Compare recovered (Â, φ̂) to
+  (A_ref, φ_ref). **A pipeline that cannot recover a known several-percent modulation at known phase
+  has no business reporting a 1% bound**, and one that recovers it with a phase bias has just measured
+  its own phase bias — which is precisely the quantity K-087's ψ estimate depends on and which no
+  simulation of ours can supply.
+- **The second, sharper use.** The beat of an S2 artifact against M2 lands at Msf = 14.765 d, inside
+  the fortnightly band that W-001-P1 and the whole fortnightly family are built on. With A_ref
+  measured rather than assumed, the **expected artifact power at Msf is computable in advance** and
+  becomes a subtractable prediction with an error bar, instead of a hand-wave in a limitations
+  section. **This converts R2-1(c) from a warning into a correction.**
+- **Test / data.** SoCal M ≥ 2.5 on disk plus the SCEDC catalogue for the Mc-versus-hour curve; the
+  global M ≥ 4.5 corpus for the pooled version. No downloads for the SoCal arm. Statistic: recovered
+  amplitude ratio Â/A_ref and phase residual φ̂ − φ_ref, both with CIs. Null: not needed in the usual
+  sense — **the entry's product is a calibration curve, not a p-value**, which is unusual for this
+  ledger and is the reason I am writing it as its own entry rather than a clause in K-090.
+- **The falsifiable prediction, since a calibration is not automatically a hypothesis.** **Â/A_ref
+  ∈ [0.8, 1.2] and |φ̂ − φ_ref| < 15° for the v2 unbinned pipeline; and Â/A_ref < 0.1 for the v1
+  day-binned pipeline** — the second is the sinc-zero prediction of §K87-0(a).1 measured on real data
+  rather than derived on paper, and if v1 recovers a solar-diurnal signal at all, the day-binning
+  model in this audit is wrong and everything I have written about the notch collapses.
+- **Expected if real.** A_ref of order a few percent (R2-1(c) says "of order several percent");
+  recovery ratio near 1 for a competent unbinned pipeline. **Honest prior that the v1 pipeline
+  recovers < 0.1: 0.9** — this is close to a mathematical certainty and its value is that it is the
+  cheapest possible external validation of the entire aliasing audit above.
+- **Why this might be dismissed too quickly.** "It is a known artifact, not a discovery." Correct, and
+  irrelevant: its value is that it is known. **This program has never once measured the transfer
+  function of its own tidal pipeline against a real signal of known amplitude, and it has published
+  bounds that depend entirely on that transfer function being what the simulation says it is.**
+
+---
+
+**Family odds, stated once so the seed is not oversold** (honest priors on the NULL, i.e. probability
+that the entry's headline is null at demonstrated power): K-087 **0.75**; K-088(1) **0.8**,
+K-088(3) **0.85**, K-088(4) **0.7**; K-089 clause-3 invariance **0.02** (it is a theorem and the test
+is a bug-check), K-089's eight unscanned features producing a survivor **0.9**; K-090 finding a
+survivor v1 missed **0.75**; K-091 **0.1** on its own falsifiable prediction, which is deliberately
+the easiest bet on the page because it is a calibration.
+
+**Reconciliation with the tidal corpse, so this is not a re-litigation in disguise.** R2-1(d) is
+explicit and I am bound by it: *"The corpse of the map stands. The corpse of the physics was never a
+corpse; it was an unresolved measurement described as one."* K-035's executed bounds are the floor
+these entries must clear — the strongest quotable one being **|modulation| < 6.3% at 80% power,
+n = 3,920, pooled over every eligible bin**, with the end-to-end pipeline bound at 9.8% and the
+per-bin train statistic at 24.5% (`results_k035.json::corpse_to_bound_table_K032_item6`, read this
+session). **Nothing in K-087..K-091 proposes reviving a static tidal-phase susceptibility map**, and
+none of them is a forecast. K-087 asks a question K-035 did not ask (which regime, not how big);
+K-088 asks for a different moment of a distribution K-035 bounded the first moment of; K-089 is a
+rule about multiplicity; K-090 is an instrument; K-091 is a calibration. **If any of them drifts back
+toward "phase predicts", it should be killed on sight and I am saying so in advance.**
+
+**Base-rate honesty, computed this session, because the seed's example is n = 1.** A single event's
+tidal phase is uniform under the null; 0.47 of range, rising, 92nd percentile of |dS/dt| is a
+p ≈ 1 observation and carries **zero** evidential weight — which is not a criticism of the seed,
+because the seed explicitly asks for a capability rather than a finding. The relevant question is
+what n buys the capability. Schuster/Rayleigh 80%-power MDA = 2.8√(2/N): **N = 6,272 for 5%;
+17,422 for 3%; 39,200 for 2%; 156,800 for 1%; 627,200 for 0.5%.** Against that:
+
+| corpus | N | MDA₈₀ |
+| --- | ---: | ---: |
+| global M ≥ 5.5, 30 yr (~450/yr) | 13,500 | **3.41%** |
+| global M ≥ 5.5, declustered (~60%) | 8,100 | **4.40%** |
+| miner corpus, global M ≥ 4.5, 21 yr | 46,585 | 1.84% |
+| SoCal M ≥ 2.5, on disk (2010+) | 18,389 | 2.92% |
+| SoCal M ≥ 2.5, 1981–2026 (est.) | 40,000 | 1.98% |
+| SoCal M ≥ 1.5 FM-matched (K-035 config D) | 23,465 | 2.59% |
+| QTM M ≥ 0.3 SoCal 2008–2017 | ~1.8 × 10⁶ | **0.29%** |
+
+*Provenance of the N column, because a power table is only as good as its counts.* **Measured:**
+46,585 (the mine report), 18,389 (`wc -l data/comcat_socal_m25.csv` minus header), 23,465
+(`results_k035.json::configs.D_full_catalog.n`). **Estimated and NOT verified against a catalogue
+count this session — must be recomputed before any of these entries is frozen:** the global M ≥ 5.5
+rate (~450/yr), the 60% declustering survival fraction, the SoCal 1981–2026 extension (40,000), and
+the QTM catalogue size (~1.8 × 10⁶, from memory of Ross et al. 2019; the file on disk,
+`data/xue_lu_derived/QTM_aftershocks.csv`, is a small aftershock subset, not the full catalogue,
+and the full catalogue is a download we have not made). Likewise the τ̇ ∈ {0.001…0.03} MPa/yr range
+used for t_a in K-087 is my own assumption, not a read value; the Aσ bracket is S-14's and carries
+Merton's PARTIALLY VERIFIED caveat.
+
+**Answer to the seed's question, stated flatly: a global M ≥ 5.5 catalogue cannot detect a
+rate-regime modulation of the size rate-and-state predicts. Its MDA₈₀ is 3.4% undeclustered and
+4.4% declustered, against a predicted effect of order 1%. It is short by a factor of 3–4 in
+amplitude, i.e. a factor of 10–20 in N, and no amount of cleverness in the statistic recovers that.**
+**SoCal M ≥ 2.5 is the better hunting ground and it is still not sufficient** (1.98% at the full
+1981–2026 extension). **The only corpus on the table that reaches 1% is a SoCal template-matched
+low-Mc catalogue (QTM-class, M ≥ 0.3), at MDA₈₀ ≈ 0.29%** — and that is also, per R2-1(c), exactly
+the regime where the measurement stops being noise-limited and becomes systematics-limited, which is
+why K-091 exists and why I would build the calibration before the measurement rather than after.
+And the *identification* question is harder than detection: separating ψ = 90° from ψ = 0° at 3σ
+needs sd(ψ) ≤ 30°, i.e. A√(N/2) ≥ 1.9 — at A = 1% that is N ≥ 72,000 *given detection*, so detection
+at N ≈ 1.6 × 10⁵ is the binding constraint and identification comes essentially free once you have it.
+
+*Kepler, offset-lineup seed. Five entries, K-087..K-091, all PROPOSED, none licensed, none a
+forecast. One audit of an instrument (§K87-0) which corrects the seed's own framing in the direction
+unfavourable to the instrument: sub-daily phase was invisible to the mark tests too, and eight cyclic
+features were never lag-scanned at all. One entry (K-087) whose most likely outcome contradicts the
+seed's preferred reading, written that way deliberately. One entry (K-091) that nobody asked for and
+that I would run first, because it costs nothing and it is the only thing here that measures our own
+instrument against a real signal instead of against a simulation of itself.*
