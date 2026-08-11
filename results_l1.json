@@ -1,0 +1,1107 @@
+{
+ "experiment": "L-1",
+ "title": "The transient link bracket - every transient POWER-STATE recomputed as the S-14(c) two-branch bracket",
+ "authority": "HYPOTHESIS_LEDGER.md P5-8 (link-function ruling) + S-14(c) + S-15; queue rank 1 of Popper round 4",
+ "run_utc": "2026-08-11T21:10:13.323017+00:00",
+ "run_status": "FIRST-RUN. No number in this file has been produced before. Arithmetic only; no new data, no new statistic, no download.",
+ "scope_constraint": "The K-034 10-200x excess is used here ONLY as calibration data for power arithmetic. It remains logged-unclaimed per R2-2 and P5-8 and is not a finding of this artifact. This artifact RE-PRICES; it does not RE-RULE. No ADMIT/DEFER verdict in P4-3 is touched.",
+ "inputs": {
+  "k034_cellstats.csv": "d7b104ef2694a4e3",
+  "k034_power.csv": "b9cf191f4f200c44",
+  "results_k034.json": "1f10c74602874f6d"
+ },
+ "branchS": {
+  "definition": "R = exp(dtau/Asigma) over the S-14 bracket {0.03, 0.10, 0.15} MPa, retained ONLY as a lower bound on response",
+  "source": "COLLECTED from k034_power.csv (columns dTau_min_kPa_Asigma*), which reproduces the K34-3 table exactly; not re-derived",
+  "K34_3_table_reproduced": {
+   "R_min_80pct": {
+    "best": 2.100000000000001,
+    "median": 5.375,
+    "worst": 19.75,
+    "n": 40
+   },
+   "dTau_min_kPa_Asigma0.03": {
+    "best": 22.25812034188133,
+    "median": 50.44464253262936,
+    "worst": 89.49460474041392,
+    "n": 40
+   },
+   "dTau_min_kPa_Asigma0.10": {
+    "best": 74.19373447293778,
+    "median": 168.1488084420979,
+    "worst": 298.3153491347131,
+    "n": 40
+   },
+   "dTau_min_kPa_Asigma0.15": {
+    "best": 111.29060170940666,
+    "median": 252.22321266314685,
+    "worst": 447.4730237020696,
+    "n": 40
+   },
+   "MDA_E_mean_kPa": {
+    "best": 24.166565542989193,
+    "median": 76.85336341362975,
+    "worst": 381.3607676070178,
+    "n": 40
+   },
+   "MDA_E_upper_kPa": {
+    "best": 5.512524567635805,
+    "median": 17.530668690569513,
+    "worst": 86.99045782184005,
+    "n": 40
+   }
+  }
+ },
+ "branchE": {
+  "form": "R(sigma) = exp(a) * sigma_kPa**b  (quasi-Poisson GLM, log link, offset log(expected), regressor log sigma)",
+  "primary_stratum": "class A+B (pre-registered geothermal/volcanic)",
+  "response_data": "K-034 primary reading: 5 d window, M >= 1.5, distance-gate survivors, n_bg > 0",
+  "fits": {
+   "AB": {
+    "a": -1.845517046351882,
+    "b": 0.81239519335395,
+    "se_naive": [
+     0.20478704379190849,
+     0.04488918900729409
+    ],
+    "se_quasipoisson": [
+     2.114957837002622,
+     0.4635974050396433
+    ],
+    "se_cluster_by_source": [
+     1.1546593041218178,
+     0.21478050856342684
+    ],
+    "deviance": 926.0099160398127,
+    "null_deviance": 1239.73700629022,
+    "pseudo_R2_deviance": 0.2530593897404112,
+    "dispersion_pearson": 106.65923739284246,
+    "LRT_b": 313.7270902504074,
+    "p_LRT_b_naive_NOT_TRUSTED": 3.3675848416185264e-70,
+    "n_pairs": 30,
+    "cluster_bootstrap_a_CI95": [
+     -6.330891304596125,
+     -0.250572409315875
+    ],
+    "cluster_bootstrap_b_CI95": [
+     0.5220005219241863,
+     1.6487685218373749
+    ],
+    "cluster_bootstrap_n": 4000,
+    "sigma_support_kPa": [
+     7.128612699110122,
+     346.855901681756
+    ],
+    "median_observed_RR": 1.8517441860465116,
+    "n_pairs_class_total": 35,
+    "n_pairs_S15_UNMEASURABLE_nbg0": 5,
+    "sensitivity_OLS_log10RR": {
+     "slope_per_decade": 0.45193927422530705,
+     "intercept": -0.1930928067022386,
+     "r2": 0.07484335767004686,
+     "p": 0.17627144667877728,
+     "se_slope": 0.3243437003764171,
+     "n": 26
+    },
+    "envelope_q90_intercept_a": -0.6448396896470402,
+    "envelope_note": "slope held at the mean-link b; intercept set to the 90th percentile of log(RR_c) - b*log(sigma) with RR_c=(n_post+0.5)/(expected+0.5)"
+   },
+   "C": {
+    "a": -2.0894518556329125,
+    "b": 0.298828532636574,
+    "se_naive": [
+     0.4391329600712925,
+     0.1293096483367511
+    ],
+    "se_quasipoisson": [
+     1.3826736581899113,
+     0.40715013620476104
+    ],
+    "se_cluster_by_source": [
+     1.0930785254569109,
+     0.23732771406598405
+    ],
+    "deviance": 68.62662639216332,
+    "null_deviance": 72.87901570211689,
+    "pseudo_R2_deviance": 0.058348610625239994,
+    "dispersion_pearson": 9.913963315855764,
+    "LRT_b": 4.252389309953571,
+    "p_LRT_b_naive_NOT_TRUSTED": 0.03919514916932787,
+    "n_pairs": 18,
+    "cluster_bootstrap_a_CI95": [
+     -8.845113881942892,
+     3.0626465893360226
+    ],
+    "cluster_bootstrap_b_CI95": [
+     -0.783058457719146,
+     2.601125522121822
+    ],
+    "cluster_bootstrap_n": 4000,
+    "sigma_support_kPa": [
+     13.082720463322959,
+     509.35022770059106
+    ],
+    "median_observed_RR": 0.7829424307036248,
+    "n_pairs_class_total": 19,
+    "n_pairs_S15_UNMEASURABLE_nbg0": 1,
+    "sensitivity_OLS_log10RR": {
+     "slope_per_decade": -0.24958972488843512,
+     "intercept": 0.4497654336597149,
+     "r2": 0.06464563499440949,
+     "p": 0.42518393662682474,
+     "se_slope": 0.3002238487331959,
+     "n": 12
+    }
+   }
+  },
+  "optimistic_envelope_q90_intercept": -0.6448396896470402,
+  "class_C_ruling": "UNMEASURED per S-15. Class-C slope b = 0.299 with cluster-bootstrap CI [-0.78, 2.60] spanning 0, median observed RR = 0.78 (< 1). Branch E is NOT quoted at a non-geothermal receiver."
+ },
+ "per_cell_MDA_summary": {
+  "all_measurable_cells": {
+   "R_min_80pct": {
+    "best": 2.100000000000001,
+    "median": 5.375,
+    "worst": 19.75,
+    "n": 40
+   },
+   "dTau_min_kPa_Asigma0.03": {
+    "best": 22.25812034188133,
+    "median": 50.44464253262936,
+    "worst": 89.49460474041392,
+    "n": 40
+   },
+   "dTau_min_kPa_Asigma0.10": {
+    "best": 74.19373447293778,
+    "median": 168.1488084420979,
+    "worst": 298.3153491347131,
+    "n": 40
+   },
+   "dTau_min_kPa_Asigma0.15": {
+    "best": 111.29060170940666,
+    "median": 252.22321266314685,
+    "worst": 447.4730237020696,
+    "n": 40
+   },
+   "MDA_E_mean_kPa": {
+    "best": 24.166565542989193,
+    "median": 76.85336341362975,
+    "worst": 381.3607676070178,
+    "n": 40
+   },
+   "MDA_E_upper_kPa": {
+    "best": 5.512524567635805,
+    "median": 17.530668690569513,
+    "worst": 86.99045782184005,
+    "n": 40
+   }
+  },
+  "class_AB_measurable_cells": {
+   "R_min_80pct": {
+    "best": 2.100000000000001,
+    "median": 5.5,
+    "worst": 19.75,
+    "n": 26
+   },
+   "dTau_min_kPa_Asigma0.03": {
+    "best": 22.25812034188133,
+    "median": 51.14244276715276,
+    "worst": 89.49460474041392,
+    "n": 26
+   },
+   "dTau_min_kPa_Asigma0.10": {
+    "best": 74.19373447293778,
+    "median": 170.47480922384253,
+    "worst": 298.3153491347131,
+    "n": 26
+   },
+   "dTau_min_kPa_Asigma0.15": {
+    "best": 111.29060170940666,
+    "median": 255.7122138357638,
+    "worst": 447.4730237020696,
+    "n": 26
+   },
+   "MDA_E_mean_kPa": {
+    "best": 24.166565542989193,
+    "median": 79.05318135950438,
+    "worst": 381.3607676070178,
+    "n": 26
+   },
+   "MDA_E_upper_kPa": {
+    "best": 5.512524567635805,
+    "median": 18.03245908562538,
+    "worst": 86.99045782184005,
+    "n": 26
+   }
+  }
+ },
+ "status_rules": {
+  "POWERED": "band max >= adverse Branch-S MDA (Asigma = 0.15) AND >= mean Branch-E MDA",
+  "UNDERPOWERED": "band max below both branches MDA AND inside the Branch-E fitted support",
+  "POWER_INDETERMINATE": "branches disagree, or band max lies below the Branch-E support where Branch E is UNMEASURED (S-15)",
+  "NOT_AMPLITUDE_LIMITED": "the POWER-STATE contains no stress-to-response conversion; the bracket does not bind",
+  "reference_floor": 1.05,
+  "reference_floor_justification": "used only where the entry declares no MDM; equals the modulation floor the family itself quotes (K-063 4-12%, K-065 5.6%). Flagged per row."
+ },
+ "bracket_table": [
+  {
+   "entry": "K-059 (main, R1/R2 near-teleseismic)",
+   "band_kPa": [
+    1.0,
+    100.0
+   ],
+   "floor_R_min": 1.05,
+   "floor_provenance": "REFERENCE-FLOOR (entry declares no MDM; bits/event statistic)",
+   "receiver_class": "mixed (global cells)",
+   "kind": "amplitude",
+   "note": "ledger L7144: \"1-100 kPa: predicted 3%-x28 rate modulation at Asigma=0.03\"",
+   "MDA_branchS_kPa": {
+    "0.03": 1.464,
+    "0.10": 4.879,
+    "0.15": 7.319
+   },
+   "MDA_branchS_adverse_kPa": 7.319,
+   "MDA_branchE_mean_kPa": 10.296,
+   "MDA_branchE_upper_kPa": 2.349,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 28.0316,
+    "branchS_Asigma0_10": 2.7183,
+    "branchS_Asigma0_15": 1.9477,
+    "branchE_mean": 6.6572,
+    "branchE_upper": 22.1177,
+    "branchE_extrapolated_below_support": false
+   },
+   "bracket_kPa": [
+    2.349,
+    10.296
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0067,
+    "branchE_mean": 0.1579,
+    "branchE_upper": 0.5247,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWERED",
+   "status_reason": "band max clears the adverse Branch-S MDA and the mean Branch-E MDA"
+  },
+  {
+   "entry": "K-059 (3 kPa exposure gate)",
+   "band_kPa": [
+    3.0,
+    3.0
+   ],
+   "floor_R_min": 1.05,
+   "floor_provenance": "REFERENCE-FLOOR",
+   "receiver_class": "mixed (global cells)",
+   "kind": "amplitude",
+   "note": "the exposure gate named in P5-8 and at ledger L10490; Popper predicted this moves",
+   "MDA_branchS_kPa": {
+    "0.03": 1.464,
+    "0.10": 4.879,
+    "0.15": 7.319
+   },
+   "MDA_branchS_adverse_kPa": 7.319,
+   "MDA_branchE_mean_kPa": 10.296,
+   "MDA_branchE_upper_kPa": 2.349,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.1052,
+    "branchS_Asigma0_10": 1.0305,
+    "branchS_Asigma0_15": 1.0202,
+    "branchE_mean": 0.3856,
+    "branchE_upper": 1.281,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.349,
+    10.296
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0202,
+    "branchE_mean": 0.3856,
+    "branchE_upper": 1.281,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 3.0 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "K-060",
+   "band_kPa": [
+    3.0,
+    4.2
+   ],
+   "floor_R_min": 1.028,
+   "floor_provenance": "DERIVED from declared N_exposed >= 1e4 (2.8/sqrt(N))",
+   "receiver_class": "mixed",
+   "kind": "amplitude",
+   "note": "ledger L7200: 3 kPa envelope -> 11%, 4.2 kPa coherent peak -> 15% at Asigma=0.03",
+   "MDA_branchS_kPa": {
+    "0.03": 0.828,
+    "0.10": 2.762,
+    "0.15": 4.142
+   },
+   "MDA_branchS_adverse_kPa": 4.142,
+   "MDA_branchE_mean_kPa": 10.031,
+   "MDA_branchE_upper_kPa": 2.288,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.1503,
+    "branchS_Asigma0_10": 1.0429,
+    "branchS_Asigma0_15": 1.0284,
+    "branchE_mean": 0.5068,
+    "branchE_upper": 1.6837,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.288,
+    10.031
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0202,
+    "branchE_mean": 0.3856,
+    "branchE_upper": 1.281,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 4.2 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "K-061",
+   "band_kPa": [
+    3.0,
+    3.0
+   ],
+   "floor_R_min": 1.028,
+   "floor_provenance": "DERIVED from declared N_exposed >= 1e4",
+   "receiver_class": "mixed",
+   "kind": "amplitude",
+   "note": "ledger L7245: 3 kPa envelope, deficit -8% to -11%",
+   "MDA_branchS_kPa": {
+    "0.03": 0.828,
+    "0.10": 2.762,
+    "0.15": 4.142
+   },
+   "MDA_branchS_adverse_kPa": 4.142,
+   "MDA_branchE_mean_kPa": 10.031,
+   "MDA_branchE_upper_kPa": 2.288,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.1052,
+    "branchS_Asigma0_10": 1.0305,
+    "branchS_Asigma0_15": 1.0202,
+    "branchE_mean": 0.3856,
+    "branchE_upper": 1.281,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.288,
+    10.031
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0202,
+    "branchE_mean": 0.3856,
+    "branchE_upper": 1.281,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 3.0 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "K-062",
+   "band_kPa": [
+    0.3,
+    3.0
+   ],
+   "floor_R_min": 1.051,
+   "floor_provenance": "DERIVED from declared N_exposed > 3e3",
+   "receiver_class": "mixed",
+   "kind": "amplitude",
+   "note": "ledger L7288: net antipodal 0.3-3 kPa, 1%-11%",
+   "MDA_branchS_kPa": {
+    "0.03": 1.492,
+    "0.10": 4.974,
+    "0.15": 7.461
+   },
+   "MDA_branchS_adverse_kPa": 7.461,
+   "MDA_branchE_mean_kPa": 10.308,
+   "MDA_branchE_upper_kPa": 2.351,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.1052,
+    "branchS_Asigma0_10": 1.0305,
+    "branchS_Asigma0_15": 1.0202,
+    "branchE_mean": 0.3856,
+    "branchE_upper": 1.281,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.351,
+    10.308
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.002,
+    "branchE_mean": 0.0594,
+    "branchE_upper": 0.1973,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 3.0 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "K-063",
+   "band_kPa": [
+    0.3,
+    3.0
+   ],
+   "floor_R_min": 1.12,
+   "floor_provenance": "ENTRY-DECLARED MDM 4-12%, adverse end",
+   "receiver_class": "mixed",
+   "kind": "amplitude",
+   "note": "ledger L7345: R3 at 0.3-3 kPa; R5 below floor",
+   "MDA_branchS_kPa": {
+    "0.03": 3.4,
+    "0.10": 11.333,
+    "0.15": 16.999
+   },
+   "MDA_branchS_adverse_kPa": 16.999,
+   "MDA_branchE_mean_kPa": 11.147,
+   "MDA_branchE_upper_kPa": 2.543,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.1052,
+    "branchS_Asigma0_10": 1.0305,
+    "branchS_Asigma0_15": 1.0202,
+    "branchE_mean": 0.3856,
+    "branchE_upper": 1.281,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.543,
+    16.999
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.002,
+    "branchE_mean": 0.0594,
+    "branchE_upper": 0.1973,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 3.0 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "K-064",
+   "band_kPa": [
+    5.0,
+    5.0
+   ],
+   "floor_R_min": 1.05,
+   "floor_provenance": "REFERENCE-FLOOR",
+   "receiver_class": "A+B (entry conditions on low-Asigma/geothermal cells)",
+   "kind": "amplitude",
+   "note": "ledger L7388: dTau ~5 kPa; entry states its power lives in low-Asigma cells",
+   "MDA_branchS_kPa": {
+    "0.03": 1.464,
+    "0.10": 4.879,
+    "0.15": 7.319
+   },
+   "MDA_branchS_adverse_kPa": 7.319,
+   "MDA_branchE_mean_kPa": 10.296,
+   "MDA_branchE_upper_kPa": 2.349,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.1814,
+    "branchS_Asigma0_10": 1.0513,
+    "branchS_Asigma0_15": 1.0339,
+    "branchE_mean": 0.5839,
+    "branchE_upper": 1.9399,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.349,
+    10.296
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0339,
+    "branchE_mean": 0.5839,
+    "branchE_upper": 1.9399,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 5.0 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "K-065",
+   "band_kPa": [
+    0.01,
+    0.1
+   ],
+   "floor_R_min": 1.056,
+   "floor_provenance": "ENTRY-DECLARED MDM 5.6%",
+   "receiver_class": "mixed",
+   "kind": "amplitude",
+   "note": "ledger L7420: 0.01-0.1 kPa mode amplitudes",
+   "MDA_branchS_kPa": {
+    "0.03": 1.635,
+    "0.10": 5.449,
+    "0.15": 8.173
+   },
+   "MDA_branchS_adverse_kPa": 8.173,
+   "MDA_branchE_mean_kPa": 10.368,
+   "MDA_branchE_upper_kPa": 2.365,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.0033,
+    "branchS_Asigma0_10": 1.001,
+    "branchS_Asigma0_15": 1.0007,
+    "branchE_mean": 0.0243,
+    "branchE_upper": 0.0808,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.365,
+    10.368
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0001,
+    "branchE_mean": 0.0037,
+    "branchE_upper": 0.0124,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 0.1 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "K-066",
+   "band_kPa": null,
+   "floor_R_min": null,
+   "floor_provenance": "n/a",
+   "receiver_class": "mixed",
+   "kind": "not-amplitude-limited",
+   "note": "ledger L7480: not amplitude-limited (no triggering claimed); patch-count limited",
+   "MDA_branchS_kPa": "UNMEASURED (no detection floor declared)",
+   "MDA_branchE_mean_kPa": "UNMEASURED (no detection floor declared)",
+   "MDA_branchE_upper_kPa": "UNMEASURED (no detection floor declared)",
+   "status": "N/A - NOT AMPLITUDE-LIMITED (no exp(dtau/Asigma) conversion in the POWER-STATE; bracket does not bind)",
+   "bracket_kPa": "n/a"
+  },
+  {
+   "entry": "K-067",
+   "band_kPa": [
+    1.0,
+    10.0
+   ],
+   "floor_R_min": 1.05,
+   "floor_provenance": "REFERENCE-FLOOR",
+   "receiver_class": "mixed",
+   "kind": "amplitude",
+   "note": "ledger L7522: exceedance thresholds 1 kPa and 10 kPa",
+   "MDA_branchS_kPa": {
+    "0.03": 1.464,
+    "0.10": 4.879,
+    "0.15": 7.319
+   },
+   "MDA_branchS_adverse_kPa": 7.319,
+   "MDA_branchE_mean_kPa": 10.296,
+   "MDA_branchE_upper_kPa": 2.349,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.3956,
+    "branchS_Asigma0_10": 1.1052,
+    "branchS_Asigma0_15": 1.0689,
+    "branchE_mean": 1.0254,
+    "branchE_upper": 3.4068,
+    "branchE_extrapolated_below_support": false
+   },
+   "bracket_kPa": [
+    2.349,
+    10.296
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0067,
+    "branchE_mean": 0.1579,
+    "branchE_upper": 0.5247,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "branches disagree about whether the entry has power; bracket printed, no MDA"
+  },
+  {
+   "entry": "K-068",
+   "band_kPa": null,
+   "floor_R_min": 1.28,
+   "floor_provenance": "DERIVED from declared >=100 exposures/cell",
+   "receiver_class": "mixed",
+   "kind": "amplitude-unstated",
+   "note": "ledger L7573: per-pair SNR a few percent; no amplitude band declared",
+   "MDA_branchS_kPa": {
+    "0.03": 7.406,
+    "0.10": 24.686,
+    "0.15": 37.029
+   },
+   "MDA_branchS_adverse_kPa": 37.029,
+   "MDA_branchE_mean_kPa": 13.139,
+   "MDA_branchE_upper_kPa": 2.997,
+   "MDA_branchE_in_support": true,
+   "status": "POWER-INDETERMINATE (amplitude band UNSTATED in-entry; bracket printed, status pending band declaration per S-15)",
+   "bracket_kPa": [
+    2.997,
+    37.029
+   ]
+  },
+  {
+   "entry": "K-069",
+   "band_kPa": null,
+   "floor_R_min": null,
+   "floor_provenance": "n/a",
+   "receiver_class": "mixed",
+   "kind": "not-amplitude-limited",
+   "note": "ledger L7613: committed-window count limited; no amplitude band",
+   "MDA_branchS_kPa": "UNMEASURED (no detection floor declared)",
+   "MDA_branchE_mean_kPa": "UNMEASURED (no detection floor declared)",
+   "MDA_branchE_upper_kPa": "UNMEASURED (no detection floor declared)",
+   "status": "N/A - NOT AMPLITUDE-LIMITED (no exp(dtau/Asigma) conversion in the POWER-STATE; bracket does not bind)",
+   "bracket_kPa": "n/a"
+  },
+  {
+   "entry": "K-070",
+   "band_kPa": null,
+   "floor_R_min": 1.5,
+   "floor_provenance": "ENTRY-DECLARED rate ratio >= 1.5",
+   "receiver_class": "mixed",
+   "kind": "amplitude-unstated",
+   "note": "ledger L7662: MDM is a factor not a percent; top-0.1% configurations",
+   "MDA_branchS_kPa": {
+    "0.03": 12.164,
+    "0.10": 40.547,
+    "0.15": 60.82
+   },
+   "MDA_branchS_adverse_kPa": 60.82,
+   "MDA_branchE_mean_kPa": 15.971,
+   "MDA_branchE_upper_kPa": 3.643,
+   "MDA_branchE_in_support": true,
+   "status": "POWER-INDETERMINATE (amplitude band UNSTATED in-entry; bracket printed, status pending band declaration per S-15)",
+   "bracket_kPa": [
+    3.643,
+    60.82
+   ]
+  },
+  {
+   "entry": "K-071",
+   "band_kPa": [
+    5.0,
+    5.0
+   ],
+   "floor_R_min": 1.8,
+   "floor_provenance": "ENTRY-DECLARED >=1.4 pooled / >=1.8 per stratum, adverse end",
+   "receiver_class": "A+B and C (ledger-class contrast)",
+   "kind": "amplitude",
+   "note": "ledger L7821: sources contributing >= 5 kPa to a target cell",
+   "MDA_branchS_kPa": {
+    "0.03": 17.634,
+    "0.10": 58.779,
+    "0.15": 88.168
+   },
+   "MDA_branchS_adverse_kPa": 88.168,
+   "MDA_branchE_mean_kPa": 19.99,
+   "MDA_branchE_upper_kPa": 4.56,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.1814,
+    "branchS_Asigma0_10": 1.0513,
+    "branchS_Asigma0_15": 1.0339,
+    "branchE_mean": 0.5839,
+    "branchE_upper": 1.9399,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    4.56,
+    88.168
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0339,
+    "branchE_mean": 0.5839,
+    "branchE_upper": 1.9399,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 5.0 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed.",
+   "branchE_class_C": "UNMEASURED per S-15 (class-C cells did not fire; see fits.C)"
+  },
+  {
+   "entry": "K-072 (1-5 kPa band)",
+   "band_kPa": [
+    1.0,
+    5.0
+   ],
+   "floor_R_min": 1.16,
+   "floor_provenance": "DERIVED from declared >=10 triggered events x >=30 cells/group",
+   "receiver_class": "mixed",
+   "kind": "amplitude",
+   "note": "P5-8 names the 1-5 kPa band; entry text uses >=5 kPa exposure. Popper predicted this moves",
+   "MDA_branchS_kPa": {
+    "0.03": 4.453,
+    "0.10": 14.842,
+    "0.15": 22.263
+   },
+   "MDA_branchS_adverse_kPa": 22.263,
+   "MDA_branchE_mean_kPa": 11.639,
+   "MDA_branchE_upper_kPa": 2.655,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.1814,
+    "branchS_Asigma0_10": 1.0513,
+    "branchS_Asigma0_15": 1.0339,
+    "branchE_mean": 0.5839,
+    "branchE_upper": 1.9399,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.655,
+    22.263
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0067,
+    "branchE_mean": 0.1579,
+    "branchE_upper": 0.5247,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 5.0 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "K-073",
+   "band_kPa": [
+    1.0,
+    10.0
+   ],
+   "floor_R_min": 1.05,
+   "floor_provenance": "REFERENCE-FLOOR",
+   "receiver_class": "mixed (wetness contrast)",
+   "kind": "amplitude",
+   "note": "ledger L7942: 1 kPa -> 3% predicted; 10 kPa exceedances are the informative ones",
+   "MDA_branchS_kPa": {
+    "0.03": 1.464,
+    "0.10": 4.879,
+    "0.15": 7.319
+   },
+   "MDA_branchS_adverse_kPa": 7.319,
+   "MDA_branchE_mean_kPa": 10.296,
+   "MDA_branchE_upper_kPa": 2.349,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.3956,
+    "branchS_Asigma0_10": 1.1052,
+    "branchS_Asigma0_15": 1.0689,
+    "branchE_mean": 1.0254,
+    "branchE_upper": 3.4068,
+    "branchE_extrapolated_below_support": false
+   },
+   "bracket_kPa": [
+    2.349,
+    10.296
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0067,
+    "branchE_mean": 0.1579,
+    "branchE_upper": 0.5247,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "branches disagree about whether the entry has power; bracket printed, no MDA"
+  },
+  {
+   "entry": "K-074",
+   "band_kPa": [
+    1.0,
+    5.0
+   ],
+   "floor_R_min": 1.089,
+   "floor_provenance": "DERIVED from pooled matrix N ~ 1e3",
+   "receiver_class": "mixed",
+   "kind": "amplitude",
+   "note": "ledger L7997: M8.5 at 8000 km = 1-5 kPa -> 3-18% predicted",
+   "MDA_branchS_kPa": {
+    "0.03": 2.558,
+    "0.10": 8.526,
+    "0.15": 12.789
+   },
+   "MDA_branchS_adverse_kPa": 12.789,
+   "MDA_branchE_mean_kPa": 10.769,
+   "MDA_branchE_upper_kPa": 2.456,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.1814,
+    "branchS_Asigma0_10": 1.0513,
+    "branchS_Asigma0_15": 1.0339,
+    "branchE_mean": 0.5839,
+    "branchE_upper": 1.9399,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.456,
+    12.789
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0067,
+    "branchE_mean": 0.1579,
+    "branchE_upper": 0.5247,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 5.0 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "K-075",
+   "band_kPa": null,
+   "floor_R_min": null,
+   "floor_provenance": "n/a",
+   "receiver_class": "mixed",
+   "kind": "not-amplitude-limited",
+   "note": "ledger L8058: probe-pair / region-year limited; rank statistic, no amplitude",
+   "MDA_branchS_kPa": "UNMEASURED (no detection floor declared)",
+   "MDA_branchE_mean_kPa": "UNMEASURED (no detection floor declared)",
+   "MDA_branchE_upper_kPa": "UNMEASURED (no detection floor declared)",
+   "status": "N/A - NOT AMPLITUDE-LIMITED (no exp(dtau/Asigma) conversion in the POWER-STATE; bracket does not bind)",
+   "bracket_kPa": "n/a"
+  },
+  {
+   "entry": "K-038",
+   "band_kPa": [
+    50.0,
+    50.0
+   ],
+   "floor_R_min": 1.05,
+   "floor_provenance": "REFERENCE-FLOOR",
+   "receiver_class": "mixed (interaction with ledger class)",
+   "kind": "amplitude",
+   "note": "ledger L1332: \"threshold-like behaviour with detection above ~0.05 MPa\"",
+   "MDA_branchS_kPa": {
+    "0.03": 1.464,
+    "0.10": 4.879,
+    "0.15": 7.319
+   },
+   "MDA_branchS_adverse_kPa": 7.319,
+   "MDA_branchE_mean_kPa": 10.296,
+   "MDA_branchE_upper_kPa": 2.349,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 5.2945,
+    "branchS_Asigma0_10": 1.6487,
+    "branchS_Asigma0_15": 1.3956,
+    "branchE_mean": 3.7909,
+    "branchE_upper": 12.5946,
+    "branchE_extrapolated_below_support": false
+   },
+   "bracket_kPa": [
+    2.349,
+    10.296
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.3956,
+    "branchE_mean": 3.7909,
+    "branchE_upper": 12.5946,
+    "branchE_extrapolated_below_support": false
+   },
+   "status_at_band_min": "POWERED",
+   "status": "POWERED",
+   "status_reason": "band max clears the adverse Branch-S MDA and the mean Branch-E MDA"
+  },
+  {
+   "entry": "K-043",
+   "band_kPa": null,
+   "floor_R_min": 1.05,
+   "floor_provenance": "REFERENCE-FLOOR",
+   "receiver_class": "mixed (global ping map)",
+   "kind": "amplitude-unstated",
+   "note": "no kPa band declared in-entry; PGV-weighted pooling over all pings",
+   "MDA_branchS_kPa": {
+    "0.03": 1.464,
+    "0.10": 4.879,
+    "0.15": 7.319
+   },
+   "MDA_branchS_adverse_kPa": 7.319,
+   "MDA_branchE_mean_kPa": 10.296,
+   "MDA_branchE_upper_kPa": 2.349,
+   "MDA_branchE_in_support": true,
+   "status": "POWER-INDETERMINATE (amplitude band UNSTATED in-entry; bracket printed, status pending band declaration per S-15)",
+   "bracket_kPa": [
+    2.349,
+    7.319
+   ]
+  },
+  {
+   "entry": "W-002-P2",
+   "band_kPa": [
+    33.8,
+    346.9
+   ],
+   "floor_R_min": 1.05,
+   "floor_provenance": "REFERENCE-FLOOR",
+   "receiver_class": "A+B (Landers/HectorMine/Ridgecrest targets)",
+   "kind": "amplitude",
+   "note": "no band declared in-entry; the sources are K-034s own, so the K-034 measured amplitude span is used and flagged",
+   "MDA_branchS_kPa": {
+    "0.03": 1.464,
+    "0.10": 4.879,
+    "0.15": 7.319
+   },
+   "MDA_branchS_adverse_kPa": 7.319,
+   "MDA_branchE_mean_kPa": 10.296,
+   "MDA_branchE_upper_kPa": 2.349,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 105169.9964,
+    "branchS_Asigma0_10": 32.1046,
+    "branchS_Asigma0_15": 10.1013,
+    "branchE_mean": 18.2874,
+    "branchE_upper": 60.7574,
+    "branchE_extrapolated_below_support": false
+   },
+   "bracket_kPa": [
+    2.349,
+    10.296
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.2527,
+    "branchE_mean": 2.758,
+    "branchE_upper": 9.1629,
+    "branchE_extrapolated_below_support": false
+   },
+   "status_at_band_min": "POWERED",
+   "status": "POWERED",
+   "status_reason": "band max clears the adverse Branch-S MDA and the mean Branch-E MDA"
+  },
+  {
+   "entry": "K-078 (slab-transient arm)",
+   "band_kPa": null,
+   "floor_R_min": null,
+   "floor_provenance": "n/a",
+   "receiver_class": "C (intraslab, non-geothermal)",
+   "kind": "not-amplitude-limited",
+   "note": "no amplitude declared; POWER-STATE is P(oasis) at n=40, count-limited",
+   "MDA_branchS_kPa": "UNMEASURED (no detection floor declared)",
+   "MDA_branchE_mean_kPa": "UNMEASURED (no detection floor declared)",
+   "MDA_branchE_upper_kPa": "UNMEASURED (no detection floor declared)",
+   "status": "N/A - NOT AMPLITUDE-LIMITED (no exp(dtau/Asigma) conversion in the POWER-STATE; bracket does not bind)",
+   "bracket_kPa": "n/a",
+   "branchE_class_C": "UNMEASURED per S-15 (class-C cells did not fire; see fits.C)"
+  },
+  {
+   "entry": "K-084 (0-1 d dynamic row)",
+   "band_kPa": [
+    0.4,
+    2.0
+   ],
+   "floor_R_min": 1.15,
+   "floor_provenance": "DERIVED from N_eff=337 targets after clustering",
+   "receiver_class": "mixed",
+   "kind": "amplitude",
+   "note": "ledger L10194: dynamic amplitude at 320 km, M6 = 0.4-2 kPa",
+   "MDA_branchS_kPa": {
+    "0.03": 4.193,
+    "0.10": 13.976,
+    "0.15": 20.964
+   },
+   "MDA_branchS_adverse_kPa": 20.964,
+   "MDA_branchE_mean_kPa": 11.516,
+   "MDA_branchE_upper_kPa": 2.627,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 1.0689,
+    "branchS_Asigma0_10": 1.0202,
+    "branchS_Asigma0_15": 1.0134,
+    "branchE_mean": 0.2774,
+    "branchE_upper": 0.9215,
+    "branchE_extrapolated_below_support": true
+   },
+   "bracket_kPa": [
+    2.627,
+    20.964
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0027,
+    "branchE_mean": 0.075,
+    "branchE_upper": 0.2493,
+    "branchE_extrapolated_below_support": true
+   },
+   "status_at_band_min": "POWER-INDETERMINATE (Branch E UNMEASURED below support)",
+   "status": "POWER-INDETERMINATE",
+   "status_reason": "band max 2.0 kPa lies below the Branch-E fitted support [7.1, 346.9] kPa: Branch E is UNMEASURED there per S-15, and Branch S may never be used to declare no power (P5-8). Bracket printed, no MDA claimed."
+  },
+  {
+   "entry": "A0b (Landers angular control)",
+   "band_kPa": [
+    9.6,
+    346.9
+   ],
+   "floor_R_min": 5.5,
+   "floor_provenance": "MEASURED: median R_min_80pct over K-034 class-AB measurable cells",
+   "receiver_class": "A+B",
+   "kind": "amplitude",
+   "note": "the K-034 cells themselves; amplitude span is K-034 measured (suggestive floor to max cell)",
+   "MDA_branchS_kPa": {
+    "0.03": 51.142,
+    "0.10": 170.475,
+    "0.15": 255.712
+   },
+   "MDA_branchS_adverse_kPa": 255.712,
+   "MDA_branchE_mean_kPa": 79.053,
+   "MDA_branchE_upper_kPa": 18.032,
+   "MDA_branchE_in_support": true,
+   "R_predicted_at_band_max": {
+    "branchS_Asigma0_03": 105169.9964,
+    "branchS_Asigma0_10": 32.1046,
+    "branchS_Asigma0_15": 10.1013,
+    "branchE_mean": 18.2874,
+    "branchE_upper": 60.7574,
+    "branchE_extrapolated_below_support": false
+   },
+   "bracket_kPa": [
+    18.032,
+    255.712
+   ],
+   "R_predicted_at_band_min": {
+    "branchS_Asigma0_15": 1.0661,
+    "branchE_mean": 0.992,
+    "branchE_upper": 3.2957,
+    "branchE_extrapolated_below_support": false
+   },
+   "status_at_band_min": "UNDERPOWERED",
+   "status": "POWERED",
+   "status_reason": "band max clears the adverse Branch-S MDA and the mean Branch-E MDA"
+  }
+ ],
+ "status_counts": {
+  "POWER-INDETERMINATE": 16,
+  "POWERED": 4,
+  "N/A": 4
+ },
+ "deviations": [
+  "D1. Popper P5-8 characterises Branch E as the OPTIMISTIC response. The mean empirical link is not optimistic everywhere: the power law (b = 0.81) is FLATTER than the exponential, so Branch S at Asigma = 0.03 predicts MORE response than Branch E above ~40 kPa, and the branches CROSS near 15-20 kPa. Two Branch-E variants are therefore reported: the mean link (primary) and a q90 optimistic envelope. The bracket is [most optimistic, most pessimistic] across all branch variants, computed per row rather than assumed.",
+  "D2. The 10-200x excess quoted in P5-8 is a per-firing-cell ratio, not the pooled mean response. The count-weighted mean link over all class-A+B pairs predicts R = 2.76 at the 33.8 kPa certified floor, against Branch S(0.15) = 1.25 - a factor of ~2.2, not 10-200x. The larger factors live in individual cells (Landers -> cedar_city_ut RR = 204 at 46 kPa). This is a property of the fit, reported, not claimed.",
+  "D3. Branch-E support is [7.1, 346.9] kPa. Every entry whose band lies below 7.1 kPa is priced POWER-INDETERMINATE by extrapolation refusal (S-15), not by a computed MDA. This is the mechanism by which K-059s 3 kPa gate and K-072s 1-5 kPa band move.",
+  "D4. Entry detection floors R_min are entry-declared where the POWER-STATE states an MDM or rate ratio, DERIVED as 2.8/sqrt(N_exposed) where the entry states only an N, and set to the REFERENCE floor 1.05 otherwise. Provenance is printed per row. No floor was invented silently.",
+  "D5. Overdispersion in the Branch-E fit is severe (Pearson dispersion = 107). Naive GLM p-values are not trusted; quasi-Poisson and cluster-by-source (4 clusters) standard errors and a 4000-draw cluster bootstrap are reported instead. With only four sources the cluster CI is wide by construction and that width is the finding about our own ignorance that S-14(c) asks to be put in the headline.",
+  "D6. Six of the 54 pairs are S-15 UNMEASURABLE at the primary reading (n_bg = 0); k034_power.csv flags 14 of 54 unmeasurable under its own floor. The fit uses the 48 measurable-by-n_bg pairs (30 class A+B, 18 class C); the per-cell MDA summary uses the 40 flagged measurable."
+ ],
+ "verification": [
+  "Branch-S per-cell MDA summary over all 40 measurable cells reproduces the K34-3 table to 3 significant figures: 0.03 MPa best/median/worst 22.3/50.4/89.5 kPa; 0.10 MPa 74.2/168/298; 0.15 MPa 111/252/447.",
+  "Branch-S identity checked: dTau_min_kPa_Asigma0.15 == 150 * ln(R_min_80pct) for every measurable cell.",
+  "Max abs deviation of that identity: 5.68e-14 kPa."
+ ]
+}

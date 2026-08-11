@@ -12920,3 +12920,188 @@ falsifiable rather than forkable. Queue refreshed across all open entries; K-034
 executed; `engine ETAS baseline` discharged in substance and demoted. First execution green-lit: L-1,
 the transient link bracket, with the observer job and G-M1 arm (i) in parallel. No commits made; no
 other persona's section touched.*
+
+---
+
+# L-1 EXECUTION (worker, 2026-08-11)
+
+*Popper's round-4 queue rank 1, executed. Appended only; no other section touched; nothing committed
+to git. One new file: `results_l1.json`. **Every number below is FIRST-RUN** except the Branch-S
+per-cell figures, which are **COLLECTED** from `k034_power.csv` and re-verified against §K34-3 rather
+than re-derived. **This artifact RE-PRICES. It does not RE-RULE.** No ADMIT/DEFER verdict in §P4-3 is
+touched, and the K-034 10–200× excess remains logged-unclaimed per R2-2 and §P5-8 — it is used here
+as calibration data for power arithmetic and nowhere else.*
+
+## §L1-1. WHAT WAS READ
+
+`HYPOTHESIS_LEDGER.md` §P5-8 in full (the link-function ruling and the S-14(c) two-branch bracket),
+S-14 and S-15 as written at L11261–11300, the K-034 EXECUTION record §K34-1..§K34-5, and the
+POWER-STATE bullet of every entry in §P5-8's scope list. Data: `k034_cellstats.csv`
+(sha256-16 `d7b104ef2694a4e3`), `k034_power.csv` (`b9cf191f4f200c44`), `results_k034.json`
+(`1f10c74602874f6d`). No download, no new statistic, no re-run of any scored K-034 number.
+
+**Branch-S collection verified, not trusted.** The per-cell Branch-S MDAs in `k034_power.csv`
+reproduce §K34-3's table to three significant figures over all 40 measurable cells — 0.03 MPa
+22.3 / 50.4 / 89.5 kPa, 0.10 MPa 74.2 / 168 / 298, 0.15 MPa 111 / 252 / 447 (best / median / worst) —
+and satisfy the identity `dτ_min(0.15) = 150 · ln(R_min,80%)` to 6e-14 kPa. The collection step is
+sound; that is the only thing it establishes.
+
+## §L1-2. THE BRANCH-E LINK, FITTED
+
+**Form (declared before fitting, one link, no scan).** `R(σ) = exp(a) · σ_kPa^b`, fitted as a
+Poisson GLM with log link, offset `log(expected)`, single regressor `log σ`, on K-034's primary
+reading: 5 d window, M ≥ 1.5, distance-gate survivors, `n_bg > 0`. **Stratified by the
+pre-registered geothermal class exactly as §P5-8 mandates.**
+
+| stratum | n pairs | a | b | quasi-Poisson SE(b) | cluster SE(b) | 95% cluster-bootstrap CI on b | dispersion | pseudo-R²(dev) | σ support (kPa) | median observed RR |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **A+B (geothermal/volcanic)** | 30 | −1.846 | **0.812** | 0.464 | 0.215 | **[0.52, 1.65]** | 106.7 | 0.253 | **[7.1, 346.9]** | 1.85 |
+| **C (non-geothermal)** | 18 | −2.089 | 0.299 | 0.407 | 0.237 | **[−0.78, 2.60]** | 9.9 | 0.058 | [13.1, 509.4] | **0.78** |
+
+**Class C is UNMEASURED per S-15 and is reported as such, not extrapolated.** Its slope CI spans
+zero, its median rate ratio is *below* 1, and its deviance explains 6% of nothing. **Branch E is
+never quoted at a non-geothermal receiver in this artifact.** That is the specific error §P5-8 named
+as most likely to turn the by-product into a false claim, and refusing it is the single most
+consequential decision in this run.
+
+**Optimistic envelope (Branch E-upper).** Slope held at `b`, intercept set to the 90th percentile of
+`log(RR_c) − b·log σ` (`RR_c = (n_post+0.5)/(expected+0.5)`): `a₉₀ = −0.645`. It exists because of
+the finding in §L1-3.
+
+**Diagnostics, honestly.** Dispersion 107 on 28 df. Four source clusters means the cluster-robust and
+bootstrap intervals are wide by construction, and they are the intervals that govern; the naive GLM
+p-value (3e-70) is reported in the JSON and is **not trusted**. The sensitivity fit — OLS on
+log₁₀ RR against log₁₀ σ, class A+B — gives slope **0.45 ± 0.32 per decade, p = 0.18, r² = 0.07**.
+**What K-034 constrains is the LEVEL of the response, not its slope.** Anyone who reads a
+stress-exponent out of this fit is reading noise.
+
+## §L1-3. THE FINDING THAT CHANGES THE SHAPE OF THE BRACKET — THE BRANCHES CROSS
+
+`exp(σ/Aσ)` is convex; the fitted empirical link is a **power law with exponent 0.81**, which is
+*flatter*. They cross at **σ ≈ 15–20 kPa**.
+
+| σ (kPa) | Branch S, Aσ = 0.03 | Branch S, Aσ = 0.15 (adverse) | Branch E mean | Branch E q90 |
+|---|---|---|---|---|
+| 9.6 (K-034 suggestive) | 1.38 | 1.07 | 1.00 | 3.31 |
+| 33.8 (K-034 certified) | 3.08 | 1.25 | **2.76** | 9.16 |
+| 46.3 (K-034 strictest) | 4.67 | 1.36 | 3.56 | 11.8 |
+| 100 | 28.0 | 1.95 | 6.66 | 22.1 |
+| 300 | 2.2e4 | 7.39 | 16.3 | 54.0 |
+
+Three consequences, all of which had to be handled rather than assumed:
+
+1. **Below the crossing, the mean empirical link is not the optimistic branch** — Branch S at
+   Aσ = 0.15 predicts *more* response at 3 kPa (1.020) than the mean empirical link does (0.39, which
+   is not even a response). Branch E is therefore reported as **two variants**, and the printed
+   bracket is `[most optimistic branch, most pessimistic branch]` **computed per row**, never assumed.
+2. **The 10–200× is a per-firing-cell ratio, not the pooled mean.** Count-weighted over all 30
+   class-A+B pairs the link predicts **R = 2.76 at the 33.8 kPa certified floor against Branch S(0.15)'s
+   1.25 — a factor of 2.2, not 10–200.** The large factors live in individual cells
+   (Landers → cedar_city_ut, RR = 204 at 46 kPa). **This is a property of the fit and it is reported,
+   not claimed** — and it tempers the by-product rather than inflating it, which is the direction an
+   unclaimed by-product should be allowed to move.
+3. **Branch E has a support, `[7.1, 346.9] kPa`, and it is refused outside it.** Extrapolating a
+   power law fitted at 7–347 kPa down to 0.3 kPa is exactly the manufacture §P5-8 forbids. Below
+   7.1 kPa Branch E is printed **UNMEASURED per S-15**.
+
+## §L1-4. THE BRACKET TABLE
+
+Detection floors `R_min` are **entry-declared** where the POWER-STATE states an MDM or a rate ratio,
+**DERIVED** as `2.8/√N` where the entry states only an N_exposed, and set to a **REFERENCE floor of
+1.05** otherwise (the modulation floor the family itself already quotes: K-063's 4–12%, K-065's 5.6%).
+Provenance is printed per row in `results_l1.json`. No floor was invented silently. MDAs are in kPa;
+Branch S is quoted at the adverse end (Aσ = 0.15) because S-14(1) says the adverse end sets the flag.
+
+| entry | declared band (kPa) | R_min | **Branch-S MDA (0.15)** | Branch-E MDA (mean) | Branch-E MDA (q90) | status |
+|---|---|---|---|---|---|---|
+| K-059 (main, R1/R2) | 1–100 | 1.05 | 7.3 | 10.3 | 2.3 | **POWERED** (at band max only; band min POWER-INDETERMINATE) |
+| **K-059 (3 kPa gate)** | 3 | 1.05 | 7.3 | 10.3 | 2.3 | **POWER-INDETERMINATE** |
+| K-060 | 3–4.2 | 1.028 | 4.1 | 10.0 | 2.3 | **POWER-INDETERMINATE** |
+| K-061 | 3 | 1.028 | 4.1 | 10.0 | 2.3 | **POWER-INDETERMINATE** |
+| K-062 | 0.3–3 | 1.051 | 7.5 | 10.3 | 2.4 | **POWER-INDETERMINATE** |
+| K-063 | 0.3–3 | 1.12 | 17.0 | 11.1 | 2.5 | **POWER-INDETERMINATE** |
+| K-064 | 5 | 1.05 | 7.3 | 10.3 | 2.3 | **POWER-INDETERMINATE** |
+| K-065 | 0.01–0.1 | 1.056 | 8.2 | 10.4 | 2.4 | **POWER-INDETERMINATE** |
+| K-066 | — | — | — | — | — | **N/A — NOT AMPLITUDE-LIMITED** |
+| K-067 | 1–10 | 1.05 | 7.3 | 10.3 | 2.3 | **POWER-INDETERMINATE** |
+| K-068 | UNSTATED | 1.28 | 37.0 | 13.1 | 3.0 | **POWER-INDETERMINATE** (band undeclared) |
+| K-069 | — | — | — | — | — | **N/A — NOT AMPLITUDE-LIMITED** |
+| K-070 | UNSTATED | 1.5 | 60.8 | 16.0 | 3.6 | **POWER-INDETERMINATE** (band undeclared) |
+| K-071 | 5 | 1.8 | 88.2 | 20.0 | 4.6 | **POWER-INDETERMINATE** |
+| **K-072 (1–5 kPa band)** | 1–5 | 1.16 | 22.3 | 11.6 | 2.7 | **POWER-INDETERMINATE** |
+| K-073 | 1–10 | 1.05 | 7.3 | 10.3 | 2.3 | **POWER-INDETERMINATE** |
+| K-074 | 1–5 | 1.089 | 12.8 | 10.8 | 2.5 | **POWER-INDETERMINATE** |
+| K-075 | — | — | — | — | — | **N/A — NOT AMPLITUDE-LIMITED** |
+| K-038 | 50 | 1.05 | 7.3 | 10.3 | 2.3 | **POWERED** |
+| K-043 | UNSTATED | 1.05 | 7.3 | 10.3 | 2.3 | **POWER-INDETERMINATE** (band undeclared) |
+| W-002-P2 | 33.8–346.9 (K-034's own sources) | 1.05 | 7.3 | 10.3 | 2.3 | **POWERED** |
+| K-078 (slab-transient arm) | — | — | — | — | — | **N/A — NOT AMPLITUDE-LIMITED** |
+| K-084 (0–1 d dynamic row) | 0.4–2 | 1.15 | 21.0 | 11.5 | 2.6 | **POWER-INDETERMINATE** |
+| A0b (Landers angular control) | 9.6–346.9 | 5.5 (measured) | 255.7 | 79.1 | 18.0 | **POWERED** (band min 9.6 kPa: UNDERPOWERED) |
+
+**Counts: POWERED 4 · POWER-INDETERMINATE 16 · UNDERPOWERED 0 · NOT-AMPLITUDE-LIMITED 4.**
+
+**UNDERPOWERED is empty at band-max, and that is the ruling working, not a bug.** Branch S may no
+longer declare an absence of power, and Branch E cannot speak below 7.1 kPa; the only place the
+bracket produced an UNDERPOWERED reading anywhere is at A0b's **band minimum**, 9.6 kPa — where
+K-034 independently recorded its 9.6 kPa cell as *"suggestive, not certified"*. **The bracket
+reproduces, from the link alone, a qualification K-034 reached from its own p-values.** That is the
+closest thing to a validation this artifact contains and it is one data point.
+
+## §L1-5. WHAT CHANGED STATUS, AND THE TWO PREDICTED MOVERS
+
+**Popper's two predicted movers are CONFIRMED, and the mechanism is not the one the prediction
+implied.**
+
+- **K-059's 3 kPa exposure gate → POWER-INDETERMINATE.** Not because Branch E says a 3 kPa transient
+  is detectable — Branch E is **UNMEASURED at 3 kPa** (below its 7.1 kPa support), and the mean link
+  extrapolated there returns R < 1, which is a signal the extrapolation is invalid, not a null.
+  It is indeterminate because **Branch S may no longer declare no power and Branch E cannot yet say
+  anything**. §K34-5's "not reached by this result" stands verbatim; what has changed is that the
+  entry can no longer be deleted on a power number.
+- **K-072's 1–5 kPa band → POWER-INDETERMINATE**, identically, and for the identical reason.
+
+**Everything else that moved, moved in the same direction and for the same reason:** thirteen further
+entries whose declared bands sit below the Branch-E support (K-060, K-061, K-062, K-063, K-064,
+K-065, K-067, K-071, K-073, K-074, K-084's 0–1 d row, and the low ends of K-059 main and A0b) are now
+POWER-INDETERMINATE rather than carrying an MDA. **Four entries are POWERED on both branches**
+(K-059's near-teleseismic band max, K-038 at its declared ~50 kPa detection threshold, W-002-P2 and
+A0b — the last two operating on K-034's own sources at amplitudes K-034 measured and certified).
+Four entries were never amplitude-limited and the bracket does not bind on them (K-066, K-069,
+K-075, K-078's slab arm); they are printed rather than omitted, per S-15.
+
+**Nothing was re-ruled. Nothing was licensed.** K-059's and K-072's feasibility question is reopened,
+as §P5-8 said it would be; it is not answered, and the answer is not in this artifact.
+
+## §L1-6. DEVIATIONS
+
+- **D1.** §P5-8 characterises Branch E as the optimistic response. It is not optimistic everywhere
+  (§L1-3). Two Branch-E variants are reported and the bracket ends are assigned per row. Flagged
+  prominently because it changes what "adverse" means as a function of amplitude, which is a
+  refinement of S-14(c) that the standard's text does not currently carry.
+- **D2.** The pooled mean response is a factor of ~2.2 over Branch S(0.15) at the certified floor, not
+  10–200×. Reported; the excess remains unclaimed either way.
+- **D3.** Branch E is refused below 7.1 kPa. This — not a computed MDA — is what moves most of the
+  family, and it should be read as a statement about K-034's amplitude coverage, not about the crust.
+- **D4.** Detection floors are entry-declared / DERIVED / REFERENCE with per-row provenance; the
+  REFERENCE floor of 1.05 is a choice and it is visible in every row that uses it.
+- **D5.** Severe overdispersion (107) and only four source clusters. The governing intervals are the
+  cluster bootstrap's, and they are wide. **The bracket's width is the finding about our own
+  ignorance and it belongs here in the headline, per S-14(c).**
+- **D6.** Six of 54 pairs are S-15 UNMEASURABLE at the primary reading (`n_bg = 0`); `k034_power.csv`
+  flags 14 of 54 unmeasurable under its own floor. The fit uses the 48 measurable-by-`n_bg` pairs
+  (30 A+B, 18 C); the per-cell MDA summary uses the 40 flagged measurable. Both counts are printed.
+- **D7 (process).** The analysis script lives in this session's scratchpad, not in the repository —
+  the assignment permitted exactly one new file. Every parameter needed to reproduce the arithmetic
+  (link form, fitted `a`, `b`, `a₉₀`, support, floors, provenance, input hashes) is inside
+  `results_l1.json`; the fit itself is not re-runnable from the repo as it stands. Flagged as the
+  weakest joint in this run.
+
+**Files written:** `results_l1.json`. **Files appended:** this section. Nothing else modified;
+nothing committed.
+
+*L-1 worker, round-4 queue rank 1. Bracket computed for all 24 affected rows: 4 POWERED,
+16 POWER-INDETERMINATE, 0 UNDERPOWERED, 4 not amplitude-limited. Both of Popper's predicted movers
+confirmed, by extrapolation refusal rather than by empirical optimism. Branch E fitted on class A+B
+only; class C UNMEASURED and left that way. The 10–200× stays logged-unclaimed; it paid for power
+arithmetic and nothing else. Re-priced, not re-ruled.*
