@@ -54,7 +54,20 @@ def load_stress():
 
 
 def phase_series(stress):
-    """Assign a tidal phase to every sample index by trough-peak-trough interpolation."""
+    """Assign a tidal phase to every sample index by trough-peak-trough interpolation.
+
+    WARNING (measured 2026-08-11): this anchor-based convention is NOT
+    null-calibrated. Forcing each half-cycle to equal phase width warps time, so
+    uniform-in-time events emerge phase-non-uniform on any mixed
+    diurnal/semidiurnal tide (first-harmonic amplitude ~2% at SoCal-like mixes,
+    ~9% for diurnal-dominant regimes) - larger than the modulations this
+    literature hunts. The confirmatory pipeline corrects for it: EXP-A scores
+    against the series' own phase occupancy (p0_hist) AND circular time-shift
+    surrogates. Exploratory scripts (exp_c_susceptibility_drift.py,
+    exp_c2_anza_coso.py) fit raw histograms WITHOUT the correction; treat their
+    phase amplitudes as uncalibrated. Do not reuse this function without an
+    occupancy or time-shift correction.
+    """
     pk, _ = find_peaks(stress)
     tr, _ = find_peaks(-stress)
     phase = np.full(len(stress), np.nan)
