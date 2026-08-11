@@ -1,0 +1,12 @@
+{
+ "engine_version": "1.0.0",
+ "covariate": "quiescence",
+ "params": {"m_min": 4.5, "radius_km": 100.0, "window_days": 365},
+ "baseline": "climatology-v1",
+ "grid": {"dlat": 1.0, "dlon": 1.0},
+ "explore_frac": 0.7,
+ "mag_target": 4.5,
+ "alpha": 0.5,
+ "data_dir": "data/comcat_world",
+ "note": "Frozen 2026-08-10 at engine defaults, no tuning. Spent to demonstrate the holdout gate end-to-end. Whatever the sign, it is read against recent_rate's number, not against zero -- the baseline is climatology-v1."
+}

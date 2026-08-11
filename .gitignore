@@ -21,3 +21,6 @@ CHRONICLE.md
 METHODS_STORY.md
 DRAFT_LIAN_REPLY.md
 DRAFT_LIAN_REPLY.txt
+
+# EQ-23 engine outputs (design cache, per-run JSON) - regenerable, never committed
+engine/out/

@@ -1,0 +1,12 @@
+{
+ "engine_version": "1.0.0",
+ "covariate": "recent_rate",
+ "params": {"m_min": 4.5, "radius_km": 100.0, "days": 30},
+ "baseline": "climatology-v1",
+ "grid": {"dlat": 1.0, "dlon": 1.0},
+ "explore_frac": 0.7,
+ "mag_target": 4.5,
+ "alpha": 0.5,
+ "data_dir": "data/comcat_world",
+ "note": "Frozen 2026-08-10. Sanity covariate; expected positive under climatology-v1 because clustering is not absorbed. Spending the holdout on it is deliberate: it is the engine's end-to-end demonstration, not a hypothesis test."
+}
