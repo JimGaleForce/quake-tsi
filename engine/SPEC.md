@@ -14,6 +14,17 @@ the fork decisions below — flag disagreements, don't silently change them.
    the engine prints must carry the line: `baseline=climatology-v1 (clustering NOT
    absorbed; sniff-grade only)`. An `etas` baseline slot exists in the interface,
    unimplemented, raising NotImplementedError with that explanation.
+
+   **AMENDED 2026-08-10 (ledger P4-4, ruled GATING). The original ruling is left
+   above, unedited.** The slot is now filled: `engine/baseline.py:EtasV1` is a
+   space-time ETAS fitted by Poisson ML on the exploration window only. Decision 2
+   stands as the description of `--baseline climatology`, which remains the default
+   and still prints the line above verbatim. Under `--baseline etas` the printed
+   line becomes `baseline=etas-v1 (isotropic kernel; anisotropy/mechanism NOT
+   absorbed)`. The requirement is unchanged in substance: every report carries a
+   caveat naming exactly what its baseline did and did not absorb. Model, declared
+   approximations, and the measured collapse of `recent_rate`/`quiescence` are in
+   README.md, "The two baselines".
 3. **Split:** temporal. Exploration = first 70% of the catalog time span, holdout = last
    30%. Forecast skill only counts forward in time; spatial or random splits are wrong
    here and must not be offered.

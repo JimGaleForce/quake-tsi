@@ -87,10 +87,13 @@ def test_recent_rate_finds_planted_clustering():
     assert ig["bits_per_event"] > 0.02, ig["bits_per_event"]
 
 
-def test_etas_baseline_is_declared_not_implemented():
-    with pytest.raises(NotImplementedError) as e:
-        baseline.EtasBaseline().fit(None, None, None)
-    assert "clustering is NOT absorbed" in str(e.value)
+def test_etas_baseline_slot_is_implemented():
+    """v1 shipped this slot raising NotImplementedError; v1.1 fills it. The ETAS
+    tests proper live in engine/tests/test_etas.py."""
+    assert baseline.EtasBaseline is baseline.EtasV1
+    assert baseline.get_baseline("etas") is baseline.EtasV1
+    assert baseline.get_baseline("climatology") is baseline.ClimatologyV1
+    assert not hasattr(baseline, "ETAS_MESSAGE")
 
 
 def test_covariate_registry_shape_and_finiteness():

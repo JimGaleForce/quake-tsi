@@ -11,20 +11,18 @@ import time
 
 import numpy as np
 
-from . import BASELINE_CAVEAT, __version__, baseline as bl, covariates, datasets, design, score, splits
+from . import (BASELINE_CAVEAT, __version__, baseline as bl, baseline_caveat,
+               canonical_baseline, covariates, datasets, design, score, splits)
 
 OUT_DIR = os.path.join("engine", "out")
+
+BASELINE_CHOICES = ["climatology", "climatology-v1", "etas", "etas-v1"]
 
 
 def _banner(title):
     print("=" * 78)
     print(title)
     print("=" * 78)
-
-
-def _caveat(baseline_name):
-    print(f"baseline={baseline_name} (clustering NOT absorbed; sniff-grade only)"
-          if baseline_name == "climatology-v1" else f"baseline={baseline_name}")
 
 
 # ------------------------------------------------------------------ cache ---
@@ -47,8 +45,11 @@ def cmd_list(args):
         print(f"  {name:<14s} {fn.describe}")
         print(f"                 defaults={fn.defaults}")
     print()
-    print("baselines: " + ", ".join(sorted(bl.BASELINES)) + "   (etas = NotImplementedError)")
-    print(BASELINE_CAVEAT)
+    print("baselines:")
+    print(f"  climatology-v1  {BASELINE_CAVEAT}")
+    print(f"  etas            {baseline_caveat('etas')}")
+    print("                  params cached in engine/out/cache/etas_params.json; "
+          "(re)fit with `cli fit-etas`")
 
 
 # -------------------------------------------------------------------- run ---
@@ -57,7 +58,7 @@ def _build_config(args):
         "engine_version": __version__,
         "covariate": args.covariate,
         "params": json.loads(args.params) if args.params else {},
-        "baseline": args.baseline,
+        "baseline": canonical_baseline(args.baseline),
         "grid": {"dlat": args.dlat, "dlon": args.dlon},
         "explore_frac": args.explore_frac,
         "mag_target": args.mag_target,
@@ -74,34 +75,44 @@ def _run_core(cfg, mode, verbose=True):
     explore, holdout = splits.temporal_split(ctx.n_days, cfg["explore_frac"])
 
     y = ctx.day_counts(cfg["mag_target"])
-    cls = bl.get_baseline(cfg["baseline"])
-    base = cls(alpha=cfg.get("alpha", 0.5)) if cls is bl.ClimatologyV1 else cls()
+    base = bl.make_baseline(cfg["baseline"], alpha=cfg.get("alpha", 0.5),
+                            mag_target=cfg["mag_target"], verbose=verbose)
+    t_bl = time.time()
     base.fit(ctx, y, explore)
     if verbose:
         for line in base.report():
             print(line)
+        print(f"  baseline ready in  = {time.time()-t_bl:.1f}s")
 
     t0 = time.time()
     z, zstats = covariates.compute(cfg["covariate"], ctx, cfg["params"])
-    burn = zstats["burn_in"]
+    burn = max(zstats["burn_in"], getattr(base, "burn_in_days", 0))
     if verbose:
         print(f"covariate            = {cfg['covariate']} {zstats['params']}")
         print(f"  computed in        = {time.time()-t0:.1f}s")
-        print(f"  burn-in days       = {burn} (dropped from both fit and eval)")
+        print(f"  burn-in days       = {burn} (dropped from both fit and eval; "
+              f"covariate {zstats['burn_in']}, baseline "
+              f"{getattr(base, 'burn_in_days', 0)})")
         print(f"  standardised range = {zstats['min']:.3f} .. {zstats['max']:.3f} "
               f"(raw mean {zstats['raw_mean']:.4f}, sd {zstats['raw_sd']:.4f})")
 
     fit_sl = slice(burn, explore.stop)
     eval_sl = slice(burn, explore.stop) if mode == "explore" else holdout
 
-    fit = score.fit_poisson(base.mu, z[:, fit_sl], y[:, fit_sl])
-    ig = score.information_gain(base.mu, z[:, eval_sl], y[:, eval_sl], fit["a"], fit["beta"])
-    mol = score.molchan(base.mu, z[:, eval_sl], y[:, eval_sl], fit["a"], fit["beta"])
+    mu_fit = base.rate(fit_sl)          # 1-D for climatology, 2-D for etas
+    mu_eval = base.rate(eval_sl)
+    fit = score.fit_poisson(mu_fit, z[:, fit_sl], y[:, fit_sl])
+    ig = score.information_gain(mu_eval, z[:, eval_sl], y[:, eval_sl], fit["a"], fit["beta"])
+    mol = score.molchan(mu_eval, z[:, eval_sl], y[:, eval_sl], fit["a"], fit["beta"])
     gain, nev = score.green_red_cells(
-        ctx, base.mu, z[:, eval_sl], y[:, eval_sl], fit["a"], fit["beta"], ig["a0_baseline"]
+        ctx, mu_eval, z[:, eval_sl], y[:, eval_sl], fit["a"], fit["beta"], ig["a0_baseline"]
     )
     results = {
         "mode": mode,
+        "baseline": {"name": base.name, "caveat": base.caveat,
+                     **({"params": base.params, "fit_info":
+                         {k: v for k, v in base.fit_info.items() if k != "bounds"}}
+                        if isinstance(base, bl.EtasV1) else {})},
         "fit": fit,
         "covariate_stats": {k: v for k, v in zstats.items() if k != "params"},
         "fit_window_days": [fit_sl.start, fit_sl.stop],
@@ -117,7 +128,8 @@ def _run_core(cfg, mode, verbose=True):
 
 def _print_results(cfg, res, n_green, n_red, extra=()):
     print("-" * 78)
-    print(f"RESULT  covariate={cfg['covariate']}  mode={res['mode']}")
+    print(f"RESULT  covariate={cfg['covariate']}  mode={res['mode']}  "
+          f"baseline={res.get('baseline', {}).get('name', cfg['baseline'])}")
     f = res["fit"]
     ig = res["information_gain"]
     print(f"  beta                 = {f['beta']:+.5f} +/- {f['se_beta']:.5f} "
@@ -137,7 +149,7 @@ def _print_results(cfg, res, n_green, n_red, extra=()):
         print("        period. This bits/event is IN-SAMPLE and is an upper bound.")
     for line in extra:
         print(line)
-    print(BASELINE_CAVEAT)
+    print(baseline_caveat(cfg["baseline"]))
     print("-" * 78)
 
 
@@ -173,7 +185,8 @@ def cmd_run(args):
     cells_path = os.path.join(OUT_DIR, f"cells_{runid}.json")
     n_green, n_red = score.export_cells(
         cells_path, ctx, gain, nev, runid,
-        {"config": cfg, "baseline_caveat": BASELINE_CAVEAT, "mode": args.mode},
+        {"config": cfg, "baseline_caveat": baseline_caveat(cfg["baseline"]),
+         "mode": args.mode},
     )
 
     extra = []
@@ -204,8 +217,45 @@ def cmd_run(args):
     res_path = os.path.join(OUT_DIR, f"run_{runid}.json")
     with open(res_path, "w", encoding="utf-8") as fh:
         json.dump({"runid": runid, "config": cfg, "results": res,
-                   "baseline_caveat": BASELINE_CAVEAT}, fh, indent=1)
+                   "baseline_caveat": baseline_caveat(cfg["baseline"])}, fh, indent=1)
     print(f"  full result JSON     = {res_path}")
+    return 0
+
+
+# --------------------------------------------------------------- fit-etas ---
+def cmd_fit_etas(args):
+    _banner(f"EQ-23 engine v{__version__} -- fit ETAS baseline")
+    ctx = design.build_design(
+        data_dir=args.data_dir, dlat=args.dlat, dlon=args.dlon,
+        explore_frac=args.explore_frac, verbose=True,
+    )
+    explore, _hold = splits.temporal_split(ctx.n_days, args.explore_frac)
+    y = ctx.day_counts(args.mag_target)
+
+    base = bl.EtasV1(alpha=args.alpha, verbose=True, polish=not args.no_polish,
+                     trunc_days=args.omori_trunc, mag_target=args.mag_target)
+    if args.refit and os.path.exists(base.cache_path):
+        print(f"--refit: discarding cached params in {base.cache_path}")
+        os.remove(base.cache_path)
+
+    print("fitting ETAS by Poisson maximum likelihood on the EXPLORATION window only.")
+    print(f"  Omori truncation     = {args.omori_trunc} d (declared approximation)")
+    print(f"  bounds               = "
+          + ", ".join(f"{k}{list(bl.PARAM_BOUNDS[k])}" for k in bl.PARAM_NAMES))
+    t0 = time.time()
+    base.fit(ctx, y, explore)
+    print(f"  wall clock           = {time.time()-t0:.1f}s "
+          f"(params {base.fit_info.get('source')})")
+    print("-" * 78)
+    for line in base.report():
+        print(line)
+    info = base.fit_info
+    if "n_objective_evals" in info:
+        print(f"  objective evals      = {info['n_objective_evals']} "
+              f"({', '.join(info['methods'])})")
+    print(f"  params cache         = {base.cache_path}")
+    print(baseline_caveat("etas"))
+    print("-" * 78)
     return 0
 
 
@@ -231,12 +281,23 @@ def main(argv=None):
     common(r)
     r.add_argument("--covariate", required=True)
     r.add_argument("--params", default=None, help="JSON dict of covariate params")
-    r.add_argument("--baseline", default="climatology-v1")
+    r.add_argument("--baseline", default="climatology-v1", choices=BASELINE_CHOICES)
     r.add_argument("--mode", choices=["explore", "holdout"], default="explore")
     r.add_argument("--config", default=None, help="frozen config JSON (required for holdout)")
     r.add_argument("--mag-target", type=float, default=4.5)
     r.add_argument("--alpha", type=float, default=0.5)
     r.set_defaults(fn=cmd_run)
+
+    f = sub.add_parser("fit-etas", help="fit (or reload) the ETAS baseline parameters")
+    common(f)
+    f.add_argument("--mag-target", type=float, default=4.5)
+    f.add_argument("--alpha", type=float, default=0.5,
+                   help="climatology smoothing used for the ETAS background shape")
+    f.add_argument("--omori-trunc", type=int, default=bl.OMORI_TRUNC_DAYS)
+    f.add_argument("--refit", action="store_true", help="discard the cached params first")
+    f.add_argument("--no-polish", action="store_true",
+                   help="skip the Nelder-Mead polish after L-BFGS-B")
+    f.set_defaults(fn=cmd_fit_etas)
 
     args = p.parse_args(argv)
     rc = args.fn(args)

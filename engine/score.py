@@ -6,6 +6,13 @@ Model (SPEC rule 5):   lambda(x,t) = mu(x) * exp(a + beta * z(x,t))
 with its own intercept (closed form) over the same evaluation window, so bits/event
 compares two equally-renormalised models and cannot be manufactured by baseline
 miscalibration alone.
+
+`mu` here is whatever the chosen baseline offers as its OFFSET, and may be either:
+  * 1-D, shape (n_cells,)          -- a time-stationary rate (climatology-v1), or
+  * 2-D, shape (n_cells, n_window) -- a per-cell-per-day rate (etas-v1),
+already sliced to the same day window as `z` and `y`. The intercept-refit convention
+is identical in both cases: under `--baseline etas`, lambda_etas simply takes the
+place of mu as the offset.
 """
 
 from __future__ import annotations
@@ -19,6 +26,35 @@ import numpy as np
 LN2 = math.log(2.0)
 
 
+# ------------------------------------------------------- offset handling ---
+def _mu_chunk(mu, s, e):
+    """Offset for day-window columns [s, e): (n_cells, 1) if 1-D else (n_cells, e-s)."""
+    mu = np.asarray(mu)
+    if mu.ndim == 1:
+        return mu[:, None].astype(np.float64)
+    return mu[:, s:e].astype(np.float64)
+
+
+def _mu_total(mu, n_days):
+    """Total baseline expectation over a window of n_days days."""
+    mu = np.asarray(mu)
+    if mu.ndim == 1:
+        return float(mu.sum()) * n_days
+    return float(mu.sum(dtype=np.float64))
+
+
+def check_offset(mu, z):
+    mu = np.asarray(mu)
+    if mu.ndim == 1:
+        if mu.shape[0] != z.shape[0]:
+            raise ValueError(f"offset {mu.shape} does not match design {z.shape}")
+    elif mu.shape != z.shape:
+        raise ValueError(f"offset {mu.shape} does not match design window {z.shape}")
+    if not np.isfinite(mu).all() or (mu <= 0).any():
+        raise ValueError("baseline offset must be finite and strictly positive")
+    return mu
+
+
 # ---------------------------------------------------------------- fitting ---
 def _accumulate(mu, z, y, a, b, chunk=512):
     """Return LL, grad(2,), hess(2,2) at (a, b), chunked over days."""
@@ -30,7 +66,7 @@ def _accumulate(mu, z, y, a, b, chunk=512):
         e = min(s + chunk, n_days)
         zz = z[:, s:e].astype(np.float64)
         yy = y[:, s:e].astype(np.float64)
-        lam = mu[:, None] * np.exp(a + b * zz)
+        lam = _mu_chunk(mu, s, e) * np.exp(a + b * zz)
         ll += float((yy * np.log(lam) - lam).sum())
         r = yy - lam
         g[0] += float(r.sum())
@@ -44,10 +80,11 @@ def _accumulate(mu, z, y, a, b, chunk=512):
 
 def fit_poisson(mu, z, y, max_iter=50, tol=1e-9, verbose=False):
     """Newton fit of (a, beta). Returns dict with beta, se_beta, converged, ll."""
+    mu = check_offset(mu, z)
     a, b = 0.0, 0.0
     # sensible start for the intercept: match total counts at beta=0
     tot_y = float(y.sum())
-    tot_mu = float(mu.sum()) * z.shape[1]
+    tot_mu = _mu_total(mu, z.shape[1])
     if tot_y <= 0:
         raise ValueError("bulk transform produced 0 events in the fitting window")
     a = math.log(tot_y / tot_mu)
@@ -94,13 +131,13 @@ def baseline_ll(mu, y, chunk=512):
     """Log-likelihood of mu with its own fitted intercept over this window."""
     n_days = y.shape[1]
     tot_y = float(y.sum())
-    tot_mu = float(mu.sum()) * n_days
+    tot_mu = _mu_total(mu, n_days)
     a0 = math.log(tot_y / tot_mu)
     ll = 0.0
     for s in range(0, n_days, chunk):
         e = min(s + chunk, n_days)
         yy = y[:, s:e].astype(np.float64)
-        lam = (mu[:, None] * math.exp(a0)) * np.ones((1, e - s))
+        lam = (_mu_chunk(mu, s, e) * math.exp(a0)) * np.ones((1, e - s))
         ll += float((yy * np.log(lam) - lam).sum())
     return ll, a0
 
@@ -149,8 +186,8 @@ def molchan(mu, z, y, a, b, n_bins=400, chunk=512):
         e = min(s + chunk, n_days)
         v = (b * z[:, s:e]).astype(np.float64)
         idx = np.clip(np.digitize(v, edges) - 1, 0, n_bins - 1)
-        m = np.repeat(mu[:, None], e - s, axis=1)
-        np.add.at(w_mu, idx.ravel(), m.ravel())
+        m = np.broadcast_to(_mu_chunk(mu, s, e), (z.shape[0], e - s))
+        np.add.at(w_mu, idx.ravel(), np.ascontiguousarray(m).ravel())
         np.add.at(w_y, idx.ravel(), y[:, s:e].astype(np.float64).ravel())
 
     order = np.arange(n_bins)[::-1]           # highest alarm first
@@ -181,8 +218,9 @@ def green_red_cells(ctx, mu, z, y, a, b, a0, chunk=512):
         e = min(s + chunk, n_days)
         zz = z[:, s:e].astype(np.float64)
         yy = y[:, s:e].astype(np.float64)
-        lam_m = mu[:, None] * np.exp(a + b * zz)
-        lam_b = mu[:, None] * math.exp(a0)
+        mc = _mu_chunk(mu, s, e)
+        lam_m = mc * np.exp(a + b * zz)
+        lam_b = mc * math.exp(a0)
         g = yy * (np.log(lam_m) - np.log(lam_b)) - (lam_m - lam_b)
         gain += g.sum(axis=1)
         nev += yy.sum(axis=1)
