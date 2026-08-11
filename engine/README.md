@@ -29,6 +29,12 @@ python -u -m engine.cli run --covariate quiescence  --mode explore \
 python -u -m engine.cli run --covariate recent_rate --mode holdout \
        --config engine/configs/holdout_recent_rate.json
 
+# 6. mine: the EQ-24 pattern miner (GENERATOR, NOT EVIDENCE -- see below)
+python -u -m engine.cli mine --quick          # small grid, 200 surrogates, ~2 min
+python -u -m engine.cli mine                  # default grid, 1000 surrogates
+python -u -m engine.cli mine --overnight      # full lag grid + 10k surrogates
+python -u -m engine.cli mine --overnight --no-download   # zero-network run
+
 # tests
 python -u -m pytest engine/tests -q
 ```
@@ -160,6 +166,111 @@ multiplicity — and it is printed next to the holdout result.
 
 No flag bypasses the refusal. Deleting a line from the log is a human act, not
 something the engine will do for you.
+
+## `mine` mode -- the EQ-24 pattern miner
+
+> ### GENERATOR, NOT EVIDENCE
+>
+> Nothing `mine` emits is a result. It is a ranked list of *hypotheses* produced by
+> an automated sweep over the exploration window only, with in-sample effect sizes.
+> No line in a mine report may be quoted, cited, or reported as a finding. A
+> candidate becomes evidence only by walking the ordinary path: written up as a
+> K-entry, given a Popper ruling, and then tested ONCE against the frozen holdout
+> (which costs a hash). **A mine session never spends a holdout hash.** Every file
+> the miner writes repeats this in its first ten lines, on purpose.
+
+> ### Standing warning (EQ-24, verbatim)
+>
+> the known ML-mining failure mode from M-008 (DeVries Nature net beaten by
+> 2-parameter logistic — Mignan & Broccardo 2019) quoted in the README as the
+> standing warning: prefer the boring model; a boosted-tree find that a 2-param GLM
+> can't reproduce after conditioning is treated as leakage until proven otherwise.
+>
+> This is why `mine` v1 fits *2-parameter GLMs* and nothing else. There is no
+> gradient-boosted anything in here. If a future version adds one, its findings are
+> leakage until the 2-parameter GLM reproduces them.
+
+**Target.** Daily *global* (domain-wide) occurrence residual against `etas-v1`:
+`r_t = sum_c y(c,t) - sum_c lambda_etas(c,t)`, over the exploration window minus the
+365-day ETAS burn-in (days 365–8081 for the shipped catalogue = 7716 days, 46,585
+events). Plus per-event marks — magnitude and depth — for feature-vs-mark tests. v1
+is temporal and global only; there is no per-cell spatial mining.
+
+**Feature families.**
+
+| family | what | causality |
+| --- | --- | --- |
+| 1 | ephemeris, zero-download: synodic / anomalistic / draconic / annual phase, lunar distance and declination, solar declination, sun–moon elongation. Cyclic features enter as (sin, cos) pairs. | deterministic in `t` — **exempt** from the shuffle test, and the exemption is itself asserted in `test_causality.py` |
+| 2 | beats and interactions of family 1 (spring–neap = 2×synodic, 2×draconic, synodic−anomalistic, the eclipse-year beat, perigee–syzygy, declination product, a zonal tidal-potential proxy). Kept as first-class features per the moiré rule: the beat nobody computed is the point. | deterministic in `t` — exempt |
+| 3 | optional downloads, graceful skip on any failure: GFZ daily `Ap` and Penticton `F10.7`, IERS excess length-of-day. Success freezes the file, hashes it, and logs to `engine/out/mine/data_log.jsonl` (sniff-grade hygiene — deliberately **not** `download_log.md`, which belongs to frozen-protocol runs). | lagged one day, so day `t` uses only values published strictly before `t` |
+| 4 | causal catalogue-derived global marks: trailing-90-day Aki b-value, trailing-30-day deep fraction (z > 70 km), trailing-30-day mean depth. | strictly trailing, exclusive of today; **in `test_causality.py`** |
+
+**Scoring.** (a) Poisson GLM of daily domain counts on the feature with
+`log(sum lambda_etas)` as offset — beta ± SE, in-sample bits/event, lag grid 0–30 d
+for aperiodic features (a lag on an exact cycle is only a phase shift, so periodic
+features are tested at lag 0). (b) Lomb–Scargle period scan of `r_t` over 2–4000 d.
+(c) Mark tests: Spearman, or circular-linear where the feature is a phase.
+
+**Multiplicity discipline** — all mandatory, all in every report:
+
+- **Surrogate nulls.** Because the score statistic and the rank correlations are
+  exact cross-correlations, *all* admissible circular shifts are evaluated in closed
+  form rather than sampled; the actual count is printed per test. Shifts within 30
+  days of zero are excluded.
+- **BH-FDR at q = 0.1** across every test in the session; raw and adjusted p both
+  reported. The report also prints the **surrogate resolution floor** `1/(N+1)` and
+  how many tests must tie at it before BH can reject anything — a censored p is an
+  upper bound, not a measurement, and the report says so.
+- **Harmonic ladder.** Every candidate period P is scored by epoch-folding
+  likelihood ratio at {P/3, P/2, P, 2P, 3P}, extended at the winning edge while the
+  score improves; the winning rung is reported *with all rung scores*.
+- **Aliasing audit.** Every post-FDR survivor is re-tested at 2-day and 7-day
+  binning, and period claims additionally on **unbinned event times** (real
+  catalogue timestamps) against an ETAS-simulated inhomogeneous-Poisson null.
+  Anything that halves under re-binning is flagged `LATTICE-SUSPECT`: a pattern that
+  moves when the lattice moves is the lattice.
+- **Session ledger.** One line per session in `engine/EXPLORE_COUNT.jsonl` with
+  `kind: "mine"` and `n_tests`, so holdout multiplicity reporting includes mining.
+
+**One honest deviation from the ruling, flagged and measured.** A circular time
+shift of an evenly sampled series does not change its power spectrum — a shift is a
+pure phase rotation. Two of the three scoring paths are, at bottom, measurements of
+that spectrum at a fixed frequency: the period scan explicitly, and the 2-df
+(sin, cos) GLM test of a *deterministic cycle* implicitly. For those, circular-shift
+surrogates inherit the very signal they are supposed to destroy. Measured on a
+synthetic 8% modulation at 29.53 d over 7716 days: observed chi² = 152, **median
+circular-shift surrogate = 97**; at a 2% modulation the shift null returns a
+meaningless p = 0.22 for a real effect. So the null is chosen per test and both are
+always recorded:
+
+| test | null used |
+| --- | --- |
+| GLM, periodic feature (families 1–2) | circular moving-block bootstrap of the (counts, offset) pair, block ≥ 2 cycles of the feature |
+| GLM, aperiodic feature (families 3–4) | more conservative of circular shift (as ruled) and the block bootstrap |
+| mark test | more conservative of circular shift and a block bootstrap of the mark series along the event sequence |
+| period scan | AR(1) red-noise null matched to the residual's own lag-1 autocorrelation, and a permutation (white) null; more conservative of the two |
+
+The degeneracy is asserted as a test, not just as prose:
+`test_mine.py::test_block_bootstrap_null_is_calibrated_and_shift_null_is_not`.
+
+**Output.** `engine/out/mine/session_<timestamp>/` holds `report.md` (the ranked
+table: feature, lag/period, effect, raw p, BH q, surrogate count, ladder verdict,
+aliasing verdict, amplitude-honesty note), `stubs.json` (auto-drafted K-entry stubs
+for everything passing FDR, each carrying the generator-not-evidence and
+expected-amplitude caveats verbatim), and `checkpoint.json`.
+
+**Unattended running.** `mine --overnight` checkpoints after **every feature**, so a
+kill and a rerun resume: an identical config finds the newest incomplete session and
+skips the completed tasks (`[skip, checkpointed] glm:<feature>`). `--new-session`
+forces a fresh one. Downloads are re-attempted on resume and a failure just drops
+those features; nothing raises.
+
+**Amplitude honesty.** Every stub carries it: the tidal corpse is the calibration —
+kPa-scale forcing on an already-critically-stressed fault yields *bounds*, not
+detections. Almost everything in this feature set is weaker than the solid-earth
+tide, so the expected product is an upper bound, or at most a state-dependent
+interaction (the K-077 shape). Read a quoted rate modulation as the size of the
+thing that must be excluded, not as a forecast.
 
 ## Adding a covariate
 

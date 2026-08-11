@@ -60,6 +60,56 @@ def test_covariate_is_causal(name, params):
     assert not np.array_equal(np.asarray(z0)[:, t_cut + 5:], np.asarray(z1)[:, t_cut + 5:])
 
 
+def test_mine_catalog_features_are_causal():
+    """EQ-24 mine mode, family 4: the same contract, the same shuffle.
+
+    Family 1/2 (ephemeris) features are deterministic functions of t -- no
+    rearrangement of the catalogue can move them -- and are documented as exempt.
+    Family 3 (downloaded indices) are lagged one day by construction. Family 4 is
+    catalogue-derived and therefore has to sign the contract here.
+    """
+    from engine import mine as M
+
+    ctx, _y, _lam = make_ctx(n_side=8, n_days=900, seed=3)
+    t_cut = 700
+
+    def marks_of(c):
+        rng = np.random.default_rng(0)
+        return {"day": np.asarray(c.ev_day), "mag": np.asarray(c.ev_mag),
+                "depth": rng.random(c.ev_day.size) * 200.0}
+
+    m0 = marks_of(ctx)
+    ctx2 = _shuffled_future_ctx(ctx, t_cut)
+    # keep the same per-event depths attached to the same events after the shuffle
+    m1 = dict(m0)
+    m1["day"] = np.asarray(ctx2.ev_day)
+
+    f0 = {f.name: f.values for f in M.catalog_features(ctx, m0, (0,))}
+    f1 = {f.name: f.values for f in M.catalog_features(ctx2, m1, (0,))}
+    assert set(f0) == {"b_value_90d", "deep_fraction_30d", "mean_depth_30d"}
+    for name in f0:
+        assert np.array_equal(f0[name][:t_cut + 1], f1[name][:t_cut + 1]), (
+            f"mine feature {name} changed on days <= {t_cut} after the future was "
+            f"scrambled -> not causal")
+    assert any(not np.array_equal(f0[n][t_cut + 5:], f1[n][t_cut + 5:]) for n in f0), (
+        "the scramble changed nothing at all -- this test cannot fail")
+
+
+def test_mine_ephemeris_features_are_exempt_and_deterministic():
+    """The exemption, asserted: ephemeris features do not read the catalogue."""
+    import datetime as dt
+
+    from engine import mine as M
+
+    ctx, _y, _lam = make_ctx(n_side=8, n_days=900, seed=3)
+    ctx2 = _shuffled_future_ctx(ctx, 700)
+    a = M.ephemeris_features(dt.datetime(1995, 1, 1), ctx.n_days)
+    b = M.ephemeris_features(dt.datetime(1995, 1, 1), ctx2.n_days)
+    assert a and all(f.causality_exempt for f in a)
+    for fa, fb in zip(a, b):
+        assert np.array_equal(fa.values, fb.values)
+
+
 def test_trailing_sum_excludes_today():
     c = np.zeros((1, 6), dtype=np.float32)
     c[0, 2] = 5.0

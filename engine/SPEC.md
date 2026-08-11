@@ -73,6 +73,17 @@ engine/
                      scrambled one)
 ```
 
+**AMENDED 2026-08-11 (supervisor; Linear EQ-24).** `mine` mode added — an
+exploration-only pattern miner (GENERATOR, never evidence): `ephemeris.py`
+(zero-download Meeus-style solar/lunar features), `mine.py` (features, GLM/period/mark
+statistics, per-test-appropriate surrogate nulls, BH-FDR, harmonic ladder {P/3, P/2, P,
+2P, 3P}, aliasing audit), `mine_session.py` (checkpointed/resumable session driver,
+report.md + stubs.json). CLI: `mine --quick|--overnight [--surrogates N]`. Mine sessions
+append to EXPLORE_COUNT.jsonl so holdout multiplicity includes mining. Runs only on the
+exploration window; no holdout hash may be spent from mine mode. Design rulings and the
+two mandatory warnings (generator-not-evidence; Mignan & Broccardo caution) live in
+Linear EQ-24 and README.md.
+
 ## Plugin interface
 
 ```python

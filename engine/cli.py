@@ -259,6 +259,42 @@ def cmd_fit_etas(args):
     return 0
 
 
+# ------------------------------------------------------------------- mine ---
+def cmd_mine(args):
+    from . import mine as M, mine_session as ms
+
+    preset = ms.QUICK if args.quick else (ms.OVERNIGHT if args.overnight else ms.DEFAULT)
+    cfg = ms.build_config(args, preset)
+    if args.surrogates:
+        cfg["n_surrogates"] = int(args.surrogates)
+    _banner(f"EQ-23 engine v{__version__} -- MINE (EQ-24 pattern miner) "
+            f"preset={cfg['preset']}")
+    print("*** " + M.GENERATOR_NOT_EVIDENCE)
+    print()
+    print("standing warning (EQ-24, verbatim):")
+    print("  " + M.MIGNAN_BROCCARDO)
+    print()
+    print(f"config hash          = {splits.config_hash(cfg)}")
+    print(f"surrogates           = {cfg['n_surrogates']} (circular shifts; capped at "
+          f"the number of admissible shifts and reported per test)")
+    print(f"lag grid             = {cfg['lags'][0]}..{cfg['lags'][-1]} "
+          f"({len(cfg['lags'])} lags, aperiodic features only)")
+    print(f"FDR                  = Benjamini-Hochberg at q={cfg['fdr_q']}")
+
+    out = ms.run(cfg, verbose=True, resume=not args.new_session)
+    print("-" * 78)
+    print(f"MINE SESSION COMPLETE  {out['session_dir']}")
+    print(f"  tests                = {out['n_tests']}")
+    print(f"  survive BH-FDR       = {out['n_pass']}")
+    print(f"  report               = {out['report']}")
+    print(f"  stubs                = {out['stubs']}")
+    print(f"  elapsed              = {out['elapsed']} s")
+    print(baseline_caveat("etas"))
+    print("*** " + M.GENERATOR_NOT_EVIDENCE)
+    print("-" * 78)
+    return 0
+
+
 def main(argv=None):
     p = argparse.ArgumentParser("engine.cli", description=f"EQ-23 engine v{__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -298,6 +334,22 @@ def main(argv=None):
     f.add_argument("--no-polish", action="store_true",
                    help="skip the Nelder-Mead polish after L-BFGS-B")
     f.set_defaults(fn=cmd_fit_etas)
+
+    mi = sub.add_parser("mine", help="EQ-24 pattern miner (GENERATOR, NOT EVIDENCE)")
+    common(mi)
+    mi.add_argument("--mag-target", type=float, default=4.5)
+    mi.add_argument("--quick", action="store_true",
+                    help="small grid, 200 surrogates (<10 min)")
+    mi.add_argument("--overnight", action="store_true",
+                    help="full lag grid + 10k surrogates, checkpointed per feature")
+    mi.add_argument("--surrogates", type=int, default=None,
+                    help="override the preset surrogate count")
+    mi.add_argument("--no-download", action="store_true",
+                    help="skip family-3 optional downloads entirely")
+    mi.add_argument("--new-session", action="store_true",
+                    help="do not resume an incomplete session with the same config")
+    mi.add_argument("--seed", type=int, default=20260811)
+    mi.set_defaults(fn=cmd_mine)
 
     args = p.parse_args(argv)
     rc = args.fn(args)
