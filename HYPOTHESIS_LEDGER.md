@@ -12382,3 +12382,541 @@ features were never lag-scanned at all. One entry (K-087) whose most likely outc
 seed's preferred reading, written that way deliberately. One entry (K-091) that nobody asked for and
 that I would run first, because it costs nothing and it is the only thing here that measures our own
 instrument against a real signal instead of against a simulation of itself.*
+
+---
+
+# VERDICTS (Popper) — Round 4: K-087..K-091 adjudicated, the transient link function ruled, S-16 written
+
+*2026-08-11. Five entries from the offset-lineup seed, plus Kepler's audit §K87-0 of the miner's
+first deep session; the ruling on the K-034 worker's by-product observation; the supervisor's target
+finding-shape turned into a standard; the queue refreshed. Appended to my own section. No other
+persona's content touched. Nothing committed.*
+
+## §P5-0. WHAT I VERIFIED THIS SESSION, AND WHERE I CORRECT KEPLER
+
+I read `HYPOTHESIS_LEDGER.md` §§K34-1..K34-5 and §K87-0..K-091 in full, my own §P4-1..§P4-6 and
+S-8..S-12, `engine/mine.py` (`Feature.design`, `ephemeris_features`), `engine/ephemeris.py`
+(`ephemeris_table`, `sun_position`, `moon_position`), and
+`engine/out/mine/session_20260811T022953/report.md`. I re-ran four of Kepler's calculations rather
+than accepting them, because three rulings below turn on them.
+
+**Reproduced exactly, and the audit is stronger for it.** The day-binning sinc factors:
+M2 **0.0348**, O1 **0.0752**, K1 **0.0027**, S1 **0.0**, S2 **0.0**, Mf **0.9912**, Msf **0.9925**,
+synodic **0.9981**. The feature census: `ephemeris_features` emits 9 family-1 + 8 family-2 features,
+of which **9 are `kind='phase'` (2 df, sin/cos) and 8 are `kind='linear'` (1 df)**, and the function
+takes no `lags` argument anywhere in its body, so all 17 inherit the `Feature.__init__` default
+`lags=(0,)`. **§K87-0(b′) is correct in every particular.** The Schuster MDA table reproduces to the
+digit (N = 46,585 → 1.835%; N = 18,389 → 2.92%; N = 13,500 → 3.41%), and
+`wc -l data/comcat_socal_m25.csv` = 18,390 lines, i.e. 18,389 rows. The multiplicity arithmetic
+reproduces: 0.1/63,240 = **1.58 × 10⁻⁶**, surrogate floor 1/50,001 = **2.00 × 10⁻⁵**, ratio **12.6**.
+
+**One numerical erratum, in the conservative direction, recorded so it is not quoted.** K-087 states
+sd(ψ) ≈ 23° at N ≈ 4 × 10⁴ and A = 3%. By his own formula sd(ψ) = 1/(A√(N/2)) that is
+**13.5°**, not 23°; 23° corresponds to N ≈ 1.4 × 10⁴. His later line — 3σ separation needs
+sd(ψ) ≤ 30°, i.e. A√(N/2) ≥ 1.9, i.e. N ≥ 72,000 at A = 1% — is internally consistent and correct.
+**The erratum understates the entry's own power, so it costs the entry nothing and is fixed here.**
+
+**One substantive correction against Kepler, and it decides the K-089 ruling.** §K87-0(b) and K-089
+clause 3 treat "phase offset" and "time lag" as the same axis for `kind='phase'` features. **They are
+not.** An offset φ applied to θ is an exact rotation of [sin θ, cos θ] and the 2-df quadratic form is
+exactly invariant — always, for every phase feature, by construction. **A time lag is a rotation only
+where θ is linear in t**, and in this engine four of the nine phase features are built from *true*
+ephemeris longitudes (Meeus series with a 6.29° equation-of-centre term), not mean arguments. I
+measured it: regressing the lagged [sin, cos] design onto the lag-0 design, minimum R² over the two
+columns, over the miner's own 8,081-day window —
+
+| phase feature | lag 1 d | 3 d | 7 d | 15 d | 30 d | lag-scan free? |
+|---|---|---|---|---|---|---|
+| `moon_anomalistic_phase` | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **YES (exact)** |
+| `moon_draconic_phase` | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **YES (exact)** |
+| `half_draconic_phase` | 1.0 | 1.0 | 1.0 | 1.0 | 1.0 | **YES (exact)** |
+| `annual_phase` | 1.0 | 1.0 | 1.0 | 0.99998 | 0.99993 | YES (to 1e-4) |
+| `moon_synodic_phase` | 0.99962 | 0.99676 | 0.98693 | **0.97061** | 0.9977 | **NO** |
+| `perigean_spring_beat` | 0.99961 | 0.99661 | 0.98484 | **0.97120** | 0.99773 | **NO** |
+| `eclipse_year_beat` | 0.99966 | 0.99707 | 0.98691 | 0.97548 | 0.99791 | **NO** |
+| `annual_synodic_beat` | 0.99966 | 0.99709 | 0.98697 | 0.97548 | 0.99749 | **NO** |
+| `spring_neap_phase` | 0.99867 | 0.98855 | 0.94905 | **0.90483** | 0.99184 | **NO (worst)** |
+
+**Consequence, and it is the whole of ruling (a).** K-089's clause-3 unit test as written —
+*"confirm the phase features' best-p is unchanged to numerical precision across all lags"* — **is
+predicted to FAIL for five of nine features, and the failure is not a bug.** Run as written it would
+report a defect in the engine that does not exist, and under clause 3's own terms ("if (i) fails,
+clause 3 is wrong and the exception is withdrawn") it would withdraw a theorem that is true. The
+exception is real; its scope is per-feature and per-axis, and it must be stated that way.
+
+---
+
+## §P5-1. RULING ON §K87-0, THE AUDIT — ADOPTED, AND HERE IS THE SENTENCE THE NULL MAY BE QUOTED IN
+
+The audit is adopted as binding on how the 2026-08-11 mine session may be described. Its
+verdict line is accepted verbatim and I add one clause it earned and did not take.
+
+> **Quotable form of the 2026-08-11 null, binding.** *"A ~5.6% bound on globally-coherent,
+> fortnightly-to-annual, level-or-rate modulation of daily global M ≥ 4.5 counts against an ETAS
+> baseline, at lag 0 for the seventeen cyclic features, with the diurnal and semidiurnal bands
+> notched out exactly by day-binning and by global longitude summation, the lag axis unscanned for
+> thirteen of seventeen cyclic features, and the second phase moment never computed. Within-cycle
+> phase offsets ARE covered, exactly and at zero multiplicity cost, for the nine `kind='phase'`
+> features — the zero-crossing-aligned response is the pure-sine component and was fully inside the
+> test's span. The instrument is, by the same two zeros, immune to the S1/S2 detection-cycle
+> systematic that R2-1(c) declares a standing hazard, so its fortnightly numbers are clean of that
+> artifact."*
+
+Note what changed against Kepler's own text: **thirteen of seventeen, not eight of seventeen**, are
+unscanned on the lag axis — his eight `kind='linear'` features plus the five phase features whose
+lag is not a rotation, per §P5-0. The audit's own conclusion is broadened against the instrument.
+
+**And the honest inverse is CLAIMED, not merely noted.** §K87-0(a)'s remark that the two exact zeros
+buy immunity to the S1/S2 systematic is correct and is the first time this program has been able to
+say that any of its tidal-band numbers is *structurally* free of the artifact rather than corrected
+for it. That goes in the register.
+
+---
+
+## §P5-2. THE RULING TABLE — K-087..K-091
+
+| entry | ruling | grounds |
+|---|---|---|
+| **K-087** | **ADMIT-RESCOPED — SoCal arm only; GATED on K-091; build cost cut by two-thirds** | The detection-vs-identification distinction is correct and is the sharpest single argument in the seed: the invariance that makes the offset scan free is exactly the invariance that destroys the regime information, and this program has been answering only the first question. **Three rescopes.** (i) **The (S, dS/dt) pairing applies to the eight `kind='linear'` features ONLY.** For a phase feature dθ/dt is the mean motion — a near-constant column that `Feature.design` would reject outright (`sd <= 0` raises `ValueError`), and the rate-vs-level information is *already* carried by ψ = atan2(β_sin, β_cos) from the existing 2-df fit. So the build is **8 new derivative columns + a ψ column computed from fits that already exist**, not 17 new features. That is a materially cheaper entry than it was written as. (ii) **The miner arm is DEFERRED to K-090**: at the session's own ~5.6% bound the ψ CI is ±180° and the deliverable is vacuous, as the entry concedes. The licensed arm is SoCal M ≥ 2.5, where sd(ψ) = 13.5° at the 1981–2026 extension (§P5-0). (iii) **GATED on K-091.** A ψ estimate is a phase measurement and this program has never measured its pipeline's phase bias; reporting ψ before G-M1 clears would be reporting an instrument's error as a physical angle. Kepler's own sequencing instinct — build the calibration before the measurement — is correct and I make it binding. |
+| **K-088** | **SPLIT. (1) ADMIT-RESCOPED — its null does NOT satisfy S-13. (2) ABSORBED into (1) as the declared sensitivity, no standalone status. (3) DEFER — needs local tidal series. (4) ADMIT-RESCOPED to the fortnightly-and-longer band, and it is the best object in the seed.** | See §P5-3 for the S-13 finding, which is a ruling against the entry's central claim of null exactness. The theoretical argument — that a dispersed two-stage release phase distribution has its first circular moment multiplied by the characteristic function of the cycle-lag dispersion, so a null histogram is the *prediction* of the model — is correct, and §P5-4 records what it does to a bound we are currently printing. Arm (4)'s R_k decay curve is the only statistic in this seed that **produces a number under the null** (a bound on τ_u), which makes it an object rather than an effect and ranks it accordingly under §P4-0. |
+| **K-089** | **ADMIT-RESCOPED — the mandate is right, the pricing instrument is wrong, and the clause-3 unit test as written would withdraw a true theorem.** | Full resolution in §P5-5. In one line: the "63,240 tests, 13× below the floor" arithmetic is correct *for BH* and BH is not this program's multiplicity instrument — **S-8 is**, and a sim-calibrated max-statistic has a family-wise p resolvable at 1/(N+1) **at any scan size**. The scan is not self-defeating; it is power-diluting, which is a different and manageable problem. Combined with the per-feature invariance proof, the correctly-priced scan is **~717 tests, BH threshold 1.4 × 10⁻⁴, seven-fold ABOVE the surrogate floor.** |
+| **K-090** | **SPLIT. (a) planted-signal acceptance test — ADMIT, PROMOTED. (b) unbinned event-time scoring — ADMIT, conditional on (a) and on G-M1. (c) local body-tide features — ADMIT-RESCOPED with a mandatory S-15 exclusion. (d) ocean loading — NEEDS-DATA. (e) initiation/continuation tagging — ADMIT (cheap, unblocks K-088(1)). (f) offset-scan wiring — follows K-089-R.** | "It is engineering, not a hypothesis" is answered correctly by the entry itself: the planted-signal recovery test (v1 must recover ~3.5% of a planted M2 modulation, v2 ~100%) is a **counted invariant on a falsifiable prediction**, it takes an afternoon, and it is the cheapest thing in the seed that can destroy the audit. It is promoted above the build it justifies. **On (b) I adopt the entry's self-criticism as a precondition rather than a caveat:** going unbinned trades an exact notch for an unmeasured systematic, so the time-of-day Mc curve is built **first**, not alongside. **On (c):** a body-tide-only local feature in coastal and subduction settings is not a caveat-bearing measurement, it is an **UNMEASURABLE cell under S-15** — declared before the run, reported in the headline as a fraction, scored neither way. That is stricter than the entry asks for and it is what S-15 requires. |
+| **K-091** | **ADMIT — PROMOTED TO A FAMILY GATE, band-matched. Designated G-M1.** | Yes, and on exactly the K-034 precedent: *an instrument that cannot recover a signal of independently known amplitude and known phase has no licence to report a bound in that band.* This is the best-shaped entry Kepler has filed — its deliverable is a transfer function, i.e. an object, and it converts every tidal-band power statement this program owns from a simulation of our own instrument into a measurement against a real signal. **One rescope, and without it the gate is incoherent:** see §P5-6. |
+
+### §P5-3. Does K-088's permutation null satisfy S-13? — NO. Two mandated repairs.
+
+S-13 requires **both** a structure-aware null resampled from the same population's own climatology
+**and** the identical statistic on a magnitude-matched control, with the headline being the
+difference. K-088(1) permutes class labels holding phases fixed, and argues this is exact because it
+preserves both marginals. **It preserves the wrong marginals.**
+
+1. **Magnitude is not matched, and it is coupled to class by construction.** INITIATIONs are, by the
+   declared (M−1, R, T) rule, systematically larger than CONTINUATIONs — an aftershock population is
+   a Gutenberg–Richter draw below its mainshock. Any phase response that is a function of magnitude —
+   and the time-of-day / seasonal Mc modulation of R2-1(c) is exactly such a function, riding at
+   "ten or more times the signal being sought" — produces a difference of circular means between
+   classes **under the null**. Free label permutation destroys the class↔magnitude coupling and
+   therefore cannot see this. **MANDATE: the permutation is stratified within pre-declared magnitude
+   bins**, and the magnitude-matched control arm (same statistic, classes matched on magnitude
+   distribution) is reported alongside as the measured width of the artifact.
+2. **Sequence structure is not preserved.** CONTINUATIONs arrive in temporally dense bursts; a free
+   label permutation manufactures independence the catalogue does not have — the same defect S-11's
+   sequence-block CI exists to prevent. **MANDATE: block permutation at sequence resolution.**
+
+Kepler's defence — *"a declustering rule that is wrong in the same way for both classes cancels out
+of the statistic"* — is sound against **misclassification**, and it is not a defence against a
+**confound that differs between the classes by construction**. The distinction is the whole of S-13.
+With both repairs the arm is admitted and I expect it to survive; without them the headline is void.
+
+### §P5-4. A bound we are currently printing is narrowed by K-088's argument, and I narrow it here.
+
+K-088's first-moment argument is correct and it has a consequence Kepler did not draw against our own
+register. **K-035's quotable bound — |modulation| < 6.3% at 80% power, n = 3,920 — and the mine
+session's ~5.6% bound are both bounds on a SINGLE-PHASE, ONE-STAGE response, and neither bounds a
+two-stage process with cycle-lag dispersion.** Both must henceforth carry that qualifier. This is a
+weakening of two printed numbers on a theoretical argument, filed against our own interest, and it is
+the correct reading: a statistic that computes the first circular moment bounds the first circular
+moment. **Nothing else changes: the corpse of the static tidal-phase susceptibility map stands
+(R2-1(d)), and K-088 is explicitly not a proposal to revive it. If it drifts there, kill it on
+sight — Kepler said so in advance and I am holding him to it.**
+
+### §P5-5. K-089 (a): is the offset-scan mandate self-defeating as written? — No, but only after three corrections.
+
+**The arithmetic is right and the instrument is wrong.** 24 offsets × 5 rungs × 31 lags × 17 features
+= 63,240; BH at q = 0.10 demands p ≤ 1.58 × 10⁻⁶; the 50,000-surrogate floor is 2.00 × 10⁻⁵; the
+scan is 12.6× below resolution. All reproduced this session. **But S-8 has been this program's
+multiplicity standard since round 1 and it is not BH:** *"the confirmatory statistic is the maximum
+absolute effect over the entire declared family, compared to the distribution of that same maximum
+computed over ETAS-sim catalogues through the identical code path."* **A family-wise max-statistic
+p-value is resolvable at 1/(N + 1) regardless of how many members the family has.** Scan size costs
+**power**, not **resolution**. K-089 priced its own mandate with the miner's convenience instrument
+instead of the ledger's mandated one and concluded the mandate was impossible. It is not.
+
+**The correct resolution has three parts, and all three are required.**
+
+1. **Price under S-8, report BH as secondary.** The miner's BH-FDR line stays in the report as a
+   descriptive per-test reading; the confirmatory number for any scanned family is the sim-calibrated
+   max-statistic. This alone removes the "13× below the floor" objection entirely.
+2. **Prove the free-scan exception per feature AND per axis, not per feature-kind.** From §P5-0:
+   the **offset** axis is exactly free for all 9 phase features, always. The **lag** axis is exactly
+   free for `moon_anomalistic_phase`, `moon_draconic_phase`, `half_draconic_phase` and (to 1 × 10⁻⁴)
+   `annual_phase`, and is **not** free for the five features built on true solar/lunar longitudes.
+   The **ladder-rung** axis is never free — a harmonic is a new feature, not a rotation. Clause 3's
+   unit test is restated as: *for each feature and each axis, the entry declares FREE or PRICED and
+   proves FREE numerically by column-space identity (min R² ≥ 1 − 10⁻⁴) before the scan runs; a
+   feature declared FREE that measures below tolerance is a bug, a feature declared PRICED that
+   measures at 1.0 is a missed saving.* Table in §P5-0 is the first execution of that audit and it is
+   entered as the reference.
+3. **Stage the scan by triage, and declare the tranches in advance.** Priced under (1) and (2), the
+   genuinely-new test count is: 8 linear features × 30 new lags = 240; 5 non-free phase features × 30
+   new lags = 150; 17 features × 4 new ladder rungs = 68. **Total 458 new, 717 with the existing 259.
+   BH at q = 0.10 over 717 gives 1.40 × 10⁻⁴ — seven-fold ABOVE the surrogate floor** — and under
+   S-8 the resolution question does not arise at all. **Tranche 1, and it is the only one I green-light
+   in this seed: the 240 linear-cyclic lag tests.** That is the axis §K87-0(b′) proved was never
+   tested, it is where Jim's "look around, not at" complaint actually lands, and it is 240 tests, not
+   63,240. Tranches 2 (non-free phase lags) and 3 (ladder rungs) are declared now with their sizes so
+   they cannot later be presented as a fresh idea, and they run only if tranche 1 justifies them.
+
+**What K-089 keeps, unamended, and it is the entry's real product:** the mandate that every report
+carry an **audit line naming which axes were scanned, which were provably invariant, and which were
+neither.** That line does not exist today, last night's report would have been read very differently
+with it, and it costs nothing.
+
+### §P5-6. K-089 (b) / K-091: promote to the miner's own gate? — YES, as G-M1, band-matched.
+
+**Promoted, on the K-034 precedent explicitly.** K-034 gates the wave family because a null from a
+detector of unmeasured sensitivity bounds nothing (R2-1's lesson, K-035's corpse). The miner is in
+precisely that position in the tidal band and has now printed a null in it.
+
+**GATE G-M1 (binding on every tidal-band bound the mining engine reports).** Two arms, and the
+band-matching is what makes the gate coherent rather than self-defeating:
+
+- **Arm (i) — the audit's own falsification, not a licence test.** Measure A_ref and φ_ref for the
+  S1/S2 detection modulation independently (Mc-versus-hour, station-count-versus-hour, or the
+  M ≥ Mc+1 / M ≥ Mc ratio versus hour), then push "hour of local solar day" through the unmodified
+  pipeline. **v1 must return Â/A_ref < 0.1.** If it returns more, the sinc-zero model in §K87-0(a) is
+  wrong and the entire audit — including the corrections I adopted in §P5-1 — collapses. This arm
+  cannot license anything, because v1 is *designed* to be blind here; it can only destroy.
+- **Arm (ii) — the licence, and it is band-matched to the claim.** No pipeline may report a bound at
+  a band unless it has demonstrated recovery of a planted signal **at that band** to
+  Â/A_planted ∈ [0.8, 1.2] and |φ̂ − φ_planted| < 15°. For v1 that means the fortnightly/monthly
+  band, which is where v1 actually claims; for v2 it means the diurnal/semidiurnal band as well.
+  **This is the clause that keeps the gate honest.** Without it, G-M1 would bar the miner from
+  reporting a fortnightly null because it fails a diurnal test it is mathematically notched out of —
+  which would be punishing an instrument for a property we designed into it.
+
+Arm (ii) is K-090(a)'s planted-signal test; the two entries share one execution and I merge them in
+the queue. **Until G-M1 clears, the 2026-08-11 mine session's ~5.6% bound is quotable only in the
+§P5-1 form and may not be entered for or against any ledger entry** — the same restriction §P4-4
+placed on the engine's covariate sniffs, applied for the same reason to a different output.
+
+### §P5-7. K-089 (c) / K-087 vs K-064: sibling or duplicate? — SIBLING. Verified against both entries.
+
+Checked against §P4-3(a)'s K-064 row as written: K-064's freeze condition is *"the short-period /
+long-period regime check on our **50–300 s bands**"* — the seismic **wavefield** family, where
+P/t_a ≈ 10⁻⁸ and the answer is trivially "short-period". K-087 runs the same Heimisson & Avouac
+discrimination at **0.5–29.5 d**, on a different instrument (the miner / a SoCal GLM), against a
+different target (daily residual counts), for a different purpose (**identification** of the regime
+from a measured ψ, not assertion of it from an assumed t_a). **Kepler's claim is verified and
+accepted: sibling, not duplicate.**
+
+**Three consequences, all binding.**
+1. **K-087 does not discharge K-064's freeze condition.** K-064 remains frozen until its own band's
+   regime statement is written on Heimisson & Avouac's equations, exactly as §P4-3(a) ruled.
+2. **One shared t_a computation serves both, and it is written once.** K-087 computes
+   t_a = Aσ/τ̇ across {0.03, 0.064, 0.10, 0.15} MPa × τ̇ ∈ {0.001…0.03} MPa/yr → 365–54,800 d. That
+   single table is the input to K-064's statement as well. **The program may not emit two
+   inconsistent regime statements from two entries, and the way to guarantee that is one artifact
+   with one hash.** New freeze condition on both entries.
+3. **The τ̇ range is Kepler's own assumption and he flags it.** It is UNVERIFIED and may not be
+   printed in a protocol without a primary read, per the standing S-14 reservation on Aσ. The
+   *obligation* to compute the bracket does not depend on that; the *right to print the numbers*
+   does.
+
+---
+
+## §P5-8. THE LINK-FUNCTION RULING — `exp(Δτ/Aσ)` IS VOID AS A POWER CALCULATOR FOR TRANSIENTS
+
+**The observation, from the K-034 worker's §K34-3, verified against its own table.** At
+Aσ = 0.15 MPa, Denali → Yellowstone has predicted R = exp(33.8/150) = **1.25** (I recomputed: 1.2527)
+and formal power **0.000**; it was detected at RR = 96.4, WY p = 0.0010, raw-RR p = 0.0247, under
+both family corrections. Landers → Long Valley: predicted R = 1.44, power 0.00075, observed
+RR = 21.2. Observed responses run **10–200×** the rate-state Coulomb-step prediction.
+
+**Ruling. The mapping is wrong, and it is wrong in a specific and nameable way.** `R = exp(Δτ/Aσ)` is
+the rate-and-state response to a **permanent Coulomb step**. Feeding it the **peak amplitude of a
+passing oscillatory transient** is a category error: a seismic wave deposits essentially zero
+permanent Coulomb stress, so the static formula predicts essentially nothing, and the thing that
+actually produces days of elevated rate at 3,100 km is not the elastic step. **This is not evidence
+against rate-and-state.** It is evidence that the mediating mechanism at these sites is not elastic
+Coulomb loading of a rate-state fault, and K-034's own P3 result names the mechanism class: the
+excess is concentrated in the pre-registered geothermal/volcanic cells (class A+B vs class C,
+Mann–Whitney p = 0.033, median p_cell 0.0072 vs 0.93). **A fluid/permeability/unclamping pathway is
+where the 10–200× lives, and the non-geothermal controls did not fire.**
+
+**MANDATED REPLACEMENT — a two-branch bracket, because we cannot yet identify the correct link and
+must not pretend otherwise.** Every POWER-STATE line in this program that converts a stress amplitude
+into a detection threshold for a **transient** forcing is VOID and is recomputed as:
+
+- **Branch S (static-equivalent, pessimistic response).** `R = exp(Δτ/Aσ)` over the S-14 bracket
+  {0.03, 0.10, 0.15} MPa, retained **only as a lower bound on response**. It may never again be used
+  to declare that an entry has no power.
+- **Branch E (empirical, optimistic response).** The response-versus-peak-dynamic-stress relation
+  fitted from K-034's own 54 source–cell pairs — our data, our pipeline, our region. **Stratified by
+  the pre-registered geothermal/volcanic class**, because that is the axis on which K-034's effect is
+  organised. **For class-C (non-geothermal) receivers Branch E is UNMEASURED, not 10–200×** — the
+  class-C cells did not fire, and quoting the geothermal amplification at a non-geothermal receiver
+  would be the single most likely way to turn this by-product into a false claim.
+
+**The asymmetry rule, and it is the point (this is the S-14 amendment).**
+
+> **S-14(c) — LINK-FUNCTION BRACKETING FOR TRANSIENT FORCING. Where the forcing is a transient
+> rather than a permanent stress change, the link from stress to rate response is bracketed as a
+> FUNCTIONAL FORM, not merely as a parameter, and the branch that governs is the one ADVERSE to the
+> claim being made — which is a different branch for different claims.**
+> - A **bound** ("we found nothing, therefore the effect is below X") is quoted on **Branch S**, the
+>   pessimistic response — because a bound needs power and must not assume the generous link.
+> - A **feasibility or screening decision** ("this entry is bound-producing only / not worth running")
+>   is taken on **Branch E**, the optimistic response — because dismissing an entry as underpowered on
+>   a link function we have measured to be wrong by two orders of magnitude is precisely the error
+>   K-034 exposed, and it is the error that silently deletes experiments.
+> - A **detection** is reported with both, and if the branches disagree about whether the entry had
+>   power the entry is **POWER-INDETERMINATE** and prints the bracket instead of an MDA. That is the
+>   honest state and it is not a failure state.
+> - The bracket's width is a **finding about our own ignorance** and is reported in the headline, not
+>   the limitations section.
+
+**Scope of what this changes, stated tightly.** Every wave-family entry whose POWER-STATE was
+computed through `exp(Δτ/Aσ)` for a dynamic transient — the seventeen K-059..K-075 entries, K-038,
+K-043, W-002-P2, K-078's slab-transient arm, K-084's 0–1 d row, and A0b — is **re-priced, not
+re-ruled**: no ADMIT/DEFER verdict in §P4-3 is reversed by this, because none of them turned on a
+power number alone. Two rankings do move, and they move because entries I priced as marginal may not
+be: **K-059's 3 kPa exposure gate and K-072's 1–5 kPa band**, which §K34-5 explicitly says K-034's
+licence does not reach, are now **POWER-INDETERMINATE rather than out of reach** — under Branch E a
+1–5 kPa transient at a geothermal receiver is not obviously undetectable. **That does not license
+them.** It means the question of whether they are worth running is reopened, and the artifact that
+reopens it is L-1 below.
+
+**And the by-product itself is still not claimed.** Per R2-2, K-034 is a control and its success is
+not evidence for anything. The 10–200× observation is **logged, scored nowhere, and needs its own
+pre-registered entry to become a finding.** What it licenses today is exactly one thing: the
+withdrawal of a power calculation we had no business trusting.
+
+---
+
+## §P5-9. S-16 — THE CONDITIONAL-OFFSET STANDARD. The supervisor's target finding-shape, made falsifiable.
+
+The supervisor states the deliverable the program is aiming at: **an interval structure in some
+coordinate, not necessarily time; a shift of the response within that structure; the shift itself
+conditional on a covariate such as magnitude; and offsets that resolve on a rung of a harmonic
+ladder.** That is a legitimate and precise scientific target, and it is also — stated without
+discipline — the most efficient forking-paths machine this program could build. Nothing in S-1..S-15
+covers it: S-8 prices a **discrete declared family**, S-9 freezes **construction choices**, S-11 sets
+a **bits floor**, S-13 governs **nulls**, S-15 governs **unmeasurable cells**. None of them governs a
+**conditional parameter**, and ψ(Q) is a regression, not a number. **S-16 is required and is written
+here.**
+
+> ### S-16. CONDITIONAL OFFSETS: the coordinate, the covariate list, the variance component, and the second holdout.
+>
+> A claim of the form *"in coordinate Y, structure repeats at interval P (rung n), and the response
+> is offset by ψ, where ψ depends on covariates Q"* is admissible only with all six clauses.
+>
+> **(a) The coordinate is declared, and it is audited by a reparameterisation null.** Y may be any
+> measurable monotone ordering — time, magnitude, cumulative event count, distance, cycle index,
+> cumulative moment, cumulative Benioff strain — and it is named before the run with its exact
+> construction. **Any non-time Y must additionally pass a reparameterisation null: the identical
+> statistic, run in a coordinate that is a physics-free monotone transform of Y (rank transform, or Y
+> rebuilt from a time-shuffled catalogue preserving marginals), must not reproduce the periodicity.**
+> Grounds: periodicity in an event-count or cumulative coordinate is manufacturable by clustering
+> alone — "every k-th event" is a property of any burst process — and this is EXP-F's corpse
+> generalised off the time axis. **This clause is the most important one in S-16, because a non-time
+> coordinate is where artifacts are cheapest and where this program has the least experience.**
+>
+> **(b) The covariate list is closed before the run, and it is short.** ψ(Q) is declared as a
+> regression with **one** pre-registered link and **at most five** named covariates with their exact
+> coding, plus any interactions named explicitly. A covariate added after the data is read does not
+> merely join the S-8 family — **it re-prices the entire scan and the entry reverts to exploratory.**
+>
+> **(c) The headline is the VARIANCE COMPONENT, and it is read before any per-stratum ψ.** ψ(Q) is
+> fitted hierarchically, with partial pooling of stratum-level offsets toward a common ψ. **The
+> confirmatory statistic is the single-degree-of-freedom question "is σ_ψ > 0?" — does the offset
+> depend on Q at all — and it is scored before any individual ψ(Q = q) is looked at.** Per-stratum
+> offsets may not be reported at all unless the variance component clears. Grounds: the per-stratum
+> offsets are the forking-paths machine; the variance component is one number and cannot be
+> re-partitioned.
+>
+> **(d) The conditional model must pay for itself in bits.** Under S-11, the conditional model
+> ψ(Q) must beat the unconditional model ψ = const by **≥ 0.01 bits/event out of sample**, with a
+> sequence-block CI. A conditional offset that is statistically detectable and worth less than
+> 0.01 bits/event is reported as a measurement and is **not** a claim. This is the sharpest
+> anti-forking device available and it costs nothing to apply.
+>
+> **(e) Two claims, two holdouts.** "An offset exists" and "the offset depends on Q" are two claims,
+> and under S-10 exactly one model crosses into a test window. **They are scored on disjoint data** —
+> the unconditional offset on holdout A, the conditional dependence on holdout B, or on a second
+> region/catalogue/epoch. Establishing the dependence on the data that established the offset is not
+> permitted and no amount of cross-validation substitutes.
+>
+> **(f) The ladder rung is part of the claim, pre-nominated, and priced under K-089-R.** "Resolves
+> upon another divisor" means the claim **names n in P/n** from a physically motivated set declared
+> before the run (≤ 5 rungs), and the S-8 max-statistic runs over the declared rungs. **A rung
+> discovered by the scan is a property of the scan and is reported as exploratory, never as the
+> claim.** Each rung is declared FREE or PRICED under K-089-R's per-axis invariance audit, with the
+> proof attached.
+>
+> **(g) The reporting template, and no finding in this family may be printed without all slots.**
+> *"In coordinate **Y**, at interval **P** (rung **n**), the response peaks at offset
+> **ψ̂ ± CI**; ψ varies with **Q** at **σ̂_ψ ± CI**, worth **b bits/event** out of sample over the
+> unconditional model; scope **[catalogue, magnitude range, epoch, region]**; if null, the bound is
+> **|A| < …** on **Branch S** per S-14(c)."* A slot that is unmeasured is printed **UNMEASURED**
+> per S-15, never omitted. Grounds: the program's recurring failure is not producing wrong numbers,
+> it is producing numbers whose scope readers must reconstruct. A fixed template makes over-quoting
+> visible on the page.
+
+**What S-16 permits that the program could not do before:** it makes the supervisor's target a
+*fundable* research shape rather than a rhetorical one. K-087's ψ is its first instance —
+ψ estimated with a CI, and the obvious next question ("does ψ depend on magnitude?") now has a
+discipline attached before anyone asks it rather than after. **What it forbids:** reading a
+per-magnitude-bin offset table off a run whose variance component was never computed. That table is
+the single most likely artifact this program will produce in the next six months, and S-16(c) exists
+to make producing it impossible rather than merely discouraged.
+
+---
+
+## §P5-10. THE REFRESHED PRIORITY QUEUE
+
+Ranked as before by decision value per compute-hour, with the two standing tiebreaks (objects over
+effects; debts against scored results over new exploration) and one new one made explicit by this
+round: **a re-pricing runs before the things whose priority it re-prices.**
+
+**K-034 leaves the queue — EXECUTED, gate PASS (qualified), certified floor 34 kPa.** It was rank 1
+and it discharged twenty-three entries' dependency. It is replaced at the top not by its successors
+but by its by-product.
+
+**1. L-1 — the transient link bracket.** Recompute every transient POWER-STATE in the ledger as the
+S-14(c) two-branch bracket, from `results_k034.json` which we already own. No downloads, no new
+statistic, an afternoon of arithmetic. It re-prices seventeen wave entries plus K-038, K-043,
+W-002-P2, K-078's slab arm, K-084's 0–1 d row and A0b, and it reopens the feasibility of K-059's
+3 kPa gate and K-072's 1–5 kPa band. **A debt against a scored result, and it changes the rank of the
+things below it, so it goes first.**
+
+**2. The observer job (W-004-P1 + K-031 + K-028) FUSED with G-M1 arm (i)'s A_ref measurement.** The
+Mc-versus-hour / station-count-versus-hour instrument is the same build in both. Serves Q2, A3,
+R2-1(c), K-090(ii)'s precondition and K-091 step (1). **One build, five debts, and it was already
+rank 2 before this round gave it a fifth customer.**
+
+**3. G-M1 — the miner's gate, both arms, merged with K-090(a).** Arm (i) (v1 must read
+Â/A_ref < 0.1) runs the moment item 2 delivers A_ref; arm (ii) is the planted-signal recovery test at
+the fortnightly band. Until this clears, the mine session's bound is quotable only in §P5-1's form.
+An afternoon plus item 2.
+
+**4. K-059-min + K-070's Johnson-113 C-ranking retrodiction, as one job.** Unchanged from §P4-5
+rank 3 and unchanged by K-034: §K34-5 is explicit that the licence does **not** reach K-059's 3 kPa
+gate, so a null here is still recorded **provisional-pending** — but L-1 may move that, which is
+another reason L-1 goes first. Externally defined, already declustered, non-cherry-pickable. It also
+builds the ephemeris that item 6 needs.
+
+**5. K-080's oasis census + K-069's prospective commitment log.** Green-lit in §P4-5 and I do not
+find an execution record for either. **Their value is the only value in the queue that decays with
+every day of delay**, and item 4 is better run by a program that has already committed. Half a day.
+
+**6. K-060.** K-034's PASS at 34 kPa discharges one of its two gates; the other is item 4's
+ephemeris. The wave family's only clean NOVEL, with the best-designed success rule in the ledger.
+It was rank 11 as doubly-gated; it is now singly-gated and rises.
+
+**7. K-089-R tranche 1 — the 240 linear-cyclic lag tests, plus the per-axis invariance audit.** The
+§P5-0 table is the audit's first execution and it is already in hand; running the tranche is a
+config change (`ephemeris_features(..., lags=...)`) and one re-run. It converts a silently-uncovered
+axis into a priced one and it is where Jim's complaint actually lands.
+
+**8. W-003-R.** Unchanged from §P4-5 rank 7. Half a day, reading only, and it corrects a scoreboard
+line we are actively briefing. Cheap corrections to things we say out loud outrank new measurements.
+
+**9. K-088(1) — initiations versus continuations**, with the §P5-3 stratified block permutation and
+the magnitude-matched control arm. Runs today on geocentric phase; K-090(e)'s tagging pass is the
+only new code and it is one pass over the catalogue.
+
+**10. K-009R + K-002, as one pre-registered job.** Unchanged from §P4-5 rank 6.
+
+*Below the line, named so the ordering is legible:* **11. A0 + A0b + A0c** (A0b now runs under
+K-034's licence and at the **0–1 d** window, which §K34-5 shows is materially stronger than 0–5 d);
+**12. Q0 + K-076**; **13. K-088(4)** — the R_k phase-coherence decay curve at the fortnightly band on
+geocentric phase, the only statistic in the seed that yields a number under the null; **14. K-082**
+with its 10 Pa pre-check; **15. K-087's SoCal ψ arm** (runs the moment G-M1 clears; eight derivative
+columns and a ψ column, not seventeen features); **16. K-077 + the geodetic layer**; **17. K-083**;
+**18. K-090(b) — the full unbinned v2 build** (ranked here, not higher, precisely because item 3
+decides whether it is worth building); **19. K-075(i)**; **20. W-001-P1**; **21. K-068**;
+**22. K-090(c) local body-tide module**; **23. W-006-P1(b)**; **24. K-061**; **25. K-063** (free at
+item 4); **26. K-078**; **27. K-027**; **28. K-081 SoCal arm**; **29. K-086**; **30. K-084**;
+**31. K-085**; **32. K-062**; **33. K-064** (with §P5-7's shared t_a artifact); **34. K-065**;
+**35. K-079**; **36. K-072(A)**; **37. K-071**; **38. K-074(i)/(ii)**; **39. K-067's Mmax arm**;
+**40. K-073**; **41. K-033**; **42. `engine ETAS baseline`** — *demoted from §P4-5 rank 5*: the
+2026-08-11 session ran with `"baseline": "etas"` and produced a usable null, so the gating
+infrastructure item is discharged in substance for the mining path; §P4-4's restriction on quoting
+engine covariate sniffs at entry level stands unchanged. **Deferred, not ranked:** K-066,
+K-067(τ*), K-072(B), K-088(2)/(3), K-089-R tranches 2–3, K-090(d) ocean loading, and the
+discriminator billing of K-074(iii)/K-075(ii).
+
+### The first execution I green-light
+
+> **L-1 — the transient link bracket (item 1). And, launched the same day in parallel because it
+> shares no code path and no analyst attention, the observer job fused with G-M1 arm (i) (item 2).**
+>
+> L-1 first because a power calculation we have measured to be wrong by one to two orders of
+> magnitude is currently sitting inside every transient POWER-STATE line in the wave family, and
+> because every ranking below it in this queue is computed through that number. **You do not run the
+> experiments a re-pricing reorders before the re-pricing.** It costs an afternoon on an artifact
+> already on disk, and its deliverable is an object — a measured response-versus-stress relation,
+> stratified by receiver class — rather than a p-value.
+>
+> The observer job alongside it because five separate debts are waiting on one instrument, and
+> because G-M1 cannot start without A_ref. **Neither requires a download. Both are debts against
+> results already on the register.**
+
+---
+
+## §P5-11. COUNTS AND CLOSING
+
+**Five entries adjudicated.** ADMIT 1 as written and promoted to a gate (K-091 → G-M1).
+ADMIT-RESCOPED 2 (K-087, K-089). SPLIT 2 (K-088 → one arm ADMIT-RESCOPED, one absorbed, one
+DEFERRED, one ADMIT-RESCOPED; K-090 → three ADMIT arms, one ADMIT-RESCOPED, one NEEDS-DATA, one
+sequenced behind K-089-R). **REFUSED: nothing.** This is the first seed in four rounds with no
+refusal in it, and the reason is structural rather than generous: four of the five entries deliver
+**objects** — a phase angle with a CI, a coherence-decay curve, an instrument, a transfer function —
+which is the ranking rule I set in §P4-0 and asked Kepler to riff on, and he did.
+
+**One new standard, one amendment.** **S-16** — conditional offsets: declared coordinate with a
+reparameterisation null, closed covariate list, the variance component as the headline read before
+any per-stratum offset, a 0.01 bits/event floor on the conditional model over the unconditional, two
+disjoint holdouts for two claims, pre-nominated ladder rungs, and a fixed reporting template.
+**S-14(c)** — link-function bracketing for transient forcing, with the adverse branch differing by
+claim type: bounds on the pessimistic branch, feasibility decisions on the optimistic branch,
+POWER-INDETERMINATE when they disagree.
+
+**One printed bound narrowed against our own interest.** K-035's |modulation| < 6.3% and the mine
+session's ~5.6% are bounds on a **single-phase, one-stage** response and do not bound a two-stage
+process with cycle-lag dispersion (§P5-4). Both carry that qualifier from now on.
+
+**One power calculation withdrawn.** `exp(Δτ/Aσ)` applied to a transient's peak amplitude is VOID as
+a detection-threshold calculator across the wave family (§P5-8). No verdict is reversed; every
+transient POWER-STATE is re-priced.
+
+**One correction against Kepler, on his own strongest argument.** The free-scan exception is real and
+its scope is smaller than he wrote: offsets are free for all nine phase features, **lags are free for
+only four of them**, and his clause-3 unit test as written would have reported a bug in the engine
+that does not exist and withdrawn a true theorem (§P5-0). Thirteen of seventeen cyclic features are
+lag-unscanned, not eight.
+
+**One erratum, in his own conservative direction:** sd(ψ) at N = 4 × 10⁴, A = 3% is 13.5°, not 23°.
+
+**To Kepler — three things.**
+**(1) §K87-0 is the best audit any seat has written, and the reason is that you audited the
+instrument you were about to propose using.** The line I keep is the one you wrote against yourself
+and then immediately balanced: the day-binning notch is a loss *and* it is the only structural
+immunity to the S1/S2 artifact this program owns. Both halves are true, you printed both, and I have
+adopted both.
+**(2) K-091 is the best-shaped entry in the ledger and nobody asked for it.** It measures our
+instrument against a real signal instead of a simulation of itself, its product is a transfer
+function rather than a p-value, and it is now a gate. The instinct to build the calibration before
+the measurement was right, and it is the second time in two rounds your run order beat mine.
+**(3) The unclaimed ground, again: you are now producing objects reliably. The next scarce thing is
+COORDINATES.** S-16(a) exists because the supervisor is asking for interval structure in coordinates
+that are not time, and this program has never once run a statistic in one. A periodicity in
+cumulative moment, in event count, in distance — those are unexplored axes with a named artifact
+class and a named null. **Riff on coordinates.**
+
+---
+
+*Popper, round 4. Five entries adjudicated (K-087..K-091); §K87-0 adopted with the quotable form of
+the 2026-08-11 null fixed and broadened against the instrument; K-089's multiplicity objection
+resolved (S-8 not BH; per-axis invariance proved numerically this session; staged tranches of 240 /
+150 / 68 rather than a single 63,240-test scan); K-091 promoted to gate G-M1, band-matched;
+K-087 confirmed a sibling of K-064 and gated on G-M1, with one shared t_a artifact mandated across
+both; K-088's permutation null ruled non-compliant with S-13 and repaired; K-035's and the miner's
+bounds narrowed to one-stage responses. The rate-state link function ruled VOID as a transient power
+calculator, replaced by the S-14(c) two-branch bracket with claim-dependent adverse ends. New
+standard S-16 for conditional offsets, written to make the supervisor's target finding-shape
+falsifiable rather than forkable. Queue refreshed across all open entries; K-034 retired from it as
+executed; `engine ETAS baseline` discharged in substance and demoted. First execution green-lit: L-1,
+the transient link bracket, with the observer job and G-M1 arm (i) in parallel. No commits made; no
+other persona's section touched.*
