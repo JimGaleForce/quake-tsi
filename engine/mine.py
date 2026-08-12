@@ -810,6 +810,156 @@ def bootstrap_p(S_obs, S_boot):
     return (1.0 + ge) / (1.0 + np.asarray(S_boot).size)
 
 
+# =============================================== canonical test-key schema ===
+# Every random stream in the miner is addressed by a COMPLETE test key hashed as
+# canonical JSON -- not by a raw tuple, so the schema can gain fields without
+# silently re-keying the fields that already exist. `region` and `bin_width` are
+# present and defaulted NOW, unused today, precisely so that adding per-region or
+# per-binning strata later does not change the key schema of anything else.
+TEST_KEY_FIELDS = ("master_seed", "feature", "kind", "lag", "rung", "null_type",
+                   "region", "bin_width")
+
+
+def test_key(master_seed, feature, kind, lag=None, rung=None, null_type=None,
+             region=None, bin_width=None):
+    """The complete, canonical identity of one test (or one rung of one test)."""
+    return {
+        "master_seed": int(master_seed),
+        "feature": str(feature),
+        "kind": str(kind),
+        "lag": None if lag is None else int(lag),
+        "rung": None if rung is None else int(rung),
+        "null_type": None if null_type is None else str(null_type),
+        "region": None if region is None else str(region),
+        "bin_width": None if bin_width is None else float(bin_width),
+    }
+
+
+def test_key_digest(key):
+    """sha256 of the key's canonical JSON. Stable across processes and versions."""
+    missing = set(TEST_KEY_FIELDS) - set(key)
+    if missing:
+        raise KeyError(f"test key missing fields {sorted(missing)}")
+    blob = json.dumps({k: key[k] for k in TEST_KEY_FIELDS}, sort_keys=True,
+                      separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def seed_sequence_for(key):
+    """SeedSequence for a test key. Depends on the key and nothing else."""
+    d = test_key_digest(key)
+    return np.random.SeedSequence(entropy=int(key["master_seed"]),
+                                  spawn_key=(int(d[:32], 16),))
+
+
+def rung_seed_sequence(parent, rung):
+    """Child SeedSequence for rung `rung`, addressable BY INDEX.
+
+    `SeedSequence.spawn(k)` is stateful -- it hands out children in call order, so
+    the stream a rung gets would depend on how many rungs were spawned before it,
+    which is exactly the process-boundary dependence we must not have. Constructing
+    the child by index reproduces what `spawn` would have produced for that index
+    while being addressable: rung 2 is rung 2 whether rung 1 ran in this process,
+    another process, or not at all.
+    """
+    return np.random.SeedSequence(entropy=parent.entropy,
+                                  spawn_key=tuple(parent.spawn_key) + (int(rung),))
+
+
+# ================================================ adaptive surrogate ladder ===
+# OFF by default. When enabled (`--ladder`) its parameters enter the config hash,
+# because a stopping rule is a STATISTICAL choice, not an execution detail.
+#
+# `chunk` is an IMPLEMENTATION DETAIL -- the number of surrogates generated per
+# vectorised call -- and is NOT a statistical stage. The rule below is defined on
+# single draws and recovers the exact stopping index inside whatever chunk trips
+# it, so changing `chunk` changes speed and nothing else. It is nevertheless
+# hashed, because a claim that it changes nothing should be checkable.
+LADDER_DEFAULTS = {
+    "rule": "besag_clifford_1991",
+    "h": 25,              # stop once this many surrogates reach the observed stat
+    "chunk": 200,         # vectorisation chunk size. NOT a statistical stage.
+}
+
+
+def ladder_n_max(ladder_cfg, key):
+    """N_max for one test's declared stratum. FUNCTION OF THE TEST KEY ONLY.
+
+    Fixed before the run. There is deliberately no path by which an observed
+    statistic, a p-value, a rank or a survivor list can raise or lower a test's
+    budget: rank-based escalation would invalidate the sequential p-value, and no
+    amount of care elsewhere would repair it. Strata may key on any field of the
+    test key; the default is a single stratum at the preset's surrogate count.
+    """
+    strata = ladder_cfg.get("n_max_by_kind") or {}
+    return int(strata.get(key.get("kind"), ladder_cfg["n_max"]))
+
+
+def besag_clifford_p(draw_chunk, s_obs, n_max, rung_rng, h=25, chunk=200):
+    """Sequential Monte Carlo test with an EXACTLY valid p under optional stopping.
+
+    Besag & Clifford (1991), "Sequential Monte Carlo p-values", Biometrika 78(2)
+    301-304. Surrogates are drawn until `h` of them reach the observed statistic.
+    If the h-th exceedance lands on draw l (counted inclusive), the p-value is
+
+        p = h / l
+
+    and if the cap `n_max` is reached with only c < h exceedances it falls back to
+    the ordinary fixed-sample estimate p = (1 + c) / (1 + n_max). Both branches are
+    valid under the null -- which is the whole point, since an ordinary Monte Carlo
+    p-value computed after peeking would not be.
+
+    CHUNKING IS NOT A STAGE. Draws are generated `chunk` at a time for
+    vectorisation. The chunk that trips the rule is generated in full and `l` is
+    then recovered from the ORDER of exceedances INSIDE it. Setting l to the chunk
+    boundary instead would report a smaller p than the rule permits
+    (anti-conservative); recovering the exact l is the rule exactly as published,
+    and makes the answer independent of `chunk`.
+
+    `draw_chunk(b, rng)` returns b surrogate statistics. `rung_rng(i)` returns the
+    generator for chunk i; it must be index-addressable (see `rung_seed_sequence`)
+    so that a given chunk's draws do not depend on which process drew the ones
+    before it.
+
+    This is deliberately the ONLY place the stopping rule lives, so an adjudication
+    that changes h, the chunk schedule, or the rule itself changes one function.
+    """
+    s_obs = float(s_obs)
+    n_max, h = int(n_max), int(h)
+    chunk = int(max(1, chunk))
+    if h < 1:
+        raise ValueError("besag_clifford_p: h must be >= 1")
+    total, c, l_stop, rung = 0, 0, None, 0
+    while total < n_max:
+        b = int(min(chunk, n_max - total))
+        s = np.asarray(draw_chunk(b, rung_rng(rung)), dtype=np.float64).ravel()
+        if s.size != b:
+            raise ValueError(f"draw_chunk({b}) returned {s.size} statistics")
+        hit = s >= s_obs
+        n_hit = int(hit.sum())
+        if c + n_hit >= h:
+            k = int(np.nonzero(np.cumsum(hit) == (h - c))[0][0])
+            l_stop = total + k + 1
+            c += n_hit
+            total += b
+            rung += 1
+            break
+        c += n_hit
+        total += b
+        rung += 1
+    base = {"rule": "besag_clifford_1991", "h": h, "chunk": chunk, "n_max": n_max,
+            "n_drawn": int(total), "n_rungs": int(rung), "n_exceed": int(c)}
+    if l_stop is not None:
+        base.update({"p": h / float(l_stop), "l_stop": int(l_stop),
+                     "stopped_early": True,
+                     "p_basis": "h/l (Besag-Clifford sequential)"})
+    else:
+        base.update({"p": (1.0 + c) / (1.0 + n_max), "l_stop": None,
+                     "stopped_early": False,
+                     "p_basis": "(1+c)/(1+n_max) (cap reached)"})
+    return base
+
+
 def empirical_p(S, n_surr, rng, min_shift=30):
     """p = rank of S[0] among circular-shift surrogates. Returns (p, n_used)."""
     n = S.size
@@ -1003,7 +1153,7 @@ def _mark_stat_matrix(feature_at_event, R, kind):
 
 
 def mark_test(feature_at_event, mark, kind, n_surr, rng, min_shift=100,
-              block_events=500):
+              block_events=500, ladder=None, rung_rng=None):
     """Spearman (linear) or circular-linear (phase) feature-vs-mark association.
 
     Two nulls, both resampling the MARK series along the time-ordered event
@@ -1036,20 +1186,44 @@ def mark_test(feature_at_event, mark, kind, n_surr, rng, min_shift=100,
     p_shift, n_used = empirical_p(stat, n_surr, rng, min_shift=min_shift)
 
     n_ev = rm.size
-    boot = np.empty(int(n_surr))
-    done, chunk = 0, 100
-    while done < n_surr:
-        b = int(min(chunk, n_surr - done))
-        idx = block_bootstrap_idx(n_ev, b, block_events, rng)
+
+    def _draw(b, g):
+        idx = block_bootstrap_idx(n_ev, int(b), block_events, g)
         v, _ = _mark_stat_matrix(feature_at_event, rm[idx], kind)
-        boot[done:done + b] = v
-        done += b
-    p_boot = bootstrap_p(stat[0], boot)
-    return {"effect": effect, "statistic": float(stat[0]),
-            "p_circular_shift": p_shift, "p_block_bootstrap": p_boot,
-            "p_raw": max(p_shift, p_boot), "n_surrogates": min(n_used, int(n_surr)),
-            "df": df, "null": "max(circular-shift, block-bootstrap)",
-            "test": "circular-linear" if kind == "phase" else "spearman"}
+        return v
+
+    lad = None
+    if ladder:
+        # `ladder` is a dict of stopping-rule parameters; see besag_clifford_p.
+        # NOTE: the ladder touches ONLY this Monte Carlo block-bootstrap null.
+        # `p_circular_shift` above comes from empirical_p, an EXHAUSTIVE enumeration
+        # of admissible shifts whose floor is a property of the record length, not
+        # of a surrogate budget; sequential stopping is meaningless there and is
+        # deliberately not applied.
+        if rung_rng is None:
+            raise ValueError("mark_test: ladder requires rung_rng")
+        lad = besag_clifford_p(_draw, stat[0],
+                               n_max=int(ladder.get("n_max", n_surr)),
+                               rung_rng=rung_rng,
+                               h=int(ladder.get("h", 25)),
+                               chunk=int(ladder.get("chunk", 200)))
+        p_boot = lad["p"]
+    else:
+        boot = np.empty(int(n_surr))
+        done, chunk = 0, 100
+        while done < n_surr:
+            b = int(min(chunk, n_surr - done))
+            boot[done:done + b] = _draw(b, rng)
+            done += b
+        p_boot = bootstrap_p(stat[0], boot)
+    out = {"effect": effect, "statistic": float(stat[0]),
+           "p_circular_shift": p_shift, "p_block_bootstrap": p_boot,
+           "p_raw": max(p_shift, p_boot), "n_surrogates": min(n_used, int(n_surr)),
+           "df": df, "null": "max(circular-shift, block-bootstrap)",
+           "test": "circular-linear" if kind == "phase" else "spearman"}
+    if lad is not None:
+        out["ladder_stop"] = lad
+    return out
 
 
 # ============================================================ multiplicity ===

@@ -3,15 +3,71 @@
 Split out of engine/mine.py (which holds the statistics) so the orchestration --
 resume logic, task ordering, ledger accounting and report writing -- reads in one
 sitting. Everything this module writes carries the generator-not-evidence banner.
+
+
+RNG POLICY (v2) -- READ THIS BEFORE COMPARING TWO RUNS
+------------------------------------------------------
+There are two randomness regimes and they do NOT produce the same numbers. This is
+deliberate and the difference is the price of parallelism.
+
+* `--jobs 1` (the default) is the AUDIT BASELINE. One `default_rng(cfg["seed"])` is
+  created in `run()` and threaded through every task in a fixed order -- GLM sweep
+  in feature order, then the mark tests in feature order, then the period scan --
+  exactly as v1 did. Every draw depends on every draw before it. Output is
+  bit-identical to the pre-parallel engine for the same config and seed.
+
+* `--jobs != 1` derives an INDEPENDENT `numpy.random.SeedSequence` per task from
+  the sha256 of the CANONICAL JSON of the complete test key -- master seed, feature
+  name, test kind, lag, rung, null type, region, bin width (`engine.mine.test_key`,
+  `engine.mine.seed_sequence_for`). Not a raw tuple: a hashed schema can gain a
+  field without re-keying the fields that already exist, and `region`/`bin_width`
+  are present and defaulted NOW so that per-region or per-binning strata later do
+  not change anybody else's stream. The parent asserts every declared stream has a
+  distinct digest and refuses to run on a collision (`assert_task_keys_unique`).
+
+  Nothing is threaded, so nothing depends on the order in which the pool happens
+  to finish: `--jobs 2` and `--jobs 4` and `--jobs 32` all return the same numbers.
+  They are NOT the same numbers as `--jobs 1`, because a per-task stream cannot
+  reproduce a single shared stream. Both are valid nulls; only one is the baseline.
+
+* LADDER RUNGS cross process boundaries. When `--ladder` is on, each chunk (rung)
+  of a test's sequential draw takes an index-addressable child SeedSequence of that
+  test's sequence (`engine.mine.rung_seed_sequence`), never a continuing generator.
+  Rung 2 is therefore the same draws whether rungs 1 and 2 ran in one process or
+  two, or whether rung 1 ran at all in this invocation. `SeedSequence.spawn` is
+  deliberately NOT used: it hands out children in call order, which is exactly the
+  process-boundary dependence we must not have.
+
+* ORDER-DETERMINISTIC REDUCTION. Results are sorted by `order_key` -- a function of
+  the test key alone -- before any aggregation, and `order_key` is the final
+  tiebreak of every downstream sort, so BH ties and table rank ties break by test
+  key and never by arrival order.
+
+  The post-FDR aliasing audit is also given per-task derived streams in parallel
+  mode (keyed on the audit's own checkpoint key), so it does not depend on how many
+  tests happened to survive FDR ahead of it.
+
+`--jobs` is an EXECUTION detail and is deliberately absent from the config hash:
+the same sweep run on 1 core or 30 cores is the same sweep, and a resumable session
+must not be orphaned by a core count. `--ladder`, by contrast, changes the sampling
+rule, so its parameters DO enter the config hash (see `build_config`).
+
+Parallelism is process-based (`spawn`, so Windows-safe): worker entry points are
+module-level, arguments are picklable, and workers NEVER write. The parent owns
+every checkpoint write, the report, the stubs and the append-only ledger.
 """
 
 from __future__ import annotations
 
+import concurrent.futures as _cf
+from concurrent.futures.process import BrokenProcessPool
 import datetime as _dt
 import json
 import math
+import multiprocessing as _mp
 import os
 import time
+import traceback
 
 import numpy as np
 
@@ -31,6 +87,334 @@ DEFAULT = {
 }
 
 PERIOD_MIN, PERIOD_MAX = 2.0, 4000.0
+
+
+# ---------------------------------------------------------------- RNG policy ---
+def task_seed_sequence(master_seed, feature, kind, lag=None, null_type=None,
+                       region=None, bin_width=None):
+    """Deterministic SeedSequence for a task. See module docstring + M.test_key.
+
+    Derived from the sha256 of the COMPLETE test key's canonical JSON -- master
+    seed, feature, kind, lag, rung, null type, region, bin width -- and nothing
+    else. In particular NOT from task index, submission order or completion order,
+    so the stream a task sees is independent of how the pool schedules it.
+    """
+    return M.seed_sequence_for(M.test_key(master_seed, feature, kind, lag=lag,
+                                          null_type=null_type, region=region,
+                                          bin_width=bin_width))
+
+
+def task_rng(master_seed, feature, kind, lag=None, **kw):
+    return np.random.default_rng(
+        task_seed_sequence(master_seed, feature, kind, lag, **kw))
+
+
+def rung_rng_factory(master_seed, feature, kind, lag=None, null_type=None,
+                     region=None, bin_width=None):
+    """Index-addressable per-rung generators for one test's ladder.
+
+    Rung i is reproducible on its own: it does not matter whether rungs 0..i-1 were
+    drawn in this process, another process, or (in a resumed run) never at all.
+    """
+    parent = task_seed_sequence(master_seed, feature, kind, lag,
+                               null_type=null_type, region=region,
+                               bin_width=bin_width)
+    return lambda i: np.random.default_rng(M.rung_seed_sequence(parent, i))
+
+
+def ledger_record(cfg, n_tests, session_dir):
+    """The one line a completed session appends to the exploration ledger.
+
+    `n_declared_tests` is stated explicitly and by name alongside `n_tests` so a
+    reader never has to infer whether the count meant DECLARED or SURVIVING. They
+    are the same number here -- the declared family size -- and saying so costs one
+    field and removes an ambiguity that would otherwise be resolved by guessing.
+
+    Parent-only: workers never see this function, let alone the ledger path.
+    """
+    return {
+        "ts": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+        "kind": "mine",
+        "n_tests": int(n_tests),
+        "n_declared_tests": int(n_tests),
+        "hash": splits.config_hash(cfg),
+        "config": cfg,
+        "session_dir": session_dir.replace("\\", "/"),
+    }
+
+
+def test_floor(t, n_surr):
+    """Smallest p this test could ever have reported, and where that floor comes from.
+
+    Two DIFFERENT floors, reported separately because they have different causes and
+    different cures:
+
+      * the ENUMERATION floor, 1/(n_admissible_shifts + 1). The circular-shift null
+        is an exhaustive enumeration, so this is a property of the RECORD LENGTH.
+        More surrogates cannot lower it, and the ladder never touches it.
+      * the MONTE CARLO floor, 1/(N_max + 1), a property of the surrogate BUDGET.
+        This is the one the ladder economises on -- and note it is set by N_max, the
+        pre-declared cap, not by however many draws a laddered test actually made:
+        a test that stopped at rung 1 could still have gone to the cap.
+
+    Where p_raw is max(shift, bootstrap), the effective floor is the LARGER of the
+    two. Where the block bootstrap is the sole null (periodic features) it is the
+    Monte Carlo floor alone. Side effect: annotates `t`.
+    """
+    lad = t.get("ladder_stop")
+    mc_n = int(lad["n_max"]) if lad else int(n_surr)
+    floor_mc = 1.0 / (mc_n + 1.0)
+    floor_enum = None
+    if t["test"] == "lomb_scargle_peak":
+        # the period scan has no enumeration null at all -- see the DEVIATION note
+        floor_mc = 1.0 / (int(t.get("n_surrogates", n_surr)) + 1.0)
+    elif t.get("p_circular_shift") is not None:
+        floor_enum = 1.0 / (int(t.get("n_surrogates", n_surr)) + 1.0)
+    t["floor_enumeration"] = floor_enum
+    t["floor_monte_carlo"] = float(floor_mc)
+    periodic_only = str(t.get("null", "")).startswith("block-bootstrap")
+    if floor_enum is None or periodic_only:
+        return float(floor_mc)
+    return float(max(floor_enum, floor_mc))
+
+
+def assert_task_keys_unique(keys):
+    """Fail loudly on a test-key collision rather than silently sharing a stream."""
+    digests = {}
+    for k in keys:
+        d = M.test_key_digest(k)
+        if d in digests:
+            raise RuntimeError(
+                f"test-key digest collision: {digests[d]} and {k} hash to {d}. "
+                f"Two tests would share a random stream. Refusing to run.")
+        digests[d] = k
+    return digests
+
+
+def resolve_jobs(jobs):
+    """--jobs N; 0 means auto = max(1, cpu_count() - 2). Never returns < 1."""
+    j = int(jobs)
+    if j == 0:
+        return max(1, (os.cpu_count() or 1) - 2)
+    return max(1, j)
+
+
+# ----------------------------------------------------------------- task bodies -
+# One body per test kind, called by BOTH drivers. The sequential driver hands them
+# the single shared rng (which is what makes --jobs 1 bit-identical to v1); the
+# parallel driver hands them per-task derived streams. Nothing else differs.
+def glm_task(f, window, counts, offset, n_surr, rng_for_lag, ladder=None, seed=0):
+    rows = []
+    for lag in f.lags:
+        rng = rng_for_lag(lag)
+        X = f.design(window, lag)
+        fit = M.glm_fit(X, counts, offset)
+        S = M.score_stat_all_shifts(X, counts, offset)
+        # EXHAUSTIVE enumeration of admissible circular shifts. Never laddered:
+        # its resolution floor is a property of the record length, not of a
+        # surrogate budget, so sequential stopping has nothing to stop.
+        p_shift, n_used = M.empirical_p(S, n_surr, rng)
+        lad = None
+        if ladder:
+            key = M.test_key(seed, f.name, "glm", lag=lag,
+                             null_type="block_bootstrap")
+            rr = rung_rng_factory(seed, f.name, "glm", lag,
+                                  null_type="block_bootstrap")
+            lad = M.besag_clifford_p(
+                lambda b, g: M.score_stat_block_bootstrap(
+                    X, counts, offset, int(b), g, mean_block=f.block_days),
+                S[0], n_max=M.ladder_n_max(ladder, key), rung_rng=rr,
+                h=int(ladder.get("h", 25)), chunk=int(ladder.get("chunk", 200)))
+            p_boot = lad["p"]
+        else:
+            Sb = M.score_stat_block_bootstrap(X, counts, offset, n_surr, rng,
+                                              mean_block=f.block_days)
+            p_boot = M.bootstrap_p(S[0], Sb)
+        # circular shifts are provably powerless for a deterministic cycle, so
+        # for periodic features the block bootstrap IS the null; elsewhere both
+        # are valid and the more conservative one is reported.
+        p = p_boot if f.periodic else max(p_shift, p_boot)
+        b = np.asarray(fit["beta"])
+        amp = float(np.hypot(*b)) if f.kind == "phase" else float(abs(b[0]))
+        row = {
+            "feature": f.name, "family": f.family, "kind": f.kind, "lag": int(lag),
+            "test": "glm_poisson_offset_etas", "df": f.df,
+            "beta": fit["beta"], "se": fit["se"], "amplitude_log_rate": amp,
+            "pct_rate_modulation": 100.0 * (math.exp(amp) - 1.0),
+            "bits_per_event": fit["bits_per_event"],
+            "chi2_score": float(S[0]), "p_parametric": M.chi2_sf(S[0], f.df),
+            "p_circular_shift": p_shift, "p_block_bootstrap": p_boot,
+            "block_days": f.block_days,
+            "null": ("block-bootstrap (periodic feature)" if f.periodic
+                     else "max(circular-shift, block-bootstrap)"),
+            "p_raw": p, "n_surrogates": min(n_used, n_surr),
+            "converged": fit["converged"],
+        }
+        if lad is not None:
+            row["ladder_stop"] = lad
+        rows.append(row)
+    return rows
+
+
+def marks_task(f, window, fe_day, marks, n_surr, rng, ladder=None, seed=0):
+    vals = f.values[window][fe_day]
+    rows = []
+    for mk in ("mag", "depth"):
+        kk = f"mark_{mk}"
+        rr, lad_cfg = None, None
+        if ladder:
+            key = M.test_key(seed, f.name, kk, null_type="block_bootstrap")
+            # N_max is resolved from the DECLARED stratum of this test key, before
+            # any statistic is looked at (M.ladder_n_max enforces that).
+            lad_cfg = dict(ladder, n_max=M.ladder_n_max(ladder, key))
+            rr = rung_rng_factory(seed, f.name, kk, null_type="block_bootstrap")
+        r = M.mark_test(vals, marks[mk], f.kind, n_surr, rng,
+                        ladder=lad_cfg, rung_rng=rr)
+        r.update({"feature": f.name, "family": f.family, "kind": f.kind,
+                  "mark": mk, "n_events": int(marks[mk].size)})
+        rows.append(r)
+    return rows
+
+
+def period_task(counts, offset, days, resid, cfg, n_surr, rng, verbose=False):
+    periods = np.exp(np.linspace(math.log(PERIOD_MIN), math.log(PERIOD_MAX),
+                                 int(cfg["n_periods"])))
+    peaks, meta = M.period_scan(days, resid, periods, n_surr, rng,
+                                n_peaks=int(cfg["n_peaks"]), verbose=verbose)
+    lam0 = offset * (counts.sum() / offset.sum())
+    for pk in peaks:
+        pk["ladder"] = M.harmonic_ladder(counts, lam0, days, pk["period_days"],
+                                         max_period=counts.size / 3.0)
+        pk["feature"] = f"period_{pk['period_days']:.4g}d"
+        pk["family"] = 0
+        pk["test"] = "lomb_scargle_peak"
+        wp = pk["ladder"]["winning_period_days"]
+        ph = np.mod(days, wp) / wp
+        b = np.minimum((ph * 8).astype(int), 7)
+        Y = np.bincount(b, weights=counts, minlength=8)
+        L = np.bincount(b, weights=lam0, minlength=8)
+        ratio = Y / np.maximum(L * (Y.sum() / L.sum()), 1e-9)
+        pk["pct_rate_modulation"] = float(100.0 * (ratio.max() - ratio.min()) / 2.0)
+        pk["fold_ratio_by_phase_bin"] = [round(float(v), 4) for v in ratio]
+    return {"peaks": peaks, "scan": meta,
+            "n_trial_periods": int(cfg["n_periods"]),
+            "period_range_days": [PERIOD_MIN, PERIOD_MAX]}
+
+
+# ------------------------------------------------------------------ workers ---
+# Windows uses the `spawn` start method, so everything below must be importable at
+# module level and every argument must be picklable. The bulk payload (counts,
+# offset, features, marks) is shipped ONCE per worker through the pool initializer;
+# per-task messages carry only a string key.
+_WORKER_PAYLOAD = {}
+
+
+def _worker_init(payload):
+    global _WORKER_PAYLOAD
+    _WORKER_PAYLOAD = payload
+
+
+def dispatch_task(key, W):
+    """Run one named task against a payload dict. Pure: no file writes, ever."""
+    kind, _, name = key.partition(":")
+    seed, n_surr, ladder = W["seed"], W["n_surr"], W["ladder"]
+    if kind == "glm":
+        f = W["feats"][name]
+        return glm_task(f, W["window"], W["counts"], W["offset"], n_surr,
+                        lambda lag: task_rng(seed, name, "glm", lag,
+                                             null_type="circular_shift"),
+                        ladder, seed=seed)
+    if kind == "marks":
+        f = W["feats"][name]
+        return marks_task(f, W["window"], W["fe_day"], W["marks"], n_surr,
+                          task_rng(seed, name, "marks", None,
+                                   null_type="circular_shift"),
+                          ladder, seed=seed)
+    if key == "period_scan":
+        return period_task(W["counts"], W["offset"], W["days"], W["resid"],
+                           W["cfg"], n_surr,
+                           task_rng(seed, "period_scan", "period", None,
+                                    null_type="ar1_and_permutation"),
+                           verbose=False)
+    raise KeyError(f"unknown mine task key {key!r}")
+
+
+def worker_run_task(key):
+    """Pool entry point. Returns (key, result, error_text) -- never raises upward.
+
+    A worker that dies outright (OOM, segfault, taskkill) cannot return anything;
+    that case is detected by the PARENT via BrokenProcessPool, which is why the
+    parent keeps the future->key map. This function covers the other case: an
+    ordinary Python exception, whose traceback must reach the parent still carrying
+    the feature/test name, because "one of 90 tasks failed" is not a bug report.
+    """
+    t = time.perf_counter()
+    try:
+        return key, dispatch_task(key, _WORKER_PAYLOAD), None, time.perf_counter() - t
+    except BaseException:                                    # noqa: BLE001
+        return key, None, traceback.format_exc(), time.perf_counter() - t
+
+
+def _run_tasks_parallel(ckpt, keys, payload, jobs, verbose=True):
+    """Run the not-yet-checkpointed `keys` across a spawn pool. Parent writes."""
+    todo = [k for k in keys if not ckpt.done(k)]
+    if verbose:
+        print(f"parallel: {len(todo)} tasks over {jobs} worker processes "
+              f"({len(keys) - len(todo)} already checkpointed)")
+    if not todo:
+        return 0
+    # One BLAS thread per worker: 30 processes each spawning 32 OpenMP threads is
+    # slower than sequential. Set in the PARENT because spawned children inherit
+    # os.environ at creation, and by then it is too late to set it from inside.
+    saved = {}
+    for var in ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS", "MKL_NUM_THREADS",
+                "NUMEXPR_NUM_THREADS"):
+        saved[var] = os.environ.get(var)
+        os.environ[var] = "1"
+    n_done = 0
+    try:
+        ctx = _mp.get_context("spawn")
+        with _cf.ProcessPoolExecutor(max_workers=int(jobs), mp_context=ctx,
+                                     initializer=_worker_init,
+                                     initargs=(payload,)) as ex:
+            futs = {ex.submit(worker_run_task, k): k for k in todo}
+            try:
+                for fut in _cf.as_completed(futs):
+                    key = futs[fut]
+                    try:
+                        rkey, result, err, secs = fut.result()
+                    except BrokenProcessPool as exc:
+                        pending = sorted(futs[f] for f in futs if not f.done())
+                        raise RuntimeError(
+                            f"mine worker pool died while running {key!r}; "
+                            f"{len(pending)} task(s) unfinished: "
+                            f"{', '.join(pending[:10])}"
+                            f"{' ...' if len(pending) > 10 else ''}. "
+                            f"Completed tasks are checkpointed -- rerun to resume."
+                        ) from exc
+                    if err is not None:
+                        raise RuntimeError(
+                            f"mine task {key!r} raised in a worker process:\n{err}")
+                    # PARENT-ONLY WRITE. A kill between two puts loses at most the
+                    # one task in flight; the ledger is appended once, later, by the
+                    # parent, so a partial run cannot double-count multiplicity.
+                    ckpt.record_seconds(rkey, secs)
+                    ckpt.put(rkey, result)
+                    n_done += 1
+                    if verbose:
+                        print(f"  [{n_done}/{len(todo)}] done {rkey} "
+                              f"({secs:.1f}s in-worker)")
+            except BaseException:
+                for f in futs:
+                    f.cancel()
+                raise
+    finally:
+        for var, val in saved.items():
+            if val is None:
+                os.environ.pop(var, None)
+            else:
+                os.environ[var] = val
+    return n_done
 
 
 # ------------------------------------------------------------ checkpointing ---
@@ -80,6 +464,14 @@ class Checkpoint:
     def done(self, key):
         return key in self.state["results"]
 
+    def record_seconds(self, key, seconds):
+        """Per-task cost, so a slow sweep can be diagnosed without re-running it.
+
+        Recorded for BOTH drivers and always measured around the task body itself,
+        so parallel numbers are per-task compute and not wall-clock-with-queueing.
+        """
+        self.state.setdefault("task_seconds", {})[key] = round(float(seconds), 3)
+
     def put(self, key, value):
         self.state["results"][key] = value
         if key not in self.state["completed_tasks"]:
@@ -96,7 +488,7 @@ class Checkpoint:
 
 # ------------------------------------------------------------------- driver ---
 def build_config(args, preset):
-    return {
+    cfg = {
         "engine_version": __version__,
         "mode": "mine",
         "preset": preset["label"],
@@ -118,6 +510,23 @@ def build_config(args, preset):
         "downloads": bool(not args.no_download),
         "seed": int(args.seed),
     }
+    # --ladder changes the SAMPLING RULE, so its parameters must be part of the
+    # config hash: two runs that stop drawing under different rules are not the
+    # same experiment. The keys are inserted ONLY when the ladder is on, so a
+    # default run's config -- and therefore its hash, and therefore its resumable
+    # sessions -- is byte-identical to the pre-v2 engine.
+    #
+    # --jobs is NOT here, on purpose. See the module docstring.
+    if getattr(args, "ladder", False):
+        cfg["ladder"] = dict(M.LADDER_DEFAULTS)
+        for k in ("h", "chunk"):
+            v = getattr(args, "ladder_" + k, None)
+            if v is not None:
+                cfg["ladder"][k] = int(v)
+        # N_max is fixed HERE, before the run, from the preset alone. Nothing
+        # downstream may raise it for an interesting-looking test.
+        cfg["ladder"]["n_max"] = int(cfg["n_surrogates"])
+    return cfg
 
 
 def prepare(cfg, verbose=True):
@@ -181,7 +590,24 @@ def prepare(cfg, verbose=True):
     return ctx, base, y, window, counts, offset, marks, feats, dl_log, t0
 
 
-def run(cfg, verbose=True, resume=True, session_dir=None):
+def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
+        ledger_path=None, prepared=None):
+    """`prepared` reuses an already-built context; `ledger_path` redirects the ledger.
+
+    `prepared` is the tuple `prepare(cfg)` returns. It exists for the throughput
+    benchmark, which must time the TEST LOOP -- the only thing the parallel layer
+    changes -- and not the design build and ETAS fit, which are identical work in
+    every cell and would otherwise dominate the wall clock and flatten the speedup
+    into meaninglessness. Passing a context prepared under a DIFFERENT config would
+    silently mismatch the report, so ordinary callers leave it None.
+
+    It exists for ONE reason: the throughput benchmark runs the same sweep four
+    times to time it, and four benchmark lines in `engine/EXPLORE_COUNT.jsonl`
+    would inflate the reported multiplicity of real science with runs that were
+    never about a hypothesis. Benchmarks point this at scratch. Real runs leave it
+    None and get the real ledger. Either way, only the PARENT ever appends.
+    """
+    ledger_path = ledger_path or splits.EXPLORE_COUNT
     os.makedirs(M.MINE_DIR, exist_ok=True)
     ch = _cfg_hash(cfg)
     ckpt = None
@@ -203,7 +629,8 @@ def run(cfg, verbose=True, resume=True, session_dir=None):
 
     t_start = time.time()
     (ctx, base, y, window, counts, offset, marks, feats,
-     dl_log, t0) = prepare(cfg, verbose=verbose)
+     dl_log, t0) = prepared if prepared is not None else prepare(cfg,
+                                                                 verbose=verbose)
     ckpt.state["data_log"] = dl_log
     ckpt.state["window"] = [window.start, window.stop]
 
@@ -228,133 +655,177 @@ def run(cfg, verbose=True, resume=True, session_dir=None):
 
     rng = np.random.default_rng(cfg["seed"])
     n_surr = int(cfg["n_surrogates"])
+    ladder = cfg.get("ladder") or None
     resid = counts - offset
     days = np.arange(counts.size, dtype=np.float64)
-
-    # ---------------------------------------------------- (a) GLM sweep ----
-    for f in feats:
-        key = f"glm:{f.name}"
-        if ckpt.done(key):
-            if verbose:
-                print(f"  [skip, checkpointed] {key}")
-            continue
-        t_f = time.time()
-        rows = []
-        for lag in f.lags:
-            X = f.design(window, lag)
-            fit = M.glm_fit(X, counts, offset)
-            S = M.score_stat_all_shifts(X, counts, offset)
-            p_shift, n_used = M.empirical_p(S, n_surr, rng)
-            Sb = M.score_stat_block_bootstrap(X, counts, offset, n_surr, rng,
-                                              mean_block=f.block_days)
-            p_boot = M.bootstrap_p(S[0], Sb)
-            # circular shifts are provably powerless for a deterministic cycle, so
-            # for periodic features the block bootstrap IS the null; elsewhere both
-            # are valid and the more conservative one is reported.
-            p = p_boot if f.periodic else max(p_shift, p_boot)
-            b = np.asarray(fit["beta"])
-            amp = float(np.hypot(*b)) if f.kind == "phase" else float(abs(b[0]))
-            rows.append({
-                "feature": f.name, "family": f.family, "kind": f.kind, "lag": int(lag),
-                "test": "glm_poisson_offset_etas", "df": f.df,
-                "beta": fit["beta"], "se": fit["se"], "amplitude_log_rate": amp,
-                "pct_rate_modulation": 100.0 * (math.exp(amp) - 1.0),
-                "bits_per_event": fit["bits_per_event"],
-                "chi2_score": float(S[0]), "p_parametric": M.chi2_sf(S[0], f.df),
-                "p_circular_shift": p_shift, "p_block_bootstrap": p_boot,
-                "block_days": f.block_days,
-                "null": ("block-bootstrap (periodic feature)" if f.periodic
-                         else "max(circular-shift, block-bootstrap)"),
-                "p_raw": p, "n_surrogates": min(n_used, n_surr),
-                "converged": fit["converged"],
-            })
-        ckpt.put(key, rows)
-        if verbose:
-            best = min(rows, key=lambda r: r["p_raw"])
-            print(f"  glm {f.name:<24s} {len(rows):>2d} lags in "
-                  f"{time.time()-t_f:5.1f}s   best p={best['p_raw']:.4g} "
-                  f"(lag {best['lag']}, {best['pct_rate_modulation']:+.2f}%/sd)")
-
-    # -------------------------------------------------- (c) mark tests -----
     fe_day = marks["day"] - window.start
-    for f in feats:
-        key = f"marks:{f.name}"
-        if ckpt.done(key):
-            if verbose:
-                print(f"  [skip, checkpointed] {key}")
-            continue
-        vals = f.values[window][fe_day]
-        rows = []
-        for mk in ("mag", "depth"):
-            r = M.mark_test(vals, marks[mk], f.kind, n_surr, rng)
-            r.update({"feature": f.name, "family": f.family, "kind": f.kind,
-                      "mark": mk, "n_events": int(marks[mk].size)})
-            rows.append(r)
-        ckpt.put(key, rows)
-        if verbose:
-            print(f"  marks {f.name:<22s} mag p={rows[0]['p_raw']:.4g} "
-                  f"depth p={rows[1]['p_raw']:.4g}")
 
-    # ------------------------------------------------ (b) period scan ------
-    if not ckpt.done("period_scan"):
-        periods = np.exp(np.linspace(math.log(PERIOD_MIN), math.log(PERIOD_MAX),
-                                     int(cfg["n_periods"])))
-        peaks, meta = M.period_scan(days, resid, periods, n_surr, rng,
-                                    n_peaks=int(cfg["n_peaks"]), verbose=verbose)
-        lam0 = offset * (counts.sum() / offset.sum())
-        for pk in peaks:
-            pk["ladder"] = M.harmonic_ladder(counts, lam0, days, pk["period_days"],
-                                             max_period=counts.size / 3.0)
-            pk["feature"] = f"period_{pk['period_days']:.4g}d"
-            pk["family"] = 0
-            pk["test"] = "lomb_scargle_peak"
-            wp = pk["ladder"]["winning_period_days"]
-            ph = np.mod(days, wp) / wp
-            b = np.minimum((ph * 8).astype(int), 7)
-            Y = np.bincount(b, weights=counts, minlength=8)
-            L = np.bincount(b, weights=lam0, minlength=8)
-            ratio = Y / np.maximum(L * (Y.sum() / L.sum()), 1e-9)
-            pk["pct_rate_modulation"] = float(100.0 * (ratio.max() - ratio.min()) / 2.0)
-            pk["fold_ratio_by_phase_bin"] = [round(float(v), 4) for v in ratio]
-        ckpt.put("period_scan", {"peaks": peaks, "scan": meta,
-                                 "n_trial_periods": int(cfg["n_periods"]),
-                                 "period_range_days": [PERIOD_MIN, PERIOD_MAX]})
-    elif verbose:
-        print("  [skip, checkpointed] period_scan")
+    # The declared task list. Order is the v1 order (GLM sweep, mark tests, period
+    # scan) because the sequential driver's shared rng stream depends on it.
+    task_keys = ([f"glm:{f.name}" for f in feats]
+                 + [f"marks:{f.name}" for f in feats]
+                 + ["period_scan"])
+
+    # Every random stream in the session is addressed by a canonical test key.
+    # Two tests sharing a digest would share a stream, which is a silent
+    # correlation between "independent" nulls -- so it is checked, not assumed.
+    all_keys = []
+    for f in feats:
+        for lag in f.lags:
+            all_keys.append(M.test_key(cfg["seed"], f.name, "glm", lag=lag,
+                                       null_type="block_bootstrap"))
+        for mk in ("mag", "depth"):
+            all_keys.append(M.test_key(cfg["seed"], f.name, f"mark_{mk}",
+                                       null_type="block_bootstrap"))
+    all_keys.append(M.test_key(cfg["seed"], "period_scan", "period",
+                               null_type="ar1_and_permutation"))
+    digests = assert_task_keys_unique(all_keys)
+    n_declared_streams = len(all_keys)
+    if len(digests) != n_declared_streams:            # belt and braces
+        raise RuntimeError(f"test-key digest count {len(digests)} != "
+                           f"{n_declared_streams} declared streams")
+    if verbose:
+        print(f"test-key schema: {len(M.TEST_KEY_FIELDS)} fields "
+              f"{M.TEST_KEY_FIELDS}; {n_declared_streams} declared streams, "
+              f"{len(digests)} distinct digests (no collisions)")
+
+    n_jobs = resolve_jobs(jobs)
+    if verbose:
+        print(f"execution: --jobs {jobs} -> {n_jobs} process(es); "
+              + ("SEQUENTIAL, shared rng stream (v1-bit-identical audit baseline)"
+                 if n_jobs == 1 else
+                 "PARALLEL, per-task derived SeedSequence (order-independent, "
+                 "NOT bit-identical to --jobs 1)")
+              + (f"; ladder ON {ladder}" if ladder else "; ladder off"))
+
+    if n_jobs == 1:
+        # -------------------------------------------- (a) GLM sweep --------
+        for f in feats:
+            key = f"glm:{f.name}"
+            if ckpt.done(key):
+                if verbose:
+                    print(f"  [skip, checkpointed] {key}")
+                continue
+            t_f = time.perf_counter()
+            rows = glm_task(f, window, counts, offset, n_surr,
+                            lambda lag: rng, ladder, seed=int(cfg["seed"]))
+            ckpt.record_seconds(key, time.perf_counter() - t_f)
+            ckpt.put(key, rows)
+            if verbose:
+                best = min(rows, key=lambda r: r["p_raw"])
+                print(f"  glm {f.name:<24s} {len(rows):>2d} lags in "
+                      f"{time.perf_counter()-t_f:5.1f}s   best p={best['p_raw']:.4g} "
+                      f"(lag {best['lag']}, {best['pct_rate_modulation']:+.2f}%/sd)")
+
+        # ------------------------------------------ (c) mark tests ---------
+        for f in feats:
+            key = f"marks:{f.name}"
+            if ckpt.done(key):
+                if verbose:
+                    print(f"  [skip, checkpointed] {key}")
+                continue
+            t_f = time.perf_counter()
+            rows = marks_task(f, window, fe_day, marks, n_surr, rng, ladder,
+                              seed=int(cfg["seed"]))
+            ckpt.record_seconds(key, time.perf_counter() - t_f)
+            ckpt.put(key, rows)
+            if verbose:
+                print(f"  marks {f.name:<22s} mag p={rows[0]['p_raw']:.4g} "
+                      f"depth p={rows[1]['p_raw']:.4g}")
+
+        # ---------------------------------------- (b) period scan ----------
+        if not ckpt.done("period_scan"):
+            t_f = time.perf_counter()
+            res = period_task(counts, offset, days, resid, cfg, n_surr, rng,
+                              verbose=verbose)
+            ckpt.record_seconds("period_scan", time.perf_counter() - t_f)
+            ckpt.put("period_scan", res)
+        elif verbose:
+            print("  [skip, checkpointed] period_scan")
+    else:
+        payload = {
+            "feats": {f.name: f for f in feats}, "window": window,
+            "counts": counts, "offset": offset, "days": days, "resid": resid,
+            "marks": marks, "fe_day": fe_day, "seed": int(cfg["seed"]),
+            "n_surr": n_surr, "ladder": ladder, "cfg": cfg,
+        }
+        _run_tasks_parallel(ckpt, task_keys, payload, n_jobs, verbose=verbose)
+
+    # BULK INVARIANT. Every declared task must have a result before anything is
+    # reported. A silently short pool (cancelled future, swallowed error) would
+    # otherwise produce a report whose multiplicity denominator is a lie.
+    missing = [k for k in task_keys if not ckpt.done(k)]
+    if missing:
+        raise RuntimeError(
+            f"mine session incomplete: {len(missing)} of {len(task_keys)} declared "
+            f"tasks have no result ({', '.join(missing[:10])}"
+            f"{' ...' if len(missing) > 10 else ''}). Refusing to write a report.")
 
     # --------------------------------------------------- multiplicity ------
+    # ORDER-DETERMINISTIC REDUCTION. Every row carries `order_key`, a function of
+    # its test key alone (declared feature ordinal, test kind, lag, mark). The list
+    # is sorted by it before ANY aggregation, and every downstream sort uses it as
+    # the final tiebreak, so nothing -- not BH, not the ranked table, not the stub
+    # list -- can depend on the order in which a pool happened to return results.
     tests = []
-    for f in feats:
-        tests += ckpt.state["results"][f"glm:{f.name}"]
-        tests += ckpt.state["results"][f"marks:{f.name}"]
-    tests += ckpt.state["results"]["period_scan"]["peaks"]
+    for i, f in enumerate(feats):
+        for t in ckpt.state["results"][f"glm:{f.name}"]:
+            t["order_key"] = [0, i, int(t["lag"]), 0, f.name]
+            tests.append(t)
+        for j, t in enumerate(ckpt.state["results"][f"marks:{f.name}"]):
+            t["order_key"] = [0, i, -1, 1 + j, f.name]
+            tests.append(t)
+    for j, t in enumerate(ckpt.state["results"]["period_scan"]["peaks"]):
+        t["order_key"] = [1, j, -1, 0, str(t["feature"])]
+        tests.append(t)
+    tests.sort(key=lambda t: t["order_key"])
+
     p = np.array([t["p_raw"] for t in tests])
     q, passed = M.benjamini_hochberg(p, M.FDR_Q)
     for t, qq, pa in zip(tests, q, passed):
         t["bh_q"] = float(qq)
         t["passes_fdr"] = bool(pa)
     n_tests = len(tests)
+
+    # Per-test resolution floors, which are HETEROGENEOUS once the ladder is on
+    # (and already heterogeneous without it, because the enumeration floor is set
+    # by the record length while the Monte Carlo floor is set by the budget).
+    floors = [test_floor(t, n_surr) for t in tests]
+    for t, fl in zip(tests, floors):
+        t["p_floor"] = float(fl)
+    bh_thresh = M.FDR_Q / max(n_tests, 1)
+    n_above = sum(1 for fl in floors if fl > bh_thresh)
+    enum_floors = sorted({t["floor_enumeration"] for t in tests
+                          if t.get("floor_enumeration") is not None})
+    mc_floors = sorted({t["floor_monte_carlo"] for t in tests
+                        if t.get("floor_monte_carlo") is not None})
     if verbose:
         print(f"multiplicity: {n_tests} tests, BH-FDR at q={M.FDR_Q} -> "
               f"{int(passed.sum())} survive")
-        bh_thresh = M.FDR_Q / max(n_tests, 1)
         print(f"  BH threshold at the DECLARED count ({n_tests} tests): "
-              f"p <= {bh_thresh:.3g} for the smallest; surrogate resolution floor "
-              f"1/(N+1) = {1.0/(n_surr+1.0):.3g} with N={n_surr}. "
-              + ("The floor is BELOW the BH threshold: BH is resolvable here."
-                 if 1.0 / (n_surr + 1.0) <= bh_thresh else
-                 "The floor is ABOVE the BH threshold, so BH cannot resolve the "
-                 "smallest p at this surrogate budget -- S-8's sim-calibrated "
-                 "max-statistic over the declared family is the confirmatory "
-                 "instrument; the BH line is descriptive only."))
-        floor = 1.0 / (n_surr + 1.0)
-        k_min = int(math.ceil(floor * max(n_tests, 1) / M.FDR_Q))
-        n_at_floor = sum(1 for t in tests if t["p_raw"] <= floor + 1e-12)
+              f"p <= {bh_thresh:.3g} for the smallest.")
+        print(f"  RESOLUTION: **{n_above} of {n_tests} declared tests have a "
+              f"resolution floor ABOVE the BH threshold** and therefore cannot "
+              f"attain it at any effect size.")
+        print(f"    enumeration floors (exhaustive circular shifts, set by RECORD "
+              f"LENGTH, never laddered): "
+              + (", ".join(f"{v:.3g}" for v in enum_floors[:6]) or "none")
+              + (" ..." if len(enum_floors) > 6 else ""))
+        print(f"    Monte Carlo floors (surrogate budget, laddered when --ladder): "
+              + (", ".join(f"{v:.3g}" for v in mc_floors[:6]) or "none")
+              + (" ..." if len(mc_floors) > 6 else ""))
+        if n_above:
+            print(f"  For those {n_above}, S-8's sim-calibrated max-statistic over "
+                  f"the declared family -- not BH -- is the confirmatory "
+                  f"instrument; the BH line for them is descriptive only.")
+        n_at_floor = sum(1 for t, fl in zip(tests, floors)
+                         if t["p_raw"] <= fl + 1e-12)
+        k_min = int(math.ceil(min(floors) * max(n_tests, 1) / M.FDR_Q))
         if k_min > 1:
-            print(f"  WARNING: {n_surr} surrogates censor every p at the floor "
-                  f"{floor:.5f}. BH can reject only if >= {k_min} tests tie at that "
-                  f"floor ({n_at_floor} did). Survivors are provisional; rerun with "
-                  f"more surrogates before trusting the ordering.")
+            print(f"  WARNING: BH can reject only if >= {k_min} tests tie at the "
+                  f"smallest floor {min(floors):.5f} ({n_at_floor} tests sit at "
+                  f"their own floor). Survivors are provisional; rerun with more "
+                  f"surrogates before trusting the ordering.")
 
     # ------------------------------------------------- aliasing audit ------
     fmap = {f.name: f for f in feats}
@@ -366,12 +837,16 @@ def run(cfg, verbose=True, resume=True, session_dir=None):
         if ckpt.done(key):
             t["aliasing"] = ckpt.state["results"][key]
             continue
+        # Sequential mode keeps threading the shared stream (v1 behaviour). Parallel
+        # mode derives a stream from the audit's own key, so the audit result does
+        # not depend on how many survivors preceded it.
+        arng = rng if n_jobs == 1 else task_rng(cfg["seed"], key, "aliasing", None)
         if t["test"] == "glm_poisson_offset_etas":
             aud = M.aliasing_audit_glm(fmap[t["feature"]], t["lag"], window,
-                                       counts, offset, n_surr, rng)
+                                       counts, offset, n_surr, arng)
         elif t["test"] == "lomb_scargle_peak":
             aud = M.aliasing_audit_period(t["ladder"]["winning_period_days"], counts,
-                                          offset, marks["day_float"], n_surr, rng,
+                                          offset, marks["day_float"], n_surr, arng,
                                           float(window.start))
         else:
             aud = {"verdict": "N/A (mark test: no time lattice claim)"}
@@ -394,19 +869,14 @@ def run(cfg, verbose=True, resume=True, session_dir=None):
     # One ledger line per SESSION, not per invocation: a resumed session is the same
     # sweep continued, so counting it twice would inflate the reported multiplicity.
     if not ckpt.state.get("ledger_logged"):
-        splits._append_jsonl(splits.EXPLORE_COUNT, {
-            "ts": _dt.datetime.now(_dt.timezone.utc).isoformat(),
-            "kind": "mine",
-            "n_tests": n_tests,
-            "hash": splits.config_hash(cfg),
-            "config": cfg,
-            "session_dir": session_dir.replace("\\", "/"),
-        })
+        splits._append_jsonl(ledger_path,
+                             ledger_record(cfg, n_tests, session_dir))
         ckpt.state["ledger_logged"] = True
         ckpt.save()
         if verbose:
-            print(f"session ledger       -> {splits.EXPLORE_COUNT} "
-                  f"(kind=mine, n_tests={n_tests})")
+            print(f"session ledger       -> {ledger_path} "
+                  f"(kind=mine, n_tests={n_tests}, "
+                  f"n_declared_tests={n_tests})")
     elif verbose:
         print(f"session ledger       -> already logged for this session "
               f"(resumed run; multiplicity is not double-counted)")
@@ -445,7 +915,7 @@ def _amp_note(t):
 def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
                  base, window):
     path = os.path.join(session_dir, "report.md")
-    order = sorted(tests, key=lambda t: (t["bh_q"], t["p_raw"]))
+    order = sorted(tests, key=lambda t: (t["bh_q"], t["p_raw"], t.get("order_key", [])))
     n_pass = sum(t["passes_fdr"] for t in tests)
     L = []
     A = L.append
@@ -489,38 +959,53 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
           _count_by(feats, lambda f: f.family).items())))
     A(f"- **{state['n_tests']} tests** in this session; BH-FDR at q = {cfg['fdr_q']} "
       f"-> **{n_pass} survive**")
-    floor = 1.0 / (cfg["n_surrogates"] + 1.0)
     m = max(state["n_tests"], 1)
     bh_thresh = cfg["fdr_q"] / m
-    A(f"- **MULTIPLICITY, PRICED AT THE DECLARED COUNT, AND THE FLOOR THAT LIMITS IT "
-      f"(the two numbers, stated together, S-8 caveat).** Declared family = "
-      f"**{m} tests**; BH at q = {cfg['fdr_q']} demands **p <= {bh_thresh:.3g}** for "
-      f"the smallest. The surrogate resolution floor is **1/(N+1) = {floor:.3g}** at "
-      f"N = {cfg['n_surrogates']} surrogates. "
-      + (f"Floor <= BH threshold, so BH is resolvable at this budget."
-         if floor <= bh_thresh else
-         f"**The floor is ABOVE the BH threshold by a factor of "
-         f"{floor / bh_thresh:.1f}x**, so the BH line here is DESCRIPTIVE ONLY: no "
-         f"single test can attain the threshold it demands. Per S-8 -- this "
+    floors = [t.get("p_floor", 1.0 / (cfg["n_surrogates"] + 1.0)) for t in tests]
+    floor = min(floors) if floors else 1.0 / (cfg["n_surrogates"] + 1.0)
+    n_above = sum(1 for fl in floors if fl > bh_thresh)
+    enum_f = sorted({t["floor_enumeration"] for t in tests
+                     if t.get("floor_enumeration") is not None})
+    mc_f = sorted({t["floor_monte_carlo"] for t in tests
+                   if t.get("floor_monte_carlo") is not None})
+    A(f"- **MULTIPLICITY, PRICED AT THE DECLARED COUNT, AND THE FLOORS THAT LIMIT IT "
+      f"(stated together, S-8 caveat).** Declared family = **{m} tests**; BH at "
+      f"q = {cfg['fdr_q']} demands **p <= {bh_thresh:.3g}** for the smallest. "
+      f"**{n_above} of {m} declared tests have a resolution floor ABOVE that "
+      f"threshold** and therefore cannot attain it at any effect size. "
+      + ("Every test in this session is resolvable against the BH line."
+         if n_above == 0 else
+         f"For those {n_above}, the BH line is DESCRIPTIVE ONLY. Per S-8 -- this "
          f"program's multiplicity standard since round 1, and not BH -- the "
          f"confirmatory statistic for a scanned family is the MAXIMUM absolute "
          f"effect over the whole declared family compared to that same maximum "
          f"computed over sim catalogues through the identical code path, whose "
          f"family-wise p is resolvable at 1/(N+1) regardless of family size. Scan "
          f"size costs POWER, not RESOLUTION."))
+    A(f"- **the two floors are different things and are reported separately.** "
+      f"The ENUMERATION floor comes from the exhaustive circular-shift null and is "
+      f"a property of the RECORD LENGTH -- no surrogate budget can lower it, and "
+      f"the adaptive ladder never touches it: "
+      + (", ".join(f"{v:.3g}" for v in enum_f[:8]) or "n/a")
+      + (" ..." if len(enum_f) > 8 else "")
+      + f". The MONTE CARLO floor comes from the surrogate BUDGET (1/(N_max+1), "
+        f"where N_max is the PRE-DECLARED cap, not the number of draws a laddered "
+        f"test actually made): "
+      + (", ".join(f"{v:.3g}" for v in mc_f[:8]) or "n/a")
+      + (" ..." if len(mc_f) > 8 else "") + ".")
     k_min = int(math.ceil(floor * m / cfg["fdr_q"]))
-    n_at_floor = sum(1 for t in tests if t["p_raw"] <= floor + 1e-12)
-    A(f"- **surrogate resolution (read this before the table):** with "
-      f"{cfg['n_surrogates']} surrogates the smallest attainable empirical p is "
-      f"1/(N+1) = {floor:.5f}. Every p at that value is CENSORED -- the true p is "
-      f"somewhere at or below it -- so the BH q attached to it is an upper bound "
-      f"computed from a tie, not a measurement. "
+    n_at_floor = sum(1 for t, fl in zip(tests, floors)
+                     if t["p_raw"] <= fl + 1e-12)
+    A(f"- **resolution (read this before the table):** the smallest attainable "
+      f"empirical p anywhere in this session is {floor:.5f}. Every p at its own "
+      f"floor is CENSORED -- the true p is somewhere at or below it -- so the BH q "
+      f"attached to it is an upper bound computed from a tie, not a measurement. "
       + (f"**No test in this session can pass FDR at all** ({k_min} > "
          f"{m} tests would have to tie at the floor)."
          if k_min > m else
          f"At this resolution BH can only reject if at least {k_min} "
          f"{'test ties' if k_min == 1 else 'tests tie'} at the floor "
-         f"simultaneously; {n_at_floor} did."
+         f"simultaneously; {n_at_floor} sit at their own floor."
          + ("" if k_min == 1 else
             " A survivor list produced from a tie at the floor is provisional --"
             " rerun with more surrogates before believing the ordering.")))
@@ -723,6 +1208,38 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
       "`engine/tests/test_causality.py`.")
     A("6. **In-sample.** Every effect size here is fitted and evaluated on the "
       "exploration window. They are upper bounds, exactly as `--mode explore` is.")
+    lad_cfg = cfg.get("ladder")
+    if lad_cfg:
+        A(f"7. **ADAPTIVE SURROGATE LADDER WAS ON for this session** "
+          f"(`--ladder`, rule `{lad_cfg.get('rule')}`, h = {lad_cfg.get('h')}, "
+          f"N_max = {lad_cfg.get('n_max')}). Each test's Monte Carlo null was drawn "
+          f"until h surrogates reached its observed statistic; its p is then h/l, "
+          f"where l is the draw index of the h-th exceedance, or (1+c)/(1+N_max) if "
+          f"the cap was reached with c < h. That is the Besag & Clifford (1991) "
+          f"sequential Monte Carlo p-value, EXACTLY valid under optional stopping -- "
+          f"an ordinary MC p computed after peeking would not be. Uninteresting "
+          f"tests stop after {lad_cfg.get('h')} exceedances instead of consuming the "
+          f"full {lad_cfg.get('n_max')}; interesting ones still pay the full cap, so "
+          f"the Monte Carlo floor at the sharp end is unchanged.")
+        A(f"   - **N_max is fixed per declared stratum BEFORE the run** and depends "
+          f"only on the test key (feature, kind, lag). There is no rank-based "
+          f"escalation: no observed statistic, p-value or survivor list can raise a "
+          f"test's budget, because that would invalidate the sequential p-value.")
+        A(f"   - **The ladder applies to MONTE CARLO nulls only** (block bootstrap; "
+          f"AR(1) and permutation where used). It does NOT touch the exhaustive "
+          f"circular-shift enumeration, whose floor is a property of the record "
+          f"length. The two floors are reported separately in the configuration "
+          f"section above.")
+        A(f"   - Chunk size {lad_cfg.get('chunk')} is a VECTORISATION DETAIL, not a "
+          f"statistical stage: the exact stopping index is recovered inside "
+          f"whichever chunk trips the rule, so the answer does not depend on it. "
+          f"Per-test stopping detail is in the `ladder_stop` field of "
+          f"`checkpoint.json`. All stopping-rule parameters are part of the config "
+          f"hash: a run under a different rule is a different experiment.")
+    else:
+        A("7. **Adaptive surrogate ladder: OFF** (the default). Every test drew the "
+          "full surrogate budget; no optional stopping was applied, so the p-values "
+          "here are ordinary fixed-sample Monte Carlo p-values.")
     A("")
     A("## Power / bounds note")
     A("")
@@ -813,7 +1330,7 @@ def _wrap(text, width=88):
 def write_stubs(session_dir, cfg, tests):
     path = os.path.join(session_dir, "stubs.json")
     entries = []
-    for t in sorted(tests, key=lambda t: (t["bh_q"], t["p_raw"])):
+    for t in sorted(tests, key=lambda t: (t["bh_q"], t["p_raw"], t.get("order_key", []))):
         if not t["passes_fdr"]:
             continue
         entries.append({

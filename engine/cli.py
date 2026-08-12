@@ -290,8 +290,21 @@ def cmd_mine(args):
               f"{len(tl)-1} = {5*(len(tl)-1)}); the 4 provably lag-free phase "
               f"features stay at lag 0")
     print(f"FDR                  = Benjamini-Hochberg at q={cfg['fdr_q']}")
+    n_jobs = ms.resolve_jobs(args.jobs)
+    print(f"jobs                 = {n_jobs} process(es) "
+          + ("(sequential; shared rng stream = the v1 audit baseline)" if n_jobs == 1
+             else "(parallel; per-task derived SeedSequence, order-independent, "
+                  "NOT bit-identical to --jobs 1). Not in the config hash."))
+    if cfg.get("ladder"):
+        L = cfg["ladder"]
+        print(f"ladder               = ON, {L['rule']} h={L['h']} "
+              f"N_max={L['n_max']} (chunk={L['chunk']}, an implementation detail) "
+              f"-- IN the config hash (statistical choice). Applies to Monte Carlo "
+              f"nulls only, never to the exhaustive shift enumeration.")
+    else:
+        print(f"ladder               = off (full fixed surrogate budget per test)")
 
-    out = ms.run(cfg, verbose=True, resume=not args.new_session)
+    out = ms.run(cfg, verbose=True, resume=not args.new_session, jobs=args.jobs)
     print("-" * 78)
     print(f"MINE SESSION COMPLETE  {out['session_dir']}")
     print(f"  tests                = {out['n_tests']}")
@@ -363,6 +376,24 @@ def main(argv=None):
     mi.add_argument("--new-session", action="store_true",
                     help="do not resume an incomplete session with the same config")
     mi.add_argument("--seed", type=int, default=20260811)
+    mi.add_argument("--jobs", type=int, default=1,
+                    help="worker processes for the per-feature test loop. 1 (the "
+                         "default) is sequential and bit-identical to v1; 0 is auto "
+                         "= max(1, cpu_count()-2). EXECUTION ONLY -- not part of the "
+                         "config hash, and parallel runs use per-task derived RNG "
+                         "streams (see engine/mine_session.py docstring)")
+    mi.add_argument("--ladder", action="store_true",
+                    help="adaptive surrogate ladder: Besag-Clifford sequential "
+                         "stopping on the block-bootstrap null. Off by default. "
+                         "CHANGES THE CONFIG HASH when on, because it is a "
+                         "statistical choice")
+    mi.add_argument("--ladder-h", type=int, default=None,
+                    help="exceedances at which a laddered test stops (default 25)")
+    mi.add_argument("--ladder-chunk", type=int, default=None,
+                    help="vectorisation chunk size for ladder draws (default 200). "
+                         "An IMPLEMENTATION DETAIL, not a statistical stage: the "
+                         "exact stopping index is recovered inside the chunk, so "
+                         "changing this changes speed and nothing else")
     mi.set_defaults(fn=cmd_mine)
 
     args = p.parse_args(argv)
