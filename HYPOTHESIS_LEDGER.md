@@ -15163,3 +15163,63 @@ five pricing questions instead of answering them favourably to itself, and propo
 against its own interest — is a generator doing its job at the top of its range, and the correct
 adjudication of it is mostly arithmetic and sequencing rather than refusal. Zero entries refused.
 Appended to my own section; no existing line modified; nothing committed. The supervisor commits.*
+
+---
+
+## §P7-7. THE §P6-2(7) GPD CALIBRATION OUTCOME — the BCa re-attempt pre-declared, and the bar's own resolution corrected
+
+*2026-08-12, phase 2a shipped (commit `18e5fab`). The calibration harness rejected the GPD estimator at
+22/26 = 84.6% coverage against my 90% bar; `assert_calibrated` blocks `--gpd` without a passing
+artifact, so the path is complete, tested and unlicensed. Requested: pre-declare a BCa re-attempt per
+S-9. Three letters, and one correction to the bar that the builder is owed.*
+
+**First, the thing the builder did that is worth more than the result.** One correctness fix — the
+percentile bootstrap now resamples the full surrogate set and re-derives `u`, `ζ`, `ξ`, `β` per
+replicate, where the old interval conditioned on estimated quantities — and then a **stop**, with a
+refusal to tune the estimator to its own bar and a stated diagnosis of the next principled attempt.
+**That is the correct behaviour and it is rarer than a passing test.** The fix is a *correctness*
+repair (the old interval was wrong, not unlucky), so it does not count as an estimator attempt.
+
+**(a) Is the BCa swap admissible as a single pre-declared estimator change? — YES.** It is a
+principled change with a stated diagnosis that precedes the fix: all four misses are upper-edge
+under-coverage of a percentile bootstrap on a skewed tail quantity, which is precisely the failure
+mode bias-correction and acceleration exist to repair. Declared before the re-run, frozen in the
+config hash, reported whichever way it lands, it satisfies S-9 — **one declared value, no alternatives
+run.** What would make it inadmissible is trying BCa and percentile and studentised and reporting the
+best; that is the forking path, and it is not what is proposed.
+
+**(b) Same 27-comparison design and bars? — NO on the design, YES on the bars, and this is a
+correction in the builder's favour.** The recommendation is right that the bars must not move: **90%
+coverage and the 3× understatement ceiling stay exactly as §P6-2(7) wrote them.** Moving a bar after
+seeing a result is the one thing that would void the whole harness. But the *design* cannot stay,
+for two reasons that compound. **(i) It cannot resolve its own bar.** At n = 26 the standard error on
+a coverage of 0.9 is 5.9%, and `P(X <= 22 | true coverage = 0.90, n = 26) = 0.259` — the observed
+84.6% is **0.9 standard errors below the bar and entirely consistent with a true 90%**; the exact 95%
+interval on 22/26 runs **[0.675, 0.946]**, which contains the bar. The harness did the right thing by
+refusing to license, because an unresolved calibration is not a passing calibration — but the artifact
+must be labelled **UNRESOLVED AT THE DESIGN'S RESOLUTION**, not REJECTED, because 22/26 does not
+distinguish a broken estimator from a working one. **(ii) Re-running BCa on the same 26 comparisons
+tests the fix on the data that motivated it.** Both problems have one fix: **enlarge the decisive
+set.** Separating the observed 0.846 from the 0.90 bar at 2 SE requires
+`n >= 0.9·0.1/((0.90−0.846)/2)² = 125`, so the re-run scores **≥ 125 fresh comparisons** as the
+decisive set, with the original 26 retained, re-scored and reported **separately** as a frozen legacy
+subset that licenses nothing. The cost — ~125 brute-force references — is precisely what the 100–1000×
+throughput was built to make affordable, and spending it here is a better use of the first big
+parallel run than any feature in the catalog.
+
+**(c) How many re-attempts before REJECTED-STANDING? — This is the last estimator change, and the
+count starts now.** Agreed in substance, with the labels corrected: attempt 1 (percentile) is scored
+**UNRESOLVED**, not failed, so BCa is **attempt 1 of a properly-powered design and also the last one**.
+If BCa clears ≥ 90% coverage and ≤ 3× understatement on ≥ 125 fresh comparisons, the GPD path is
+licensed within §P6-2's existing conditions (CI-upper only, one-decade cap, mandatory label,
+brute-force confirmation of every extrapolated survivor — none of which this ruling touches). If it
+does not, the path is parked **REJECTED-STANDING**, `assert_calibrated` keeps blocking `--gpd`, and
+**a third estimator requires a §P6-2 amendment argued on its own merits** — not a third quiet swap.
+Parked is not dead: v2 loses nothing it has, since every survivor whose significance rested on
+extrapolation already required brute-force confirmation, and the ladder plus a declared `N_max`
+remains the resolution instrument. **The honest outcome of a rejected GPD path is a v2 that reports
+UNRESOLVED more often, which is a worse-looking report and a better one.**
+
+*Popper seat, 2026-08-12. Bars unchanged, design enlarged, one attempt remaining, and the first
+attempt relabelled from REJECTED to UNRESOLVED because the harness could not resolve its own
+threshold at n = 26. Appended to my own section; no existing line modified; nothing committed.*
