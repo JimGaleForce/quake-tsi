@@ -811,6 +811,27 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                  "PARALLEL, per-task derived SeedSequence (order-independent; "
                  "glm/marks NOT bit-identical to --jobs 1, period scan IS)")
               + (f"; ladder ON {ladder}" if ladder else "; ladder off"))
+    # PRE-FLIGHT MEMORY STATEMENT (v2 phase 1c). Each worker builds and holds its
+    # OWN cached Lomb-Scargle basis, so the bill is per-worker x --jobs. The
+    # per-worker ceiling is enforced inside `M.build_ls_basis`, which can only see
+    # one process; the AGGREGATE is only knowable here, so it is printed here,
+    # BEFORE the pool is created rather than after the machine starts swapping.
+    _basis_bytes = M.ls_basis_footprint_bytes(counts.size, int(cfg["n_periods"]))
+    if verbose:
+        print(f"cached Lomb-Scargle basis: {counts.size} days x "
+              f"{int(cfg['n_periods'])} trial periods = "
+              f"{_basis_bytes / 2**20:.1f} MiB per worker process "
+              f"(ceiling {M.LS_BASIS_MAX_BYTES / 2**20:.0f} MiB), "
+              f"{n_jobs * _basis_bytes / 2**30:.2f} GiB total at {n_jobs} "
+              f"process(es)")
+    if _basis_bytes > M.LS_BASIS_MAX_BYTES:
+        raise MemoryError(
+            f"the period grid for this config needs {_basis_bytes / 2**20:.0f} MiB "
+            f"of cached Lomb-Scargle basis PER WORKER, over the "
+            f"{M.LS_BASIS_MAX_BYTES / 2**20:.0f} MiB ceiling; at --jobs {n_jobs} "
+            f"that is {n_jobs * _basis_bytes / 2**30:.1f} GiB. Refusing before the "
+            f"pool is created. Cut n_periods, cut --jobs, or raise "
+            f"engine.mine.LS_BASIS_MAX_BYTES deliberately.")
 
     # The worker payload. Built for BOTH drivers: the sequential path runs the
     # period subtasks through the very same `dispatch_task`, which is what makes

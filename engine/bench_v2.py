@@ -40,7 +40,20 @@ Phase 1b decomposed it: the surrogate periodograms are now their own subtasks
 canonical-key machinery, so chunking is provably not a statistical stage. The
 ceiling line below is kept -- printed from the measured per-task seconds on every
 run -- because a headline speedup should never be readable without the granularity
-that bounds it.
+that bounds it. It bought 3.41x, which was 88-93% of a HARDWARE ceiling: the kernel
+itself was the wall.
+
+Phase 1c took the kernel. The cos/sin basis over (time grid, trial-period grid) is
+identical for the observed series and for every surrogate in a scan, so it is built
+once per worker process and each series then costs one BLAS pass
+(engine.mine.lomb_scargle_power). Measured on this machine: 261 ms -> 2.9 ms per
+7716 x 800 periodogram, a whole quick-preset period scan 102.5 s -> 1.9 s, with the
+quick preset's period p-values EXACTLY unchanged.
+
+Which moved the bottleneck, and the table below is now the only honest guide to
+where. Read `--scaling` before choosing a job count: at the quick preset the sweep
+is small enough that per-worker warm-up (including one ~0.66 s basis build per
+process that touches a period task) can cost more than the parallelism saves.
 
 WHY THE CELLS ARE NOT DIRECTLY COMPARABLE AS SCIENCE. The ladder cells do LESS
 WORK, on purpose -- that is the speedup being measured -- and their p-values come
@@ -167,6 +180,11 @@ def main(argv=None):
                     help="override the quick preset's surrogate count")
     ap.add_argument("--data-dir", default=datasets.DEFAULT_DATA_DIR)
     ap.add_argument("--verbose", action="store_true")
+    ap.add_argument("--scaling", default=None,
+                    help="comma-separated worker counts (e.g. 1,2,4,8,16,30). "
+                         "Runs the no-ladder sweep at each and prints the scaling "
+                         "curve. A headline speedup at one job count says nothing "
+                         "about where the curve bends, and the bend is the finding")
     a = ap.parse_args(argv)
 
     cells = [c.strip() for c in a.cells.split(",") if c.strip()]
@@ -272,18 +290,22 @@ def main(argv=None):
                       f"{st['amdahl_ceiling']:.2f}x on {par['jobs_actual']} "
                       f"workers.")
                 if got < 0.25 * st["amdahl_ceiling"]:
-                    print("  >>> The gap is NOT task granularity. On this machine "
-                          "the binding limit is the Lomb-Scargle kernel itself: "
-                          "scipy 1.18's `lombscargle` is pure numpy and allocates "
-                          "several (n_time x n_freq) float64 temporaries per call "
-                          "(~49 MB each at 7716 x 800), so the scan is "
+                    print("  >>> The gap is NOT task granularity; look at the "
+                          "stage table above for which stage now dominates. "
+                          "HISTORY: through phase 1b the binding limit was the "
+                          "Lomb-Scargle kernel -- scipy 1.18's `lombscargle` is "
+                          "pure numpy and allocates several (n_time x n_freq) "
+                          "float64 temporaries plus 2 x n_time x n_freq "
+                          "transcendentals PER CALL, so the scan was "
                           "memory-bandwidth bound and aggregate throughput "
-                          "saturates a few x above serial however many cores are "
-                          "used. Measured with ZERO engine code in the loop; see "
-                          "the phase-1b report. The next lever is a cached-basis "
-                          "periodogram (cos/sin of freqs x t are identical for "
-                          "every surrogate), which rewrites a statistical kernel "
-                          "and is a SCOPE DECISION, not a tuning knob.")
+                          "saturated a few x above serial however many cores were "
+                          "used. Phase 1c removed that: the cos/sin basis over "
+                          "(t, period grid) is identical for the observed series "
+                          "and every surrogate in a scan, so it is now built once "
+                          "per worker process and each series costs one BLAS pass "
+                          "(engine.mine.lomb_scargle_power). If the period stage "
+                          "is no longer the largest line above, the next lever is "
+                          "wherever the table says it is.")
         if st["amdahl_ceiling"] < 2.0:
             print(f"  >>> The measured parallel speedup above should be read "
                   f"against {st['amdahl_ceiling']:.2f}x, NOT against the worker "
@@ -300,7 +322,57 @@ def main(argv=None):
         print(f"  {r['cell']:<7} {r['config_hash']}  ladder="
               f"{'on' if r['ladder'] else 'off'}")
 
+    # ---- the jobs scaling curve -------------------------------------------
+    # Deliberately the SAME sweep at every point, ladder off, so the only thing
+    # varying is the worker count. Reported with parallel efficiency, because a
+    # speedup number without efficiency hides exactly where the curve stops paying.
+    scaling = []
+    if a.scaling:
+        js = [int(x) for x in a.scaling.split(",") if x.strip()]
+        print()
+        print("=" * 78)
+        print(f"JOBS SCALING CURVE (no ladder, {a.repeat} rep(s) per point, "
+              f"median reported)")
+        print("=" * 78)
+        for j in js:
+            runs = []
+            for r in range(a.repeat):
+                print(f"  jobs={j} rep {r + 1}/{a.repeat} ...", flush=True)
+                CELLS["_scale"] = {"jobs": j, "ladder": False,
+                                   "label": f"--jobs {j}"}
+                try:
+                    runs.append(_one("_scale", preset, args_kw, prepared,
+                                     verbose=a.verbose))
+                finally:
+                    CELLS.pop("_scale", None)
+            med = statistics.median(x["seconds"] for x in runs)
+            scaling.append({"jobs_flag": j,
+                            "jobs_actual": ms.resolve_jobs(j),
+                            "seconds": med,
+                            "all_seconds": [round(x["seconds"], 2) for x in runs],
+                            "n_tests": runs[0]["n_tests"],
+                            "n_pass": runs[0]["n_pass"],
+                            "task_seconds_total": sum(
+                                runs[0]["task_seconds"].values())})
+            print(f"    -> {med:.2f} s")
+        s1 = next((r["seconds"] for r in scaling if r["jobs_actual"] == 1), None)
+        print()
+        print(f"{'jobs':>6} {'seconds':>10} {'speedup':>9} {'efficiency':>11} "
+              f"{'compute-s':>10} {'tests':>6}")
+        print("-" * 60)
+        for r in scaling:
+            sp = (s1 / r["seconds"]) if s1 and r["seconds"] > 0 else float("nan")
+            eff = sp / r["jobs_actual"] if r["jobs_actual"] else float("nan")
+            print(f"{r['jobs_actual']:>6} {r['seconds']:>10.2f} {sp:>8.2f}x "
+                  f"{100 * eff:>10.1f}% {r['task_seconds_total']:>10.1f} "
+                  f"{r['n_tests']:>6}")
+        print("-" * 60)
+        print("compute-s is the SUM of per-task seconds measured inside the "
+              "workers; wall clock below it is the parallel gain, wall clock "
+              "above it is dispatch, pickling and per-process basis construction.")
+
     payload = {"engine_version": __version__, "preset": preset,
+               "scaling": scaling,
                "cpu_count": os.cpu_count(), "repeat": a.repeat,
                "prepare_seconds_excluded": round(prep_s, 2),
                "n_features": n_feats,

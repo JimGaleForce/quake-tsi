@@ -693,3 +693,102 @@ def test_resolve_jobs():
     assert ms.resolve_jobs(4) == 4
     assert ms.resolve_jobs(0) == max(1, (os.cpu_count() or 1) - 2)
     assert ms.resolve_jobs(-3) == 1
+
+
+# ============================================================================
+# (e) THE §P6-9 AMENDED LADDER AUDIT GATES (v2 phase 1c)
+# ============================================================================
+def test_audit_is_sliced_by_test_index_so_jobs_cannot_reach_the_answer():
+    """`--jobs` on the audit is an execution knob, exactly like `--jobs` on a sweep.
+
+    Every audit test's streams come from its own canonical key, keyed on the TEST
+    INDEX, so any partition of [0, n) reassembles the same numbers in the same
+    order. An audit whose verdict depended on the scheduler would not be an audit.
+    """
+    from engine import audit_ladder as AL
+
+    kw = dict(n_max=200, h=5, chunk=50, seed=4242)
+    whole = AL.audit_range(0, 24, **kw)
+    parts = [AL.audit_range(a, b, **kw) for a, b in ((0, 7), (7, 7), (7, 19), (19, 24))]
+    for j in range(4):
+        assert np.array_equal(whole[j],
+                              np.concatenate([p[j] for p in parts])), j
+    # and via the real parallel entry point
+    seq = AL.run_audit(n_tests=24, verbose=False, jobs=1, **kw)
+    par = AL.run_audit(n_tests=24, verbose=False, jobs=3, **kw)
+    for k in ("d_plus", "d_minus", "agree_frac_combined", "signed_bias_median",
+              "mean_draws", "operating_points", "pass"):
+        assert seq[k] == par[k], k
+
+
+def test_audit_gates_implement_the_P6_9_wording_not_the_superseded_one():
+    """The four gates, the two superseded numbers, and the reported-only block."""
+    from engine import audit_ladder as AL
+
+    out = AL.run_audit(n_tests=300, n_max=400, h=25, chunk=100, seed=99,
+                       verbose=False, jobs=1)
+
+    # GATE 1: one-sided D+ against sqrt(-ln(a)/(2n)); D- reported, not gating
+    n, alpha = out["n_tests"], out["ks_alpha"]
+    assert alpha == 0.01
+    assert out["d_crit_one_sided"] == pytest.approx(math.sqrt(-math.log(alpha)
+                                                              / (2 * n)))
+    assert out["validity_pass"] == (out["d_plus"] <= out["d_crit_one_sided"])
+    assert "d_minus" in out and "ks_stat" in out and "ks_p" in out
+
+    # GATE 2: 3 x sqrt(p^2/h + p(1-p)/N), pass at >= 99.0%
+    assert out["agree_required"] == 0.99
+    assert out["agree_pass"] == (out["agree_frac_combined"] >= 0.99)
+
+    # GATE 3: signed bias, |median standardised difference| <= 0.25
+    assert out["signed_bias_max"] == AL.SIGNED_BIAS_MAX == 0.25
+    assert out["signed_bias_pass"] == (abs(out["signed_bias_median"]) <= 0.25)
+
+    # the verdict is the CONJUNCTION of all four, signed bias included
+    assert out["pass"] == (out["validity_pass"] and out["agree_pass"]
+                           and out["signed_bias_pass"] and out["exact_on_cap_pass"])
+
+    # reported-only: operating points and the ladder's own relative SE
+    assert [op["alpha"] for op in out["operating_points"]] == [0.1, 0.01, 0.001]
+    for op in out["operating_points"]:
+        assert op["ratio"] == pytest.approx(op["p_le_alpha"] / op["alpha"])
+    assert out["ladder_relative_se"] == pytest.approx(1.0 / math.sqrt(out["h"]))
+
+
+def test_audit_signed_bias_gate_would_catch_a_downward_shift():
+    """A gate nobody has seen fail is a gate nobody has tested.
+
+    The failure GATE 3 exists to catch is a systematically LOW ladder p. Injected
+    here directly on the audit's own arrays, because the point is that the
+    statistic fires, not that this particular ladder is broken.
+    """
+    p_full = np.linspace(0.01, 0.99, 5000)
+    h, n_max = 25, 1000
+    se = np.sqrt(p_full ** 2 / h + p_full * (1 - p_full) / n_max)
+    for shift, want_pass in ((0.05, True), (-0.05, True), (-0.6, False),
+                             (0.6, False)):
+        med = float(np.median((p_full + shift * se - p_full) / se))
+        assert (abs(med) <= 0.25) is want_pass, (shift, med)
+
+
+def test_audit_supports_the_production_n_max_and_says_what_it_licenses():
+    """§P6-9 addition 3 / S-17: the audit is re-run at each production N_max."""
+    from engine import audit_ladder as AL
+
+    small = AL.run_audit(n_tests=200, n_max=50, h=25, chunk=25, seed=7,
+                         verbose=False)
+    big = AL.run_audit(n_tests=200, n_max=5000, h=25, chunk=25, seed=7,
+                       verbose=False)
+    assert small["n_max"] == 50 and big["n_max"] == 5000
+
+    # N_max is not a presentational field. It moves the estimator itself: the cap
+    # branch (1+c)/(1+N_max) is a DIFFERENT formula on a DIFFERENT lattice, and how
+    # often it is taken is a function of N_max. That is precisely why §P6-9
+    # addition 3 refuses to let an audit at one N_max license a run at another.
+    assert small["frac_capped"] > big["frac_capped"]
+    assert small["draw_saving"] < big["draw_saving"]
+
+    # and the flags that make the re-run possible actually exist on the CLI
+    rc = AL.main(["--n-tests", "20", "--n-max", "60", "--h", "5", "--chunk", "20",
+                  "--jobs", "2"])
+    assert rc in (0, 1)

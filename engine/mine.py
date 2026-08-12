@@ -1004,8 +1004,221 @@ def chi2_sf(x, df):
 
 
 # ============================================================ period scan ===
+# ------------------------------------------------------------------------------
+# THE CACHED-BASIS LOMB-SCARGLE KERNEL (v2 phase 1c). ONE KERNEL, NO FLAG.
+#
+# Phase 1b measured the ceiling and named the cause: `scipy.signal.lombscargle` is
+# pure numpy and allocates ~8 float64 temporaries of shape (n_time, n_freq) per call
+# -- about 49 MB EACH at 7716 x 800 -- so a periodogram is memory-bandwidth bound
+# and aggregate throughput saturates a few x above serial however many cores are
+# thrown at it (proven in phase 1b with zero engine code in the loop).
+#
+# Everything scipy computes from (x, freqs) alone is IDENTICAL for the observed
+# series and for all ~2 x n_mc surrogates of one scan. Reading scipy's own source
+# (scipy/signal/_spectral_py.py, 1.18.0) with uniform weights = 1/N and
+# floating_mean=False, the computation is:
+#
+#     CC0 = sum_j cos^2(w t_j)/N        SS0 = 1 - CC0      CS0 = sum_j cos sin /N
+#     tau = 0.5 * atan2(2 CS0, CC0 - SS0)
+#     C[k,j] = cos(w_k t_j - tau_k)     S[k,j] = sin(w_k t_j - tau_k)
+#     CC  = sum_j C^2/N (clipped >= epsneg)      SS = 1 - CC (clipped >= epsneg)
+#     YC  = sum_j (x_j/N) C[k,j]        YS = sum_j (x_j/N) S[k,j]
+#     YY  = sum_j (x_j/N) x_j
+#     power = 2 (YC^2/CC + YS^2/SS) * 0.5/YY
+#
+# The ONLY x-dependent quantities are YC, YS and YY. So tau, C, S, CC and SS are
+# built ONCE per (t, periods) pair and every subsequent series costs exactly one
+# BLAS matrix-vector product against the stacked basis plus one dot product. Per
+# periodogram that is one streaming read of the basis (~99 MB at the quick preset)
+# instead of ~8 allocate-write-read passes over the same footprint.
+#
+# WHY THERE IS NO --kernel FLAG, AND WHY THAT IS THE SAFER CHOICE. A per-call
+# kernel choice is exactly the structure that could let an observed statistic and
+# its surrogates be scored by different code, which would corrupt a rank while every
+# individual number stayed defensible. There is therefore ONE implementation of
+# `lomb_scargle_power` and no selector of any kind: `period_observed` and
+# `period_surrogate_maxima` cannot disagree because there is nothing to disagree
+# about. The licence for the change is §P6-5 (a deliberate kernel change) plus the
+# validation in engine/tests/test_mine_kernel.py: max relative deviation from
+# scipy.signal.lombscargle below 1e-10 over the full period grid on real and
+# synthetic series, and the quick-preset p-values unchanged.
+#
+# WHY THE BASIS IS NOT BATCHED OVER SURROGATES. Evaluating a whole chunk of
+# surrogates as one (n_time, n_chunk) matrix product would cut the basis traffic
+# further, but BLAS is free to sum a dgemm differently from a dgemv, so the answer
+# would acquire a dependence on the CHUNK SIZE at the last ulp -- and chunk size is
+# declared a pure execution knob, pinned by
+# test_mine_parallel.py::test_period_chunk_size_invariance. One series at a time is
+# bit-stable under every chunking, so that is what this does.
+# ------------------------------------------------------------------------------
+
+# Per-worker ceiling on ONE cached basis. The quick preset (7716 days x 800 trial
+# periods) needs 2 x 7716 x 800 x 8 B = 98.8 MB, so 30 workers hold ~2.9 GB, which
+# this machine has. The assertion exists for the grid nobody has run yet: at
+# n_periods=3000 (the `full` preset) the basis is 370 MB per worker and 30 workers
+# would want 11 GB. That must fail LOUDLY at the first build, naming the fix, rather
+# than swap the machine to death halfway through a sweep.
+LS_BASIS_MAX_BYTES = 512 * 1024 * 1024
+LS_BASIS_CACHE_MAX = 4               # entries kept per process
+LS_BASIS_BUILD_BLOCK = 64            # frequency rows built at once (transient only)
+LS_BASIS_ANNOUNCE_BYTES = 1 << 20    # print the footprint for bases above 1 MB
+
+_LS_BASIS_CACHE = {}                 # digest -> basis dict. PER PROCESS.
+_LS_BASIS_LAST = None                # (t_obj, periods_obj, basis) identity fast path
+
+
+def ls_basis_footprint_bytes(n_time, n_freq):
+    """Bytes ONE cached basis occupies: the stacked (2 n_freq, n_time) float64 array.
+
+    The (2 n_freq,) CC/SS vectors are four orders of magnitude smaller and are not
+    counted; this number is the one that decides whether jobs x workers fits in RAM.
+    """
+    return int(2 * int(n_time) * int(n_freq) * 8)
+
+
+def ls_basis_digest(t, periods):
+    """Content hash of the (time grid, period grid) pair. Stable across processes."""
+    t = np.ascontiguousarray(np.asarray(t, dtype=np.float64).ravel())
+    p = np.ascontiguousarray(np.atleast_1d(np.asarray(periods, dtype=np.float64)
+                                           ).ravel())
+    h = hashlib.sha256()
+    h.update(np.asarray([t.size, p.size], dtype=np.int64).tobytes())
+    h.update(t.tobytes())
+    h.update(p.tobytes())
+    return h.hexdigest()
+
+
+def build_ls_basis(t, periods, block=LS_BASIS_BUILD_BLOCK, announce=True):
+    """Build the x-independent half of the Lomb-Scargle periodogram, once.
+
+    Returns {"B": (n_time, 2 n_freq) float64 with columns [cos-cols | sin-cols]
+    already rotated by tau, "CC", "SS", "n_time", "n_freq", "bytes"}. Built in
+    frequency blocks so the TRANSIENT working set is `block` columns, not another
+    full copy.
+
+    THE LAYOUT IS SCIPY'S, DELIBERATELY, AND IT COST 1.2 ms PER PERIODOGRAM TO KEEP.
+    The obvious layout is (2 n_freq, n_time) with a row-wise matvec, which measured
+    3.08 ms against this one's 4.31 ms. It was rejected: it reduces every accumulation
+    to a different summation order from `scipy.signal.lombscargle`, and at the
+    degenerate Nyquist endpoint P = 2 d on an integer day grid -- where sin(pi j) is
+    identically zero, SS is clipped to machine `epsneg` and CS is pure round-off --
+    that turned a 1e-16 difference in CS into a 1.2e-8 RELATIVE difference in the
+    reported power. Harmless in fact (the point is a grid endpoint, never a local
+    maximum, five orders below the peak) but it would have shipped a validation
+    number of 1e-8 against a stated bar of 1e-10, i.e. an excuse. Keeping scipy's own
+    (n_time, n_freq) orientation and its exact dot-product sequence measures
+    9.2e-15 instead, with no excuse attached.
+    """
+    t = np.ascontiguousarray(np.asarray(t, dtype=np.float64).ravel())
+    periods = np.ascontiguousarray(
+        np.atleast_1d(np.asarray(periods, dtype=np.float64)).ravel())
+    n, nf = int(t.size), int(periods.size)
+    if n == 0 or nf == 0:
+        raise ValueError("Lomb-Scargle basis needs a non-empty time and period grid")
+    nbytes = ls_basis_footprint_bytes(n, nf)
+    if nbytes > LS_BASIS_MAX_BYTES:
+        raise MemoryError(
+            f"Lomb-Scargle cached basis would need {nbytes / 2**20:.0f} MiB per "
+            f"WORKER PROCESS ({n} time samples x {nf} trial periods x 2 x 8 B), "
+            f"over the {LS_BASIS_MAX_BYTES / 2**20:.0f} MiB per-worker ceiling "
+            f"(engine.mine.LS_BASIS_MAX_BYTES). Every worker holds its own copy, so "
+            f"the real bill is that number times --jobs. Fix by running fewer "
+            f"workers, cutting n_periods, or raising the ceiling DELIBERATELY after "
+            f"checking total RAM against --jobs.")
+
+    freqs = (2.0 * np.pi / periods).reshape(1, -1)
+    tcol = t.reshape(-1, 1)
+    weights = np.full((n, 1), 1.0 / n)         # scipy's normalised uniform weights
+    B = np.empty((n, 2 * nf), dtype=np.float64)
+    CC = np.empty(nf, dtype=np.float64)
+    SS = np.empty(nf, dtype=np.float64)
+    epsneg = float(np.finfo(np.float64).epsneg)
+    for a in range(0, nf, int(max(1, block))):
+        b = min(a + int(max(1, block)), nf)
+        # every line below is scipy/signal/_spectral_py.py's lombscargle body for
+        # uniform weights and floating_mean=False, in its order, on a column block
+        freqst = freqs[:, a:b] * tcol
+        coswt, sinwt = np.cos(freqst), np.sin(freqst)
+        cc0 = np.dot(weights.T, coswt * coswt)
+        ss0 = 1.0 - cc0
+        cs0 = np.dot(weights.T, coswt * sinwt)
+        tau = 0.5 * np.arctan2(2.0 * cs0, cc0 - ss0)
+        freqst_tau = freqst - tau
+        ct = np.cos(freqst_tau, out=coswt)
+        st = np.sin(freqst_tau, out=sinwt)
+        cc = np.dot(weights.T, ct * ct)
+        ss = 1.0 - cc
+        # scipy clips BOTH after forming SS = 1 - CC; replicate exactly, in order
+        cc[cc < epsneg] = epsneg
+        ss[ss < epsneg] = epsneg
+        B[:, a:b] = ct
+        B[:, nf + a:nf + b] = st
+        CC[a:b] = np.squeeze(cc, axis=0)
+        SS[a:b] = np.squeeze(ss, axis=0)
+    basis = {"B": B, "CC": CC, "SS": SS, "n_time": n, "n_freq": nf,
+             "bytes": nbytes, "digest": None}
+    if announce and nbytes >= LS_BASIS_ANNOUNCE_BYTES:
+        print(f"  [pid {os.getpid()}] Lomb-Scargle basis cached: {n} x {nf} "
+              f"= {nbytes / 2**20:.1f} MiB per worker process "
+              f"(ceiling {LS_BASIS_MAX_BYTES / 2**20:.0f} MiB)", flush=True)
+    return basis
+
+
+def ls_basis(t, periods):
+    """The cached basis for this (t, periods) pair, built at most once per process.
+
+    Two lookups, cheapest first: an IDENTITY check against the last basis used (which
+    is the hit in the inner surrogate loop, where the same two arrays are passed
+    hundreds of times), then a content digest. The identity path keeps references to
+    the arrays it matched, so an id() cannot be recycled underneath it.
+    """
+    global _LS_BASIS_LAST
+    last = _LS_BASIS_LAST
+    if last is not None and last[0] is t and last[1] is periods:
+        return last[2]
+    d = ls_basis_digest(t, periods)
+    basis = _LS_BASIS_CACHE.get(d)
+    if basis is None:
+        basis = build_ls_basis(t, periods)
+        basis["digest"] = d
+        if len(_LS_BASIS_CACHE) >= LS_BASIS_CACHE_MAX:
+            _LS_BASIS_CACHE.pop(next(iter(_LS_BASIS_CACHE)))
+        _LS_BASIS_CACHE[d] = basis
+    _LS_BASIS_LAST = (t, periods, basis)
+    return basis
+
+
 def lomb_scargle_power(t, x, periods):
-    """Normalised Lomb-Scargle power at the given trial periods."""
+    """Normalised Lomb-Scargle power at the given trial periods.
+
+    THE one kernel. Identical code for the observed statistic and for every
+    surrogate of every null, by construction: there is no selector to get wrong.
+    Numerically equivalent to `scipy.signal.lombscargle(t, x - mean(x), 2 pi/periods,
+    normalize=True)` to better than 1e-10 relative (validated, not asserted).
+    """
+    x = np.asarray(x, dtype=np.float64)
+    x = x - x.mean()
+    bas = ls_basis(t, periods)
+    if x.size != bas["n_time"]:
+        raise ValueError(f"series has {x.size} samples, time grid has "
+                         f"{bas['n_time']}")
+    nf = bas["n_freq"]
+    y = x.reshape(-1, 1)
+    wy = y * (1.0 / bas["n_time"])             # scipy's weights_y, uniform weights
+    z = np.dot(wy.T, bas["B"])                 # [YC | YS], one streaming pass
+    yc, ys = z[0, :nf], z[0, nf:]
+    yy = float(np.dot(wy.T, y)[0, 0])
+    pgram = 2.0 * (yc * yc / bas["CC"] + ys * ys / bas["SS"])
+    return pgram * (0.5 / yy)
+
+
+def lomb_scargle_power_scipy(t, x, periods):
+    """The pre-1c kernel, kept ONLY as the validation reference. Never called in a run.
+
+    This is deliberately not reachable from any scan: it exists so
+    engine/tests/test_mine_kernel.py can measure the deviation of the shipped kernel
+    against the library it replaced, and so a future reader can re-measure it.
+    """
     from scipy import signal
     x = np.asarray(x, dtype=np.float64)
     x = x - x.mean()
