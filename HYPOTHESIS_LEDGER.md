@@ -14262,3 +14262,421 @@ no "first" language anywhere; S&A own the California tidal bound; ours is the MD
 replication row at 6.6% worst-case.
 
 *Supervisor seat, 2026-08-12. One gate closed by delegated read; verdicts recorded before drafting begins.*
+
+---
+
+# VERDICTS (Popper) — Round 5: the EQ-24 miner v2 statistical machinery, ruled before it becomes default
+
+*2026-08-12. Five statistical questions on the v2 build (process-pool parallelism, 100–1000× test
+throughput), ruled BEFORE the machinery is wired into defaults. The engineering needed no ruling and
+got none. Four rulings are PASS-WITH-CONDITIONS and one carries a hard reframe (§P6-4). Five counted
+acceptance invariants (R1–R5) and one CANDIDATE standard (S-17) appended. Appended to my own
+section; no other persona's content touched, no existing line modified. Nothing committed.*
+
+## §P6-0. THE FRAME, AND WHAT I VERIFIED THIS SESSION
+
+**The frame, stated once so every ruling below inherits it.** The miner is a GENERATOR. Its outputs
+cannot be quoted; per §P5-6, until G-M1 clears even the 2026-08-11 ~5.6% bound is quotable only in
+§P5-1's form and may not be entered for or against any ledger entry. So these five questions are not
+*"is this good enough to claim from"* — they are ***"does this machinery preserve the ability to make
+a claim later."*** That is a lower bar in one direction and a much higher one in another: a generator
+that silently mis-calibrates its own ranking spends the holdout hashes of everything downstream of it.
+
+**The standing multiplicity ruling applies unchanged and three of the five questions get easier once
+it is honoured.** §P5-5(1): the confirmatory instrument for any scanned family is **S-8's
+sim-calibrated max-statistic**, not BH; BH stays as the descriptive per-test reading. A family-wise
+max-statistic p is resolvable at 1/(N+1) **regardless of family size**. v2 must compute and print it,
+per stratum and globally — not BH alone.
+
+**Read in full this session:** `engine/mine.py` (1,162 lines, all four scoring paths and both null
+constructions), `engine/SPEC.md`, `engine/HOLDOUT_LOG.jsonl`, `k080_census.py`,
+`results_k080_census.json`, and my own §§P5-0..P5-8 plus S-8, S-9, S-10, S-15 and §K87-0(a)–(d).
+
+**Two quantities re-derived rather than accepted, because two findings turn on them.** Both are
+written out below in full so they are checkable from this ledger alone.
+
+**Re-derivation 1 — the miner's per-cell power floor, in the units of the miner's own statistic.**
+§P5-0's Schuster MDA table gives two independent points: A = 1.835% at N = 46,585 and A = 2.92% at
+N = 18,389. Solving for the constant in A·√(N/2):
+
+    0.01835 × √(46585/2) = 0.01835 × 152.62 = 2.801
+    0.02920 × √(18389/2) = 0.02920 ×  95.91 = 2.801
+
+The constant is **2.80 on both points, to three digits**, so the miner's minimum detectable
+zero-to-peak modulation in a cell holding N events is
+
+    **A_min(cell) = 2.80 × √(2/N) = 3.96 / √N**
+
+Inverting: a 20% per-cell modulation needs **N ≥ (3.96/0.20)² = 392 events in that cell**; a 10%
+modulation needs **N ≥ 1,568**. Hold those two numbers; §P6-4 Finding B is nothing but them applied
+to the catalogue's own event budget.
+
+**Re-derivation 2 — the K-080 census measurability window sits inside the holdout.** From
+`results_k080_census.json`: `etas.fit_window_day_index = [365, 8081]` and
+`provenance.catalog_load_report.span_days = 11543`, so the exploration window is day index
+**[0, 8081]** of 11,543 (the 70% split) and the ETAS burn-in removes days 0–364, leaving the miner's
+7,716-day window. The census's trailing window is `['2026-05-12T00:00:00+00:00',
+'2026-08-10T00:00:00+00:00']`, 90 days ending at the final catalogue day — i.e. day index
+**[11453, 11542]**. From `k080_census.py:118-124`:
+
+    n_obs = w @ counts[:, lo:last_day + 1].sum(axis=1)
+    Lam   = w @ lam[:,    lo:last_day + 1].sum(axis=1)
+    measurable = Lam >= LAMBDA_FLOOR          # LAMBDA_FLOOR = 4.0
+
+`lo = 11453`, `last_day = 11542`. **The measurability filter that defines the 1,039 cells is
+evaluated on days 11453–11542, which lie wholly inside the holdout 30%.** ETAS *parameters* are
+exploration-fitted and never refit — that part is clean — but `lam` is a **conditional** intensity:
+its value over those 90 days is driven by the events that occurred in those 90 days. Consequence in
+§P6-4 Finding A.
+
+---
+
+## §P6-1. THE ADAPTIVE SURROGATE LADDER — PASS-WITH-CONDITIONS
+
+Besag & Clifford (1991) sequential Monte Carlo is the right instrument and is exactly valid under
+optional stopping. **But the ladder as proposed — "tests with running p below a threshold escalate,
+200 → 2,000 → 10,000" — is not Besag–Clifford, and the difference is the whole ruling.** A rule that
+continues while the running p looks small and then reports `(1+c)/(1+n_final)` with a data-dependent
+`n_final` is **anti-conservative**. BC's validity lives entirely in its estimator, not in its
+escalation pattern.
+
+1. **The stopping rule is Besag–Clifford, exactly.** Draw surrogates (batched is fine) until the
+   **h-th exceedance** (`S_surr >= S_obs`) or until `N_max`. Report
+   **`p = h/n`** if the h-th exceedance occurred at draw `n`; **`p = (1+c)/(1+N_max)`** if the cap
+   was reached with `c < h` exceedances. No other estimator, and no running-p threshold anywhere.
+   `N0 = 200` is then not a statistical stage at all — it is a **chunk size**, an implementation
+   detail of batching, and the report must describe it as such.
+2. **`h >= 20`.** The relative standard error of a BC p-value is `1/√h`: 32% at h = 10, 22% at h = 20.
+   A generator whose product is a **ranking** cannot afford 32% noise on the quantity it ranks by.
+   Declare `h`, the chunk schedule and `N_max` in the config hash.
+3. **One `N_max` per declared stratum, frozen before the run.** If tiered, tier assignment is a
+   function of the **test key only** (feature, kind, lag, cell) — never of any observed statistic and
+   never of a test's rank among other tests. Rank-based promotion ("the top 500 escalate") makes `n`
+   a function of other tests' data and BC's proof does not cover it. If rank-based promotion is
+   wanted, the promoted tests get a **fresh independent brute-force run** and report *that* p; the
+   screening p is discarded from the inferential path and retained only in the record.
+4. **The ladder applies only to Monte Carlo nulls** — block bootstrap, AR(1), permutation, ETAS-sim.
+   It does **not** apply to `score_stat_all_shifts` / `empirical_p`, which is an exhaustive
+   enumeration over admissible circular shifts. Its floor `1/(n_admissible+1)` is a property of the
+   record length, not of compute. Print the enumeration floor and the MC floor as **separate**
+   quantities; at 10⁶ tests they will otherwise be read as one.
+5. **FDR compatibility.** BC p-values are valid (super-uniform under the null), so BH on them remains
+   conservative, unchanged. But the **p floor is now heterogeneous across tests**, so the engine's
+   existing floor-vs-BH-threshold line becomes a per-stratum count:
+   *"K of M declared tests have a resolution floor above the BH threshold and therefore could not
+   have been rejected whatever the data."* At v2 scale that number is the difference between a null
+   result and no test at all.
+6. **Acceptance test before the ladder ships as default (see R1, binding).** Uniformity audit on
+   ≥5,000 null-drawn tests (take a surrogate as the "observed" statistic, identical code path):
+   (a) KS distance of ladder p's from U(0,1) not significant at 0.01; (b) on the same 5,000, ladder p
+   and full-`N_max` p agree within `3·√(p(1−p)/n)` for ≥99% of tests.
+
+**Pricing.** The ladder costs **zero multiplicity** — it changes no test count. It is a config-hash
+declaration, not a test-count declaration. The report must say so, so nobody prices it twice.
+
+---
+
+## §P6-2. GPD TAIL EXTRAPOLATION — PASS-WITH-CONDITIONS, and the conditions are severe
+
+Knijnenburg et al. (2009)-style GPD tail fitting is legitimate and is the field's standard answer to
+this exact problem. But **this program has already voided one estimator for precisely this sin**:
+§P5-8 killed `exp(Δτ/Aσ)` as a power calculator because a law fitted at 7–347 kPa was being quoted at
+0.3 kPa. A GPD p quoted a decade below the data that fitted it is the same manufacture in a different
+coordinate.
+
+1. **Goodness-of-fit gate, declared before the run.** Threshold `u` = the declared top 10% of
+   surrogate statistics; GPD by MLE. Gate on **both**: (a) Anderson–Darling of the exceedances
+   against the fitted GPD, `p_AD >= 0.05`; (b) **shape stability** — refit at top {5%, 10%, 20%} and
+   require ξ to agree across all three within its own bootstrap CI. Fail either → **no
+   extrapolation**; the p is reported `UNRESOLVED (< 1/(N_max+1))` and the test is **ineligible for
+   BH rejection**.
+2. **Never a point estimate.** Quote the **upper end of the 95% bootstrap CI** of the extrapolated p
+   — the conservative direction. That number, and not the point estimate, is what enters any
+   downstream step.
+3. **One-decade cap.** No extrapolated p below `0.1/(N_max+1)`. Beyond one decade the shape parameter
+   dominates the answer and the CI stops meaning anything. Below the cap: `UNRESOLVED`, never "very
+   significant".
+4. **GPD is FORBIDDEN on the all-shifts null.** The ~8,000 circular-shift statistics are strongly
+   dependent across neighbouring shifts; the GPD's iid-exceedances assumption fails hardest exactly
+   there. Permitted only on independently generated surrogates (block bootstrap, AR(1), permutation,
+   ETAS-sim).
+5. **Mandatory label, on every row and in the headline.** `p_method ∈ {MC_RESOLVED,
+   GPD_EXTRAPOLATED, UNRESOLVED}` in `stubs.json`, in `report.md`, and as a three-number census in
+   the banner. A reader must never have to infer which kind of number they are looking at.
+6. **The confirmation rule — the load-bearing one.** BH runs once on the full vector with GPD rows
+   entered at their **CI-upper** value. **A survivor labelled `GPD_EXTRAPOLATED` is not a survivor.**
+   It is a *candidate*, and it becomes a stub only after a targeted brute-force MC on that single
+   test at `N >= 10/p_gpd`, resolving the p directly. This is affordable precisely because selection
+   has reduced it to a handful of tests — which is the entire economic argument for the ladder, spent
+   where it belongs. Only the brute-force p is written to `stubs.json`.
+7. **Calibration before default (see R1; this is G-M1's logic applied to a p-value estimator).** On
+   ≥15 representative tests spanning all three test kinds, compare the GPD-at-2,000-surrogates CI
+   against a brute-force p at `N = 10⁶`. Accept only if the CI covers the brute-force p in ≥90% of
+   cases **and never understates it by more than 3×**. *An instrument that has not demonstrated
+   recovery in the range it reports in may not report there* — the same rule G-M1 arm (ii) imposes on
+   the miner, applied to the estimator instead of the pipeline. Generalised as S-17 below.
+
+---
+
+## §P6-3. STRATIFIED BH — PASS-WITH-CONDITIONS, with one correction to the stated motive
+
+**The stated motive — "so dead families do not tax live ones" — is not what per-stratum BH at a flat
+q buys, and the arithmetic matters.** Applying BH at level `q` independently within each of `S`
+pre-specified families controls the **average over families** of FDR (Benjamini & Bogomolov 2014),
+**not** the overall FDR across all tests. Overall control requires the weighted-BH constraint:
+
+1. **The global accounting identity, enforced in code:**
+
+       Σ_s ( m_s × q_s )  ==  m × q            (m = Σ_s m_s ,  q = 0.10)
+
+   This is weighted BH with pre-specified weights and it controls global FDR at `q` exactly. The
+   engine **asserts the identity and refuses to run if it fails**. The table `(stratum, m_s, q_s,
+   threshold_s)` is printed in the report.
+2. **The honest trade, stated in the report.** Under this identity a dead family **still** consumes
+   budget through its `m_s`. The only way a live family gets more is if another gets **less**, and
+   that reallocation is a **prior**: frozen in the config hash with its justification (physics, prior
+   ledger result) written into the config's own note field **before** the run. Reallocating after
+   seeing which strata look alive is S-9's forking path with extra steps, and is forbidden.
+3. **Strata frozen in the config hash before the run**, defined as
+   `(feature_family × test_kind [× region, per §P6-4])`, with `m_s` a declared integer per stratum.
+   Tests that error out count as **non-rejections against their declared `m_s`**; the denominator is
+   the declaration, not the execution. This preserves the miner's existing "declared count" discipline.
+4. **The anti-repartition guarantee is S-8, not BH.** The report carries, per stratum **and
+   globally**, the sim-calibrated max-statistic p (§P5-5(1)). **The global max-statistic p is
+   invariant to how the family is partitioned** — that is exactly what makes stratification a
+   discipline rather than a knob. Any cross-stratum statement ("survivors in 3 of 8 strata") is
+   printed adjacent to the global max-statistic p and the full stratum table. **No stratum may be
+   reported alone**, without its `m_s`, its `q_s` and the global figures.
+5. **Re-partitioning is a new session**: new config hash, new `EXPLORE_COUNT.jsonl` line. The prior
+   partition's report is neither deleted nor amended.
+
+---
+
+## §P6-4. TRANCHE-2 (PER-CELL BATTERY) — PASS-WITH-CONDITIONS, one condition being a hard reframe. Two independent findings against the design as posed.
+
+**The diagnosis is right and I endorse it.** §K87-0(d)(i), adopted in §P5-1, states that the bound is
+global-aggregate and that *"a coherent regional signal with region-dependent phase is cancelled by the
+domain sum before any test runs."* That blind spot is real and worth killing. **The proposed cure has
+two problems**, and the second is fatal to the design as written.
+
+### Finding A — the K-080 census cell list is holdout-contaminated. It may not be the selector.
+
+Established by Re-derivation 2 above: the 1,039-cell `measurable` set is defined by `Λ ≥ 4` evaluated
+over day index **[11453, 11542]**, wholly inside the holdout 30%, on a **conditional** ETAS intensity
+driven by the events in that window. **So the cell list is a function of holdout-window seismicity —
+specifically of recent local rate, which is the miner's target variable.**
+
+Answering the question exactly as it was asked:
+
+- **No, it does not contaminate the already-spent quiescence holdout hash** (`1afa6cdc…`, spent
+  2026-08-10). A spent hash cannot be retro-spoiled, and the miner spends none — `mine` runs on the
+  exploration window and no holdout hash may be spent from mine mode (SPEC §4, EQ-24 amendment). The
+  census's own scoring is prospective (events after the 2026-08-10 census instant), which is a fresh
+  window by construction, exactly as `scoring_protocol.holdout_note` states. **That reasoning is
+  correct for the census and does not transfer to the miner.**
+- **Yes, it contaminates any FUTURE holdout test whose cell set descends from this list.** Selecting
+  mining cells on end-of-record rate correlates the selection with holdout-window rate, and rate is
+  the target. That is the exact leakage class the 70/30 split exists to break, arriving through a
+  side door rather than the front.
+
+**Rule 4.1.** The tranche-2 cell/region set is derived from **exploration-window data only**: cells
+active in `[365, 8081]`, event counts computed on that window. The K-080 census list may be used as a
+**cross-check** (report the overlap fraction) and never as the selector. Note also a plain mismatch
+that would bite regardless: the census is a **0.5°** grid (`k080_census.py:62`), the engine a **1°**
+grid — the two lists are not even the same objects.
+
+### Finding B — under S-15, a per-cell battery on global M ≥ 4.5 is almost entirely UNMEASURABLE, and the number is computable now.
+
+S-15 requires the power floor **in the units of the statistic**, declared before the run. The census's
+floor (Λ ≥ 4 over a 90-day neighbourhood count) is a floor for a **different statistic**; importing it
+as the miner's floor is a category error independent of Finding A.
+
+The miner's floor is Re-derivation 1: `A_min(cell) = 3.96/√N_cell`, so **N ≥ 392** for a 20%
+modulation and **N ≥ 1,568** for 10%. The catalogue holds **69,918 events across 4,329 active cells**
+(`provenance.catalog_load_report.n_events`, `domain.n_cells_active`) — a mean of **≈ 16 events per
+cell**.
+
+**A per-cell battery at M ≥ 4.5 is therefore not power-limited, it is power-absent.** S-15's mandatory
+headline fraction would read **>99% UNMEASURABLE**, and a ~1,000× multiplicity would be paid almost
+entirely for tests that could not reject at any effect size. This is the K-076 Colombia cell
+(Λ ≈ 1.7, rendered anyway) at a thousand-fold scale, and S-15 exists because of that cell.
+
+### The reframe, and it is cheaper than the thing it replaces
+
+**Rule 4.2 — the primary blind-spot kill costs ~1 test per (feature, lag), not 1,000, and this is
+what is green-lit.** The problem is **phase heterogeneity**; the cure for phase *cancellation* is a
+**phase-incoherent statistic**, not more tests. Partition the domain into `R` pre-declared regions,
+compute the per-region 2-df score statistic, and **sum them**. The sum is a **2R-df quadratic form
+that adds regardless of relative phase** — it retains the full event count and is exactly blind to
+the cancellation §K87-0(d)(i) identified. One test per (feature, lag), declared partition frozen in
+the hash. This is strictly better than the per-cell battery at killing the named blind spot and costs
+nothing in multiplicity.
+
+**Rule 4.3 — the per-region battery, for identification as well as detection**, runs at `R ≈ 12–24`
+regions chosen for phase coherence (longitude sector and/or tectonic province), the choice rule
+written down per S-9 with **one value and no alternatives run**. At `R = 20` the mean is ≈ 3,500
+events per region → `A_min ≈ 3.96/√3500 = 6.7%`, comparable to the existing global ~5.6% bound. That
+is a real instrument. Multiplicity ≈ 20×, not 1,000× — and §P6-1..§P6-3 stop straining.
+
+**Rule 4.4 — if the literal per-cell battery is run anyway**, and I do not object to running it (v2's
+throughput makes it cost compute, not credibility), it runs **EXPLORATORY-UNPRICED**: every cell
+reported with its `N_cell` and its `A_min`; the UNMEASURABLE fraction in the headline per S-15;
+UNMEASURABLE cells scored neither way; and **no cell below its declared floor may emit a stub**. Do
+not render a value in a cell where the statistic cannot resolve it.
+
+**Rule 4.5 — declaration and pricing, as asked.** Cell/region set, per-cell test count, and the
+**total declared test count as a single integer**, all frozen in the config hash before the run.
+Exploration window only; no holdout hash; the same 70/30 discipline; strata per §P6-3(3) include
+region.
+
+**Rule 4.6 — spatial dependence is declared, not assumed away.** If neighbourhood aggregation is used
+(the census's 166.79 km neighbourhoods on 0.5° cells overlap heavily), cells are strongly dependent.
+BH survives positive dependence under PRDS; the S-8 max-statistic handles it **exactly and without
+assumption**. One more reason the max-statistic is the confirmatory number.
+
+**Rule 4.7 — the generator-not-evidence banner, at this scale, adds five lines.** The existing
+`GENERATOR_NOT_EVIDENCE` and `AMPLITUDE_HONESTY` text stays verbatim. Added:
+
+1. **Declared test count**, and the number of survivors expected by chance at the operating threshold
+   (`q × m`). At 10⁶ declared tests with q = 0.1 the reader must see that before the ranked list.
+2. **S-15 line**: measurable / unmeasurable counts and fraction, in the headline, per stratum.
+3. **Winner's-curse line** — the biggest genuinely new hazard v2 introduces, and nobody asked for it.
+   At 10⁶ tests every quoted effect size is the maximum of a huge search and is **upward-biased by
+   selection**. Either report a selection-debiased estimate, or label every amplitude
+   `SELECTION-BIASED UPPER BOUND` and print alongside it the median effect among survivors of an
+   equal-sized **null** run. Without this, v2's headline amplitudes will exceed v1's for purely
+   combinatorial reasons and someone will read that as a finding.
+4. **p-method census** (§P6-2(5)) and the resolvability count (§P6-1(5)).
+5. **G-M1 restated at scale**: no v2 output may be entered for or against any ledger entry until G-M1
+   clears; and per §P5-6 arm (ii), **v2 may not report a bound in any band, or at any regional/cell
+   aggregation level, where it has not demonstrated planted-signal recovery at that band and that
+   aggregation.** The planted-signal test is re-run **per region**, because `N` per region is an order
+   of magnitude smaller and recovery is an `N`-dependent property.
+
+---
+
+## §P6-5. RNG / DETERMINISM UNDER PARALLEL EXECUTION — PASS-WITH-CONDITIONS
+
+Per-task `numpy.random.SeedSequence` spawned from the test key is the correct design, and losing
+bit-identity with v1's sequential stream is a non-issue **provided the invariance audit below passes**.
+Determinism independent of pool scheduling is worth more than byte-compatibility with a superseded
+build. Retaining v1-exact sequential mode for the audit is right and is required to stay runnable.
+
+1. **The spawn key is a hash of the canonical JSON of the COMPLETE test key** — master seed, feature
+   name, test kind, lag, region/cell id, ladder rung index, harmonic rung, **binning width** (the
+   aliasing audit re-tests at 1/2/7 d and must not reuse a stream), and null type. Not a tuple whose
+   ordering could collide. **Assert no collisions**: collect all key hashes, check
+   `len(set) == n_declared`, fail loudly.
+2. **Ladder streams must be reproducible across process boundaries.** Either spawn one child
+   `SeedSequence` per rung from the test's own sequence and take the union of draws, or require exact
+   skip-ahead. Either way, a unit test must show that rung-2 draws are identical whether rungs 1 and 2
+   ran in one process or two. Without this, BC's `n` is not reproducible and neither is the p.
+3. **Order-deterministic reductions.** Results are **sorted by test key** before any global
+   aggregation (BH, max-statistic, GPD pooling). BH ties break by test key, never by arrival order.
+   No floating-point accumulation in completion order. BLAS threads pinned, or the resulting tolerance
+   justified in the audit record.
+4. **The invariance audit — what it must show, on which quantities.**
+   - **Exact (bitwise, or ≤ 1e-12 relative):** design matrices; `S_obs`, `chi2`, `z_equivalent`;
+     `bits_per_event`; GLM coefficients and SEs; `fold_lr` and every ladder rung; **every all-shifts /
+     `empirical_p` result** (deterministic enumeration — any difference here is a bug, not MC noise);
+     and all gate decisions computed from the same surrogate stream. **Zero tolerance**: these paths
+     contain no randomness, so a discrepancy means the parallel refactor changed the arithmetic.
+   - **Within MC error:** for every test, `|p_v2 − p_v1| <= 3·√(p(1−p)/n_eff)`. Across the audit set
+     the count of 3σ exceedances must be consistent with binomial expectation (≤ 0.3% of tests, tested
+     at 0.01). Additionally, Spearman correlation of the two p-vectors ≥ 0.99, restricted to tests
+     with `p > 10/n`.
+   - **Survivor sets:** the BH survivor sets must be **identical**, except for tests whose p lies
+     within 3 MC standard errors of the BH threshold. **Every such exception is listed by name** in
+     the audit output with both p's and the threshold. A survivor-set difference outside that band
+     **fails** the audit.
+   - **Scale and re-trigger:** the audit runs on the full `--quick` config, not a toy subset, and is
+     re-run whenever the feature list, the rung schedule, the ladder parameters, or the numpy/scipy
+     versions change (SPEC pins numpy 2.5.1 / scipy 1.18.0 for a reason).
+
+---
+
+## §P6-6. R1–R5 — COUNTED ACCEPTANCE INVARIANTS. Four of these were not asked for.
+
+These are **counted invariants** in the K-090(a) sense: falsifiable pass/fail conditions on the
+build, not preferences. R1 gates shipping; R2 protects every future holdout in this repository.
+
+| id | invariant | pass condition | consequence of failure |
+|---|---|---|---|
+| **R1** | **Null-only end-to-end calibration at v2 scale.** Run the **entire** v2 pipeline — ladder, GPD, stratified BH, per-region battery, all of it — over **≥ 30 ETAS-simulated catalogues, through the identical code path** (S-8's own wording). | (a) mean BH survivors ≤ `q × m`; (b) the global max-statistic p is uniform across the 30 sims; (c) the `GPD_EXTRAPOLATED` survivor rate is not elevated relative to `MC_RESOLVED`. | **v2 does not ship as default, whatever its throughput.** This is the negative control, and it is the single test that decides whether the 100–1000× is a telescope or a random number generator with good ergonomics. |
+| **R2** | **`EXPLORE_COUNT.jsonl` records declared test count, not just a run line.** Today one mine session = one line, and `n_explore_runs` is printed next to holdout results as reported multiplicity (SPEC §4). Under v2 one line can represent 10⁶ tests where a v1 line represented 259. | `n_declared_tests` recorded per run; the holdout print reports **cumulative declared tests** since the last holdout alongside the run count. | The multiplicity number printed next to every future holdout result silently becomes a lie. Two-line change; **not optional**. |
+| **R3** | **Winner's-curse handling** (§P6-4, banner item 3). | Every emitted stub carries either a selection-debiased effect estimate or the `SELECTION-BIASED UPPER BOUND` label **plus** the median effect among survivors of an equal-sized null run. | Effect size is the quantity my own standard weights above p (charter clause 4). Unhandled, v2's amplitudes inflate for combinatorial reasons and get read as physics. |
+| **R4** | **Rank stability under reseeding.** Run the whole session twice under two different master seeds. | Rank correlation of the top-100 stubs printed in the report. | If the top-100 list is not stable under reseeding, the ranking **is noise** and the banner must say so. Cheap under v2's throughput; devastating if skipped. |
+| **R5** | **What none of this buys — printed, not assumed.** | The report states that v2 remains a generator on the exploration window under a v1 ETAS baseline, blind through the diurnal/semidiurnal band by two exact zeros (§K87-0(a)), blind to the second phase moment (§K87-0(c) / K-088), gated by G-M1, and forbidden from being entered for or against any ledger entry. | **Nothing in v2 shortens the path to a claim by one step.** It shortens the path to a better-ordered list of hypotheses — worth building, and worth building correctly precisely because everything downstream spends real hashes on what it ranks first. |
+
+---
+
+## §P6-7. S-17 — CANDIDATE STANDARD. Not adopted here; entered for the usual adoption path.
+
+> ### S-17 (CANDIDATE). An estimator may not be quoted outside the range in which it has demonstrated recovery.
+>
+> **Rule.** Before any estimator — a link function, a pipeline, a p-value extrapolation, a power
+> calculator — is quoted at a value of its argument, it must have demonstrated recovery of a known
+> input at that value, or within a declared and stated interpolation range containing it. Recovery is
+> demonstrated by injection: plant a known signal at the argument value, push it through the
+> **unmodified** code path, and report the recovered/planted ratio and, where the estimator has a
+> phase, the phase error. Outside the demonstrated range the estimator returns **UNRESOLVED**, never
+> a number.
+
+**Marked CANDIDATE, and it goes to the usual adoption path — it is not adopted by this ruling.**
+
+**What it generalises.** Three rulings already in this ledger are the same rule in three coordinates,
+and I only noticed that while writing §P6-2:
+
+1. **§P5-8** — `exp(Δτ/Aσ)` is VOID as a power calculator for transients: a law fitted at 7–347 kPa
+   was being quoted at 0.3 kPa.
+2. **G-M1 arm (ii)** (§P5-6) — no pipeline may report a bound at a band unless it has demonstrated
+   recovery of a planted signal **at that band**, to Â/A ∈ [0.8, 1.2] and |φ̂ − φ| < 15°. Extended in
+   §P6-4 banner item 5 from *band* to *band and aggregation level*.
+3. **§P6-2(7)** — the GPD CI must be shown to cover a brute-force p, and never understate it by more
+   than 3×, before extrapolated p's may be quoted.
+
+**Why a standard rather than three precedents.** Each of the three was argued from scratch, and the
+third took a fresh derivation to reach a conclusion the first two already implied. A standard makes
+the fourth instance cheap, and there will be a fourth. **What would kill it:** an estimator whose
+recovery range cannot be defined because it has no injectable input — in which case the rule is
+vacuous for that estimator and the honest response is to say so in the entry rather than to weaken
+the standard.
+
+---
+
+## §P6-8. COUNTS AND CLOSING
+
+**Five questions ruled.** PASS-WITH-CONDITIONS ×5; **zero FAIL**, and one hard reframe inside a pass
+(§P6-4: the per-cell battery survives only as EXPLORATORY-UNPRICED, the primary blind-spot kill is
+the phase-incoherent 2R-df sum, and the K-080 census list is barred as a selector). **31 numbered
+implementable rules**, **5 counted acceptance invariants**, **1 candidate standard**.
+
+**Two corrections against the proposal as posed, both structural rather than stylistic.** (i) The
+ladder as written is **not** Besag–Clifford and would be anti-conservative; validity lives in the
+`p = h/n` estimator, not in the escalation pattern (§P6-1(1)). (ii) Per-stratum BH at a flat q
+controls the **average over families** of FDR, not the overall FDR; overall control requires
+`Σ m_s q_s = m q`, asserted in code (§P6-3(1)). Neither correction reduces the build's ambition; both
+reduce its ability to mislead itself.
+
+**One leakage channel closed before it opened.** The K-080 census's 1,039-cell measurable list is a
+function of holdout-window seismicity (day index [11453, 11542] vs exploration [0, 8081]). It cannot
+retro-spoil the spent quiescence hash and does not touch the census's own prospective scoring — but
+it would have leaked holdout rate information into the cell selection of every future test descending
+from it. The tranche-2 selector is exploration-window-only.
+
+**One number that decides a design.** `A_min = 3.96/√N_cell`, against a mean of ≈ 16 events per
+active cell, makes a per-cell battery on global M ≥ 4.5 **> 99% UNMEASURABLE under S-15**. The
+1,000× multiplicity would have been paid almost entirely for tests that could not reject at any
+effect size. The 2R-df regional sum kills the same blind spot at ~1 test per (feature, lag), and the
+per-region battery reaches `A_min ≈ 6.7%` at R = 20 — comparable to the bound we already have,
+which is the first time this instrument has had a spatial arm worth the name.
+
+**What I did not rule on.** The engineering. Process-pool parallelism needed no adjudication and got
+none; §P6-5 rules only on the parts of it that are statistical (stream identity, reduction order,
+and what the invariance audit must show).
+
+*Popper seat, 2026-08-12. Ruled before the machinery became default, which is the only moment a
+ruling on machinery is worth anything. Five passes, no refusals, and the one reframe makes the build
+cheaper rather than larger — that is what a blind spot correctly diagnosed and incorrectly priced
+looks like. Appended to my own section; no existing line modified; nothing committed. The supervisor
+commits.*
