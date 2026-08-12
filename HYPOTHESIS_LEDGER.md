@@ -14186,3 +14186,43 @@ before a single emission exists.
 *Worker seat, 2026-08-11. Two artifacts frozen, four hashes above, zero claims. The census is a
 denominator; the log is a rule. Neither is scored, both have declared dates on which they can lose,
 and the public timestamp is the supervisor's commit, not this note.*
+
+---
+
+## S&A METHODS READ (M-010 gate) — supervisor execution, 2026-08-12
+
+**Gate context.** F-012 drafting was blocked on a human read of Sirorattanakul & Avouac 2026 SciAdv 12(13)
+eadz5711 Materials & Methods (attach/, quake root). Jim delegated the read to the supervisor session on
+2026-08-12 ("I think you need to read the PDF carefully yourself for confirmations"). Full 13-page read
+performed; the three gate questions and verdicts:
+
+**(a) Did S&A run power-through-selection? NO — confirmed.** Their 8.16% M2 bound is the analytic Schuster
+detection threshold alpha_threshold = sqrt(-4(ln P_95 + 1)/N) (their Eq. 5) at N = 5000, with a
+trials-scaled cutoff P_95 = 0.05 * T / t_catalog_length. It is a 95%-confidence detection threshold, NOT an
+80%-power minimum detectable amplitude, and it is NOT propagated through their selection pipeline
+(declustering + M_c filtering + 5000-nearest-event grid selection) by injection-recovery or any power
+simulation. Declustering quality is validated a posteriori only (CoV ~ 1, Poissonian background). Our
+narrow novelty — 80%-power MDA computed THROUGH the selection step — stands as scoped in M-010.
+
+**(b) Is their alpha zero-to-peak? YES — confirmed.** Their Eq. 4: R(t)/r = 1 + alpha*cos(2*pi*t/T), and
+in text: "alpha = DeltaR/r, where DeltaR is the half peak-to-peak variation". Half peak-to-peak of a
+sinusoid = zero-to-peak amplitude. Direct comparison with our zero-to-peak bound is licensed.
+
+**(c) t_catalog definition? Merton's back-solve CONFIRMED on four independent thresholds.** The paper never
+states t_catalog_length's value for the gridded analysis. Back-solving their four published thresholds
+(annual 0.038, K2 0.0818, M2 0.0816, N2 0.0815) with N = 5000 gives t_catalog = 0.826, 0.796, 0.793,
+0.792 yr respectively; forward with t_catalog = 0.8 yr reproduces all four to the printed precision
+(0.0377, 0.0818, 0.0816, 0.0815). So the effective t_catalog_length ~ 0.8 yr (a local/effective window),
+NOT the 16-yr 2006-2021 catalog duration. Corroborating oddity: at the annual period, 0.8 yr implies
+P_95 = 0.0625 > 0.05 (looser than nominal), which is only coherent under the local-window reading.
+Arithmetic run this session (script inline, N=5000, periods 8765.82/11.967/12.421/12.658 h).
+
+**Bonus facts for the draft** (paper body): their tidal-bound corollary is a-sigma > 7.5 kPa via their
+Eq. 11; solid-Earth M2 stress amplitude in California quoted at ~0.6 kPa; the bound applies to background
+(declustered) seismicity of the gridded regions, M >= local M_c, 2006-2021, NCSS+HYS catalogs.
+
+**Consequence.** The F-012 drafting gate is CLEAR. The novelty sentence stays exactly as M-010 scoped it;
+no "first" language anywhere; S&A own the California tidal bound; ours is the MDA-through-selection
+replication row at 6.6% worst-case.
+
+*Supervisor seat, 2026-08-12. One gate closed by delegated read; verdicts recorded before drafting begins.*
