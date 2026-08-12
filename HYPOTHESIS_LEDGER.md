@@ -14020,3 +14020,169 @@ number is now supported by a second, published, independently-derived estimator.
 corrected it against the paper's own random-walk definition rather than against the renderer. The
 correction strengthens the result: read correctly, the giant's closed form and our simulation are the
 same measurement made twice.*
+
+---
+
+## K-080/K-069 COMMITMENTS (worker, 2026-08-11)
+
+*Execution seat, not an adjudicating seat. This section commits two artifacts and makes no claim
+about the Earth. It is appended because §P4-5 item 4 and §P5-10 item 5 green-lit both, twice, on the
+explicit grounds that **their value is the only value in the queue that decays with delay**. Nothing
+below is scored; scoring dates are declared, and both artifacts lose in the direction they are
+committed to lose in.*
+
+### K-080 CENSUS COMMITMENT
+
+**Artifact:** `results_k080_census.json`
+**SHA256:** `259054ae155088a568969e2ef16f4f0270a399e411209e6ed87eeda4fe455bfd`
+**Generator:** `k080_census.py`, SHA256 `de4a03ecd28caf6635f07a50383cc212d8bc79f473608b99cac86e6cdd47e1fc`
+**Frozen ETAS params:** `engine/out/cache/etas_params_k080_0p5deg.json`
+(nu 0.59448, K 0.057638, alpha 0.50000, c 0.0010001, p 1.193684, sigma 26.848 km; Poisson MLE on the
+EXPLORATION window day-index [365, 8081] only, never refit; L-BFGS-B converged, `is_local_max` true,
++/-10% perturbation gap 7.1e-6 nats; +0.982 bits/event vs climatology-v1 in-train on 46,585 events.)
+
+**Census instant:** 2026-08-10T00:00:00Z (end of the last day of the catalogue on disk; latest event
+2026-08-09T17:05:42Z). **Trailing window:** 2026-05-12 -> 2026-08-10, 90 d.
+
+**The detector, frozen exactly as K-076's "Construction" paragraph specifies** — 0.5 deg grid,
+1.5 deg (166.79 km) neighbourhood, 90 d trailing window, Mc 4.5 fixed, `Lambda = int lambda_ETAS dt`
+from the frozen space-time ETAS (**not** own-cell climatology, **not** declustered background,
+**not** regional mean rate, all three of which K-076 rules out by name), `Lambda >= 4` power floor,
+oasis at `z <= -2`. **Sign convention declared because the ledger contains both:** K-076 writes
+`z = (Lambda - N)/sqrt(Lambda)` (positive = quiet) and K-080 writes the oasis condition as
+`z <= -2`. Those are inconsistent as literals; the frozen file uses the standardized-residual
+convention `z = (N_obs - Lambda)/sqrt(Lambda)` (negative = quiet), which makes K-080's stated
+threshold operative as written, and emits **both** signs per cell so no later reading can turn on the
+convention.
+
+**THE HEADLINE NUMBERS.**
+
+| quantity | value |
+|---|---|
+| active cells in domain (0.5 deg) | 4,329 |
+| measurable cells (`Lambda >= 4`) | 1,039 |
+| **UNMEASURABLE (S-15), scored neither way** | **3,290 (76.0%)** |
+| **LIVE OASES** | **89** |
+| oasis area | 234,153 km2 |
+| area fraction of the measurable set | **8.22%** |
+| area fraction of the active domain | 2.04% |
+| area fraction of Earth's surface | 0.046% |
+| z of the quietest cell | -3.94 |
+| median z over measurable cells | -0.075 |
+
+**Against Kepler's own pre-computed base rate, stated plainly and in both directions.** He predicted
+**order 10^2 live oases worldwide (200-2000 at any moment)** from a qualifying fraction of **1-5% of
+measurable cells** over an active-cell inventory of 10^3-10^4. **The count came in at 89 — below the
+200-2000 band, and at the low edge of "order 10^2".** The **rate** came in at **8.2% of measurable
+cells, ABOVE his 1-5%.** Both halves matter: the shortfall in the count is a coverage effect, not a
+refutation — this catalogue is 13 ComCat boxes, not the globe, and it yields 1,039 measurable cells
+where his arithmetic assumed 10^3-10^4 active cells. **8.2% x 1,039 = 89 is his own formula evaluated
+on the domain that actually exists.** So: **the base-rate prediction held in fraction and undershot
+in count, for a declared and auditable reason.** The order-of-magnitude conclusion he drew from it —
+that a handful of M >= 6.5 will land inside a listed oasis in the coming years *by chance alone* —
+survives unchanged and is exactly what the +5 y Molchan scoring will price.
+
+**Three properties of the frozen census that must be on the record now rather than discovered at
+scoring time.**
+1. **All 89 oases lie in two regions: Japan/Kuril (65) and Indonesia/Philippines (24).** Zero in
+   Chile, Alaska-Aleutians, Himalaya, Mexico, Greece, Turkey, Iran, Iceland, California, Caribbean.
+   The measurable set is itself dominated by the highest-rate margins (`Lambda >= 4` in 90 d needs
+   ~16 M >= 4.5/yr in the neighbourhood), so the census is a census *of where the detector can see*,
+   and it is not spatially uniform. Declared, not corrected.
+2. **The z distribution is over-dispersed against Gaussian:** 8.2% of measurable cells at
+   `z <= -2` where a calibrated Gaussian gives 2.3%, with a median of -0.075 (i.e. centred). That
+   over-dispersion is ETAS misfit and clustering, which is **precisely why K-076's ETAS-sim null is
+   the load-bearing one** and why the Molchan reference set at scoring must include ETAS-sim alarms
+   through this identical detector, per the entry.
+3. **The detector is a residual detector, not an absence detector.** The quietest cell (37.25N,
+   142.25E) has 2 observed against 19.3 expected and its neighbourhood's last M >= 4.5 was 5 days
+   ago; only 7 of 89 oases are literal blackouts. This is the intended behaviour and it is the one
+   feature that distinguishes this census from every "seismic gap" list in the corpse literature.
+
+**What is NOT claimed, and what is still owed.** No claim is made. The census is a denominator
+committed before the numerator exists. **Q0 (the family's injection-recovery licence) has NOT been
+run**; the census needs no licence to be *committed*, and the +5 y scoring remains gated on Q0
+exactly as the standing mandates require. **Q2 (the Mc/station-count rerun) is owed before scoring.**
+K-076 does not exist as a built instrument; this file implements the minimal detector its
+Construction paragraph specifies and nothing more. The domain is the 13 boxes — **Colombia is still a
+hole**, the global fill-in download named in K-076's Data line has not been made, and the census is
+therefore complete for the domain it declares and silent outside it.
+
+**Scoring, declared now.** Molchan trajectory + area skill score at **2031-08-09** (+5 y), against
+(a) the frozen ETAS above, (b) random alarms of matched space-time volume, (c) ETAS-sim alarms
+through the identical detector. Targets: M >= 6.5 with epicentre in a committed oasis cell. **+1 y
+(2027-08-10) and +2 y (2028-08-10) readouts are DESCRIPTIVE ONLY**, per the entry's own POWER-STATE.
+**Pass = the Molchan point lies significantly below the diagonal. Fail = it does not, and we publish
+the diagonal.** On §P4-4(b)'s holdout ruling: this scoring runs on events occurring *after* the
+census instant, which is a fresh window by construction and does not re-spend the engine's 70/30
+quiescence hash.
+
+### K-069 COMMITMENT — PARTIAL: envelope arm COMMITTED, constructive arm NEEDS-INFRASTRUCTURE
+
+**Artifact:** `results_k069_prospective_log.json`
+**SHA256:** `130a72a1d6d8982a493970e39cc7d0ffc013a78851ca4baac909520de3b8125b`
+**Emitter (the real commitment):** `k069_emit.py`,
+SHA256 `870cffd2c14b8892da13dc29c29e9232b997bcc7c78f5778795a907e9b1b77ff`
+**Emitter demonstration (RETROSPECTIVE, NOT SCORED, NOT ADMISSIBLE):**
+`results_k069_demo_emission.json`, SHA256
+`e7534e6007b88ea8eff4a7592780979046dd9ada097aeb40aeabaa2c74059157`
+
+**Why this is a rule-and-code commitment rather than a list of windows.** K-069's own design is a
+*rolling* protocol: the windows cannot exist before their source events do. What can be — and now
+is — committed before the fact is the **trigger rule, the emitter, the exclusion, the ranking and the
+scoring rule, all hashed**. The emitter runs in **2.9 s** against a declared 60-minute deadline, and
+the earliest admissible window opens 1000 km / 4.5 km s^-1 = **62 min** after origin time, so the
+deadline is met with margin by construction rather than by promise.
+
+**Committed protocol (K-069-min).** Trigger: any global M >= 7.0. Emission: top **100**
+(0.5 deg cell x **3 h** window) over the following **10 days**, ranked by nominal peak dynamic stress
+from the **envelope** exposure field. Amplitude model: **van der Elst & Brodsky (2010) eq.(6)**,
+copied from this repository's own `exp_k034_landers_control.py` (G = 30 GPa, c = 3500 m s^-1,
+T_SW = 20 s) — a frozen ranking functional, not a calibrated stress claim. Timing: group-velocity
+band **[3.0, 4.5] km s^-1**, exposure spread across the bins overlapping `[D/4.5, D/3.0]`. Overlay:
+trigger **plus every catalogued M >= 6.0 in the preceding 10 days**, exposures **add**. Exclusion:
+every cell within **1000 km of any contributing source** is struck out before ranking — the source's
+own aftershock zone and near field are not what this family is about. Domain: the **same 0.5 deg
+active-cell domain as the K-080 census** — one file, one hashing discipline, as the entries require.
+Ties broken by `(-exposure, cell_index, bin_index)`; no randomness anywhere.
+
+**Scoring, declared now.** 24 months (score at **2028-08-11**). Observed M >= 4.5 with epicentre in a
+committed cell and origin time in the committed 3 h bin, versus the **frozen ETAS of the K-080 census
+above**, integrated over the identical cell-bins with history to each bin's start. Statistic: rate
+ratio and bits/event. **Unit = committed window; N_eff = number of distinct trigger events, NOT the
+number of windows** — the entry's own instruction, adopted verbatim. **Pass = rate-ratio CI on N_eff
+excluding 1 from above; fail = CI contains 1, published as a clean prospective null.** K-069's
+POWER-STATE clause is carried unchanged: **if expected total ETAS counts in the committed set fall
+below ~300 at the horizon, the HORIZON EXTENDS rather than the claim weakening** — written down
+before a single emission exists.
+
+**NEEDS-INFRASTRUCTURE, itemised, because a truthful gap beats a hollow commitment.**
+1. **The constructive-maxima arm is NOT committed.** "Constructive" is a statement about *phase*.
+   **K-059's phase-resolved surface-wave ephemeris `T(x,t)` does not exist on disk** — I checked:
+   `engine/ephemeris.py` is the astronomical (solar/lunar) ephemeris built for the tidal miner and is
+   unrelated, and no `k059*` module exists anywhere in the tree. What is committed is the
+   **amplitude-only** reduction Popper himself named — "K-059-min, an amplitude-only ephemeris (no
+   phase)", §P4-5 rank 3 / §P5-10 rank 4 — which is the entry's own permitted minimum.
+2. **The paired destructive control set (K-061) is NOT committed**, for the same reason: it is
+   phase-defined.
+3. **Consequence, stated without softening: K-069's stated success rule — rate-ratio CI excluding 1
+   in the constructive set AND <= 1 in the destructive set — CANNOT be scored on this log.** This log
+   is a **one-armed** prospective test of envelope exposure and is labelled as one in its own
+   `not_committed_needs_infrastructure` block. When K-059 exists, the constructive/destructive arms
+   open a **second, separately hashed log**; they do not retro-fit into this one.
+4. **A property of the min version, declared in advance from the demo emission** (2026-07-17
+   M7.3, us7000t1bu): with a single contributing source the top-100 set **collapses into the earliest
+   3 h bin** — an amplitude-only ephemeris has one wave passage and no phase. Time diversity appears
+   only under overlay. **So K-069-min is a prospective version of the classical instantaneous
+   remote-triggering test — which is exactly the niche Merton records as empty (no dynamic-triggering
+   model has ever entered a prospective CSEP experiment) — and it is NOT a test of interference.**
+   Committed exposures in that demo ran 1.83-14.02 kPa.
+5. **Interpretation stays gated on K-034**, whose PASS is certified only at >= ~34 kPa. Most
+   committed windows sit far below that. A positive here is not licensed as dynamic triggering until
+   the licence reaches the amplitude; **a null is recorded provisional-pending-K-034.** Committing
+   today is still right, for the reason the entry gives: committing costs nothing and un-committing
+   is impossible.
+
+*Worker seat, 2026-08-11. Two artifacts frozen, four hashes above, zero claims. The census is a
+denominator; the log is a rule. Neither is scored, both have declared dates on which they can lose,
+and the public timestamp is the supervisor's commit, not this note.*

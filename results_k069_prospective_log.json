@@ -1,0 +1,98 @@
+{
+ "protocol": {
+  "entry": "K-069 (committed as K-069-min: envelope arm only)",
+  "artifact": "prospective commitment log (commits; scores nothing)",
+  "committed_by": "worker session, 2026-08-11",
+  "commitment_opened_utc": "2026-08-11T00:00:00+00:00",
+  "append_only": "Window sets are APPENDED to `emissions`. No emission is ever edited or removed. Each emission carries the sha256 of this emitter as it stood when the emission was made.",
+  "trigger_rule": {
+   "trigger_magnitude": 7.0,
+   "catalog": "USGS ComCat, global, first available solution",
+   "emission_deadline_minutes": 60,
+   "earliest_admissible_window_opens_minutes": 3.7
+  },
+  "emission_rule": {
+   "top_n": 100,
+   "cell_deg": 0.5,
+   "bin_hours": 3.0,
+   "horizon_days": 10.0,
+   "min_delta_km": 1000.0,
+   "contributing_source_magnitude": 6.0,
+   "contributing_source_lookback_days": 10.0,
+   "group_velocity_km_s": [
+    3.0,
+    3.7,
+    4.5
+   ],
+   "amplitude_model": "van der Elst & Brodsky (2010) eq.(6): log10 A20[um] = M - 1.66 log10(D[deg]) - 2; V = 2*pi*A20/T_SW; sigma = G*V/c. G=30 GPa, c=3500 m/s, T_SW=20 s. Nominal amplitude, frozen ranking functional.",
+   "overlay": "exposures of all contributing sources ADD (envelope leg)",
+   "tie_break": "(-exposure, cell_index, bin_index) ascending; fully deterministic",
+   "time_concentration_note": "Declared in advance, from the 2026-07-17 demo emission: with a single contributing source the top-100 set collapses into the earliest 3 h bins -- an amplitude-only ephemeris has one wave passage and no phase, so the committed set is the wave-passage set. Time diversity appears only under overlay (two or more contributing sources). This makes K-069-min a PROSPECTIVE version of the classical instantaneous remote-triggering test, which is precisely the niche Merton records as empty, and it is NOT a test of interference."
+  },
+  "domain": {
+   "data_dir": "data/comcat_world",
+   "cell_domain": "engine 0.5 deg active-cell domain over data/comcat_world (cells with >=1 event in the exploration window); identical to the K-080 census domain",
+   "boxes": [
+    "Alaska-Aleutians.csv",
+    "California.csv",
+    "Caribbean.csv",
+    "Chile.csv",
+    "Greece-Aegean.csv",
+    "Himalaya.csv",
+    "Iceland.csv",
+    "Indonesia.csv",
+    "Iran.csv",
+    "Japan.csv",
+    "Mexico.csv",
+    "Philippines.csv",
+    "Turkey.csv"
+   ],
+   "coverage_note": "13 ComCat regional boxes, NOT the globe."
+  },
+  "scoring": {
+   "horizon_months": 24,
+   "score_at_utc": "2028-08-11T00:00:00+00:00",
+   "target": "M >= 4.5, epicentre in a committed cell, origin time in the committed 3 h bin",
+   "expectation": "frozen ETAS (K-080 census parameters, engine/out/cache/etas_params_k080_0p5deg.json), integrated over the identical cell-bins with history to each bin's start",
+   "statistic": "rate ratio observed/expected, and bits/event",
+   "unit": "committed window",
+   "N_eff": "number of distinct trigger events, NOT the number of windows",
+   "pass": "rate-ratio CI on N_eff excluding 1 from above",
+   "fail": "CI contains 1 -> clean prospective null, published as such",
+   "power_note": "K-069's POWER-STATE: if the expected total ETAS count in the committed set is below ~300 at the horizon, the HORIZON EXTENDS rather than the claim weakening. Recorded before any emission exists."
+  },
+  "not_committed_needs_infrastructure": [
+   "CONSTRUCTIVE-maxima arm: requires K-059's phase-resolved surface-wave ephemeris T(x,t). NOT ON DISK. engine/ephemeris.py is an astronomical (solar/lunar) ephemeris for the tidal miner and is unrelated.",
+   "Paired DESTRUCTIVE control set (K-061): phase-defined, unbuilt for the same reason.",
+   "K-069's stated success rule (constructive CI > 1 AND destructive CI <= 1) therefore CANNOT be scored on this log. The envelope arm is a one-armed prospective test and is labelled as one.",
+   "Interpretation gate K-034 is certified only at >= ~34 kPa; most committed windows will sit far below it. A null here is provisional-pending-K-034.",
+   "When K-059 exists, the constructive/destructive arms open a SECOND, separately hashed log. They do not retro-fit into this one."
+  ],
+  "provenance": {
+   "emitter": "k069_emit.py",
+   "emitter_sha256": "870cffd2c14b8892da13dc29c29e9232b997bcc7c78f5778795a907e9b1b77ff",
+   "engine_version": "1.1.0",
+   "python": "3.12.4",
+   "platform": "Windows-11-10.0.26200-SP0",
+   "numpy": "2.5.1",
+   "pandas": "3.0.3",
+   "seed_declared": 20260811,
+   "input_sha256": {
+    "Alaska-Aleutians.csv": "7aa5dafa946918052a3ca2f3ddb35fed0bde6f5fb16300bb2cfe80cc9c4609d2",
+    "California.csv": "2ff647617c21bfebc3485d989f8fdca50e8c63ce96285b7d2f909c10f733d765",
+    "Caribbean.csv": "ad77e8eda19cf21270a3fe39dbce47bb22d1ab21973a4724b21fbbb5a0b84c9e",
+    "Chile.csv": "dc6a5695463f8437cb0f521175a4449af6d557e94194498c06b177dc699d986b",
+    "Greece-Aegean.csv": "bade2f0fa5ae69407393a6c574d41cc0c3e9de81ddb022b10f674844b6309ab8",
+    "Himalaya.csv": "b6ba7ca9546844deec5b6aa30ef6eb296a9e99194d08436ba13ea0ad0db54e6b",
+    "Iceland.csv": "e6417fd5f88e48d310e49e42ef07183043865548053ecebd6d0cf6580f6c4a65",
+    "Indonesia.csv": "02209875b145f9c0caec15f81e21f97abb34fba4149564ecd66fb91b81fe1a30",
+    "Iran.csv": "7f218667d952a6118ae7af114af2628584a8eb081952141afa9ae3974af69258",
+    "Japan.csv": "277cd7cecb29a81b881e9d2bf728848dc5d42eba5dc579c80be8eec3b5e144f9",
+    "Mexico.csv": "e51ee19e1441a8aa136acf6791f31b2163d40fe2455595fcd0dd75f07c631dd9",
+    "Philippines.csv": "268b6325b1016efb497b6ef8018a7f46a51151354461d1822eab45c4d4f1e0b6",
+    "Turkey.csv": "f3e9d778c70405026d06699cd87e65ddeed16da2929ec7721ce79da1ec0faa1e"
+   }
+  }
+ },
+ "emissions": []
+}
