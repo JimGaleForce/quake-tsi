@@ -73,6 +73,7 @@ import time
 import numpy as np
 
 from . import baseline as bl, datasets, design, ephemeris as eph, splits
+from . import gpd_tail
 
 MINE_DIR = os.path.join("engine", "out", "mine")
 DATA_LOG = os.path.join(MINE_DIR, "data_log.jsonl")
@@ -919,7 +920,8 @@ def ladder_n_max(ladder_cfg, key):
     return int(strata.get(key.get("kind"), ladder_cfg["n_max"]))
 
 
-def besag_clifford_p(draw_chunk, s_obs, n_max, rung_rng, h=25, chunk=200):
+def besag_clifford_p(draw_chunk, s_obs, n_max, rung_rng, h=25, chunk=200,
+                     keep_draws=False):
     """Sequential Monte Carlo test with an EXACTLY valid p under optional stopping.
 
     Besag & Clifford (1991), "Sequential Monte Carlo p-values", Biometrika 78(2)
@@ -947,6 +949,12 @@ def besag_clifford_p(draw_chunk, s_obs, n_max, rung_rng, h=25, chunk=200):
 
     This is deliberately the ONLY place the stopping rule lives, so an adjudication
     that changes h, the chunk schedule, or the rule itself changes one function.
+
+    `keep_draws` retains the surrogate statistics in the returned dict under the key
+    `draws`, for §P6-2 tail extrapolation, and does NOT change a single number this
+    function computes. It is off by default because those arrays are per-test
+    vectors of up to N_max floats and this dict is checkpointed as JSON: the caller
+    that asks for them must POP them before the row is stored.
     """
     s_obs = float(s_obs)
     n_max, h = int(n_max), int(h)
@@ -954,11 +962,14 @@ def besag_clifford_p(draw_chunk, s_obs, n_max, rung_rng, h=25, chunk=200):
     if h < 1:
         raise ValueError("besag_clifford_p: h must be >= 1")
     total, c, l_stop, rung = 0, 0, None, 0
+    kept = [] if keep_draws else None
     while total < n_max:
         b = int(min(chunk, n_max - total))
         s = np.asarray(draw_chunk(b, rung_rng(rung)), dtype=np.float64).ravel()
         if s.size != b:
             raise ValueError(f"draw_chunk({b}) returned {s.size} statistics")
+        if kept is not None:
+            kept.append(s.copy())
         hit = s >= s_obs
         n_hit = int(hit.sum())
         if c + n_hit >= h:
@@ -973,6 +984,8 @@ def besag_clifford_p(draw_chunk, s_obs, n_max, rung_rng, h=25, chunk=200):
         rung += 1
     base = {"rule": "besag_clifford_1991", "h": h, "chunk": chunk, "n_max": n_max,
             "n_drawn": int(total), "n_rungs": int(rung), "n_exceed": int(c)}
+    if kept is not None:
+        base["draws"] = np.concatenate(kept) if kept else np.empty(0)
     if l_stop is not None:
         base.update({"p": h / float(l_stop), "l_stop": int(l_stop),
                      "stopped_early": True,
@@ -1353,7 +1366,8 @@ def period_observed(t, resid, periods, n_peaks=8):
     return power, peaks
 
 
-def period_assemble(power, periods, peaks, maxima, phi, n_mc):
+def period_assemble(power, periods, peaks, maxima, phi, n_mc, gpd=None,
+                    gpd_rng=None):
     """p-values from the collected maxima. COUNTS THE SURROGATES BEFORE USING THEM.
 
     `maxima` is {null_type: array}. A silently short null -- one dropped chunk, one
@@ -1380,17 +1394,36 @@ def period_assemble(power, periods, peaks, maxima, phi, n_mc):
     max_red, perm = got["ar1"], got["permutation"]
     power = np.asarray(power, dtype=np.float64)
     periods = np.asarray(periods, dtype=np.float64)
+    enabled = bool(gpd and gpd.get("enabled"))
     out = []
     for i in peaks:
         i = int(i)
         p_red = (1.0 + int((max_red >= power[i]).sum())) / (1.0 + n_mc)
         p_perm = (1.0 + int((perm >= power[i]).sum())) / (1.0 + n_mc)
-        out.append({
+        row = {
             "period_days": float(periods[i]), "power": float(power[i]),
             "p_red_noise": p_red, "p_permutation": p_perm,
             "p_raw": max(p_red, p_perm),          # the CONSERVATIVE one
             "n_surrogates": n_mc, "ar1_phi": float(phi),
-        })
+        }
+        # §P6-2: BOTH period nulls are independently generated (AR(1) draws and
+        # permutations), so both are permitted substrates. Each is priced on its
+        # own and the CONSERVATIVE (larger) of the two binds -- the same rule the
+        # un-extrapolated p_raw already follows, so extrapolation cannot make the
+        # answer less conservative than the pair of nulls jointly allows.
+        pr_red = gpd_tail.price_row(p_red, n_mc, power[i],
+                                    max_red if enabled else None, "ar1", gpd_rng,
+                                    enabled=enabled)
+        pr_perm = gpd_tail.price_row(p_perm, n_mc, power[i],
+                                     perm if enabled else None, "permutation",
+                                     gpd_rng, enabled=enabled)
+        binding = pr_red if pr_red["p_bh"] >= pr_perm["p_bh"] else pr_perm
+        row.update(binding)
+        row["gpd_red_noise"] = pr_red["gpd"]
+        row["gpd_permutation"] = pr_perm["gpd"]
+        row["p_method_binding_null"] = ("ar1" if binding is pr_red
+                                        else "permutation")
+        out.append(row)
     return out, {"ar1_phi": float(phi), "n_mc": n_mc,
                  "max_power_red_p95": float(np.quantile(max_red, 0.95)),
                  "max_power_perm_p95": float(np.quantile(perm, 0.95))}
@@ -1530,7 +1563,8 @@ def _mark_stat_matrix(feature_at_event, R, kind):
 
 
 def mark_test(feature_at_event, mark, kind, n_surr, rng, min_shift=100,
-              block_events=500, ladder=None, rung_rng=None):
+              block_events=500, ladder=None, rung_rng=None, gpd=None,
+              gpd_rng=None):
     """Spearman (linear) or circular-linear (phase) feature-vs-mark association.
 
     Two nulls, both resampling the MARK series along the time-ordered event
@@ -1569,7 +1603,8 @@ def mark_test(feature_at_event, mark, kind, n_surr, rng, min_shift=100,
         v, _ = _mark_stat_matrix(feature_at_event, rm[idx], kind)
         return v
 
-    lad = None
+    lad, boot = None, None
+    want_draws = bool(gpd and gpd.get("enabled"))
     if ladder:
         # `ladder` is a dict of stopping-rule parameters; see besag_clifford_p.
         # NOTE: the ladder touches ONLY this Monte Carlo block-bootstrap null.
@@ -1583,8 +1618,12 @@ def mark_test(feature_at_event, mark, kind, n_surr, rng, min_shift=100,
                                n_max=int(ladder.get("n_max", n_surr)),
                                rung_rng=rung_rng,
                                h=int(ladder.get("h", 25)),
-                               chunk=int(ladder.get("chunk", 200)))
+                               chunk=int(ladder.get("chunk", 200)),
+                               keep_draws=want_draws)
+        # POPPED, never stored: `ladder_stop` is checkpointed as JSON.
+        boot = lad.pop("draws", None)
         p_boot = lad["p"]
+        mc_n_max = int(lad["n_max"])
     else:
         boot = np.empty(int(n_surr))
         done, chunk = 0, 100
@@ -1593,6 +1632,7 @@ def mark_test(feature_at_event, mark, kind, n_surr, rng, min_shift=100,
             boot[done:done + b] = _draw(b, rng)
             done += b
         p_boot = bootstrap_p(stat[0], boot)
+        mc_n_max = int(n_surr)
     out = {"effect": effect, "statistic": float(stat[0]),
            "p_circular_shift": p_shift, "p_block_bootstrap": p_boot,
            "p_raw": max(p_shift, p_boot), "n_surrogates": min(n_used, int(n_surr)),
@@ -1600,6 +1640,14 @@ def mark_test(feature_at_event, mark, kind, n_surr, rng, min_shift=100,
            "test": "circular-linear" if kind == "phase" else "spearman"}
     if lad is not None:
         out["ladder_stop"] = lad
+    # §P6-2(5): the p_method label goes on EVERY row, whether or not extrapolation
+    # is enabled. The block bootstrap is the only permitted substrate here -- the
+    # circular-shift enumeration is forbidden by §P6-2(4) and is passed as
+    # `other_p`, which the conservative max() keeps binding where it is larger.
+    out.update(gpd_tail.price_row(
+        p_boot, mc_n_max, stat[0], boot if want_draws else None,
+        "block_bootstrap", gpd_rng, other_p=p_shift,
+        other_floor=1.0 / (n_used + 1.0), enabled=want_draws))
     return out
 
 

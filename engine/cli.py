@@ -394,6 +394,31 @@ def main(argv=None):
                          "An IMPLEMENTATION DETAIL, not a statistical stage: the "
                          "exact stopping index is recovered inside the chunk, so "
                          "changing this changes speed and nothing else")
+    mi.add_argument("--gpd", action="store_true",
+                    help="§P6-2 GPD tail extrapolation for p-values CENSORED at the "
+                         "Monte Carlo floor: MLE fit to the exceedances over the "
+                         "declared top 10%%, gated on Anderson-Darling p >= 0.05 AND "
+                         "xi-stability across the top {5,10,20}%%, quoted at the "
+                         "UPPER end of the 95%% bootstrap CI, capped one decade "
+                         "below 1/(N_max+1), and FORBIDDEN on the all-shifts "
+                         "enumeration null. Off by default. CHANGES THE CONFIG HASH")
+    mi.add_argument("--gpd-confirm-max-n", type=int, default=None,
+                    help="ceiling on the targeted brute-force confirmation of a GPD "
+                         "candidate (§P6-2(6) demands N >= 10/p_gpd). Default "
+                         "500000. A candidate needing more stays a candidate and "
+                         "emits NO stub")
+    mi.add_argument("--gpd-calibration", default=None,
+                    help="path to the §P6-2(7) calibration artifact (default "
+                         "engine/out/audit_gpd.json). --gpd REFUSES TO RUN without "
+                         "a PASSING one: an instrument that has not demonstrated "
+                         "recovery in the range it reports in may not report there")
+    mi.add_argument("--strata", default=None,
+                    help="§P6-3 stratified (weighted) BH: path to a declared "
+                         "partition JSON, (feature_family x test_kind [x region]) "
+                         "with a declared m_s and q_s per stratum. The engine "
+                         "ASSERTS sum_s m_s q_s == m q and REFUSES TO RUN on "
+                         "violation. Default UNSTRATIFIED (flat BH). The FILE "
+                         "CONTENT is hash-affecting")
     mi.set_defaults(fn=cmd_mine)
 
     args = p.parse_args(argv)

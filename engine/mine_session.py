@@ -88,6 +88,7 @@ import traceback
 import numpy as np
 
 from . import (baseline as bl, design, mine as M, splits, __version__)
+from . import gpd_tail, strata as strata_mod
 
 QUICK = {
     "n_surrogates": 200, "n_periods": 800, "n_peaks": 5,
@@ -219,8 +220,10 @@ def resolve_jobs(jobs):
 # One body per test kind, called by BOTH drivers. The sequential driver hands them
 # the single shared rng (which is what makes --jobs 1 bit-identical to v1); the
 # parallel driver hands them per-task derived streams. Nothing else differs.
-def glm_task(f, window, counts, offset, n_surr, rng_for_lag, ladder=None, seed=0):
+def glm_task(f, window, counts, offset, n_surr, rng_for_lag, ladder=None, seed=0,
+             gpd=None):
     rows = []
+    want_draws = bool(gpd and gpd.get("enabled"))
     for lag in f.lags:
         rng = rng_for_lag(lag)
         X = f.design(window, lag)
@@ -240,12 +243,17 @@ def glm_task(f, window, counts, offset, n_surr, rng_for_lag, ladder=None, seed=0
                 lambda b, g: M.score_stat_block_bootstrap(
                     X, counts, offset, int(b), g, mean_block=f.block_days),
                 S[0], n_max=M.ladder_n_max(ladder, key), rung_rng=rr,
-                h=int(ladder.get("h", 25)), chunk=int(ladder.get("chunk", 200)))
+                h=int(ladder.get("h", 25)), chunk=int(ladder.get("chunk", 200)),
+                keep_draws=want_draws)
+            # POPPED, never checkpointed: see besag_clifford_p(keep_draws=...).
+            Sb = lad.pop("draws", None)
             p_boot = lad["p"]
+            mc_n_max = int(lad["n_max"])
         else:
             Sb = M.score_stat_block_bootstrap(X, counts, offset, n_surr, rng,
                                               mean_block=f.block_days)
             p_boot = M.bootstrap_p(S[0], Sb)
+            mc_n_max = int(n_surr)
         # circular shifts are provably powerless for a deterministic cycle, so
         # for periodic features the block bootstrap IS the null; elsewhere both
         # are valid and the more conservative one is reported.
@@ -268,11 +276,24 @@ def glm_task(f, window, counts, offset, n_surr, rng_for_lag, ladder=None, seed=0
         }
         if lad is not None:
             row["ladder_stop"] = lad
+        # §P6-2(4)+(5). The block bootstrap is the ONLY permitted substrate; the
+        # exhaustive circular-shift enumeration is forbidden and enters only as
+        # `other_p`, which stays binding wherever it is the larger (= more
+        # conservative) of the two. For a PERIODIC feature the shift null is
+        # provably powerless and is not part of p_raw at all, so it is not passed.
+        row.update(M.gpd_tail.price_row(
+            p_boot, mc_n_max, S[0], Sb if want_draws else None,
+            "block_bootstrap",
+            task_rng(seed, f.name, "gpd", lag) if want_draws else None,
+            other_p=(0.0 if f.periodic else p_shift),
+            other_floor=(0.0 if f.periodic else 1.0 / (n_used + 1.0)),
+            enabled=want_draws))
         rows.append(row)
     return rows
 
 
-def marks_task(f, window, fe_day, marks, n_surr, rng, ladder=None, seed=0):
+def marks_task(f, window, fe_day, marks, n_surr, rng, ladder=None, seed=0,
+                gpd=None):
     vals = f.values[window][fe_day]
     rows = []
     for mk in ("mag", "depth"):
@@ -285,11 +306,127 @@ def marks_task(f, window, fe_day, marks, n_surr, rng, ladder=None, seed=0):
             lad_cfg = dict(ladder, n_max=M.ladder_n_max(ladder, key))
             rr = rung_rng_factory(seed, f.name, kk, null_type="block_bootstrap")
         r = M.mark_test(vals, marks[mk], f.kind, n_surr, rng,
-                        ladder=lad_cfg, rung_rng=rr)
+                        ladder=lad_cfg, rung_rng=rr, gpd=gpd,
+                        gpd_rng=(task_rng(seed, f.name, "gpd:" + kk)
+                                 if (gpd and gpd.get("enabled")) else None))
         r.update({"feature": f.name, "family": f.family, "kind": f.kind,
                   "mark": mk, "n_events": int(marks[mk].size)})
         rows.append(r)
     return rows
+
+
+def max_statistic_matrix(feats, window, counts, offset, tests, min_shift=30):
+    """The joint null for S-8's max-statistic: one column per test, ONE SHARED index.
+
+    §P6-3(4) makes the max-statistic -- not BH -- the anti-repartition guarantee, and
+    it only IS one if the columns share a replicate index: the statistic has to be
+    "the largest of these tests ON THE SAME SURROGATE WORLD", not "the largest of
+    these tests each on its own surrogates". The circular-shift enumeration provides
+    exactly that for the GLM family: shift k is one surrogate world, every GLM test
+    is evaluated in it, and the enumeration is exhaustive rather than sampled, so
+    the joint null is EXACT under arbitrary dependence between the tests -- no PRDS
+    assumption and no correction factor.
+
+    COVERAGE IS DECLARED, NOT ASSUMED. Mark tests resample along the EVENT sequence
+    and period peaks resample the residual SERIES; neither shares the day-shift
+    index, so neither can be entered into this matrix without inventing a
+    correspondence that does not exist. They are reported as NOT COVERED rather than
+    quietly folded in, and `n_covered` is printed next to the declared count.
+    """
+    fmap = {f.name: f for f in feats}
+    cols, obs = [], []
+    idx = []
+    admissible = None
+    for i, t in enumerate(tests):
+        if t.get("test") != "glm_poisson_offset_etas":
+            continue
+        f = fmap.get(t["feature"])
+        if f is None:
+            continue
+        S = M.score_stat_all_shifts(f.design(window, int(t["lag"])), counts, offset)
+        if admissible is None:
+            n = S.size
+            a = np.arange(n)
+            admissible = a[(a >= min_shift) & (a <= n - min_shift)]
+        cols.append(S[admissible])
+        obs.append(float(S[0]))
+        idx.append(i)
+    if not cols:
+        return None, None, []
+    return np.column_stack(cols), np.array(obs), idx
+
+
+def confirm_gpd_candidates(tests, feats, window, counts, offset, marks, fe_day,
+                           cfg, verbose=True):
+    """§P6-2(6), the load-bearing rule. A GPD survivor is a CANDIDATE, not a stub.
+
+    BH has already run with the GPD rows entered at their CI-upper. Every survivor
+    still labelled GPD_EXTRAPOLATED is marked CANDIDATE-REQUIRES-BRUTE-FORCE and gets
+    a TARGETED single-test Monte Carlo at N >= 10/p_gpd, resolving its p directly.
+    ONLY that brute-force p may be written to stubs.json -- which is affordable
+    precisely because selection has reduced the extrapolated survivors to a handful,
+    and is the entire economic argument for spending the budget here.
+
+    A candidate whose required N exceeds the declared ceiling stays a CANDIDATE and
+    emits NO stub. That is the honest outcome: the confirmation was not affordable,
+    so the claim was not made.
+    """
+    cap = int((cfg.get("gpd") or {}).get("confirm_max_n", 0) or 0)
+    fmap = {f.name: f for f in feats}
+    out = []
+    for t in tests:
+        if not t.get("passes_fdr") or t.get("p_method") != gpd_tail.P_GPD:
+            continue
+        t["candidate_label"] = gpd_tail.CANDIDATE_LABEL
+        p_gpd = float(t.get("p_bh"))
+        n_need = gpd_tail.brute_force_n(p_gpd)
+        rec = {"feature": t["feature"], "test": t["test"], "p_gpd_ci_upper": p_gpd,
+               "n_required": n_need, "cap": cap}
+        if t["test"] == "lomb_scargle_peak":
+            rec.update({"status": "NOT CONFIRMED (not attempted)",
+                        "reason": ("each period-scan surrogate is a FULL "
+                                   "periodogram; a targeted brute force at "
+                                   f"N = {n_need} is not affordable and is not "
+                                   "attempted. No stub is emitted.")})
+        elif n_need > cap:
+            rec.update({"status": "NOT CONFIRMED (over the declared ceiling)",
+                        "reason": (f"N >= 10/p_gpd = {n_need} exceeds the declared "
+                                   f"confirmation ceiling {cap}. No stub is "
+                                   f"emitted; the row stays a candidate.")})
+        else:
+            t0 = time.perf_counter()
+            rng = task_rng(int(cfg["seed"]), t["feature"], "gpd_confirm",
+                           t.get("lag"))
+            if t["test"] == "glm_poisson_offset_etas":
+                f = fmap[t["feature"]]
+                X = f.design(window, int(t["lag"]))
+                Sb = M.score_stat_block_bootstrap(X, counts, offset, n_need, rng,
+                                                  mean_block=f.block_days)
+                p_bf = M.bootstrap_p(t["chi2_score"], Sb)
+            else:
+                f = fmap[t["feature"]]
+                vals = f.values[window][fe_day]
+                r = M.mark_test(vals, marks[t["mark"]], f.kind, n_need, rng)
+                p_bf = float(r["p_block_bootstrap"])
+            rec.update({"status": "CONFIRMED (brute force)", "p_brute_force": p_bf,
+                        "n_drawn": n_need,
+                        "seconds": round(time.perf_counter() - t0, 1),
+                        "floor": 1.0 / (n_need + 1.0)})
+            t["p_brute_force"] = p_bf
+            t["p_method"] = gpd_tail.P_MC_RESOLVED
+            t["p_method_reason"] = (f"GPD candidate CONFIRMED by a targeted "
+                                    f"single-test Monte Carlo at N = {n_need} "
+                                    f">= 10/p_gpd (§P6-2(6)); the brute-force p is "
+                                    f"the only number written to stubs.json")
+        t["gpd_confirmation"] = rec
+        out.append(rec)
+        if verbose:
+            print(f"  §P6-2(6) {gpd_tail.CANDIDATE_LABEL}: {t['feature']} "
+                  f"({t['test']}) p_gpd={p_gpd:.3g}, N>=10/p={n_need} -> "
+                  f"{rec['status']}"
+                  + (f", p_brute={rec['p_brute_force']:.4g}"
+                     if "p_brute_force" in rec else ""))
+    return out
 
 
 def period_grid(cfg):
@@ -364,8 +501,14 @@ def collect_period_maxima(results, cfg, n_surr, chunk=None):
 def period_finish(counts, offset, days, cfg, obs, maxima, n_mc):
     """Parent-side assembly: p-values, harmonic ladder, folded amplitudes."""
     periods = period_grid(cfg)
+    # The GPD stream for the period scan is derived from the test key like every
+    # other stream (feature "period_scan", kind "period"), so the extrapolation is
+    # reproducible and independent of how the surrogate chunks were scheduled.
     peaks, meta = M.period_assemble(obs["power"], periods, obs["peaks"], maxima,
-                                    obs["ar1_phi"], n_mc)
+                                    obs["ar1_phi"], n_mc,
+                                    gpd=cfg.get("gpd"),
+                                    gpd_rng=task_rng(cfg["seed"], "period_scan",
+                                                     "gpd"))
     return _period_decorate(counts, offset, days, cfg, peaks, meta)
 
 
@@ -420,18 +563,19 @@ def dispatch_task(key, W):
     """Run one named task against a payload dict. Pure: no file writes, ever."""
     kind, _, name = key.partition(":")
     seed, n_surr, ladder = W["seed"], W["n_surr"], W["ladder"]
+    gpd = W.get("gpd")
     if kind == "glm":
         f = W["feats"][name]
         return glm_task(f, W["window"], W["counts"], W["offset"], n_surr,
                         lambda lag: task_rng(seed, name, "glm", lag,
                                              null_type="circular_shift"),
-                        ladder, seed=seed)
+                        ladder, seed=seed, gpd=gpd)
     if kind == "marks":
         f = W["feats"][name]
         return marks_task(f, W["window"], W["fe_day"], W["marks"], n_surr,
                           task_rng(seed, name, "marks", None,
                                    null_type="circular_shift"),
-                          ladder, seed=seed)
+                          ladder, seed=seed, gpd=gpd)
     if key == "period_obs":
         return period_obs_task(W["days"], W["resid"], W["cfg"])
     if kind == "psurr":
@@ -631,6 +775,38 @@ def build_config(args, preset):
         # N_max is fixed HERE, before the run, from the preset alone. Nothing
         # downstream may raise it for an interesting-looking test.
         cfg["ladder"]["n_max"] = int(cfg["n_surrogates"])
+    # --gpd changes the ESTIMATOR (a censored p becomes an extrapolated one) and
+    # --strata changes the MULTIPLICITY PROCEDURE, so both are hash-affecting and
+    # both are OFF by default. Inserted only when on, so a default run's config --
+    # and therefore its hash and its resumable sessions -- is byte-identical to the
+    # pre-§P6-2/§P6-3 engine.
+    if getattr(args, "gpd", False):
+        cfg["gpd"] = {
+            "enabled": True,
+            "threshold_q": gpd_tail.GPD_THRESHOLD_Q,
+            "stability_q": list(gpd_tail.GPD_STABILITY_QS),
+            "ad_alpha": gpd_tail.GPD_AD_ALPHA,
+            "ci_level": gpd_tail.GPD_CI_LEVEL,
+            "n_boot": gpd_tail.GPD_N_BOOT,
+            "n_ad_boot": gpd_tail.GPD_N_AD_BOOT,
+            "decades": gpd_tail.GPD_DECADES,
+            "confirm_factor": gpd_tail.GPD_CONFIRM_FACTOR,
+            "confirm_max_n": int(getattr(args, "gpd_confirm_max_n", None)
+                                 or 500000),
+            # §P6-2(7) is BINDING, not advisory: no calibration (or a REJECT one)
+            # and the engine refuses to run with extrapolation on. The verdict is
+            # part of the config -- and therefore of the hash -- because a
+            # re-calibration is a new licence and a new experiment.
+            "calibration": gpd_tail.assert_calibrated(
+                getattr(args, "gpd_calibration", None)),
+        }
+    path = getattr(args, "strata", None)
+    if path:
+        # §P6-3(3)+(5): the partition FILE CONTENT is hash-affecting (its sha256 is
+        # in the config), so re-partitioning cannot resume an existing session --
+        # it is a new config hash and a new ledger line, which is rule 5 exactly.
+        cfg["strata"] = strata_mod.load_partition(path, q=cfg["fdr_q"])
+        strata_mod.assert_budget_identity(cfg["strata"]["strata"], cfg["fdr_q"])
     return cfg
 
 
@@ -841,6 +1017,7 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         "counts": counts, "offset": offset, "days": days, "resid": resid,
         "marks": marks, "fe_day": fe_day, "seed": int(cfg["seed"]),
         "n_surr": n_surr, "ladder": ladder, "cfg": cfg,
+        "gpd": cfg.get("gpd"),
         "period_chunk": M.PERIOD_SURROGATE_CHUNK,
     }
 
@@ -854,7 +1031,8 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                 continue
             t_f = time.perf_counter()
             rows = glm_task(f, window, counts, offset, n_surr,
-                            lambda lag: rng, ladder, seed=int(cfg["seed"]))
+                            lambda lag: rng, ladder, seed=int(cfg["seed"]),
+                            gpd=cfg.get("gpd"))
             ckpt.record_seconds(key, time.perf_counter() - t_f)
             ckpt.put(key, rows)
             if verbose:
@@ -872,7 +1050,7 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                 continue
             t_f = time.perf_counter()
             rows = marks_task(f, window, fe_day, marks, n_surr, rng, ladder,
-                              seed=int(cfg["seed"]))
+                              seed=int(cfg["seed"]), gpd=cfg.get("gpd"))
             ckpt.record_seconds(key, time.perf_counter() - t_f)
             ckpt.put(key, rows)
             if verbose:
@@ -945,12 +1123,44 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         tests.append(t)
     tests.sort(key=lambda t: t["order_key"])
 
-    p = np.array([t["p_raw"] for t in tests])
-    q, passed = M.benjamini_hochberg(p, M.FDR_Q)
+    n_tests = len(tests)
+    # §P6-2(5): every row carries a p_method. Rows produced by a path that predates
+    # the labelling (or by a resumed checkpoint written before it) are labelled here
+    # rather than left blank, because "no label" is exactly what rule 5 forbids.
+    for t in tests:
+        if t.get("p_method") not in gpd_tail.P_METHODS:
+            t["p_method"] = gpd_tail.P_MC_RESOLVED
+            t["p_bh"] = float(t["p_raw"])
+            t["bh_eligible"] = True
+            t["p_method_reason"] = "labelled at assembly (no extrapolation path)"
+
+    # §P6-3. Strata are a DECLARATION read from the partition file, whose content is
+    # hash-affecting; the default is one stratum holding the whole declared family,
+    # which reproduces flat BH exactly (engine/tests/test_strata.py pins that).
+    part = cfg.get("strata")
+    if part:
+        strata_decl = [dict(s) for s in part["strata"]]
+        stratum_names = [strata_mod.stratum_of(t, part) for t in tests]
+        for t, nm in zip(tests, stratum_names):
+            t["stratum"] = nm
+    else:
+        strata_decl = strata_mod.flat_partition(n_tests, M.FDR_Q)
+        stratum_names = [strata_mod.UNSTRATIFIED] * n_tests
+        for t in tests:
+            t["stratum"] = strata_mod.UNSTRATIFIED
+
+    # §P6-2(2)+(6): GPD rows enter BH at their CI-UPPER, never at the point
+    # estimate; §P6-2(1): a test whose extrapolation failed its gates is INELIGIBLE
+    # for rejection but still counts against its stratum's declared m_s.
+    p = np.array([float(t.get("p_bh", t["p_raw"])) for t in tests])
+    eligible = np.array([bool(t.get("bh_eligible", True)) for t in tests])
+    q, passed, bh_meta = strata_mod.stratified_bh(
+        p, stratum_names, strata_decl, M.FDR_Q, eligible=eligible)
     for t, qq, pa in zip(tests, q, passed):
         t["bh_q"] = float(qq)
         t["passes_fdr"] = bool(pa)
-    n_tests = len(tests)
+    ckpt.state["bh"] = bh_meta
+    ckpt.state["p_method_census"] = gpd_tail.census(tests)
 
     # Per-test resolution floors, which are HETEROGENEOUS once the ladder is on
     # (and already heterogeneous without it, because the enumeration floor is set
@@ -991,6 +1201,44 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                   f"smallest floor {min(floors):.5f} ({n_at_floor} tests sit at "
                   f"their own floor). Survivors are provisional; rerun with more "
                   f"surrogates before trusting the ordering.")
+
+    # ------------------------------------- S-8 max-statistic (§P6-3(4)) ----
+    t_ms = time.perf_counter()
+    ms_mat, ms_obs, ms_idx = max_statistic_matrix(feats, window, counts, offset,
+                                                  tests)
+    if ms_mat is not None:
+        ms = strata_mod.max_statistic_report(
+            ms_mat, ms_obs, [tests[i]["stratum"] for i in ms_idx], strata_decl)
+        ms["n_covered"] = len(ms_idx)
+        ms["n_declared"] = n_tests
+        ms["coverage_note"] = (
+            f"{len(ms_idx)} of {n_tests} declared tests carry a SHARED surrogate "
+            f"index (the exhaustive circular-shift enumeration) and are therefore "
+            f"in the joint max-statistic null. Mark tests resample along the event "
+            f"sequence and period peaks resample the residual series; neither "
+            f"shares that index, so they are NOT COVERED rather than folded in.")
+        ms["seconds"] = round(time.perf_counter() - t_ms, 2)
+        ckpt.state["max_statistic"] = ms
+        if verbose:
+            print(f"  S-8 max-statistic (§P6-3(4)), GLOBAL and "
+                  f"partition-invariant: p = {ms['global']['p']:.4g} over "
+                  f"{ms['global']['n_tests']} tests x "
+                  f"{ms['global']['n_replicates']} shared surrogate worlds "
+                  f"(floor {ms['global']['floor']:.3g}); {ms['seconds']}s")
+            for r in ms["per_stratum"]:
+                print(f"    stratum {r['stratum']}: p = {r['p']:.4g} "
+                      f"({r['n_tests']} covered tests) | GLOBAL p = "
+                      f"{r['global_p']:.4g} (printed adjacent, §P6-3(4))")
+    else:
+        ckpt.state["max_statistic"] = None
+
+    # --------------------------- §P6-2(6) GPD candidate confirmation ------
+    ckpt.state["gpd_confirmations"] = confirm_gpd_candidates(
+        tests, feats, window, counts, offset, marks, fe_day, cfg, verbose=verbose)
+
+    if verbose:
+        cen = gpd_tail.census(tests)
+        print("  " + gpd_tail.census_line(cen, n_tests))
 
     # ------------------------------------------------- aliasing audit ------
     fmap = {f.name: f for f in feats}
@@ -1124,6 +1372,31 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
           _count_by(feats, lambda f: f.family).items())))
     A(f"- **{state['n_tests']} tests** in this session; BH-FDR at q = {cfg['fdr_q']} "
       f"-> **{n_pass} survive**")
+    # ---- §P6-4 rule 4.7 item 1: the declared count AND what chance alone buys ----
+    _m_decl = int(state["n_tests"])
+    _exp_false = float(cfg["fdr_q"]) * _m_decl
+    A(f"- **DECLARED TEST COUNT {_m_decl}, AND WHAT CHANCE ALONE BUYS AT THIS "
+      f"THRESHOLD (§P6-4(4.7) item 1).** Operating at q = {cfg['fdr_q']}, the "
+      f"expected number of FALSE discoveries among the survivors is "
+      f"**q x m = {_exp_false:.1f}**. Read that number before the ranked list: with "
+      f"{n_pass} survivor(s) reported, chance alone is expected to supply "
+      f"{_exp_false:.1f} of them. BH controls the EXPECTED PROPORTION of false "
+      f"discoveries, not their number, and it makes no statement at all about any "
+      f"individual row.")
+    # ---- §P6-4 rule 4.7 item 4: the p-method census + the resolvability count ----
+    _cen = state.get("p_method_census") or gpd_tail.census(tests)
+    A(f"- **P-METHOD CENSUS (§P6-2(5), §P6-4(4.7) item 4).** "
+      f"{_cen.get(gpd_tail.P_MC_RESOLVED, 0)} `MC_RESOLVED` / "
+      f"{_cen.get(gpd_tail.P_GPD, 0)} `GPD_EXTRAPOLATED` / "
+      f"{_cen.get(gpd_tail.P_UNRESOLVED, 0)} `UNRESOLVED`, of {_m_decl} declared "
+      f"tests. `MC_RESOLVED` means the Monte Carlo actually resolved the p; "
+      f"`GPD_EXTRAPOLATED` means it did not and a gated GPD tail fit was quoted at "
+      f"the UPPER end of its 95% bootstrap CI; `UNRESOLVED` means the p is the "
+      f"floor and the true p is somewhere at or below it. A reader must never have "
+      f"to infer which kind of number they are looking at."
+      + (f" **{_cen.get(gpd_tail.P_GPD, 0)} extrapolated survivor(s) are labelled "
+         f"{gpd_tail.CANDIDATE_LABEL} and emit no stub** (§P6-2(6))."
+         if _cen.get(gpd_tail.P_GPD, 0) else ""))
     m = max(state["n_tests"], 1)
     bh_thresh = cfg["fdr_q"] / m
     floors = [t.get("p_floor", 1.0 / (cfg["n_surrogates"] + 1.0)) for t in tests]
@@ -1182,6 +1455,109 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
       f"(kind=mine, n_tests={state['n_tests']}), so holdout multiplicity reporting "
       f"includes this sweep. No holdout hash was spent.")
     A("")
+
+    # ---------------------------------- §P6-3: the stratum table + S-8 ---------
+    bh_meta = state.get("bh")
+    ms = state.get("max_statistic")
+    if bh_meta:
+        strat_on = bool(cfg.get("strata"))
+        A("## Multiplicity partition and the max-statistic (§P6-3)")
+        A("")
+        A(f"- **mode: {'STRATIFIED (weighted BH)' if strat_on else 'UNSTRATIFIED (flat BH)'}**"
+          + (f", partition `{cfg['strata']['path']}` sha256 "
+             f"`{cfg['strata']['sha256'][:16]}` -- the FILE CONTENT is "
+             f"hash-affecting, so re-partitioning is a new session with a new "
+             f"config hash and a new ledger line (§P6-3(5))."
+             if strat_on else
+             ". Flat BH over one stratum holding the whole declared family, which "
+             "is the default; `--strata <partition.json>` switches this on."))
+        A("")
+        for line in strata_mod.budget_table_lines(bh_meta["table"],
+                                                  bh_meta["identity"]):
+            A(line)
+        A("")
+        for line in _wrap(strata_mod.HONEST_TRADE):
+            A(line)
+        A("")
+        A("**Per-stratum BH at a flat q would NOT control global FDR.** Applying BH "
+          "at level q independently within each of S families controls the AVERAGE "
+          "OVER FAMILIES of FDR (Benjamini & Bogomolov 2014), not the overall FDR "
+          "across all tests. The identity above is what converts it into weighted "
+          "BH with pre-specified weights, which controls global FDR at q exactly, "
+          "and the engine refuses to run without it.")
+        A("")
+        A("Errored, ineligible and never-executed tests count as NON-REJECTIONS "
+          "against their declared `m_s` (§P6-3(3)): the denominator is the "
+          "DECLARATION, not the execution. The `ineligible/errored` column is that "
+          "count.")
+        A("")
+    if ms:
+        A("### S-8 sim-calibrated max-statistic -- the anti-repartition guarantee")
+        A("")
+        for line in _wrap(strata_mod.MAXSTAT_NOTE):
+            A(line)
+        A("")
+        A(f"- **GLOBAL max-statistic p = {ms['global']['p']:.4g}** over "
+          f"{ms['global']['n_tests']} covered tests x "
+          f"{ms['global']['n_replicates']} shared surrogate worlds "
+          f"(floor {ms['global']['floor']:.3g}). Statistic: "
+          f"{ms['global'].get('statistic')}.")
+        for line in _wrap(ms.get("coverage_note", "")):
+            A("  " + line)
+        A("")
+        A("| stratum | covered tests | max-statistic p | **GLOBAL p (adjacent, "
+          "§P6-3(4))** |")
+        A("| --- | ---: | ---: | ---: |")
+        for r in ms["per_stratum"]:
+            pv = "n/a (no covered test)" if not np.isfinite(r["p"]) else f"{r['p']:.4g}"
+            A(f"| `{r['stratum']}` | {r['n_tests']} | {pv} | "
+              f"**{r['global_p']:.4g}** |")
+        A("")
+        A("No stratum is reported without the global figure on the same row, per "
+          "§P6-3(4). The global number is invariant to how the family is "
+          "partitioned -- that is exactly what makes stratification a discipline "
+          "rather than a knob.")
+        A("")
+
+    # ------------------------------------- §P6-2: the p-method table -----------
+    gconf = state.get("gpd_confirmations") or []
+    if cfg.get("gpd") or any(t.get("p_method") == gpd_tail.P_GPD for t in tests):
+        A("## GPD tail extrapolation (§P6-2)")
+        A("")
+        A(gpd_tail.census_line(_cen, _m_decl))
+        A("")
+        A("| test | p_method | p_raw (MC) | p entering BH | p_AD | xi stability | "
+          "reason |")
+        A("| --- | --- | ---: | ---: | ---: | --- | --- |")
+        for t in sorted(tests, key=lambda t: (t.get("p_bh", t["p_raw"]),
+                                              t.get("order_key", []))):
+            if t.get("p_method") == gpd_tail.P_MC_RESOLVED and not t.get("gpd"):
+                continue
+            g = t.get("gpd") or {}
+            pad = g.get("p_ad")
+            A(f"| `{t['feature']}` {_row_where(t)} | `{t.get('p_method')}` | "
+              f"{t['p_raw']:.4g} | {t.get('p_bh', t['p_raw']):.4g} | "
+              f"{('%.3f' % pad) if pad is not None else 'n/a'} | "
+              f"{g.get('xi_stability_pass')} | "
+              f"{(t.get('p_method_reason') or '')[:160]} |")
+        A("")
+        if gconf:
+            A("### §P6-2(6) confirmation of GPD candidates")
+            A("")
+            A("A survivor labelled `GPD_EXTRAPOLATED` **is not a survivor**. BH ran "
+              "with it at its CI-upper; surviving makes it a "
+              f"`{gpd_tail.CANDIDATE_LABEL}`, and it becomes a stub only after a "
+              "targeted single-test Monte Carlo at N >= 10/p_gpd resolves its p "
+              "directly. **Only the brute-force p is written to `stubs.json`.**")
+            A("")
+            A("| test | p_gpd (CI-upper) | N required | status | p_brute_force |")
+            A("| --- | ---: | ---: | --- | ---: |")
+            for r in gconf:
+                pbf = r.get("p_brute_force")
+                A(f"| `{r['feature']}` ({r['test']}) | {r['p_gpd_ci_upper']:.4g} | "
+                  f"{r['n_required']} | {r['status']} | "
+                  f"{('%.4g' % pbf) if pbf is not None else '--'} |")
+            A("")
     dl = state.get("data_log", [])
     if dl:
         A("### Optional downloads (family 3)")
@@ -1241,14 +1617,16 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
 
     A("## Ranked candidates (top 25 by BH q, then raw p)")
     A("")
-    A("| # | feature | lag/period | effect | raw p | BH q | surrogates | ladder | "
-      "aliasing | amplitude honesty |")
-    A("| ---: | --- | --- | --- | ---: | ---: | ---: | --- | --- | --- |")
+    A("| # | feature | lag/period | effect | raw p | p_method | BH q | stratum | "
+      "surrogates | ladder | aliasing | amplitude honesty |")
+    A("| ---: | --- | --- | --- | ---: | --- | ---: | --- | ---: | --- | --- | --- |")
     for i, t in enumerate(order[:25], 1):
         lad = (t["ladder"]["verdict"] if t["test"] == "lomb_scargle_peak" else "n/a")
         ali = t.get("aliasing", {}).get("verdict", "-- (did not pass FDR)")
+        # §P6-2(5): p_method is on EVERY row of the table, not only the survivors.
         A(f"| {i} | `{t['feature']}` | {_row_where(t)} | {_row_effect(t)} | "
-          f"{t['p_raw']:.4g} | {t['bh_q']:.4g} | {t.get('n_surrogates', '')} | "
+          f"{t['p_raw']:.4g} | `{t.get('p_method')}` | {t['bh_q']:.4g} | "
+          f"{t.get('stratum', '')} | {t.get('n_surrogates', '')} | "
           f"{lad} | {ali} | {_amp_note(t)} |")
     A("")
 
@@ -1494,9 +1872,31 @@ def _wrap(text, width=88):
 # ------------------------------------------------------------------- stubs ---
 def write_stubs(session_dir, cfg, tests):
     path = os.path.join(session_dir, "stubs.json")
-    entries = []
+    entries, candidates = [], []
     for t in sorted(tests, key=lambda t: (t["bh_q"], t["p_raw"], t.get("order_key", []))):
         if not t["passes_fdr"]:
+            continue
+        # §P6-2(6). A SURVIVOR LABELLED GPD_EXTRAPOLATED IS NOT A SURVIVOR: it is a
+        # candidate, and it becomes a stub only after the targeted brute-force MC
+        # has resolved its p directly. `confirm_gpd_candidates` relabels a confirmed
+        # row to MC_RESOLVED and attaches `p_brute_force`; anything still carrying
+        # the GPD label at this point was not confirmed and is listed separately,
+        # never as a stub.
+        if t.get("p_method") == gpd_tail.P_GPD:
+            candidates.append({
+                "status": gpd_tail.CANDIDATE_LABEL,
+                "observable": _observable(t),
+                "feature": t["feature"], "test": t["test"],
+                "p_method": gpd_tail.P_GPD,
+                "p_gpd_ci_upper": t.get("p_bh"),
+                "bh_q": t["bh_q"],
+                "confirmation": t.get("gpd_confirmation"),
+                "why_not_a_stub": (
+                    "§P6-2(6): BH ran with this row at its 95%-CI upper end, and it "
+                    "survived -- which makes it a CANDIDATE, not a stub. Only a "
+                    "targeted single-test Monte Carlo at N >= 10/p_gpd may resolve "
+                    "it, and only that brute-force p may be written here."),
+            })
             continue
         entries.append({
             "status": "DRAFT STUB -- generator output, not a K-entry",
@@ -1508,6 +1908,13 @@ def write_stubs(session_dir, cfg, tests):
             "effect_size": _row_effect(t),
             "rate_modulation": _amp_note(t),
             "p_raw": t["p_raw"],
+            # §P6-2(5): the label is on EVERY row, so a reader never has to infer
+            # which kind of number they are looking at.
+            "p_method": t.get("p_method"),
+            "p_method_reason": t.get("p_method_reason"),
+            "p_entered_into_bh": t.get("p_bh", t["p_raw"]),
+            "p_brute_force": t.get("p_brute_force"),
+            "stratum": t.get("stratum"),
             "bh_q": t["bh_q"],
             "n_surrogates": t.get("n_surrogates"),
             "ladder": t.get("ladder", {}).get("verdict"),
@@ -1525,6 +1932,11 @@ def write_stubs(session_dir, cfg, tests):
         "config": cfg,
         "n_tests": len(tests),
         "n_stubs": len(entries),
+        "p_method_census": gpd_tail.census(tests),
+        "p_method_census_line": gpd_tail.census_line(gpd_tail.census(tests),
+                                                     len(tests)),
+        "n_gpd_candidates": len(candidates),
+        "gpd_candidates_requiring_brute_force": candidates,
         "stubs": entries,
     }
     with open(path, "w", encoding="utf-8") as fh:

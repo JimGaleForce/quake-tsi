@@ -115,8 +115,22 @@ def test_jobs1_glm_is_bit_identical_to_the_v1_inner_loop():
         rng_v2 = np.random.default_rng(SEED)
         v2 = ms.glm_task(f, window, counts, offset, n_surr, lambda lag: rng_v2,
                          None, seed=SEED)
-        assert json.dumps(v1, sort_keys=True) == json.dumps(v2, sort_keys=True), \
+        # PIN SCOPE, v2 phase 2a. §P6-2(5) requires a `p_method` label (and the
+        # number that enters BH) on EVERY row, so v2 rows carry FIELDS the v1 loop
+        # never produced. The pin is on the v1 QUANTITIES -- every number and string
+        # v1 computed must still be bit-identical -- and the added fields are
+        # asserted separately, below, rather than being allowed to hide a drift.
+        v2_pinned = [{k: r[k] for k in v1[i]} for i, r in enumerate(v2)]
+        assert json.dumps(v1, sort_keys=True) == json.dumps(v2_pinned,
+                                                            sort_keys=True), \
             f"--jobs 1 GLM output drifted from v1 for {f.name}"
+        for r in v2:
+            # GPD is OFF here (no `gpd` argument), so the label must describe the
+            # censoring state and nothing may have been extrapolated.
+            assert r["gpd"] is None
+            assert r["p_bh"] == r["p_raw"]
+            assert r["bh_eligible"] is True
+            assert r["p_method"] in ("MC_RESOLVED", "UNRESOLVED")
 
 
 def test_jobs1_marks_and_period_are_bit_identical_to_the_v1_inner_loops():
