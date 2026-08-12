@@ -10,11 +10,27 @@ RNG POLICY (v2) -- READ THIS BEFORE COMPARING TWO RUNS
 There are two randomness regimes and they do NOT produce the same numbers. This is
 deliberate and the difference is the price of parallelism.
 
-* `--jobs 1` (the default) is the AUDIT BASELINE. One `default_rng(cfg["seed"])` is
-  created in `run()` and threaded through every task in a fixed order -- GLM sweep
-  in feature order, then the mark tests in feature order, then the period scan --
-  exactly as v1 did. Every draw depends on every draw before it. Output is
-  bit-identical to the pre-parallel engine for the same config and seed.
+* `--jobs 1` (the default) is the AUDIT BASELINE for the GLM and MARK tests. One
+  `default_rng(cfg["seed"])` is created in `run()` and threaded through those tasks
+  in a fixed order -- GLM sweep in feature order, then the mark tests in feature
+  order. Every draw depends on every draw before it. Output is bit-identical to the
+  pre-parallel engine for the same config and seed.
+
+* THE PERIOD SCAN IS THE EXCEPTION, AND IT IS DELIBERATE (v2 phase 1b, §P6-5).
+  It no longer touches the shared stream in EITHER mode. Its 2 x n_mc surrogates
+  are subtasks, and surrogate i draws from an index-addressable child of that
+  null's key sequence (`engine.mine.surrogate_seed_sequence`), so:
+    - `--jobs 1` and `--jobs 32` give bit-identical period results;
+    - the chunk size is an execution knob and provably changes nothing;
+    - and the pre-1b shared-stream period numbers are SUPERSEDED. That was the
+      price, paid knowingly: the old stream was reproducible only for one process
+      running one fixed task order, and the scan was 90.7% of the sweep as a single
+      indivisible task (Amdahl ceiling 1.10x). Determinism independent of scheduling
+      is worth more than bit-identity with a build that could not be parallelised.
+  Second-order consequence, stated rather than discovered later: in `--jobs 1` the
+  shared stream is no longer advanced by the period scan, so the post-FDR aliasing
+  audit (which runs after it and threads the same stream) also draws different
+  surrogates than it did before phase 1b.
 
 * `--jobs != 1` derives an INDEPENDENT `numpy.random.SeedSequence` per task from
   the sha256 of the CANONICAL JSON of the complete test key -- master seed, feature
@@ -276,11 +292,84 @@ def marks_task(f, window, fe_day, marks, n_surr, rng, ladder=None, seed=0):
     return rows
 
 
-def period_task(counts, offset, days, resid, cfg, n_surr, rng, verbose=False):
-    periods = np.exp(np.linspace(math.log(PERIOD_MIN), math.log(PERIOD_MAX),
-                                 int(cfg["n_periods"])))
-    peaks, meta = M.period_scan(days, resid, periods, n_surr, rng,
-                                n_peaks=int(cfg["n_peaks"]), verbose=verbose)
+def period_grid(cfg):
+    """The trial-period grid. A pure function of the config, so every subtask that
+    needs it can rebuild it instead of shipping it."""
+    return np.exp(np.linspace(math.log(PERIOD_MIN), math.log(PERIOD_MAX),
+                              int(cfg["n_periods"])))
+
+
+# ---- the period scan as N subtasks (phase 1b) ------------------------------
+# Task keys:
+#   "period_obs"            observed periodogram + peak picking (no randomness)
+#   "psurr:<null>:<start>"  max power of surrogates [start, start+chunk) of <null>
+# The parent then assembles. `period_scan` (the checkpoint key downstream code and
+# the report already know) is written by the parent from those pieces, so nothing
+# past the assembly changed shape.
+def period_task_keys(cfg, n_surr, chunk=None):
+    n_mc = M.period_n_mc(n_surr)
+    keys = ["period_obs"]
+    for nt in M.PERIOD_NULLS:
+        for a, _b in M.period_chunks(n_mc, chunk):
+            keys.append(f"psurr:{nt}:{a}")
+    return keys
+
+
+def period_obs_task(days, resid, cfg):
+    power, peaks = M.period_observed(days, resid, period_grid(cfg),
+                                     n_peaks=int(cfg["n_peaks"]))
+    return {"power": [float(v) for v in power], "peaks": [int(i) for i in peaks],
+            "ar1_phi": float(M.ar1_params(resid)[0]),
+            "n_trial_periods": int(cfg["n_periods"])}
+
+
+def period_surrogate_task(days, resid, cfg, null_type, start, stop, seed):
+    seqs = M.period_seed_seqs(int(seed))
+    vals = M.period_surrogate_maxima(days, resid, period_grid(cfg), null_type,
+                                     start, stop, seqs[null_type])
+    return {"null_type": null_type, "start": int(start), "stop": int(stop),
+            "maxima": [float(v) for v in vals]}
+
+
+def collect_period_maxima(results, cfg, n_surr, chunk=None):
+    """Reassemble the per-null surrogate maxima IN SURROGATE ORDER, counting them.
+
+    FAILURE-FIRST. A missing chunk, a short chunk or a chunk that returned the wrong
+    slice is named here -- null type and chunk start -- and stops the run. It cannot
+    be allowed to become a quietly shifted p-value: every peak's p is a rank against
+    exactly n_mc draws, so losing one chunk moves every p in the scan.
+    """
+    n_mc = M.period_n_mc(n_surr)
+    out = {}
+    for nt in M.PERIOD_NULLS:
+        parts = []
+        for a, b in M.period_chunks(n_mc, chunk):
+            key = f"psurr:{nt}:{a}"
+            r = results.get(key)
+            if r is None:
+                raise RuntimeError(
+                    f"period scan: chunk {key} (null {nt!r}, surrogates "
+                    f"[{a}, {b})) has no result. Refusing to price the scan.")
+            got = len(r["maxima"])
+            if int(r["start"]) != a or int(r["stop"]) != b or got != b - a:
+                raise RuntimeError(
+                    f"period scan: chunk {key} (null {nt!r}) claims "
+                    f"[{r['start']}, {r['stop']}) with {got} maxima but was "
+                    f"declared [{a}, {b}). Refusing to price the scan.")
+            parts.append(np.asarray(r["maxima"], dtype=np.float64))
+        out[nt] = np.concatenate(parts) if parts else np.empty(0)
+    return out, n_mc
+
+
+def period_finish(counts, offset, days, cfg, obs, maxima, n_mc):
+    """Parent-side assembly: p-values, harmonic ladder, folded amplitudes."""
+    periods = period_grid(cfg)
+    peaks, meta = M.period_assemble(obs["power"], periods, obs["peaks"], maxima,
+                                    obs["ar1_phi"], n_mc)
+    return _period_decorate(counts, offset, days, cfg, peaks, meta)
+
+
+def _period_decorate(counts, offset, days, cfg, peaks, meta):
     lam0 = offset * (counts.sum() / offset.sum())
     for pk in peaks:
         pk["ladder"] = M.harmonic_ladder(counts, lam0, days, pk["period_days"],
@@ -299,6 +388,19 @@ def period_task(counts, offset, days, resid, cfg, n_surr, rng, verbose=False):
     return {"peaks": peaks, "scan": meta,
             "n_trial_periods": int(cfg["n_periods"]),
             "period_range_days": [PERIOD_MIN, PERIOD_MAX]}
+
+
+def period_task(counts, offset, days, resid, cfg, n_surr, seeds, verbose=False,
+                chunk=None):
+    """The whole period scan in ONE process. The unchunked reference.
+
+    Not used by `run()` (which runs the pieces as separate tasks) but kept as the
+    thing the chunked path is checked against: same seeds -> byte-identical peaks.
+    """
+    peaks, meta = M.period_scan(days, resid, period_grid(cfg), n_surr, seeds,
+                                n_peaks=int(cfg["n_peaks"]), verbose=verbose,
+                                chunk=chunk)
+    return _period_decorate(counts, offset, days, cfg, peaks, meta)
 
 
 # ------------------------------------------------------------------ workers ---
@@ -330,12 +432,15 @@ def dispatch_task(key, W):
                           task_rng(seed, name, "marks", None,
                                    null_type="circular_shift"),
                           ladder, seed=seed)
-    if key == "period_scan":
-        return period_task(W["counts"], W["offset"], W["days"], W["resid"],
-                           W["cfg"], n_surr,
-                           task_rng(seed, "period_scan", "period", None,
-                                    null_type="ar1_and_permutation"),
-                           verbose=False)
+    if key == "period_obs":
+        return period_obs_task(W["days"], W["resid"], W["cfg"])
+    if kind == "psurr":
+        null_type, _, start = name.partition(":")
+        a = int(start)
+        b = min(a + int(W.get("period_chunk") or M.PERIOD_SURROGATE_CHUNK),
+                M.period_n_mc(n_surr))
+        return period_surrogate_task(W["days"], W["resid"], W["cfg"], null_type,
+                                     a, b, seed)
     raise KeyError(f"unknown mine task key {key!r}")
 
 
@@ -661,10 +766,14 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     fe_day = marks["day"] - window.start
 
     # The declared task list. Order is the v1 order (GLM sweep, mark tests, period
-    # scan) because the sequential driver's shared rng stream depends on it.
+    # scan) because the sequential driver's shared rng stream depends on it -- for
+    # the GLM and mark tasks. The period-scan subtasks do NOT touch that stream:
+    # each surrogate draws from its own index-addressable child sequence, so their
+    # position in this list is presentational only (see M.surrogate_seed_sequence).
+    period_keys = period_task_keys(cfg, n_surr)
     task_keys = ([f"glm:{f.name}" for f in feats]
                  + [f"marks:{f.name}" for f in feats]
-                 + ["period_scan"])
+                 + period_keys)
 
     # Every random stream in the session is addressed by a canonical test key.
     # Two tests sharing a digest would share a stream, which is a silent
@@ -677,8 +786,12 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         for mk in ("mag", "depth"):
             all_keys.append(M.test_key(cfg["seed"], f.name, f"mark_{mk}",
                                        null_type="block_bootstrap"))
-    all_keys.append(M.test_key(cfg["seed"], "period_scan", "period",
-                               null_type="ar1_and_permutation"))
+    # The period scan's two nulls are now separate task families with separate
+    # streams (phase 1b). No field was added to TEST_KEY_FIELDS, so every OTHER
+    # declared digest in this session is byte-identical to phase 1.
+    for _nt in M.PERIOD_NULLS:
+        all_keys.append(M.test_key(cfg["seed"], "period_scan", "period",
+                                   null_type=_nt))
     digests = assert_task_keys_unique(all_keys)
     n_declared_streams = len(all_keys)
     if len(digests) != n_declared_streams:            # belt and braces
@@ -692,11 +805,23 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     n_jobs = resolve_jobs(jobs)
     if verbose:
         print(f"execution: --jobs {jobs} -> {n_jobs} process(es); "
-              + ("SEQUENTIAL, shared rng stream (v1-bit-identical audit baseline)"
+              + ("SEQUENTIAL, shared rng stream for glm/marks (v1-bit-identical "
+                 "audit baseline); period scan on per-surrogate streams"
                  if n_jobs == 1 else
-                 "PARALLEL, per-task derived SeedSequence (order-independent, "
-                 "NOT bit-identical to --jobs 1)")
+                 "PARALLEL, per-task derived SeedSequence (order-independent; "
+                 "glm/marks NOT bit-identical to --jobs 1, period scan IS)")
               + (f"; ladder ON {ladder}" if ladder else "; ladder off"))
+
+    # The worker payload. Built for BOTH drivers: the sequential path runs the
+    # period subtasks through the very same `dispatch_task`, which is what makes
+    # --jobs 1 and --jobs N bit-identical there.
+    payload = {
+        "feats": {f.name: f for f in feats}, "window": window,
+        "counts": counts, "offset": offset, "days": days, "resid": resid,
+        "marks": marks, "fe_day": fe_day, "seed": int(cfg["seed"]),
+        "n_surr": n_surr, "ladder": ladder, "cfg": cfg,
+        "period_chunk": M.PERIOD_SURROGATE_CHUNK,
+    }
 
     if n_jobs == 1:
         # -------------------------------------------- (a) GLM sweep --------
@@ -734,21 +859,25 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                       f"depth p={rows[1]['p_raw']:.4g}")
 
         # ---------------------------------------- (b) period scan ----------
-        if not ckpt.done("period_scan"):
+        # SAME SUBTASKS AS THE PARALLEL PATH, same per-surrogate streams. This is
+        # the design-B choice: --jobs 1 and --jobs N give bit-identical period
+        # results, at the price of no longer reproducing the pre-1b shared-stream
+        # numbers. See the module docstring.
+        for key in period_keys:
+            if ckpt.done(key):
+                if verbose:
+                    print(f"  [skip, checkpointed] {key}")
+                continue
             t_f = time.perf_counter()
-            res = period_task(counts, offset, days, resid, cfg, n_surr, rng,
-                              verbose=verbose)
-            ckpt.record_seconds("period_scan", time.perf_counter() - t_f)
-            ckpt.put("period_scan", res)
-        elif verbose:
-            print("  [skip, checkpointed] period_scan")
+            res = dispatch_task(key, payload)
+            ckpt.record_seconds(key, time.perf_counter() - t_f)
+            ckpt.put(key, res)
+        if verbose:
+            print(f"  period scan: {len(period_keys)} subtasks "
+                  f"({M.period_n_mc(n_surr)} AR(1) + {M.period_n_mc(n_surr)} "
+                  f"permutation surrogates in chunks of "
+                  f"{M.PERIOD_SURROGATE_CHUNK})")
     else:
-        payload = {
-            "feats": {f.name: f for f in feats}, "window": window,
-            "counts": counts, "offset": offset, "days": days, "resid": resid,
-            "marks": marks, "fe_day": fe_day, "seed": int(cfg["seed"]),
-            "n_surr": n_surr, "ladder": ladder, "cfg": cfg,
-        }
         _run_tasks_parallel(ckpt, task_keys, payload, n_jobs, verbose=verbose)
 
     # BULK INVARIANT. Every declared task must have a result before anything is
@@ -760,6 +889,21 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
             f"mine session incomplete: {len(missing)} of {len(task_keys)} declared "
             f"tasks have no result ({', '.join(missing[:10])}"
             f"{' ...' if len(missing) > 10 else ''}). Refusing to write a report.")
+
+    # ------------------------------------------ period-scan assembly -------
+    # PARENT ONLY, and after the bulk invariant. `collect_period_maxima` re-counts
+    # the surrogates chunk by chunk and `M.period_assemble` re-counts the total
+    # before any rank is taken: a dropped chunk must be a crash, never a p-value.
+    maxima, n_mc = collect_period_maxima(ckpt.state["results"], cfg, n_surr)
+    per = period_finish(counts, offset, days, cfg,
+                        ckpt.state["results"]["period_obs"], maxima, n_mc)
+    per["n_subtasks"] = len(period_keys)
+    per["surrogate_chunk"] = int(M.PERIOD_SURROGATE_CHUNK)
+    ckpt.state["results"]["period_scan"] = per
+    if verbose:
+        print(f"period scan assembled from {len(period_keys)} subtasks: "
+              f"{n_mc} AR(1) + {n_mc} permutation surrogates counted exactly, "
+              f"{len(per['peaks'])} peaks priced")
 
     # --------------------------------------------------- multiplicity ------
     # ORDER-DETERMINISTIC REDUCTION. Every row carries `order_key`, a function of

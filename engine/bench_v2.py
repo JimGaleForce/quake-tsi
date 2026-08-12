@@ -29,22 +29,18 @@ Run from replication/. Requires the design cache to already exist -- build it wi
 engine/out/mine/ (gitignored scratch) and is forced to start fresh, because timing
 a resumed session would time the checkpoint reader.
 
-MEASURED RESULT, AND THE SCOPE FLAG IT RAISES. At the quick preset the sweep is
-dominated by ONE task: `period_scan` costs ~139 s of a ~149 s sweep (93%), because
-it computes 2 x n_mc full Lomb-Scargle periodograms (400 x 7716 samples x 800 trial
-periods) inside a single task. The 40 per-feature GLM and mark tasks together are
-~10 s. The pool boundary specified for this work is the per-feature/per-test task
-loop, and `period_scan` is ONE member of that loop, so the pool cannot split it: the
-Amdahl ceiling is ~1.08x no matter how many workers are used, and the measured
-parallel speedup lands exactly there. That is the pool working correctly against a
-task granularity that is wrong for this preset.
+HISTORY, AND WHY THE TABLE STILL PRINTS THE CEILING. In phase 1 the sweep was
+dominated by ONE task: `period_scan` cost ~101 s of a ~112 s sweep (90.7%), because
+it computed 2 x n_mc full Lomb-Scargle periodograms inside a single task. The pool
+boundary was the per-feature/per-test loop and `period_scan` was ONE member of it,
+so the Amdahl ceiling was 1.10x however many workers were used.
 
-The fix is to make the period scan's surrogate periodograms their own tasks -- they
-are embarrassingly parallel, and the per-rung SeedSequence machinery built for the
-ladder already gives them reproducible index-addressable streams. That changes the
-task granularity and touches a statistical code path, so it is NOT done here; it is
-flagged for a scope decision. This script prints the decomposition and the ceiling
-on every run so the headline speedup can never be read without it.
+Phase 1b decomposed it: the surrogate periodograms are now their own subtasks
+("period_obs" plus "psurr:<null>:<start>"), seeded PER SURROGATE INDEX off the
+canonical-key machinery, so chunking is provably not a statistical stage. The
+ceiling line below is kept -- printed from the measured per-task seconds on every
+run -- because a headline speedup should never be readable without the granularity
+that bounds it.
 
 WHY THE CELLS ARE NOT DIRECTLY COMPARABLE AS SCIENCE. The ladder cells do LESS
 WORK, on purpose -- that is the speedup being measured -- and their p-values come
@@ -143,7 +139,12 @@ def _stages(task_seconds):
     """
     glm = sum(v for k, v in task_seconds.items() if k.startswith("glm:"))
     marks = sum(v for k, v in task_seconds.items() if k.startswith("marks:"))
-    per = task_seconds.get("period_scan", 0.0)
+    # phase 1b: the period scan is now "period_obs" + N "psurr:<null>:<start>"
+    # subtasks. The old single "period_scan" key is still summed so a checkpoint
+    # written by the phase-1 build reads correctly in this table.
+    per = (task_seconds.get("period_scan", 0.0)
+           + task_seconds.get("period_obs", 0.0)
+           + sum(v for k, v in task_seconds.items() if k.startswith("psurr:")))
     total = glm + marks + per
     biggest = max(task_seconds.values()) if task_seconds else 0.0
     return {"glm": glm, "marks": marks, "period_scan": per, "total": total,
@@ -263,6 +264,26 @@ def main(argv=None):
         print(f"  AMDAHL CEILING at this task granularity = "
               f"{st['amdahl_ceiling']:.2f}x, however many workers are used, "
               f"because the pool cannot split one task.")
+        if base:
+            par = next((r for r in rows if r["jobs_actual"] > 1), None)
+            if par and par["seconds"] > 0:
+                got = base["seconds"] / par["seconds"]
+                print(f"  ACHIEVED {got:.2f}x against a granularity ceiling of "
+                      f"{st['amdahl_ceiling']:.2f}x on {par['jobs_actual']} "
+                      f"workers.")
+                if got < 0.25 * st["amdahl_ceiling"]:
+                    print("  >>> The gap is NOT task granularity. On this machine "
+                          "the binding limit is the Lomb-Scargle kernel itself: "
+                          "scipy 1.18's `lombscargle` is pure numpy and allocates "
+                          "several (n_time x n_freq) float64 temporaries per call "
+                          "(~49 MB each at 7716 x 800), so the scan is "
+                          "memory-bandwidth bound and aggregate throughput "
+                          "saturates a few x above serial however many cores are "
+                          "used. Measured with ZERO engine code in the loop; see "
+                          "the phase-1b report. The next lever is a cached-basis "
+                          "periodogram (cos/sin of freqs x t are identical for "
+                          "every surrogate), which rewrites a statistical kernel "
+                          "and is a SCOPE DECISION, not a tuning knob.")
         if st["amdahl_ceiling"] < 2.0:
             print(f"  >>> The measured parallel speedup above should be read "
                   f"against {st['amdahl_ceiling']:.2f}x, NOT against the worker "

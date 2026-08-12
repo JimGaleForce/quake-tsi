@@ -52,12 +52,14 @@ def _payload(n_feats=3, n_surr=N_SURR, ladder=None, seed=SEED):
         "days": np.arange(N_DAYS, dtype=np.float64), "resid": counts - offset,
         "marks": marks, "fe_day": day - window.start,
         "seed": seed, "n_surr": n_surr, "ladder": ladder, "cfg": cfg,
+        "period_chunk": M.PERIOD_SURROGATE_CHUNK,
     }
 
 
 def _keys(W):
     return ([f"glm:{n}" for n in W["feats"]]
-            + [f"marks:{n}" for n in W["feats"]] + ["period_scan"])
+            + [f"marks:{n}" for n in W["feats"]]
+            + ms.period_task_keys(W["cfg"], W["n_surr"]))
 
 
 def _ckpt(tmp_path, name="session_x"):
@@ -136,19 +138,30 @@ def test_jobs1_marks_and_period_are_bit_identical_to_the_v1_inner_loops():
                            seed=SEED)
         assert json.dumps(v1, sort_keys=True) == json.dumps(v2, sort_keys=True)
 
-    # ---- period scan ----
-    rng_v1 = np.random.default_rng(SEED)
+    # ---- period scan: PIN DELIBERATELY UPDATED IN v2 PHASE 1b ----
+    # The v1 pin compared `period_scan` driven by a THREADED Generator against the
+    # sequential driver threading the same one. That stream is gone on purpose: it
+    # made the scan one indivisible task (90.7% of the sweep, Amdahl ceiling 1.10x)
+    # and it was reproducible only for a single process running a fixed task order.
+    # The replacement pin is stronger, not weaker -- it fixes the scan against the
+    # KEY-DERIVED per-surrogate streams, which is a property of the seed alone and
+    # holds across processes, chunkings and job counts (see the three phase-1b tests
+    # at the bottom of this file).
     periods = np.exp(np.linspace(math.log(ms.PERIOD_MIN), math.log(ms.PERIOD_MAX),
                                  int(W["cfg"]["n_periods"])))
-    peaks, meta = M.period_scan(W["days"], W["resid"], periods, n_surr, rng_v1,
+    peaks, meta = M.period_scan(W["days"], W["resid"], periods, n_surr, SEED,
                                 n_peaks=int(W["cfg"]["n_peaks"]), verbose=False)
-    rng_v2 = np.random.default_rng(SEED)
     v2 = ms.period_task(counts, offset, W["days"], W["resid"], W["cfg"], n_surr,
-                        rng_v2, verbose=False)
+                        SEED, verbose=False)
     assert [p["period_days"] for p in v2["peaks"]] == [p["period_days"]
                                                        for p in peaks]
     assert [p["p_raw"] for p in v2["peaks"]] == [p["p_raw"] for p in peaks]
     assert v2["scan"]["ar1_phi"] == meta["ar1_phi"]
+    # and the scan must refuse a threaded Generator outright rather than silently
+    # accepting one and reintroducing order dependence
+    with pytest.raises((TypeError, AttributeError, KeyError)):
+        M.period_scan(W["days"], W["resid"], periods, n_surr,
+                      np.random.default_rng(SEED), n_peaks=2, verbose=False)
 
 
 def test_jobs_flag_is_absent_from_the_config_hash_and_ladder_is_present():
@@ -500,6 +513,179 @@ def test_ledger_record_states_the_declared_count_explicitly():
     assert rec["kind"] == "mine" and rec["config"] == cfg
     assert "\\" not in rec["session_dir"]
     json.dumps(rec)                       # must be ledger-serialisable
+
+
+# ============================================================================
+# (e) PHASE 1b -- the period scan is decomposed, and the decomposition is invisible
+#
+# These three are the forcing functions for the design. If seeding were per CHUNK
+# instead of per SURROGATE INDEX, (b) would fail; if the sequential driver used a
+# different stream from the pool, (a) would fail; if the assembly dropped or
+# reordered a chunk, (c) would fail.
+# ============================================================================
+def _period_keys(W):
+    return ms.period_task_keys(W["cfg"], W["n_surr"])
+
+
+def _run_sequential(ck, keys, W):
+    """Exactly what mine_session.run() does for these keys at --jobs 1."""
+    for k in keys:
+        if ck.done(k):
+            continue
+        ck.record_seconds(k, 0.0)
+        ck.put(k, ms.dispatch_task(k, W))
+
+
+def _assemble(results, W, chunk=None):
+    return ms.period_finish(W["counts"], W["offset"], W["days"], W["cfg"],
+                            results["period_obs"],
+                            *ms.collect_period_maxima(results, W["cfg"],
+                                                      W["n_surr"], chunk))
+
+
+def test_period_scan_jobs1_equals_jobs4_bit_for_bit(tmp_path):
+    """The headline claim of phase 1b: scheduling cannot reach the answer."""
+    W = _payload(n_feats=1)
+    keys = _period_keys(W)
+    assert len(keys) > 2, "the period scan must actually be decomposed"
+
+    ck1 = _ckpt(tmp_path, "session_seq")
+    _run_sequential(ck1, keys, W)
+    ck4 = _ckpt(tmp_path, "session_par4")
+    ms._run_tasks_parallel(ck4, keys, W, 4, verbose=False)
+
+    r1 = {k: ck1.state["results"][k] for k in keys}
+    r4 = {k: ck4.state["results"][k] for k in keys}
+    assert json.dumps(r1, sort_keys=True) == json.dumps(r4, sort_keys=True), \
+        "period subtask results differ between --jobs 1 and --jobs 4"
+    assert json.dumps(_assemble(r1, W), sort_keys=True) == \
+        json.dumps(_assemble(r4, W), sort_keys=True), \
+        "assembled period scan differs between --jobs 1 and --jobs 4"
+
+
+def test_period_chunk_size_invariance():
+    """Seeding is per SURROGATE INDEX, so chunk size is an execution knob only.
+
+    chunk=50 vs chunk=200 as specified, plus a deliberately ragged 7 vs 13 so the
+    invariance is not an artefact of one chunking dividing the other.
+    """
+    W = _payload(n_feats=1, n_surr=120)
+    ref = None
+    for chunk in (50, 200, 7, 13):
+        seqs = M.period_seed_seqs(W["seed"])
+        periods = ms.period_grid(W["cfg"])
+        got = {}
+        for nt in M.PERIOD_NULLS:
+            parts = [M.period_surrogate_maxima(W["days"], W["resid"], periods, nt,
+                                               a, b, seqs[nt])
+                     for a, b in M.period_chunks(M.period_n_mc(W["n_surr"]), chunk)]
+            got[nt] = np.concatenate(parts)
+        if ref is None:
+            ref = got
+            assert ref["ar1"].size == M.period_n_mc(W["n_surr"])
+            assert not np.array_equal(ref["ar1"], ref["permutation"])
+        for nt in M.PERIOD_NULLS:
+            assert np.array_equal(ref[nt], got[nt]), \
+                f"chunk={chunk} changed the {nt} surrogates -- seeding is not " \
+                f"per surrogate index"
+
+    # and end to end, through the public scan, at ZERO tolerance
+    a = M.period_scan(W["days"], W["resid"], ms.period_grid(W["cfg"]), W["n_surr"],
+                      W["seed"], n_peaks=3, verbose=False, chunk=50)
+    b = M.period_scan(W["days"], W["resid"], ms.period_grid(W["cfg"]), W["n_surr"],
+                      W["seed"], n_peaks=3, verbose=False, chunk=200)
+    assert json.dumps(a, sort_keys=True) == json.dumps(b, sort_keys=True)
+
+
+def test_chunked_period_scan_equals_the_unchunked_reference(tmp_path):
+    """Chunked session path == single-process `period_task`, exactly. No tolerance."""
+    W = _payload(n_feats=1, n_surr=120)
+    keys = _period_keys(W)
+    ck = _ckpt(tmp_path, "session_chunked")
+    _run_sequential(ck, keys, W)
+    chunked = _assemble({k: ck.state["results"][k] for k in keys}, W)
+
+    reference = ms.period_task(W["counts"], W["offset"], W["days"], W["resid"],
+                               W["cfg"], W["n_surr"], W["seed"], verbose=False,
+                               chunk=10 ** 6)          # one chunk = no chunking
+    assert json.dumps(chunked, sort_keys=True) == \
+        json.dumps(reference, sort_keys=True)
+    assert chunked["scan"]["n_mc"] == M.period_n_mc(W["n_surr"])
+    for pk in chunked["peaks"]:
+        assert pk["n_surrogates"] == M.period_n_mc(W["n_surr"])
+
+
+def test_period_assembly_refuses_a_dropped_or_short_chunk(tmp_path):
+    """FAILURE-FIRST: a missing chunk names itself and stops the run.
+
+    A silently dropped chunk would shift every p-value in the scan by a fraction of
+    a rank, which is the kind of error that never surfaces as a crash.
+    """
+    W = _payload(n_feats=1)
+    keys = _period_keys(W)
+    ck = _ckpt(tmp_path, "session_drop")
+    _run_sequential(ck, keys, W)
+    res = dict(ck.state["results"])
+
+    victim = [k for k in keys if k.startswith("psurr:ar1:")][-1]
+    dropped = {k: v for k, v in res.items() if k != victim}
+    with pytest.raises(RuntimeError) as exc:
+        ms.collect_period_maxima(dropped, W["cfg"], W["n_surr"])
+    assert victim in str(exc.value) and "ar1" in str(exc.value)
+
+    short = json.loads(json.dumps(res))
+    short[victim]["maxima"] = short[victim]["maxima"][:-1]
+    with pytest.raises(RuntimeError, match="Refusing to price"):
+        ms.collect_period_maxima(short, W["cfg"], W["n_surr"])
+
+    # and the counted invariant is ALSO enforced one level down, in period_assemble
+    n_mc = M.period_n_mc(W["n_surr"])
+    with pytest.raises(RuntimeError, match="collected"):
+        M.period_assemble(np.zeros(5), np.arange(1.0, 6.0), [1],
+                          {"ar1": np.zeros(n_mc - 1),
+                           "permutation": np.zeros(n_mc)}, 0.1, n_mc)
+    with pytest.raises(RuntimeError, match="NO surrogate maxima"):
+        M.period_assemble(np.zeros(5), np.arange(1.0, 6.0), [1],
+                          {"ar1": np.zeros(n_mc)}, 0.1, n_mc)
+
+
+def test_period_decomposition_actually_shrinks_the_largest_task():
+    """The point of phase 1b, asserted as an invariant rather than a benchmark.
+
+    No period subtask may carry more than `PERIOD_SURROGATE_CHUNK` surrogates, and
+    the number of subtasks must scale with the surrogate budget -- otherwise the
+    Amdahl ceiling that motivated this work quietly comes back.
+    """
+    for n_surr, expect in ((200, 2 * (200 // M.PERIOD_SURROGATE_CHUNK) + 1),
+                           (10000, 2 * (M.PERIOD_N_MC_CAP
+                                        // M.PERIOD_SURROGATE_CHUNK) + 1)):
+        keys = ms.period_task_keys({"n_peaks": 5, "n_periods": 100}, n_surr)
+        assert len(keys) == expect, (n_surr, len(keys))
+    bounds = M.period_chunks(M.period_n_mc(10000))
+    assert max(b - a for a, b in bounds) <= M.PERIOD_SURROGATE_CHUNK
+    assert sum(b - a for a, b in bounds) == M.period_n_mc(10000)
+    # the two nulls must not share a stream
+    s = M.period_seed_seqs(SEED)
+    assert M.test_key_digest(M.test_key(SEED, "period_scan", "period",
+                                        null_type="ar1")) != \
+        M.test_key_digest(M.test_key(SEED, "period_scan", "period",
+                                     null_type="permutation"))
+    assert s["ar1"].spawn_key != s["permutation"].spawn_key
+
+
+def test_period_key_schema_extension_did_not_rekey_phase1_digests():
+    """Compatibility clause: no field was added to TEST_KEY_FIELDS.
+
+    The chunk/surrogate index rides the SPAWN-KEY child axis instead, so every test
+    digest phase 1 declared is byte-identical today. These are the phase-1 values.
+    """
+    assert M.TEST_KEY_FIELDS == ("master_seed", "feature", "kind", "lag", "rung",
+                                "null_type", "region", "bin_width")
+    k = M.test_key(20260811, "moon_synodic_phase", "glm", lag=3,
+                   null_type="block_bootstrap")
+    # verified against `git show cca6432:engine/mine.py` (the phase-1 commit)
+    assert M.test_key_digest(k) == (
+        "311f3760df3a42e4d743c1d38e8ca2ea21d90a999f4b3e5be69025fbb407ee20")
 
 
 def test_resolve_jobs():

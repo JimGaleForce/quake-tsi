@@ -147,7 +147,11 @@ def test_planted_cycle_is_found_and_scrambled_control_is_clean():
     lam0 = off * (y.sum() / off.sum())
     resid = y - lam0
     periods = np.exp(np.linspace(math.log(2.0), math.log(400.0), 900))
-    peaks, _meta = M.period_scan(t, resid, periods, 200, rng, n_peaks=3, verbose=False)
+    # phase 1b: the scan takes a master seed / parent SeedSequences, never a
+    # threaded Generator -- surrogate i is addressed by index so the answer cannot
+    # depend on chunking or on which process drew it.
+    peaks, _meta = M.period_scan(t, resid, periods, 200, SEED, n_peaks=3,
+                                 verbose=False)
     assert peaks, "period scan returned no peaks on a planted 10% cycle"
     top = peaks[0]
     assert abs(math.log(top["period_days"] / period)) < 0.01, top
@@ -166,7 +170,7 @@ def test_planted_cycle_is_found_and_scrambled_control_is_clean():
     assert M.bootstrap_p(S_s[0], Sb_s) > 0.05, "scrambled control passed the GLM test"
     lam0_s = off_s * (y_s.sum() / off_s.sum())
     resid_s = y_s - lam0_s
-    peaks_s, meta_s = M.period_scan(t, resid_s, periods, 200, rng, n_peaks=3,
+    peaks_s, meta_s = M.period_scan(t, resid_s, periods, 200, SEED + 1, n_peaks=3,
                                     verbose=False)
     # The control must not REDISCOVER THE PLANTED PERIOD. (Asserting that no peak
     # anywhere in a 900-point scan reaches p<0.05 would be a coin flip: the top

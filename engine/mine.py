@@ -853,7 +853,7 @@ def seed_sequence_for(key):
 
 
 def rung_seed_sequence(parent, rung):
-    """Child SeedSequence for rung `rung`, addressable BY INDEX.
+    """Child SeedSequence for index `rung`, addressable BY INDEX.
 
     `SeedSequence.spawn(k)` is stateful -- it hands out children in call order, so
     the stream a rung gets would depend on how many rungs were spawned before it,
@@ -864,6 +864,30 @@ def rung_seed_sequence(parent, rung):
     """
     return np.random.SeedSequence(entropy=parent.entropy,
                                   spawn_key=tuple(parent.spawn_key) + (int(rung),))
+
+
+def surrogate_seed_sequence(parent, index):
+    """Child SeedSequence for SURROGATE `index` of one Monte Carlo null.
+
+    Deliberately the SAME construction as `rung_seed_sequence` -- an index-addressable
+    child, never `SeedSequence.spawn` -- and deliberately keyed on the SURROGATE
+    index rather than on a chunk index. That is the whole design of the period
+    scan's decomposition:
+
+      * surrogate i is surrogate i whatever chunk it lands in, whatever process
+        drew it, and whether or not surrogates 0..i-1 were drawn at all;
+      * therefore the CHUNK SIZE is a pure execution knob -- it changes how the work
+        is packed for the pool and nothing else. `--jobs 1` and `--jobs 32` produce
+        identical numbers, and so do chunk=10 and chunk=200
+        (engine/tests/test_mine_parallel.py::test_period_chunk_size_invariance).
+
+    Note what is NOT done here: the chunk index is NOT added to TEST_KEY_FIELDS.
+    Adding a field to the canonical key would re-key every existing digest in the
+    schema, which the phase-1 contract forbids. The spawn-key child path is exactly
+    the extensibility axis phase 1 built for sub-indices, and it leaves every
+    already-declared test digest byte-identical.
+    """
+    return rung_seed_sequence(parent, index)
 
 
 # ================================================ adaptive surrogate ladder ===
@@ -990,21 +1014,116 @@ def lomb_scargle_power(t, x, periods):
         signal.lombscargle(np.asarray(t, dtype=np.float64), x, w, normalize=True))
 
 
-def _ar1_surrogate(x, rng, n):
+# --------------------------------------------------------------------------
+# THE PERIOD SCAN, DECOMPOSED (v2 phase 1b)
+#
+# The scan is 2 x n_mc INDEPENDENT full Lomb-Scargle periodograms plus one for the
+# observed series. Before phase 1b it was a single indivisible task and, at the
+# quick preset, 90.7% of the whole sweep -- an Amdahl ceiling of 1.10x however many
+# workers were thrown at it (measured, engine/bench_v2.py, phase-1 report).
+#
+# It is now four separable pieces:
+#   period_observed          the observed periodogram + peak picking (deterministic)
+#   period_surrogate_maxima  the max power of surrogates [start, stop) of one null
+#   period_assemble          the p-values, given ALL the maxima (counted invariant)
+#   period_scan              the three of them wired up in one process
+#
+# THE SEEDING RULE, which is the load-bearing part. Surrogate i of null `nt` draws
+# from `surrogate_seed_sequence(parent[nt], i)` -- keyed on the SURROGATE INDEX, not
+# on the chunk. So the chunk boundaries are not a statistical stage: any chunking of
+# [0, n_mc) reproduces the same 2 x n_mc surrogates in the same order, and the pool's
+# scheduling cannot reach the answer. The old code drew all n_mc AR(1) series from
+# one (n_mc, n) normal draw off a shared threaded generator, which was reproducible
+# only for a single process running the tasks in one fixed order. That stream is
+# DELIBERATELY superseded (§P6-5): determinism independent of scheduling is worth
+# more than bit-identity with the pre-decomposition build.
+# --------------------------------------------------------------------------
+PERIOD_NULLS = ("ar1", "permutation")
+
+# The max-power MC cap. The 95th percentile of a max-power distribution converges
+# fast, and each draw costs a full periodogram. The cap sets the period scan's own
+# p floor at 1/(cap+1), which the report states.
+PERIOD_N_MC_CAP = 500
+
+# Surrogates per subtask. PURE EXECUTION DETAIL, like --jobs: provably result-
+# invariant by the per-surrogate seeding above, pinned by a test, and therefore
+# deliberately NOT in the config hash. Small enough that the largest period subtask
+# is a fraction of the sweep (the whole point of phase 1b), large enough that
+# per-task pickling/dispatch stays in the noise.
+PERIOD_SURROGATE_CHUNK = 10
+
+
+def period_n_mc(n_surr):
+    """Surrogates per null for the period scan. Capped -- see PERIOD_N_MC_CAP."""
+    return int(min(int(n_surr), PERIOD_N_MC_CAP))
+
+
+def period_chunks(n_mc, chunk=None):
+    """[(start, stop), ...] partitioning [0, n_mc). Execution only, never statistics."""
+    c = int(chunk if chunk else PERIOD_SURROGATE_CHUNK)
+    if c < 1:
+        raise ValueError("period chunk size must be >= 1")
+    n_mc = int(n_mc)
+    return [(s, min(s + c, n_mc)) for s in range(0, n_mc, c)]
+
+
+def period_seed_seqs(master_seed):
+    """The parent SeedSequence of each period-scan null, from the canonical key.
+
+    Two keys where phase 1 declared one (`null_type="ar1_and_permutation"`): the two
+    nulls are now separate task families and must not share a stream. Every OTHER
+    key digest in the schema is untouched -- no field was added to TEST_KEY_FIELDS.
+    """
+    return {nt: seed_sequence_for(test_key(int(master_seed), "period_scan", "period",
+                                           null_type=nt))
+            for nt in PERIOD_NULLS}
+
+
+def ar1_params(x):
+    """(phi, sd) of the AR(1) matched to x's own lag-1 autocorrelation."""
+    x = np.asarray(x, dtype=np.float64)
     x = x - x.mean()
     phi = float(np.dot(x[1:], x[:-1]) / max(np.dot(x[:-1], x[:-1]), 1e-30))
     phi = float(np.clip(phi, -0.98, 0.98))
     sd = float(x.std() * math.sqrt(max(1.0 - phi * phi, 1e-6)))
-    e = rng.normal(0.0, sd, size=(n, x.size))
-    out = np.empty_like(e)
-    out[:, 0] = e[:, 0] / math.sqrt(max(1 - phi * phi, 1e-6))
-    for i in range(1, x.size):
-        out[:, i] = phi * out[:, i - 1] + e[:, i]
-    return out, phi
+    return phi, sd
 
 
-def period_scan(t, resid, periods, n_surr, rng, n_peaks=8, verbose=True):
-    """Lomb-Scargle scan + max-power nulls (AR(1) red noise AND permutation white)."""
+def ar1_draw(n, phi, sd, rng):
+    """ONE AR(1) realisation of length n, stationary at the first sample."""
+    n = int(n)
+    e = rng.normal(0.0, sd, size=n)
+    out = np.empty(n)
+    out[0] = e[0] / math.sqrt(max(1.0 - phi * phi, 1e-6))
+    for i in range(1, n):
+        out[i] = phi * out[i - 1] + e[i]
+    return out
+
+
+def period_surrogate_maxima(t, resid, periods, null_type, start, stop, parent_seq):
+    """Max LS power of surrogates [start, stop) of one null. The parallel unit.
+
+    Pure: no state, no shared generator, no dependence on which other surrogates
+    exist. Surrogate i's stream is `surrogate_seed_sequence(parent_seq, i)`.
+    """
+    if null_type not in PERIOD_NULLS:
+        raise ValueError(f"unknown period null {null_type!r}; expected {PERIOD_NULLS}")
+    resid = np.asarray(resid, dtype=np.float64)
+    start, stop = int(start), int(stop)
+    if stop < start:
+        raise ValueError(f"period chunk [{start}, {stop}) is empty-backwards")
+    phi, sd = ar1_params(resid) if null_type == "ar1" else (0.0, 0.0)
+    out = np.empty(stop - start)
+    for j, i in enumerate(range(start, stop)):
+        g = np.random.default_rng(surrogate_seed_sequence(parent_seq, i))
+        s = (ar1_draw(resid.size, phi, sd, g) if null_type == "ar1"
+             else g.permutation(resid))
+        out[j] = float(lomb_scargle_power(t, s, periods).max())
+    return out
+
+
+def period_observed(t, resid, periods, n_peaks=8):
+    """The observed periodogram and its peak indices. Deterministic, no randomness."""
     power = lomb_scargle_power(t, resid, periods)
     # local maxima, strongest first, with a 5% fractional-period exclusion zone
     is_pk = np.r_[False, (power[1:-1] > power[:-2]) & (power[1:-1] >= power[2:]), False]
@@ -1018,35 +1137,80 @@ def period_scan(t, resid, periods, n_surr, rng, n_peaks=8, verbose=True):
         peaks.append(int(i))
         if len(peaks) >= n_peaks:
             break
+    return power, peaks
 
-    # max-power MC. Capped at 500: the 95th percentile of a max-power distribution
-    # converges fast, and each draw costs a full periodogram (0.9 s at 3000 trial
-    # periods). The cap sets the period scan's own p floor at 1/501, reported below.
-    n_mc = int(min(n_surr, 500))
-    t0 = time.time()
-    red, phi = _ar1_surrogate(np.asarray(resid, float), rng, n_mc)
-    max_red = np.array([lomb_scargle_power(t, red[i], periods).max()
-                        for i in range(n_mc)])
-    perm = np.array([lomb_scargle_power(t, rng.permutation(resid), periods).max()
-                     for i in range(n_mc)])
-    if verbose:
-        print(f"  period scan: {len(periods)} trial periods, {n_mc} AR(1) + {n_mc} "
-              f"permutation surrogates (AR(1) phi = {phi:.3f}) in "
-              f"{time.time()-t0:.1f}s")
 
+def period_assemble(power, periods, peaks, maxima, phi, n_mc):
+    """p-values from the collected maxima. COUNTS THE SURROGATES BEFORE USING THEM.
+
+    `maxima` is {null_type: array}. A silently short null -- one dropped chunk, one
+    cancelled future -- would shift EVERY p in the scan by a fraction of a rank, so
+    the count is an assertion, not an assumption.
+    """
+    n_mc = int(n_mc)
+    got = {}
+    for nt in PERIOD_NULLS:
+        if nt not in maxima:
+            raise RuntimeError(
+                f"period scan: null {nt!r} produced NO surrogate maxima at all "
+                f"(expected {n_mc}). Refusing to compute a p-value.")
+        a = np.asarray(maxima[nt], dtype=np.float64).ravel()
+        if a.size != n_mc:
+            raise RuntimeError(
+                f"period scan: null {nt!r} collected {a.size} surrogate maxima, "
+                f"declared {n_mc}. A dropped or duplicated chunk shifts every "
+                f"p-value in this scan. Refusing to compute a p-value.")
+        if not np.isfinite(a).all():
+            raise RuntimeError(
+                f"period scan: null {nt!r} returned non-finite surrogate maxima")
+        got[nt] = a
+    max_red, perm = got["ar1"], got["permutation"]
+    power = np.asarray(power, dtype=np.float64)
+    periods = np.asarray(periods, dtype=np.float64)
     out = []
     for i in peaks:
+        i = int(i)
         p_red = (1.0 + int((max_red >= power[i]).sum())) / (1.0 + n_mc)
         p_perm = (1.0 + int((perm >= power[i]).sum())) / (1.0 + n_mc)
         out.append({
             "period_days": float(periods[i]), "power": float(power[i]),
             "p_red_noise": p_red, "p_permutation": p_perm,
             "p_raw": max(p_red, p_perm),          # the CONSERVATIVE one
-            "n_surrogates": n_mc, "ar1_phi": phi,
+            "n_surrogates": n_mc, "ar1_phi": float(phi),
         })
-    return out, {"ar1_phi": phi, "n_mc": n_mc,
+    return out, {"ar1_phi": float(phi), "n_mc": n_mc,
                  "max_power_red_p95": float(np.quantile(max_red, 0.95)),
                  "max_power_perm_p95": float(np.quantile(perm, 0.95))}
+
+
+def period_scan(t, resid, periods, n_surr, seeds, n_peaks=8, verbose=True,
+                chunk=None):
+    """Lomb-Scargle scan + max-power nulls (AR(1) red noise AND permutation white).
+
+    `seeds` is either a master seed (int) or the dict `period_seed_seqs` returns.
+    It is NOT a Generator: a threaded generator would make the answer depend on how
+    the surrogates were split across chunks and processes, which is exactly what
+    phase 1b removes. This single-process entry point exists for tests, small
+    callers and as the UNCHUNKED REFERENCE the chunked session path is checked
+    against; the session driver runs the same pieces as separate tasks.
+    """
+    if not isinstance(seeds, dict):
+        seeds = period_seed_seqs(seeds)
+    resid = np.asarray(resid, dtype=np.float64)
+    n_mc = period_n_mc(n_surr)
+    power, peaks = period_observed(t, resid, periods, n_peaks=n_peaks)
+    phi, _sd = ar1_params(resid)
+    t0 = time.time()
+    maxima = {}
+    for nt in PERIOD_NULLS:
+        parts = [period_surrogate_maxima(t, resid, periods, nt, a, b, seeds[nt])
+                 for a, b in period_chunks(n_mc, chunk)]
+        maxima[nt] = np.concatenate(parts) if parts else np.empty(0)
+    if verbose:
+        print(f"  period scan: {len(periods)} trial periods, {n_mc} AR(1) + {n_mc} "
+              f"permutation surrogates (AR(1) phi = {phi:.3f}) in "
+              f"{time.time()-t0:.1f}s")
+    return period_assemble(power, periods, peaks, maxima, phi, n_mc)
 
 
 def fold_lr(counts, lam0, days, period, n_bins=8):
