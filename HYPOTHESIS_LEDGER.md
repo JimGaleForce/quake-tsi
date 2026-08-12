@@ -14680,3 +14680,115 @@ ruling on machinery is worth anything. Five passes, no refusals, and the one ref
 cheaper rather than larger — that is what a blind spot correctly diagnosed and incorrectly priced
 looks like. Appended to my own section; no existing line modified; nothing committed. The supervisor
 commits.*
+
+---
+
+## §P6-9. AMENDMENT TO §P6-1(6) — GRANTED IN FULL. The original rule text stands above, unedited; it was wrong in both numbers and here is why.
+
+*2026-08-12, later the same day. Requested by the build session after the ladder was implemented per
+§P6-1(1)–(4) and the uniformity audit was executed at 20,000 null tests, `N_max` = 1000. Evidence:
+`engine/audit_ladder.py`, which prints the literal §P6-1(6) numbers, its own deviation note, and the
+gated repairs, all three side by side. The original rule is left in place unedited per the ledger's
+append-only discipline; this section supersedes it.*
+
+**Both objections are correct, I verified both arithmetically this session, and the amendment is
+granted as requested with three additions.** The failure mode is one this ledger has already named
+once, in §P5-0, against Kepler: *a unit test which, run as written, would report a defect that does
+not exist and withdraw a theorem that is true.* §P6-1(6) as I wrote it is the same error from the
+adjudicator's seat, and it is worth saying plainly. **An acceptance test that a correct
+implementation cannot pass is not a strict standard — it is a standard that trains people to
+override acceptance tests**, which costs more than the laxity it was trying to prevent.
+
+### (a) The KS criterion. Amended to one-sided D+.
+
+**The objection is right on the mathematics, not merely on the measurement.** An exact sequential
+Monte Carlo p-value is **discrete** (BC's `p = h/n` lives on a lattice; the cap branch
+`(1+c)/(1+N_max)` on another) and **stochastically conservative** — the validity property being
+claimed is *super-uniformity*, `P(p <= a) <= a`, not uniformity. Super-uniformity puts the ECDF
+**below** the diagonal by construction, so `D-` is systematically positive and a two-sided KS at
+fixed level rejects **any** valid discrete estimator once `n` is large enough — including
+brute-force MC at the same `N_max`, which is the tell. I asked for uniformity when the property that
+licenses the ladder is super-uniformity. Those are different claims and only one of them is true.
+
+**Verified this session:** the one-sided KS critical value
+`D_crit = sqrt(-ln(a)/(2n))` at `a` = 0.01, `n` = 20,000 is **0.010730**, matching the build's
+0.0107 exactly. The measured `D+` = 0.0037 clears it by a factor of ~2.9. `D-` (0.038 as reported;
+`audit_ladder.py`'s docstring records 0.041 from its own run) is an order of magnitude larger and
+sits on the **conservative** side — which is permitted, and which the two-sided test was punishing.
+
+> **§P6-1(6a), AMENDED.** The ladder's uniformity audit gates on the **one-sided KS statistic in the
+> anti-conservative direction**, `D+ = sup_x (F_n(x) - x)`, against
+> `D_crit = sqrt(-ln(a)/(2n))` at `a = 0.01`. **`D-` is reported and does not gate**, because
+> conservatism is permitted by the validity property and discreteness guarantees it. The two-sided
+> statistic and its p-value are still printed, labelled as the literal original rule and as
+> **not gating**, so the deviation stays visible rather than becoming folklore.
+
+**Addition 1 — `D-` gets reported at the operating points, not only as a sup.** A sup-distance
+somewhere in the middle of the unit interval is not what costs the miner power; conservatism at the
+**rejection thresholds** is. The audit must additionally print the measured ratio
+`P(p <= a) / a` at `a in {0.1, 0.01, 0.001}` — the realised conservatism where the ladder is actually
+spent — together with the ladder's own relative standard error `1/sqrt(h)`. These are reported
+quantities, not gates: they are how a future reader learns what the ladder cost in power, which
+`D-` alone does not tell them.
+
+### (b) The agreement criterion. Amended to the combined standard error.
+
+**The objection is right, and the error is larger than the request states.** `3*sqrt(p(1-p)/n)`
+bounds the sampling error of the **full-run** estimator only, while the quantity being bounded is a
+difference between **two** estimates, of which the ladder's is ordinarily the noisier. For BC at
+`h = 20` the ladder's own standard error is `p/sqrt(h)`, i.e. a 22% relative error that does not
+shrink with `N_max`. Computed this session:
+
+| p | N (full run) | SE_full | SE_ladder (h=20) | combined | ratio |
+|---|---|---|---|---|---|
+| 0.1 | 10,000 | 0.00300 | 0.02236 | 0.02256 | **7.5×** |
+| 0.1 | 1,000 | 0.00949 | 0.02236 | 0.02429 | 2.6× |
+| 0.02 | 10,000 | 0.00140 | 0.00447 | 0.00469 | 3.4× |
+| 0.005 | 10,000 | 0.00071 | 0.00112 | 0.00132 | 1.9× |
+
+At the p values where survivor ranking is decided, my bar was between two and seven times too tight,
+and it was tight in a way that has no statistical meaning: **it compared a difference against the
+smaller of its two variance components.**
+
+> **§P6-1(6b), AMENDED.** Agreement is assessed against **3× the combined standard error of both
+> estimators**, `sqrt(p^2/h + p(1-p)/N)` for a BC ladder p against a full-run p at `N` draws (the
+> general form: the root-sum-square of the two estimators' standard errors, each computed under its
+> own sampling scheme). **Pass at >= 99.0%** of tests within that band. The build's measured 99.5% is
+> recorded here as the reference value; the nominal Gaussian 3-sigma figure is 99.73% and the
+> shortfall is expected, because both error distributions are discrete and skewed rather than normal.
+
+**Addition 2 — a count bar alone is insensitive to the failure that matters, so add a signed-bias
+check.** 99.5% two-sided agreement is fully compatible with a small **systematic downward** shift of
+the ladder p's, which is precisely the anti-conservative failure this audit exists to catch. The
+audit must therefore also report the **median signed standardised difference**
+`median[ (p_ladder - p_full) / SE_combined ]` and gate it at `|median| <= 0.25`. A centred cloud and
+a shifted cloud can have identical exceedance counts; only the signed statistic separates them.
+
+**Addition 3 — the audit runs at the production `N_max`, not at a convenience value.** The estimator's
+discreteness and its whole cap branch `(1+c)/(1+N_max)` are functions of `N_max`, so an audit at
+`N_max` = 1000 does not license a production run at `N_max` = 10^5. This is affordable and I checked
+the cost before requiring it: expected draws per null test under BC are `~ h*ln(N_max/h)` = 78, 124
+and 170 at `N_max` = 10^3, 10^4 and 10^5 respectively, so 20,000 null tests at `N_max` = 10^5 costs
+**~3.4 million surrogate draws** — trivial under v2. **Rule: the uniformity audit is re-run at each
+declared production `N_max`, and a stratum may not run at an `N_max` the audit has not covered.**
+This is S-17 (§P6-7) applied to the ladder itself: an estimator is quoted only in the range where it
+has demonstrated recovery, and `N_max` is one of its ranges.
+
+### What does not change
+
+§P6-1(1)–(5) stand unamended: BC's `p = h/n` estimator, `h >= 20`, tier assignment from the test key
+only, no ladder on the all-shifts enumeration, and the per-stratum resolvability count. **R1
+(§P6-6) also stands unamended** — the null-only end-to-end calibration over >= 30 ETAS-sim catalogues
+is a separate and stricter object than this uniformity audit, and nothing here discharges it. The
+ladder passing its own uniformity audit licenses the ladder; it does not license v2.
+
+**Recorded against my own seat.** Two acceptance numbers wrong, both in the unsatisfiable direction,
+caught by the build executing them rather than arguing with them — which is the correct order and is
+exactly why acceptance tests are written before the machinery ships. The corrections make the gate
+**sharper**, not looser: a one-sided test in the anti-conservative direction plus a signed-bias check
+detects the failure mode that matters, where a two-sided KS on a discrete estimator detects only that
+the estimator is discrete.
+
+*Popper seat, 2026-08-12. Amendment granted in full as requested, plus three additions (operating-point
+conservatism reporting, signed-bias gate, audit at production `N_max`). Original §P6-1(6) text left
+unedited above. Appended to my own section; no existing line modified; nothing committed.*
