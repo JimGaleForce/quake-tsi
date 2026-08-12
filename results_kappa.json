@@ -1,0 +1,820 @@
+{
+  "experiment": "F-012 kappa (clustering variance inflation of the K-035 MDA bounds)",
+  "state_class": "first-run for the reported estimator (v3), complete recorded run. Estimator v1 was run to completion and rejected on its bias audit in the same session; estimator v2 was launched but stopped before scoring and is rejected analytically, not empirically.",
+  "run_utc": "2026-08-12T03:52:03.935782+00:00",
+  "prices": "results_k035.json :: corpse_to_bound_table_K032_item6",
+  "estimator": {
+    "reported": "v3 truncated pair-correlation with matched-jitter reference",
+    "target": "kappa = 1 + 2*sum_{i<j} Cov(u_i,u_j) / sum_i Var(u_i), u = (cos,sin) of the 36-bin-centre tidal phase; expectation over the EXP-A circular-shift ensemble.",
+    "formula": "kappa(T) = 1 + 2*[P_real(T) - mean_j P_jit,j(T)] / sum_i V_i",
+    "P": "sum of R_ij over ordered pairs with 0 < t_j - t_i <= T",
+    "R_ij": "unbiased shift-ensemble sample covariance of u_i and u_j (ddof=1)",
+    "reference": "J = 6 jitter realisations, u_i ~ U(-30/2, +30/2) d",
+    "n_shift": 600,
+    "T_primary_days": 10.0,
+    "T_ladder_days": [
+      0.25,
+      0.5,
+      1.0,
+      2.0,
+      5.0,
+      10.0,
+      20.0,
+      30.0
+    ],
+    "correction": "MDA* = MDA * sqrt(kappa)"
+  },
+  "rejected_estimators": {
+    "v1": {
+      "estimator": "kappa = V_shift(real)/V_indep_analytic",
+      "B1_poisson_control_kappa": 0.4630345839207085,
+      "truth": 1.0,
+      "diagnosis_40_poisson_catalogs": {
+        "n200": {
+          "mean": 0.885,
+          "sd": 0.406
+        },
+        "n1906": {
+          "mean": 1.01,
+          "sd": 0.482
+        },
+        "n20000": {
+          "mean": 1.102,
+          "sd": 0.78
+        }
+      },
+      "verdict": "REJECTED: unbiased but ~50-80% relative scatter at every n. The rigid-shift variance of ONE catalogue is not an estimator of the unconditional variance. Not used for any reported number."
+    },
+    "v2": {
+      "estimator": "V_shift(real)/mean_j V_shift(jitter_j)",
+      "verdict": "REJECTED ANALYTICALLY, NEVER SCORED: launched but stopped before completion. Jitter re-randomises the numerator's chance term rather than cancelling it, so v2 inherits v1's 40-80% scatter. No number from v2 is reported anywhere."
+    }
+  },
+  "seeds": {
+    "shift": 20260811,
+    "jitter": 20260815,
+    "poisson_control": 20260812,
+    "etas_bracket": 20260813,
+    "group_mix": 20260814,
+    "policy": "fixed integer literals only; no time-based seeding"
+  },
+  "multiplicity": "ONE pre-declared measurement (F-012's single missing verification), not a scan. Configurations are exactly the six rows of the K-035 bounds table; the primary truncation T = 10 d and the jitter window W = 30 d were fixed before the run, and the full T ladder is reported rather than selected from. No p-value is reported.",
+  "catalog": {
+    "file": "SCSN_decluster_m1.5.txt",
+    "n_fm_matched_in_box": 23465,
+    "n_orientation_groups": 2332,
+    "n_eligible_bins": 42,
+    "n_control_bins": 22,
+    "config_n": {
+      "A1_train_bin245": 245,
+      "A2_end_to_end": 3920,
+      "A3_pooled_test_all_eligible": 3920,
+      "A3b_pooled_control_bins": 1906,
+      "C_coso_fig4c": 113,
+      "D_full_catalog": 23465
+    }
+  },
+  "bias_audits": {
+    "base_configuration": "A3b_pooled_control_bins",
+    "kappa_base": 0.9955417230929599,
+    "B1_poisson_controls": {
+      "B1a_matched_to_D": {
+        "n": 23465,
+        "n_pairs_le_Tmax": 1190424,
+        "sum_var": 23453.4140625,
+        "T_ladder_days": [
+          0.25,
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          30.0
+        ],
+        "kappa_ladder": [
+          0.9994442600772557,
+          0.9945751267982641,
+          0.9816243615316849,
+          0.991591087325385,
+          1.0006484956167752,
+          0.9981669084315854,
+          0.9859738194173491,
+          0.983671743803953
+        ],
+        "kappa_ladder_se": [
+          0.003549158851417158,
+          0.005305442330549536,
+          0.007921447118062716,
+          0.0068085604326184055,
+          0.012136314209903099,
+          0.02204294641282431,
+          0.0204708260797562,
+          0.03530516831809896
+        ],
+        "kappa": 0.9981669084315854,
+        "kappa_se": 0.02204294641282431,
+        "ci95": [
+          0.9549627334624498,
+          1.041371083400721
+        ],
+        "sqrt_kappa": 0.9990830338022888,
+        "sqrt_ci95": [
+          0.9772219468792388,
+          1.020475910250076
+        ],
+        "n_eff": 23508.092486125828,
+        "truth_kappa": 1.0,
+        "bias": -0.001833091568414602,
+        "pass": true
+      },
+      "B1b_matched_to_A3b": {
+        "n": 1906,
+        "n_pairs_le_Tmax": 32986,
+        "sum_var": 1905.47021484375,
+        "T_ladder_days": [
+          0.25,
+          0.5,
+          1.0,
+          2.0,
+          5.0,
+          10.0,
+          20.0,
+          30.0
+        ],
+        "kappa_ladder": [
+          0.995775021512236,
+          0.9987149407763046,
+          0.9662039487339061,
+          0.9296273994151876,
+          0.9671373600497392,
+          0.9313900250761759,
+          0.97332456090313,
+          0.9325027833728213
+        ],
+        "kappa_ladder_se": [
+          0.005126400051609033,
+          0.008999651598521697,
+          0.020935293496420312,
+          0.026753238514909912,
+          0.025395992080816072,
+          0.055874197729270665,
+          0.06577158373226169,
+          0.08651266931601517
+        ],
+        "kappa": 0.9313900250761759,
+        "kappa_se": 0.055874197729270665,
+        "ci95": [
+          0.8218765975268053,
+          1.0409034526255463
+        ],
+        "sqrt_kappa": 0.9650855014329952,
+        "sqrt_ci95": [
+          0.9065740993028674,
+          1.0202467606542773
+        ],
+        "n_eff": 2046.4037070228592,
+        "truth_kappa": 1.0,
+        "bias": -0.06860997492382415,
+        "pass": true
+      }
+    },
+    "B2_planted_replication_m3": {
+      "n": 5718,
+      "n_pairs_le_Tmax": 307533,
+      "sum_var": 5716.3544921875,
+      "T_ladder_days": [
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        5.0,
+        10.0,
+        20.0,
+        30.0
+      ],
+      "kappa_ladder": [
+        3.004247001377288,
+        2.9698810036045753,
+        3.0270212511168797,
+        3.0545302105180285,
+        3.2067244224543026,
+        2.950197671248896,
+        3.085460746021102,
+        3.1600444272760493
+      ],
+      "kappa_ladder_se": [
+        0.004711914439111899,
+        0.01694823189417497,
+        0.01887703859294562,
+        0.03258606455407409,
+        0.039601258145943306,
+        0.041335514612370755,
+        0.03375242304827727,
+        0.017466104758014665
+      ],
+      "kappa": 2.950197671248896,
+      "kappa_se": 0.041335514612370755,
+      "ci95": [
+        2.8691800626086494,
+        3.031215279889143
+      ],
+      "sqrt_kappa": 1.717613947093146,
+      "sqrt_ci95": [
+        1.6938654204536585,
+        1.7410385635847194
+      ],
+      "n_eff": 1938.1752130457821,
+      "truth_kappa": 2.9866251692788794,
+      "ratio_to_truth": 0.9878031236042992,
+      "pass": true
+    },
+    "B3_etas_undeclustered_bracket": {
+      "realizations": [
+        {
+          "realization": 0,
+          "n_events": 12490
+        }
+      ],
+      "per_realization": {
+        "r0": {
+          "n": 12490,
+          "n_pairs_le_Tmax": 354731,
+          "sum_var": 12484.9228515625,
+          "T_ladder_days": [
+            0.25,
+            0.5,
+            1.0,
+            2.0,
+            5.0,
+            10.0,
+            20.0,
+            30.0
+          ],
+          "kappa_ladder": [
+            1.059824970771507,
+            1.0606675525594331,
+            1.0432059518734214,
+            1.0340739901761515,
+            1.0211421984460793,
+            1.014779241013936,
+            1.0233159115117965,
+            1.04057674949317
+          ],
+          "kappa_ladder_se": [
+            0.0012230173178774987,
+            0.0044170028228381454,
+            0.010315349547260943,
+            0.016990073540070025,
+            0.021666921997906707,
+            0.04449256527099085,
+            0.0446150177784767,
+            0.0425681085698116
+          ],
+          "kappa": 1.014779241013936,
+          "kappa_se": 0.04449256527099085,
+          "ci95": [
+            0.927573813082794,
+            1.101984668945078
+          ],
+          "sqrt_kappa": 1.0073625171773744,
+          "sqrt_ci95": [
+            0.9631063352936653,
+            1.0497545755771098
+          ],
+          "n_eff": 12308.095687413135
+        }
+      },
+      "note": "NOT a truth case: UNDECLUSTERED branching-ETAS at the frozen EXP-H parameters over the same span, full simulated catalogue, orientation mix resampled from the A3b sample. Upper bracket on what the Xue/Lu declustering removed."
+    }
+  },
+  "audit_verdict": "PASS",
+  "audit_pass_rule": "pre-declared: |kappa_Poisson - 1| <= max(0.05, 2 SE) on BOTH density-matched Poisson controls, and |kappa_planted/(3*kappa_base) - 1| <= 0.05",
+  "kappa_by_configuration": {
+    "A1_train_bin245": {
+      "n": 245,
+      "n_pairs_le_Tmax": 186,
+      "sum_var": 244.84213256835938,
+      "T_ladder_days": [
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        5.0,
+        10.0,
+        20.0,
+        30.0
+      ],
+      "kappa_ladder": [
+        0.9954213663771543,
+        0.9929228629988367,
+        0.9941321736978229,
+        0.9835208140715815,
+        0.9750931896530557,
+        0.9593994387951043,
+        0.9406583504931414,
+        0.9652929701270653
+      ],
+      "kappa_ladder_se": [
+        0.0034432208771268563,
+        0.00578812629515128,
+        0.01034908355248624,
+        0.017515977398930092,
+        0.017394797190771125,
+        0.021212716265549846,
+        0.026048758900885358,
+        0.028957657308743123
+      ],
+      "kappa": 0.9593994387951043,
+      "kappa_se": 0.021212716265549846,
+      "ci95": [
+        0.9178225149146265,
+        1.0009763626755819
+      ],
+      "sqrt_kappa": 0.9794893765606161,
+      "sqrt_ci95": [
+        0.9580305396565532,
+        1.0004880622354182
+      ],
+      "n_eff": 255.3680876733594
+    },
+    "A3_pooled_test_all_eligible": {
+      "n": 3920,
+      "n_pairs_le_Tmax": 141834,
+      "sum_var": 3918.54345703125,
+      "T_ladder_days": [
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        5.0,
+        10.0,
+        20.0,
+        30.0
+      ],
+      "kappa_ladder": [
+        0.9949264573498852,
+        0.973586101016886,
+        0.9922636833270774,
+        1.0109406985742306,
+        1.0032233178722192,
+        0.9164652379253339,
+        0.9868453398708268,
+        1.0798596969418868
+      ],
+      "kappa_ladder_se": [
+        0.010455607582011386,
+        0.019763938361464773,
+        0.020469038828886225,
+        0.035210136794131076,
+        0.04214551592979993,
+        0.057537067002143595,
+        0.06976954272701894,
+        0.06888004342881532
+      ],
+      "kappa": 0.9164652379253339,
+      "kappa_se": 0.057537067002143595,
+      "ci95": [
+        0.8036925866011324,
+        1.0292378892495353
+      ],
+      "sqrt_kappa": 0.9573219092475288,
+      "sqrt_ci95": [
+        0.8964890331739326,
+        1.0145136220128024
+      ],
+      "n_eff": 4277.3035329457525
+    },
+    "A3b_pooled_control_bins": {
+      "n": 1906,
+      "n_pairs_le_Tmax": 33535,
+      "sum_var": 1905.451416015625,
+      "T_ladder_days": [
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        5.0,
+        10.0,
+        20.0,
+        30.0
+      ],
+      "kappa_ladder": [
+        1.002175243389017,
+        0.9893580795260744,
+        0.9986152111921903,
+        1.0158940881587624,
+        1.0771649616864098,
+        0.9955417230929599,
+        1.0442532953051338,
+        1.0739035336247207
+      ],
+      "kappa_ladder_se": [
+        0.007690972694503386,
+        0.006239060608352301,
+        0.014029492414485858,
+        0.015212732143683641,
+        0.039095064365358055,
+        0.039915504951069845,
+        0.04480041411547138,
+        0.03163629007528675
+      ],
+      "kappa": 0.9955417230929599,
+      "kappa_se": 0.039915504951069845,
+      "ci95": [
+        0.9173073333888629,
+        1.0737761127970566
+      ],
+      "sqrt_kappa": 0.9977683714635175,
+      "sqrt_ci95": [
+        0.9577616266007231,
+        1.0362316887632113
+      ],
+      "n_eff": 1914.5355295390518
+    },
+    "C_coso_fig4c": {
+      "n": 113,
+      "n_pairs_le_Tmax": 32,
+      "sum_var": 112.93266296386719,
+      "T_ladder_days": [
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        5.0,
+        10.0,
+        20.0,
+        30.0
+      ],
+      "kappa_ladder": [
+        0.9999421953015167,
+        1.0047567193943778,
+        1.0117217730118537,
+        1.0133501527978008,
+        1.0236134519590325,
+        1.0303243374066982,
+        1.0425327341574278,
+        1.077855472283549
+      ],
+      "kappa_ladder_se": [
+        0.00015293685679786887,
+        0.00015293685679786887,
+        0.0063410692945513,
+        0.011463273029365397,
+        0.0227189670192407,
+        0.024934412719122973,
+        0.037674120375087106,
+        0.04795698930831782
+      ],
+      "kappa": 1.0303243374066982,
+      "kappa_se": 0.024934412719122973,
+      "ci95": [
+        0.9814528884772171,
+        1.0791957863361792
+      ],
+      "sqrt_kappa": 1.015048933503552,
+      "sqrt_ci95": [
+        0.9906830413796418,
+        1.0388434850044443
+      ],
+      "n_eff": 109.67420247920991
+    },
+    "D_full_catalog": {
+      "n": 23465,
+      "n_pairs_le_Tmax": 1272417,
+      "sum_var": 23453.51171875,
+      "T_ladder_days": [
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        5.0,
+        10.0,
+        20.0,
+        30.0
+      ],
+      "kappa_ladder": [
+        0.9947435426970472,
+        0.9934292200957962,
+        0.9915632552362891,
+        1.0010586102922199,
+        1.0070430867319935,
+        0.977834818919735,
+        1.0126189484960428,
+        1.0462335702767025
+      ],
+      "kappa_ladder_se": [
+        0.004925999663742471,
+        0.010722308509853215,
+        0.01594677232731627,
+        0.01517453599611199,
+        0.015022773833016688,
+        0.021324443694964865,
+        0.01225944625169224,
+        0.04185500411785424
+      ],
+      "kappa": 0.977834818919735,
+      "kappa_se": 0.021324443694964865,
+      "ci95": [
+        0.9360389092776039,
+        1.0196307285618662
+      ],
+      "sqrt_kappa": 0.9888553073729922,
+      "sqrt_ci95": [
+        0.9674910383448541,
+        1.0097676606833208
+      ],
+      "n_eff": 23996.895534895153
+    },
+    "A2_end_to_end": {
+      "n": 3920,
+      "n_pairs_le_Tmax": 141834,
+      "sum_var": 3918.54345703125,
+      "T_ladder_days": [
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        5.0,
+        10.0,
+        20.0,
+        30.0
+      ],
+      "kappa_ladder": [
+        0.9949264573498852,
+        0.973586101016886,
+        0.9922636833270774,
+        1.0109406985742306,
+        1.0032233178722192,
+        0.9164652379253339,
+        0.9868453398708268,
+        1.0798596969418868
+      ],
+      "kappa_ladder_se": [
+        0.010455607582011386,
+        0.019763938361464773,
+        0.020469038828886225,
+        0.035210136794131076,
+        0.04214551592979993,
+        0.057537067002143595,
+        0.06976954272701894,
+        0.06888004342881532
+      ],
+      "kappa": 0.9164652379253339,
+      "kappa_se": 0.057537067002143595,
+      "ci95": [
+        0.8036925866011324,
+        1.0292378892495353
+      ],
+      "sqrt_kappa": 0.9573219092475288,
+      "sqrt_ci95": [
+        0.8964890331739326,
+        1.0145136220128024
+      ],
+      "n_eff": 4277.3035329457525,
+      "note": "identical test-event set to A3_pooled_test_all_eligible"
+    }
+  },
+  "requoted_bounds": [
+    {
+      "corpse": "EXP-A per-bin train statistic (the selected bin, n=245)",
+      "config": "A1_train_bin245",
+      "n": 245,
+      "kappa": 0.9593994387951043,
+      "kappa_ci95": [
+        0.9178225149146265,
+        1.0009763626755819
+      ],
+      "sqrt_kappa": 0.9794893765606161,
+      "mda80_old": 0.24494313754258987,
+      "mda80_old_pct": 24.494313754258986,
+      "mda80_kappa_corrected": 0.23991920108439257,
+      "mda80_kappa_corrected_pct": 23.991920108439256,
+      "mda80_kappa_corrected_pct_ci95": [
+        23.46630062450967,
+        24.506268503784927
+      ],
+      "null_carried_clustering": false,
+      "threshold_aware_factor": 0.9794893765606161,
+      "mda80_threshold_aware_pct": 23.991920108439256,
+      "mda_over_theory_old": 24.494313754258986,
+      "mda_over_theory_new": 23.991920108439256,
+      "contacts_theory_after_kappa": false
+    },
+    {
+      "corpse": "EXP-A end-to-end pipeline (1-of-42 selection + pooled circular-shift test)",
+      "config": "A2_end_to_end",
+      "n": 3920,
+      "kappa": 0.9164652379253339,
+      "kappa_ci95": [
+        0.8036925866011324,
+        1.0292378892495353
+      ],
+      "sqrt_kappa": 0.9573219092475288,
+      "mda80_old": 0.09753651529752982,
+      "mda80_old_pct": 9.753651529752982,
+      "mda80_kappa_corrected": 0.09337384304598205,
+      "mda80_kappa_corrected_pct": 9.337384304598205,
+      "mda80_kappa_corrected_pct_ci95": [
+        8.7440416298237,
+        9.89521234130041
+      ],
+      "null_carried_clustering": true,
+      "threshold_aware_factor": 0.9851346482703653,
+      "mda80_threshold_aware_pct": 9.608660069114915,
+      "mda_over_theory_old": 9.753651529752982,
+      "mda_over_theory_new": 9.337384304598205,
+      "contacts_theory_after_kappa": false
+    },
+    {
+      "corpse": "EXP-A pooled statistic on the 22 train-null CONTROL bins (the quoted corpse: n=1906, S=0.009, p=0.28)",
+      "config": "A3b_pooled_control_bins",
+      "n": 1906,
+      "kappa": 0.9955417230929599,
+      "kappa_ci95": [
+        0.9173073333888629,
+        1.0737761127970566
+      ],
+      "sqrt_kappa": 0.9977683714635175,
+      "mda80_old": 0.07961870553261585,
+      "mda80_old_pct": 7.961870553261585,
+      "mda80_kappa_corrected": 0.07944102615731147,
+      "mda80_kappa_corrected_pct": 7.944102615731147,
+      "mda80_kappa_corrected_pct_ci95": [
+        7.625574091876215,
+        8.250342569120335
+      ],
+      "null_carried_clustering": true,
+      "threshold_aware_factor": 0.9992435223070159,
+      "mda80_threshold_aware_pct": 7.955847575793616,
+      "mda_over_theory_old": 7.961870553261585,
+      "mda_over_theory_new": 7.944102615731147,
+      "contacts_theory_after_kappa": false
+    },
+    {
+      "corpse": "EXP-A pooled statistic over all 42 eligible bins (upper limit of the design)",
+      "config": "A3_pooled_test_all_eligible",
+      "n": 3920,
+      "kappa": 0.9164652379253339,
+      "kappa_ci95": [
+        0.8036925866011324,
+        1.0292378892495353
+      ],
+      "sqrt_kappa": 0.9573219092475288,
+      "mda80_old": 0.06289847567086825,
+      "mda80_old_pct": 6.289847567086825,
+      "mda80_kappa_corrected": 0.06021408881799483,
+      "mda80_kappa_corrected_pct": 6.021408881799483,
+      "mda80_kappa_corrected_pct_ci95": [
+        5.638779364229079,
+        6.381136037193667
+      ],
+      "null_carried_clustering": true,
+      "threshold_aware_factor": 0.9851346482703653,
+      "mda80_threshold_aware_pct": 6.196346770676292,
+      "mda_over_theory_old": 6.289847567086825,
+      "mda_over_theory_new": 6.021408881799483,
+      "contacts_theory_after_kappa": false
+    },
+    {
+      "corpse": "Coso Fig 4c replication (n=113)",
+      "config": "C_coso_fig4c",
+      "n": 113,
+      "kappa": 1.0303243374066982,
+      "kappa_ci95": [
+        0.9814528884772171,
+        1.0791957863361792
+      ],
+      "sqrt_kappa": 1.015048933503552,
+      "mda80_old": 0.40875422520690075,
+      "mda80_old_pct": 40.87542252069007,
+      "mda80_kappa_corrected": 0.4149055403613353,
+      "mda80_kappa_corrected_pct": 41.49055403613353,
+      "mda80_kappa_corrected_pct_ci95": [
+        40.494587900475146,
+        42.46316638242283
+      ],
+      "null_carried_clustering": false,
+      "threshold_aware_factor": 1.015048933503552,
+      "mda80_threshold_aware_pct": 41.49055403613353,
+      "mda_over_theory_old": 40.87542252069007,
+      "mda_over_theory_new": 41.49055403613353,
+      "contacts_theory_after_kappa": false
+    },
+    {
+      "corpse": "Full-catalogue intensity likelihood (n=23465)",
+      "config": "D_full_catalog",
+      "n": 23465,
+      "kappa": 0.977834818919735,
+      "kappa_ci95": [
+        0.9360389092776039,
+        1.0196307285618662
+      ],
+      "sqrt_kappa": 0.9888553073729922,
+      "mda80_old": 0.028326617289570703,
+      "mda80_old_pct": 2.83266172895707,
+      "mda80_kappa_corrected": 0.02801092584671555,
+      "mda80_kappa_corrected_pct": 2.8010925846715553,
+      "mda80_kappa_corrected_pct_ci95": [
+        2.7405748374284054,
+        2.8603302075561516
+      ],
+      "null_carried_clustering": false,
+      "threshold_aware_factor": 0.9888553073729922,
+      "mda80_threshold_aware_pct": 2.8010925846715553,
+      "mda_over_theory_old": 2.83266172895707,
+      "mda_over_theory_new": 2.8010925846715553,
+      "contacts_theory_after_kappa": false
+    }
+  ],
+  "headline": {
+    "pooled_all_eligible_old_pct": 6.289847567086825,
+    "pooled_all_eligible_new_pct": 6.021408881799483,
+    "pooled_all_eligible_new_pct_ci95": [
+      5.638779364229079,
+      6.381136037193667
+    ],
+    "pooled_stays_single_digit": true,
+    "max_kappa_over_configs": 1.0303243374066982,
+    "any_bound_contacts_theory_after_kappa": false
+  },
+  "runtime_minutes": 10.76324376265208,
+  "conservative_requote": {
+    "rule": "kappa_conservative = kappa_hat + (largest downward Poisson-control offset, 0.0686) + (upper 95% half-width). MDA_conservative = MDA_old * sqrt(kappa_conservative). This is the number a hostile reviewer should be given.",
+    "worst_control_offset": 0.06860997492382415,
+    "rows": [
+      {
+        "config": "A1_train_bin245",
+        "n": 245,
+        "mda_old_pct": 24.494313754258986,
+        "kappa": 0.9593994387951043,
+        "kappa_ci95": [
+          0.9178225149146265,
+          1.0009763626755819
+        ],
+        "kappa_conservative": 1.069586337599406,
+        "mda_conservative_pct": 25.33221701944605
+      },
+      {
+        "config": "A2_end_to_end",
+        "n": 3920,
+        "mda_old_pct": 9.753651529752982,
+        "kappa": 0.9164652379253339,
+        "kappa_ci95": [
+          0.8036925866011324,
+          1.0292378892495353
+        ],
+        "kappa_conservative": 1.0978478641733593,
+        "mda_conservative_pct": 10.2197039730638
+      },
+      {
+        "config": "A3b_pooled_control_bins",
+        "n": 1906,
+        "mda_old_pct": 7.961870553261585,
+        "kappa": 0.9955417230929599,
+        "kappa_ci95": [
+          0.9173073333888629,
+          1.0737761127970566
+        ],
+        "kappa_conservative": 1.142386087720881,
+        "mda_conservative_pct": 8.509843340846274
+      },
+      {
+        "config": "A3_pooled_test_all_eligible",
+        "n": 3920,
+        "mda_old_pct": 6.289847567086825,
+        "kappa": 0.9164652379253339,
+        "kappa_ci95": [
+          0.8036925866011324,
+          1.0292378892495353
+        ],
+        "kappa_conservative": 1.0978478641733593,
+        "mda_conservative_pct": 6.590391298606383
+      },
+      {
+        "config": "C_coso_fig4c",
+        "n": 113,
+        "mda_old_pct": 40.87542252069007,
+        "kappa": 1.0303243374066982,
+        "kappa_ci95": [
+          0.9814528884772171,
+          1.0791957863361792
+        ],
+        "kappa_conservative": 1.1478057612600032,
+        "mda_conservative_pct": 43.79216889730526
+      },
+      {
+        "config": "D_full_catalog",
+        "n": 23465,
+        "mda_old_pct": 2.83266172895707,
+        "kappa": 0.977834818919735,
+        "kappa_ci95": [
+          0.9360389092776039,
+          1.0196307285618662
+        ],
+        "kappa_conservative": 1.0882407034856902,
+        "mda_conservative_pct": 2.9549980450521907
+      }
+    ]
+  }
+}
