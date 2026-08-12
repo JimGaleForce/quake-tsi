@@ -13320,3 +13320,528 @@ Nothing else modified; nothing committed.
 bias audits before any result was read from them; the third validated on a planted truth case
 and two Poisson controls. kappa = 1 to within a few percent — F-012's optimism factor is real in
 principle and negligible in fact, and the bounds paper's headline survives unchanged.*
+
+---
+
+## PRIOR ART (Merton)
+
+*Round 4 — 2026-08-11. Assigned by the supervisor as the PRE-SUBMISSION prior-art dossier for the
+program's first paper (F-012 + F-003, the tidal forecast-skill BOUNDS paper). Sources read this
+session: `PROGRESS_REGISTER.md` F-003 and F-012 in full; the K-035 mentions across the ledger;
+`HYPOTHESIS_LEDGER.md` "MEASUREMENTS (Laplace): kappa for F-012" in full; file listing confirming
+`results_k035.json` (23,699 B, 2026-08-09) and `results_kappa.json` (24,758 B, 2026-08-11) on disk.
+No commits. Ledger write only, this section only.*
+
+## M-010 — PRE-SUBMISSION DOSSIER: **the tidal forecast-skill BOUNDS paper (F-012 + F-003)**
+
+### M-010.0 THE HEADLINE, STATED FIRST SO NOBODY READS PAST IT
+
+**Someone published our paper's central quantity, in our region, this year, in *Science Advances*.**
+
+**Sirorattanakul, K. & Avouac, J.-P. (2026), "Seismic rhythms: Earthquake response to tectonic,
+hydrological, and tidal forcing in California," *Science Advances* 12(13), eadz5711,
+doi:10.1126/sciadv.adz5711.** Verified this session by WebFetch of the PMC full text
+(PMC13015884) and corroborated by the Caltech news release and a bibliographic index. The
+operative content, quoted from the fetched text:
+
+- *"no statistically significant semidiurnal tidal modulation of seismicity"* in **both** Northern
+  and Southern California;
+- *"the amplitude must be below **8.16%** of the background seismicity rate (Eq. 5; Materials and
+  Methods)"* — an explicit **upper bound on tidal modulation amplitude for California**;
+- the bound is computed **analytically**, `alpha = -4(ln P + 1)/N`, with a period-count multiplicity
+  scaling `P95 = 0.05 * T / t_catalog_length` — *"the confidence level must be scaled to account for
+  the number of independent trials"*;
+- per-tidal-line thresholds are tabulated (K2 0.0818, **M2 0.0816**, N2 0.0815; annual 0.038), on
+  **5,000-nearest-earthquake** neighbourhoods at **M >= 2.5**;
+- and — the sentence that decides the classification — the WebFetch pass found **no injected-amplitude
+  power simulation described**, and **no simulation of a data-driven selection step**; the multiplicity
+  handling is an analytic Bonferroni-type scaling over *periods*, not over *places chosen from data*.
+
+**Consequences, in order of how much they cost us.**
+
+1. **"Bounds, not nulls" is NOT our idea and the title must not imply it is.** Converting a tidal
+   null into a modulation-amplitude upper limit is at least thirteen years old (Ader & Avouac 2013,
+   Nepal, *"less than 18% at tidal periods"*) and was done for **California** four months ago at
+   **8.16%**. The framing sentence in F-012 — *"this is the first time anyone has run the selection
+   step through a power simulation and said what such a design can actually resolve"* — is
+   **unsafe as written** and must be narrowed (see §M-010.6).
+2. **Our number is not the field's best California bound by coverage; it is the field's best
+   California bound by rigour.** 6.6% (conservative, post-kappa) vs 8.16% is a 20% improvement in
+   amplitude and it is measured at **80% power through a simulated 1-of-42 selection**, against their
+   **threshold-crossing amplitude at nominal significance** — which is a ~50%-power quantity, not an
+   80%-power one. **That is our delta and it is a real one, but it is a methods delta, not a
+   discovery.**
+3. **It is also the best thing that could have happened to the paper.** An independent, better-resourced
+   group reaching a *consistent, slightly weaker* bound on the same region four months before us is a
+   free external replication. §M-010.5 lists three more.
+4. **Tidal forecast-skill testing exists and it is null.** Hirose, Maeda & Kamigaichi (2022) built a
+   tidal-correlation forecast model and scored it on a Molchan error diagram. The F-003 phrase *"no
+   forecast skill"* is therefore a **rediscovery in a new geometry**, not a first.
+
+**Nothing in this dossier threatens the paper's correctness. Everything in it threatens the paper's
+novelty language.** The recommendation at §M-010.7 is that the paper be written as an
+*explicitly-attributed tightening* of Ader–Avouac/Sirorattanakul–Avouac, and that "first" appear
+exactly once, in the narrow methodological form §M-010.3 licenses.
+
+### M-010.1 SEARCH TRAILS RUN (so a null search is auditable)
+
+Run 2026-08-11 via WebSearch and WebFetch. Queries as typed, verbatim, so the next seat can attack them.
+
+**Sweep A — tidal FORECAST SKILL (as distinct from detection/correlation).**
+`tidal triggering earthquake forecast skill out-of-sample test prospective`; `CSEP earthquake
+forecast experiment tidal model submitted testing center`; `tidal stress earthquake nucleation
+"probability gain" prediction operational forecast tidal phase Tanaka Hirose`; `"Tonga-Kermadec"
+tidal correlation background seismicity forecast model efficiency Molchan diagram earth tides`.
+**HIT:** Hirose et al. (2022), EPS 74:10 — abstract read verbatim off page 1 of the publisher PDF.
+**NULL:** no tidal-based model appears in any CSEP California/Japan/NZ/Europe testing-centre roster
+in the sources retrieved; the CSEP result set (SCEC CSEP page, cseptesting.org, pyCSEP docs, the
+2025 *Scientific Data* 10-year California benchmark, `s41597-025-05766-3`) returned **no tidal
+entry**. The search engine's own summary states it: *"they do not contain specific information
+about a 'tidal model' submission."* **This null is weak — a roster absence read off search
+summaries, not off a downloaded model list — and is recorded as weak.**
+
+**Sweep B — the classic detection literature, both camps.**
+`Vidale 1998 absence of earthquake correlation with Earth tides JGR`; `Cochran Vidale Tanaka 2004
+Science earth tide triggering shallow thrust earthquakes`; `Beeler Lockner 2003 why earthquakes
+correlate weakly with the solid earth tides rate-and-state`; `Metivier 2009 evidence of earthquake
+triggering by solid earth tides EPSL`; `Ide Yabe Tanaka 2016 earthquake potential tidal
+size-frequency statistics replication failure`; `Hough 2018 "Do Large (Magnitude >= 8) Global
+Earthquakes Occur on Preferred Days" SRL abstract "No"`; `Kossobokov Panza 2020 "A Myth of Preferred
+Days of Strong Earthquakes" SRL`; `"Tidal modulation of seismicity at the Coso geothermal field"
+2021 EPSL authors`; `Wang Shearer tidal triggering southern California QTM template matching
+catalog`; `Thomas Burgmann Nadeau tidal triggering low frequency earthquakes San Andreas sensitivity
+percent modulation`. All HIT; see §M-010.2.
+
+**Sweep C — power / minimum detectable amplitude / bounds-not-nulls.**
+`statistical power minimum detectable tidal modulation seismicity number of earthquakes required
+Schuster test`; `Ader Avouac 2013 Schuster spectrum minimum detectable modulation amplitude formula
+seismicity periodicity`; `seismology null result "upper bound" statistical power precursor search
+report detection limit rather than null`; `"minimum detectable" OR "detection threshold" modulation
+amplitude seismicity rate 80% power simulation selection bias pre-registered`; `injection recovery
+synthetic test tidal modulation seismicity simulate known amplitude recover power percent`;
+`look-elsewhere effect trials factor power calculation including model selection step
+pre-registration astronomy physics`.
+**HIT:** the analytic-bound lineage (Ader & Avouac 2013 -> Sirorattanakul & Avouac 2026);
+Beeler & Lockner's sample-size statement; Gross & Vitells (2010) for the trials-factor formalism.
+**NULL — and this is the load-bearing null of the dossier:** **no seismological paper found that
+computes a minimum detectable modulation at a stated power (80% or otherwise) by Monte-Carlo
+injection *through a data-driven selection step*.** The "bounds not nulls" *practice* is standard
+in particle/gravitational-wave physics (the search returned LIGO/AURIGA/IGEC upper-limit papers,
+Feldman-Cousins, NEMO-3 periodic-modulation limits at ~2.0-2.5% relative amplitude) and is
+**imported, not invented, when we do it.**
+
+**Sweep D — clustering / variance inflation of a phase statistic (the kappa question).**
+`Rayleigh test overdispersion correction variance inflation clustered circular data effective sample
+size`; `Schuster test declustering aftershock clustering inflates significance tidal triggering
+effective number of independent events`; `Hawkes process clustering variance inflation periodogram
+seismicity effective sample size overdispersion test statistic`; `variance inflation factor point
+process periodicity test clustered events "effective number of independent" astronomy red noise
+Vaughan periodogram`.
+**HIT on the concern** (universally known; see §M-010.4). **NULL on the object:** no measured,
+bias-audited variance-inflation factor for a *tidal-phase resultant* used to re-quote a power
+calculation. The circular-statistics literature returned corrections for *rounding/aggregation*
+(Landler et al., *Behav. Ecol. Sociobiol.* 2018 / grouped-circular-data follow-up 2020) — a
+different pathology from temporal clustering — and the astronomy literature returned red-noise
+periodicity testing (Vaughan 2010, *MNRAS* 402, 307; Vaughan 2005, *A&A*), which is the right
+*analogy* and not the same object.
+
+**Sweep E — replication status of the positives.**
+`tidal triggering earthquake forecast skill out-of-sample test prospective` (returned the Earthquake
+Insights series); WebFetch of `earthquakeinsights.substack.com/p/the-great-tidal-earthquake-hypothesis-bad`.
+**HIT:** Bradley & Hubbard (2024) — see §M-010.2, and note the venue caveat.
+
+**Access failures, recorded so nobody thinks they were skipped.** ScienceDirect (403) blocked
+direct reads of Ader & Avouac (2013) and the *Geodesy and Geodynamics* 2022 review; Wiley (403)
+blocked Lu et al. (2025) JGR and Wang & Shearer (2015); science.org (403) blocked both *Science
+Advances* papers directly (the 2026 one was recovered via PMC; `sciadv.ady6350` was **not**
+recovered and is listed UNVERIFIED below); Springer redirected to an auth wall for Hirose et al.
+(recovered via the open d-nb.info PDF, pages 1-2 read directly).
+
+### M-010.2 THE CLASSIFICATION TABLE — the paper's five claims
+
+| # | claim as the paper wants to make it | verdict | the giants who own it | our defensible delta |
+|---|---|---|---|---|
+| 1 | Static tidal-phase susceptibility maps have no out-of-sample forecast skill (SoCal, M>=1.5, 1981-2018) | **REDISCOVERY (new geometry, new region)** | Hirose, Maeda & Kamigaichi (2022) for tidal->forecast-skill scoring; **Wang & Shearer (2015)** for the gridded-cell tidal-p null | Ours is a **spatial static susceptibility map** trained then frozen and scored out-of-sample on a *later window*; theirs is a temporal p-value tracker (Hirose) and a same-window multiplicity audit (W&S). Plus hash-frozen pre-registration and an anti-leak control. |
+| 2a | Reporting a powered upper bound instead of a null ("bounds, not nulls") | **REDISCOVERY — and recent, and in our region** | **Ader & Avouac (2013)**; **Sirorattanakul & Avouac (2026)**; the entire upper-limit culture of particle/GW physics | We state ours at **80% power** rather than at threshold crossing, and we state the estimator's own false-positive rate first (the a=0 arm). |
+| 2b | MDA computed **through the data-driven selection step** (1-of-42 bin selection simulated into the power calculation) | **NOVEL (narrow), on a weak null search** | Nearest neighbours: Wang & Shearer (2015) *diagnosed* grid-selection sensitivity; Gross & Vitells (2010) formalised the trials factor; Bradley & Hubbard (2024) warned of tidal p-hacking. **None computes a powered MDA through the selection.** | This is the paper's genuine methods contribution. Claim it narrowly and cite all three neighbours in the same sentence. |
+| 3 | kappa: measuring the variance inflation of the phase statistic against the power simulation's independence assumption | **REDISCOVERY on the concern; NOVEL (narrow) on the measured, bias-audited factor** | Ader & Avouac (2013) (Schuster-spectrum drift as a clustering diagnostic); Reasenberg (1985) and the declustering tradition; Hainzl et al. (2013); Vaughan (2010) for the red-noise analogue | A *number* with a CI, validated against a **planted 3x inflation recovered to 1.2%** and two density-matched Poisson controls, then propagated into the bound. Nobody found doing this for a tidal phase statistic. |
+| 4 | "No configuration contacts the ~1% rate-state theory line" | **REDISCOVERY — the shortfall is Beeler & Lockner's own point** | **Beeler & Lockner (2003)** predicted the weakness *and* stated the sample-size consequence: *"would require >13,000 earthquakes to detect"* (abstract-level; see UNVERIFIED note) | We supply the arithmetic for a specific real design, and our n=23,465 configuration is *above* their stated threshold yet still bounded at 3.0% — a genuinely interesting tension worth a paragraph. |
+
+**Full citations, with what each actually showed (claim vs replication status kept distinct).**
+
+**The forecast-skill lineage (claim 1).**
+- **Hirose, F., Maeda, K. & Kamigaichi, O. (2022), *Earth, Planets and Space* 74:10,
+  doi:10.1186/s40623-021-01564-4.** Abstract read verbatim off page 1 of the publisher PDF this
+  session: *"We evaluated a forecast model based on the temporal variations of the tidal correlation
+  via Molchan's error diagram, using the tidal correlation value itself as well as its rate of change
+  as threshold values. For Mw >= 7.0 earthquakes, this model was as ineffective as random guessing.
+  For Mw >= 6.5, 6.0, or 5.5 earthquakes, the forecast model performed better than random guessing in
+  some cases, but even the best forecast only had a probability gain of about 1.7. Therefore, the
+  practicality of this model alone is poor, at least in this region. These results suggest that
+  changes of the tidal correlation are not reliable indicators of large earthquakes along the
+  Tonga-Kermadec trench."* **This is a tidal forecast-skill null with a skill diagram attached,
+  published four years before us.** Scope: Tonga-Kermadec, N = 729 interplate thrusts Mw >= 5.5,
+  1977-2020, retrospective but rule-based. Not replicated elsewhere that I found.
+- **Wang, W. & Shearer, P. M. (2015), "No clear evidence for localized tidal periodicities in
+  earthquakes in the central Japan region," *JGR Solid Earth* 120(9), 6317-6328,
+  doi:10.1002/2015JB011937.** Cells at 0.2/0.5/1.0 deg x 100/200/400 d, Schuster test on semidiurnal
+  and semimonthly phase; the count of low-p cells was **no more than chance**, and low-p cells did not
+  cluster on the Tohoku-Oki origin time. **This is the structural twin of our 42-bin scan, in Japan,
+  eleven years earlier, and it reached our conclusion.** It is also the paper that rebutted
+  Tanaka (2012) on exactly the selection-sensitivity grounds our claim 2b is about — per Hirose et
+  al.'s introduction, read this session: *"Wang and Shearer (2015) argued that the low p-value
+  preceding the 2011 Tohoku earthquake reported by Tanaka (2012) was due to chance because the
+  p-value was sensitive to their selection of spatiotemporal grids."*
+- **Hough, S. E. (2018), "Do large (magnitude >=8) global earthquakes occur on preferred days of the
+  calendar year or lunar cycle?", *Seismological Research Letters* 89(2A).** One-word abstract: *"No."*
+  Confirmed via the USGS Publications Warehouse record and the GeoScienceWorld listing.
+- **Kossobokov, V. G. & Panza, G. F. (2020), "A Myth of Preferred Days of Strong Earthquakes?",
+  *SRL* 91(2A), 948-955.** M >= 7.5 global; the null of random coincidental occurrence is not
+  rejected. *(Page range from search metadata; UNVERIFIED against the article itself.)*
+
+**The classic detection literature — both camps, because this is genuinely CONTESTED.**
+- **NULL camp.** **Vidale, J. E., Agnew, D. C., Johnston, M. J. S. & Oppenheimer, D. H. (1998),
+  "Absence of earthquake correlation with Earth tides: an indication of high preseismic fault stress
+  rate," *JGR* 103(B11), 24,567-24,572.** 13,042 events near the San Andreas/Calaveras;
+  **rate 2% higher when tidal stress promotes failure, not statistically significant**; inferred
+  preseismic stress rates >= 15 kPa/hr. *That 2% is itself an informal upper bound and the paper
+  should say so.* — **Sirorattanakul & Avouac (2026)** (above), California, **< 8.16%**. —
+  **Ader, L. & Avouac, J.-P. (2013), "Detecting periodicities and declustering in earthquake catalogs
+  using the Schuster spectrum, application to Himalayan seismicity," *EPSL* 377-378, 97-105**, which
+  quantifies Nepal seismicity-rate variation as ~40% annual and **"less than 18% at tidal periods,"**
+  and which shows *"the Schuster test alone does not provide a sufficient condition to assert the
+  existence of a periodicity."* *(Amplitude figures from search-result summary; ScienceDirect 403'd —
+  flagged UNVERIFIED-BEYOND-SUMMARY.)*
+- **POSITIVE camp.** **Cochran, E. S., Vidale, J. E. & Tanaka, S. (2004), "Earth tides can trigger
+  shallow thrust fault earthquakes," *Science* 306, 1164-1166, doi:10.1126/science.1103961** —
+  >2,000 global M >= 5.5 shallow thrusts 1977-2000, rate varying **by a factor of ~3** with tidal
+  stress, best at mu = 0.4 (good for mu 0.2-0.6). — **Tanaka, S., Ohtake, M. & Sato, H. (2002),
+  *JGR* 107, doi:10.1029/2001JB001577.** — **Metivier, L., de Viron, O., Conrad, C. P., Renault, S.,
+  Diament, M. & Patau, G. (2009), "Evidence of earthquake triggering by the solid earth tides,"
+  *EPSL* 278(3-4), 370-375, doi:10.1016/j.epsl.2008.12.024** — NEIC, 442,412 events, ~99% confidence,
+  anomaly larger for smaller and shallower events. — **Ide, S., Yabe, S. & Tanaka, Y. (2016),
+  "Earthquake potential revealed by tidal influence on earthquake size-frequency statistics,"
+  *Nature Geoscience* 9, 834-838.** — **Wang, W., Shearer, P. M., Vidale, J. E., Xu, X.,
+  Trugman, D. T. & Fialko, Y. (2022), "Tidal modulation of seismicity at the Coso geothermal field,"
+  *EPSL* 579, 117335, doi:10.1016/j.epsl.2021.117335** — **this is the source of the Fig 4c our F-001
+  reproduces and our K-035 row "Coso Fig 4c" prices; its citation must appear in the bounds paper,
+  not only in F-001's.** — **Thomas, A. M., Nadeau, R. M. & Burgmann, R. (2009), *Nature*** and
+  **Thomas, A. M. et al. (2012), *JGR* 117, doi:10.1029/2011JB009036** for LFE/tremor tidal
+  sensitivity to sub-kPa stresses, which is why nobody may write that the physics is absent.
+- **THE REPLICATION STATUS OF THE POSITIVE CAMP IS THE MOST USEFUL THING IN THIS DOSSIER.**
+  **Bradley, K. & Hubbard, J. A. (2024), "The great tidal earthquake hypothesis test" (parts I-IV),
+  *Earthquake Insights*, doi:10.62481/3b93879a**, read this session. They re-ran **Tanaka et al.
+  (2002)**, **Cochran et al. (2004)** and **Ide et al. (2016)**: the pre-2001 patterns replicate on the
+  original windows, but *"we do not find strong evidence for tidal triggering of global earthquakes in
+  the new data"*; for Cochran, post-2001 data *"significantly weakens the result"* and using origin
+  rather than centroid locations shows *"no reliable signal"*; and *"if a real correlation does exist
+  between large earthquakes and tidal stresses, it must be an impressively small effect."* They also
+  warn that *"it is very hard to look at subsets of global data without performing unintentional
+  p-hacking"* and that resolving a 0-5% effect needs samples *"well above 1000."*
+  **PROVENANCE FLAG, BINDING: this is a DOI'd Substack essay, not a peer-reviewed paper.** It is
+  excellent, it is by two well-known authors, and **it must be cited as what it is.** Do not let it
+  carry weight a reviewer can strip.
+
+**The theory line (claim 4).** **Beeler, N. M. & Lockner, D. A. (2003), "Why earthquakes correlate
+weakly with the solid Earth tides: Effects of periodic stress on the rate and probability of
+earthquake occurrence," *JGR* 108(B8), 2391.** Already attributed in F-012. **New this session and
+material to the paper:** their abstract states that extrapolation of the laboratory results
+*"suggests a very weak correlation of earthquakes with the daily Earth tides, one that would require
+>13,000 earthquakes to detect."* **That is a sample-size-for-detection statement in the founding
+theory paper. The paper must quote it, because our D configuration has n = 23,465 and still bounds
+only at 3.0% — which either sharpens their estimate or indicates our estimator is weaker than their
+implicit one. Either way it is a paragraph, and a reviewer who knows this abstract will ask.**
+*(Read from a search-result rendering of the abstract; the full text was not opened — flagged
+UNVERIFIED-BEYOND-ABSTRACT.)*
+
+### M-010.3 CLAIM 2b IN DETAIL — the one place "first" is defensible, and its exact wording
+
+The null search in Sweep C is the basis of the only novelty claim I am prepared to license, and I
+want its boundaries visible.
+
+**What already exists.** (i) **Analytic** minimum-detectable-amplitude formulas for periodic
+seismicity modulation, with an explicit multiplicity scaling over the *number of trial periods*:
+Sirorattanakul & Avouac (2026) Eq. 5 with `P95 = 0.05*T/t_cat`, in the Ader & Avouac (2013) lineage.
+(ii) **Diagnosis** of selection-driven false positives in tidal searches over spatiotemporal cells:
+Wang & Shearer (2015). (iii) **Formal trials-factor machinery** for a search over a nuisance
+parameter: Gross, E. & Vitells, O. (2010), "Trial factors for the look elsewhere effect in high
+energy physics," *Eur. Phys. J. C* 70, 525. (iv) **Injection-recovery power simulation** as a
+standard instrument elsewhere in physics (NEMO-3 periodic-modulation limits; LIGO/IGEC upper limits).
+
+**What I did not find.** Any paper — tidal, or otherwise in seismology — that (a) Monte-Carlo injects
+a modulation of known amplitude, (b) pushes each realisation through the *actual analysis pipeline
+including a data-driven selection of which cell to carry forward*, (c) reports the amplitude at a
+stated power (80%), and (d) validates the machine first with an a = 0 false-positive arm.
+
+**Therefore the licensed sentence, and I would like it used verbatim:**
+
+> Minimum detectable amplitudes for periodic seismicity modulation have been reported analytically
+> (Ader & Avouac, 2013; Sirorattanakul & Avouac, 2026), and the sensitivity of tidal p-values to the
+> choice of spatiotemporal cell has been documented (Wang & Shearer, 2015). To our knowledge the
+> present study is the first to combine the two: to compute the minimum detectable modulation at a
+> stated statistical power by simulating the full analysis pipeline, *including the data-driven
+> selection of the reported cell*, and to verify the simulator's false-positive rate at zero
+> injected amplitude before reading any power result.
+
+**Do not write "the first powered upper bound on tidal modulation."** That is false. **Do not write
+"the reference bound in this literature."** *Science Advances* has one.
+
+### M-010.4 CLAIM 3 IN DETAIL — kappa, and the honest size of its novelty
+
+The **concern** is textbook and must be conceded in one sentence with citations: clustered events
+inflate the significance of periodicity tests, which is why declustering (Reasenberg 1985; the
+nearest-neighbour family) is standard, why **Ader & Avouac (2013)** built the Schuster *spectrum*
+specifically so that *"drifting P values at periods larger than the decay time of aftershocks"*
+reveal imperfect declustering, and why **Bradley & Hubbard (2024)** and **Wang & Shearer (2015)**
+both treat it as the first-order threat. **Hainzl, S. et al. (2013), "Testing atmospheric and tidal
+earthquake triggering at Mt. Hochstaufen, Germany"** is the nearest published example of pricing a
+periodic-forcing test against a clustering-aware background. *(Surfaced in Sweep A/D; venue and year
+not verified beyond an MIT group listing — UNVERIFIED.)*
+
+**Our delta, stated at its true size:** the program *measured* the residual inflation of the specific
+statistic its power simulation assumed independent, with a pre-declared estimator, a pre-declared
+pass rule, a **planted 3x inflation recovered to 1.2%** and two density-matched Poisson controls
+(read this session from the Laplace kappa section: B1a 0.9982 +/- 0.0220, B1b 0.9314 +/- 0.0559,
+B2 2.9502 +/- 0.0413 against truth 2.9866), and propagated it into every bound
+(6.3% -> 6.6% conservative). **That is a small, real, honest methods increment, worth about one
+paragraph and one supplementary figure — not a section title.**
+
+**One genuine takeable-in-reverse, i.e. a finding of ours the literature should have:** the rejected
+v1 estimator's diagnosis — *"the rigid-shift variance of one catalogue is not an estimator of the
+unconditional variance"*, with 40 Poisson catalogues showing mean 1.010 but **sd 0.482** at
+n = 1,906. **Circular/rigid time-shift nulls are used throughout this literature.** I searched for a
+published statement of this specific pathology (Sweep D) and **did not find one**; I also do not
+believe it is unknown to specialists. **Recommendation: state it as a cautionary methodological note
+with "to our knowledge" hedging, not as a discovery.** It is the kind of folklore a reviewer named
+Avouac, Shearer or Ader may answer with an existing reference — and if they do, that is a citation
+gained, not a claim lost.
+
+### M-010.5 TAKEABLES (adopt instead of reinventing) — including four free external replications
+
+**Estimators and parameter values to adopt.**
+1. **The analytic MDA `alpha = -4(ln P + 1)/N`** (Sirorattanakul & Avouac 2026, Eq. 5; Ader & Avouac
+   2013 lineage). **Adopt as a free cross-check**: evaluate it at our six n values and put it beside
+   our simulated 80%-power MDAs in the same table. If our simulated numbers are systematically
+   *larger* (they should be — 80% power costs more than threshold crossing), the table itself
+   demonstrates the methods point, at zero compute.
+2. **The multiplicity scaling `P95 = 0.05*T/t_catalog`.** Their honest handling of trials over
+   periods. Our systematics arm scans named nuisance lines (S1, S2, K1, P1, Msf) and two off-tidal
+   controls; this scaling is the field-standard way to price that scan and we should quote it.
+3. **The Schuster *spectrum*, not the Schuster *test*** (Ader & Avouac 2013). Our off-tidal control
+   lines at 11.0 d and 16.5 d are a two-point version of their spectrum. **We reinvented a special
+   case of a published instrument and must say so.** Better: run the full spectrum — our
+   full-catalogue control-line failure (reject rate 0.34 at n = 23,465, holding at 0.06 at n = 1,906)
+   is precisely the *"drifting P value at periods larger than the decay time of aftershocks"*
+   signature they named. **Their diagnosis explains our failure; cite it as the explanation rather
+   than presenting the failure as unexplained.**
+4. **Molchan error diagram + probability gain** (Hirose et al. 2022) as the forecast-skill metric.
+   F-003 reports S statistics and bits/event; **adding a probability gain makes our null directly
+   commensurable with the only other tidal forecast-skill result in the literature (theirs: best
+   gain ~1.7, ineffective at Mw >= 7.0).** Cheap, and the single highest-value comparability upgrade
+   available to the paper.
+5. **Centroid-vs-origin location sensitivity** (Bradley & Hubbard 2024, on Cochran et al.) — a named
+   artifact our controls do not include. For SoCal M >= 1.5 it is likely negligible, **but say so in
+   one sentence rather than leaving it unaddressed.**
+
+**Four free external replications of our bound — put these in a single comparison table.**
+
+| source | region | statistic | bound on tidal modulation |
+|---|---|---|---|
+| Vidale et al. (1998) | SoCal, SAF/Calaveras, n = 13,042 | rate ratio | +2%, not significant (informal bound) |
+| Ader & Avouac (2013) | Nepal | Schuster spectrum | **< 18%** at tidal periods |
+| Sirorattanakul & Avouac (2026) | **California, M >= 2.5** | analytic threshold | **< 8.16%** (M2) |
+| **This work (F-012 + kappa)** | **SoCal, M >= 1.5, FM-resolved** | **simulated, 80% power, through selection** | **< 6.6%** pooled (conservative) |
+
+**That table is the paper's abstract figure.** It shows the field converging, it credits everyone,
+and it makes our number the tightest without a word of novelty rhetoric.
+
+**Datasets to note.** `data.caltech.edu/records/wgvt5-6qs27` — Sirorattanakul & Avouac's supporting
+data and codes, which would allow a *direct* method-vs-method comparison on the same catalogue.
+**Recommended but not required before submission.**
+
+### M-010.6 UNSAFE SENTENCES IN F-012 / F-003 — flagged, with replacements
+
+1. **F-012, HOSTILE-REVIEWER paragraph:** *"this is the first time anyone has run the selection step
+   through a power simulation and said what such a design can actually resolve."*
+   **UNSAFE.** Replace with the §M-010.3 licensed sentence. The unqualified version is refutable by a
+   reviewer holding Ader & Avouac (2013).
+2. **F-012, FRAMING:** *"a result that becomes the reference bound in a literature."*
+   **UNSAFE.** Sirorattanakul & Avouac (2026) is the reference California bound as of this year.
+   Replace with: *"a result that can be compared with, and is tighter than, the published bounds for
+   California and Nepal."*
+3. **F-012, CLASS/ATTRIBUTION:** *"Our measurable delta over the standard practice in this
+   literature."* **NEEDS A CITATION, NOT A REMOVAL.** "Standard practice" must be instantiated:
+   Ader & Avouac (2013) and Sirorattanakul & Avouac (2026) *are* the standard practice, and the delta
+   is measured against them by name.
+4. **F-012, PENDING-ATTRIBUTION item (b)** — *"whether anyone has previously published
+   minimum-detectable-modulation bounds for tidal-triggering searches at all"* — **ANSWERED: YES.**
+   Ader & Avouac (2013), Sirorattanakul & Avouac (2026), and, in prospective form, Beeler & Lockner
+   (2003)'s ">13,000 earthquakes". **F-012's stated prior — "upper bounds are stated informally in
+   this literature" — was wrong in one direction: they are stated *formally*, with a closed-form
+   estimator.** Recorded, per charter, as Merton's own prior having been wrong.
+5. **F-003, PENDING-ATTRIBUTION** — *"whether 'static phase maps have no forecast skill' has been
+   shown before."* **ANSWERED: not in that exact geometry, but the adjacent claims are shown** —
+   tidal-correlation forecast models scored and found ineffective (Hirose et al. 2022), and gridded
+   tidal-p cells found consistent with chance (Wang & Shearer 2015). **No "first" language is
+   permitted for F-003 in any form.** F-003's own prior — *"the forecast skill framing may well be
+   less crowded"* — is **partly vindicated** (it is a thin literature: one scored forecast model
+   found) **and partly wrong** (it is not empty).
+6. **F-003, safe as written:** the scoped claim sentence, the R2-5 prose rule, and *"the corpse of the
+   map stands; the corpse of the physics was never a corpse."* **Nothing in the literature makes these
+   unsafe, and the Bradley-Hubbard replication independently supports the scoping.**
+7. **A new one the literature creates.** Because Sirorattanakul & Avouac (2026) report **no significant
+   semidiurnal modulation in Southern California at M >= 2.5**, any sentence of ours implying that
+   *significant* modulation in the San Jacinto/Anza area is an established regional feature (F-003's
+   WHAT-IT-DOES-NOT-SHOW item 4) now sits against a same-region published non-detection at a different
+   magnitude floor and spatial scale. **Not a contradiction — different Mc, different cells, different
+   statistic — but it must be reconciled in one explicit sentence rather than left for a reviewer.**
+
+### M-010.7 THE ATTRIBUTION BLOCK — who is named, for what, in which section
+
+**Title.** Avoid "first", "bounds not nulls" as a bare slogan, and "reference bound". A safe form:
+*"How well can a tidal-phase forecast experiment in Southern California resolve a rate-state-scale
+effect? Powered upper bounds through the selection step."*
+
+**Abstract.** Name **Beeler & Lockner (2003)** (the ~1% line) and **Sirorattanakul & Avouac (2026)**
+(the standing California bound) in the abstract itself. Naming the strongest competitor in your own
+abstract is the cheapest possible insurance, and reviewers reward it.
+
+**Introduction — the tidal literature.** Two camps, in this order, without editorialising:
+positive (Tanaka et al. 2002; **Cochran, Vidale & Tanaka 2004**; Metivier et al. 2009;
+**Ide, Yabe & Tanaka 2016**; **Wang et al. 2022** for Coso — the source of our Fig-4c row; Thomas,
+Nadeau & Burgmann 2009 and Thomas et al. 2012 for the LFE/tremor sensitivity that makes the physics
+undeniable at *some* scale); null (**Vidale et al. 1998**; **Wang & Shearer 2015**; **Hough 2018**;
+**Kossobokov & Panza 2020**; **Sirorattanakul & Avouac 2026**); replication status
+(**Bradley & Hubbard 2024**, flagged as a non-peer-reviewed but DOI'd replication essay).
+
+**Introduction — the forecast-skill gap.** **Hirose, Maeda & Kamigaichi (2022)** as the one prior
+scored tidal forecast model, with its Molchan/probability-gain result quoted. State our geometry as
+complementary (static spatial map, frozen, later window) — not as a first.
+
+**Methods — the power calculation.** **Ader & Avouac (2013)** and **Sirorattanakul & Avouac (2026)**
+for the analytic MDA we cross-check against; **Wang & Shearer (2015)** for the selection-sensitivity
+motivation; **Gross & Vitells (2010)** for the trials-factor formalism we are implementing by
+simulation rather than analytically. **This is the paragraph where the narrow novelty sentence
+belongs**, immediately after those three citations.
+
+**Methods — kappa.** **Reasenberg (1985)** and the declustering tradition; **Ader & Avouac (2013)**
+for clustering-driven p-value drift; **Vaughan (2010)** as the cross-disciplinary analogue if a
+sentence of framing is wanted.
+
+**Methods — the failed control line.** **Ader & Avouac (2013)** again, as the *published explanation*
+of our 11-day control failure. Do not present it as an unexplained anomaly.
+
+**Data and code.** **Lu et al. (2025), *JGR Solid Earth*, doi:10.1029/2025JB032249** (Lu, Xue, Yue,
+Zhuang & Zhao) for the SoCal catalogs and the section-2.5 FM stress-resolution convention; SCEDC; the
+Yang-Hauksson-Shearer FM catalog; NCEDC/NCSS; NGL MIDAS.
+
+**Acknowledgements.** Sirorattanakul & Avouac's public data/codes record
+(`data.caltech.edu/records/wgvt5-6qs27`) if we use it.
+
+**Not named, and here is why:** van der Elst & Brodsky (2010) and Hill et al. (1993) belong to F-013,
+not here; Dieterich (1994) only if the paper carries a rate-state paragraph beyond the Beeler-Lockner
+line.
+
+### M-010.8 THE STRONGEST HOSTILE-REVIEWER CITATION, AND THE PRE-PREPARED ANSWER
+
+**The citation the paper must pre-empt is Sirorattanakul & Avouac (2026), *Science Advances* 12(13),
+eadz5711.** Not Vidale 1998, not Cochran 2004. It is same region, same year, higher-profile venue,
+broader catalogue coverage, and it already contains an amplitude bound.
+
+**The objection, in the form it will actually arrive:** *"Sirorattanakul and Avouac (2026) analysed
+all of California, reported no significant semidiurnal tidal modulation, and bounded the amplitude at
+8.16% of the background rate — with a closed-form expression, no Monte Carlo, and a multiplicity
+correction. You have run a large simulation to obtain 6.6% for a subset of the same region. What is
+the contribution?"*
+
+**The answer, four sentences, pre-written into the discussion so a reviewer meets it before raising
+it:**
+
+> Sirorattanakul and Avouac's threshold is the amplitude at which the Schuster p-value crosses the
+> significance cutoff — a detection threshold at approximately even odds, not a bound at a stated
+> power — and their multiplicity correction prices the number of trial *periods*, not the number of
+> trial *places*. Our design selects one bin out of forty-two on training data and reports it, so the
+> quantity a reader needs is the modulation that this pipeline, selection included, would recover
+> **80% of the time**; we obtain it by injection through the full pipeline, after verifying that the
+> simulator's false-positive rate at zero injected amplitude lies inside a binomial 99% band in
+> 13 of 13 configurations. Evaluating their closed form at our sample sizes gives [X]% and is
+> reported alongside ours, so the two methods are compared rather than asserted against each other.
+> The agreement of the two bounds to within a factor of about 1.3, obtained by independent routes on
+> overlapping data, is itself the strongest evidence that either is right.
+
+**Action required before submission (small, and it makes the answer bulletproof):** evaluate
+`alpha = -4(ln P + 1)/N` at our six n values and fill in [X]. **This is arithmetic, not a run.**
+
+**Second-strongest hostile citation:** Hirose et al. (2022), aimed at the abstract's "no forecast
+skill" phrasing — *"a tidal forecast model has already been scored and found ineffective."* The
+answer is the geometry difference (static spatial susceptibility map, frozen and scored on a later
+window, vs their temporal p-value tracker) plus the fact that **we cite them for it**, which removes
+the sting entirely.
+
+**Third:** Beeler & Lockner's own ">13,000 earthquakes to detect" against our n = 23,465 / 3.0%
+bound. **Answer it in the discussion; do not let it be found.**
+
+### M-010.9 FEEDING THE TRIO
+
+**To Popper.** (i) **The novelty bar rises, the evidence bar does not.** Nothing here contradicts
+F-003 or F-012; every external result is *consistent* with ours. The corrections are all to claim
+language, §M-010.6, and I ask that those seven items be made binding in the same way R2-5 is.
+(ii) **The replication burden on the bounds themselves LOWERS:** three independent published bounds
+(Vidale 1998 informal, Ader & Avouac 2013, Sirorattanakul & Avouac 2026) bracket ours from the loose
+side. A powered upper bound agreeing with two independent analytic bounds in two regions is about as
+replicated as a first-paper result can be. (iii) **One new mandate I would like:** the analytic
+cross-check of §M-010.8 before submission — arithmetic, zero compute, and it converts the paper's
+most dangerous reviewer into its best supporting citation.
+
+**To Wegener — new observation-table rows, none of which duplicate his existing entries:**
+- *California shows no significant semidiurnal tidal modulation at M >= 2.5 while showing pronounced
+  seasonal/hydrological modulation, with rate-state fits at a*sigma ~ 1-10 kPa and relaxation time
+  t_a ~ 0.05-1 yr, and a seismicity-rate peak lagging the peak stressing rate by half a month*
+  (Sirorattanakul & Avouac 2026). **The frequency-dependence of the crust's response to comparable
+  stress amplitudes is a unification target and it is exactly W-001-P1's object.**
+- *Tidal correlation strength is not a reliable precursor: a forecast built on its temporal variation
+  achieves probability gain ~1.7 at best and nothing at Mw >= 7.0* (Hirose et al. 2022).
+- *The three most-cited positive global tidal results do not replicate on post-2000 data*
+  (Bradley & Hubbard 2024, non-peer-reviewed).
+
+**To Kepler — a new floor.** **Any tidal-phase hypothesis whose predicted rate modulation in
+SoCal-like settings is below ~6% is not testable by any design this program currently owns, and below
+~8% has already been excluded from *detection* by a *Science Advances* paper on more data than we
+have.** The productive frontier is therefore not "find the modulation" but **frequency-dependence**
+(the seasonal/tidal contrast above), **state-conditioning** (Beauce, E. et al. (2023), *GRL*,
+doi:10.1029/2023GL104375, "Enhanced tidal sensitivity of seismicity before the 2019 magnitude 7.1
+Ridgecrest, California earthquake" — an explicitly time-varying-susceptibility positive in our own
+region), and **high-sensitivity targets** (LFEs/tremor, Coso-class geothermal fields) where the
+response is percent-scale-or-larger and our instruments actually reach.
+
+### M-010.10 UNVERIFIED / PROVENANCE FLAGS
+
+- **UNVERIFIED-BEYOND-ABSTRACT:** Beeler & Lockner (2003) *">13,000 earthquakes to detect"* — read
+  from a search-result rendering of the abstract, not the article PDF. **Verify against the paper
+  before it appears in our text**, since the paper will lean on it.
+- **UNVERIFIED-BEYOND-SUMMARY:** Ader & Avouac (2013) amplitude figures (~40% annual, < 18% tidal,
+  Nepal) and the exact form of their p-N-amplitude relation — ScienceDirect 403'd. The *existence* of
+  the closed-form lineage is verified through Sirorattanakul & Avouac's Eq. 5 as fetched.
+- **UNVERIFIED:** Kossobokov & Panza (2020) page range 948-955; Hough (2018) page numbers;
+  Wang & Shearer (2015) page range 6317-6328 (from search metadata and the Hirose et al. introduction,
+  not from the article); Hainzl et al. (2013) venue and year; Thomas et al. (2009) *Nature* volume.
+- **NOT VERIFIED AT ALL, listed as a lead:** *Science Advances* doi:10.1126/sciadv.ady6350, "Tidal and
+  hydrological seismicity modulations reveal pore fluid diffusion during earthquake nucleation" —
+  surfaced in Sweep B, 403 on fetch. **Given its title it may contain another regional bound and
+  should be read before submission.**
+- **PROVENANCE, BINDING:** Bradley & Hubbard (2024) is a DOI'd Substack essay, not peer-reviewed.
+- **PROVENANCE:** Sirorattanakul & Avouac's numbers here are from the PMC full text via WebFetch; the
+  8.16% figure, Eq. 5, the `P95 = 0.05*T/t_cat` scaling and the per-line thresholds were returned as
+  quoted passages. **Before the paper quotes them, one human read of the Materials and Methods is
+  required** — the whole hostile-reviewer answer turns on the claim that they do *not* run an
+  injection power simulation, and that is an absence, which WebFetch is worst at establishing.
+  **This is the single highest-priority verification in the dossier.**
+
+*Merton, prior-art seat. The paper's physics is safe, its bounds are safe, and its novelty language
+is not. Someone bounded California tidal modulation at 8.16% four months ago in Science Advances;
+someone scored a tidal forecast model on a Molchan diagram in 2022; someone diagnosed tidal
+grid-selection sensitivity in 2015; and someone wrote down the closed-form minimum detectable
+amplitude in 2013. What is left to us is genuinely ours — a powered bound computed through the
+selection step, on a pre-registered null, with the instrument's false-positive rate verified first —
+and it is one sentence, not a title. Cite the giants in the abstract and the paper becomes
+unattackable on this axis.*
