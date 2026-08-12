@@ -248,3 +248,73 @@ def test_report_banner_and_stub_caveats_are_present(tmp_path):
     assert any("EXPECTED-AMPLITUDE FRAMING" in c for c in stub["caveats"])
     assert "Mignan & Broccardo 2019" in payload["standing_warning_eq24"]
     assert "holdout" in stub["next_step"]
+
+
+# ------------------------------------------------- K-089-R tranche 1 (lags) ---
+def test_ephemeris_features_default_lags_are_unchanged():
+    """Backward compatibility, asserted: the default is a single lag-0 test."""
+    feats = M.ephemeris_features(_dt.datetime(1995, 1, 1), 4000)
+    assert len(feats) == 17
+    assert all(f.lags == (0,) for f in feats)
+    assert sum(1 for f in feats if f.kind == "phase") == 9
+    assert sum(1 for f in feats if f.kind == "linear") == 8
+
+
+def test_tranche1_lag_grid_selects_the_thirteen_and_counts_390_new_tests():
+    """§P5-5: 8 linear x 30 = 240 plus 5 non-lag-free phase x 30 = 150."""
+    feats = M.ephemeris_features(_dt.datetime(1995, 1, 1), 4000,
+                                 lags=M.TRANCHE1_LAGS, lag_features="tranche1")
+    assert M.TRANCHE1_LAGS == tuple(range(31))
+    scanned = [f for f in feats if len(f.lags) > 1]
+    unscanned = [f for f in feats if len(f.lags) == 1]
+    assert len(scanned) == 13 and len(unscanned) == 4
+    assert {f.name for f in unscanned} == set(M.LAG_FREE_PHASE_FEATURES)
+    assert all(f.lags == M.TRANCHE1_LAGS for f in scanned)
+    n_linear = sum(1 for f in scanned if f.kind == "linear")
+    n_phase = sum(1 for f in scanned if f.kind == "phase")
+    assert (n_linear, n_phase) == (8, 5)
+    new = sum(len(f.lags) - 1 for f in feats)
+    assert new == 13 * 30 == 390
+    assert n_linear * 30 == 240 and n_phase * 30 == 150
+    # total GLM rows the session will run over the cyclic features
+    assert sum(len(f.lags) for f in feats) == 13 * 31 + 4 == 407
+
+    audit = M.scan_axis_audit(feats, tranche1=True)
+    assert audit["tranche"] == M.TRANCHE1_LABEL == "K-089-R tranche 1"
+    assert audit["n_new_lag_tests_cyclic"] == 390
+    assert len(audit["lag_axis_scanned"]) == 13
+    assert len(audit["lag_axis_provably_free_not_scanned"]) == 4
+    assert audit["lag_axis_neither_scanned_nor_free"] == []
+    # without the flag, thirteen features are neither scanned nor provably free
+    plain = M.scan_axis_audit(M.ephemeris_features(_dt.datetime(1995, 1, 1), 4000),
+                              tranche1=False)
+    assert len(plain["lag_axis_neither_scanned_nor_free"]) == 13
+    assert plain["n_new_lag_tests_cyclic"] == 0
+
+
+def test_tranche1_lag_features_are_rejected_when_unknown():
+    with pytest.raises(ValueError):
+        M.ephemeris_features(_dt.datetime(1995, 1, 1), 500, lags=(0, 1),
+                             lag_features=["no_such_feature"])
+
+
+def test_lag_invariance_audit_reproduces_the_free_scan_exception():
+    """Clause 3 as §P5-5 restates it: FREE is proved numerically, per feature."""
+    feats = M.ephemeris_features(_dt.datetime(1995, 1, 1), 8081)
+    rows = M.lag_invariance_audit(feats, slice(100, 8081))
+    assert len(rows) == 9
+    by = {r["feature"]: r for r in rows}
+    for name in M.LAG_FREE_PHASE_FEATURES:
+        r = by[name]
+        assert r["declared"] == "FREE"
+        assert r["worst_min_r2"] >= 1.0 - M.LAG_FREE_TOL, r
+        assert r["measured_free"] and r["ok"], r
+    # the five built on true solar/lunar longitudes are NOT rotations under a lag
+    for name in ("moon_synodic_phase", "spring_neap_phase", "perigean_spring_beat",
+                 "eclipse_year_beat", "annual_synodic_beat"):
+        r = by[name]
+        assert r["declared"] == "PRICED"
+        assert not r["measured_free"], r
+        assert r["ok"], r
+    assert by["spring_neap_phase"]["worst_min_r2"] < 0.95
+    assert all(r["verdict"] == "OK" for r in rows)

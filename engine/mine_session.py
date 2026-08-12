@@ -104,6 +104,11 @@ def build_config(args, preset):
         "n_periods": int(preset["n_periods"]),
         "n_peaks": int(preset["n_peaks"]),
         "lags": list(preset["lags"]),
+        # K-089-R tranche 1: the lag grid for the 13 lag-unscanned CYCLIC features.
+        # Off by default -- the historical single lag-0 test per cyclic feature.
+        "tranche1": bool(getattr(args, "tranche1", False)),
+        "tranche1_lags": (list(M.TRANCHE1_LAGS)
+                          if getattr(args, "tranche1", False) else []),
         "fdr_q": M.FDR_Q,
         "baseline": "etas",
         "mag_target": float(args.mag_target),
@@ -149,7 +154,19 @@ def prepare(cfg, verbose=True):
               f"(magnitude + depth)")
 
     lags = tuple(cfg["lags"])
-    feats = M.ephemeris_features(t0, ctx.n_days)
+    if cfg.get("tranche1"):
+        feats = M.ephemeris_features(t0, ctx.n_days,
+                                     lags=tuple(cfg["tranche1_lags"]),
+                                     lag_features="tranche1")
+        if verbose:
+            n_scan = sum(1 for f in feats if len(f.lags) > 1)
+            print(f"{M.TRANCHE1_LABEL}: lag grid "
+                  f"{cfg['tranche1_lags'][0]}..{cfg['tranche1_lags'][-1]} d "
+                  f"({len(cfg['tranche1_lags'])} lags) on {n_scan} lag-unscanned "
+                  f"cyclic features; {len(M.LAG_FREE_PHASE_FEATURES)} lag-free phase "
+                  f"features stay at lag 0 (invariance is a theorem, not a test)")
+    else:
+        feats = M.ephemeris_features(t0, ctx.n_days)
     dl_feats, dl_log = M.download_features(t0, ctx.n_days, lags,
                                            enabled=cfg["downloads"], verbose=verbose)
     feats += dl_feats
@@ -189,6 +206,23 @@ def run(cfg, verbose=True, resume=True, session_dir=None):
      dl_log, t0) = prepare(cfg, verbose=verbose)
     ckpt.state["data_log"] = dl_log
     ckpt.state["window"] = [window.start, window.stop]
+
+    # ---- K-089 clause 3, restated by §P5-5: prove FREE numerically BEFORE the scan --
+    axis_audit = M.scan_axis_audit(feats, bool(cfg.get("tranche1")))
+    inv = M.lag_invariance_audit(feats, window)
+    axis_audit["lag_invariance"] = inv
+    ckpt.state["axis_audit"] = axis_audit
+    if verbose:
+        print(f"axis audit: {axis_audit['tranche']}; "
+              f"{len(axis_audit['lag_axis_scanned'])} cyclic features lag-scanned, "
+              f"{len(axis_audit['lag_axis_provably_free_not_scanned'])} provably "
+              f"lag-free, {len(axis_audit['lag_axis_neither_scanned_nor_free'])} "
+              f"neither; {axis_audit['n_new_lag_tests_cyclic']} NEW cyclic lag tests")
+        bad = [r for r in inv if not r["ok"]]
+        print(f"  lag-invariance audit: {len(inv)} phase features checked, "
+              f"{len(bad)} declaration mismatches"
+              + ("" if not bad else
+                 " -> " + "; ".join(f"{r['feature']}: {r['verdict']}" for r in bad)))
     ckpt.state["session_dir"] = session_dir.replace("\\", "/")
     ckpt.save()
 
@@ -303,6 +337,16 @@ def run(cfg, verbose=True, resume=True, session_dir=None):
     if verbose:
         print(f"multiplicity: {n_tests} tests, BH-FDR at q={M.FDR_Q} -> "
               f"{int(passed.sum())} survive")
+        bh_thresh = M.FDR_Q / max(n_tests, 1)
+        print(f"  BH threshold at the DECLARED count ({n_tests} tests): "
+              f"p <= {bh_thresh:.3g} for the smallest; surrogate resolution floor "
+              f"1/(N+1) = {1.0/(n_surr+1.0):.3g} with N={n_surr}. "
+              + ("The floor is BELOW the BH threshold: BH is resolvable here."
+                 if 1.0 / (n_surr + 1.0) <= bh_thresh else
+                 "The floor is ABOVE the BH threshold, so BH cannot resolve the "
+                 "smallest p at this surrogate budget -- S-8's sim-calibrated "
+                 "max-statistic over the declared family is the confirmatory "
+                 "instrument; the BH line is descriptive only."))
         floor = 1.0 / (n_surr + 1.0)
         k_min = int(math.ceil(floor * max(n_tests, 1) / M.FDR_Q))
         n_at_floor = sum(1 for t in tests if t["p_raw"] <= floor + 1e-12)
@@ -406,8 +450,19 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
     L = []
     A = L.append
 
-    A(f"# mine session report -- {os.path.basename(session_dir)}")
+    tranche = bool(cfg.get("tranche1"))
+    A(f"# mine session report -- {os.path.basename(session_dir)}"
+      + (f" -- **{M.TRANCHE1_LABEL}**" if tranche else ""))
     A("")
+    if tranche:
+        tl = cfg["tranche1_lags"]
+        A(f"> **RUN LABEL: {M.TRANCHE1_LABEL}.** Lag grid {tl[0]}..{tl[-1]} d "
+          f"({len(tl)} lags) applied to the 13 lag-unscanned cyclic features "
+          f"(8 `kind='linear'` + 5 `kind='phase'` whose lag is not a rotation); the "
+          f"4 provably lag-free phase features "
+          f"({', '.join('`%s`' % n for n in M.LAG_FREE_PHASE_FEATURES)}) stay at "
+          f"lag 0 by theorem. See the axis audit below.")
+        A("")
     A("> **" + M.GENERATOR_NOT_EVIDENCE.split(".")[0] + ".**")
     A(">")
     for line in _wrap(M.GENERATOR_NOT_EVIDENCE):
@@ -436,6 +491,23 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
       f"-> **{n_pass} survive**")
     floor = 1.0 / (cfg["n_surrogates"] + 1.0)
     m = max(state["n_tests"], 1)
+    bh_thresh = cfg["fdr_q"] / m
+    A(f"- **MULTIPLICITY, PRICED AT THE DECLARED COUNT, AND THE FLOOR THAT LIMITS IT "
+      f"(the two numbers, stated together, S-8 caveat).** Declared family = "
+      f"**{m} tests**; BH at q = {cfg['fdr_q']} demands **p <= {bh_thresh:.3g}** for "
+      f"the smallest. The surrogate resolution floor is **1/(N+1) = {floor:.3g}** at "
+      f"N = {cfg['n_surrogates']} surrogates. "
+      + (f"Floor <= BH threshold, so BH is resolvable at this budget."
+         if floor <= bh_thresh else
+         f"**The floor is ABOVE the BH threshold by a factor of "
+         f"{floor / bh_thresh:.1f}x**, so the BH line here is DESCRIPTIVE ONLY: no "
+         f"single test can attain the threshold it demands. Per S-8 -- this "
+         f"program's multiplicity standard since round 1, and not BH -- the "
+         f"confirmatory statistic for a scanned family is the MAXIMUM absolute "
+         f"effect over the whole declared family compared to that same maximum "
+         f"computed over sim catalogues through the identical code path, whose "
+         f"family-wise p is resolvable at 1/(N+1) regardless of family size. Scan "
+         f"size costs POWER, not RESOLUTION."))
     k_min = int(math.ceil(floor * m / cfg["fdr_q"]))
     n_at_floor = sum(1 for t in tests if t["p_raw"] <= floor + 1e-12)
     A(f"- **surrogate resolution (read this before the table):** with "
@@ -475,6 +547,46 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
         A("Frozen copies and hashes are in `engine/out/mine/data_log.jsonl` "
           "(sniff-grade hygiene). This is deliberately NOT `download_log.md`, which "
           "belongs to frozen-protocol runs only.")
+        A("")
+
+    aa = state.get("axis_audit")
+    if aa:
+        A("## Axis audit (K-089, the standing rule)")
+        A("")
+        for line in _wrap(M.AXIS_AUDIT_LINE):
+            A(line)
+        A("")
+        A(f"- **tranche:** {aa['tranche']}")
+        A(f"- **offset axis:** {aa['offset_axis']}")
+        A(f"- **lag axis, SCANNED ({len(aa['lag_axis_scanned'])} features, "
+          f"{aa['n_new_lag_tests_cyclic']} new cyclic tests):** "
+          + (", ".join(f"`{n}`" for n in aa["lag_axis_scanned"]) or "none"))
+        A(f"- **lag axis, PROVABLY FREE and therefore not scanned "
+          f"({len(aa['lag_axis_provably_free_not_scanned'])}):** "
+          + (", ".join(f"`{n}`" for n in aa["lag_axis_provably_free_not_scanned"])
+             or "none"))
+        A(f"- **lag axis, NEITHER scanned nor provably free "
+          f"({len(aa['lag_axis_neither_scanned_nor_free'])}) -- the honest gap:** "
+          + (", ".join(f"`{n}`" for n in aa["lag_axis_neither_scanned_nor_free"])
+             or "none"))
+        A(f"- **ladder-rung axis:** {aa['ladder_rung_axis']}")
+        A("")
+        A("### Lag-invariance proof, executed before the scan (min R^2 of the "
+          "lagged [sin, cos] design on the lag-0 column space)")
+        A("")
+        A("| phase feature | declared | lag 1 | 3 | 7 | 15 | 30 | worst | verdict |")
+        A("| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | --- |")
+        for r in aa.get("lag_invariance", []):
+            byl = r["min_r2_by_lag"]
+            cells = " | ".join(f"{byl[str(L)] if str(L) in byl else byl[L]:.5f}"
+                               for L in (1, 3, 7, 15, 30) if (L in byl or str(L) in byl))
+            A(f"| `{r['feature']}` | {r['declared']} | {cells} | "
+              f"{r['worst_min_r2']:.5f} | {r['verdict']} |")
+        A("")
+        A(f"Tolerance: FREE means min R^2 >= 1 - {M.LAG_FREE_TOL:g}. A feature "
+          "declared FREE that measures below tolerance is a BUG; one declared PRICED "
+          "that measures at 1.0 is a MISSED SAVING. Both are reported, neither is "
+          "silently corrected.")
         A("")
 
     A("## Ranked candidates (top 25 by BH q, then raw p)")

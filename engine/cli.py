@@ -268,7 +268,8 @@ def cmd_mine(args):
     if args.surrogates:
         cfg["n_surrogates"] = int(args.surrogates)
     _banner(f"EQ-23 engine v{__version__} -- MINE (EQ-24 pattern miner) "
-            f"preset={cfg['preset']}")
+            f"preset={cfg['preset']}"
+            + (f" -- {M.TRANCHE1_LABEL}" if cfg["tranche1"] else ""))
     print("*** " + M.GENERATOR_NOT_EVIDENCE)
     print()
     print("standing warning (EQ-24, verbatim):")
@@ -279,6 +280,15 @@ def cmd_mine(args):
           f"the number of admissible shifts and reported per test)")
     print(f"lag grid             = {cfg['lags'][0]}..{cfg['lags'][-1]} "
           f"({len(cfg['lags'])} lags, aperiodic features only)")
+    if cfg["tranche1"]:
+        tl = cfg["tranche1_lags"]
+        print(f"tranche              = {M.TRANCHE1_LABEL}: cyclic lag grid "
+              f"{tl[0]}..{tl[-1]} d ({len(tl)} lags) on the 13 lag-unscanned cyclic "
+              f"features")
+        print(f"                       = {13 * (len(tl) - 1)} NEW tests "
+              f"(8 linear x {len(tl)-1} = {8*(len(tl)-1)}; 5 non-lag-free phase x "
+              f"{len(tl)-1} = {5*(len(tl)-1)}); the 4 provably lag-free phase "
+              f"features stay at lag 0")
     print(f"FDR                  = Benjamini-Hochberg at q={cfg['fdr_q']}")
 
     out = ms.run(cfg, verbose=True, resume=not args.new_session)
@@ -342,6 +352,10 @@ def main(argv=None):
                     help="small grid, 200 surrogates (<10 min)")
     mi.add_argument("--overnight", action="store_true",
                     help="full lag grid + 10k surrogates, checkpointed per feature")
+    mi.add_argument("--tranche1", action="store_true",
+                    help="K-089-R tranche 1: scan lags 0..30 d for the 13 "
+                         "lag-unscanned cyclic features (8 linear + 5 non-lag-free "
+                         "phase); +390 tests, priced at the declared count")
     mi.add_argument("--surrogates", type=int, default=None,
                     help="override the preset surrogate count")
     mi.add_argument("--no-download", action="store_true",

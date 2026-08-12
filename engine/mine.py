@@ -99,6 +99,36 @@ AMPLITUDE_HONESTY = (
     "the thing that must be excluded, not as a forecast."
 )
 
+# ------------------------------------------------ K-089-R (offset/lag scan) ---
+# Popper's §P5-5 ruling, executed. The free-scan exception is per FEATURE and per
+# AXIS, never per feature-kind:
+#   * the OFFSET axis is exactly free for all 9 kind='phase' features (a phase offset
+#     is an orthogonal rotation of [sin, cos] and the 2-df quadratic form is exactly
+#     invariant), so the scan is complete at offset 0 at zero multiplicity cost;
+#   * the LAG axis is free only where theta is LINEAR in t. Four phase features are
+#     built from mean arguments (or close enough); the other five are built on true
+#     solar/lunar longitudes (Meeus, 6.29 deg equation of centre) and a lag is NOT a
+#     rotation for them -- measured min R^2 down to 0.905 at lag 15 d;
+#   * the LADDER-RUNG axis is never free (a harmonic is a new feature).
+# Tranche 1 is therefore the lag scan over the 13 lag-unscanned cyclic features:
+# 8 kind='linear' (240 new tests) + 5 non-lag-free kind='phase' (150 new tests).
+TRANCHE1_LABEL = "K-089-R tranche 1"
+TRANCHE1_LAGS = tuple(range(0, 31))          # 0..30 d inclusive -> 30 NEW lags each
+
+# The four phase features whose lag axis is provably free (min R^2 >= 1 - 1e-4
+# against the lag-0 column space); see LAG_FREE_TOL and lag_invariance_audit().
+LAG_FREE_PHASE_FEATURES = (
+    "moon_anomalistic_phase", "moon_draconic_phase", "half_draconic_phase",
+    "annual_phase",
+)
+LAG_FREE_TOL = 1e-4
+
+AXIS_AUDIT_LINE = (
+    "AXIS AUDIT (K-089, the clause that survives unamended). Axes scanned in this "
+    "session, axes provably invariant, and axes neither -- stated so no reader has to "
+    "infer it from the config."
+)
+
 MIGNAN_BROCCARDO = (
     "the known ML-mining failure mode from M-008 (DeVries Nature net beaten by "
     "2-parameter logistic -- Mignan & Broccardo 2019) quoted in the README as the "
@@ -191,8 +221,22 @@ class Feature:
         return 2 if self.kind == "phase" else 1
 
 
-def ephemeris_features(t0, n_days):
-    """Families 1 and 2: deterministic functions of t. No downloads, ever."""
+def ephemeris_features(t0, n_days, lags=(0,), lag_features=None):
+    """Families 1 and 2: deterministic functions of t. No downloads, ever.
+
+    `lags` defaults to (0,) -- the historical behaviour, byte-for-byte -- so every
+    existing caller keeps a single lag-0 test per cyclic feature.
+
+    `lag_features` selects WHICH features receive the grid (K-089-R: the exception is
+    per feature and per axis, so a blanket grid would pay multiplicity for tests that
+    are provably identical):
+      * None        -> every family-1/2 feature gets `lags`;
+      * "tranche1"  -> only the 13 lag-unscanned cyclic features (the 8 kind='linear'
+                       plus the 5 kind='phase' whose lag is not a rotation). The four
+                       features in LAG_FREE_PHASE_FEATURES stay at lag 0: their
+                       invariance is a theorem, and scanning them is waste, not rigour;
+      * an iterable of feature names -> exactly those.
+    """
     e = eph.ephemeris_table(t0, n_days)
     syn, ano, dra, ann = (e["synodic_rad"], e["anomalistic_rad"],
                           e["draconic_rad"], e["annual_rad"])
@@ -265,7 +309,99 @@ def ephemeris_features(t0, n_days):
                 causality_exempt=True,
                 period_hint=1.0 / abs(1 / eph.DRACONIC_MONTH
                                       - 1 / eph.ANOMALISTIC_MONTH)))
+
+    lags = tuple(int(l) for l in lags)
+    if lags != (0,):
+        if lag_features is None:
+            sel = {ft.name for ft in f}
+        elif lag_features == "tranche1":
+            sel = set(tranche1_lag_features(f))
+        else:
+            sel = set(lag_features)
+        unknown = sel - {ft.name for ft in f}
+        if unknown:
+            raise ValueError(f"lag_features names no such feature: {sorted(unknown)}")
+        for ft in f:
+            if ft.name in sel:
+                ft.lags = lags
     return f
+
+
+def tranche1_lag_features(feats):
+    """The 13 K-089-R tranche-1 names, derived from the feature list, not hardcoded.
+
+    8 kind='linear' cyclic features (the axis §K87-0(b') proved was never tested) plus
+    the 5 kind='phase' features whose lag is not an exact rotation. Returns names in
+    feature order.
+    """
+    return tuple(ft.name for ft in feats
+                 if ft.family in (1, 2)
+                 and (ft.kind == "linear"
+                      or ft.name not in LAG_FREE_PHASE_FEATURES))
+
+
+def lag_invariance_audit(feats, window, lags=(1, 3, 7, 15, 30)):
+    """Clause 3 of K-089, restated by §P5-5: prove FREE numerically, before the scan.
+
+    For every kind='phase' feature, regress the lag-L design [sin, cos] onto the lag-0
+    design and take the MINIMUM R^2 over the two columns. A lag that is an exact
+    rotation gives 1.0. Declaration comes from LAG_FREE_PHASE_FEATURES; the audit
+    checks the declaration and reports `ok=False` on either failure mode Popper names:
+    a feature declared FREE that measures below tolerance is a BUG; a feature declared
+    PRICED that measures at 1.0 is a MISSED SAVING.
+    """
+    rows = []
+    for ft in feats:
+        if ft.kind != "phase" or ft.family not in (1, 2):
+            continue
+        A = ft.design(window, 0)
+        A1 = np.column_stack([A, np.ones(A.shape[0])])
+        pinv = np.linalg.pinv(A1)
+        r2 = {}
+        for L in lags:
+            B = ft.design(window, int(L))
+            fitb = A1 @ (pinv @ B)
+            resid = B - fitb
+            sst = ((B - B.mean(axis=0)) ** 2).sum(axis=0)
+            r2[int(L)] = float(np.min(1.0 - (resid ** 2).sum(axis=0)
+                                      / np.maximum(sst, 1e-300)))
+        worst = min(r2.values())
+        declared_free = ft.name in LAG_FREE_PHASE_FEATURES
+        measured_free = worst >= 1.0 - LAG_FREE_TOL
+        rows.append({
+            "feature": ft.name, "declared": "FREE" if declared_free else "PRICED",
+            "min_r2_by_lag": r2, "worst_min_r2": worst,
+            "measured_free": measured_free,
+            "ok": bool(declared_free == measured_free),
+            "verdict": ("OK" if declared_free == measured_free else
+                        ("BUG: declared FREE, measures PRICED" if declared_free else
+                         "MISSED SAVING: declared PRICED, measures FREE")),
+        })
+    return rows
+
+
+def scan_axis_audit(feats, tranche1):
+    """The K-089 audit line's content: which axes were scanned, invariant, neither."""
+    cyc = [f for f in feats if f.family in (1, 2)]
+    scanned = [f.name for f in cyc if len(f.lags) > 1]
+    free_lag = [f.name for f in cyc
+                if len(f.lags) == 1 and f.name in LAG_FREE_PHASE_FEATURES]
+    unscanned = [f.name for f in cyc
+                 if len(f.lags) == 1 and f.name not in LAG_FREE_PHASE_FEATURES]
+    n_new = sum(len(f.lags) - 1 for f in cyc)
+    return {
+        "tranche": TRANCHE1_LABEL if tranche1 else "none (lag 0 only for cyclic features)",
+        "offset_axis": ("PROVABLY INVARIANT for all kind='phase' features (orthogonal "
+                        "rotation of [sin, cos]; complete at offset 0, zero "
+                        "multiplicity cost). NOT applicable to kind='linear'."),
+        "lag_axis_scanned": scanned,
+        "lag_axis_provably_free_not_scanned": free_lag,
+        "lag_axis_neither_scanned_nor_free": unscanned,
+        "ladder_rung_axis": ("NOT SCANNED for cyclic features (never free: a harmonic "
+                             "is a new feature, not a rotation). Tranche 3, declared "
+                             "at 68 tests, not run here."),
+        "n_new_lag_tests_cyclic": int(n_new),
+    }
 
 
 def catalog_features(ctx, marks, lags):

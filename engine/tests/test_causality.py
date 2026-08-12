@@ -117,3 +117,40 @@ def test_trailing_sum_excludes_today():
     assert s[0].tolist() == [0.0, 0.0, 0.0, 5.0, 5.0, 5.0]
     s1 = design.EngineContext.trailing_sum(c, 1)
     assert s1[0].tolist() == [0.0, 0.0, 0.0, 5.0, 0.0, 0.0]
+
+
+def test_mine_lagged_cyclic_features_stay_causal_and_exempt():
+    """K-089-R tranche 1: turning the lag axis on must not weaken the contract.
+
+    Two things are asserted, because the tranche adds an axis, not a data source:
+      1. the lagged designs are still deterministic in t -- scrambling the future of
+         the catalogue changes nothing, so the family-1/2 exemption still holds;
+      2. `Feature.design(window, lag)` reads STRICTLY EARLIER days: the lag-L design
+         over [a, b) is the lag-0 design over [a-L, b-L), never anything at or after
+         the day being predicted. A negative lag (peeking forward) is not on the grid.
+    """
+    import datetime as dt
+
+    from engine import mine as M
+
+    ctx, _y, _lam = make_ctx(n_side=8, n_days=900, seed=3)
+    ctx2 = _shuffled_future_ctx(ctx, 700)
+    kw = dict(lags=M.TRANCHE1_LAGS, lag_features="tranche1")
+    a = M.ephemeris_features(dt.datetime(1995, 1, 1), ctx.n_days, **kw)
+    b = M.ephemeris_features(dt.datetime(1995, 1, 1), ctx2.n_days, **kw)
+    assert sum(1 for f in a if len(f.lags) > 1) == 13
+    win = slice(400, 900)
+    for fa, fb in zip(a, b):
+        assert fa.causality_exempt and fa.family in (1, 2)
+        for lag in fa.lags:
+            assert lag >= 0, "a negative lag would read the future"
+            da, db = fa.design(win, lag), fb.design(win, lag)
+            assert np.array_equal(da, db), (
+                f"{fa.name} lag {lag} moved when the catalogue's future was scrambled")
+            shifted = fa.design(slice(win.start - lag, win.stop - lag), 0)
+            assert np.array_equal(da, shifted), (
+                f"{fa.name} lag {lag} is not a strict backward shift")
+    # and the lag actually does something: at least one scanned feature moves
+    moved = [f for f in a if len(f.lags) > 1
+             and not np.array_equal(f.design(win, 0), f.design(win, 30))]
+    assert len(moved) == 13, "a lag that changes no design cannot be a new test"
