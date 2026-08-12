@@ -1,0 +1,1257 @@
+{
+ "protocol": {
+  "id": "F-016-phase-clock-null",
+  "version": "1.0",
+  "frozen": "2026-08-11",
+  "conventions": [
+   "quarter_anchored",
+   "two_anchor"
+  ],
+  "quantities": [
+   "instrument_response",
+   "sampling_floor"
+  ],
+  "seed_constituent_phases": 20260811,
+  "seed_monte_carlo": 20260812,
+  "seed_segments": 20260813,
+  "n_realizations": 24,
+  "n_segments_real": 24,
+  "years": 10.0,
+  "dt_hours": 1.0,
+  "edge_guard_hours": 48.0,
+  "mc_event_counts": [
+   10000,
+   100000,
+   1000000
+  ],
+  "mc_repeats": 8,
+  "robustness_dt_hours": [
+   1.0,
+   0.5,
+   0.25,
+   0.1
+  ],
+  "robustness_years": [
+   3.0,
+   10.0,
+   30.0
+  ],
+  "robustness_n_realizations": 6,
+  "mixes": {
+   "M2_only": [
+    [
+     1.0,
+     12.4206
+    ]
+   ],
+   "M2_S2_semidiurnal": [
+    [
+     1.0,
+     12.4206
+    ],
+    [
+     0.46,
+     12.0
+    ]
+   ],
+   "SoCal_like_M2_S2_K1_O1": [
+    [
+     1.0,
+     12.4206
+    ],
+    [
+     0.46,
+     12.0
+    ],
+    [
+     0.58,
+     23.9345
+    ],
+    [
+     0.41,
+     25.8193
+    ]
+   ],
+   "diurnal_dominant": [
+    [
+     0.4,
+     12.4206
+    ],
+    [
+     0.18,
+     12.0
+    ],
+    [
+     1.0,
+     23.9345
+    ],
+    [
+     0.7,
+     25.8193
+    ]
+   ]
+  },
+  "real_series": {
+   "coso_mean_stress_native_6000s": {
+    "path": "data/xue_lu_zenodo/Tidal_Vol.txt",
+    "companions": [
+     "data/xue_lu_zenodo/Tidal_N_0.txt",
+     "data/xue_lu_zenodo/Tidal_N_90.txt"
+    ],
+    "dt_seconds": 6000.0,
+    "note": "Coso / SoCal tidal stress, K-035-era Zenodo series, NATIVE sampling (no spline upsampling)"
+   },
+   "long_valley_volumetric_600s": {
+    "path": "data/lv_tidal_vol.npz",
+    "dt_seconds": 600.0,
+    "note": "Long Valley caldera volumetric body-tide series computed from JPL ephemerides for the real site, K-035/LV era"
+   }
+  },
+  "elastic": {
+   "E_young_Pa": 75000000000.0,
+   "nu": 0.25
+  }
+ },
+ "protocol_hash": "bb98d5b4d5e70a081a90bd9d1be18edde13295a021229143f2ce819effa18821",
+ "effective_config": {
+  "n_realizations": 3,
+  "n_segments_real": 3,
+  "years": 2.0,
+  "mc_event_counts": [
+   10000,
+   100000
+  ],
+  "mc_repeats": 2,
+  "robustness_dt_hours": [
+   1.0,
+   0.25
+  ],
+  "robustness_years": [
+   3.0
+  ],
+  "robustness_n_realizations": 2,
+  "mode": "smoke"
+ },
+ "quantity_definitions": {
+  "instrument_response": "DETERMINISTIC. First-harmonic amplitude of the phase distribution of a UNIFORM TIME GRID pushed through the convention. No random numbers are involved; there is no sampling noise in it. THIS IS THE FINDING.",
+  "sampling_floor": "MONTE CARLO BOOKKEEPING. Same amplitude computed from N uniform-random event times. Carries a Rayleigh floor of sqrt(pi/N) even against a perfectly fair clock. NOT an instrument property and may never be quoted as one."
+ },
+ "conventions": {
+  "quarter_anchored": "quarter-anchored (Tanaka-style) phase assignment: trough/ascending-zero/peak/descending-zero at 0/90/180/270 deg, linear in time between anchors, shifted so peak stress = 0 deg.",
+  "two_anchor": "this repository's own convention, imported unmodified from coso_positive_control.phase_series: trough -180, peak 0, trough +180, linear in time."
+ },
+ "synthetic": {
+  "M2_only": {
+   "mix_amp_periodhours": [
+    [
+     1.0,
+     12.4206
+    ]
+   ],
+   "quarter_anchored": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored first-harmonic amplitude, deterministic uniform grid, 2 yr @ 1.0 h",
+     "n_realizations": 3,
+     "min_pct": 0.022499167747393838,
+     "q1_pct": 0.022574273301885474,
+     "median_pct": 0.022649378856377113,
+     "q3_pct": 0.02987047750233618,
+     "max_pct": 0.037091576148295245,
+     "values_pct": [
+      0.022649378856377113,
+      0.037091576148295245,
+      0.022499167747393838
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored peak-aligned cosine component (SIGN is waveform-dependent), deterministic uniform grid",
+     "n_realizations": 3,
+     "min_pct": 0.0069568096597297105,
+     "q1_pct": 0.007701332758758457,
+     "median_pct": 0.008445855857787204,
+     "q3_pct": 0.011857465815940455,
+     "max_pct": 0.015269075774093706,
+     "values_pct": [
+      0.008445855857787204,
+      0.0069568096597297105,
+      0.015269075774093706
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 10000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 2.2696960019984327,
+      "q1_pct": 2.342852074915774,
+      "median_pct": 2.416008147833116,
+      "q3_pct": 2.4891642207504576,
+      "max_pct": 2.562320293667799,
+      "values_pct": [
+       2.562320293667799,
+       2.2696960019984327
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 0.022649378856377113
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 100000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 0.08205600970211828,
+      "q1_pct": 0.09278455548127508,
+      "median_pct": 0.10351310126043188,
+      "q3_pct": 0.11424164703958868,
+      "max_pct": 0.12497019281874548,
+      "values_pct": [
+       0.08205600970211828,
+       0.12497019281874548
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 0.022649378856377113
+     }
+    }
+   },
+   "two_anchor": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "two_anchor first-harmonic amplitude, deterministic uniform grid, 2 yr @ 1.0 h",
+     "n_realizations": 3,
+     "min_pct": 0.022174605745835026,
+     "q1_pct": 0.02217460574584665,
+     "median_pct": 0.022174605745858274,
+     "q3_pct": 0.022277935473735133,
+     "max_pct": 0.022381265201611992,
+     "values_pct": [
+      0.022174605745858274,
+      0.022381265201611992,
+      0.022174605745835026
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "two_anchor peak-aligned cosine component (SIGN is waveform-dependent), deterministic uniform grid",
+     "n_realizations": 3,
+     "min_pct": -0.021419024377678154,
+     "q1_pct": -0.005854078672906068,
+     "median_pct": 0.00971086703186602,
+     "q3_pct": 0.012695340562452521,
+     "max_pct": 0.01567981409303902,
+     "values_pct": [
+      0.01567981409303902,
+      0.00971086703186602,
+      -0.021419024377678154
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 10000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 0.40389718666872626,
+      "q1_pct": 1.100930856606964,
+      "median_pct": 1.797964526545202,
+      "q3_pct": 2.49499819648344,
+      "max_pct": 3.1920318664216776,
+      "values_pct": [
+       0.40389718666872626,
+       3.1920318664216776
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 0.022174605745858274
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 100000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 0.646674401819975,
+      "q1_pct": 0.7521602975948136,
+      "median_pct": 0.8576461933696522,
+      "q3_pct": 0.9631320891444908,
+      "max_pct": 1.0686179849193294,
+      "values_pct": [
+       1.0686179849193294,
+       0.646674401819975
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 0.022174605745858274
+     }
+    }
+   }
+  },
+  "M2_S2_semidiurnal": {
+   "mix_amp_periodhours": [
+    [
+     1.0,
+     12.4206
+    ],
+    [
+     0.46,
+     12.0
+    ]
+   ],
+   "quarter_anchored": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored first-harmonic amplitude, deterministic uniform grid, 2 yr @ 1.0 h",
+     "n_realizations": 3,
+     "min_pct": 0.018473424659475376,
+     "q1_pct": 0.025546467082705186,
+     "median_pct": 0.03261950950593499,
+     "q3_pct": 0.05410917772950606,
+     "max_pct": 0.07559884595307713,
+     "values_pct": [
+      0.03261950950593499,
+      0.07559884595307713,
+      0.018473424659475376
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored peak-aligned cosine component (SIGN is waveform-dependent), deterministic uniform grid",
+     "n_realizations": 3,
+     "min_pct": -0.027508219838546046,
+     "q1_pct": -0.007071007309264169,
+     "median_pct": 0.01336620522001771,
+     "q3_pct": 0.0159198145582318,
+     "max_pct": 0.018473423896445886,
+     "values_pct": [
+      0.01336620522001771,
+      -0.027508219838546046,
+      0.018473423896445886
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 10000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 0.8877703801508043,
+      "q1_pct": 0.9350903866010551,
+      "median_pct": 0.982410393051306,
+      "q3_pct": 1.0297303995015568,
+      "max_pct": 1.0770504059518076,
+      "values_pct": [
+       1.0770504059518076,
+       0.8877703801508043
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 0.03261950950593499
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 100000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 0.39057353566744063,
+      "q1_pct": 0.5043789917529727,
+      "median_pct": 0.6181844478385049,
+      "q3_pct": 0.7319899039240371,
+      "max_pct": 0.8457953600095692,
+      "values_pct": [
+       0.39057353566744063,
+       0.8457953600095692
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 0.03261950950593499
+     }
+    }
+   },
+   "two_anchor": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "two_anchor first-harmonic amplitude, deterministic uniform grid, 2 yr @ 1.0 h",
+     "n_realizations": 3,
+     "min_pct": 0.022381265201614594,
+     "q1_pct": 0.03492986791570804,
+     "median_pct": 0.04747847062980149,
+     "q3_pct": 0.049513386927338046,
+     "max_pct": 0.05154830322487461,
+     "values_pct": [
+      0.05154830322487461,
+      0.022381265201614594,
+      0.04747847062980149
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "two_anchor peak-aligned cosine component (SIGN is waveform-dependent), deterministic uniform grid",
+     "n_realizations": 3,
+     "min_pct": -0.009940603808348472,
+     "q1_pct": -0.007839907046500198,
+     "median_pct": -0.005739210284651923,
+     "q3_pct": 0.008040454935173684,
+     "max_pct": 0.021820120154999293,
+     "values_pct": [
+      -0.005739210284651923,
+      0.021820120154999293,
+      -0.009940603808348472
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 10000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 0.19733206043285856,
+      "q1_pct": 0.40388536141935627,
+      "median_pct": 0.610438662405854,
+      "q3_pct": 0.8169919633923517,
+      "max_pct": 1.0235452643788494,
+      "values_pct": [
+       1.0235452643788494,
+       0.19733206043285856
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 0.05154830322487461
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 100000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 0.3915309954537945,
+      "q1_pct": 0.48634119880305715,
+      "median_pct": 0.5811514021523199,
+      "q3_pct": 0.6759616055015825,
+      "max_pct": 0.7707718088508452,
+      "values_pct": [
+       0.3915309954537945,
+       0.7707718088508452
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 0.05154830322487461
+     }
+    }
+   }
+  },
+  "SoCal_like_M2_S2_K1_O1": {
+   "mix_amp_periodhours": [
+    [
+     1.0,
+     12.4206
+    ],
+    [
+     0.46,
+     12.0
+    ],
+    [
+     0.58,
+     23.9345
+    ],
+    [
+     0.41,
+     25.8193
+    ]
+   ],
+   "quarter_anchored": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored first-harmonic amplitude, deterministic uniform grid, 2 yr @ 1.0 h",
+     "n_realizations": 3,
+     "min_pct": 6.327689575426828,
+     "q1_pct": 7.170202659420509,
+     "median_pct": 8.01271574341419,
+     "q3_pct": 8.282107070125056,
+     "max_pct": 8.551498396835921,
+     "values_pct": [
+      8.551498396835921,
+      6.327689575426828,
+      8.01271574341419
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored peak-aligned cosine component (SIGN is waveform-dependent), deterministic uniform grid",
+     "n_realizations": 3,
+     "min_pct": -1.068436190076775,
+     "q1_pct": 1.3336996552526297,
+     "median_pct": 3.735835500582034,
+     "q3_pct": 3.786816311619866,
+     "max_pct": 3.8377971226576975,
+     "values_pct": [
+      3.8377971226576975,
+      -1.068436190076775,
+      3.735835500582034
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 10000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 7.754531815931578,
+      "q1_pct": 8.237388344445025,
+      "median_pct": 8.720244872958471,
+      "q3_pct": 9.203101401471915,
+      "max_pct": 9.685957929985362,
+      "values_pct": [
+       9.685957929985362,
+       7.754531815931578
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 8.551498396835921
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 100000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 8.733740844908015,
+      "q1_pct": 8.873644090614345,
+      "median_pct": 9.013547336320674,
+      "q3_pct": 9.153450582027004,
+      "max_pct": 9.293353827733334,
+      "values_pct": [
+       8.733740844908015,
+       9.293353827733334
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 8.551498396835921
+     }
+    }
+   },
+   "two_anchor": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "two_anchor first-harmonic amplitude, deterministic uniform grid, 2 yr @ 1.0 h",
+     "n_realizations": 3,
+     "min_pct": 0.3586285478793952,
+     "q1_pct": 1.282532464810659,
+     "median_pct": 2.206436381741923,
+     "q3_pct": 2.9134249250803004,
+     "max_pct": 3.620413468418678,
+     "values_pct": [
+      3.620413468418678,
+      2.206436381741923,
+      0.3586285478793952
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "two_anchor peak-aligned cosine component (SIGN is waveform-dependent), deterministic uniform grid",
+     "n_realizations": 3,
+     "min_pct": -0.02141902437767997,
+     "q1_pct": -0.002869605142321527,
+     "median_pct": 0.015679814093036915,
+     "q3_pct": 0.022328306207228296,
+     "max_pct": 0.028976798321419677,
+     "values_pct": [
+      -0.02141902437767997,
+      0.015679814093036915,
+      0.028976798321419677
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 10000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 2.8485799266467686,
+      "q1_pct": 3.414991861326635,
+      "median_pct": 3.981403796006502,
+      "q3_pct": 4.547815730686368,
+      "max_pct": 5.114227665366235,
+      "values_pct": [
+       2.8485799266467686,
+       5.114227665366235
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 3.620413468418678
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 100000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 3.642914915370983,
+      "q1_pct": 3.761675532811624,
+      "median_pct": 3.8804361502522644,
+      "q3_pct": 3.999196767692905,
+      "max_pct": 4.117957385133546,
+      "values_pct": [
+       4.117957385133546,
+       3.642914915370983
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 3.620413468418678
+     }
+    }
+   }
+  },
+  "diurnal_dominant": {
+   "mix_amp_periodhours": [
+    [
+     0.4,
+     12.4206
+    ],
+    [
+     0.18,
+     12.0
+    ],
+    [
+     1.0,
+     23.9345
+    ],
+    [
+     0.7,
+     25.8193
+    ]
+   ],
+   "quarter_anchored": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored first-harmonic amplitude, deterministic uniform grid, 2 yr @ 1.0 h",
+     "n_realizations": 3,
+     "min_pct": 14.981794903853437,
+     "q1_pct": 15.339203251019839,
+     "median_pct": 15.696611598186239,
+     "q3_pct": 17.465018734109165,
+     "max_pct": 19.233425870032093,
+     "values_pct": [
+      19.233425870032093,
+      15.696611598186239,
+      14.981794903853437
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored peak-aligned cosine component (SIGN is waveform-dependent), deterministic uniform grid",
+     "n_realizations": 3,
+     "min_pct": 13.446020246584517,
+     "q1_pct": 14.209686433840822,
+     "median_pct": 14.97335262109713,
+     "q3_pct": 15.272028369298312,
+     "max_pct": 15.570704117499492,
+     "values_pct": [
+      13.446020246584517,
+      15.570704117499492,
+      14.97335262109713
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 10000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 16.493817260259412,
+      "q1_pct": 16.998175102048165,
+      "median_pct": 17.502532943836915,
+      "q3_pct": 18.006890785625664,
+      "max_pct": 18.511248627414417,
+      "values_pct": [
+       16.493817260259412,
+       18.511248627414417
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 19.233425870032093
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 100000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 18.885539615315384,
+      "q1_pct": 18.923458283503386,
+      "median_pct": 18.961376951691385,
+      "q3_pct": 18.999295619879383,
+      "max_pct": 19.037214288067386,
+      "values_pct": [
+       18.885539615315384,
+       19.037214288067386
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 19.233425870032093
+     }
+    }
+   },
+   "two_anchor": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "two_anchor first-harmonic amplitude, deterministic uniform grid, 2 yr @ 1.0 h",
+     "n_realizations": 3,
+     "min_pct": 8.97583428377349,
+     "q1_pct": 15.665051650113869,
+     "median_pct": 22.354269016454246,
+     "q3_pct": 22.360295663465337,
+     "max_pct": 22.366322310476427,
+     "values_pct": [
+      8.97583428377349,
+      22.354269016454246,
+      22.366322310476427
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "two_anchor peak-aligned cosine component (SIGN is waveform-dependent), deterministic uniform grid",
+     "n_realizations": 3,
+     "min_pct": -0.022887326435092933,
+     "q1_pct": 0.00522681895024054,
+     "median_pct": 0.033340964335574014,
+     "q3_pct": 0.037909635363104294,
+     "max_pct": 0.04247830639063458,
+     "values_pct": [
+      0.04247830639063458,
+      0.033340964335574014,
+      -0.022887326435092933
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 10000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 7.748388392630109,
+      "q1_pct": 8.532446106111303,
+      "median_pct": 9.316503819592496,
+      "q3_pct": 10.10056153307369,
+      "max_pct": 10.884619246554884,
+      "values_pct": [
+       10.884619246554884,
+       7.748388392630109
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 8.97583428377349
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 100000 uniform-random event times (realization 0 of the constituent-phase draw). This is instrument response PLUS event-sampling noise; the noise part is the quantity being reported, and it is what a re-runner's own N buys them for free.",
+      "n_realizations": 2,
+      "min_pct": 8.561410769585656,
+      "q1_pct": 8.630938083347896,
+      "median_pct": 8.700465397110136,
+      "q3_pct": 8.769992710872375,
+      "max_pct": 8.839520024634615,
+      "values_pct": [
+       8.561410769585656,
+       8.839520024634615
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 8.97583428377349
+     }
+    }
+   }
+  }
+ },
+ "real": {
+  "coso_mean_stress_native_6000s": {
+   "provenance": {
+    "path": "data/xue_lu_zenodo/Tidal_Vol.txt",
+    "dt_seconds": 6000.0,
+    "n_samples": 262800,
+    "record_days": 18249.93055555556,
+    "sha256_first_1e6_bytes": "c6a75359de5aea24bfcbdc0e1a3d37c37e063156cc9a42d90ca0e98ac293d326",
+    "note": "Coso / SoCal tidal stress, K-035-era Zenodo series, NATIVE sampling (no spline upsampling)"
+   },
+   "quarter_anchored": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored first-harmonic amplitude on the REAL series, deterministic uniform grid, 3 disjoint segments of 6083 d",
+     "n_realizations": 3,
+     "min_pct": 17.08456960627711,
+     "q1_pct": 17.4011173731073,
+     "median_pct": 17.71766513993749,
+     "q3_pct": 17.766524746589404,
+     "max_pct": 17.815384353241313,
+     "values_pct": [
+      17.815384353241313,
+      17.71766513993749,
+      17.08456960627711
+     ],
+     "deterministic": true,
+     "monte_carlo": false,
+     "segment_days": 6083.333333333333
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored peak-aligned cosine component on the REAL series",
+     "n_realizations": 3,
+     "min_pct": -16.372937164103618,
+     "q1_pct": -16.365019457852007,
+     "median_pct": -16.3571017516004,
+     "q3_pct": -16.169269997725795,
+     "max_pct": -15.98143824385119,
+     "values_pct": [
+      -16.3571017516004,
+      -16.372937164103618,
+      -15.98143824385119
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 10000 uniform-random event times on segment 0 of the REAL series. Instrument response PLUS event-sampling noise; only the noise part is this quantity.",
+      "n_realizations": 2,
+      "min_pct": 18.106993738109033,
+      "q1_pct": 18.536564762452258,
+      "median_pct": 18.966135786795483,
+      "q3_pct": 19.395706811138705,
+      "max_pct": 19.82527783548193,
+      "values_pct": [
+       19.82527783548193,
+       18.106993738109033
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 17.815384353241313
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 100000 uniform-random event times on segment 0 of the REAL series. Instrument response PLUS event-sampling noise; only the noise part is this quantity.",
+      "n_realizations": 2,
+      "min_pct": 17.92369851083193,
+      "q1_pct": 18.055039217727785,
+      "median_pct": 18.18637992462364,
+      "q3_pct": 18.317720631519496,
+      "max_pct": 18.44906133841535,
+      "values_pct": [
+       17.92369851083193,
+       18.44906133841535
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 17.815384353241313
+     }
+    }
+   },
+   "two_anchor": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "two_anchor first-harmonic amplitude on the REAL series, deterministic uniform grid, 3 disjoint segments of 6083 d",
+     "n_realizations": 3,
+     "min_pct": 0.41454695982707546,
+     "q1_pct": 0.47749435841508314,
+     "median_pct": 0.5404417570030908,
+     "q3_pct": 0.637513239078561,
+     "max_pct": 0.7345847211540312,
+     "values_pct": [
+      0.7345847211540312,
+      0.5404417570030908,
+      0.41454695982707546
+     ],
+     "deterministic": true,
+     "monte_carlo": false,
+     "segment_days": 6083.333333333333
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "two_anchor peak-aligned cosine component on the REAL series",
+     "n_realizations": 3,
+     "min_pct": -0.0022846176692252543,
+     "q1_pct": -0.0016117146141926201,
+     "median_pct": -0.000938811559159986,
+     "q3_pct": 0.0006729030550404779,
+     "max_pct": 0.002284617669240942,
+     "values_pct": [
+      0.002284617669240942,
+      -0.0022846176692252543,
+      -0.000938811559159986
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 10000 uniform-random event times on segment 0 of the REAL series. Instrument response PLUS event-sampling noise; only the noise part is this quantity.",
+      "n_realizations": 2,
+      "min_pct": 0.6339583794423617,
+      "q1_pct": 1.3993877115662627,
+      "median_pct": 2.1648170436901637,
+      "q3_pct": 2.9302463758140647,
+      "max_pct": 3.6956757079379656,
+      "values_pct": [
+       3.6956757079379656,
+       0.6339583794423617
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 0.7345847211540312
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 100000 uniform-random event times on segment 0 of the REAL series. Instrument response PLUS event-sampling noise; only the noise part is this quantity.",
+      "n_realizations": 2,
+      "min_pct": 0.5029336817541484,
+      "q1_pct": 0.5396870068793407,
+      "median_pct": 0.5764403320045328,
+      "q3_pct": 0.6131936571297251,
+      "max_pct": 0.6499469822549173,
+      "values_pct": [
+       0.5029336817541484,
+       0.6499469822549173
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 0.7345847211540312
+     }
+    }
+   }
+  },
+  "long_valley_volumetric_600s": {
+   "provenance": {
+    "path": "data/lv_tidal_vol.npz",
+    "dt_seconds": 600.0,
+    "n_samples": 2182320,
+    "record_days": 15154.993055555555,
+    "sha256_first_1e6_bytes": "3b08d761a490fc635c6bb721c0e3ee1d525f25dc1aca98636a899ae17d66e578",
+    "note": "Long Valley caldera volumetric body-tide series computed from JPL ephemerides for the real site, K-035/LV era"
+   },
+   "quarter_anchored": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored first-harmonic amplitude on the REAL series, deterministic uniform grid, 3 disjoint segments of 5052 d",
+     "n_realizations": 3,
+     "min_pct": 20.110105428311133,
+     "q1_pct": 20.196811805035754,
+     "median_pct": 20.283518181760375,
+     "q3_pct": 20.4737809784661,
+     "max_pct": 20.664043775171823,
+     "values_pct": [
+      20.283518181760375,
+      20.664043775171823,
+      20.110105428311133
+     ],
+     "deterministic": true,
+     "monte_carlo": false,
+     "segment_days": 5051.666666666667
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored peak-aligned cosine component on the REAL series",
+     "n_realizations": 3,
+     "min_pct": -20.65936459661332,
+     "q1_pct": -20.45446093762902,
+     "median_pct": -20.24955727864472,
+     "q3_pct": -20.17602761839556,
+     "max_pct": -20.102497958146397,
+     "values_pct": [
+      -20.24955727864472,
+      -20.65936459661332,
+      -20.102497958146397
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 10000 uniform-random event times on segment 0 of the REAL series. Instrument response PLUS event-sampling noise; only the noise part is this quantity.",
+      "n_realizations": 2,
+      "min_pct": 20.127179105907786,
+      "q1_pct": 20.546898865390116,
+      "median_pct": 20.966618624872446,
+      "q3_pct": 21.386338384354776,
+      "max_pct": 21.806058143837106,
+      "values_pct": [
+       21.806058143837106,
+       20.127179105907786
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 20.283518181760375
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "quarter_anchored amplitude from 100000 uniform-random event times on segment 0 of the REAL series. Instrument response PLUS event-sampling noise; only the noise part is this quantity.",
+      "n_realizations": 2,
+      "min_pct": 20.133149988121716,
+      "q1_pct": 20.233514346780712,
+      "median_pct": 20.33387870543971,
+      "q3_pct": 20.434243064098705,
+      "max_pct": 20.534607422757702,
+      "values_pct": [
+       20.133149988121716,
+       20.534607422757702
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 20.283518181760375
+     }
+    }
+   },
+   "two_anchor": {
+    "instrument_response": {
+     "quantity": "instrument_response",
+     "label": "two_anchor first-harmonic amplitude on the REAL series, deterministic uniform grid, 3 disjoint segments of 5052 d",
+     "n_realizations": 3,
+     "min_pct": 0.0577490749804979,
+     "q1_pct": 0.19693310520861418,
+     "median_pct": 0.33611713543673044,
+     "q3_pct": 0.3536428723682915,
+     "max_pct": 0.37116860929985257,
+     "values_pct": [
+      0.37116860929985257,
+      0.0577490749804979,
+      0.33611713543673044
+     ],
+     "deterministic": true,
+     "monte_carlo": false,
+     "segment_days": 5051.666666666667
+    },
+    "instrument_response_cos_component": {
+     "quantity": "instrument_response",
+     "label": "two_anchor peak-aligned cosine component on the REAL series",
+     "n_realizations": 3,
+     "min_pct": 0.00407953099551881,
+     "q1_pct": 0.004137346048679205,
+     "median_pct": 0.004195161101839599,
+     "q3_pct": 0.004812523958184333,
+     "max_pct": 0.005429886814529067,
+     "values_pct": [
+      0.00407953099551881,
+      0.005429886814529067,
+      0.004195161101839599
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "sampling_floor": {
+     "N=10000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 10000 uniform-random event times on segment 0 of the REAL series. Instrument response PLUS event-sampling noise; only the noise part is this quantity.",
+      "n_realizations": 2,
+      "min_pct": 1.1488079326186718,
+      "q1_pct": 1.2218079952291576,
+      "median_pct": 1.2948080578396435,
+      "q3_pct": 1.3678081204501291,
+      "max_pct": 1.440808183060615,
+      "values_pct": [
+       1.440808183060615,
+       1.1488079326186718
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 10000,
+      "analytic_rayleigh_floor_pct": 1.772453850905516,
+      "instrument_response_same_grid_pct": 0.37116860929985257
+     },
+     "N=100000": {
+      "quantity": "sampling_floor",
+      "label": "two_anchor amplitude from 100000 uniform-random event times on segment 0 of the REAL series. Instrument response PLUS event-sampling noise; only the noise part is this quantity.",
+      "n_realizations": 2,
+      "min_pct": 0.7404591265401401,
+      "q1_pct": 0.7996604497448838,
+      "median_pct": 0.8588617729496275,
+      "q3_pct": 0.9180630961543713,
+      "max_pct": 0.977264419359115,
+      "values_pct": [
+       0.977264419359115,
+       0.7404591265401401
+      ],
+      "deterministic": false,
+      "monte_carlo": true,
+      "n_events": 100000,
+      "analytic_rayleigh_floor_pct": 0.5604991216397929,
+      "instrument_response_same_grid_pct": 0.37116860929985257
+     }
+    }
+   }
+  }
+ },
+ "robustness": {
+  "quarter_anchored": {
+   "sampling_refinement": {
+    "dt=1.0h": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored amplitude vs sampling refinement (SoCal_like_M2_S2_K1_O1)",
+     "n_realizations": 2,
+     "min_pct": 6.246947062408367,
+     "q1_pct": 6.732618847625691,
+     "median_pct": 7.218290632843014,
+     "q3_pct": 7.703962418060337,
+     "max_pct": 8.189634203277661,
+     "values_pct": [
+      6.246947062408367,
+      8.189634203277661
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "dt=0.25h": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored amplitude vs sampling refinement (SoCal_like_M2_S2_K1_O1)",
+     "n_realizations": 2,
+     "min_pct": 8.77842129195597,
+     "q1_pct": 9.790886794519826,
+     "median_pct": 10.803352297083684,
+     "q3_pct": 11.81581779964754,
+     "max_pct": 12.828283302211396,
+     "values_pct": [
+      8.77842129195597,
+      12.828283302211396
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    }
+   },
+   "record_length": {
+    "years=3.0": {
+     "quantity": "instrument_response",
+     "label": "quarter_anchored amplitude vs record length (SoCal_like_M2_S2_K1_O1)",
+     "n_realizations": 2,
+     "min_pct": 9.968924603356536,
+     "q1_pct": 10.139192422994686,
+     "median_pct": 10.309460242632838,
+     "q3_pct": 10.47972806227099,
+     "max_pct": 10.64999588190914,
+     "values_pct": [
+      9.968924603356536,
+      10.64999588190914
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    }
+   }
+  },
+  "two_anchor": {
+   "sampling_refinement": {
+    "dt=1.0h": {
+     "quantity": "instrument_response",
+     "label": "two_anchor amplitude vs sampling refinement (SoCal_like_M2_S2_K1_O1)",
+     "n_realizations": 2,
+     "min_pct": 2.518177104453885,
+     "q1_pct": 2.8199555063662043,
+     "median_pct": 3.1217339082785234,
+     "q3_pct": 3.4235123101908425,
+     "max_pct": 3.7252907121031615,
+     "values_pct": [
+      2.518177104453885,
+      3.7252907121031615
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    },
+    "dt=0.25h": {
+     "quantity": "instrument_response",
+     "label": "two_anchor amplitude vs sampling refinement (SoCal_like_M2_S2_K1_O1)",
+     "n_realizations": 2,
+     "min_pct": 2.449019267865313,
+     "q1_pct": 2.599199232084188,
+     "median_pct": 2.749379196303063,
+     "q3_pct": 2.899559160521938,
+     "max_pct": 3.049739124740813,
+     "values_pct": [
+      2.449019267865313,
+      3.049739124740813
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    }
+   },
+   "record_length": {
+    "years=3.0": {
+     "quantity": "instrument_response",
+     "label": "two_anchor amplitude vs record length (SoCal_like_M2_S2_K1_O1)",
+     "n_realizations": 2,
+     "min_pct": 0.9240760263439235,
+     "q1_pct": 1.306803769956506,
+     "median_pct": 1.6895315135690883,
+     "q3_pct": 2.0722592571816705,
+     "max_pct": 2.454987000794253,
+     "values_pct": [
+      0.9240760263439235,
+      2.454987000794253
+     ],
+     "deterministic": true,
+     "monte_carlo": false
+    }
+   }
+  }
+ },
+ "gaps": [
+  "The real series here are modelled body-tide / tidal-stress series for real sites and epochs, NOT instrumental strainmeter records, and neither carries ocean loading. A borrowed instrumental record from a published study's own site remains an open gap."
+ ],
+ "elapsed_seconds": 5.6
+}

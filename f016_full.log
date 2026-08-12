@@ -1,0 +1,62 @@
+==============================================================================
+F-016 -- null calibration of anchor-based tidal phase clocks (FROZEN PROTOCOL)
+protocol F-016-phase-clock-null v1.0  hash bb98d5b4d5e70a08...
+mode = full; conventions = quarter_anchored, two_anchor
+realizations per synthetic mix = 24 (constituent-phase draws); segments per real series = 24
+quantities reported SEPARATELY: instrument_response (deterministic) vs sampling_floor (Monte Carlo)
+==============================================================================
+  [    5.8s] synthetic M2_only                  quarter_anchored instrument_response 0.00..0.01% (median 0.00%) over 24 phasings  [5.8s]
+  [   12.1s] synthetic M2_only                  two_anchor       instrument_response 0.00..0.01% (median 0.00%) over 24 phasings  [6.2s]
+  [   17.1s] synthetic M2_S2_semidiurnal        quarter_anchored instrument_response 0.00..0.02% (median 0.01%) over 24 phasings  [5.0s]
+  [   21.4s] synthetic M2_S2_semidiurnal        two_anchor       instrument_response 0.00..0.02% (median 0.01%) over 24 phasings  [4.4s]
+  [   27.4s] synthetic SoCal_like_M2_S2_K1_O1   quarter_anchored instrument_response 6.51..13.25% (median 10.33%) over 24 phasings  [5.9s]
+  [   31.8s] synthetic SoCal_like_M2_S2_K1_O1   two_anchor       instrument_response 0.28..3.58% (median 2.84%) over 24 phasings  [4.5s]
+  [   35.7s] synthetic diurnal_dominant         quarter_anchored instrument_response 15.49..26.35% (median 23.08%) over 24 phasings  [3.8s]
+  [   39.2s] synthetic diurnal_dominant         two_anchor       instrument_response 0.72..22.46% (median 19.94%) over 24 phasings  [3.5s]
+  [   41.0s] REAL      coso_mean_stress_native_6000s    quarter_anchored instrument_response 13.06..19.87% (median 18.39%) over 24 segments  [1.6s]
+  [   42.1s] REAL      coso_mean_stress_native_6000s    two_anchor       instrument_response 0.12..2.02% (median 0.73%) over 24 segments  [1.1s]
+  [   43.8s] REAL      long_valley_volumetric_600s      quarter_anchored instrument_response 18.40..21.35% (median 20.75%) over 24 segments  [1.5s]
+  [   44.8s] REAL      long_valley_volumetric_600s      two_anchor       instrument_response 0.06..1.48% (median 0.69%) over 24 segments  [1.0s]
+  [   44.9s] robustness dt=1.0   h quarter_anchored median 10.08%
+  [   45.1s] robustness dt=0.5   h quarter_anchored median 10.68%
+  [   45.2s] robustness dt=0.25  h quarter_anchored median 12.69%
+  [   45.6s] robustness dt=0.1   h quarter_anchored median 12.80%
+  [   48.1s] robustness dt=1.0   h two_anchor       median 3.14%
+  [   48.2s] robustness dt=0.5   h two_anchor       median 2.16%
+  [   48.4s] robustness dt=0.25  h two_anchor       median 2.52%
+  [   48.7s] robustness dt=0.1   h two_anchor       median 1.82%
+
+==============================================================================
+F-016 SUMMARY -- two separately labelled quantities, never merged
+==============================================================================
+
+convention: quarter_anchored
+  mix / series                       INSTRUMENT RESPONSE (det.)     SAMPLING FLOOR (MC)     
+  M2_only                             0.00- 0.01% (med  0.00%)      MC  0.188% @ N=1000000 vs det  0.003% on the same grid; analytic floor 0.177%
+  M2_S2_semidiurnal                   0.00- 0.02% (med  0.01%)      MC  0.132% @ N=1000000 vs det  0.012% on the same grid; analytic floor 0.177%
+  SoCal_like_M2_S2_K1_O1              6.51-13.25% (med 10.33%)      MC  8.805% @ N=1000000 vs det  8.703% on the same grid; analytic floor 0.177%
+  diurnal_dominant                   15.49-26.35% (med 23.08%)      MC 19.666% @ N=1000000 vs det 19.722% on the same grid; analytic floor 0.177%
+  REAL coso_mean_stress_native_6000s 13.06-19.87% (med 18.39%)      MC 17.578% @ N=1000000 vs det 16.973% on the same grid; analytic floor 0.177%
+  REAL long_valley_volumetric_600s   18.40-21.35% (med 20.75%)      MC 20.991% @ N=1000000 vs det 20.975% on the same grid; analytic floor 0.177%
+
+convention: two_anchor
+  mix / series                       INSTRUMENT RESPONSE (det.)     SAMPLING FLOOR (MC)     
+  M2_only                             0.00- 0.01% (med  0.00%)      MC  0.197% @ N=1000000 vs det  0.003% on the same grid; analytic floor 0.177%
+  M2_S2_semidiurnal                   0.00- 0.02% (med  0.01%)      MC  0.112% @ N=1000000 vs det  0.009% on the same grid; analytic floor 0.177%
+  SoCal_like_M2_S2_K1_O1              0.28- 3.58% (med  2.84%)      MC  3.695% @ N=1000000 vs det  3.576% on the same grid; analytic floor 0.177%
+  diurnal_dominant                    0.72-22.46% (med 19.94%)      MC  9.032% @ N=1000000 vs det  9.124% on the same grid; analytic floor 0.177%
+  REAL coso_mean_stress_native_6000s  0.12- 2.02% (med  0.73%)      MC  0.177% @ N=1000000 vs det  0.123% on the same grid; analytic floor 0.177%
+  REAL long_valley_volumetric_600s    0.06- 1.48% (med  0.69%)      MC  0.386% @ N=1000000 vs det  0.362% on the same grid; analytic floor 0.177%
+
+GAP: The real series here are modelled body-tide / tidal-stress series for real sites and epochs, NOT instrumental strainmeter records, and neither carries ocean loading. A borrowed instrumental record from a published study's own site remains an open gap.
+
+READ THIS BEFORE QUOTING ANY NUMBER ABOVE. The left column is the INSTRUMENT RESPONSE:
+deterministic, no random numbers, and it is the finding. The right column is a MONTE
+CARLO estimate on the same grid -- instrument response PLUS event-sampling noise --
+printed next to the deterministic value and the analytic floor sqrt(pi/N) so the two
+contributions can be told apart by inspection. Where the instrument is flat (the
+semidiurnal controls), the MC column IS the sampling floor and nothing else: a 0.1-
+0.9% reading there is the re-runner's own N, not a bias. They are not the same
+quantity and neither substitutes for the other.
+
+elapsed 51.5 s  ->  D:\CODE\git\quake\replication\results_phase_clock_null.json
