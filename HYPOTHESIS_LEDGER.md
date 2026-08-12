@@ -13950,6 +13950,42 @@ K(1.8644e-6) = 12.192562. `alpha = 2 sqrt(K/n)`.
 | C | Coso Fig 4c | 113 | 0.05 | **26.58%** | 41.5% | 43.8% | **1.56** | **1.65** | 65.70% |
 | D | full-catalogue intensity likelihood | 23,465 | 0.05 | **1.84%** | 2.8% | 3.0% | **1.52** | **1.63** | 4.56% |
 
+> **DATED CORRECTION TO §11.3, appended 2026-08-12 by Faraday on the Popper pass. Merton's section
+> above is NOT rewritten; this note sits adjacent to it, per the append-only rule, and the table as
+> Merton published it stands as the record of what he computed.**
+>
+> **(1) MANDATED CORRECTION, row D, conservative ratio: 1.63 → 1.60.** Recomputed from the
+> primaries: `results_kappa.json :: conservative_requote`, row `D_full_catalog`, field
+> `mda_conservative_pct` = 2.9549980450521907, divided by the analytic 1.84446%
+> (`alpha = 2*sqrt(K(0.05)/23465)`, K(0.05) = 1.995732) = **1.6021**. F-012's bounds table in
+> `PROGRESS_REGISTER.md` has been corrected to match. **This is the ratio that reaches the paper**,
+> and it was the only ratio Popper mandated.
+>
+> **(2) TWO FURTHER ROUNDING DISCREPANCIES FOUND WHILE VERIFYING (1), REPORTED AND NOT SILENTLY
+> FIXED, because Popper adjudicated this table and only ruled on row D.** Recomputing all twelve
+> ratios from the primaries: ten reproduce exactly as printed; two do not.
+> - **A3b, point ratio: printed 1.22, recomputes to 1.2275, i.e. 1.23.** Popper's own replacement
+>   text for the paper's §3.6 already uses **1.23** for A3b, so the paper is correct and the ledger
+>   table is the stale copy.
+> - **A2, conservative ratio: printed 1.33, recomputes to 1.3361, i.e. 1.34.** This one also
+>   propagated into **F-012's bounds table**, which prints 1.33 in the A2 row.
+>
+> Neither changes any bound, any verdict, or the "agree to within a factor of 1.7" statement, and
+> both are third-significant-figure rounding rather than arithmetic error. They were flagged here
+> for Popper's ruling rather than corrected unilaterally, since he had already adjudicated this
+> table once.
+>
+> **(3) POPPER'S RULING, 2026-08-12 re-verification: both corrections accepted.** Applied as
+> follows. **A2's conservative ratio 1.33 → 1.34 is corrected in F-012's bounds table** in
+> `PROGRESS_REGISTER.md`, which is the copy that feeds the paper, and **in the paper's Table 1.**
+> **A3b's point ratio 1.22 → 1.23 exists only in §11.3 above**, so it is corrected *here*, in this
+> adjacent note, and **Merton's table is left exactly as he printed it** per the append-only rule;
+> the paper's §3.6 already quotes A3b at 1.23 on Popper's own replacement wording. **The corrected
+> reading of §11.3's two ratio columns is: point 1.33, 1.22, 1.33, 1.23, 1.56, 1.52; conservative
+> 1.40, 1.34, 1.46, 1.31, 1.65, 1.60.** All twelve have now been recomputed from
+> `results_kappa.json` against the analytic column, and with these two amendments all twelve
+> reproduce.
+
 #### 11.4 THE VERDICT — and a diagnostic I did not expect to get
 
 **YES. The two routes corroborate, and they corroborate better than I predicted.**

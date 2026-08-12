@@ -1176,15 +1176,34 @@ seismicity-rate modulation at 80% power** is:
 |---|---|---|---|---|---|---|---|
 | EXP-A per-bin train statistic (the selected bin) | 245 | 24.5% | 0.959 | **25.3%** | 18.1% | 1.40 | 25.3 |
 | Coso Fig 4c replication | 113 | 40.9% | 1.030 | **43.8%** | 26.6% | 1.65 | 43.8 |
-| EXP-A end-to-end pipeline (1-of-42 selection + pooled shift test) | 3,920 | 9.8% | 0.916 | **10.2%** | 7.7% | 1.33 | 10.2 |
+| EXP-A end-to-end pipeline (1-of-42 selection + pooled shift test) | 3,920 | 9.8% | 0.916 | **10.2%** | 7.7% | 1.34 | 10.2 |
 | EXP-A pooled on the 22 train-null control bins (the quoted corpse) | 1,906 | 8.0% | 0.996 | **8.5%** | 6.5% | 1.31 | 8.5 |
 | **EXP-A pooled over all 42 eligible bins (design upper limit)** | 3,920 | 6.3% | 0.916 | **6.6%** | 4.5% | 1.46 | 6.6 |
-| Full-catalogue Cox intensity likelihood | 23,465 | 2.8% | 0.978 | **3.0%** | 1.8% | 1.63 | 3.0 |
+| Full-catalogue Cox intensity likelihood | 23,465 | 2.8% | 0.978 | **3.0%** | 1.8% | 1.60 | 3.0 |
 
 *The analytic column is Sirorattanakul & Avouac (2026) Eq. 5 evaluated at our own n and our own P
 (Merton M-010.11), and it is a **~50%-power median detection threshold, not an 80%-power bound** —
 the caption must say so. It is not a competitor to our column; it is the independent second route,
 and the two agree on every row to within a factor of 1.7.*
+
+**DATED CORRECTION (Popper pass, 2026-08-12, applied by Faraday).** The full-catalogue row's ratio
+was printed as **1.63** and is corrected to **1.60**. Recomputed from the primaries: conservative
+MDA 2.9549980450521907% (`results_kappa.json :: conservative_requote`, row `D_full_catalog`) divided
+by the analytic 1.84446% (`alpha = 2*sqrt(K(0.05)/23465)`, K = 1.995732) = **1.602**. The same
+correction is recorded adjacent to Merton's M-010.11 §11.3 table in the ledger; **Merton's section
+is not rewritten**, per the append-only rule.
+**SECOND CORRECTION TO THIS COLUMN, RULED AND NOW APPLIED (Popper re-verification, 2026-08-12).**
+The **end-to-end pipeline row's ratio was printed as 1.33 and is corrected to 1.34**
+(10.2197039730638 / 7.6488 = **1.3361**). It is third-significant-figure rounding, it changes no
+bound and no verdict. I found it while verifying the full-catalogue row, flagged it rather than
+changing it, and Popper has now ruled it in; the companion item in **Merton's own point column
+(A3b, printed 1.22, recomputes to 1.2275, i.e. 1.23)** lives only in M-010.11 §11.3 and is recorded
+in the dated note adjacent to that table, with Merton's table left as printed.
+**All six ratios in this table have now been recomputed from the primaries and all six reproduce as
+printed: 1.40, 1.65, 1.34, 1.31, 1.46, 1.60.**
+*(An earlier version of this correction block asserted that no other ratio changed. That was wrong,
+it was mine, and it lasted about ten minutes: I wrote it before finishing the recomputation of the
+remaining rows. It is replaced rather than deleted so the error stays visible.)*
 
 **No configuration contacts the theory line** — `contacts_theory: false` on all six rows of
 `results_k035.json`, and `any_bound_contacts_theory_after_kappa: false` on all six rows of
@@ -1203,7 +1222,15 @@ realizations, T = 10 d primary with a ladder to 30 d), and **κ is consistent wi
 the six configurations** (0.916–1.030; largest 1.0303). The correction is therefore ~1–6%, not a
 factor, and two rows move *down*. The pooled design-limit bound moves **6.29% → 6.02% at the point
 estimate, → 6.59% in the deliberately adversarial conservative reading**, and stays in single
-digits. **The number the paper quotes is the conservative one, 6.6%.** Bias audit PASSES against its
+digits. **The number the paper quotes is the conservative one, 6.6%.**
+**DATED CORRECTION (Popper pass, 2026-08-12).** This entry previously said the correction moves two
+rows downward. Recomputed from `results_kappa.json :: requoted_bounds`, comparing
+`mda80_kappa_corrected_pct` against `mda80_old_pct`: five of the six rows move down at the point
+estimate (A1, A2, A3, A3b, D) and one moves up (C, n = 113, the smallest sample, κ 1.0303). Under
+the pre-declared conservative re-quote every row moves up, because the rule adds the worst
+Poisson-control offset and the upper interval half-width before the square root. The headline is
+unaffected: the pooled design limit is 6.29% raw, 6.02% at the point estimate, 6.59% conservative,
+and 6.6% is what is quoted. Bias audit PASSES against its
 pre-declared rule: two density-matched Poisson controls return κ = 0.9982 ± 0.0220 and
 0.9314 ± 0.0559 against a truth of 1, and a **planted 3× overdispersion is recovered as
 2.9502 ± 0.0413 against a truth of 2.9866 — a ratio of 0.9878, i.e. recovered to 1.2%.** Precision
@@ -1243,8 +1270,20 @@ without a word of novelty rhetoric.
 |---|---|---|---|
 | Vidale, Agnew, Johnston & Oppenheimer (1998) | SoCal, SAF/Calaveras, n = 13,042 | rate ratio | +2%, not significant (informal bound) |
 | Ader & Avouac (2013) | Nepal | Schuster spectrum | **< 18%** at tidal periods |
-| **Sirorattanakul & Avouac (2026)** | **California, M ≥ 2.5** | analytic threshold at nominal significance | **< 8.16%** (M2) |
+| **Sirorattanakul & Avouac (2026)** | **California, declustered background, M ≥ local M_c, 2006–2021** | analytic threshold at nominal significance (~50% power) | **< 8.16%** (M2) |
 | **This work (F-012 + κ)** | **SoCal, M ≥ 1.5, FM-resolved** | **simulated, 80% power, through the selection step** | **< 6.6%** pooled (conservative) |
+
+**DATED CORRECTION (Popper pass, 2026-08-12, applied by Faraday; source: the S&A METHODS READ of
+2026-08-12 recorded at the tail of `HYPOTHESIS_LEDGER.md`).** The Sirorattanakul & Avouac row
+previously read **"California, M ≥ 2.5"**. That is wrong and it was ours, not theirs: **their bound
+applies to declustered background seismicity above the LOCAL completeness magnitude of each
+5,000-nearest-earthquake neighbourhood, over 2006–2021 on the NCSS + Yang–Hauksson–Shearer
+catalogs** — a spatially varying floor, not a fixed M ≥ 2.5. **This propagates to F-003's mandatory
+San Jacinto/Anza reconciliation sentence**, which contains the same "M ≥ 2.5" phrasing and must be
+restated as "their spatially varying local completeness magnitude" wherever it is quoted; the
+reconciliation's logic is unaffected, since the two designs still differ in floor, support and
+statistic. Misdescribing a competitor's scope in our own abstract figure is exactly the error that
+gets caught in review, and it is corrected here rather than in the draft alone.
 
 **ATTRIBUTION.** **Sirorattanakul, K. & Avouac, J.-P. (2026), "Seismic rhythms: Earthquake response
 to tectonic, hydrological, and tidal forcing in California," *Science Advances* 12(13), eadz5711,
@@ -1313,8 +1352,20 @@ permitted in any form except the one licensed sentence below.**
   (ii) Null reconstruction validated against the original EXP-A run to 15 digits
   (`expA_reported_null_S_p95 = 0.101377747448516**48**` vs
   `k035_reconstructed_null_S_p95 = 0.101377747448516**52**`) — I re-read both and they agree to
-  floating-point noise on independent shift draws. (iii) Two off-tidal negative-control lines
-  (11.0 d, 16.5 d). (iv) An injected S2 detection artifact at 3% amplitude.
+  floating-point noise on independent shift draws. (iii) **One SCORED off-tidal negative-control
+  line, at 11.0 d.** (iv) An injected S2 detection artifact at 3% amplitude.
+  **DATED CORRECTION (Popper pass, 2026-08-12, applied by Faraday).** This item previously read
+  "two off-tidal negative-control lines (11.0 d, 16.5 d)", and that overstated the control set.
+  **Both lines are DECLARED** in `results_k035.json :: systematics_R2_1c.off_tidal_control_lines_hours`
+  (`off_11.0d: 264.0`, `off_16.5d: 396.0`), but **only the 11.0 d line is SCORED**: the sole
+  rejection-rate field present anywhere in the artifact is
+  `off_tidal_control_line_11.0d_reject_rate` (six occurrences), and no 16.5 d rejection rate exists
+  on disk. Every claim resting on this control, here and in the F-012 bounds paper, is therefore a
+  one-line claim and is stated as such. **Binding on any future run:** scoring the 16.5 d line is
+  **confirmatory scoring of an already-declared line**, must be pre-declared as such before it is
+  run, and must be reported **whichever way it lands**. It may not be run, inspected, and then
+  quoted only if it holds; a 16.5 d failure would be as informative as the 11.0 d full-catalogue
+  failure already recorded, and would tighten rather than weaken the methods contribution.
 - Replication status: **VALIDATED** as a power-and-systematics audit within its scope.
 
 **WHAT IT DOES NOT SHOW — and one of these is a finding in its own right.**
@@ -1817,8 +1868,21 @@ standard and undiscussed; and whether the "which convention" question has been p
   uniform event grid*, which removes sampling noise and isolates the instrument: **pure M2 0.0034%,
   M2+S2 0.0100%** (4 seeds each, spanning 0.0015–0.0191%), **mixed 9.45%.** A scaling check confirms
   the interpretation: the semidiurnal Monte Carlo value falls 2.14% → 0.086% as N goes 12,500 →
-  800,000, tracking `√(π/N)` rather than converging to a bias. **The mechanism reproduces, and the
-  two modes must never again be quoted as if they measured the same thing** — see finding #7.
+  800,000, **decaying with run size** rather than converging to a bias. **The mechanism reproduces,
+  and the two modes must never again be quoted as if they measured the same thing** — see finding #7.
+  **DATED CORRECTION (Popper pass, 2026-08-12, applied by Faraday).** This line previously said the
+  measurement was *"tracking `√(π/N)`"*. **It does not track it; it brackets it, and I over-read my
+  own two-point check.** `√(π/12,500) = 1.585%` against a measured **2.14%** (high), and
+  `√(π/800,000) = 0.198%` against a measured **0.086%** (low). Two endpoints straddling a curve are
+  consistent with the square-root rate but do not confirm it, and with only two points no rate is
+  established. **What the check DOES establish, which is the only thing it was needed for, is the
+  qualitative claim: the quantity decays with N instead of converging to a bias, which is what
+  separates a sampling floor from an instrument response.** The exact rate is not load-bearing for
+  F-012 or for anything else in the register. **F-016's freeze-and-commit run must report this on a
+  fixed run-size ladder** (≥ 4 points, seeds declared) **with the fitted exponent and its
+  uncertainty**, and until it does, no text of ours may state the rate as measured. This is the
+  second time this entry's two estimands have produced an over-read (see finding #7); the first was
+  a conflation, this one is an over-claimed functional form, and both were mine.
 - **THE TWO QUANTITIES, NAMED, BECAUSE THIS ENTRY'S WHOLE VALUE DEPENDS ON KEEPING THEM APART.**
   The **instrument response** is what the anchor convention does to uniform-in-time events:
   ~0.003–0.019% for purely semidiurnal tides (a genuine flat null — the mechanism check), and
@@ -2228,6 +2292,17 @@ the upper 95% half-width before taking the square root; and the pooled design-li
 `pooled_stays_single_digit: true` and `any_bound_contacts_theory_after_kappa: false`. **Lesson for
 me: a "single missing verification" line is a claim like any other and decays like any other. I will
 re-check every open blocking step against the disk at the start of each pass, not assume it.**
+**DATED CORRECTION (Popper pass, 2026-08-12).** This entry previously said the correction moves two
+rows downward. Recomputed from `results_kappa.json :: requoted_bounds`, comparing
+`mda80_kappa_corrected_pct` against `mda80_old_pct`: five of the six rows move down at the point
+estimate (A1, A2, A3, A3b, D) and one moves up (C, n = 113, the smallest sample, κ 1.0303). Under
+the pre-declared conservative re-quote every row moves up, because the rule adds the worst
+Poisson-control offset and the upper interval half-width before the square root. The headline is
+unaffected: the pooled design limit is 6.29% raw, 6.02% at the point estimate, 6.59% conservative,
+and 6.6% is what is quoted.
+**And the shape of this one is worth naming, since #9 is already an entry about my own over-read:**
+the "two rows" error survived a re-read in which I verified every *number* around it and never
+checked the *count*. Verifying the neighbours of a claim is not verifying the claim.
 
 **#10 — Two estimators were killed by their own bias audits before scoring, and that belongs in the
 register rather than only in the ledger.** κ's v1 estimator (`V_shift(real)/V_indep_analytic`)
