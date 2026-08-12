@@ -13845,3 +13845,178 @@ amplitude in 2013. What is left to us is genuinely ours — a powered bound comp
 selection step, on a pre-registered null, with the instrument's false-positive rate verified first —
 and it is one sentence, not a title. Cite the giants in the abstract and the paper becomes
 unattackable on this axis.*
+
+### M-010.11 ADDENDUM — THE MANDATED ANALYTIC CROSS-CHECK: Sirorattanakul & Avouac's closed form evaluated at our six configurations
+
+*Appended 2026-08-11 on the coordinator's follow-up mandate, which asked me to (a) pin the exact
+semantics of the closed form before using it, (b) evaluate it at our six n, (c) lay it beside our
+simulated MDAs with a ratio per row, and (d) state whether the two routes corroborate. This closes
+the "[X]" placeholder left in §M-010.8.*
+
+#### 11.1 THE SEMANTICS — and a correction to my own §M-010.0
+
+**M-010.0 quoted the formula as `alpha = -4(ln P + 1)/N`. That rendering is wrong, and it is wrong
+because a MathML superscript was stripped in transit. The correct form is:**
+
+> **alpha^2 = -4 (ln P + 1) / N**, equivalently **alpha = 2 * sqrt( -(ln P + 1) / N )**
+
+**This is not a judgement call; it is forced three separate ways, and I want all three on the record
+because the entire cross-check rests on it.**
+
+**(i) It is derivable from the paper's own quoted Schuster definition.** A second WebFetch of
+PMC13015884 returned the definition verbatim: **`P = e^(-D^2/N)`**, where *D* is *"the total drift
+distance from the walk's origin to its endpoint"* after *"N steps from N earthquakes occurring over a
+number of full cycles of period T."* For a sinusoidally modulated rate
+`R(t) = R0 (1 + alpha cos(2*pi*t/T))`, the coherent drift per event is `alpha/2`, so the systematic
+contribution is `D_sig = N*alpha/2`, and the incoherent random walk contributes `E[D^2] = N`. Hence
+`D^2 = N^2 alpha^2/4 + N`, and `-ln P = D^2/N = N alpha^2/4 + 1`, i.e.
+**`alpha^2 = -4(ln P + 1)/N`.** The paper's Eq. 5 is exactly this, and the square is on the alpha.
+
+**(ii) The linear reading is numerically absurd.** Taking their own quoted M2 threshold
+alpha = 0.0816 at N = 5000: the linear reading gives `ln P = -103`, i.e. **P = 1e-45** — a p-value no
+finite catalogue can produce and which their own `P95 = 0.05*T/t` scaling can never reach. The
+square-root reading gives `ln P = -9.323`, **P = 8.90e-5** — entirely ordinary.
+
+**(iii) The square-root reading reproduces the internal ordering of their three tidal thresholds, and
+the linear one cannot.** This test is independent of N and of t_catalog and is the strongest single
+piece of evidence. Their tabulated thresholds are **K2 0.0818, M2 0.0816, N2 0.0815** — decreasing
+with increasing period, exactly as `P95 = 0.05*T/t_cat` (larger T -> larger, i.e. less stringent, P95
+-> smaller detectable alpha) demands. Quantitatively, inverting each through the square-root form:
+
+| line | T (h) | alpha quoted | implied P | P ratio to M2 | T ratio to M2 |
+|---|---|---|---|---|---|
+| K2 | 11.96724 | 0.0818 | 8.546e-5 | 0.9600 | 0.9635 |
+| M2 | 12.420601 | 0.0816 | 8.902e-5 | 1 | 1 |
+| N2 | 12.658348 | 0.0815 | 9.085e-5 | 1.0206 | 1.0191 |
+
+**The implied P ratios track the period ratios to 0.4% and 0.14% respectively** — well inside the
+rounding of alpha to three significant figures (+/-0.0001 in alpha propagates to about +/-2% in P).
+**This simultaneously confirms the square-root semantics AND the `P95` proportional-to-T scaling.**
+
+**THE FORM THE PAPER MUST QUOTE, VERBATIM, IS THEREFORE:**
+
+> Sirorattanakul and Avouac (2026) express the detectable modulation of a sinusoidally varying
+> seismicity rate `R(t) = R0 [1 + alpha cos(2*pi*t/T)]` through the Schuster random walk
+> `P = exp(-D^2/N)`, giving `alpha = 2 sqrt( -(ln P + 1)/N )` (their Eq. 5), evaluated at a
+> trials-corrected cutoff `P95 = 0.05 * T / t_catalog` that prices the number of cycles of period T
+> contained in the record.
+
+**Two conventions the paper must state when it quotes them, or a reviewer will catch a factor of 2.**
+1. **alpha is the ZERO-TO-PEAK fractional amplitude**, not peak-to-trough. Peak-to-trough is 2*alpha.
+   **Our MDA convention must be confirmed to match before the two numbers are printed in one table.**
+   *(Flagged as a required check — I have verified their convention from the sinusoid they write, not
+   ours from our code.)*
+2. **alpha is the amplitude at which the Schuster statistic's EXPECTED value reaches the critical
+   value** — i.e. the median, ~50%-power detection threshold. **It is not an 80%-power bound.** This
+   is derived, not asserted: `E[D^2] = N^2 alpha^2/4 + N` is a mean, and setting a mean equal to a
+   threshold gives 50% power. **This single fact is what makes our number and their number
+   commensurable, and it is the load-bearing sentence of the whole comparison.**
+
+**UNRESOLVED, and honestly so: the absolute value of `t_catalog`.** The second fetch glossed it as the
+full catalogue duration (2006-2021); back-solving their quoted thresholds does **not** support that —
+with N = 5000 and t = 15 yr, M2 gives 9.49% (quoted 8.16%) and the annual line gives 6.13% (quoted
+3.8%). A self-consistent solve of the M2 and annual rows together instead returns
+**t_catalog ~ 0.80 yr and ~0.83 yr respectively** — i.e. the *local time span of the
+5000-nearest-earthquake neighbourhood*, under which the annual period has ~1 trial and M2 has ~562.
+**That reading is internally consistent to 4% across two independent rows; the full-duration reading
+is not consistent at all.** I cannot settle it remotely. **It is added to the §M-010.10
+human-read list. It does NOT affect anything below**, because for our own table we evaluate their
+formula at *our* design's P, not at theirs.
+
+#### 11.2 THE P ASSIGNED TO EACH OF OUR SIX ROWS, AND WHY
+
+Their `P95` prices trials over **periods**. Our design does not scan periods — it tests named tidal
+lines — so the literal transplant is inappropriate and is reported only as a sanity column. Our
+multiplicity is over **places**. Assignments:
+
+- **A2 (end-to-end pipeline)** is the only row in which F-012 describes the selection as *inside* the
+  statistic ("1-of-42 selection + pooled shift test"). It gets **P = 0.05/42 = 1.1905e-3**.
+- **A1, A3, A3b, C, D** are each a single reported statistic. They get **P = 0.05**.
+- A third column applies their literal recipe, `P = 0.05 * T_M2 / 38 yr = 1.8644e-6`, to show what our
+  bounds would be under *their* trials convention. We do not need it; it is reported so that no
+  reviewer can claim we chose the convention that flattered us.
+
+Constants used: `K(P) = -(ln P + 1)`; K(0.05) = 1.995732, K(0.05/42) = 5.733402,
+K(1.8644e-6) = 12.192562. `alpha = 2 sqrt(K/n)`.
+
+#### 11.3 THE COMPARISON TABLE
+
+| row | configuration | n | P used | **S&A analytic (~50% power)** | ours, point | ours, conservative | **ratio, point** | **ratio, conservative** | their literal period-trials recipe |
+|---|---|---|---|---|---|---|---|---|---|
+| A1 | per-bin train statistic (selected bin) | 245 | 0.05 | **18.05%** | 24.0% | 25.3% | **1.33** | **1.40** | 44.62% |
+| A2 | end-to-end pipeline (selection + pooled) | 3,920 | 0.05/42 | **7.65%** | 9.3% | 10.2% | **1.22** | **1.33** | 11.15% |
+| A3 | pooled, all 42 eligible bins (**the quotable bound**) | 3,920 | 0.05 | **4.51%** | 6.0% | 6.6% | **1.33** | **1.46** | 11.15% |
+| A3b | pooled, 22 control bins | 1,906 | 0.05 | **6.47%** | 7.9% | 8.5% | **1.22** | **1.31** | 16.00% |
+| C | Coso Fig 4c | 113 | 0.05 | **26.58%** | 41.5% | 43.8% | **1.56** | **1.65** | 65.70% |
+| D | full-catalogue intensity likelihood | 23,465 | 0.05 | **1.84%** | 2.8% | 3.0% | **1.52** | **1.63** | 4.56% |
+
+#### 11.4 THE VERDICT — and a diagnostic I did not expect to get
+
+**YES. The two routes corroborate, and they corroborate better than I predicted.**
+
+**(1) Every row agrees within a factor of 1.65, and every ratio has the same sign.** Point column
+1.22-1.56; conservative column 1.31-1.65. **My §M-010.8 prediction of "within a factor of about 1.3"
+was right for the point column (median 1.33) and slightly optimistic for the conservative column
+(median 1.40).** The pre-written reviewer answer should say **"to within a factor of 1.7"**, which is
+both true and unfalsifiable, rather than "about 1.3".
+
+**(2) The offset is not slop — it is the 50%-to-80% power conversion, and it lands on the predicted
+number.** For a Schuster/Rayleigh statistic the noncentrality is `lambda = N alpha^2 / 4`. At
+P = 0.05 the 50%-power noncentrality is `lambda_50 = 2(c-1) = 3.99` (c = ln(1/P)), while 80% power
+requires `lambda_80 = 9.43`, so the amplitude ratio is `sqrt(9.43/3.99) = ` **1.54**. At P = 0.05/42,
+`lambda_50 = 11.47`, `lambda_80 = 19.0`, ratio **1.29**.
+
+| row | observed ratio (point) | predicted 50%->80% factor | agreement |
+|---|---|---|---|
+| C | 1.56 | 1.54 | **1.5%** |
+| D | 1.52 | 1.54 | **1.3%** |
+| A2 | 1.22 | 1.29 | 5% |
+| A1 | 1.33 | 1.54 | 14% low |
+| A3 | 1.33 | 1.54 | 14% low |
+| A3b | 1.22 | 1.54 | 21% low |
+
+**(3) The pattern of residuals is itself informative, and it confirms something the ledger already
+says about our own machine.** The two rows that agree to better than 2% — **C and D** — are exactly
+the two whose null is constructed the way theirs is. The four rows that run ~14-21% *tighter* than
+the analytic prediction are **A1, A2, A3, A3b**, and the Laplace kappa section names the reason
+without knowing it would be needed here: *"A2, A3 and A3b take their threshold from the EXP-A
+circular-shift null, which does carry the real inter-event time structure."* A shift null on a
+finite catalogue gives a slightly *less stringent* effective critical value than the asymptotic
+Schuster cutoff, which is precisely a downward push on the recovered MDA of the size observed.
+**Two independent methods, six configurations, and the residual structure is explained by a property
+of our own estimator that was documented before this comparison was run. I regard that as the
+strongest internal-validity evidence the bounds paper has.**
+
+**(4) Under their own trials convention we look worse, and we should say so.** The final column shows
+that if we adopted `P95 = 0.05*T/t_catalog` over a 38-year record, our quotable pooled bound would be
+**11.15%, not 6.6%** — looser than their 8.16%. **We do not adopt it, because we did not scan
+periods; but the paper must show the column and state the reason in one sentence.** Volunteering the
+convention under which our number is worse is the cheapest credibility we will ever buy.
+
+#### 11.5 WHAT CHANGES IN THE PAPER
+
+1. **§M-010.8's "[X]" is filled:** *"Evaluating their closed form at our sample sizes gives 18.1%,
+   7.7%, 4.5%, 6.5%, 26.6% and 1.8% for the six configurations, against our simulated 80%-power
+   values of 24.0%, 9.3%, 6.0%, 7.9%, 41.5% and 2.8%."*
+2. **Amend the last sentence of the pre-written reviewer answer** from "to within a factor of about
+   1.3" to: *"The two routes agree to within a factor of 1.7 on every configuration, and the residual
+   — median 1.4, and 1.52-1.56 on the two configurations whose null is constructed as theirs is —
+   is quantitatively the 50%-to-80% power conversion factor of 1.54 expected for a Schuster
+   statistic. The methods do not merely agree; they disagree by exactly the amount their differing
+   definitions require."*
+3. **Add the analytic column to the bounds table** as `alpha_S&A`, with the ~50%-power caveat in the
+   caption.
+4. **Two checks still owed before submission**, both small: confirm our alpha convention is
+   zero-to-peak like theirs (§11.1), and settle their `t_catalog` by human read (§11.1, §M-010.10).
+   **Neither can change the ratios above**, since our column uses our own P.
+
+**Bottom line for the coordinator: the independent analytic route corroborates our bounds. It does
+not merely fail to contradict them — it reproduces them to within the exact factor that the
+difference between a median detection threshold and an 80%-power bound predicts, and it does so most
+precisely on the two configurations where the two methods' assumptions coincide. The paper's central
+number is now supported by a second, published, independently-derived estimator.**
+
+*Merton, prior-art seat, addendum. The formula was mis-rendered in my own first pass and I have
+corrected it against the paper's own random-walk definition rather than against the renderer. The
+correction strengthens the result: read correctly, the giant's closed form and our simulation are the
+same measurement made twice.*

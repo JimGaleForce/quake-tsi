@@ -18,6 +18,24 @@ Popper's **§P4-2** ruling on K-046 is folded into F-009. A **PUBLICATION TRIAGE
 the end — the ranked answer to "what can we publish", with the single next step for each candidate,
 and the one-paper recommendation.
 
+**REVISION 2, SAME DAY, AND IT IS THE MOST IMPORTANT PARAGRAPH IN THIS HEADER.** Merton's **M-010**
+pre-submission dossier landed on the recommended first paper and **ruled several of my own permitted
+sentences unsafe.** All seven of his §M-010.6 items are applied below, verbatim in intent: the
+"first time anyone has run the selection step through a power simulation" sentence is **struck** and
+replaced by his single licensed sentence; "becomes the reference bound in a literature" is
+**struck** — *Science Advances* 12(13) eadz5711 published a California tidal-modulation bound of
+**8.16%** four months ago; "standard practice in this literature" is **instantiated by name** (Ader
+& Avouac 2013; Sirorattanakul & Avouac 2026); **both** F-012 and F-003 PENDING-ATTRIBUTION items are
+marked **ANSWERED** with **no "first" language permitted in any form** outside the one licensed
+sentence; F-003 gains a **mandatory reconciliation sentence** against the same-region published
+non-detection; and F-012 gains the **four-row external-replication table** that is now the paper's
+abstract figure, plus a full M-010.7 attribution block. **Separately, and found by my own
+over-verification pass rather than assigned: κ has been measured** (`results_kappa.json`, Laplace,
+2026-08-12) — **my previous revision's statement that "every bound is optimistic by an unmeasured
+factor" was wrong**, κ is consistent with 1 everywhere, and the bounds and blocking step are updated
+accordingly. **Nothing in M-010 threatens this program's correctness. It threatened our novelty
+language, and the register was the wrong place for that language to survive.**
+
 **How to read an entry.** CLAIM is the sentence a skeptical seismologist would accept as scoped —
 region, magnitude floor, period, method, number. FRAMING (why it matters) is kept separate from
 CLAIM on purpose, and no enthusiasm is allowed to cross that line. PROOF CHAIN gives real hashes
@@ -48,7 +66,7 @@ discrepancies — one of them in an email that has already been drafted for an o
 | F-009 | K-009 ETAS residual field is not white in SoCal | REPRODUCTION + 1 candidate methods delta | success rule met, partial vs spec | attributed (M-001) | INTERNAL |
 | F-010 | The research engine itself (frozen protocols, personas, ledger) | METHODS/PROCESS (candidate) | n/a — not a hypothesis | **PENDING-ATTRIBUTION** | INTERNAL |
 | F-011 | Live ETAS forecaster + globe layer | ENGINEERING ARTIFACT (not a claim) | n/a | n/a | INTERNAL |
-| F-012 | K-035: the tidal corpses re-priced as powered upper bounds | **EXTENSION** (methods delta on our own null) | validated (frozen mandates 1–6 met; a0 arm PASS) | attributed via F-003 + Beeler–Lockner theory line; **PENDING-ATTRIBUTION on the bounds-reporting norm** | **PANEL-READY** |
+| F-012 | K-035 + κ: the tidal corpses re-priced as powered upper bounds (< 6.6% pooled) | **EXTENSION** — an attributed tightening of Ader–Avouac / Sirorattanakul–Avouac | validated (frozen mandates 1–6 met; a0 arm PASS; κ audit PASS) | **attributed (M-010)** — both PENDING items answered; one licensed novelty sentence, no other "first" | **PANEL-READY** |
 | F-013 | K-034: Landers-class remote dynamic triggering detected blind at documented sites; certified floor ~34 kPa | REPRODUCTION (positive control) + **licensing instrument** | validated PASS (qualified — one of four family readings fails) | attributed (sealed literature, Hill et al. 1993; vdE&B 2010) | **PANEL-READY** |
 | F-014 | L-1: the standard transient link function is void; two-branch bracket | **EXTENSION** (methods) | provisional — arithmetic validated, link unclaimed | attributed (Dieterich rate-state; K-034 own data) | INTERNAL |
 | F-015 | EQ-23/EQ-24 engine: holdout hash-gate, generator-not-evidence, planted-signal tests | METHODS/SOFTWARE ARTIFACT | n/a — not a hypothesis | **PENDING-ATTRIBUTION** | INTERNAL |
@@ -277,11 +295,25 @@ documented in `KOSMOS_METHODOLOGY.md`). Data and method credits: Lu, Xue, Yue, Z
 (2025) for the openly shared SoCal catalogs and the §2.5 FM stress-resolution method; SCEDC and
 the Yang–Hauksson–Shearer FM catalog; NCEDC/NCSS for Long Valley; NGL MIDAS. The self-correction
 at §14b (overlapping-window autocorrelation dressed as coherence) is the program's own.
-**PENDING-ATTRIBUTION, narrow:** Merton has not searched the tidal-triggering-forecast-skill
-literature (Vidale et al. 1998; Cochran, Vidale & Tanaka 2004; Beeler & Lockner 2003; Tanaka;
-Métivier; Ide; Scholz; van der Elst) to establish whether "static phase maps have no forecast
-skill" has been shown before. My prior: the *physics* literature is enormous and the *forecast
-skill* framing may well be less crowded — but I will not say "first" without his trail.
+**PENDING-ATTRIBUTION — ANSWERED (Merton M-010.6 item 5, 2026-08-11). NO "FIRST" LANGUAGE IS
+PERMITTED FOR THIS ENTRY IN ANY FORM.** The question was whether "static phase maps have no forecast
+skill" has been shown before. **Not in that exact geometry — but the adjacent claims are shown, and
+by two papers that a reviewer will hold.** **Hirose, Maeda & Kamigaichi (2022), *Earth, Planets and
+Space* 74:10, doi:10.1186/s40623-021-01564-4** built a forecast model on the temporal variation of
+tidal correlation, scored it on a **Molchan error diagram**, and found it *"as ineffective as random
+guessing"* for Mw ≥ 7.0 with a best probability gain of ~1.7 (Tonga-Kermadec, n = 729, 1977–2020).
+**Wang, W. & Shearer, P. M. (2015), *JGR Solid Earth* 120(9), 6317–6328** ran the structural twin of
+our 42-bin scan in central Japan — Schuster tests on spatiotemporal cells at 0.2°/0.5°/1.0° ×
+100/200/400 d — and found low-p cells **no more numerous than chance**. **Our claim is a rediscovery
+in a new geometry** (a *static spatial susceptibility map*, trained, frozen, and scored
+out-of-sample on a *later* window, with a hash-frozen pre-registration and an anti-leak control)
+**and it must be stated as complementary to theirs, never as a first.** My own prior — that the
+forecast-skill framing "may well be less crowded" — is **partly vindicated** (it is a thin
+literature; exactly one scored tidal forecast model was found) **and partly wrong** (it is not
+empty), and that is recorded rather than quietly dropped. Also now attributable and previously
+missing from this block: **Vidale, Agnew, Johnston & Oppenheimer (1998), *JGR* 103(B11),
+24,567–24,572**, whose non-significant +2% rate ratio on 13,042 SoCal events is itself an informal
+upper bound of the same kind F-012 formalises.
 
 **PROOF CHAIN.**
 - Protocols, all hashed in `download_log.md` before the corresponding analysis:
@@ -330,7 +362,17 @@ skill* framing may well be less crowded — but I will not say "first" without h
    measurement it becomes a *systematics* problem, not a noise problem.
 4. The bin scan does find significant modulation in the San Jacinto/Anza area independently in
    both catalogs, and elevated-but-underpowered amplitude at Coso. The null is about the *map's
-   forecast skill*, not about the absence of modulation anywhere.
+   forecast skill*, not about the absence of modulation anywhere. **MANDATORY RECONCILIATION
+   SENTENCE (Merton M-010.6 item 7), which must travel with this bullet:** *Sirorattanakul & Avouac
+   (2026) report no statistically significant semidiurnal tidal modulation anywhere in Southern
+   California at M ≥ 2.5 on 5,000-nearest-earthquake neighbourhoods, so our San Jacinto/Anza bin-scan
+   detections are not established as a regional feature; the two results are not in contradiction —
+   different magnitude floor (M ≥ 1.5 vs M ≥ 2.5), different spatial support (0.4° bins vs
+   nearest-neighbour clouds), different statistic (FM-resolved phase histogram vs Schuster test) —
+   and our own K-035 power audit prices the single-bin design at a 25% minimum detectable amplitude,
+   which is where a train-window detection of this kind should be expected to live.* **This entry may
+   not describe the Anza signal as an established regional feature, and any text that does is
+   corrected on sight.**
 5. Long Valley: 19,787 declustered events, one caldera, one window — and see the hash defect
    above.
 
@@ -344,11 +386,13 @@ plus the R2-1(c) systematics arm. **The nulls are now upper bounds, and F-003 no
 alone — it stands as the falsification half of a bounds paper.** Two consequences travel back into
 this entry and are binding on any restatement of it:
 1. **The R2-1(b) shortfall number is now measured, not estimated.** The best bound this design
-   reaches is **6.3% at 80% power** (pooled over all 42 eligible bins, n = 3,920) against a
-   Beeler–Lockner theory line of **1%** — a factor of **6.3**, not "three orders of magnitude" and
-   not "10×". The full-catalogue intensity-likelihood configuration reaches **2.8%** (n = 23,465),
-   a factor of 2.8 — **the closest this program has come to the theory line, and it still does not
-   contact it.** `contacts_theory: false` on all six rows.
+   reaches is **6.6% at 80% power** (pooled over all 42 eligible bins, n = 3,920, κ-corrected
+   conservative; 6.3% before the κ correction) against a
+   Beeler–Lockner theory line of **1%** — a factor of **6.6**, not "three orders of magnitude" and
+   not "10×". The full-catalogue intensity-likelihood configuration reaches **3.0%** (n = 23,465),
+   a factor of 3.0 — **the closest this program has come to the theory line, and it still does not
+   contact it.** `contacts_theory: false` on all six rows of `results_k035.json`;
+   `any_bound_contacts_theory_after_kappa: false` on all six rows of `results_kappa.json`.
 2. **A method limit was found that F-003's text did not know about.** At full-catalogue n the
    off-tidal negative-control line **fails** (reject rate 0.34 against a nominal 0.05), because ETAS
    clustering deposits power at the 11-day control line faster than the statistical error shrinks.
@@ -1128,49 +1172,131 @@ M ≥ 1.5 FM-matched events, 1981–2018, α = 0.05, with the null-amplitude arm
 verified in advance and the bin-selection step simulated end to end, the **minimum detectable
 seismicity-rate modulation at 80% power** is:
 
-| configuration | n | MDA at 80% power | ÷ 1% theory line |
-|---|---|---|---|
-| EXP-A per-bin train statistic (the selected bin) | 245 | **24.5%** | 24.5 |
-| Coso Fig 4c replication | 113 | **40.9%** | 40.9 |
-| EXP-A end-to-end pipeline (1-of-42 selection + pooled shift test) | 3,920 | **9.8%** | 9.8 |
-| EXP-A pooled on the 22 train-null control bins (the quoted corpse) | 1,906 | **8.0%** | 8.0 |
-| EXP-A pooled over all 42 eligible bins (design upper limit) | 3,920 | **6.3%** | 6.3 |
-| Full-catalogue Cox intensity likelihood | 23,465 | **2.8%** | 2.8 |
+| configuration | n | MDA at 80% power | κ | **κ-corrected (conservative)** | S&A analytic (~50% power) | ratio | ÷ 1% theory line |
+|---|---|---|---|---|---|---|---|
+| EXP-A per-bin train statistic (the selected bin) | 245 | 24.5% | 0.959 | **25.3%** | 18.1% | 1.40 | 25.3 |
+| Coso Fig 4c replication | 113 | 40.9% | 1.030 | **43.8%** | 26.6% | 1.65 | 43.8 |
+| EXP-A end-to-end pipeline (1-of-42 selection + pooled shift test) | 3,920 | 9.8% | 0.916 | **10.2%** | 7.7% | 1.33 | 10.2 |
+| EXP-A pooled on the 22 train-null control bins (the quoted corpse) | 1,906 | 8.0% | 0.996 | **8.5%** | 6.5% | 1.31 | 8.5 |
+| **EXP-A pooled over all 42 eligible bins (design upper limit)** | 3,920 | 6.3% | 0.916 | **6.6%** | 4.5% | 1.46 | 6.6 |
+| Full-catalogue Cox intensity likelihood | 23,465 | 2.8% | 0.978 | **3.0%** | 1.8% | 1.63 | 3.0 |
 
-**No configuration contacts the theory line** (`contacts_theory: false`, all six rows). The
-falsifiable consequence: *the tidal-phase forecast nulls in F-003 are consistent with a true
-seismicity-rate modulation anywhere below ~6–8% in the pooled designs and below ~25–41% in the
-single-bin designs, and therefore say nothing whatever about a rate-state-predicted ~1% response.*
-Separately, the intensity-likelihood estimator is **not more powerful than the phase histogram** at
-matched n (2.83% vs 2.93% at the full catalogue; 7.21% vs 7.31% pooled) — the gain the program hoped
-for from a Cox likelihood is ~3%, not a factor.
+*The analytic column is Sirorattanakul & Avouac (2026) Eq. 5 evaluated at our own n and our own P
+(Merton M-010.11), and it is a **~50%-power median detection threshold, not an 80%-power bound** —
+the caption must say so. It is not a competitor to our column; it is the independent second route,
+and the two agree on every row to within a factor of 1.7.*
+
+**No configuration contacts the theory line** — `contacts_theory: false` on all six rows of
+`results_k035.json`, and `any_bound_contacts_theory_after_kappa: false` on all six rows of
+`results_kappa.json`, all three readings. The falsifiable consequence: *the tidal-phase forecast
+nulls in F-003 are consistent with a true seismicity-rate modulation anywhere below ~6.6–8.5% in the
+pooled designs and below ~25–44% in the single-bin designs, and therefore say nothing whatever about
+a rate-state-predicted ~1% response.* Separately, the intensity-likelihood estimator is **not more
+powerful than the phase histogram** at matched n (2.83% vs 2.93% at the full catalogue; 7.21% vs
+7.31% pooled) — the gain the program hoped for from a Cox likelihood is ~3%, not a factor.
+
+**THE κ MEASUREMENT LANDED (2026-08-12), AND IT WENT THE OTHER WAY FROM MY PRIOR.** My previous
+revision recorded that "every bound in the table is optimistic by an unmeasured factor". **It is
+not.** Laplace measured the clustering variance inflation of the tidal-phase resultant with a
+truncated pair-correlation estimator against a matched-jitter reference (600 shifts, 6 jitter
+realizations, T = 10 d primary with a ladder to 30 d), and **κ is consistent with 1 in every one of
+the six configurations** (0.916–1.030; largest 1.0303). The correction is therefore ~1–6%, not a
+factor, and two rows move *down*. The pooled design-limit bound moves **6.29% → 6.02% at the point
+estimate, → 6.59% in the deliberately adversarial conservative reading**, and stays in single
+digits. **The number the paper quotes is the conservative one, 6.6%.** Bias audit PASSES against its
+pre-declared rule: two density-matched Poisson controls return κ = 0.9982 ± 0.0220 and
+0.9314 ± 0.0559 against a truth of 1, and a **planted 3× overdispersion is recovered as
+2.9502 ± 0.0413 against a truth of 2.9866 — a ratio of 0.9878, i.e. recovered to 1.2%.** Precision
+is sufficient to have seen a real effect: a true κ of 1.10 would have resolved at better than 2 SE
+in three configurations, and κ = 1.5 would have been unmissable everywhere. **This is an informative
+null on κ, not an underpowered one.** One row crosses a round number and the paper must respect it:
+the end-to-end pipeline is **~10%, not "<10%"**.
 
 **FRAMING (kept separate, per charter, and I want the program to feel this one).** This is the
 entry that converts a graveyard into an instrument. Every pre-registered null this program produced
 in July was, in the honest accounting, an absence of evidence. K-035 turns each one into a number a
 reviewer can use: *"we would have seen it if it were bigger than X, and here is the simulated proof,
 including the selection step."* **That is the difference between a result nobody can cite and a
-result that becomes the reference bound in a literature.** It is also, per unit of compute
-(12.3 minutes), the highest-value artifact on the program's disk.
+result that can be compared with, and is tighter than, the published bounds for California and
+Nepal.** It is also, per unit of compute (12.3 minutes for K-035, 10.8 for κ), the highest-value
+artifact on the program's disk.
 
 **CLASS — EXTENSION.** Prior art: the null it prices is our own (F-003, Gale 2025 lineage), and the
-1% theory line is **Beeler & Lockner (2003)**'s. Our measurable delta over the standard practice in
-this literature: (i) the MDA is computed **through the actual selection pipeline** (train-side
+1% theory line is **Beeler & Lockner (2003)**'s. **The standard practice this entry improves on is
+named, not gestured at: the closed-form minimum-detectable-amplitude lineage of Ader & Avouac
+(2013) and Sirorattanakul & Avouac (2026), whose analytic threshold `α = 2·√( −(ln P + 1)/N )` with
+a multiplicity scaling over trial *periods* is the field's established instrument.** Our measurable
+delta against those two papers by name: (i) the MDA is computed **through the actual selection
+pipeline** (train-side
 1-of-42 bin selection then pooled test scoring), not for a fixed-n single test; (ii) an **a = 0
 false-positive arm is run first and must hold before any other arm is read** — it does, 8 of 8
 phase-histogram configurations and 5 of 5 intensity-likelihood configurations inside a binomial 99%
 band of [0.015, 0.095]; (iii) an explicit **systematics arm** with named nuisance lines (S1, S2, K1,
-P1, Msf) and two off-tidal control lines.
+P1, Msf) and two off-tidal control lines; (iv) a measured, bias-audited κ propagated into every
+bound. **None of these is "bounds instead of nulls" as a concept — that concept is theirs.**
 
-**ATTRIBUTION.** Beeler, N. M. & Lockner, D. A. (2003), *JGR* 108(B8), 2391 — the ~1% rate-modulation
-prediction at 1–3 kPa tidal stressing that supplies the theory line. Lu, Xue, Yue, Zhuang & Zhao
-(2025) for the catalogs and the §2.5 FM stress-resolution method; SCEDC and the
-Yang–Hauksson–Shearer FM catalog. The null being priced is our own. **PENDING-ATTRIBUTION, narrow
-but real:** Merton has not searched (a) the tidal-triggering forecast-skill literature (inherited
-from F-003) and (b) **whether anyone has previously published minimum-detectable-modulation bounds
-for tidal-triggering searches at all.** My prior is that upper bounds are stated informally in this
-literature and rarely simulated through a selection step — but "rarely" is not a citation and I will
-not write "first".
+**FOUR FREE EXTERNAL REPLICATIONS OF OUR BOUND (Merton M-010.5). This table is the paper's abstract
+figure.** It shows the field converging, it credits everyone, and it makes our number the tightest
+without a word of novelty rhetoric.
+
+| source | region | statistic | bound on tidal modulation |
+|---|---|---|---|
+| Vidale, Agnew, Johnston & Oppenheimer (1998) | SoCal, SAF/Calaveras, n = 13,042 | rate ratio | +2%, not significant (informal bound) |
+| Ader & Avouac (2013) | Nepal | Schuster spectrum | **< 18%** at tidal periods |
+| **Sirorattanakul & Avouac (2026)** | **California, M ≥ 2.5** | analytic threshold at nominal significance | **< 8.16%** (M2) |
+| **This work (F-012 + κ)** | **SoCal, M ≥ 1.5, FM-resolved** | **simulated, 80% power, through the selection step** | **< 6.6%** pooled (conservative) |
+
+**ATTRIBUTION.** **Sirorattanakul, K. & Avouac, J.-P. (2026), "Seismic rhythms: Earthquake response
+to tectonic, hydrological, and tidal forcing in California," *Science Advances* 12(13), eadz5711,
+doi:10.1126/sciadv.adz5711** — *the standing California bound and the strongest competitor to this
+entry*: no statistically significant semidiurnal tidal modulation in either Northern or Southern
+California, with the amplitude bounded **below 8.16%** of the background rate by the closed form
+**`α = 2·√( −(ln P + 1)/N )`** (their Eq. 5, i.e. `α² = −4(ln P + 1)/N`, from the Schuster random
+walk `P = exp(−D²/N)`) and a multiplicity scaling `P95 = 0.05·T/t_catalog` over trial periods.
+**Two conventions must travel with any quotation of their number, or a reviewer catches a factor of
+2: their α is the ZERO-TO-PEAK fractional amplitude (peak-to-trough is 2α), and it is the amplitude
+at which the Schuster statistic's *expected* value reaches the critical value — a ~50%-power median
+detection threshold, not an 80%-power bound.** That second fact is what makes their number and ours
+commensurable and it is the load-bearing sentence of the whole comparison.
+**This must be named in the paper's abstract, alongside Beeler & Lockner.** **Ader, L. &
+Avouac, J.-P. (2013), *EPSL* 377–378, 97–105** — the Schuster *spectrum* and the closed-form
+minimum-detectable-amplitude lineage; also the published explanation of our own 11-day control-line
+failure (clustering-driven p-value drift at periods beyond the aftershock decay time). **Wang, W. &
+Shearer, P. M. (2015), *JGR Solid Earth* 120(9), 6317–6328** — gridded tidal-p cells in central
+Japan found no more numerous than chance; the structural twin of our 42-bin scan, eleven years
+earlier, and the paper that diagnosed grid-selection sensitivity. **Gross, E. & Vitells, O. (2010),
+*Eur. Phys. J. C* 70, 525** — the trials-factor formalism we implement by simulation rather than
+analytically. **Beeler, N. M. & Lockner, D. A. (2003), *JGR* 108(B8), 2391** — the ~1%
+rate-modulation prediction that supplies the theory line, *and* the sample-size statement that our
+n = 23,465 / 3.0% row sits in tension with. **Wang, Shearer, Vidale, Xu, Trugman & Fialko (2022),
+*EPSL* 579, 117335** — the source of the Coso Fig 4c our table prices; **its citation belongs in this
+entry, not only in F-001's.** **Reasenberg (1985)** and the declustering tradition for the κ concern.
+Lu, Xue, Yue, Zhuang & Zhao (2025) for the catalogs and the §2.5 FM stress-resolution method; SCEDC;
+the Yang–Hauksson–Shearer FM catalog. The null being priced is our own.
+
+**PENDING-ATTRIBUTION — BOTH ITEMS ANSWERED (Merton M-010, 2026-08-11). No "first" language is
+permitted in any form except the one licensed sentence below.**
+- *(a) the tidal forecast-skill literature* — **ANSWERED.** It exists and it is null:
+  **Hirose, Maeda & Kamigaichi (2022), *Earth, Planets and Space* 74:10** scored a
+  tidal-correlation forecast model on a Molchan error diagram over Tonga-Kermadec and found it *"as
+  ineffective as random guessing"* at Mw ≥ 7.0, with a best probability gain of ~1.7. **F-003's
+  "no forecast skill" is a rediscovery in a new geometry, not a first.**
+- *(b) whether minimum-detectable-modulation bounds have been published for tidal searches* —
+  **ANSWERED: YES, and my stated prior was wrong.** I wrote that "upper bounds are stated informally
+  in this literature". **They are stated *formally*, with a closed-form estimator** — Ader & Avouac
+  (2013), Sirorattanakul & Avouac (2026), and prospectively Beeler & Lockner (2003)'s
+  ">13,000 earthquakes to detect". **Recorded here as my own prior having been wrong, per charter.**
+- **The single licensed novelty sentence, to be used verbatim and nowhere expanded:**
+  > Minimum detectable amplitudes for periodic seismicity modulation have been reported analytically
+  > (Ader & Avouac, 2013; Sirorattanakul & Avouac, 2026), and the sensitivity of tidal p-values to
+  > the choice of spatiotemporal cell has been documented (Wang & Shearer, 2015). To our knowledge
+  > the present study is the first to combine the two: to compute the minimum detectable modulation
+  > at a stated statistical power by simulating the full analysis pipeline, *including the
+  > data-driven selection of the reported cell*, and to verify the simulator's false-positive rate at
+  > zero injected amplitude before reading any power result.
+- **Forbidden forms, explicitly:** "the first powered upper bound on tidal modulation" (false);
+  "the reference bound in this literature" (*Science Advances* has one); "bounds, not nulls" as a
+  bare slogan implying the framing is ours (it is at least thirteen years old).
 
 **PROOF CHAIN.**
 - Protocol: `HYPOTHESIS_LEDGER.md` R2-2 K-035 verdict, mandates 1–6, plus R2-1(b) and R2-1(c);
@@ -1198,38 +1324,85 @@ not write "first".
    tidal result** — the tidal-band lines stayed calibrated in the a = 0 arm — but the honest reading
    is that **the 2.8% full-catalogue bound is not yet safe to quote as a stand-alone upper limit**
    until the test conditions on an ETAS baseline (K-033's Cox-ETAS) rather than a stationary λ₀.
-   **The safe quotable bound today is the 6.3% pooled figure, whose control line holds.**
-2. All four target samples are the **declustered** SCSN catalogue, modelled as independent draws
-   from a thinned ETAS intensity. Residual Hawkes clustering with effective cluster size κ inflates
-   **every** MDA above by √κ. κ is not measured. Every number in the table is therefore an
-   *optimistic* bound.
+   **The safe quotable bound today is the 6.6% pooled figure, whose control line holds.**
+   **Merton M-010.5 supplies the published explanation and it must be cited rather than presented as
+   an unexplained anomaly:** this is exactly Ader & Avouac (2013)'s *"drifting P values at periods
+   larger than the decay time of aftershocks"* signature, which is why they built the Schuster
+   *spectrum*. Our two off-tidal control lines at 11.0 d and 16.5 d are a two-point special case of
+   their instrument, and **we must say so.**
+2. All target samples are the **declustered** SCSN catalogue, modelled as independent draws from a
+   thinned ETAS intensity. **κ has now been measured (2026-08-12) and is consistent with 1 in all six
+   configurations**, so the residual-clustering inflation is ~1–6% rather than a factor — but κ
+   prices only the **tidal-phase-coherent temporal** pair covariance, truncated at T = 10 d with a
+   ladder to 30 d. **It does not price spatial or magnitude clustering effects on the bin-selection
+   step**, and that gap is open.
 3. The intensity likelihood is evaluated on the same 36 phase bins as the histogram, so the
    comparison isolates the estimator, not the binning.
 4. It does not bound the *physical* tidal response — it bounds what **this design at this n** could
    have seen. Bigger n is available (global catalogs) and would move these numbers.
 5. **It does not include the F-016 instrument response.** The MDAs above are computed against a
    phase clock whose own null response has since been measured at ~2% for our convention on
-   SoCal-like mixes. **A 2% instrument response sitting under a 6.3% bound is not fatal, but it is
-   not negligible either, and the bound must be restated once F-016 is calibrated.** This is the
+   SoCal-like mixes. **A 2% instrument response sitting under a 6.6% bound is not fatal, but it is
+   not negligible either, and the bound must be restated once F-016 is calibrated.** With κ
+   delivered, **this is now the only stated obstacle left in this entry's list**, and it is the
    single most important open coupling in the register.
+6. **It is not the first bound of its kind, and the entry says so in its own limitations.** See the
+   replication table above: Ader & Avouac (2013) bounded Nepal at < 18%, and Sirorattanakul & Avouac
+   (2026) bounded California at < 8.16% four months before us. **Ours is tighter and it is measured
+   at a stated power through a simulated selection; it is not a new kind of object.**
+7. **It does not include the centroid-vs-origin location sensitivity** that Bradley & Hubbard (2024)
+   showed matters for Cochran et al. (2004). For SoCal M ≥ 1.5 it is likely negligible — **but the
+   paper must say so in one sentence rather than leave it unaddressed.**
 
-**HOSTILE-REVIEWER OBJECTION, PRE-ANSWERED.** *"You are publishing a null with a bound six times
-above the effect you were looking for. Why is that a paper?"* Answer: because the literature this
-sits in routinely reports tidal-phase modulations at the 5–20% level from samples of a few hundred
-events, and this is the first time anyone has run the selection step through a power simulation and
-said what such a design can actually resolve. **The bound is the contribution; the null is the
-occasion for it.** Second objection: *"your own control line fails at large n."* Answer: we found
-that, we report it in the headline rather than the limitations, and it is the reason our quotable
-number is 6.3% and not 2.8%.
+**HOSTILE-REVIEWER OBJECTION, PRE-ANSWERED — and Merton M-010.8 has replaced my guess about which
+objection arrives with the actual one.** The citation to pre-empt is **not** Vidale (1998) or
+Cochran (2004); it is **Sirorattanakul & Avouac (2026)** — same region, same year, higher-profile
+venue, broader catalogue coverage, and it already contains an amplitude bound. The objection arrives
+as: *"Sirorattanakul and Avouac analysed all of California, reported no significant semidiurnal
+modulation, and bounded the amplitude at 8.16% with a closed-form expression, no Monte Carlo, and a
+multiplicity correction. You ran a large simulation to get 6.6% for a subset of the same region.
+What is the contribution?"* **The pre-written answer, which belongs in the paper's discussion so a
+reviewer meets it before raising it:** their threshold is the amplitude at which the Schuster
+p-value crosses the significance cutoff — a detection threshold at roughly even odds, **not a bound
+at a stated power** — and their multiplicity correction prices the number of trial *periods*, not the
+number of trial *places*; our design selects one bin out of forty-two on training data and reports
+it, so the quantity a reader needs is the modulation this pipeline, selection included, would
+recover **80% of the time**; we obtain it by injection through the full pipeline after verifying the
+simulator's false-positive rate at zero injected amplitude in 13 of 13 configurations; and
+**evaluating their closed form at our sample sizes is reported alongside ours, so the two methods are
+compared rather than asserted against each other.** **The final sentence, now that M-010.11 has run
+the cross-check, is stronger than the one I drafted and replaces it verbatim:** *"The two routes
+agree to within a factor of 1.7 on every configuration, and the residual — median 1.4, and 1.52–1.56
+on the two configurations whose null is constructed as theirs is — is quantitatively the 50%-to-80%
+power conversion factor of 1.54 expected for a Schuster statistic. The methods do not merely agree;
+they disagree by exactly the amount their differing definitions require."* **The residual structure
+is itself the internal-validity evidence:** the two rows agreeing to better than 2% (C and D) are
+exactly the two whose null is built the way theirs is, and the four running 14–21% tighter are the
+four that take their threshold from the EXP-A circular-shift null, which carries the real
+inter-event time structure and is therefore slightly less stringent than the asymptotic Schuster
+cutoff — **a property of our estimator documented before this comparison was ever run.** And we
+volunteer the column under which we look worse: **under their literal period-trials convention over
+a 38-year record our pooled bound would be 11.15%, not 6.6% — looser than their 8.16%.** We do not
+adopt it, because we did not scan periods, but the paper shows the column and says why in one
+sentence. Second objection: *"your own control line fails at large n."*
+Answer: we found it, we report it in the headline rather than the limitations, it is the reason our
+quotable number is 6.6% and not 3.0%, and **Ader & Avouac (2013) already named the mechanism.**
 
-**TIER: PANEL-READY.** Shareable today with Vidale, Bürgmann, Xue and Lu, with the κ caveat, the
-failed full-catalogue control line, and the F-016 coupling in the same paragraph as the numbers.
+**TIER: PANEL-READY.** Shareable today with Vidale, Bürgmann, Xue and Lu, with the κ result, the
+failed full-catalogue control line, the F-016 coupling, and **the Sirorattanakul–Avouac comparison**
+in the same paragraph as the numbers.
 
-**SINGLE MISSING VERIFICATION TO REACH PUBLISHABLE.** **Measure κ, the effective cluster size, and
-re-quote every MDA as MDA·√κ.** Every bound in the table is currently optimistic by an unmeasured
-factor, and that is the first thing a reviewer with a Hawkes background will ask. It is arithmetic
-on data already on disk. (Second, and it is the same afternoon: fold in the F-016 instrument
-response so the bound is stated against a calibrated clock.)
+**SINGLE MISSING VERIFICATION TO REACH PUBLISHABLE — κ IS DELIVERED; THE STEP HAS MOVED.**
+~~Measure κ~~ — done 2026-08-12, `results_kappa.json`, audit PASS, κ ≈ 1 everywhere, bounds re-quoted
+above. **The blocking step is now: a human read of Sirorattanakul & Avouac (2026)'s Materials and
+Methods.** Merton flags this as the single highest-priority verification in his dossier, and he is
+right: **the entire hostile-reviewer answer turns on the claim that they do *not* run an
+injection-based power simulation, and that is an absence — the one thing a WebFetch pass is worst at
+establishing.** If they do run one, our narrow novelty sentence is false and must be withdrawn
+before submission rather than after. (The analytic cross-check that used to sit here is **delivered**
+— M-010.11, and it corroborates: see the bounds table's analytic column. The remaining companion is
+still cheap: add a Molchan error diagram and probability gain to F-003's scoring so our null is
+directly commensurable with Hirose et al. (2022)'s.)
 
 ---
 
@@ -1590,9 +1763,14 @@ thing here. Four gaps, stated as a checklist:**
    also may not borrow the credibility of the entries that have it**, and the program's whole brand
    is the freeze record.
 2. **There is no results JSON.** The headline numbers live in a **module docstring**
-   (`weifan_phase_null.py`) and in a **draft email**. That is not a primary artifact. Every other
-   entry in this register points at a `results_*.json`; this one cannot, and until it can, **no
-   number from it may appear in an outgoing communication.**
+   (`weifan_phase_null.py`) and in an **email**. That is not a primary artifact. Every other entry
+   in this register points at a `results_*.json`; this one cannot. **Numbers from this entry have
+   already gone to an outside collaborator (see audit finding #7). They were correct — Popper's
+   pre-send audit and my own deterministic re-run both confirm the instrument figure — but they were
+   not *checkable* from the public repository by the person receiving them, and that is the gap this
+   item names.** The freeze must also report the **instrument response and the Monte Carlo sampling
+   floor as two separately labelled quantities**, because conflating them is what produced finding
+   #7 in the first place.
 3. **`DRAFT_WEIFAN_REPLY.txt` is gitignored**, and `weifan_phase_null.py` lives at the repository
    *parent* (`D:\CODE\git\quake\`), **outside the public replication repo.** The proof chain has no
    public commit. The only committed trace is `1ba76f6`, which documents the defect in
@@ -1633,10 +1811,20 @@ standard and undiscussed; and whether the "which convention" question has been p
   `exp_c_susceptibility_drift.py` and `exp_c2_anza_coso.py` **do not** — *"treat their phase
   amplitudes as uncalibrated."* **That disclosure is itself a register-worthy act and it protects
   F-003, whose confirmatory arm is corrected.**
-- **Independent re-execution by me this session** (6 seeds, 200k events each, reduced from the
-  docstring's 20 × 2M): mixed 6.7–11.6% (median 10.5%), cosine −11.6% to +7.3%, pure M2 0.43%,
-  M2+S2 0.31%, diurnal-dominant 18.9%. **The mechanism reproduces. The exact headline figures do
-  not all reproduce — see over-quote findings #6 and #7.**
+- **Independent re-execution by me this session, in two modes.** *(a) Monte Carlo* (6 seeds, 200k
+  random event times each, reduced from the docstring's 20 × 2M): mixed 6.7–11.6% (median 10.5%),
+  cosine −11.6% to +7.3%, pure M2 0.43%, M2+S2 0.31%, diurnal-dominant 18.9%. *(b) Deterministic
+  uniform event grid*, which removes sampling noise and isolates the instrument: **pure M2 0.0034%,
+  M2+S2 0.0100%** (4 seeds each, spanning 0.0015–0.0191%), **mixed 9.45%.** A scaling check confirms
+  the interpretation: the semidiurnal Monte Carlo value falls 2.14% → 0.086% as N goes 12,500 →
+  800,000, tracking `√(π/N)` rather than converging to a bias. **The mechanism reproduces, and the
+  two modes must never again be quoted as if they measured the same thing** — see finding #7.
+- **THE TWO QUANTITIES, NAMED, BECAUSE THIS ENTRY'S WHOLE VALUE DEPENDS ON KEEPING THEM APART.**
+  The **instrument response** is what the anchor convention does to uniform-in-time events:
+  ~0.003–0.019% for purely semidiurnal tides (a genuine flat null — the mechanism check), and
+  **~9–10% for mixed diurnal/semidiurnal tides**. The **Monte Carlo sampling floor** is `√(π/N)` and
+  is a property of the run, not the clock — 0.40% at N = 200,000. **The finding of this entry is the
+  first quantity. The second is bookkeeping.**
 - Replication status: **PROVISIONAL, synthetic-only, uncommitted.**
 
 **WHAT IT DOES NOT SHOW.** It does not show that any published tidal-triggering result is wrong —
@@ -1726,7 +1914,7 @@ distance to submission. Every row's "next single step" is a real, scoped, costed
 
 | # | candidate paper | register basis | class it would be submitted as | tier of the underlying claims | venue shape | **the SINGLE next step that levels it up** | distance |
 |---|---|---|---|---|---|---|---|
-| **1** | **Bounds, not nulls: what a tidal-phase forecast experiment in Southern California can actually resolve** | **F-012 + F-003** | EXTENSION (pre-registered nulls converted to powered upper bounds, with the selection step simulated) | PANEL-READY | *SRL* / *BSSA* methods-and-results; *Seismica* | **Measure κ (effective cluster size) and re-quote every MDA as MDA·√κ.** All six bounds are currently optimistic by an unmeasured factor. Arithmetic on data on disk. | **closest — one verification + ~4 weeks writing** |
+| **1** | **How well can a tidal-phase forecast experiment in Southern California resolve a rate-state-scale effect? Powered upper bounds through the selection step** *(M-010.7's suggested title; "bounds, not nulls" may not be the title — the framing is Ader & Avouac's)* | **F-012 + F-003** | EXTENSION — an explicitly-attributed **tightening** of Ader–Avouac / Sirorattanakul–Avouac, with the selection step simulated | PANEL-READY | *SRL* / *BSSA* methods-and-results; *Seismica* | **A human read of Sirorattanakul & Avouac (2026) Materials and Methods**, to confirm they run no injection-based power simulation. The whole novelty sentence rests on that absence, and WebFetch cannot establish an absence. *(κ: DELIVERED 2026-08-12.)* | **closest — one read + ~4 weeks writing** |
 | **2** | **The null response of anchor-based tidal phase clocks** | **F-016** | NEW APPLICATION, candidate **NEW** | INTERNAL (PENDING-VALIDATION + PENDING-ATTRIBUTION) | *SRL* short methods note; *Seismica* | **Freeze a protocol, re-run the calibration into a committed `results_phase_clock_null.json`, and add one real tidal stress series.** One afternoon; fixes four gaps at once. Then Merton's convention search. | **highest ceiling — 2 steps, ~6 weeks** |
 | **3** | **A pre-registered positive control for remote dynamic triggering, and the link function it breaks** | **F-013 + F-014** | REPRODUCTION (control) + EXTENSION (the S-14(c) bracket as proposed community practice) | F-013 PANEL-READY / F-014 INTERNAL | *SRL* / *GRL* (short) | **A supervisor- or third-party-authored re-seal of the literature file, and a re-score of P3 and P4 against it.** D1 is the one deviation a reviewer can neither check nor forgive. | **one step for F-013; F-014 needs Merton too** |
 | **4** | **The engine / miner as an open methods artifact** | **F-015** (+ F-010) | METHODS/SOFTWARE | INTERNAL, PENDING-ATTRIBUTION | *JOSS*; or a reproducibility section inside paper #1 | **Merton's dossier on pyCSEP / EarthquakeNPP / leakage-guard prior art.** My prior is REDISCOVERY on the harness, leaving at most the hash-gate. Worth knowing *before* a week of writing. | **blocked on a search that will probably shrink it** |
@@ -1758,14 +1946,23 @@ preparation.**
 
 ## THE ONE PAPER TO WRITE FIRST
 
-### *Bounds, not nulls: what a tidal-phase forecast experiment in Southern California can actually resolve* — F-012 + F-003.
+### *How well can a tidal-phase forecast experiment in Southern California resolve a rate-state-scale effect? Powered upper bounds through the selection step* — F-012 + F-003.
+
+*(Working title per Merton M-010.7. The earlier title "Bounds, not nulls" is **withdrawn**: that
+framing is Ader & Avouac's and Sirorattanakul & Avouac's, not ours, and a title implying otherwise
+is refutable by any reviewer holding either paper.)*
 
 **Why this one.** It is the only candidate where the science is finished, the tier is already
 PANEL-READY, the proof chain is complete and hash-verified, the controls are the strongest in the
 register (an a = 0 false-positive arm that had to pass before any power arm could be read, and it
-passed 13 of 13 configurations inside a binomial 99% band), and the remaining work is one afternoon
-of arithmetic plus writing. Everything else on the list needs a decision from Merton, a re-seal from
-a second party, or an artifact that does not yet exist. **It is also the paper that plays to what
+passed 13 of 13 configurations inside a binomial 99% band), the κ measurement has landed with its
+own bias audit passing, and the remaining work is one literature read plus writing. Everything else
+on the list needs a decision from Merton, a re-seal from a second party, or an artifact that does
+not yet exist. **And Merton's M-010 dossier, far from weakening it, handed it its abstract figure:
+three independent published bounds — Vidale (1998) informal, Ader & Avouac (2013) at < 18% in Nepal,
+Sirorattanakul & Avouac (2026) at < 8.16% in California — bracket ours from the loose side. A
+powered upper bound agreeing with two independent analytic bounds in two regions is about as
+replicated as a first paper's result can be.** **It is also the paper that plays to what
 this program is actually best at.** We ran a multi-angle pre-registered falsification of our own
 prior claim, killed our own most attractive intermediate finding when a cross-catalog control
 contradicted it, and then — instead of publishing "we found nothing" — went back and measured what
@@ -1775,55 +1972,87 @@ the design could have found. **That sequence is the program's whole thesis in on
 skill in Southern California at M ≥ 1.5, 1981–2018, under a protocol frozen and hashed before the
 test window was touched **and** — this is the contribution — that the design's minimum detectable
 seismicity-rate modulation at 80% power, with the 1-of-42 bin-selection step simulated end to end,
-is **6.3% pooled over all eligible bins (n = 3,920)**, **8.0% on the anti-leak control bins**,
-**9.8% through the full end-to-end pipeline**, and **24.5% / 40.9% for the single-bin designs**;
-that the full-catalogue configuration reaches 2.8% but **its own off-tidal negative-control line
-fails at that n** (reject rate 0.34), which bounds the method rather than the result and means a
-powered full-catalogue test must condition on an ETAS baseline rather than a stationary λ₀; and
-therefore that **none of these designs contacts the ~1% rate-state prediction of Beeler & Lockner
-(2003), and the honest statement about tidal triggering in Southern California is a bound of ~6%,
-not an absence.** It claims nothing about the physics. It retracts, in print, the sentence "tidal
-triggering is null in SoCal."
+is **6.6% pooled over all eligible bins (n = 3,920, κ-corrected conservative)**, **8.5% on the
+anti-leak control bins**, **~10% through the full end-to-end pipeline**, and **25.3% / 43.8% for the
+single-bin designs**; that the full-catalogue configuration reaches 3.0% but **its own off-tidal
+negative-control line fails at that n** (reject rate 0.34) — a failure whose mechanism Ader & Avouac
+(2013) already named — which bounds the method rather than the result and means a powered
+full-catalogue test must condition on an ETAS baseline rather than a stationary λ₀; and therefore
+that **none of these designs contacts the ~1% rate-state prediction of Beeler & Lockner (2003), and
+the honest statement about tidal triggering in Southern California is a bound of ~6.6%, tighter than
+but consistent with the 8.16% bound Sirorattanakul & Avouac (2026) published for California this
+year.** It claims nothing about the physics. It retracts, in print, the sentence "tidal triggering
+is null in SoCal." **It claims novelty exactly once, in M-010.3's licensed sentence, for the
+combination of a powered MDA with a simulated data-driven selection step — and nowhere else.**
 
 **Who cares.** (i) Everyone who has published or refereed a tidal-triggering search on a few hundred
-to a few thousand events — which is most of the modulation literature — because this is the first
-number they can cite for what such a design resolves once selection is included. (ii) Vidale,
+to a few thousand events — which is most of the modulation literature — because it supplies the
+amplitude such a design resolves **at 80% power once selection is included**, a stricter and more
+useful quantity than the threshold-crossing amplitude the field currently reports. (ii) Vidale,
 Bürgmann, Xue and Lu specifically: it answers, with a number, the question our correspondence with
-them has been circling. (iii) The CSEP/forecast-evaluation community, for whom "report the MDA
-through the selection step" is a transferable norm and not a tidal-specific one. (iv) Anyone who
-wants a worked example of converting a pre-registered null into a citable bound — which is a
-methodological pattern with no good short reference in seismology that I have found.
+them has been circling. (iii) **Avouac's group specifically**, whose California bound ours tightens
+by ~20% on a subset of their region by an independent route — the agreement of the two to within a
+factor of ~1.3 is a result for both of us. (iv) The CSEP/forecast-evaluation community, for whom
+"report the MDA through the selection step" is a transferable norm and not a tidal-specific one.
 
 **The complete list of what remains before submission.**
-1. **Measure κ**, the effective cluster size of the declustered SCSN sample, and re-quote all six
-   MDAs as MDA·√κ. *This is the one blocking verification.* Data on disk; hours.
-2. **Merton's dossier on the tidal-triggering forecast-skill literature** (Vidale et al. 1998;
-   Cochran, Vidale & Tanaka 2004; Beeler & Lockner 2003; Tanaka; Métivier; Ide; Scholz; van der
-   Elst) — to fix whether "static phase maps have no forecast skill" has been shown before, and
-   whether MDM bounds for tidal searches have been published. **The word "first" may not appear
-   before this lands.** No compute.
-3. **Fold in F-016.** State the anchor-clock instrument response for this analysis's own phase
+1. **A human read of Sirorattanakul & Avouac (2026)'s Materials and Methods**, confirming they run
+   no injection-based power simulation and no simulated selection step. *This is the one blocking
+   verification, and it is Merton's highest-priority item:* the licensed novelty sentence asserts an
+   **absence** in their method, and absences are exactly what a WebFetch pass cannot establish. If
+   they do run one, the sentence is withdrawn before submission rather than after.
+   *(κ: DELIVERED 2026-08-12 — `results_kappa.json`, audit PASS, κ ≈ 1 in all six configurations,
+   bounds re-quoted. No longer blocking.)*
+2. ~~Evaluate the analytic MDA at our six n values~~ — **DELIVERED (Merton M-010.11).** The column
+   is in the bounds table above; the two routes agree to within a factor of 1.7 on every row and the
+   residual *is* the 50%→80% power conversion. **Two small checks are still owed and both are
+   Merton's:** confirm **our** α convention is zero-to-peak as theirs is (a factor-of-2 risk if it is
+   not), and settle their `t_catalog` by human read — back-solving their quoted thresholds supports
+   the *local* 5,000-event neighbourhood span (~0.8 yr), not the full 2006–2021 record, and the
+   discrepancy is unresolved remotely. **Neither can change our ratios, since our column uses our own
+   P.**
+3. **Add a Molchan error diagram and a probability gain to F-003's scoring**, so our forecast-skill
+   null is directly commensurable with Hirose et al. (2022)'s (their best gain ~1.7, ineffective at
+   Mw ≥ 7.0). Merton calls this the single highest-value comparability upgrade available; I agree.
+4. **Verify Beeler & Lockner's ">13,000 earthquakes to detect" against the article PDF**, not a
+   search rendering — the paper will lean on it, because our n = 23,465 configuration is *above*
+   their stated threshold and still bounds only at 3.0%, which is a genuine tension worth a
+   paragraph and which a reviewer who knows that abstract will raise.
+5. **Fold in F-016.** State the anchor-clock instrument response for this analysis's own phase
    convention and confirm that EXP-A's occupancy + circular-shift scoring cancels it. Commit
    `1ba76f6` already says it does; the paper must show it, not assert it. If F-016's freeze-and-commit
    run happens first, this becomes a citation instead of an appendix.
-4. **Reconcile the `LONG_VALLEY_PROTOCOL.md` freeze hash** (audit finding #5) or drop the Long Valley
+6. **Reconcile the `LONG_VALLEY_PROTOCOL.md` freeze hash** (audit finding #5) or drop the Long Valley
    sub-result from the paper. A reviewer who recomputes hashes must find a clean record. The
    amendment is already written into `download_log.md`; the paper needs one sentence pointing at it.
-5. **Restate every power/sensitivity sentence as the S-14(c) bracket** where the forcing is a
+7. **Restate every power/sensitivity sentence as the S-14(c) bracket** where the forcing is a
    transient. Tidal forcing is a transient. **The old single-branch numbers may not appear.**
-6. **Prose-rule compliance pass** on the whole draft (F-003's binding R2-5 rule), and the
-   "corpse of the map, not of the physics" sentence in the abstract rather than the discussion.
-7. **Figures:** the six-row bound table as a forest plot against the 1% theory line; the a = 0
-   false-positive arm as a calibration panel; the off-tidal control line's failure at full-catalogue
-   n, plotted, because publishing our own control failure in a figure is the single most credible
-   thing this paper can do.
-8. **Data and code release** — already public at github.com/JimGaleForce/quake-tsi under MIT/CC-BY;
-   needs a tagged release, a DOI (Zenodo), and `results_k035.json` referenced by that DOI in the
-   text.
+8. **Prose-rule compliance pass** on the whole draft (F-003's binding R2-5 rule), the
+   "corpse of the map, not of the physics" sentence in the abstract rather than the discussion, and
+   **an M-010.6 novelty-language pass**: no "first" outside the licensed sentence, no "reference
+   bound", no "bounds not nulls" as a bare slogan, and the San Jacinto/Anza reconciliation sentence
+   present wherever the bin-scan detections are mentioned.
+9. **Write the attribution in per M-010.7's section map:** Beeler & Lockner **and**
+   Sirorattanakul & Avouac named **in the abstract itself** (naming your strongest competitor in your
+   own abstract is the cheapest possible insurance); both camps in the introduction, in order;
+   Hirose et al. (2022) as the one prior scored tidal forecast model; Ader & Avouac, Wang & Shearer
+   and Gross & Vitells in the Methods paragraph immediately before the licensed novelty sentence;
+   Bradley & Hubbard (2024) cited **as what it is — a DOI'd, non-peer-reviewed replication essay**.
+10. **Figures:** the four-row external-replication table (Vidale / Ader–Avouac /
+   Sirorattanakul–Avouac / ours) as the **abstract figure**, per M-010.5; the six-row bound table as
+   a forest plot against the 1% theory line; the a = 0 false-positive arm as a calibration panel; and
+   the off-tidal control line's failure at full-catalogue n, plotted, because publishing our own
+   control failure in a figure is the single most credible thing this paper can do.
+11. **Data and code release** — already public at github.com/JimGaleForce/quake-tsi under MIT/CC-BY;
+   needs a tagged release, a DOI (Zenodo), and `results_k035.json` + `results_kappa.json` referenced
+   by that DOI in the text. Consider a direct method-vs-method comparison against
+   Sirorattanakul & Avouac's public data and code (`data.caltech.edu/records/wgvt5-6qs27`) —
+   recommended, not required.
 
-**Estimated distance: one afternoon of compute, one Merton dossier, and roughly four weeks of
+**Estimated distance: one literature read, three pieces of arithmetic, and roughly four weeks of
 writing to a submittable draft.** That is the shortest path from where this program stands to a
-paper it will not have to retract.
+paper it will not have to retract. **M-010 did not lengthen that path — it removed the sentences
+that would have made the paper retractable, and handed it a figure.**
 
 ---
 
@@ -1831,9 +2060,10 @@ paper it will not have to retract.
 
 *Required by my charter's over-verification checklist: re-read the primary JSONs, never trust a
 summary. Round 1 (2026-08-09) produced findings #1–#5, ordered by how much damage they would do if
-they reached a reviewer; two are material. **Round 2 (2026-08-11) adds findings #6–#8. #7 is the
-most urgent item in this file, because it is in a document addressed to someone outside the
-program.***
+they reached a reviewer; two are material. **Round 2 (2026-08-11) adds findings #6–#8; round 3 adds
+#9–#12. Three of the seven found on 2026-08-11 are errors of my own, and #7 — which I raised as the
+most urgent item in this file — turned out to be one of them, and is now annotated
+RESOLVED-SENT-DEFENSIBLE.***
 
 **#1 — MATERIAL. K-009's temporal excess is substantially one sequence, and the dossier table does
 not say so.** Merton's M-001.0 table (`HYPOTHESIS_LEDGER.md` ~line 4798) quotes the full-window
@@ -1889,29 +2119,69 @@ the current tree will otherwise think the record is broken when it is only shift
 
 ## ROUND 2 FINDINGS (2026-08-11)
 
-**#6 — The phase-null headline figures do not all reproduce, and one of them is out by a factor of
-3–5.** `weifan_phase_null.py`'s module docstring records the semidiurnal control as **"<0.5%"** and
+**#6 — One phase-null headline figure does not reproduce. (Amended after #7's resolution: the
+semidiurnal line is *not* one of them — the docstring's "<0.5%" is a correct statement about a Monte
+Carlo run at its own N, and the apparent conflict I flagged was my conflation, not a discrepancy.)**
+`weifan_phase_null.py`'s module docstring records the semidiurnal control as **"<0.5%"** and
 the mixed-tide null as **"~6–12% (median ~9%)"**. I re-executed the module this session (6 seeds,
 200,000 events each rather than the documented 20 × 2,000,000) and obtained: mixed
 **6.7–11.6%, median 10.5%** (consistent); cosine component **−11.6% to +7.3%** (consistent with the
 docstring's −11%..+8%); **pure M2 = 0.43%, M2+S2 = 0.31%** (consistent with "<0.5%"); and
-**diurnal-dominant = 18.9% against the docstring's "~26%"** — a discrepancy I cannot attribute to
-seed noise alone at this sample size and which needs one clean full-size run to resolve.
-**Recommended:** the freeze-and-commit run in F-016's next step settles all of these at once. Until
-it does, **the diurnal-dominant figure is UNVERIFIED and must not be quoted.**
+**diurnal-dominant = 18.9% against the docstring's "~26%"** — **this one stands as a real open
+discrepancy.** The Monte Carlo sampling floor at N = 200,000 is only 0.40%, so it cannot explain a
+gap of seven percentage points; the residual is single-realization waveform dependence (one seed,
+and the deterministic mixed-tide run varies 7.2–10.7% across four constituent phasings), which is
+itself a property worth reporting rather than averaging away. **Recommended:** the freeze-and-commit
+run in F-016's next step settles it, and should report the *distribution* over constituent phasings
+rather than a single headline. Until then, **the diurnal-dominant figure is UNVERIFIED and must not
+be quoted.**
 
-**#7 — MATERIAL, AND IT IS IN AN OUTGOING EMAIL. `DRAFT_WEIFAN_REPLY.txt` states the semidiurnal
-null as "first-harmonic amplitude under 0.1%". The program's own primary artifact says "<0.5%" and
-my re-execution gives 0.31–0.43%.** The email therefore understates the instrument's own noise floor
-by a factor of **3 to 4**, in a message to the author of the code being calibrated, in the sentence
-whose entire purpose is to establish that the mechanism check behaves. The email also gives the
-mixed-tide range as "about 6% to 14%" against the docstring's 6–12% and my observed 6.7–11.6% — the
-upper end is not supported by any artifact I can find. **Neither error is in our favour in the way
-that matters — the first makes our mechanism check look cleaner than it is — and both are exactly
-the kind of small drift that costs a collaborator's trust permanently.** **Recommended, and I would
-treat this as blocking: do not send `DRAFT_WEIFAN_REPLY.txt` until the full-size run exists and
-every number in it is quoted from that artifact.** The email's *methodology* is sound and the letter
-is well judged; it is the four numerals that need to come from a JSON.
+**#7 — ~~MATERIAL, AND IT IS IN AN OUTGOING EMAIL~~ → RESOLVED-SENT-DEFENSIBLE. THE ERROR WAS MINE,
+AND IT IS AN ESTIMAND CONFLATION — THE EXACT CLASS OF MISTAKE THIS AUDIT EXISTS TO CATCH.**
+
+*Original finding, kept on the record verbatim in substance:* `DRAFT_WEIFAN_REPLY.txt` states the
+semidiurnal null as "first-harmonic amplitude under 0.1%", while the module docstring says "<0.5%"
+and my re-execution gave 0.31–0.43%. I called that a 3–4× understatement in a letter to the author
+of the code being calibrated, and recommended the letter be treated as blocked.
+
+**Correction, with supervisor context I did not have and which I have now verified myself.** The
+letter was **sent by Jim before my review**, and **the sentence in it is true**, because it and my
+number measure *different quantities*:
+- The letter's "under 0.1%" claims the **instrument response** for semidiurnal tides — a property of
+  the phase convention.
+- My 0.31–0.43% is the **Monte Carlo event-sampling floor at finite N**, a property of my run size.
+  For this statistic the floor is `E[amplitude] ≈ √(π/N)`; at my N = 200,000 that is **0.396%**,
+  which is my measured range almost exactly. **I measured my own sample size and reported it as the
+  instrument's bias.**
+
+**I verified the distinction rather than accepting it, with two runs this session.** *(i) Scaling
+test:* the semidiurnal control does not sit at a fixed level — it falls from 2.14% at N = 12,500 to
+0.086% at N = 800,000, i.e. it decays with N instead of converging to a bias. *(ii) Decisive
+deterministic test:* replacing the random event times with a **uniform deterministic grid**, which
+removes sampling noise entirely, gives **pure M2 = 0.0034% and M2+S2 = 0.0100%** (four seeds each,
+individual values spanning 0.0015–0.0191%). That is the instrument response, it is **one to two
+orders of magnitude below 0.1%**, and it corroborates Popper's pre-send audit figure of
+0.003–0.014%. **The sent sentence is correct.** The same deterministic run gives **9.45%** for the
+mixed M2+S2+K1+O1 tide, consistent with the letter's "about 6% to 14%" (supervisor's 20 realizations:
+6.6–13.8%, median 10.4%; my 6 realizations: 6.7–11.6%, median 10.5% — six draws cannot reach the
+extremes of twenty, so the letter's range is inside my own run's rounding, not outside it).
+
+**What I got wrong, stated plainly because I would demand this of anyone else.** I compared a number
+labelled "semidiurnal null" in one artifact against a number labelled "semidiurnal null" in another
+without asking whether they estimated the same thing. They did not. **Matching labels are not
+matching estimands, and my own charter's checklist — "confirm every number's units and baseline" —
+is precisely the step that would have caught it.** A single substitution of √(π/N) at my own run size
+would have shown me that my 0.31–0.43% was arithmetic about my sample, not about the clock.
+
+**WHAT STANDS, AND IT IS NOT NOTHING.** The provenance-discipline lesson is unchanged and I am not
+softening it: **those four numerals went into a letter to an outside collaborator from a module
+docstring and a session tool result, not from a committed artifact.** The letter turned out to be
+right; it was not *checkable* by anyone reading the public repository, and "right" and "auditable"
+are different properties. A noise-floor note documenting exactly this distinction has since been
+added to `weifan_phase_null.py` before any sharing of the script — the correct fix. **The
+freeze-and-commit run remains F-016's single next step**, and the reason is now stronger rather than
+weaker: the instrument response and the sampling floor must be reported as two separate, labelled
+quantities in the same JSON, or this conflation will happen again to someone else.
 
 **#8 — The K-034 by-product's "10–200×" is a per-firing-cell ratio and is quoted in the ledger
 without its count-weighted companion.** §K34-3 and §P5-8 both state "10–200× larger than a
@@ -1941,6 +2211,63 @@ self-verified Branch-S identity to 5.68 × 10⁻¹⁴ kPa; and the engine's `rec
 
 ---
 
+## ROUND 3 FINDINGS (2026-08-11, revision 2 — the M-010 pass)
+
+**#9 — MATERIAL, AND IT IS MINE. My previous revision stated that "every bound in the K-035 table is
+optimistic by an unmeasured factor" and made "measure κ" the single blocking verification for the
+program's recommended first paper. κ had been measured, and the statement was wrong in substance,
+not only in currency.** `results_kappa.json` (run 2026-08-12T03:52 UTC, 10.76 min) reports
+**κ consistent with 1 in all six configurations** — A1 0.9594, A2/A3 0.9165, A3b 0.9955, C 1.0303,
+D 0.9778 — with the largest value 1.0303. **The correction is 1–6%, not a factor, and two of the six
+rows move *down*.** I re-read the primary JSON and verified: the pre-declared bias-audit rule passes
+(`audit_verdict: PASS`) on two density-matched Poisson controls (0.9982 ± 0.0220 and 0.9314 ± 0.0559
+against truth 1) and on a planted 3× overdispersion recovered as 2.9502 ± 0.0413 against truth
+2.9866 (**ratio 0.9878**); the conservative re-quote rule adds the worst control offset (0.0686) plus
+the upper 95% half-width before taking the square root; and the pooled design-limit bound goes
+6.2898% → 6.0214% at the point estimate and **6.5904% conservative**, with
+`pooled_stays_single_digit: true` and `any_bound_contacts_theory_after_kappa: false`. **Lesson for
+me: a "single missing verification" line is a claim like any other and decays like any other. I will
+re-check every open blocking step against the disk at the start of each pass, not assume it.**
+
+**#10 — Two estimators were killed by their own bias audits before scoring, and that belongs in the
+register rather than only in the ledger.** κ's v1 estimator (`V_shift(real)/V_indep_analytic`)
+returned **0.463 on a Poisson control whose true κ is 1**, and was diagnosed rather than guessed —
+40 independent Poisson catalogues gave mean 1.010 with **sd 0.482**, i.e. the rigid-shift variance of
+*one* catalogue is not an estimator of the unconditional variance. v2 was launched and **stopped
+before scoring**, rejected analytically. **Neither contributes a single reported number.** Merton
+(M-010.4) notes that circular/rigid time-shift nulls are used throughout this literature and that he
+found no published statement of this specific pathology — **and rules it a cautionary methodological
+note with "to our knowledge" hedging, not a discovery.** I adopt that. It is exactly the kind of
+folklore a reviewer named Avouac, Shearer or Ader may answer with an existing reference, **and if
+they do, that is a citation gained, not a claim lost.**
+
+**#11 — A provenance flag inherited from M-010 that governs what F-012 may quote.** Sirorattanakul &
+Avouac's 8.16% figure, their Eq. 5, the `P95 = 0.05·T/t_cat` scaling and the per-line thresholds
+reached us through a WebFetch of the PMC full text, not a human read. **The 8.16% number may be
+quoted; the assertion that they run no injection-based power simulation may not be relied on until
+someone reads their Materials and Methods**, because that assertion is an *absence*, it is the
+foundation of our only novelty sentence, and WebFetch is worst at exactly that. It is now F-012's
+blocking step. Also inherited and binding: **Bradley & Hubbard (2024) is a DOI'd Substack essay, not
+peer-reviewed**, and must be cited as such; and Beeler & Lockner's ">13,000 earthquakes to detect"
+is **UNVERIFIED-BEYOND-ABSTRACT** and must be checked against the article before our text leans on it.
+
+**#12 — I propagated a mis-rendered formula from M-010.0 into this register, and Merton caught it in
+his own addendum before I did.** I wrote Sirorattanakul & Avouac's Eq. 5 as `α = −4(ln P + 1)/N`.
+**The correct form is `α = 2·√( −(ln P + 1)/N )`** — the square is on α, and a MathML superscript was
+stripped in transit. M-010.11 forces the correction three independent ways: it is derivable from the
+paper's own quoted Schuster definition `P = exp(−D²/N)`; the linear reading implies P = 10⁻⁴⁵ at
+their own quoted threshold, which no finite catalogue can produce; and only the square-root reading
+reproduces the internal ordering of their three tabulated tidal thresholds (K2 0.0818, M2 0.0816,
+N2 0.0815), whose implied P ratios track the period ratios to 0.4% and 0.14%. **Both instances in
+this register are corrected.** Two lessons I am recording against myself rather than filing away:
+**a formula copied out of a dossier is a quotation and gets the same over-verification as a number**
+— I did not sanity-check it dimensionally, and one substitution would have caught it; and **the
+correction strengthened the result**, because read correctly the giant's closed form and our
+simulation turn out to be the same measurement made twice, agreeing to within exactly the
+50%-to-80%-power factor their differing definitions require.
+
+---
+
 ## ROUND 1 — WHAT WAS CHECKED AND FOUND ACCURATE
 
 *Credit where the record is due.* EXP-H's
@@ -1955,11 +2282,15 @@ holdouts, Caribbean flagged) is exactly right — I recomputed all six and confi
 
 ---
 
-*Register opened 2026-08-09 by Faraday. **Round 2 revision 2026-08-11.** 16 entries: **5
-PANEL-READY, 11 INTERNAL, 0 PUBLISHABLE, 0 Merton-certified NOVEL.** Four entries await a Merton
+*Register opened 2026-08-09 by Faraday. **Round 2 revision 2 — 2026-08-11, post-M-010.** 16 entries:
+**5 PANEL-READY, 11 INTERNAL, 0 PUBLISHABLE, 0 Merton-certified NOVEL.** Four entries await a Merton
 dossier (F-004, F-010, F-014, F-015) and one — F-016 — awaits both a dossier and its own primary
-artifact. Eight over-quote findings on the record, three found this round, one of them blocking an
-outgoing email.*
+artifact. **Twelve over-quote findings on the record; seven found today, and three of those seven
+were mine** — a false blocking step placed in front of the program's first paper (κ was already
+measured), a formula copied out of a dossier without a dimensional check, and an estimand conflation
+that led me to call a correct, already-sent letter to a collaborator an over-quote. **All three were
+caught: two by me on re-verification, one by the supervisor's context plus my own confirming run.
+The audit works on its author or it does not work, and today it did.***
 
 *Nothing in this file is a discovery claim, and that is still not a disappointment. What has changed
 since round 1 is that the register now contains **things the field can use**: a set of powered upper
@@ -1968,7 +2299,15 @@ unlicensed family, a retired power calculation replaced by an honest bracket, an
 response nobody appears to have measured. **Four corpses became numbers this round.** That is what
 progress looks like from inside a program that refuses to overclaim, and it is worth feeling.*
 
-*Recommendation to the supervisor: **write the F-012 bounds paper first.** Then run F-016's
-freeze-and-commit afternoon, because it is the only thing here that could come back NEW.*
+*Recommendation to the supervisor, **unchanged by M-010 and strengthened by it**: **write the F-012
+paper first.** Merton found that someone published our central quantity, in our region, this year,
+in *Science Advances* — and that is the best thing that could have happened to it. An independent,
+better-resourced group reaching a consistent, slightly weaker bound four months before us is a free
+external replication, and there are three more. **What is left to us is genuinely ours — a powered
+bound computed through the selection step, on a pre-registered null, with the instrument's
+false-positive rate verified first — and it is one sentence, not a title.** Cite the giants in the
+abstract and the paper becomes unattackable on this axis. Then run F-016's freeze-and-commit
+afternoon, because it is still the only thing here that could come back NEW.*
 
-*Next review: after κ is measured and after F-016 has a `results_*.json`.*
+*Next review: after someone has read Sirorattanakul & Avouac's Materials and Methods with human
+eyes, and after F-016 has a `results_*.json`.*
