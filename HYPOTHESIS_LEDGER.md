@@ -14792,3 +14792,374 @@ the estimator is discrete.
 *Popper seat, 2026-08-12. Amendment granted in full as requested, plus three additions (operating-point
 conservatism reporting, signed-bias gate, audit at production `N_max`). Original §P6-1(6) text left
 unedited above. Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+# VERDICTS (Popper) — Round 6: Kepler's MINING_CATALOG.md priced, the deflated floor decomposed, three tranches sequenced
+
+*2026-08-12. Kepler delivered `MINING_CATALOG.md` (281 entries, 10 families, committed `c3bf29c`) with
+five pricing questions handed to me explicitly and one proposed amendment to my own §P6-4 Rule 4.3.
+This is a new round and a new object, so it opens §P7 rather than extending §P6. Five rulings, the
+five open questions answered, one of my own instincts reversed mid-draft and recorded as reversed, and
+one falsifiable prediction about what the cheap measurement will return. Appended to my own section;
+no other persona's content touched, no existing line modified. Nothing committed.*
+
+## §P7-0. WHAT THE CATALOG GOT RIGHT, BEFORE I PRICE ANYTHING
+
+**It respects §P6-4 throughout and it hands me its own weak point rather than burying it.** §0.1
+constraint 2 states Finding B as non-negotiable and routes every spatially-resolved entry through the
+2R-df sum or an explicit EXPLORATORY-UNPRICED tag; §0.1 constraint 1 bars the K-080 census list as a
+selector and names both reasons (holdout contamination and the 0.5° grid mismatch); §0.3 flags its own
+deflation factor as **inferred, not measured**, names the measurement that would close it, and asks me
+to treat the inferred number as operative in the meantime. **That last move is the reason this round is
+short: a generator that marks its own load-bearing assumption is doing the adjudicator's job for him,
+and the correct response is to price it rather than to lecture about it.**
+
+**One thing in the catalog is better than the ruling that licensed it** — §0.3's closing paragraph,
+which argues that under a deflated floor the R=20 per-region amplitudes are UNRESOLVED and only the
+summed statistic is quotable. That is a stricter reading of my Rule 4.3 than Rule 4.3 states, it is
+correct, and it is granted below (§P7-1c). *The standard cuts both ways and a scoreboard that only
+flatters the skeptic is broken.*
+
+---
+
+## §P7-1. THE CLUSTERING-DEFLATED MEASURABILITY FLOOR — ADOPTED PROVISIONALLY AS AN OPERATING FLOOR, REJECTED AS AN ATTRIBUTION, AND THE SCALAR IS REPLACED BY A FORMULA
+
+### (a) The decomposition. Kepler's number is right and his explanation is not.
+
+I re-derived the whole chain this session rather than accepting either end of it.
+
+**First, what `3.96/√N` actually is.** The constant 2.80 in `A_min = 2.80·√(2/N)` (§P6-4
+Re-derivation 1) is not an arbitrary fit:
+
+    z_0.025 + z_0.80 = 1.9600 + 0.8416 = 2.8016
+
+**It is exactly the 80%-power, α = 0.05 two-sided normal constant.** So the raw floor is an
+*80%-power MDA at α = 0.05*, and nothing else. That matters immediately, because the ~5.6% number
+Kepler compares it against was **not** produced at α = 0.05. It was produced at the 2026-08-11
+session's operating threshold: BH at q = 0.10 over 259 declared tests, whose most conservative rung is
+α = 0.1/259 = **3.861 × 10⁻⁴**, i.e. z = 3.549. The MDA scales as `(z_α + z_β)`:
+
+    multiplicity factor = (3.549 + 0.842) / 2.8016 = 1.567   (amplitude)  =  2.46  (variance)
+
+**Second, the residual.** Kepler's observed total is 5.6/1.8 = 3.111 in amplitude (9.68 in variance).
+Dividing out the multiplicity term:
+
+    dispersion factor = 3.111 / 1.567 = 1.985  (amplitude)  ->  VIF = 3.94  (variance)
+
+**So the honest decomposition of the factor of ~9 is roughly: ~2.5× from multiplicity, ~3.9× from
+dispersion, plus a third small term from 2-df-versus-1-df bookkeeping that I have not separated
+(χ²(2) critical 5.99 vs χ²(1) 3.84 at α = 0.05, worth ~1.1–1.15 in amplitude).** Clustering is real
+and is the largest single component. It is **not** the whole factor, and Kepler says so himself as a
+possibility ("bookkeeping, BH overhead, or the surrogate floor") — he simply could not tell which
+without the measurement.
+
+### (b) Why the distinction is not pedantry: the multiplicity term is not a property of the catalog.
+
+**Dispersion is a property of the data and is fixed. Multiplicity is a property of the declared test
+count and changes with every tranche.** A scalar floor that silently contains a multiplicity term
+computed at m = 259 will be **wrong for every tranche in this catalog**, all of which are larger:
+at Tranche B's ~1,000 tests the term rises, at Tranche C's ~12,000 it rises further, and at an
+EXPLORATORY-UNPRICED C1 run it is not defined at all. Fold the two together and 281 S-15 lines become
+quietly incorrect the moment the tranche size changes — which is exactly the class of silent error
+S-15 exists to prevent.
+
+> **RULED. The S-15 floor for any daily-binned count statistic on this catalogue is a FORMULA, not a
+> scalar:**
+>
+>     A_min = sqrt(VIF) · (z_alpha + z_0.80) · sqrt(2/N)
+>
+> where `alpha` is the **declared operating threshold of the tranche the entry will run in** (stated
+> in the entry, not inherited), `VIF` is the **measured** variance inflation factor (F4-58), and
+> `z_0.80` fixes the power convention at 80%. The raw floor `3.96/√N` is this formula at VIF = 1,
+> α = 0.05. Every S-15 line quotes the formula's inputs, so a reader can recompute it when the tranche
+> size changes.
+
+**Kepler's `11.9/√N` is ADOPTED PROVISIONALLY as the interim operating floor for tranches sized like
+the 2026-08-11 session**, and only there: the formula at VIF = 3.94 and α = 3.86 × 10⁻⁴ returns
+**12.3/√N**, which reproduces his 11.9 to within the roundings in the two published numbers he
+inferred from. His arithmetic is sound; only its attribution is wrong. Until F4-58 lands, entries
+carry both floors as he proposed, and **the deflated one is operative**, as he asked.
+
+### (c) F4-58 is re-specified, made cheaper, and given a falsifiable prediction.
+
+**Cheaper.** F4-58 does not need new surrogates. For every test the 2026-08-11 session already
+recorded an observed statistic `chi2_obs` and a block-bootstrap p. Under a correctly specified Poisson
+null the bootstrap p would equal `chi2_sf(chi2_obs, df)`. So
+
+    VIF(test) = chi2_obs / chi2_ppf(1 - p_block_bootstrap, df)
+
+is readable **from session output already on disk, at zero new surrogate cost** — one script over
+`engine/out/mine/session_20260811T022953/`. That is cheaper than the catalog prices it and it yields
+more: a VIF **per feature**, not one scalar.
+
+**And per-feature is what is actually needed**, because a single global VIF cannot be right by
+construction: `Feature.block_days` sets the bootstrap block from the feature's own timescale, clipped
+to [30, 800] days, so a 29.5-day feature is resampled in ~131 blocks and an 11-year feature in ~10.
+**The null's width is a function of the feature's own period, so the deflation factor is too.** A
+scalar will over-penalise the short-period features and under-penalise the decadal ones — the same
+error, in both directions at once, that the flat 90-day block made when it handed F10.7 a z = 32.
+
+> **F4-58, RE-SPECIFIED. (i)** Compute `VIF(test)` per the identity above from existing session output,
+> report the distribution and the median **per feature and per block length**; **(ii)** confirm on a
+> handful of features by direct simulation (Poisson draws from the fitted ETAS λ, identical code path)
+> that the measured VIF reproduces; **(iii)** rewrite §0.3's table from the measurement. Priced tests:
+> **0** — it makes no rejection and enters no BH vector.
+
+> **PREDICTION, recorded before the measurement, so this ruling is falsifiable too.** If my
+> decomposition is right, F4-58 returns a median **VIF ≈ 3.9** and a strong dependence on block
+> length. If Kepler's attribution is right and the whole factor is clustering, it returns **VIF ≈ 9.7**
+> and no block-length dependence. **If it returns ≈ 9.7, my multiplicity term is double-counted
+> somewhere and this ruling is wrong** — in which case the scalar `11.9/√N` stands unamended for
+> tranches of any size and I withdraw §P7-1(b).
+
+### (d) Kepler's stricter reading of Rule 4.3 — GRANTED, with one conditional clause.
+
+He is right. At R = 20 the mean is ~3,500 events per region; the deflated floor puts per-region
+`A_min` at ~20%, against effects the program has already bounded below 6%. **A table of per-region
+amplitudes at that floor is the K-076 Colombia cell reproduced twenty times**, and S-15 forbids it.
+
+> **RULE 4.3, AMENDED (original text in §P6-4 stands unedited).** In the regional battery, **per-region
+> amplitudes are UNRESOLVED by default and are not quoted**; the quotable object is the **summed 2R-df
+> statistic**, which is a detection statistic over the full event count and is not a per-region
+> estimator. A per-region amplitude may be quoted **only** for a region that individually clears its
+> own declared floor under the §P7-1(b) formula, computed with that region's own N and the tranche's
+> own α. At M ≥ 4.5 and R = 20 essentially no region will clear it; the clause is conditional rather
+> than blanket so that a future lower-Mc regional catalogue can pass it on the arithmetic instead of on
+> a re-argument. Credit: Kepler, `MINING_CATALOG.md` §0.3 closing paragraph.
+
+**Consequence for the build, and it is a resequencing.** The choice of R is currently declared at 20
+without the floor being known. **F4-58 runs BEFORE the region battery is built**, and R is then chosen
+by a declared rule — the smallest R whose per-region floor meets the declared effect of interest,
+subject to phase coherence — rather than by convention. If the answer is that no R both retains power
+and keeps regions phase-coherent, that is a finding about the instrument and the battery ships as the
+summed statistic alone.
+
+---
+
+## §P7-2. TRANCHE A — MUST RUN AND CLEAR FIRST. Price CONFIRMED at ~713. Overlap with R1 and G-M1 reconciled explicitly.
+
+**It runs first and B and C are gated on it.** Grounds, and they are not general caution: (i) every
+S-15 line in all 281 entries currently rests on an inferred number, so B's and C's declared floors are
+all conditional on A's output; (ii) §P6-4 banner item 5 forbids reporting a bound at any band or
+aggregation without demonstrated recovery **there**, and B introduces new statistics while C introduces
+new clocks — both are new aggregations in the S-17 sense; (iii) a 50–100× throughput increase without a
+measured false-positive rate under the actual dependence structure is a scaled-up generator of ranked
+noise, which is Kepler's own sentence and I adopt it verbatim.
+
+### (a) Price: ~713 priced tests, CONFIRMED — and I record that I drafted the opposite ruling first.
+
+My first draft ruled the negative-control battery **unpriced**, on the reasoning that controls are
+calibration rather than inference and therefore owe no multiplicity. **That was wrong and Kepler's own
+entry text caught it** (F9-20: *"the controls must be counted in the multiplicity"*). If controls are
+unpriced, "control" becomes an unaudited channel through which arbitrary features can be run and
+read — and F10-25's survivor ratio only means anything if the two arms face the same threshold, which
+requires them in the same declared vector. **Counted. Kepler's ~713 stands as the declared integer.**
+
+> **RULED.** The F9-20 negative controls are **counted in the declared test count** and enter the BH
+> vector as their **own declared stratum** under §P6-3, with `q_s` allocated to them inside the
+> identity `Σ m_s q_s = m q`. A "survivor" in the control stratum is reported as a **measured false
+> positive**, never as a finding. F9-19, F9-17, F10-24, F10-25 and F4-58 are priced at **0** — each
+> either makes no rejection or reports a property of the run.
+
+### (b) The overlap reconciliation, so nothing runs twice under two names.
+
+| catalog entry | existing obligation | ruling |
+|---|---|---|
+| **F9-19** planted recovery per band **and aggregation** | **G-M1 arm (ii)** (§P5-6), as extended by §P6-4 banner item 5 | **Same execution, one artifact.** F9-19 IS G-M1 arm (ii)-extended. It is not a new gate and does not get a new name in the register; the ledger object remains G-M1. |
+| **F9-17** selection-debiased effect estimator | **R3** (§P6-6) | **Same object.** R3 is the requirement, F9-17 the implementation. One execution, reported against R3. |
+| **F10-24** feature-selection stability | **R4** (§P6-6) | **Adjacent, not identical, and both are required.** R4 is stability under **reseeding** (does the RNG move the ranking); F10-24 is stability under **block-bootstrap resampling of the window** (does the data move it). Different failure modes. Run both, report both, and label them so they are never conflated. |
+| **F9-20** negative-control battery | **R1** (§P6-6) | **Two arms of one gate; neither discharges the other.** R1 = null **data** through the real pipeline (≥30 ETAS-sim catalogues); F9-20 = null **features** on the real data. R1 catches pipeline and dependence miscalibration; F9-20 catches feature-construction leakage and residual real-data structure. **One session, one config hash, one artifact, two named arms.** |
+| **F4-58** deflation measurement | new | Priced 0, re-specified per §P7-1(c), and it runs **first** within A. |
+| **F7-01/02/03** observer controls | new, and load-bearing for B (see §P7-3) | Build in A. Their consumer is B's mark axis, not A itself. |
+| **F8-15** random-clock control | new | Build in A, **use** in C. Mandatory the moment any clock scan runs. |
+
+**Sequencing, slotted into the build order as it stands** (2a GPD + stratified BH mid-build → 2R-df +
+region battery → G-M1 + R1): **F4-58 moves to the front, ahead of the region battery**, because it
+decides R (§P7-1d). The rest of Tranche A merges into the already-sequenced "G-M1 + R1" step rather
+than appending a fourth phase. Net change to the plan: **one cheap measurement moves earlier, and one
+existing step acquires four named arms instead of two.** No new phases.
+
+---
+
+## §P7-3. TRANCHE B — PRICED AND ADMITTED, gated on A, with a demonstrated-recovery demand per statistic and one artifact hazard Kepler did not price
+
+**Admitted, and it is the tranche I would defend hardest**, for the reason Kepler gives: §K87-0(c)
+records in the program's own words that the two-stage process **could not have been tested** by any
+statistic in the session, and the verdict line records that the second phase moment was never
+computed. **These are gaps in what was measured, not in what was proposed**, and his observation that
+this tranche cannot waste its budget — a null here converts a bound on *sinusoids* into a bound on
+*phase structure of any shape* — is correct and is the strongest expected-information argument in the
+file.
+
+**Price: the declared integer is ~1,000, frozen exactly in the config hash before the run.** One
+accounting note: **68 of it is the §P5-5(3) tranche-3 ladder, already declared in 2026-08-11**.
+Already-declared is not free — it still occupies its 68 slots in this session's BH denominator — but it
+may not be presented as new scope, and the report must say which 68 they are.
+
+**Demonstrated recovery required per statistic, before any result from it means anything (S-17
+candidate, §P6-7).** Each of these is a **new estimator**, and G-M1's logic applies to estimators, not
+only to pipelines:
+
+1. **F9-01 second circular moment.** *Positive control:* a planted **antipodal two-lobed** phase
+   distribution with first moment ≈ 0 — the statistic must recover it. *Negative control, and Kepler
+   did not name it:* a planted **pure sinusoid** — the second-moment statistic must **not** fire beyond
+   its nominal size. Without that second control, a "second-moment detection" is unfalsifiably
+   confounded with the first moment the program has already bounded. §P5-3's two mandated repairs to
+   K-088's permutation null bind here, as the entry itself states.
+2. **F9-04 Kuiper / Watson.** *Positive control:* a planted **narrow-arc** response (~10% duty cycle)
+   at a declared amplitude, which is precisely the alternative the 2-df form is weak against and the
+   entry's whole argument. *Negative control:* the day-binning lattice itself — the statistic must not
+   fire on a construction whose only structure is the 1-day grid. And the recovery must be demonstrated
+   **band by band**: Kuiper on daily-binned data inherits the same sinc notches, so it buys shape
+   sensitivity, not band coverage, and must not be described as buying both.
+3. **F9-10 mark axis — ADMITTED, and here is the hazard the entry does not price.** Kepler is right
+   that mark tests are computed at event times and therefore **escape the day-binning sinc entirely**;
+   he calls it the most underexploited property of the instrument and I agree. **But that property is
+   exactly what forfeits the program's only structural defence against the observer.** §P5-1 let us
+   claim, for the first time, that our fortnightly numbers are *structurally* immune to the S1/S2
+   detection-cycle systematic — and that immunity comes from the two exact zeros of day-binning and
+   global longitude summation. **The mark path has neither zero.** Escaping the sinc means escaping the
+   notch that was protecting us.
+
+   > **RULED.** F9-10's **sub-daily arm is gated on the F7-01/02/03 observer controls from Tranche A**,
+   > and **G-M1 arm (i)** — push "hour of local solar day" through the unmodified pipeline, require
+   > Â/A_ref < 0.1 — **must be re-run on the mark path specifically**. v1's count path was *designed*
+   > blind there and arm (i) could only destroy, never license; **the mark path is not blind, so on it
+   > arm (i) becomes a live falsification test rather than a formality.** The fortnightly-and-longer
+   > mark arm may proceed inside B without waiting. Kepler applied this reasoning to F9-15 and F1-30
+   > ("must ship with the observer controls from Tranche A") and did not carry it to F9-10; it carries.
+
+4. **F2-18..F2-25 harmonic ladders** — not new estimators, already declared, no recovery demand beyond
+   the existing ladder discipline.
+5. **F10-14 two-stage unlock-release** — this is K-088's object and inherits §P5-3's mandated null
+   repairs; it is not a fresh design and may not be reported as one.
+
+---
+
+## §P7-4. TRANCHE C — DEFERRED, design frozen now; C1 all-pairs granted EXPLORATORY-UNPRICED with five conditions
+
+**Deferred, not rejected.** The clock directive is Jim's and the entry is right that *the clock which
+simplifies the system is a discovery about the system*; the fail case is genuinely publishable
+(§P7-5(2) below makes it more so). But C's price is undetermined until the open pricing question about
+clocks is answered — which I answer in §P7-5(2) — and its value is conditional on B's statistics having
+demonstrated recovery. **Sequence: A clears → B runs → C.**
+
+**Design frozen now, though, and this is the part that cannot wait.** The partition rules, the clock
+definitions, and F8-15's random-clock control are frozen in a config hash **before B's results are
+seen**, per S-9. A clock family reshaped after seeing which statistics survived is the most efficient
+forking-paths machine this program could build, and freezing it costs nothing today.
+
+**C1 all-pairs as EXPLORATORY-UNPRICED — GRANTED under Rule 4.4, with five conditions.** Kepler's
+instinct to prefer structure over combinatorics is right, and his willingness to run the combinatorial
+class exactly once with only a survivor count published is the right shape. The conditions close the
+door he left ajar:
+
+1. **The only outputs that leave the run are two integers**: the survivor count among real pairs, and
+   the survivor count among the matched F9-20 control pairs. No feature names, no ranked list, no
+   effect sizes.
+2. **Zero stubs emitted.** Nothing from C1 enters `stubs.json`, and nothing from it may be written up
+   as a K-entry.
+3. **Run once**, config frozen. Any change to the pair set, the statistic, or the threshold is a new
+   declaration and a new `EXPLORE_COUNT.jsonl` line with its own `n_declared_tests` (R2).
+4. **Only the difference is discussed** — real count against control count. A raw survivor count with
+   no control arm is uninterpretable and may not be quoted.
+5. **The follow-up rule is declared BEFORE C1 runs.** If the real count exceeds control, that licenses
+   exactly one thing: a subsequent **priced** declaration of a specific sub-family, chosen by a rule
+   written down in advance. **Without this condition, "unpriced" is a selection stage with no
+   accounting — which is how p-hacking enters through a door marked exploratory.** This is the
+   condition that makes the category safe, and it generalises to every future use of Rule 4.4.
+
+---
+
+## §P7-5. THE FIVE OPEN PRICING QUESTIONS, ANSWERED
+
+**(1) Is the deflation factor clustering or bookkeeping?** **Both, and in a measured ratio: ~2.5×
+variance from multiplicity, ~3.9× from dispersion, plus a small df term.** Ruled in full at §P7-1,
+with the scalar replaced by a formula, F4-58 re-specified as a zero-cost per-feature measurement, and a
+recorded prediction (VIF ≈ 3.9, block-length dependent) that will falsify §P7-1(b) if it returns ≈ 9.7.
+
+**(2) Is a clock a new test per feature, or a declared stratum in the BH structure?** **Both — the
+question presents alternatives that are orthogonal.** A clock is **PRICED as a new test per feature**,
+on exactly the §P5-0 lag-axis argument: an axis is free only where the map is *linear in t*, and a
+natural-time / ETAS-rescaled / aftershock-free warp is non-linear in t **by construction — that
+non-linearity is the entire point of the clock.** So it is never a rotation of the parent's column
+space and never free. **And it is simultaneously organised as its own declared stratum** under §P6-3,
+with `q_s` inside `Σ m_s q_s = m q`. Priced as tests, organised as strata. The declare-then-prove
+discipline of §P5-5(2) applies unchanged: any clock claimed free must show min R² ≥ 1 − 10⁻⁴ against
+the lag-0 column space before the scan, and none of the proposed clocks will.
+
+**(3) Is leave-one-region-out an audit or R new tests? (F5-20)** **An audit, priced at 0 — and the
+principle generalises.** **Multiplicity is owed on rejections you might make, not on checks that can
+only unmake them.** LORO carries no price *if and only if* (i) it runs on declared survivors only,
+(ii) its output is a stability verdict rather than a p-value, and (iii) **it can only demote, never
+promote.** The moment a LORO result is allowed to rescue or upgrade anything — "significant in 19 of
+20 regions, so it is real" — it becomes R new tests and is priced as R new tests. Declare the direction
+before the run. Kepler's own reading was correct and he was right to ask rather than assume.
+
+**(4) Is the magnitude-floor ladder a post-hoc robustness check or a parallel battery? (F7-14)**
+**An audit, priced at 0, made demote-only by construction.** Report the effect as the **minimum over
+the declared Mc set {4.5, 5.0, 5.5}** — a worst-case reading, which cannot promote anything by
+arithmetic and therefore owes nothing. If instead a survivor at M ≥ 5.0 that failed at M ≥ 4.5 may be
+*claimed*, it is a parallel battery and the whole tranche count multiplies by three. Kepler's own
+caveat is adopted as binding: at M ≥ 5.5 the count falls to ~9,000, so under the deflated floor
+`A_min ≈ 12.5%` and **non-survival at M ≥ 5.5 is weak evidence of artifact and may not be reported as
+evidence of one.** An audit whose power is unstated is a trap for the next reader.
+
+**(5) Is a transform of an existing feature a new test, and how much of F10-11 is redundant?**
+**The rule already exists in code and only needs generalising from one axis to all of them.**
+`lag_invariance_audit` decides freeness by column-space identity at min R² ≥ 1 − 10⁻⁴; extend it from
+the lag axis to the **transform axis** and apply §P5-5(2)'s two-sided discipline — a transform declared
+FREE that measures PRICED is a bug, one declared PRICED that measures FREE is a missed saving. Under
+it: a **rank** transform of a linear feature is a monotone non-linear reparameterisation, outside the
+parent's span → **PRICED**. A **ratio** → PRICED, and additionally flagged against the TSI-ratio corpse
+per the entry's own note. **Cumulative dose (F10-11) → PRICED, with a sharpened version of Kepler's
+saving:** a trailing sum over W days is a boxcar filter, i.e. a fixed linear combination of the
+parent's lags 0..W. It is therefore **inside the joint span of the existing 0..30 lag columns for
+W ≤ 30, but outside the span of any single lag column** — and since the miner tests one lag at a time,
+it is *not* redundant with any existing test while being *entirely* redundant with a joint multi-lag
+test that does not currently exist. **So: price it, but note that a single joint multi-lag test would
+subsume the whole W ≤ 30 dose family at a fraction of the count.** That is a larger saving than the one
+the entry proposed, and it is available today. For W = 90 the dose feature is genuinely new.
+
+---
+
+## §P7-6. COUNTS AND CLOSING
+
+**Five rulings, five open questions answered.** Tranche A **ADMITTED and made a precondition**, price
+confirmed at ~713 with the control stratum declared. Tranche B **ADMITTED**, ~1,000 declared, four
+demonstrated-recovery demands attached and one artifact hazard priced that the entry had not.
+Tranche C **DEFERRED with its design frozen now**; C1 granted EXPLORATORY-UNPRICED under five
+conditions. The deflated floor **adopted provisionally as an operating floor and rejected as an
+attribution**, with the scalar replaced by a formula. Rule 4.3 **amended in Kepler's favour**.
+
+**Where Kepler corrected me, recorded as such.** (i) His §0.3 closing paragraph is a stricter and
+correct reading of my own Rule 4.3, and it is now the rule. (ii) His F9-20 note that controls must be
+counted in the multiplicity caught the opposite ruling in my first draft; had mine shipped,
+"control" would have become an unpriced channel and F10-25's survivor ratio would have compared two
+arms facing different thresholds. **Two corrections from the generator to the adjudicator in one round
+is the engine working in the direction it is supposed to work in less often.**
+
+**Where I correct the catalog.** The deflation factor is not all clustering; the multiplicity component
+is not a property of the catalogue and cannot be carried across tranches of different size; F4-58 is
+cheaper than priced and must be per-feature because `Feature.block_days` guarantees the factor varies
+with the feature's own period; the second-moment statistic needs a *sinusoid* negative control, not
+only a two-lobed positive one; and **the mark axis's escape from the day-binning sinc is also an escape
+from the S1/S2 immunity §P5-1 let us claim** — the most valuable property in Tranche B and the most
+dangerous, in the same sentence, for the same reason.
+
+**One prediction on the record.** F4-58 returns median VIF ≈ 3.9 with block-length dependence, or
+§P7-1(b) is wrong and the scalar stands. It costs one script over data already on disk to find out,
+which is the correct price for a claim that 281 S-15 lines depend on.
+
+**What none of this licenses.** Nothing in this catalogue is evidence, no tranche may be entered for or
+against a ledger entry until G-M1 clears at its band **and** aggregation, R1 still gates v2 shipping as
+default, and every bound this programme currently owns keeps the §P5-1 wording and the §P5-4
+single-phase-one-stage qualifier. **281 priced entries change what we may look at. They change nothing
+about what we may say.**
+
+*Popper seat, 2026-08-12. Round 6. A catalogue that marks its own load-bearing assumption, hands over
+five pricing questions instead of answering them favourably to itself, and proposes a stricter rule
+against its own interest — is a generator doing its job at the top of its range, and the correct
+adjudication of it is mostly arithmetic and sequencing rather than refusal. Zero entries refused.
+Appended to my own section; no existing line modified; nothing committed. The supervisor commits.*
