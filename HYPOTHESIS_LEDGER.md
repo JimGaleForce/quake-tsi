@@ -16552,3 +16552,206 @@ note (texts above left unmodified per append-only discipline):
 Error class: S-18 clause 1 (a number carried without its convention - here, with the wrong convention
 attached). The outward letter was corrected before send; no committed artifact carries the conflation;
 the bounds paper never contained it.
+
+---
+
+## §P7-20. TRANCHE B ADJUDICATED — 3 survivors VOID, 8 uncontrolled, 23 gated, 0 K-entry candidates. Two nulls become quotable. Two build defects gate the quoting.
+
+*2026-08-13, `73ce72a`, `session_20260813T092628`. 34 BH survivors of 171 declared, **all on the F9-10
+mark axis**; F9-01 and F9-04 zero survivors (min p 0.096 / 0.112). My §P7-19(d) SURVIVORS frame fired
+and the machinery attached the conditioning without being asked.*
+
+### (1) THE TAUTOLOGY DEFECT — the 3 circular rows are VOID; the 8 are ARTIFACT-CLASS-UNCONTROLLED. And the missing exclusion rule was mine to write.
+
+**`mean_depth_30d` x `depth` is not a weak test, it is not a test.** It asks whether the trailing
+30-day mean of a quantity correlates with that quantity — a statement about the autocorrelation of the
+catalogue, guaranteed to fire, and it fired hardest in the entire run (stat/floor 4.3–5.4). Same for
+`deep_fraction_30d` x `depth` and `b_value_90d` x `mag`.
+
+> **RULED. The 3 same-quantity rows are VOID — constructively invalid, not false positives.** The
+> distinction is load-bearing: a false positive is a valid test that happened to fire; these are
+> **not tests of any hypothesis** and carry no information about the Earth in either direction. Struck
+> from the survivor list, reported as a **declaration defect**.
+>
+> **Their slots remain in the denominator. m stays 171.** §P7-18(1)'s ratchet is absolute: *a count
+> that moves after data is scored is never permitted.* The defect does not buy us a lenient threshold.
+
+**The 8 non-circular family-4 x same-catalogue-mark pairs are not void but are uninterpretable as they
+stand.** Both sides derive from one catalogue, so any shared composition drift — Mc drift, network
+change, magnitude-scale drift — induces association with no forcing anywhere. The existing
+block-bootstrap null preserves the mark's autocorrelation but **does not cover shared drift between
+feature and mark.**
+
+> **RULED. The 8 are labelled ARTIFACT-CLASS-UNCONTROLLED**, retained as BH survivors *of record*
+> (that is a fact about the run) and **barred from K-entry candidacy** until they clear a
+> **composition-preserving null**: the feature recomputed from ETAS-simulated catalogues that reproduce
+> the composition drift, through the identical code path (S-8's own wording, S-13's structure-aware
+> mandate).
+>
+> **Declared exclusion rule for B-2 and every future mark run:** *a family-4 catalogue-endogenous
+> feature may not be paired with a mark derived from the same catalogue quantity; and any family-4 x
+> same-catalogue-mark pair runs only with a composition-preserving null declared alongside it.*
+
+**Owned: this was my miss.** I ruled on the mark axis in §P7-3, §P7-10(c), §P7-11(c), §P7-13, §P7-16(3)
+and §P7-18(2), and I had both lists in front of me — the catalogue's seven marks and family 4's
+`b_value_90d` / `deep_fraction_30d` / `mean_depth_30d`. The circularity is visible from reading them
+side by side. **I priced that axis five times and never asked what it was pairing.**
+
+### (2) THE EXOGENOUS RESIDUE — the discriminating test is a spectrum-preserving, phase-randomizing null, plus a phase-consistency split.
+
+23 ephemeris survivors, the largest being long-period beats (`eclipse_year_beat` 173 d,
+`perigean_spring_beat` 412 d) against **clustering marks** (`dt_prior`, `dist_prior`,
+`cluster_member`). **This is precisely where §P7-11(a) measured the ETAS residual's excess power —
+19.6x at 7–30 d, 64.0x at 365–1000 d — and the marks in question are definitionally the clustering
+that ETAS fails to absorb.** A spurious association here is not a worry; it is the prediction.
+
+> **RULED. Before any of the 23 becomes a K-entry candidate, both of these run:**
+>
+> **(a) PRIMARY — Fourier phase-randomized surrogates of the residual.** Preserve the residual's power
+> spectrum **exactly** while randomizing its phases. This destroys alignment with a deterministic
+> ephemeris cycle while leaving the excess power that is the suspected cause completely intact. **It is
+> the null aimed exactly at the named mechanism**, and it is strictly better here than the block
+> bootstrap, which preserves structure only out to its block length. An association that survives it is
+> not explained by residual power at that frequency.
+>
+> **(b) CONFIRMATORY — phase consistency across a temporal split.** A lunar beat is deterministic and
+> its phase is known exactly; residual-driven association is not phase-locked to it. Split the window,
+> measure psi = atan2(beta_sin, beta_cos) in each half, require the halves to agree. **This is usable
+> before G-M1's phase arm clears**, because a constant pipeline phase bias cancels in the *difference*
+> |psi_1 − psi_2| — the K-091 gate binds on reporting an absolute psi, not a differenced one.
+
+**And a caution about the mark choice itself:** `dt_prior` / `cluster_member` make "lunar modulation of
+inter-event time" nearly synonymous with "lunar modulation of aftershock productivity" — a real
+literature, and also the single place ETAS misfit is largest. **The confound is in the observable, not
+only in the null.**
+
+### (3) MARK FLOORS — the 34 are PROVISIONAL and GATED on F4-58M for the 6 marks. Not a formality.
+
+§P7-10(c) said F9-10 declares its floor from measured `VIF_mark` **or does not run**. The run used
+§P7-13's pooled fallback 0.0469 on all 120 rows. The fallback was ruled for marks *without* their own
+measurement; these 6 can be measured at **zero surrogate cost**.
+
+> **RULED. The 34 stand PROVISIONAL and are gated on F4-58M for the 6 marks.** None may be quoted or
+> proposed as a K-entry candidate until it carries **its own measured floor**.
+
+**This can remove survivors, which is why it is a gate and not a chore.** Clustering marks are the most
+autocorrelated marks in the set, so their `VIF_mark` should be the **highest** — and a higher `VIF_mark`
+raises `rho_min`, pushing rows back below their own floors. **Prediction, recorded before the
+measurement: `dt_prior` and `cluster_member` return `VIF_mark` above the 4.575 pooled fallback, and
+some of the 23 clustering-mark survivors do not survive their own floors.** The measurement is most
+consequential exactly where the survivors are.
+
+### (4) STABILITY — builder's ruling CONFIRMED. The singular-design repair is per-row, and the resampler must be structure-aware.
+
+**Confirmed: no K-entry until the stability line completes.** §P7-14(b) required the line; it is
+incomplete against its own design; a candidate cannot clear a condition that did not finish. And no
+candidate clears anyway — lower bound 0.603 against the 0.70 threshold, over a null baseline of 0.487.
+**Label-not-kill applied correctly** (§P7-14(b)): 29 BORDERLINE and 5 UNSTABLE are labelled, not
+deleted, because the metric is biased low by construction.
+
+> **RULED, the repair, in two parts.**
+> **(i) Never abort an arm for one row.** A block resample that flattens a piecewise-constant covariate
+> produces a singular design — and this programme already settled what that means, in code:
+> `mine.py:_quadform` notes that a flattened column *"is a real answer ('the effect does not survive
+> this lattice'), not an error, so it must return 0 rather than raise."* **Same disposition: record
+> `STABILITY-UNDEFINED (design flattened by resample)` for that row and continue.** An aborted arm
+> loses 120 rows to protect one.
+> **(ii) Make the resampler structure-aware, per S-13.** For piecewise-constant covariates (the Mc-drift
+> control), block resampling must be **stratified within regime segments** so the change-points
+> survive. Declared in advance, per the §P7-11(d) S-9 gloss.
+
+### (5) THE OBSERVER — not an Earth finding, and the global max-statistic must be re-scoped.
+
+**The F7 result is a positive control passing:** F7 was built to detect diurnal and weekly detection
+structure and it detected it, at the resolution floor. That is exactly what catalogue-composition
+controls exist to find, it **gates the sub-daily arm as designed** (which is off in this config), and
+it is **a measurement of the observer, not of the Earth.** Confirmed as read.
+
+> **But one correction, and it matters for the headline.** The global max-statistic (p = 1.31e-4) is
+> driven **entirely** by two **unpriced** control rows, and its covered set contains **zero declared
+> rows**. §P7-16(4) ruled that unpriced rows cannot produce findings — **it follows that they cannot
+> drive the confirmatory statistic either.**
+>
+> **RULED. The S-8 global max-statistic is computed and reported over the DECLARED family only.** The
+> control max-statistic is reported **separately and labelled as the observer measurement**. A headline
+> confirmatory number driven by rows that are barred from being findings is uninterpretable, and
+> "global max-stat p = 1.3e-4" would have read as a strong result about the Earth.
+
+### (6) THE COVERAGE HOLE — escalation AUTHORIZED, with the threshold frozen first.
+
+Two floor-pinned `half_draconic_phase` rows are BH-ineligible **and** outside the max-statistic covered
+set: they escape both channels. **This is the §P7-19(c) hazard occurring in the one configuration that
+ruling did not reach**, and the builder emitting the recipe rather than running it — resolution-fact
+kept separate from result-fact — is the correct instinct.
+
+> **RULED. The escalation is AUTHORIZED as a declared follow-up, priced 0** (it resolves a p for a row
+> already declared; it creates no new rejection). **Condition, and it is the whole of the discipline
+> here: the BH threshold from this run is FROZEN AND RECORDED BEFORE the escalation runs.** Applying an
+> already-fixed threshold to a newly-resolved p is not post-hoc; re-running BH after seeing a resolved p
+> would be. Run at the emitted `N_max` = 100,009, report the resolved p against the frozen threshold.
+>
+> **Machinery addition, extending §P7-19(c):** the max-statistic's **covered set** is reported, and any
+> **declared** row outside both channels is enumerated as a printed **double-escape count** beside the
+> resolvability count. A row that can be rejected by neither instrument must never again be
+> discoverable only by someone reading carefully.
+
+### (7) THE DOUBLE LEDGER LINE — annotate, keep both; and the hash difference GATES quoting.
+
+> **RULED, on the §P7-8(c) precedent, unchanged.** **Both lines stay.** The erroneous
+> `n_declared = 283` line is **not deleted, not edited** — `EXPLORE_COUNT.jsonl` is a commitment record
+> and retroactively lowering a declared multiplicity is the move the log exists to prevent. **Append an
+> annotation** naming both session ids, the correct declaration (171), and — explicitly — that the
+> first session is **unattributable from held evidence**, recorded as unattributable rather than
+> guessed at. **Both lines count toward cumulative declared tests** in the next holdout print (R2):
+> stricter downstream, the safe direction.
+
+**The artifact-hash difference on identical science is NOT waved through.** §P7-8(c) added the
+invariant *"two sessions whose configs differ must not produce identical artifact hashes."* **This is
+its exact dual: two sessions with identical science producing differing artifact hashes.** Either it is
+benign (embedded timestamps, session ids) or it is a **§P6-5 determinism defect**, and §P6-5 makes
+determinism a hard requirement, not a preference.
+
+> **RULED. Classify it before any Tranche B result is quoted anywhere.** If the difference is confined
+> to non-scientific fields, define a **canonical artifact hash excluding them** and add the invariant in
+> both directions. If any numerical field differs, this is an invariance-audit failure and **B's
+> results are suspect until it is resolved.** Cheap, and it gates everything below.
+
+### The two zero-survivor results — quotable forms, effective once (7) is classified.
+
+**These are the first bounds this programme has ever had on non-sinusoidal structure**, and §K87-0(c)
+said in the programme's own words that the two-stage process *could not have been tested* by any
+statistic then in the session. It can now, and it is null.
+
+> **F9-01, second circular moment — quotable form.** *"No detectable two-lobed or axial phase structure
+> in the ETAS-residualised global daily M >= 4.5 target over the exploration window [365, 8081), across
+> the declared cyclic features, at the per-feature floors of §P7-12(a) (~15% modulation at
+> N = 46,585); minimum p 0.096, zero BH survivors at q = 0.10 within a 171-test declaration. The
+> statistic demonstrated recovery on sim against a planted antipodal two-lobed signal AND returned 0%
+> on a planted pure sinusoid, so the null is not a first-moment result in disguise. Does not cover: the
+> diurnal/semidiurnal band (notched exactly), the 6 of 36 features UNMEASURABLE-BY-WINDOW under
+> S-15(c), or amplitudes below the declared floors."*
+>
+> **F9-04, Kuiper / Watson omnibus — quotable form.** *"No detectable departure from phase uniformity
+> of arbitrary shape, same target, window, features and floors; minimum p 0.112, zero BH survivors.
+> The statistic demonstrated 100% recovery on the three-arc construction whose first AND second
+> harmonics vanish exactly — a signal invisible to both Rayleigh (0%) and the second moment (0%) — and
+> 0% on the day-lattice negative control. Sensitivity to a SINGLE narrow arc exceeds Rayleigh's by at
+> most pi/2, so this bound is materially weaker for single-arc responses than for multi-arc ones."*
+
+> **What these two together buy, stated plainly: the programme's tidal null stops being a bound on
+> sinusoids and becomes a bound on phase structure of any shape, within the demonstrated sensitivity.**
+> That is exactly the payoff Kepler argued the tranche would deliver **on a fail**, and it landed on the
+> fail. **Both remain GENERATOR-NOT-EVIDENCE** — exploration window, in-sample, no holdout hash spent —
+> and both carry ~15%, **not** the ~5.6% this programme is accustomed to quoting.
+
+### Where Tranche B stands, in one line.
+
+**Zero K-entry candidates.** 3 void, 8 artifact-class-uncontrolled, 23 gated on F4-58M and on the
+phase-randomized null, all 34 gated on the stability line, and everything gated on the hash
+classification. **Two real nulls, and a declaration defect found by the machinery rather than by a
+reader.**
+
+*Popper seat, 2026-08-13. A tranche whose largest effects were its most invalid, caught by its own
+run; a mark axis I priced five times without asking what it paired; and two bounds that are the first
+of their kind in this programme, held back one build defect from being quotable. Appended to my own
+section; no existing line modified; nothing committed.*
