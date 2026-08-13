@@ -15392,3 +15392,63 @@ because the block-length dependence I predicted is itself evidence that a large 
 may be our own null rather than the Earth — which would make the miner under-powered rather than
 over-confident, and is the more interesting of the two readings. Appended to my own section; no
 existing line modified; nothing committed.*
+
+---
+
+## §P7-9. THE BCa DECISIVE CALIBRATION — clearing suffices, but the count reads SCORED. Licence withheld for three comparisons.
+
+*2026-08-12. 135 fresh comparisons run, 13 gated out by the estimator's own refusal gates (8 AD,
+4 one-decade-cap, 1 xi-stability), 113/122 scored = 92.6% coverage, worst understatement 2.28x. The
+superseded percentile method scores 3.42x on the same 122 and would FAIL. Legacy 26 re-scored
+separately at 96.2%, licensing nothing. Two caveats escalated to me as mine; both are.*
+
+**(1) SCORED, not run — and the licence does not vest yet.** §P7-7(b)'s "≥ 125" came from one
+calculation: `n >= 0.9*0.1/((0.90-0.846)/2)^2 = 125`, a statement about the number of **outcomes that
+enter the coverage proportion**. Gated-out comparisons produce no interval and therefore no outcome;
+they cannot be in a denominator they never reached. **The requirement reads SCORED. 122 is three
+short.** I note that three more comparisons move the standard error from 0.0237 to 0.0234 and will
+change nothing anybody can measure — **and that is exactly why I am not moving the bar.** §P7-7(b)
+said moving a bar after seeing a result would void the harness, and that binds hardest when the
+movement is small and the result is a pass. A bar I relax by 2.4% because the run came out well is not
+a bar.
+
+> **RULED.** `assert_calibrated` counts **scored** comparisons, not run. `--gpd` **stays blocked**
+> until scored ≥ 125. **Top-up: run until 125 scored, then stop** — at the observed 9.6% gate rate,
+> ~4 further runs. That stopping rule depends only on the gate outcomes and never on the coverage
+> outcomes, which is §P6-1(3)'s principle applied to the calibration itself; stopping when the
+> coverage looks good would be optional stopping on the audit, which would be a poor joke in this
+> particular building. **The pooled 125+ is decisive on BOTH arms** — coverage and worst
+> understatement — whatever it does to either. If the top-up drops coverage below 90%, that is the
+> answer. The artifact is not invalid; it is **incomplete**, and it completes with ~4 runs.
+
+**(2) Clearing suffices. Plainly: yes, and the coordinator's reading of my own text is correct.**
+§P7-7(c) wrote *"if BCa clears >= 90% coverage and <= 3x understatement on >= 125 fresh comparisons,
+the GPD path is licensed"*. That is a clearing condition and I wrote it deliberately. The exact 95%
+interval on 113/122 is **[0.865, 0.966]** and contains the bar, so true coverage above 90% is **not
+resolved** (posterior mass below the bar ≈ 0.17) — **and I do not get to demand resolution now**, for
+the same reason I do not get to relax 125 to 122. The bar was set before the run and it is met by
+clearing.
+
+**Why clearing is adequate here, stated so it is not mistaken for indulgence.** The licence's blast
+radius is **screening and ranking only**. §P6-2(6) stands untouched: **every GPD-extrapolated survivor
+must still be brute-force confirmed at N >= 10/p_gpd before it becomes a stub**, so a mis-calibrated
+interval cannot produce a stub — only a candidate that then gets resolved directly. Add §P6-2(2)
+CI-upper, §P6-2(3) the one-decade cap, and §P6-2(1)'s refusal gates, which just fired on 13 of 135
+comparisons and are demonstrably live. **A clearing condition would NOT be adequate if a GPD p were
+ever terminal.** It is not, and if a future amendment makes it terminal, that amendment must carry a
+resolving condition.
+
+**(3) The finding inside the pass: understatement is the sharper bar, and it must be re-checked at the
+topped-up n.** BCa 2.28x versus percentile 3.42x on the same 122, while both sit near the coverage
+bar — the understatement gate separated the two estimators and the coverage gate barely did. **Report
+worst understatement as the headline calibration number, with the n it was taken over**, because it is
+a maximum and maxima drift upward with sample size: 2.28x against a 3x ceiling has less headroom than
+it looks. **If the top-up pushes it past 3x, the licence fails on that arm** — which is what makes the
+three comparisons decisive rather than ceremonial, and is a second reason not to wave them through.
+
+**The legacy 26 at 96.2% licenses nothing and is correctly reported as true in the bytes.** Right
+disposition: it is evidence about attempt 1's sample, not about attempt 2's estimator.
+
+*Popper seat, 2026-08-12. The licence is three scored comparisons away and `--gpd` stays blocked until
+they land. A bar bent by 2.4% in the direction of the result it is judging is worth less than the four
+runs it would have saved. Appended to my own section; no existing line modified; nothing committed.*
