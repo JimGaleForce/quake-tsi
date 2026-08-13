@@ -137,8 +137,13 @@ PROVENANCE_JIM = {
     "question": ("which tidal display was Jim reading when he made the Sand Point "
                  "observation -- vertical displacement, water level, tidal potential, "
                  "volumetric strain, or a resolved stress -- and from which source?"),
-    "answer": None,
-    "status": "REQUIRED, NOT RECEIVED (§P7-23(D))",
+    "answer": ("Jim, 2026-08-13, verbatim: 'yes, screenshot for that computation of "
+               "the eq at that time/place' - confirming the panel read was the "
+               "earth-tides-globe app (D:/CODE/git/earth-tides-globe, "
+               "src/utils/astro.ts solidTideDisplacementCm): solid-earth body-tide "
+               "VERTICAL DISPLACEMENT in cm, positive = crust lifted, as "
+               "characterized and exactly reproduced in K092_SCALAR_PROVENANCE.md."),
+    "status": "RECEIVED 2026-08-13 (§P7-23(D) satisfied); scalar = app vertical displacement",
     "determinative_for_scalar": True,
     "determinative_for_direction": False,
     "rule": ("§P7-23(D) amends §P7-22 Q5. DIRECTION: still literature-derived and "
