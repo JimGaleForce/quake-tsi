@@ -283,3 +283,70 @@ def test_a_partition_that_breaks_the_identity_refuses_to_run(tmp_path):
     pth.write_text(json.dumps(doc), encoding="utf-8")
     with pytest.raises(S.BudgetIdentityError):
         _cfg(tmp_path, gpd=False, strata=str(pth))
+
+
+# --------------------------------------------- §P7-8(c)(5): the build invariant --
+def test_session_end_registers_the_artifact_hash_and_reports_it(flat_session):
+    """The invariant is checked at session end, printed in the report, and logged."""
+    out, sd = flat_session
+    rep = open(os.path.join(sd, "report.md"), encoding="utf-8").read()
+    assert "build invariant (§P7-8(c)(5)): **OK**" in rep
+
+    reg = os.path.join(os.path.dirname(os.path.normpath(sd)),
+                       ms.ARTIFACT_REGISTRY)
+    assert os.path.exists(reg), "the artifact-hash registry must be written"
+    rows = [json.loads(l) for l in open(reg, encoding="utf-8") if l.strip()]
+    assert len(rows) == 1
+    assert rows[0]["session"] == os.path.basename(os.path.normpath(sd))
+    assert rows[0]["collides_with"] == []
+
+    ck = json.load(open(os.path.join(sd, "checkpoint.json"), encoding="utf-8"))
+    assert ck["build_invariant"]["ok"] is True
+    assert ck["build_invariant"]["artifact_hash"] == rows[0]["artifact_hash"]
+
+
+def test_two_sessions_with_DIFFERENT_configs_and_identical_results_are_flagged(
+        tmp_path):
+    """§P7-8(c)(5) end to end: the clamped-mag incident, replayed through `run`.
+
+    Two configs that differ in a DECLARED, hash-affecting parameter are made to
+    produce identical results the same way the real incident did -- the parameter
+    does not bind. Here `explore_frac` differs but both runs are handed the same
+    `prepared` context, exactly as `--mag-target 4.0` differed but selected the
+    same events. The harness must WARN, name BOTH sessions in the report, and
+    delete nothing.
+    """
+    prepared = _prepared()
+    cfg_a = _cfg(tmp_path, gpd=False)
+    cfg_b = _cfg(tmp_path, gpd=False)
+    cfg_b["explore_frac"] = 0.65                 # declared, hash-affecting, inert
+    assert ms._cfg_hash(cfg_a) != ms._cfg_hash(cfg_b)
+
+    _out_a, sd_a = _run(tmp_path, "a", cfg_a, prepared)
+    _out_b, sd_b = _run(tmp_path, "b", cfg_b, prepared)
+
+    reg = os.path.join(str(tmp_path), ms.ARTIFACT_REGISTRY)
+    rows = [json.loads(l) for l in open(reg, encoding="utf-8") if l.strip()]
+    assert len(rows) == 2
+    assert rows[0]["artifact_hash"] == rows[1]["artifact_hash"], (
+        "the two runs were supposed to be bitwise identical")
+    assert rows[0]["config_hash"] != rows[1]["config_hash"]
+    assert rows[1]["collides_with"] == ["a"]
+
+    rep_b = open(os.path.join(sd_b, "report.md"), encoding="utf-8").read()
+    # the report body is hard-wrapped and blockquoted; flatten before matching
+    flat = " ".join(l.lstrip("> ").strip() for l in rep_b.splitlines())
+    assert "BUILD INVARIANT VIOLATED" in flat
+    assert "`a`" in rep_b and "`b`" in rep_b
+    assert rows[0]["config_hash"] in flat and rows[1]["config_hash"] in flat
+    assert "never be cited as agreeing" in flat
+    assert "not edited or reduced" in flat       # §P7-8(c)(1): the over-count stands
+    assert "Nothing has been deleted" in flat
+
+    ck_b = json.load(open(os.path.join(sd_b, "checkpoint.json"), encoding="utf-8"))
+    assert ck_b["build_invariant"]["ok"] is False
+
+    # nothing is deleted or quarantined: a collision is evidence about the build
+    assert os.path.exists(os.path.join(sd_a, "report.md"))
+    assert os.path.exists(os.path.join(sd_a, "checkpoint.json"))
+    assert os.path.exists(os.path.join(sd_b, "report.md"))

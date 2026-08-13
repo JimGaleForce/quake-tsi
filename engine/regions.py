@@ -57,6 +57,8 @@ import math
 import numpy as np
 from scipy import stats
 
+from . import floors
+
 # ------------------------------------------------------------ declared rule --
 REGION_RULE_ID = "R2b-lon6-active"
 N_SECTORS = 6
@@ -83,11 +85,12 @@ def a_min(vif, alpha, n):
     `alpha` is the DECLARED operating threshold of the tranche (two-sided, so
     z_alpha = Phi^-1(1 - alpha/2) -- the convention §P7-1(a) uses in its own
     arithmetic, where alpha = 0.1/259 gives z = 3.549).
+
+    Delegates to `engine.floors.a_min` so the formula has exactly ONE
+    implementation in the build (§P7-8(d) added `engine/floors.py` as its home;
+    this stays as the region module's own name for it).
     """
-    if n <= 0:
-        return float("inf")
-    z = float(stats.norm.isf(float(alpha) / 2.0))
-    return float(math.sqrt(float(vif)) * (z + Z_POWER_80) * math.sqrt(2.0 / float(n)))
+    return floors.a_min(vif, alpha, n)
 
 
 def max_R_for_sum(vif, alpha, n_total, target_amplitude, r_cap=64):

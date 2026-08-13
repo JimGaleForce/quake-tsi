@@ -24,7 +24,8 @@ import numpy as np
 import pytest
 from scipy import stats
 
-from engine import design, grid as gridmod, mine as M, regions as R, strata as strata_mod
+from engine import (design, floors, grid as gridmod, mine as M, regions as R,
+                    strata as strata_mod)
 
 SEED = 20260812
 
@@ -248,7 +249,27 @@ def test_surrogates_go_through_the_same_sum():
 
 
 # ------------------------------------- Rule 4.7 item 5: THE BLIND-SPOT KILL ---
-def _planted_world(Rn=6, n=4000, amplitude=0.35, period=29.53, seed=5,
+# §P7-8(d) PLANTED-AMPLITUDE COMPLIANCE. The plant was 0.35, chosen before the VIF
+# was measured. At this world's per-region N (base_rate * n = 32,000) the operative
+# S-15 floor under the MEASURED VIF = 24.08 at Tranche A's alpha (0.10/713) is
+# A_min = 0.1804, so §P7-8(d)'s ">= 2x the operative floor" requires >= 0.3608 --
+# and 0.35 sits just BELOW it. The plant is raised to 0.40 accordingly; the
+# arithmetic is not hardcoded here but computed from engine.floors, and asserted
+# by `test_planted_amplitude_clears_the_P7_8d_floor` below.
+#
+# WHY THIS MATTERS, and it is the entire reason §P7-8(d) exists: the per-region
+# recovery test below runs at ONE region's N, an order of magnitude smaller than
+# the domain's. A plant beneath that region's floor produces a test that fails --
+# and the failure would be written into the record as "the recovery instrument
+# does not work" when the true cause is that the experiment had no power to see
+# what it planted. A POWER failure wearing an INSTRUMENT failure's clothes is a
+# false negative recorded against the pipeline, and it is the specific outcome
+# §P7-8(d) was written to prevent.
+PLANT_N_PER_REGION = 8.0 * 4000.0          # base_rate * n, the per-region N
+PLANT_AMPLITUDE = 0.40                     # >= 2 x floors.a_min at that N
+
+
+def _planted_world(Rn=6, n=4000, amplitude=PLANT_AMPLITUDE, period=29.53, seed=5,
                    base_rate=8.0):
     rng = np.random.default_rng(seed)
     X, ph = _phase_design(n, period=period)
@@ -256,6 +277,27 @@ def _planted_world(Rn=6, n=4000, amplitude=0.35, period=29.53, seed=5,
     phases = R.equally_spaced_phases(Rn)
     C = R.plant_regional_phase(O, O, ph, amplitude, phases, rng=rng)
     return X, C, O, phases
+
+
+def test_planted_amplitude_clears_the_P7_8d_floor():
+    """§P7-8(d): every plant in a G-M1-shaped test sits at >= 2x the operative floor.
+
+    Checked at BOTH aggregations, because the binding one is the smaller N:
+    the per-region floor (N = 32,000) is 2.4x the global floor (N = 192,000), and
+    it is the per-region recovery test that would otherwise fail for want of power
+    and be recorded as an instrument failure.
+    """
+    per_region = floors.assert_plant_above_floor(
+        PLANT_AMPLITUDE, PLANT_N_PER_REGION, what="regsum per-region plant")
+    globally = floors.assert_plant_above_floor(
+        PLANT_AMPLITUDE, 6.0 * PLANT_N_PER_REGION, what="regsum global plant")
+    # the floor is the MEASURED VIF's floor, not a pre-measurement guess
+    assert per_region["vif"] == pytest.approx(floors.MEASURED_VIF_DF2_PHASE)
+    assert per_region["operative_floor_A_min"] > globally["operative_floor_A_min"]
+    # and the world actually built plants what we just certified
+    _X, C, O, _ph = _planted_world()
+    assert float(O[0].sum()) == pytest.approx(PLANT_N_PER_REGION, rel=1e-9)
+    assert C.shape[0] == 6
 
 
 def test_planted_regional_phase_cancels_in_the_global_sum():
@@ -312,9 +354,20 @@ def test_per_region_planted_recovery_at_one_regions_N():
         X, C[r], O[r], 400, np.random.default_rng(13), mean_block=90.0)
     p_r = M.bootstrap_p(s_r, Sb)
     n_r = float(C[r].sum())
+    # §P7-8(d): the planted amplitude is stated NEXT TO the floor it must clear,
+    # so a failure here can only be read as an instrument verdict.
+    rep = floors.plant_report(PLANT_AMPLITUDE, n_r, what="per-region recovery")
+    assert rep["compliant"], (
+        f"the plant ({PLANT_AMPLITUDE}) is below 2x this region's own floor "
+        f"(A_min = {rep['operative_floor_A_min']:.4f} at N = {n_r:.0f}); this "
+        f"test would fail for POWER reasons and be read as an INSTRUMENT failure")
     assert p_r < 0.01, (
         f"per-region recovery failed at N = {n_r:.0f} (chi2 = {s_r:.2f}, "
-        f"p = {p_r:.4g}); no bound may be reported at this aggregation")
+        f"p = {p_r:.4g}); planted amplitude {PLANT_AMPLITUDE} against an operative "
+        f"floor of {rep['operative_floor_A_min']:.4f} "
+        f"({rep['amplitude_over_floor']:.2f}x), so this is an INSTRUMENT failure "
+        f"and not a power failure (§P7-8(d)); no bound may be reported at this "
+        f"aggregation")
 
 
 def test_null_world_is_not_recovered():

@@ -21,6 +21,45 @@ CATALOG_MAG_FLOOR = 4.5
 NEEDED = ["time", "latitude", "longitude", "depth", "mag", "id", "type"]
 
 
+class UnsupportedMagnitude(ValueError):
+    """A requested magnitude threshold the on-disk catalogue cannot support."""
+
+
+def assert_mag_supported(mag, mag_floor: float = CATALOG_MAG_FLOOR,
+                         what: str = "--mag-target"):
+    """Refuse a magnitude threshold below the catalogue's own floor.
+
+    HYPOTHESIS_LEDGER.md §P7-8(c) item (4): *"The clamp is a bug with statistical
+    consequence and is fixed by refusing, not by clamping -- an unsupported
+    ``--mag`` must raise, never silently substitute."*
+
+    The bug this closes: the comcat_world boxes were downloaded with a stated
+    M >= 4.5 floor, so `load_catalog` returns nothing below 4.5 whatever is asked
+    for. A run declaring `--mag-target 4.0` therefore selected EXACTLY the same
+    events as one declaring 4.5 and produced a bitwise-identical artifact
+    (`session_20260812T021707` vs `session_20260812T004857`), while its
+    EXPLORE_COUNT.jsonl line declared 550 further tests. Two runs that differ in a
+    declared parameter and agree in every byte are not replicates, and had they
+    ever been cited as agreeing the agreement would have been vacuous. Refusing is
+    the only fix that cannot be mistaken for a result.
+    """
+    m = float(mag)
+    f = float(mag_floor)
+    if m < f:
+        raise UnsupportedMagnitude(
+            f"{what}={m:g} is below the catalogue magnitude floor "
+            f"M>={f:g} (engine/datasets.py:CATALOG_MAG_FLOOR). The "
+            f"{DEFAULT_DATA_DIR!r} boxes were downloaded at that floor, so there "
+            f"are no events below it to select: the request would have been "
+            f"SILENTLY CLAMPED to M>={f:g} and produced an artifact identical to "
+            f"the M>={f:g} run while declaring a different configuration. "
+            f"Refusing (HYPOTHESIS_LEDGER.md §P7-8(c) item 4). Either pass "
+            f"{what}>={f:g}, or download a catalogue with a lower floor and lower "
+            f"CATALOG_MAG_FLOOR to match it."
+        )
+    return m
+
+
 class LoadReport(dict):
     """Counted invariants of a catalog load; printed by the CLI."""
 
@@ -44,6 +83,10 @@ def load_catalog(data_dir: str = DEFAULT_DATA_DIR, mag_floor: float = CATALOG_MA
 
     Sorted by time ascending, deduped by ComCat event id (boxes overlap).
     """
+    # §P7-8(c)(4): a sub-floor request is refused here too, so a non-CLI caller
+    # cannot re-open the clamp by going straight at the loader.
+    assert_mag_supported(mag_floor, CATALOG_MAG_FLOOR, what="mag_floor")
+
     files = sorted(glob.glob(os.path.join(data_dir, "*.csv")))
     if not files:
         raise FileNotFoundError(f"no CSVs under {data_dir!r}")

@@ -14,6 +14,19 @@ import pytest
 from engine import baseline, covariates, score
 from engine.tests._synth import make_ctx, make_clustered_catalog
 
+# §P7-8(d) PLANTED-AMPLITUDE COMPLIANCE, checked and DECLARED NOT APPLICABLE here.
+# The floor A_min = sqrt(VIF)*(z_alpha+z_0.80)*sqrt(2/N) (engine/floors.py) is
+# derived for SINUSOIDAL RATE MODULATION and is quoted as a fraction of the
+# baseline rate. What is planted below is a Poisson log-linear coefficient on a
+# standardised covariate -- different units, and applying an amplitude floor to it
+# would be the same category error §P7-8(d) itself warns about for F9-10's rank
+# statistics ("the mark axis needs its own floor, in its own units").
+#
+# It is stated rather than waved at, because §P7-8(d) exists to stop a POWER
+# failure being recorded as an INSTRUMENT failure, and that risk is real whatever
+# the units. In equivalent terms the plant is enormous: beta = 0.75 per SD is a
+# rate modulation of exp(0.75) - 1 = +112% at +1 SD, against a floor of a few
+# percent at this synthetic world's N. This test cannot fail for want of power.
 BETA_TRUE = 0.75
 
 

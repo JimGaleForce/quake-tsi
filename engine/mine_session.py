@@ -78,6 +78,7 @@ from __future__ import annotations
 import concurrent.futures as _cf
 from concurrent.futures.process import BrokenProcessPool
 import datetime as _dt
+import hashlib
 import json
 import math
 import multiprocessing as _mp
@@ -87,7 +88,7 @@ import traceback
 
 import numpy as np
 
-from . import (baseline as bl, design, mine as M, splits, __version__)
+from . import (baseline as bl, datasets, design, mine as M, splits, __version__)
 from . import gpd_tail, regions as regions_mod, strata as strata_mod
 
 QUICK = {
@@ -832,6 +833,111 @@ def _run_tasks_parallel(ckpt, keys, payload, jobs, verbose=True):
     return n_done
 
 
+# --------------------------------------------- §P7-8(c)(5) BUILD INVARIANT ---
+# "Bitwise identity between two runs that differ in a declared parameter is a
+#  build invariant worth asserting -- add it to the run harness: two sessions
+#  whose configs differ must not produce identical artifact hashes."
+#
+# The incident: `session_20260812T021707` (--mag-target 4.0) and
+# `session_20260812T004857` (--mag-target 4.5) are bitwise identical, because
+# engine/datasets.py:CATALOG_MAG_FLOOR silently clamped the 4.0 request. An
+# overnight run was believed to be an independent replicate and was not; had the
+# two ever been cited as agreeing, the agreement would have been vacuous.
+#
+# This check WARNS. It does not delete, quarantine, rename or refuse anything: a
+# collision is evidence about the build, and destroying either artifact would
+# destroy the evidence. The clamp that caused this particular collision is now
+# refused outright (engine/datasets.assert_mag_supported); this invariant is the
+# backstop for the NEXT parameter that turns out not to bind.
+ARTIFACT_REGISTRY = "artifact_hashes.jsonl"
+
+
+def artifact_content_hash(tests):
+    """sha256 over a session's RESULTS, canonically serialised.
+
+    Hashes the test rows only -- not timings, not the session id, not the
+    creation timestamp -- so the hash answers exactly one question: "did these
+    two runs compute the same numbers?".
+    """
+    blob = json.dumps(tests, sort_keys=True, default=repr, separators=(",", ":"))
+    return hashlib.sha256(blob.encode("utf-8")).hexdigest()
+
+
+def check_build_invariant(session_dir, config_hash, tests, root=None,
+                          register=True, n_tests=None):
+    """Assert that configs which differ produce artifacts which differ.
+
+    Returns a dict with `ok`, `artifact_hash`, `collisions` and (when violated) a
+    ready-to-print `message`. A prior session with the SAME config hash is not a
+    collision -- that is a reproduction, which is the desired behaviour.
+    """
+    root = root or M.MINE_DIR
+    path = os.path.join(root, ARTIFACT_REGISTRY)
+    art = artifact_content_hash(tests)
+    me = os.path.basename(os.path.normpath(session_dir))
+
+    prior = []
+    if os.path.exists(path):
+        with open(path, "r", encoding="utf-8") as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                try:
+                    prior.append(json.loads(line))
+                except json.JSONDecodeError:
+                    continue
+
+    collisions = [r for r in prior
+                  if r.get("artifact_hash") == art
+                  and r.get("config_hash") != config_hash
+                  and r.get("session") != me]
+
+    rec = {
+        "session": me,
+        "session_dir": str(session_dir).replace("\\", "/"),
+        "config_hash": config_hash,
+        "artifact_hash": art,
+        "n_tests": (len(tests) if n_tests is None else int(n_tests)),
+        "recorded": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+        "collides_with": [r["session"] for r in collisions],
+    }
+    already = any(r.get("session") == me and r.get("artifact_hash") == art
+                  for r in prior)
+    if register and not already:
+        os.makedirs(root, exist_ok=True)
+        splits._append_jsonl(path, rec)
+
+    msg = None
+    if collisions:
+        lines = [
+            "!" * 78,
+            "BUILD INVARIANT VIOLATED (HYPOTHESIS_LEDGER.md §P7-8(c)(5)):",
+            "  two sessions whose CONFIGS DIFFER produced IDENTICAL artifacts.",
+            f"  this session : {me}  config_hash={config_hash}",
+        ]
+        for r in collisions:
+            lines.append(f"  collides with: {r.get('session')}  "
+                         f"config_hash={r.get('config_hash')}  "
+                         f"({r.get('session_dir')})")
+        lines += [
+            f"  shared artifact content hash: {art[:16]}...",
+            "  MEANING: some declared parameter did not bind. These runs are NOT",
+            "  independent replicates and must never be cited as agreeing -- the",
+            "  agreement would be vacuous. Their EXPLORE_COUNT.jsonl lines declare",
+            "  the same tests more than once; per §P7-8(c)(1) those lines are NOT",
+            "  edited or reduced, and the over-count stands (the conservative",
+            "  direction). Find the parameter that did not bind before quoting",
+            "  either session.",
+            "  Nothing has been deleted. This is a warning, by rule.",
+            "!" * 78,
+        ]
+        msg = "\n".join(lines)
+
+    return {"ok": not collisions, "artifact_hash": art, "collisions": collisions,
+            "registry": path.replace("\\", "/"), "record": rec, "message": msg}
+
+
 # ------------------------------------------------------------ checkpointing ---
 def _cfg_hash(cfg):
     return splits.config_hash(cfg)[:12]
@@ -931,7 +1037,11 @@ def build_config(args, preset):
                           if getattr(args, "tranche1", False) else []),
         "fdr_q": M.FDR_Q,
         "baseline": "etas",
-        "mag_target": float(args.mag_target),
+        # §P7-8(c)(4): refused at config-build time, so a programmatic caller that
+        # never touches the CLI still cannot declare a magnitude the catalogue
+        # cannot supply. A clamped --mag-target is what made two sessions with
+        # different declared configs bitwise identical.
+        "mag_target": float(datasets.assert_mag_supported(args.mag_target)),
         "grid": {"dlat": float(args.dlat), "dlon": float(args.dlon)},
         "explore_frac": float(args.explore_frac),
         "data_dir": args.data_dir.replace("\\", "/"),
@@ -1598,10 +1708,30 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     ckpt.state["n_tests"] = n_tests
     ckpt.state["elapsed_seconds"] = round(time.time() - t_start, 1)
     ckpt.state["complete"] = True
+
+    # §P7-8(c)(5) build invariant, checked at session end and BEFORE the report is
+    # written so a violation is inside the artifact, not only in the console.
+    # The registry lives beside the sessions it indexes (engine/out/mine in
+    # production; the tmp dir under test), so a test session never writes into the
+    # real registry and a redirected run keeps its own.
+    invariant = check_build_invariant(
+        session_dir, ch, tests, n_tests=n_tests,
+        root=(os.path.dirname(os.path.normpath(session_dir)) or M.MINE_DIR))
+    ckpt.state["build_invariant"] = {
+        k: v for k, v in invariant.items() if k != "collisions"}
+    ckpt.state["build_invariant"]["collides_with"] = [
+        {"session": c.get("session"), "config_hash": c.get("config_hash")}
+        for c in invariant["collisions"]]
     ckpt.save()
+    if invariant["message"]:
+        print(invariant["message"], flush=True)
+    elif verbose:
+        print(f"build invariant      -> OK (artifact "
+              f"{invariant['artifact_hash'][:12]}..., no differing-config "
+              f"collision in {invariant['registry']})")
 
     rep = write_report(session_dir, cfg, ckpt.state, tests, feats, counts, offset,
-                       marks, base, window)
+                       marks, base, window, build_invariant=invariant)
     stubs = write_stubs(session_dir, cfg, tests)
 
     # One ledger line per SESSION, not per invocation: a resumed session is the same
@@ -1662,7 +1792,7 @@ def _amp_note(t):
 
 
 def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
-                 base, window):
+                 base, window, build_invariant=None):
     path = os.path.join(session_dir, "report.md")
     order = sorted(tests, key=lambda t: (t["bh_q"], t["p_raw"], t.get("order_key", [])))
     n_pass = sum(t["passes_fdr"] for t in tests)
@@ -1703,6 +1833,39 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
     A(f"- target: daily domain-wide counts vs sum of lambda_etas; "
       f"{counts.sum():.0f} observed events, {offset.sum():.1f} expected")
     A(f"- marks: {marks['mag'].size} events (magnitude, depth)")
+    if build_invariant is not None:
+        # §P7-8(c)(5). Printed on every run, pass or fail: a build invariant that
+        # is only visible when it fires is not auditable.
+        if build_invariant["ok"]:
+            A(f"- build invariant (§P7-8(c)(5)): **OK** -- artifact content hash "
+              f"`{build_invariant['artifact_hash'][:16]}`, no session with a "
+              f"DIFFERENT config hash shares it "
+              f"(registry `{build_invariant['registry']}`)")
+        else:
+            A("")
+            A(f"> ### BUILD INVARIANT VIOLATED (§P7-8(c)(5))")
+            A(">")
+            A(f"> This session (`{os.path.basename(os.path.normpath(session_dir))}`, "
+              f"config hash `{state.get('config_hash')}`) produced an artifact "
+              f"IDENTICAL to a session with a different config hash:")
+            for c in build_invariant["collisions"]:
+                A(f"> - `{c.get('session')}` (config hash `{c.get('config_hash')}`)")
+            A(">")
+            A(f"> Shared artifact content hash: "
+              f"`{build_invariant['artifact_hash'][:16]}`.")
+            A(">")
+            for line in _wrap(
+                "Some declared parameter did not bind. These runs are NOT "
+                "independent replicates and must never be cited as agreeing -- the "
+                "agreement would be vacuous. Their EXPLORE_COUNT.jsonl lines "
+                "declare the same tests more than once; per §P7-8(c)(1) those "
+                "lines are not edited or reduced and the over-count stands, which "
+                "is the conservative direction. Nothing has been deleted: a "
+                "collision is evidence about the build and destroying either "
+                "artifact would destroy the evidence."
+            ):
+                A("> " + line)
+            A("")
     A(f"- features: {len(feats)} "
       + ", ".join(f"family {k}: {v}" for k, v in sorted(
           _count_by(feats, lambda f: f.family).items())))

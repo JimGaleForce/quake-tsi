@@ -455,6 +455,12 @@ def main(argv=None):
     mi.set_defaults(fn=cmd_mine)
 
     args = p.parse_args(argv)
+    # §P7-8(c)(4): an unsupported --mag-target RAISES here, before any design is
+    # built or any session directory is created. It must never be silently clamped
+    # to the catalogue floor -- see engine/datasets.assert_mag_supported for the
+    # session-duplication incident that earned this check.
+    if getattr(args, "mag_target", None) is not None:
+        datasets.assert_mag_supported(args.mag_target, what="--mag-target")
     rc = args.fn(args)
     return rc if isinstance(rc, int) else 0
 
