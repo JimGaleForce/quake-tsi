@@ -3,7 +3,7 @@
  "title": "EQ-24 v2 Tranche B -- the statistic tranche, DECLARATION PREPARED AND NOT RUN",
  "banner": "GENERATOR, NOT EVIDENCE. Nothing in this file is a result. It is a ranked list of hypotheses produced by an automated sweep over the EXPLORATION window only, with in-sample effect sizes. No line here may be quoted, cited, or reported as a finding. A candidate becomes evidence only by walking the ordinary path: written up as a K-entry, given a Popper ruling, and then tested ONCE against the frozen holdout (which costs a hash). This run spent no holdout hash.",
  "standing_warning_eq24": "the known ML-mining failure mode from M-008 (DeVries Nature net beaten by 2-parameter logistic -- Mignan & Broccardo 2019) quoted in the README as the standing warning: prefer the boring model; a boosted-tree find that a 2-param GLM can't reproduce after conditioning is treated as leakage until proven otherwise.",
- "prepared_utc": "2026-08-13T10:02:32.288892+00:00",
+ "prepared_utc": "2026-08-13T10:23:30.747793+00:00",
  "run_status": "GATED -- NOT RUN",
  "run_gate": "\u00a7P7-14(d) + \u00a7P7-15(b): Tranche B's BUILD is authorized and its RUN is gated on (i) the \u00a7P7-2(b) precondition builds and (ii) PER-STATISTIC G-M1 clearance for the new statistics and aggregations B introduces. As of \u00a7P7-16 the run is ALSO gated on (iii) the recovery-versus-amplitude curve \u00a7P7-15(a) assigned at price 0 -- IN FLIGHT -- and (iv) the Popper seat's ruling on the arm (i) anomaly (80% recovery at >= 2x the floor is what the formula predicts at 1x, so either the plants span a range or the global floor formula is ~2x anti-conservative). `engine/recovery_b.py` produces the evidence for (ii) on SIMULATED catalogues; it does not grant the clearance. This module refuses to run either way.",
  "count_reconciliation": {
@@ -586,8 +586,218 @@
   "harness": "engine/recovery_b.py -- SIMULATION ONLY",
   "adjudication": "the Popper seat's; this build supplies evidence only"
  },
+ "row_enumeration_P7_17": {
+  "feature_inventory": {
+   "cyclic": [
+    "moon_synodic_phase",
+    "moon_anomalistic_phase",
+    "moon_draconic_phase",
+    "annual_phase",
+    "moon_distance",
+    "moon_declination",
+    "moon_abs_declination",
+    "sun_declination",
+    "sun_moon_elongation",
+    "spring_neap_phase",
+    "half_draconic_phase",
+    "perigean_spring_beat",
+    "eclipse_year_beat",
+    "annual_synodic_beat",
+    "perigee_syzygy",
+    "declination_product",
+    "tidal_potential_proxy"
+   ],
+   "other_science": [
+    "b_value_90d",
+    "deep_fraction_30d",
+    "mean_depth_30d"
+   ],
+   "controls": [
+    "obs_diurnal_amplitude_365d",
+    "obs_diurnal_amplitude_b0",
+    "obs_diurnal_amplitude_b1",
+    "obs_diurnal_amplitude_b2",
+    "obs_diurnal_amplitude_b3",
+    "obs_weekly_amplitude_365d",
+    "obs_network_era_365d",
+    "obs_mc_drift_365d",
+    "obs_day_of_week_phase"
+   ]
+  },
+  "declared_view": {
+   "rows": [
+    {
+     "n": 17,
+     "test": "second_circular_moment_score",
+     "disposition": "DECLARED",
+     "parent": null,
+     "why": "F9-01, priced",
+     "detail": "17 cyclic features x 1 statistic"
+    },
+    {
+     "n": 34,
+     "test": "kuiper_V / watson_U2",
+     "disposition": "DECLARED",
+     "parent": null,
+     "why": "F9-04, priced",
+     "detail": "17 cyclic features x 2 statistics"
+    },
+    {
+     "n": 138,
+     "test": "markx",
+     "disposition": "DECLARED",
+     "parent": null,
+     "why": "F9-10, priced",
+     "detail": "6 scored marks x 23 features"
+    },
+    {
+     "n": 17,
+     "test": "glm_poisson_offset_etas",
+     "disposition": "COMPONENT-OF",
+     "parent": "F9-01/F9-04 on the same feature",
+     "why": "the first moment inside the second-moment claim; the Rayleigh form beside Kuiper -- the comparison IS the claim",
+     "detail": "17 cyclic features x lag 0"
+    },
+    {
+     "n": 93,
+     "test": "glm_poisson_offset_etas",
+     "disposition": "REPLICATION-OF-DECLARED",
+     "parent": null,
+     "why": "already declared (K-089-R tranche 1 / Tranche A's 550); not re-priced",
+     "detail": "3 non-cyclic science features x 31 lags"
+    },
+    {
+     "n": 40,
+     "test": "spearman / circular-linear",
+     "disposition": "REPLICATION-OF-DECLARED",
+     "parent": null,
+     "why": "the v1 2-mark axis, already declared. NOTE: with the sub-daily arm OFF these are the SAME TESTS as the markx `mag`/`depth` rows in this same session -- an intra-session duplicate of exactly the kind \u00a7P7-16 de-duplicated `log_moment` for. Flagged.",
+     "detail": "20 features x 2 v1 marks"
+    },
+    {
+     "n": 10,
+     "test": "lomb_scargle_peak",
+     "disposition": "REPLICATION-OF-DECLARED",
+     "parent": null,
+     "why": "the period scan runs in every session and is already declared",
+     "detail": "10 declared peaks"
+    },
+    {
+     "n": 9,
+     "test": "glm_poisson_offset_etas",
+     "disposition": "UNPRICED-CONTROL",
+     "parent": null,
+     "why": "F7 observer controls (\u00a7P7-16): can only calibrate a reference or condemn our own instrument",
+     "detail": "9 count-path control features x lag 0"
+    }
+   ],
+   "totals": {
+    "COMPONENT-OF": 17,
+    "REPLICATION-OF-DECLARED": 143,
+    "DECLARED": 189,
+    "UNPRICED-CONTROL": 9,
+    "TOTAL": 358
+   },
+   "rule": {
+    "COMPONENT-OF": "exists only as part of another row's claim (F9-01's R1 beside R2; F9-04's Rayleigh beside Kuiper -- the comparison IS the claim). Owes no multiplicity because it makes no independent rejection, and MUST NOT be able to make one: it appears only inside its parent's record and never standalone.",
+    "REPLICATION-OF-DECLARED": "a re-execution of a row already declared elsewhere. Not re-priced. Where the test-key digest matches the prior session, p-invariance is a FREE \u00a7P6-5 determinism check and is wired.",
+    "DECLARED": "a genuinely new independent row. These, and only these, are m.",
+    "UNPRICED-CONTROL": "\u00a7P7-16: a control that can only calibrate a reference or condemn our own instrument. Declared at m_s = 0."
+   },
+   "n_genuinely_new_beyond_the_declared_statistics": 0,
+   "genuinely_new_note": "Every executed row is a COMPONENT-OF, a REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, or one of the three DECLARED statistics. NO row falls outside the taxonomy, so no genuinely-new independent hypothesis is executed beyond the priced ones and the integer does not move on this account."
+  },
+  "executed_view": {
+   "rows": [
+    {
+     "n": 17,
+     "test": "second_circular_moment_score",
+     "disposition": "DECLARED",
+     "parent": null,
+     "why": "F9-01, priced",
+     "detail": "17 cyclic features x 1 statistic"
+    },
+    {
+     "n": 34,
+     "test": "kuiper_V / watson_U2",
+     "disposition": "DECLARED",
+     "parent": null,
+     "why": "F9-04, priced",
+     "detail": "17 cyclic features x 2 statistics"
+    },
+    {
+     "n": 120,
+     "test": "markx",
+     "disposition": "DECLARED",
+     "parent": null,
+     "why": "F9-10, priced",
+     "detail": "6 scored marks x 20 features"
+    },
+    {
+     "n": 17,
+     "test": "glm_poisson_offset_etas",
+     "disposition": "COMPONENT-OF",
+     "parent": "F9-01/F9-04 on the same feature",
+     "why": "the first moment inside the second-moment claim; the Rayleigh form beside Kuiper -- the comparison IS the claim",
+     "detail": "17 cyclic features x lag 0"
+    },
+    {
+     "n": 93,
+     "test": "glm_poisson_offset_etas",
+     "disposition": "REPLICATION-OF-DECLARED",
+     "parent": null,
+     "why": "already declared (K-089-R tranche 1 / Tranche A's 550); not re-priced",
+     "detail": "3 non-cyclic science features x 31 lags"
+    },
+    {
+     "n": 40,
+     "test": "spearman / circular-linear",
+     "disposition": "REPLICATION-OF-DECLARED",
+     "parent": null,
+     "why": "the v1 2-mark axis, already declared. NOTE: with the sub-daily arm OFF these are the SAME TESTS as the markx `mag`/`depth` rows in this same session -- an intra-session duplicate of exactly the kind \u00a7P7-16 de-duplicated `log_moment` for. Flagged.",
+     "detail": "20 features x 2 v1 marks"
+    },
+    {
+     "n": 10,
+     "test": "lomb_scargle_peak",
+     "disposition": "REPLICATION-OF-DECLARED",
+     "parent": null,
+     "why": "the period scan runs in every session and is already declared",
+     "detail": "10 declared peaks"
+    },
+    {
+     "n": 9,
+     "test": "glm_poisson_offset_etas",
+     "disposition": "UNPRICED-CONTROL",
+     "parent": null,
+     "why": "F7 observer controls (\u00a7P7-16): can only calibrate a reference or condemn our own instrument",
+     "detail": "9 count-path control features x lag 0"
+    }
+   ],
+   "totals": {
+    "COMPONENT-OF": 17,
+    "REPLICATION-OF-DECLARED": 143,
+    "DECLARED": 171,
+    "UNPRICED-CONTROL": 9,
+    "TOTAL": 340
+   },
+   "rule": {
+    "COMPONENT-OF": "exists only as part of another row's claim (F9-01's R1 beside R2; F9-04's Rayleigh beside Kuiper -- the comparison IS the claim). Owes no multiplicity because it makes no independent rejection, and MUST NOT be able to make one: it appears only inside its parent's record and never standalone.",
+    "REPLICATION-OF-DECLARED": "a re-execution of a row already declared elsewhere. Not re-priced. Where the test-key digest matches the prior session, p-invariance is a FREE \u00a7P6-5 determinism check and is wired.",
+    "DECLARED": "a genuinely new independent row. These, and only these, are m.",
+    "UNPRICED-CONTROL": "\u00a7P7-16: a control that can only calibrate a reference or condemn our own instrument. Declared at m_s = 0."
+   },
+   "n_genuinely_new_beyond_the_declared_statistics": 0,
+   "genuinely_new_note": "Every executed row is a COMPONENT-OF, a REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, or one of the three DECLARED statistics. NO row falls outside the taxonomy, so no genuinely-new independent hypothesis is executed beyond the priced ones and the integer does not move on this account."
+  },
+  "mark_axis_features_declared": 23,
+  "mark_axis_features_executed": 20,
+  "declared_minus_executed": 18,
+  "shortfall_flag": "F9-10 is priced at 23 features (MINING_CATALOG's '7 marks x 23+ features'), but B's frozen config sets `no_download=True` and therefore builds 20. 18 priced mark slots would never execute. That is LEGAL -- \u00a7P6-3 rule 3 counts an unexecuted test as a NON-REJECTION against its declared m_s -- and it is not free: those slots tax the rows that do run. It is REPORTED, not resolved: lowering the mark axis to 120 moves the integer \u00a7P7-16 just fixed, and the integer is the Popper seat's.",
+  "n_genuinely_new": 0,
+  "genuinely_new_note": "Every executed row is a COMPONENT-OF, a REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, or one of the three DECLARED statistics. NO row falls outside the taxonomy, so no genuinely-new independent hypothesis is executed beyond the priced ones and the integer does not move on this account."
+ },
  "open_items_before_the_run": [
-  "THE GLM AXIS HAS NO DECLARED STRATUM IN B. The engine executes the count-path GLM sweep on every science feature in every session, and B's partition declares strata only for `moment2`, `omnibus`, `markx` and the unpriced `glm` controls (family 7). A science GLM row (family 1/2) therefore falls to `catch_all`, which would put it in the 17-slot second-moment stratum and `strata._bh_within` would refuse to run. This is a REAL choice owed before B runs -- suppress the GLM axis in B (it re-runs already-declared tests), or declare a GLM stratum and price it -- and it is NOT resolved here: either answer changes the declared integer the \u00a7P7-16 ruling just fixed.",
   "THE RUN GATE IS NOT DISCHARGED: the recovery-versus-amplitude curve is IN FLIGHT and the arm (i) anomaly is unruled (\u00a7P7-15(a), \u00a7P7-16)."
  ],
  "what_none_of_this_licenses": "any run. This is a DECLARATION prepared before the fact, on no data at all. It licenses nothing, bounds nothing, and may not be entered for or against any ledger entry."

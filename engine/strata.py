@@ -275,6 +275,59 @@ def assert_partition_total(strata, m_declared):
     return {"m_declared": int(m_declared), "sum_m_s": total, "ok": True}
 
 
+# ------------------------------ rule 1c: the declared-ROW identity (§P7-17) ----
+class DeclaredRowCountMismatch(ValueError):
+    """Raised when the number of DECLARED rows != m. Refuses to run."""
+
+
+def assert_declared_row_count(rows_or_count, m, disposition_key="disposition",
+                              declared_tag="DECLARED"):
+    """§P7-17: `count(rows tagged DECLARED) == m`. The third identity, and the one
+    the other two are blind to.
+
+    Read the three together, because each one sees a failure the others cannot:
+
+      `assert_budget_identity`   sum_s m_s q_s == m q, with `m` DERIVED from the
+                                 strata. Sees a mis-weighted budget. Blind to a
+                                 headline that disagrees with its own table.
+      `assert_partition_total`   sum_s m_s == m, with `m` DECLARED. Sees that
+                                 (§P7-16). Blind to what the session actually runs.
+      `assert_declared_row_count`  count(DECLARED rows) == m. Sees the last gap: a
+                                 session that EXECUTES a genuinely-new independent
+                                 row the denominator never paid for -- or that fills
+                                 a priced slot with a component or a replication,
+                                 which is the same error with the sign flipped.
+
+    The failure it prevents is the one §P7-17 was written for: an executed row that
+    is nobody's component and nobody's prior declaration, quietly facing a threshold
+    priced for a different family. Under this assertion the integer has to move for
+    it, once, before the run -- which is exactly the discipline.
+    """
+    if isinstance(rows_or_count, int):
+        n = int(rows_or_count)
+        extra = ""
+    else:
+        rows = list(rows_or_count)
+        declared = [r for r in rows if r.get(disposition_key) == declared_tag]
+        n = len(declared)
+        by_tag = {}
+        for r in rows:
+            by_tag[r.get(disposition_key)] = by_tag.get(r.get(disposition_key),
+                                                        0) + 1
+        extra = "\n    dispositions: " + ", ".join(
+            f"{k} = {v}" for k, v in sorted(by_tag.items(), key=lambda kv: str(kv[0])))
+    if n != int(m):
+        raise DeclaredRowCountMismatch(
+            f"§P7-17 VIOLATED: {n} row(s) are tagged {declared_tag} but the "
+            f"partition prices m = {int(m)} (difference {n - int(m):+d}). Either an "
+            f"executed row is a genuinely-new independent hypothesis the "
+            f"denominator never paid for -- in which case the integer must move "
+            f"ONCE, before the run -- or a priced slot is being filled by a "
+            f"COMPONENT-OF or REPLICATION-OF-DECLARED row, which is the same error "
+            f"with its sign flipped. Refusing to run." + extra)
+    return {"n_declared_rows": n, "m": int(m), "ok": True}
+
+
 def flat_partition(m, q=0.10, name=UNSTRATIFIED):
     """The default: one stratum holding the whole declared family. Satisfies rule 1."""
     return [{"name": name, "feature_family": None, "test_kind": None,

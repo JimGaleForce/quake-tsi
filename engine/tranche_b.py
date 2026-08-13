@@ -70,7 +70,7 @@ import json
 import os
 import types
 
-from . import (circstat, clocks, floors, marks_ext, mine as M,
+from . import (circstat, clocks, dispositions as disp, floors, marks_ext, mine as M,
                mine_session as ms, observer, s15c, splits, stability,
                strata as strata_mod)
 
@@ -189,6 +189,80 @@ class TrancheBRunGated(RuntimeError):
 
 
 # ------------------------------------------------------------- enumeration ----
+# What B's frozen config actually builds, derived from the generators rather than
+# retyped. `no_download=True` and `tranche1=False`, so: 17 ephemeris cyclic features
+# at lag 0, 3 family-4 catalogue features across the full lag grid, no F9-20 controls.
+def session_feature_inventory():
+    """The feature names a Tranche B session would carry. No data required."""
+    import datetime as _d
+    import numpy as _np
+    eph = M.ephemeris_features(_d.datetime(2000, 1, 1), 400)
+    cyclic = [f.name for f in eph if f.kind == "phase" or f.period_hint]
+    other = ["b_value_90d", "deep_fraction_30d", "mean_depth_30d"]
+    rng = _np.random.default_rng(0)
+    d = _np.sort(rng.uniform(0, 400, size=4000))
+    marks = {"day_float": d, "mag": 4.5 + rng.exponential(0.4, d.size),
+             "day": _np.floor(d).astype(_np.int64)}
+    ctl = [f.name for f in
+           observer.count_path_features(observer.observer_features(marks, 400))]
+    return {"cyclic": cyclic, "other_science": other, "controls": ctl}
+
+
+def row_enumeration(mark_axis_features=None):
+    """§P7-17: every row B's session would execute, against the four dispositions.
+
+    Two views, because they answer two different questions and conflating them is
+    how a shortfall hides:
+
+      DECLARED VIEW   the mark axis at its DECLARED feature count
+                      (MARK_AXIS_FEATURES) -- this is what the partition prices, and
+                      what `assert_declared_row_count` checks m against.
+      EXECUTED VIEW   the mark axis at the features B's FROZEN CONFIG actually
+                      builds. `no_download=True`, so the download-derived features
+                      F9-10's price assumed are not there.
+    """
+    inv = session_feature_inventory()
+    n_exec_features = len(inv["cyclic"]) + len(inv["other_science"])
+    declared = disp.enumerate_session_rows(
+        inv["cyclic"], inv["other_science"], inv["controls"],
+        n_period_peaks=int(ms.OVERNIGHT["n_peaks"]),
+        other_lags=len(ms.OVERNIGHT["lags"]),
+        mark_axis_features=(mark_axis_features or MARK_AXIS_FEATURES),
+        scored_marks=marks_ext.SCORED_MARK_NAMES)
+    executed = disp.enumerate_session_rows(
+        inv["cyclic"], inv["other_science"], inv["controls"],
+        n_period_peaks=int(ms.OVERNIGHT["n_peaks"]),
+        other_lags=len(ms.OVERNIGHT["lags"]),
+        mark_axis_features=n_exec_features,
+        scored_marks=marks_ext.SCORED_MARK_NAMES)
+    shortfall = (declared["totals"][disp.DECLARED]
+                 - executed["totals"][disp.DECLARED])
+    return {
+        "feature_inventory": inv,
+        "declared_view": declared,
+        "executed_view": executed,
+        "mark_axis_features_declared": (mark_axis_features or MARK_AXIS_FEATURES),
+        "mark_axis_features_executed": n_exec_features,
+        "declared_minus_executed": int(shortfall),
+        "shortfall_flag": (None if shortfall == 0 else
+                           ("F9-10 is priced at %d features (MINING_CATALOG's "
+                            "'7 marks x 23+ features'), but B's frozen config sets "
+                            "`no_download=True` and therefore builds %d. %d priced "
+                            "mark slots would never execute. That is LEGAL -- §P6-3 "
+                            "rule 3 counts an unexecuted test as a NON-REJECTION "
+                            "against its declared m_s -- and it is not free: those "
+                            "slots tax the rows that do run. It is REPORTED, not "
+                            "resolved: lowering the mark axis to %d moves the "
+                            "integer §P7-16 just fixed, and the integer is the "
+                            "Popper seat's."
+                            % ((mark_axis_features or MARK_AXIS_FEATURES),
+                               n_exec_features, shortfall,
+                               len(marks_ext.SCORED_MARK_NAMES) * n_exec_features))),
+        "n_genuinely_new": declared["n_genuinely_new_beyond_the_declared_statistics"],
+        "genuinely_new_note": declared["genuinely_new_note"],
+    }
+
+
 def observer_control_count():
     """How many COUNT-PATH observer control tests B declares. Derived, not retyped."""
     import numpy as np
@@ -352,6 +426,11 @@ def frozen_config(seed=20260813, subdaily=False, strata=STRATA_FILE):
     assert cfg["strata"]["m_declared"] == POPPER_RULED_DENOMINATOR, (
         "the partition's declared total is %s, the §P7-16 ruled integer is %s"
         % (cfg["strata"]["m_declared"], POPPER_RULED_DENOMINATOR))
+    # §P7-17's third identity: the number of DECLARED rows must equal m. Asserted
+    # HERE, on the declaration, because that is when the integer can still move.
+    strata_mod.assert_declared_row_count(
+        row_enumeration()["declared_view"]["totals"][disp.DECLARED],
+        enum["bh_denominator_m"])
     return cfg
 
 
@@ -449,17 +528,8 @@ def declaration(seed=20260813, subdaily=False, write=True):
             "harness": "engine/recovery_b.py -- SIMULATION ONLY",
             "adjudication": "the Popper seat's; this build supplies evidence only",
         },
+        "row_enumeration_P7_17": row_enumeration(),
         "open_items_before_the_run": [
-            ("THE GLM AXIS HAS NO DECLARED STRATUM IN B. The engine executes the "
-             "count-path GLM sweep on every science feature in every session, and "
-             "B's partition declares strata only for `moment2`, `omnibus`, `markx` "
-             "and the unpriced `glm` controls (family 7). A science GLM row "
-             "(family 1/2) therefore falls to `catch_all`, which would put it in "
-             "the 17-slot second-moment stratum and `strata._bh_within` would "
-             "refuse to run. This is a REAL choice owed before B runs -- suppress "
-             "the GLM axis in B (it re-runs already-declared tests), or declare a "
-             "GLM stratum and price it -- and it is NOT resolved here: either "
-             "answer changes the declared integer the §P7-16 ruling just fixed."),
             ("THE RUN GATE IS NOT DISCHARGED: the recovery-versus-amplitude curve "
              "is IN FLIGHT and the arm (i) anomaly is unruled (§P7-15(a), §P7-16)."),
         ],
@@ -515,6 +585,33 @@ def main(argv=None):
           "period grid UNCHANGED at %.0f d, band reported not clamped)"
           % (d["s15c_sweep"]["n_unmeasurable_by_window"],
              d["s15c_sweep"]["cut_period_days"], ms.PERIOD_MAX))
+    print("")
+    _re = d["row_enumeration_P7_17"]
+    print("")
+    print("§P7-17 ROW ENUMERATION -- every row B's session would execute")
+    print("| rows | test | disposition | parent / why |")
+    print("| ---: | --- | --- | --- |")
+    for r in _re["declared_view"]["rows"]:
+        print("| %d | `%s` | %s | %s |"
+              % (r["n"], r["test"], r["disposition"],
+                 r["parent"] or r["detail"]))
+    t = _re["declared_view"]["totals"]
+    print("")
+    print("DECLARED (= m)           : %d   (assertion count(DECLARED) == m: %s)"
+          % (t[disp.DECLARED],
+             "PASS" if t[disp.DECLARED] == e["bh_denominator_m"] else "FAIL"))
+    print("COMPONENT-OF             : %d   (never standalone; attached to parents)"
+          % t[disp.COMPONENT])
+    print("REPLICATION-OF-DECLARED  : %d   (not re-priced; p-invariance wired)"
+          % t[disp.REPLICATION])
+    print("UNPRICED-CONTROL         : %d   (§P7-16, m_s = 0)"
+          % t[disp.UNPRICED_CONTROL])
+    print("TOTAL rows executed      : %d" % t["TOTAL"])
+    print("GENUINELY NEW rows       : %d   -> the integer does NOT move"
+          % _re["n_genuinely_new"])
+    if _re["shortfall_flag"]:
+        print("")
+        print("SHORTFALL FLAG: " + _re["shortfall_flag"])
     print("")
     print("RUN STATUS: %s" % d["run_status"])
     print(RUN_GATE_NOTE)

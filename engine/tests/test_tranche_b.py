@@ -558,3 +558,195 @@ def test_session_report_prints_the_unmeasurable_by_window_section(tmp_path):
     if cen["n_unmeasurable_by_window"]:
         assert "UNMEASURABLE-BY-WINDOW" in txt
         assert "The period grid is UNCHANGED" in txt
+
+
+# ================== §P7-17: the disposition taxonomy and its enforcement =====
+from engine import dispositions as disp   # noqa: E402
+
+PRIOR = {("glm_poisson_offset_etas", "b_value_90d", 3, None)}
+
+
+def _tagged(cyclic=("moon_synodic_phase",), prior=()):
+    rows = [
+        {"test": "second_circular_moment_score", "feature": "moon_synodic_phase",
+         "lag": 0, "mark": None, "p_raw": 0.3},
+        {"test": "kuiper_V", "feature": "moon_synodic_phase", "lag": 0,
+         "mark": None, "p_raw": 0.4},
+        {"test": "watson_U2", "feature": "moon_synodic_phase", "lag": 0,
+         "mark": None, "p_raw": 0.5},
+        {"test": "circular-linear", "feature": "moon_synodic_phase", "lag": None,
+         "mark": "mag", "mark_axis": "F9-10", "p_raw": 0.2},
+        # the first-moment GLM on the SAME cyclic feature: a component
+        {"test": "glm_poisson_offset_etas", "feature": "moon_synodic_phase",
+         "lag": 0, "mark": None, "p_raw": 1e-9, "amplitude_log_rate": 0.3,
+         "chi2_score": 40.0},
+        # a non-cyclic science GLM row already declared in a prior session
+        {"test": "glm_poisson_offset_etas", "feature": "b_value_90d", "lag": 3,
+         "mark": None, "p_raw": 0.7},
+        # an F7 observer control
+        {"test": "glm_poisson_offset_etas", "feature": "obs_mc_drift_365d",
+         "lag": 0, "mark": None, "family": 7, "control": True, "p_raw": 0.6},
+    ]
+    return disp.tag_rows(rows, prior_keys=prior, cyclic_features=cyclic)
+
+
+def test_every_row_carries_exactly_one_disposition():
+    rows = _tagged(prior=PRIOR)
+    assert disp.assert_one_disposition(rows)["ok"] is True
+    assert all(r["disposition"] in disp.DISPOSITIONS for r in rows)
+    c = disp.counts_by_disposition(rows)
+    assert c[disp.DECLARED] == 4          # 1 moment2 + 2 omnibus + 1 markx
+    assert c[disp.COMPONENT] == 1
+    assert c[disp.REPLICATION] == 1
+    assert c[disp.UNPRICED_CONTROL] == 1
+
+
+def test_first_moment_glm_on_a_cyclic_feature_is_a_component_not_a_hypothesis():
+    rows = _tagged(prior=PRIOR)
+    comp = [r for r in rows if r["disposition"] == disp.COMPONENT][0]
+    assert comp["test"] == "glm_poisson_offset_etas"
+    assert comp["feature"] == "moon_synodic_phase"
+    assert "comparison IS the claim" in comp["disposition_reason"]
+
+
+def test_a_row_that_is_nobodys_component_and_nobodys_prior_is_declared_new():
+    """The taxonomy must be able to SAY a row is new -- otherwise it hides them."""
+    rows = _tagged(prior=())          # the b_value row is in no prior declaration
+    newish = [r for r in rows if r["feature"] == "b_value_90d"][0]
+    assert newish["disposition"] == disp.DECLARED
+    assert "GENUINELY NEW" in newish["disposition_reason"]
+
+
+def test_component_rows_are_attached_to_parents_and_never_stand_alone():
+    rows = _tagged(prior=PRIOR)
+    kept, moved = disp.attach_components(rows)
+    assert len(moved) == 1
+    assert all(r["disposition"] != disp.COMPONENT for r in kept)
+    # the component is INSIDE all three of its parents -- giving it to one would make
+    # the other two's reading depend on listing order
+    parents = [r for r in kept if r["test"] in disp.COMPONENT_PARENT_TESTS]
+    assert len(parents) == 3
+    for p in parents:
+        assert len(p["components"]) == 1
+        assert p["components"][0]["test"] == "glm_poisson_offset_etas"
+
+
+def test_a_component_row_in_a_standalone_list_raises():
+    """§P7-17 makes this an ERROR, not a warning."""
+    rows = _tagged(prior=PRIOR)
+    with pytest.raises(disp.ComponentRowStandalone) as exc:
+        disp.assert_no_component_standalone(rows, "stubs.json")
+    assert "stubs.json" in str(exc.value)
+    kept, _moved = disp.attach_components(rows)
+    assert disp.assert_no_component_standalone(kept, "stubs.json")["ok"] is True
+
+
+def test_write_stubs_refuses_a_component_row(tmp_path):
+    rows = _tagged(prior=PRIOR)
+    for r in rows:
+        r.update({"bh_q": 0.5, "passes_fdr": False, "order_key": [0]})
+    with pytest.raises(disp.ComponentRowStandalone):
+        ms.write_stubs(str(tmp_path), {"n_surrogates": 100}, rows)
+
+
+# ---------------------------- the free §P6-5 determinism check on replications --
+def test_replication_invariance_is_exercised_when_the_digest_matches():
+    rows = _tagged(prior=PRIOR)
+    prior = [{"test": "glm_poisson_offset_etas", "feature": "b_value_90d",
+              "lag": 3, "mark": None, "p_raw": 0.7}]
+    rep = disp.replication_invariance(rows, prior, seed=11, prior_seed=11)
+    assert rep["n_digest_matched_and_checked"] == 1
+    assert rep["n_bitwise_identical"] == 1
+    assert rep["verdict"].startswith("EXERCISED")
+
+
+def test_replication_invariance_raises_on_a_determinism_failure():
+    rows = _tagged(prior=PRIOR)
+    prior = [{"test": "glm_poisson_offset_etas", "feature": "b_value_90d",
+              "lag": 3, "mark": None, "p_raw": 0.70000001}]
+    with pytest.raises(disp.DeterminismViolation):
+        disp.replication_invariance(rows, prior, seed=11, prior_seed=11)
+
+
+def test_replication_invariance_reports_not_comparable_across_seeds():
+    """A different master seed addresses a different stream: disagreement there is
+    not a failure and must never be counted as one."""
+    rows = _tagged(prior=PRIOR)
+    prior = [{"test": "glm_poisson_offset_etas", "feature": "b_value_90d",
+              "lag": 3, "mark": None, "p_raw": 0.123}]
+    rep = disp.replication_invariance(rows, prior, seed=11, prior_seed=99)
+    assert rep["n_digest_matched_and_checked"] == 0
+    assert rep["n_not_comparable_different_seed"] == 1
+    assert rep["verdict"].startswith("NOT EXERCISED")
+
+
+# ------------------------------------ §P7-17's assertion: count(DECLARED) == m --
+def test_assert_declared_row_count_passes_at_the_ruled_integer():
+    e = tranche_b.row_enumeration()
+    n = e["declared_view"]["totals"][disp.DECLARED]
+    assert n == 189
+    assert S.assert_declared_row_count(n, 189)["ok"] is True
+
+
+def test_assert_declared_row_count_raises_on_a_genuinely_new_row():
+    rows = _tagged(prior=())          # the b_value row is now DECLARED-and-new
+    with pytest.raises(S.DeclaredRowCountMismatch) as exc:
+        S.assert_declared_row_count(rows, 4)
+    msg = str(exc.value)
+    assert "5 row(s) are tagged DECLARED" in msg and "m = 4" in msg
+    assert "the integer must move" in msg
+    assert "COMPONENT-OF" in msg          # names WHICH class moved
+
+
+def test_the_three_identities_see_three_different_failures():
+    """Each assertion catches something the other two are structurally blind to."""
+    strata = [
+        {"name": "a", "feature_family": None, "test_kind": "moment2",
+         "region": None, "m_s": 17, "q_s": 0.10, "note": ""},
+        {"name": "b", "feature_family": None, "test_kind": "omnibus",
+         "region": None, "m_s": 34, "q_s": 0.10, "note": ""},
+    ]
+    assert S.assert_budget_identity(strata, 0.10)["ok"] is True   # satisfied
+    with pytest.raises(S.PartitionTotalMismatch):                 # 189 over a 51 table
+        S.assert_partition_total(strata, 189)
+    assert S.assert_partition_total(strata, 51)["ok"] is True
+    with pytest.raises(S.DeclaredRowCountMismatch):               # 60 rows into 51
+        S.assert_declared_row_count(60, 51)
+
+
+# ------------------------------------------------------- the enumeration itself -
+def test_row_enumeration_finds_no_genuinely_new_rows():
+    """§P7-17's expectation, CHECKED rather than assumed: m stays 189."""
+    e = tranche_b.row_enumeration()
+    assert e["n_genuinely_new"] == 0
+    t = e["declared_view"]["totals"]
+    assert t[disp.DECLARED] == 189
+    assert t[disp.COMPONENT] == 17            # one per cyclic feature, lag 0
+    assert t[disp.UNPRICED_CONTROL] == 9
+    assert t[disp.REPLICATION] == t["TOTAL"] - 189 - 17 - 9
+    assert set(t) - {"TOTAL"} == set(disp.DISPOSITIONS)
+
+
+def test_row_enumeration_reports_the_mark_axis_shortfall():
+    """A priced slot the frozen config cannot execute is legal and is not free."""
+    e = tranche_b.row_enumeration()
+    assert e["mark_axis_features_declared"] == 23
+    assert e["mark_axis_features_executed"] == 20
+    assert e["declared_minus_executed"] == 18
+    assert "REPORTED, not resolved" in e["shortfall_flag"]
+    assert e["executed_view"]["totals"][disp.DECLARED] == 171
+
+
+def test_session_tags_and_attaches_dispositions_end_to_end(tmp_path):
+    cfg = _cfg(tmp_path, tranche_b_on=True)
+    out = ms.run(cfg, verbose=False, resume=False,
+                 session_dir=str(tmp_path / "sess_disp"), jobs=1,
+                 ledger_path=str(tmp_path / "ledger_disp.jsonl"),
+                 prepared=_prepared())
+    st = json.load(open(os.path.join(out["session_dir"], "checkpoint.json"),
+                        encoding="utf-8"))
+    d = st["dispositions"]
+    assert d["counts"][disp.COMPONENT] >= 1
+    assert d["n_component_rows_attached_to_parents"] == d["counts"][disp.COMPONENT]
+    # stubs.json exists, which it could not if a component row had reached it
+    assert os.path.exists(os.path.join(out["session_dir"], "stubs.json"))

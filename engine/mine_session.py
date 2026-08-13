@@ -92,7 +92,7 @@ from . import (baseline as bl, datasets, design, mine as M, splits, __version__)
 from scipy import stats
 
 from . import gpd_tail, floors, regions as regions_mod, strata as strata_mod
-from . import circstat, marks_ext, observer as observer_mod
+from . import circstat, dispositions as disp, marks_ext, observer as observer_mod
 # `write_report` binds a LOCAL named `floors` (a list of p-value floors),
 # which shadows the module for the whole function body. This alias is how
 # the S-15(c) section reaches the module without renaming a local that
@@ -1877,6 +1877,32 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
             tests.append(t)
     tests.sort(key=lambda t: t["order_key"])
 
+    # ---- §P7-17: exactly one disposition per executed row --------------------
+    # Tagged BEFORE the multiplicity block, because the tag is what decides whether
+    # a row is entitled to a rejection at all. A COMPONENT-OF row is half of another
+    # row's claim; it is attached to its parent and it never appears standalone --
+    # `write_stubs` raises if one reaches `stubs.json`.
+    if tb_on:
+        cyc_names = [f.name for f in cyc_feats]
+        prior_keys = set()
+        disp.tag_rows(tests, prior_keys=prior_keys, cyclic_features=cyc_names)
+        disp.assert_one_disposition(tests)
+        tests, moved = disp.attach_components(tests)
+        ckpt.state["dispositions"] = {
+            "counts": disp.counts_by_disposition(tests + moved),
+            "n_component_rows_attached_to_parents": len(moved),
+            "rule": dict(disp.DISPOSITION_RULE),
+            "note": ("§P7-17: COMPONENT-OF rows are removed from the standalone "
+                     "test list and attached inside their parents' records. They "
+                     "are NOT deleted -- they are half of a claim and the claim "
+                     "needs them -- they are simply never readable alone."),
+        }
+        if verbose:
+            print("§P7-17 dispositions: "
+                  + ", ".join(f"{k} = {v}" for k, v in
+                              sorted(ckpt.state["dispositions"]["counts"].items()))
+                  + f"; {len(moved)} component row(s) attached to parents")
+
     n_tests = len(tests)
     # §P6-2(5): every row carries a p_method. Rows produced by a path that predates
     # the labelling (or by a resumed checkpoint written before it) are labelled here
@@ -3346,6 +3372,11 @@ def _wrap(text, width=88):
 # ------------------------------------------------------------------- stubs ---
 def write_stubs(session_dir, cfg, tests):
     path = os.path.join(session_dir, "stubs.json")
+    # §P7-17, enforced at the one place it matters most. `stubs.json` is the file a
+    # human reads as "things worth looking at", so a COMPONENT-OF row arriving here
+    # is precisely the failure the ruling names: a half-claim being read as a claim,
+    # against a threshold priced for a different test.
+    disp.assert_no_component_standalone(tests, "stubs.json")
     entries, candidates = [], []
     for t in sorted(tests, key=lambda t: (t["bh_q"], t["p_raw"], t.get("order_key", []))):
         if not t["passes_fdr"]:
