@@ -17537,3 +17537,161 @@ knowing exactly how: a positive would mean something, a negative would mean noth
 bounds the warp, and the observation that started it may be an arcsine artifact that its own author
 computed and put first. D-7 struck on the generator's own stricter proposal. Appended to my own
 section; no existing line modified; nothing committed.*
+
+---
+
+## §P7-23. JIM IS RIGHT AND §P7-22 PRICED THE WRONG HYPOTHESIS. D-12 and D-13 ADMITTED; Tranche D goes to 183.
+
+*2026-08-13. Jim's clarification: the claim is REGIONAL (Alaska-Aleutian majors rupture in the
+below-neutral falling quarter), a regional claim needs testing on that region's own events, and strong
+concentration at small n is decisive. Verified before ruling: **10 events all in one pre-declared
+quarter gives p = 9.5e-7; 20 gives 9.1e-13.** He is right.*
+
+### The correction I owe, stated before the rulings that follow from it.
+
+**§P7-22 ratified "Alaska alone cannot carry this." That is true for literature-scale effects and
+FALSE for the claim Jim actually made, and I priced only the first.** My floor arithmetic — 42.2% at
+VIF 24.1, N = 2,501 — answers *"what is the smallest effect Alaska can resolve."* It does **not** say
+Alaska is unmeasurable; it says Alaska can only measure **large** effects. **Jim's claim is a large
+effect.** A quarter-cycle concentration at R₁ near 1 is detectable at n = 10, not n = 38,621, and the
+whole VIF/floor apparatus is aimed at the weak-effect regime that his hypothesis does not occupy.
+
+**I evaluated the strong claim with the weak claim's instrument.** That is S-18 clause 1 in a new
+coat — a quantity (the floor) carried into an arithmetic without the convention that defines what it
+answers. **Fifth instance from this seat.**
+
+**And his methodological point stands independently: a regional claim is not confirmed or refuted by
+other regions.** D-8/D-9 test whether the *class* behaves this way. Only Alaska tests whether *Alaska*
+does. Those are different hypotheses and §P7-22 collapsed them.
+
+**What my D-7 strike did and did not reach.** It struck an **unscored generator look** whose only
+output was a convention — and that strike stands, for the reason given. **It does not reach a
+declared, frozen, scored, within-region held-out test**, which is a different object entirely. Jim is
+asking for the second. Granted.
+
+### (A) D-12 — WITHIN-ALASKA STRATUM-HELD-OUT: ADMITTED, priced 2, on six conditions.
+
+The design is standard and sound: freeze the claim from the seen majors, exclude those events by name,
+score on the unexamined strata. **The enabling fact that makes the freeze genuinely prior is that
+`sitetide.py` does not exist — nobody can compute the phase of any Alaska event today, so a freeze
+declared now cannot have been informed by one.** That window closes the moment D-3 lands.
+
+> **Conditions, all six binding.**
+>
+> **1. Exclude a SUPERSET, not a list.** "The events Jim examined" is not a crisp set — a viewer
+> scrolled past is a viewer seen. **Exclude every M ≥ 6.0 event in the Alaska-Aleutian box over the
+> viewer's full time range**, by event id, whether or not consciously examined. Excluding a superset is
+> conservative and removes an ambiguity that would otherwise be argued about after the result.
+> **2. No further Alaska looks before the freeze**, by anyone, in any form.
+> **3. The null must be FULL ETAS with triggering, not background-only.** Aftershocks of the seed
+> majors inherit their mainshock's phase neighbourhood for the first cycles (Omori puts most of them
+> within a day; the semidiurnal period is 12.42 h). A full-ETAS simulated null reproduces that
+> inheritance and it cancels common-mode. **A background-only null would score aftershock
+> phase-inheritance as signal.**
+> **4. Declare the magnitude-independence assumption explicitly** — it is the bridge from the seed
+> stratum to the scoring stratum and it is not free. If tidal phase acts at **nucleation**, phase is
+> magnitude-independent and M4–6 tests the same hypothesis; if the claim is majors-specific, **a null
+> on M4–6 does not refute it.** Therefore: **the unviewed-majors stratum is PRIMARY for the seed claim;
+> the M4–6 stratum is SECONDARY, testing the magnitude-independent form.** Both declared, both scored,
+> neither allowed to stand in for the other.
+> **5. Temporal split respected.** The 2025 M7.3 sits in the frozen holdout **and** is a seed event —
+> excluded twice over. Scoring is **exploration-window events** plus D-13's separately hashed
+> prospective log. Legitimate because **no phase statistic has ever been computed on this engine for
+> any region** — Kepler deliberately ran none — so the exploration window is unspent *for this
+> statistic*.
+> **6. Label it honestly: STRATUM-HELD-OUT, not TEMPORALLY-HELD-OUT.** The region was chosen because
+> it looked interesting, and **no within-region design can remove that.** The residual region-selection
+> circularity is **irreducible here and is the exact thing D-8/D-9 exist to answer.** D-12 must carry
+> that sentence in its own headline.
+
+**Price: 2** — one declared quadrant test per stratum (unviewed majors; M4–6). Magnitude-stratified
+robustness is a demote-only audit at 0 per §P7-5(4). **Report the ETAS-null p, not the analytic
+(1/4)ⁿ** — the analytic figure assumes independence and uniformity that the null measures directly.
+
+### (B) D-13 — THE PROSPECTIVE LOG: ADMITTED, priced 0, and it is the strongest design in this entry.
+
+**This is the K-069/K-080 pattern and it is the only arm here that cannot be gamed by anyone,
+including us.** Per K-080's precedent, a hashed commitment **makes no claim until scored and therefore
+needs no licence to be committed** — it is a denominator committed before the numerator exists.
+
+> **Declared now, frozen, hashed:** region box (Alaska-Aleutians, stated bounds); threshold **M ≥ 5.5**;
+> the frozen phase quadrant and the declared scalar (per (D)); statistic = quadrant membership against
+> the full-ETAS null, with Kuiper V beside it; **primary horizon 3 years with 1- and 2-year readouts
+> DESCRIPTIVE ONLY** (K-080's discipline verbatim); pass/fail written before the first event.
+> **Committed before any post-freeze Alaska event occurs**, which is a real deadline, not a formality.
+
+**Convergence is fast enough to matter**: at ~5–10 M ≥ 5.5/yr arc-wide, a genuine quarter-cycle
+concentration reaches p ~ 1e-6 within one to two years. **This is the arm that answers Jim's actual
+question — the one that ends "especially if someone lived there" — and it is the one I would run
+first if I could only run one.**
+
+### (C) THE MID-FALL POINT — RATIFIED, and it becomes a declared D-1 readout. The artifact may run AGAINST the null.
+
+**Verified.** For x = A·sin θ under uniform phase the density of levels is arcsine,
+`f(x) = 1/(π√(1−x²))`: **0.318 at mid-level, 1.019 at |x| = 0.95.** **Uniform phase piles events at the
+EXTREMES and puts the FEWEST at mid-slope.** So:
+
+- **Trough concentration is artifact-CONSISTENT** — it is what the dwell-time artifact manufactures.
+- **Mid-slope concentration is artifact-INCONSISTENT** — chance puts fewest events there, so a pile-up
+  at mid-slope is evidence *against* the null explanation rather than for it.
+- **And mid-fall is the maximum unloading stress-RATE phase**, which is where rate-state sensitivity
+  peaks — so the physical prior points the same way. **The artifact and the physics separate cleanly,
+  and they separate in opposite directions.**
+
+**But the data must decide which one the seed is, and it is genuinely open.** A solid-earth vertical
+tide at ~55°N has a range of order ±15 cm; **−13.2 cm may be near-trough rather than mid-fall**, in
+which case the arcsine explanation is live and strong. **This is exactly why it is a declared readout
+and not a talking point.**
+
+> **RULED. D-1's declared readout must, for each seed event, report BOTH the level percentile within
+> the local tidal range AND the phase angle, and classify the seed set as TROUGH-CONCENTRATED
+> (artifact-consistent) or MID-SLOPE-CONCENTRATED (artifact-inconsistent), against a classification
+> rule declared in advance — BEFORE any Alaska event outside the seed set is scored.** The
+> classification is a fact about the seed, not a test, and is priced at 0.
+
+**Credit where due: this implication was latent in Kepler's arcsine analysis and he did not state it.**
+It is the coordinator's, and it materially improves the entry — it converts the strongest objection
+into a two-sided diagnostic.
+
+### (D) THE CONVENTION — the quadrant is exact and convention-free; the SCALAR is not. D-0 is amended.
+
+**The algebra is exact.** For x = A·sin θ: below neutral is θ ∈ (π, 2π); falling is θ ∈ (π/2, 3π/2);
+the intersection is **θ ∈ (π, 3π/2) — exactly one quadrant, a quarter-cycle arc.** "Below neutral and
+falling" is therefore a **rotation-free specification**: it names a quadrant by two sign conditions,
+both of which are physical statements about the scalar rather than choices about where zero sits.
+**Stated as the quadrant, it needs no Tanaka convention at all.**
+
+> **But it is only convention-free ONCE THE SCALAR IS FIXED, and that is where the real content of D-0
+> now sits.** Vertical displacement, tidal potential, volumetric strain, and Coulomb stress resolved on
+> a local thrust differ from one another by phase offsets that depend on fault geometry — so
+> "below neutral falling" is a **different quadrant in each.**
+>
+> **RULED: the claim is frozen in THE SCALAR JIM'S VIEWER USED**, and any translation to a stress
+> scalar is a **separate, separately declared step** that inherits K-090(c)'s restrictions.
+> **This amends §P7-22's D-0 ruling: the provenance question is no longer "worth having," it is
+> REQUIRED**, because it identifies the scalar in which the frozen claim is stated. My earlier ruling
+> treated provenance as non-determinative for the *direction*; that stands. It is determinative for the
+> *scalar*, and I had that wrong.
+
+### PRICE: Tranche D 181 → **183**.
+
+| item | priced | note |
+|---|---:|---|
+| **D-12** within-Alaska stratum-held-out | **2** | unviewed-majors (PRIMARY) + M4–6 (SECONDARY); six conditions binding |
+| **D-13** prospective log | **0** | K-080 pattern: no claim until scored; commit before the next event |
+| D-0 convention gate | 0 | **amended:** provenance REQUIRED, fixes the scalar; direction still literature-derived |
+| D-1 arcsine control | 0 | **amended:** must classify trough vs mid-slope, declared rule, before any scoring |
+| D-7 Alaska unscored look | STRUCK | unchanged — an unscored look is still a look |
+| D-8 + D-9 + D-10 (class-level) | 181 | unchanged; **parallel to D-12/D-13, neither waits for the other** |
+| **TOTAL** | **183** | |
+
+**D-12/D-13 test the REGIONAL claim; D-8/D-9 test the CLASS claim. Neither substitutes for the other,
+and a D-12 pass with a D-8 fail is a real and interpretable outcome** — Alaska-specific, with the
+region-selection caveat still standing and the prospective log as the arbiter.
+
+*Popper seat, 2026-08-13. Jim was right twice: a regional claim needs its own region, and strong
+concentration at small n does not care about a floor built for weak effects. I had priced one version
+of his hypothesis and ruled on it as though it were the only one. The unscored look stays struck; the
+declared, frozen, scored arms are admitted; and the arm that will actually answer the question is the
+one that costs nothing and starts with the next earthquake. Appended to my own section; no existing
+line modified; nothing committed.*
