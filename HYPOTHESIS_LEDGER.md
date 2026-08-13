@@ -16016,3 +16016,95 @@ arm where the null beat the real data, a stability result that looks bad and is 
 control rows that found a hole in my own floor formula that our own code had already patched
 elsewhere. Tranche A clears what it ran. Zero survivors is a fact about the machine until G-M1 makes
 it a fact about the Earth. Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+## §P7-15. FACTUAL-PREMISE AMENDMENT TO §P7-14(a) — the gate HAD reported. Tranche A CLEARS IN FULL, and here is the sentence the null may be quoted in.
+
+*2026-08-13. `results_gate_r1.json`, committed `a27645a`, **before** Tranche A ran. R1: (a) 30 true-null
+ETAS catalogues, mean **0.067** BH survivors against a bound of 15.7; (b) max-statistic uniformity
+PASS, mean p 0.461; (c) GPD path unexercised and **reported as unexercised, not as a pass** — correct
+handling. G-M1 planted recovery at >= 2x measured floors: arm (i) global **80%**, arm (ii) regional
+2R-df through the full session pipeline **100%**, arm (iii) long-period **90%**, all at or above the
+80% bar. **§P7-14(a) was written on the premise that these had not reported. That premise was wrong
+and part (a) of that ruling is superseded here.***
+
+**On the handling: the coordinator committed my ruling as written and appended a correction rather than
+editing the ledger to make me look right.** That is the append-only discipline doing exactly what it
+is for, and it is worth one line because the alternative — a quiet edit — would have left no trace
+that the adjudicator ruled on a false premise.
+
+### (a) Tranche A CLEARS IN FULL, within a stated envelope.
+
+> **RULED. Tranche A CLEARS.** Control battery exactly quiet (zero against 71.3 expected), R1 passed on
+> both live arms, and G-M1 recovery is demonstrated at the bands and aggregations this run used. The
+> §P7-14(a) restriction — *"zero survivors is a statement about the machine, not about the Earth"* — is
+> **lifted for the demonstrated envelope** and **stands outside it**.
+>
+> **Demonstrated envelope:** global, regional-2R-df, and long-period aggregations, at amplitudes
+> >= 2x the measured per-feature floors, with amplitude recovery in [0.8, 1.2] where reported.
+> **NOT demonstrated and still bounded by nothing:** the diurnal/semidiurnal band (structurally notched
+> by the two exact zeros — G-M1 arm (ii) is band-matched precisely so v1 is not punished for a band it
+> is designed blind to, §P5-6); and the **mark path**, which per §P7-3 forfeits the S1/S2 structural
+> immunity and owes its own arm (i) re-run.
+
+**Quotable form of the 2026-08-13 null, binding, in the §P5-1 pattern:**
+
+> *"Zero survivors among 1,263 declared tests (713 new negative-control battery plus 550 re-occupied
+> K-089-R slots) at BH q = 0.10 with the budget identity asserted, on the ETAS-residualised global
+> daily target over the exploration window [365, 8081), family-wise max-statistic p = 0.319, against
+> 71.3 survivors expected by chance in the controls alone. The pipeline was gate-cleared before the
+> run: 0.067 mean false survivors on 30 true-null ETAS catalogues against a bound of 15.7, and planted
+> signals at >= 2x the measured floors recovered at 80% (global), 90% (long-period) and 100%
+> (regional 2R-df). The floors are ~15% modulation at N = 46,585 under measured VIF. The
+> diurnal/semidiurnal band is notched out exactly and is not covered; the mark path is not covered; no
+> holdout hash was spent and every effect size is in-sample."*
+
+**This remains GENERATOR-NOT-EVIDENCE** — exploration-window only, in-sample, no hash spent. What
+changed is that it is no longer *vacuous*: the K-035 objection (a null from a detector of unmeasured
+sensitivity bounds nothing) is answered for the demonstrated envelope, which is the first time this
+programme has been able to say that about a mining result.
+
+**One flag that must travel with the bound, because the arithmetic does not close.** At the tranche-A
+operating threshold the floor formula predicts recovery of **0.800 at 1x the floor, 0.9992 at 1.5x,
+and 1.0000 at 2x**. Arm (i) returned **80% at >= 2x** — which is what the formula predicts at **1x**,
+not 2x. Arm (iii) at 90% is likewise short of the prediction; only arm (ii) at 100% matches it.
+
+> **This does NOT block clearance** — the declared bar was 80%, it was declared in advance, and all
+> three arms met or beat it. **But one of two things is true and we do not know which:** either the
+> plants span a range rather than sitting at 2x (in which case the number is fine and mislabelled), or
+> **the effective global floor is ~2x larger than §P7-12(a)'s formula gives, i.e. the formula is
+> anti-conservative at global aggregation.** Until that is resolved, the quotable form above states the
+> **measured recovery rates** rather than implying certainty, and no tighter bound may be quoted from
+> this run.
+>
+> **Cheap diagnostic, assigned, priced 0: the recovery-versus-amplitude curve.** Report recovery rate
+> at 1x, 1.5x, 2x and 3x the floor, per arm. It either reproduces the predicted step (0.80 / 0.999 /
+> 1.000) or it does not, and if it does not the floor formula is corrected at the aggregation where it
+> fails. One sweep, no new declared tests, and it is the difference between a bound quoted at ~15% and
+> one quoted at ~30% globally.
+
+### (b) B's run gate — CONFIRMED as read.
+
+> **CONFIRMED.** With G-M1 arm (ii) reported and passed, **B's run is gated only on (i) its own
+> §P7-2(b) precondition builds and (ii) per-statistic G-M1 clearance for the NEW statistics and
+> aggregations B introduces.** The second clause is not a new hurdle — it is §P7-14(d)'s *"each
+> statistic clears G-M1 in its own right"*, which stands regardless of anything in this amendment,
+> because B's statistics were not the ones just cleared.
+
+**The per-statistic list, restated so nothing is inferred:** F9-01 second moment — two-lobed positive
+control **and** the sinusoid negative control (§P7-3, the one Kepler did not name); F9-04
+Kuiper/Watson — narrow-arc positive and day-lattice negative, demonstrated **band by band**; F9-10
+mark path — **G-M1 arm (i) re-run on the mark path specifically**, since it is not notched and arm (i)
+there becomes a live falsification rather than a formality; F10-14 — K-088's §P5-3 null repairs
+inherited, not re-designed. Plus F4-58M as the zero-priced precondition.
+
+**Everything else in §P7-14 stands unamended**: the F10-24 resampling-stability condition on B with its
+label-not-kill rule and the 0.487/0.044 null baseline (b); the S-15(c) UNMEASURABLE-BY-WINDOW candidate
+clause at 3 cycles with the catalog-wide sweep (c); and the declared counts (d). **Only part (a) was
+premise-dependent, and only part (a) is superseded.**
+
+*Popper seat, 2026-08-13. A ruling of mine corrected by a fact I did not have, amended in place by
+appending rather than by editing, and the clearance granted in full — with one arithmetic gap between
+predicted and observed recovery flagged loudly enough that it cannot be inherited silently by whatever
+quotes this bound next. Appended to my own section; no existing line modified; nothing committed.*
