@@ -73,7 +73,8 @@
         "loglog_p": 0.006232326042276756
       },
       "censoring_P7_10a": {
-        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so VIF is understated -- the anti-conservative direction.",
+        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so the value returned is a BOUND rather than a measurement.",
+        "direction_correction_2026_08_12": "\u00a7P7-10(a) calls the saturated value UNDERSTATED. It is OVER-stated: the value at the floor is an UPPER bound on VIF, measured monotone decreasing in B on the three censored mark rows (\u00a7P7-11(c), results_f4_58m_uncensored.json). No number in this file is affected -- the count path has zero censored rows -- and the correction is reported for the Popper seat rather than acted on.",
         "B_block_bootstrap": 50000,
         "resolution_floor_p_boot": 1.999960000799984e-05,
         "n_rows_scored": 203,
@@ -491,7 +492,8 @@
         "loglog_p": 0.0070892350726036125
       },
       "censoring_P7_10a": {
-        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so VIF is understated -- the anti-conservative direction.",
+        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so the value returned is a BOUND rather than a measurement.",
+        "direction_correction_2026_08_12": "\u00a7P7-10(a) calls the saturated value UNDERSTATED. It is OVER-stated: the value at the floor is an UPPER bound on VIF, measured monotone decreasing in B on the three censored mark rows (\u00a7P7-11(c), results_f4_58m_uncensored.json). No number in this file is affected -- the count path has zero censored rows -- and the correction is reported for the Popper seat rather than acted on.",
         "B_block_bootstrap": 10000,
         "resolution_floor_p_boot": 9.999000099990002e-05,
         "n_rows_scored": 500,
@@ -864,7 +866,8 @@
         "loglog_p": 0.007324218558164907
       },
       "censoring_P7_10a": {
-        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so VIF is understated -- the anti-conservative direction.",
+        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so the value returned is a BOUND rather than a measurement.",
+        "direction_correction_2026_08_12": "\u00a7P7-10(a) calls the saturated value UNDERSTATED. It is OVER-stated: the value at the floor is an UPPER bound on VIF, measured monotone decreasing in B on the three censored mark rows (\u00a7P7-11(c), results_f4_58m_uncensored.json). No number in this file is affected -- the count path has zero censored rows -- and the correction is reported for the Popper seat rather than acted on.",
         "B_block_bootstrap": 10000,
         "resolution_floor_p_boot": 9.999000099990002e-05,
         "n_rows_scored": 500,
@@ -1237,7 +1240,8 @@
         "loglog_p": 0.0070892350726036125
       },
       "censoring_P7_10a": {
-        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so VIF is understated -- the anti-conservative direction.",
+        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so the value returned is a BOUND rather than a measurement.",
+        "direction_correction_2026_08_12": "\u00a7P7-10(a) calls the saturated value UNDERSTATED. It is OVER-stated: the value at the floor is an UPPER bound on VIF, measured monotone decreasing in B on the three censored mark rows (\u00a7P7-11(c), results_f4_58m_uncensored.json). No number in this file is affected -- the count path has zero censored rows -- and the correction is reported for the Popper seat rather than acted on.",
         "B_block_bootstrap": 10000,
         "resolution_floor_p_boot": 9.999000099990002e-05,
         "n_rows_scored": 500,

@@ -2,10 +2,11 @@
   "id": "F4-58M",
   "title": "Mark-axis variance inflation factor (VIF_mark) from existing session output",
   "ruling": "HYPOTHESIS_LEDGER.md \u00a7P7-10(c) -- zero-priced precondition for Tranche B; censoring rule \u00a7P7-10(a); pricing-at-zero \u00a7P7-1(c)",
-  "version": 1,
+  "version": 2,
+  "version_note": "v2, 2026-08-12: no measured value changed. The DIRECTION of the \u00a7P7-10(a) censoring bias is corrected from 'understated / lower bound' to 'over-stated / upper bound', on the direct evidence of the \u00a7P7-11(c) un-censoring run (results_f4_58m_uncensored.json). v1's medians, floors and per-feature table are unchanged because they were always computed over the UNCENSORED rows.",
   "priced_tests": 0,
   "priced_tests_note": "Zero, per \u00a7P7-1(c) as invoked by \u00a7P7-10(c) ('at zero new surrogate cost, exactly as F4-58 was'). No surrogate is drawn, no rejection is made, no BH vector is entered, and NO EXPLORE_COUNT.jsonl line is written. Every input is read from checkpoint.json rows already declared by the sessions that computed them.",
-  "generated_at": "2026-08-13T02:27:24.120448+00:00",
+  "generated_at": "2026-08-13T03:10:08.615057+00:00",
   "identity": "VIF_mark = T_obs / chi2.ppf(1 - p_block_bootstrap, df), with T_obs = (n-1)*rho^2 for df=1 Spearman and T_obs = n*R^2 for df=2 circular-linear -- the \u00a7P7-1(c) identity with the correlation statistic put on its own chi-square scale.",
   "state_class": "MEASUREMENT on existing artifacts (estimator characterisation, not a hypothesis test about the Earth).",
   "sessions": [
@@ -75,7 +76,8 @@
           "min": 17.233304418586147,
           "max": 38.65726327310082
         },
-        "direction": "EXCLUDED because chi2.ppf saturates at the floor and the VIF returned there is a LOWER BOUND, not a measurement. Including them would understate the median and so understate the floor (anti-conservative)."
+        "direction": "EXCLUDED because chi2.ppf saturates at the floor and the VIF returned there is a BOUND, not a measurement. CORRECTED 2026-08-12 by the \u00a7P7-11(c) un-censoring run: it is an UPPER bound, not a lower one. VIF = T / chi2.ppf(1 - p, df) DECREASES as the floor is pushed down, measured at B = 2,000 / 50,000 / 500,000 on all three rows (b_value_90d x mag: 25.87 -> 17.23 -> 13.87). See results_f4_58m_uncensored.json :: direction_correction_to_P7_10a.",
+        "direction_RETRACTED_2026_08_12": "Earlier text in this field read 'the VIF returned there is a LOWER BOUND ... including them would understate the median and so understate the floor (anti-conservative)'. That is inverted and is retracted. No number in this file changes: the medians are computed over the uncensored rows under either reading."
       },
       "vif_mark_all": {
         "n": 43,
@@ -1508,7 +1510,8 @@
           "min": 20.708494612524028,
           "max": 46.452712073173515
         },
-        "direction": "EXCLUDED because chi2.ppf saturates at the floor and the VIF returned there is a LOWER BOUND, not a measurement. Including them would understate the median and so understate the floor (anti-conservative)."
+        "direction": "EXCLUDED because chi2.ppf saturates at the floor and the VIF returned there is a BOUND, not a measurement. CORRECTED 2026-08-12 by the \u00a7P7-11(c) un-censoring run: it is an UPPER bound, not a lower one. VIF = T / chi2.ppf(1 - p, df) DECREASES as the floor is pushed down, measured at B = 2,000 / 50,000 / 500,000 on all three rows (b_value_90d x mag: 25.87 -> 17.23 -> 13.87). See results_f4_58m_uncensored.json :: direction_correction_to_P7_10a.",
+        "direction_RETRACTED_2026_08_12": "Earlier text in this field read 'the VIF returned there is a LOWER BOUND ... including them would understate the median and so understate the floor (anti-conservative)'. That is inverted and is retracted. No number in this file changes: the medians are computed over the uncensored rows under either reading."
       },
       "vif_mark_all": {
         "n": 37,
@@ -2767,7 +2770,8 @@
           "min": 20.708494612524028,
           "max": 46.452712073173515
         },
-        "direction": "EXCLUDED because chi2.ppf saturates at the floor and the VIF returned there is a LOWER BOUND, not a measurement. Including them would understate the median and so understate the floor (anti-conservative)."
+        "direction": "EXCLUDED because chi2.ppf saturates at the floor and the VIF returned there is a BOUND, not a measurement. CORRECTED 2026-08-12 by the \u00a7P7-11(c) un-censoring run: it is an UPPER bound, not a lower one. VIF = T / chi2.ppf(1 - p, df) DECREASES as the floor is pushed down, measured at B = 2,000 / 50,000 / 500,000 on all three rows (b_value_90d x mag: 25.87 -> 17.23 -> 13.87). See results_f4_58m_uncensored.json :: direction_correction_to_P7_10a.",
+        "direction_RETRACTED_2026_08_12": "Earlier text in this field read 'the VIF returned there is a LOWER BOUND ... including them would understate the median and so understate the floor (anti-conservative)'. That is inverted and is retracted. No number in this file changes: the medians are computed over the uncensored rows under either reading."
       },
       "vif_mark_all": {
         "n": 37,
@@ -4026,7 +4030,8 @@
           "min": 20.708494612524028,
           "max": 46.452712073173515
         },
-        "direction": "EXCLUDED because chi2.ppf saturates at the floor and the VIF returned there is a LOWER BOUND, not a measurement. Including them would understate the median and so understate the floor (anti-conservative)."
+        "direction": "EXCLUDED because chi2.ppf saturates at the floor and the VIF returned there is a BOUND, not a measurement. CORRECTED 2026-08-12 by the \u00a7P7-11(c) un-censoring run: it is an UPPER bound, not a lower one. VIF = T / chi2.ppf(1 - p, df) DECREASES as the floor is pushed down, measured at B = 2,000 / 50,000 / 500,000 on all three rows (b_value_90d x mag: 25.87 -> 17.23 -> 13.87). See results_f4_58m_uncensored.json :: direction_correction_to_P7_10a.",
+        "direction_RETRACTED_2026_08_12": "Earlier text in this field read 'the VIF returned there is a LOWER BOUND ... including them would understate the median and so understate the floor (anti-conservative)'. That is inverted and is retracted. No number in this file changes: the medians are computed over the uncensored rows under either reading."
       },
       "vif_mark_all": {
         "n": 37,
@@ -5672,6 +5677,6 @@
     "The chi-square-scale conversion uses the standard large-sample nulls ((n-1)*rho^2 ~ chi2_1; n*R^2 ~ chi2_2). At n = 46,585 the asymptotics are not in question, but the conversion is an assumption of the READING, not of the recorded statistic.",
     "VIF_mark is computed against p_block_bootstrap, per \u00a7P7-10(c)'s literal formula. `vif_mark_from_p_raw` is carried per row for reference; p_raw is the conservative max(circular-shift, block-bootstrap) and where the shift arm binds it gives a LARGER VIF, so the reported medians are the smaller (more conservative for the floor's denominator, less conservative for the floor itself) of the two readings.",
     "Mark rows carry no lag axis (lag = null in every row on disk), so no lag reduction is involved and none is claimed.",
-    "The three censored rows are the same three (feature, mark) pairs in all four sessions -- b_value_90d x mag, deep_fraction_30d x depth, mean_depth_30d x depth. Their VIF is a LOWER BOUND (17.2, 28.2, 38.7 in the primary session at B = 50,000) and is reported, not medianed. That these bounds sit 4x-9x above the uncensored median 4.34 is the concrete demonstration that the \u00a7P7-10(a) seam is anti-conservative: had they been medianed in at their saturated values they would have been read as ~4x smaller than they are."
+    "The three censored rows are the same three (feature, mark) pairs in all four sessions -- b_value_90d x mag, deep_fraction_30d x depth, mean_depth_30d x depth. Their VIF is an UPPER BOUND (17.2, 28.2, 38.7 in the primary session at B = 50,000; tightened to 13.9, 22.7, 31.1 at B = 500,000 by the \u00a7P7-11(c) run, still at the floor) and is reported, not medianed. CORRECTION 2026-08-12: an earlier version of this caveat called these LOWER bounds and cited them as evidence that the \u00a7P7-10(a) seam is anti-conservative. The sign is inverted, measured directly by pushing B up; excluding these rows removes OVER-stated values and so mildly LOWERS the floor. The exclusion rule still stands -- a bound is not a measurement -- but not for the reason given."
   ]
 }
