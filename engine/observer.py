@@ -330,3 +330,145 @@ def assert_subdaily_gate(feature_names):
             + ", ".join(rep["missing"]) + ". " + SUBDAILY_GATE_RULE +
             " The fortnightly-and-longer mark arm is NOT gated and may proceed.")
     return rep
+
+
+# --------------------------------------------- D-5: the gate against a SESSION --
+# §K92-1 D-5 / §P7-22: *"Clear the F9-10 sub-daily gate: F7-01/02/03 observer
+# controls. `observer.assert_subdaily_gate` hard-refuses until this exists. Nothing
+# sub-daily runs before it."* The controls themselves were built in Tranche A
+# (§P7-2(b)); what was still owed is the EVALUATION -- pointing the gate at a real
+# session's F7 rows and reading out what it says. That is what this section is.
+#
+# TWO STAGES, and the distinction is the whole reason the PASS path is worth writing.
+#
+#   STAGE 1, THE GATE ITSELF -- PRESENCE. This is the ruled condition and the only
+#   thing that can PASS or REFUSE: are the F7-01/02/03 controls and the four
+#   catalog-composition nulls in the session's declared, SCORED feature set? §P7-3(3)
+#   gates on their existence, not on their values, and widening the gate to "and they
+#   must be quiet" would be a new ruling this module is not entitled to make.
+#
+#   STAGE 2, THE READING -- REPORTED, NEVER GATING. What the controls actually
+#   measured in that session. A control sitting at its Monte Carlo resolution floor is
+#   a MEASURED OBSERVER ARTIFACT of high significance, and it is exactly what
+#   OBSERVER_CONTROL_BANNER says must be visible. It does not change the verdict; it
+#   changes what a sub-daily result would be allowed to MEAN, which is the clause
+#   `what_it_does_not_license` already carries.
+
+SESSION_GATE_STAGES = (
+    "STAGE 1 (GATES): are the required F7 controls present in the session's scored "
+    "feature set? §P7-3(3) gates on existence. STAGE 2 (REPORTED, NOT GATING): what "
+    "those controls measured. A control at its Monte Carlo resolution floor is a "
+    "measured observer artifact; it does not move the verdict, it moves what a "
+    "sub-daily result would be permitted to mean.")
+
+COUNT_PATH_DEGENERACY_NOTE = (
+    "`obs_utc_hour_phase` is ZERO ON THE COUNT PATH BY CONSTRUCTION -- a daily bin "
+    "has exactly one UTC-hour phase -- so `observer_features` marks it "
+    "`subdaily_only` and `count_path_features` DROPS it before a count-path session "
+    "scores anything. A count-path session therefore CANNOT satisfy this gate, and "
+    "that is the design working: the one control that is specific to the arm which "
+    "escapes day-binning is the one a day-binned session cannot supply. Clearing the "
+    "gate requires a session that scores the SUB-DAILY MARK path, where that feature "
+    "is live.")
+
+
+def _session_tests(checkpoint):
+    return list((checkpoint or {}).get("tests") or [])
+
+
+def session_gate_reading(checkpoint):
+    """STAGE 2: what the F7 controls measured in this session. Never gating.
+
+    Reads only fields the checkpoint already records -- no surrogates are drawn and
+    nothing is recomputed, exactly as `f4_58_vif.py` reads a session.
+    """
+    rows = []
+    for r in _session_tests(checkpoint):
+        name = str(r.get("feature", ""))
+        if not name.startswith("obs_"):
+            continue
+        p_shift = r.get("p_circular_shift")
+        p_boot = r.get("p_block_bootstrap")
+        p_floor = r.get("p_floor")
+        at_floor = []
+        if p_shift is not None and p_floor is not None and p_shift <= p_floor * 1.0001:
+            at_floor.append("circular_shift")
+        if (p_boot is not None and r.get("n_surrogates")
+                and p_boot <= 1.0 / (1.0 + float(r["n_surrogates"])) * 1.0001):
+            at_floor.append("block_bootstrap")
+        rows.append({
+            "feature": name,
+            "family": r.get("family"),
+            "df": r.get("df"),
+            "chi2_score": r.get("chi2_score"),
+            "pct_rate_modulation": r.get("pct_rate_modulation"),
+            "p_circular_shift": p_shift,
+            "p_block_bootstrap": p_boot,
+            "p_raw": r.get("p_raw"),
+            "p_resolution_floor": p_floor,
+            "at_resolution_floor": at_floor,
+            "disposition": r.get("disposition"),
+        })
+    rows.sort(key=lambda x: x["feature"])
+    n_floor = sum(1 for x in rows if x["at_resolution_floor"])
+    return {
+        "n_observer_rows": len(rows),
+        "n_at_resolution_floor": n_floor,
+        "rows": rows,
+        "reading": (
+            "OBSERVER STRUCTURE IS LIVE AND MEASURED: %d of %d F7 control rows have "
+            "at least one null at its Monte Carlo resolution floor. Per the F7 "
+            "banner these are MEASURED OBSERVER ARTIFACTS, reported as such and "
+            "never as findings -- and per §P7-3(3) they are the reason the sub-daily "
+            "arm is gated at all." % (n_floor, len(rows))
+            if n_floor else
+            "no F7 control row sits at its Monte Carlo resolution floor in this "
+            "session"),
+        "gating": False,
+        "banner": OBSERVER_CONTROL_BANNER,
+    }
+
+
+def session_subdaily_gate(checkpoint, session_id=None):
+    """D-5: evaluate the sub-daily gate against a real session. Both stages.
+
+    Returns the full record. `verdict` is `"PASS"` or `"REFUSE"` and is decided by
+    STAGE 1 ALONE (§P7-3(3)); STAGE 2's reading is attached and explicitly
+    non-gating.
+    """
+    names = sorted({str(r.get("feature", ""))
+                    for r in _session_tests(checkpoint) if r.get("feature")})
+    presence = subdaily_gate_report(names)
+    reading = session_gate_reading(checkpoint)
+    subdaily_only_missing = [n for n in presence["missing"]
+                             if n == "obs_utc_hour_phase"]
+    return {
+        "item": "D-5 sub-daily gate evaluation against a real session",
+        "session": session_id,
+        "config_hash": (checkpoint or {}).get("config_hash"),
+        "session_kind": (checkpoint or {}).get("kind"),
+        "n_scored_tests": len(_session_tests(checkpoint)),
+        "stages": SESSION_GATE_STAGES,
+        "stage_1_presence": presence,
+        "stage_2_reading": reading,
+        "verdict": "PASS" if presence["satisfied"] else "REFUSE",
+        "verdict_basis": ("STAGE 1 only (§P7-3(3) gates on the controls' EXISTENCE). "
+                          "STAGE 2 is reported and does not gate."),
+        "count_path_degeneracy": (COUNT_PATH_DEGENERACY_NOTE
+                                  if subdaily_only_missing else None),
+        "rule": SUBDAILY_GATE_RULE,
+        "what_a_pass_would_not_license": presence["what_it_does_not_license"],
+    }
+
+
+def assert_session_subdaily_gate(checkpoint, session_id=None):
+    """The hard refusal, against a session. Returns the record when it PASSES."""
+    rec = session_subdaily_gate(checkpoint, session_id)
+    if rec["verdict"] != "PASS":
+        raise SubDailyGateNotSatisfied(
+            "session %s does not clear the F9-10 sub-daily gate; missing %s. %s%s"
+            % (session_id, ", ".join(rec["stage_1_presence"]["missing"]),
+               SUBDAILY_GATE_RULE,
+               " " + COUNT_PATH_DEGENERACY_NOTE
+               if rec["count_path_degeneracy"] else ""))
+    return rec
