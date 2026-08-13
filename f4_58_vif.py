@@ -16,11 +16,22 @@ Priced tests: 0. This makes no rejection and enters no BH vector (§P7-1(c)).
 AMENDMENT 2026-08-12 (§P7-10(a), REQUIRED REFINEMENT -- censoring)
 -----------------------------------------------------------------
 §P7-10(a) rules that the identity CENSORS whenever `p_boot` sits at its Monte
-Carlo resolution floor: `chi2.ppf(1 - p, df)` saturates, the ratio is pushed
-down, and VIF is UNDERSTATED for exactly the most significant tests -- the
-anti-conservative direction, because an understated VIF understates the S-15
-floor. Rule as written: "measurements whose `p_boot` is at the floor are
-excluded from the VIF median and reported separately with their count."
+Carlo resolution floor, and that "measurements whose `p_boot` is at the floor are
+excluded from the VIF median and reported separately with their count." That rule
+is implemented below.
+
+DIRECTION CORRECTION, 2026-08-12 (§P7-11(c) evidence, reported not acted on).
+§P7-10(a) justifies the rule by saying the ratio "is pushed down" so that VIF is
+UNDERSTATED. The sign is inverted. At the floor the reported p is 1/(B+1) while
+the true p is <= that; a smaller p gives a LARGER `chi2.ppf`; so the expressible
+quantile is capped BELOW the true one and the VIF returned at the floor is an
+UPPER bound, i.e. OVER-stated. Measured directly by pushing B up on the three
+censored mark rows (results_f4_58m_uncensored.json): b_value_90d x mag returns
+25.87 at B = 2,000, 17.23 at B = 50,000 and 13.87 at B = 500,000, monotone down,
+as it must be. The exclusion rule stands on the better ground that a saturated
+value is a bound rather than a measurement; what does not stand is the claim
+that excluding closes an anti-conservative seam. NOTHING in this file's numbers
+depends on the correction, because the count path has zero censored rows.
 
 Implemented here as follows.
 
@@ -221,7 +232,14 @@ def analyze(session: str, label: str):
         "rule": ("§P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo "
                  "resolution floor 1/(B+1) are EXCLUDED from every median below "
                  "and reported here with their count. chi2.ppf saturates there, "
-                 "so VIF is understated -- the anti-conservative direction."),
+                 "so the value returned is a BOUND rather than a measurement."),
+        "direction_correction_2026_08_12": (
+            "§P7-10(a) calls the saturated value UNDERSTATED. It is OVER-stated: "
+            "the value at the floor is an UPPER bound on VIF, measured monotone "
+            "decreasing in B on the three censored mark rows (§P7-11(c), "
+            "results_f4_58m_uncensored.json). No number in this file is affected "
+            "-- the count path has zero censored rows -- and the correction is "
+            "reported for the Popper seat rather than acted on."),
         "B_block_bootstrap": n_sur,
         "resolution_floor_p_boot": (None if not n_sur else 1.0 / (n_sur + 1.0)),
         "n_rows_scored": len(ok_rows),

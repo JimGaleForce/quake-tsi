@@ -185,10 +185,21 @@ def analyze(session, label):
                 for r in cens
             ],
             "censored_vif_summary": summarize([r["vif_mark"] for r in cens]),
-            "direction": ("EXCLUDED because chi2.ppf saturates at the floor and the "
-                          "VIF returned there is a LOWER BOUND, not a measurement. "
-                          "Including them would understate the median and so "
-                          "understate the floor (anti-conservative)."),
+            "direction": (
+                "EXCLUDED because chi2.ppf saturates at the floor and the VIF "
+                "returned there is a BOUND, not a measurement. CORRECTED "
+                "2026-08-12 by the §P7-11(c) un-censoring run: it is an UPPER "
+                "bound, not a lower one. VIF = T / chi2.ppf(1 - p, df) DECREASES "
+                "as the floor is pushed down, measured at B = 2,000 / 50,000 / "
+                "500,000 on all three rows (b_value_90d x mag: 25.87 -> 17.23 -> "
+                "13.87). See results_f4_58m_uncensored.json :: "
+                "direction_correction_to_P7_10a."),
+            "direction_RETRACTED_2026_08_12": (
+                "Earlier text in this field read 'the VIF returned there is a "
+                "LOWER BOUND ... including them would understate the median and so "
+                "understate the floor (anti-conservative)'. That is inverted and "
+                "is retracted. No number in this file changes: the medians are "
+                "computed over the uncensored rows under either reading."),
         },
         "vif_mark_all": by(lambda r: True),
         "vif_mark_df1_spearman": by(lambda r: r["df"] == 1),
@@ -213,7 +224,14 @@ def main():
         "title": "Mark-axis variance inflation factor (VIF_mark) from existing session output",
         "ruling": ("HYPOTHESIS_LEDGER.md §P7-10(c) -- zero-priced precondition for "
                    "Tranche B; censoring rule §P7-10(a); pricing-at-zero §P7-1(c)"),
-        "version": 1,
+        "version": 2,
+        "version_note": (
+            "v2, 2026-08-12: no measured value changed. The DIRECTION of the "
+            "§P7-10(a) censoring bias is corrected from 'understated / lower "
+            "bound' to 'over-stated / upper bound', on the direct evidence of the "
+            "§P7-11(c) un-censoring run (results_f4_58m_uncensored.json). v1's "
+            "medians, floors and per-feature table are unchanged because they were "
+            "always computed over the UNCENSORED rows."),
         "priced_tests": 0,
         "priced_tests_note": (
             "Zero, per §P7-1(c) as invoked by §P7-10(c) ('at zero new surrogate cost, "
@@ -315,12 +333,15 @@ def main():
         "reduction is involved and none is claimed.",
         "The three censored rows are the same three (feature, mark) pairs in all "
         "four sessions -- b_value_90d x mag, deep_fraction_30d x depth, "
-        "mean_depth_30d x depth. Their VIF is a LOWER BOUND (17.2, 28.2, 38.7 in the "
-        "primary session at B = 50,000) and is reported, not medianed. That these "
-        "bounds sit 4x-9x above the uncensored median 4.34 is the concrete "
-        "demonstration that the §P7-10(a) seam is anti-conservative: had they been "
-        "medianed in at their saturated values they would have been read as ~4x "
-        "smaller than they are.",
+        "mean_depth_30d x depth. Their VIF is an UPPER BOUND (17.2, 28.2, 38.7 in "
+        "the primary session at B = 50,000; tightened to 13.9, 22.7, 31.1 at "
+        "B = 500,000 by the §P7-11(c) run, still at the floor) and is reported, "
+        "not medianed. CORRECTION 2026-08-12: an earlier version of this caveat "
+        "called these LOWER bounds and cited them as evidence that the §P7-10(a) "
+        "seam is anti-conservative. The sign is inverted, measured directly by "
+        "pushing B up; excluding these rows removes OVER-stated values and so "
+        "mildly LOWERS the floor. The exclusion rule still stands -- a bound is "
+        "not a measurement -- but not for the reason given.",
     ]
 
     with open(OUT_PATH, "w", encoding="utf-8") as fh:
@@ -337,7 +358,7 @@ def main():
         print("    VIF_mark df1:", s["vif_mark_df1_spearman"])
         print("    VIF_mark df2:", s["vif_mark_df2_circular_linear"])
         for c in s["censoring_P7_10a"]["censored_rows"]:
-            print("      CENSORED %-18s %-6s p_boot=%.3e  VIF>=%.2f"
+            print("      CENSORED %-18s %-6s p_boot=%.3e  VIF<=%.2f"
                   % (c["feature"], c["mark"], c["p_block_bootstrap"], c["vif_mark"]))
 
     print("\n=== OPERATIVE MARK FLOOR (alpha = 1e-4, n = %d) ===" % n_ev)

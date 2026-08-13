@@ -1,0 +1,3051 @@
+{
+ "gate": "G-M1 + R1",
+ "generated_at": "2026-08-13T06:29:06.625041+00:00",
+ "engine_version": "1.1.0",
+ "config": {
+  "engine_version": "1.1.0",
+  "mode": "mine",
+  "preset": "quick",
+  "n_surrogates": 10000,
+  "n_periods": 800,
+  "n_peaks": 5,
+  "lags": [
+   0,
+   1,
+   3,
+   7,
+   14,
+   30
+  ],
+  "tranche1": false,
+  "tranche1_lags": [],
+  "fdr_q": 0.1,
+  "baseline": "etas",
+  "mag_target": 4.5,
+  "grid": {
+   "dlat": 1.0,
+   "dlon": 1.0
+  },
+  "explore_frac": 0.7,
+  "data_dir": "data/comcat_world",
+  "downloads": true,
+  "seed": 20260812,
+  "ladder": {
+   "rule": "besag_clifford_1991",
+   "h": 25,
+   "chunk": 200,
+   "n_max": 10000
+  },
+  "gpd": {
+   "enabled": true,
+   "threshold_q": 0.9,
+   "stability_q": [
+    0.95,
+    0.9,
+    0.8
+   ],
+   "ad_alpha": 0.05,
+   "ci_level": 0.95,
+   "n_boot": 400,
+   "n_ad_boot": 200,
+   "decades": 1.0,
+   "confirm_factor": 10.0,
+   "confirm_max_n": 500000,
+   "calibration": {
+    "path": "engine/out/audit_gpd_bca.json",
+    "sha256": "5eb40f27bdcfe6e9cbbc3d7525de3615f1cd92c3cd268f68fed8eb20f3267560",
+    "pass": true,
+    "coverage": 0.9302325581395349,
+    "coverage_bar": 0.9,
+    "worst_understatement": 2.281264023363487,
+    "understatement_bar": 3.0,
+    "n_comparisons": 144,
+    "n_fitted": 129,
+    "n_scored": 129,
+    "ci_method": "BCa",
+    "set": "decisive"
+   }
+  },
+  "regions": {
+   "enabled": true,
+   "rule_id": "R2b-lon6-active",
+   "n_sectors": 6,
+   "min_event_fraction": 0.01,
+   "battery": false,
+   "vif": 24.081827389301417,
+   "alpha": 0.00014025245441795232,
+   "target_amplitude": 0.2
+  }
+ },
+ "config_hash": "c6791d578baa308297b4571e5b8ef5b2e50f3ba7d0c474db8ca0b183542df6b7",
+ "verdict": {
+  "R1": "PASS",
+  "G-M1": "PASS",
+  "gate": "PASS"
+ },
+ "R1": {
+  "a_bh_survivors": {
+   "n_catalogs": 30,
+   "mean_bh_survivors": 0.06666666666666667,
+   "declared_m_mean": 157.0,
+   "q": 0.1,
+   "bound_q_times_m": 15.700000000000001,
+   "max_survivors_single_catalog": 2,
+   "total_survivors": 2,
+   "pass": true
+  },
+  "b_max_statistic_uniformity": {
+   "n": 30,
+   "alpha": 0.01,
+   "d_plus": 0.13566640550187165,
+   "d_minus_reported_not_gating": 0.0662488029946896,
+   "d_crit": 0.2770430227115183,
+   "pass": true,
+   "two_sided_D_not_gating": 0.13566640550187165,
+   "two_sided_p_not_gating": 0.5915443795447883,
+   "mean_p": 0.46104727082789243,
+   "min_p": 0.00013058239749281798,
+   "rule": "HYPOTHESIS_LEDGER.md \u00a7P6-9(a): gate on D+ only; D- is permitted by super-uniformity and does not gate."
+  },
+  "c_gpd_vs_mc_survivor_rate": {
+   "n_gpd_extrapolated": 0,
+   "n_gpd_survivors": 0,
+   "gpd_rate": null,
+   "n_mc_resolved": 4710,
+   "n_mc_survivors": 2,
+   "mc_rate": 0.0004246284501061571,
+   "fisher_one_sided_p_gpd_greater": null,
+   "elevated": false,
+   "pass": true,
+   "note": "A zero denominator on the GPD arm is reported as such and NOT read as a pass on the estimator: it means no test was censored at the Monte Carlo floor in these catalogs, so the extrapolation path was never exercised."
+  }
+ },
+ "G_M1": {
+  "i": {
+   "n_catalogs": 10,
+   "n_detected": 8,
+   "recovery_rate": 0.8,
+   "threshold": 0.8,
+   "detection_pass": true,
+   "amplitude_quoted": true,
+   "n_amplitudes": 10,
+   "amplitude_ratio_median": 1.001092453472861,
+   "amplitude_ratio_min": 0.956395977932255,
+   "amplitude_ratio_max": 1.0210080310317586,
+   "amplitude_in_band_fraction": 1.0,
+   "amplitude_pass": true,
+   "pass": true,
+   "misses": {
+    "n_misses": 2,
+    "plant_over_floor_ratios": [
+     2.0
+    ],
+    "all_plants_above_2x_floor": true,
+    "n_misses_pinned_at_their_own_p_floor": 2,
+    "verdict": "INSTRUMENT -- every plant sits at or above 2x the operative S-15 floor at its own N (\u00a7P7-8(d)), so the experiment had the declared power and the pipeline still did not return the signal.",
+    "note": "A miss whose best p sits AT its own resolution floor is budget-limited rather than instrument-limited: the test could not have produced a smaller p at any effect size. Those are counted separately above."
+   }
+  },
+  "ii": {
+   "n_catalogs": 10,
+   "n_detected": 10,
+   "recovery_rate": 1.0,
+   "threshold": 0.8,
+   "detection_pass": true,
+   "amplitude_quoted": false,
+   "n_amplitudes": 0,
+   "amplitude_ratio_median": null,
+   "amplitude_ratio_min": null,
+   "amplitude_ratio_max": null,
+   "amplitude_in_band_fraction": null,
+   "amplitude_pass": null,
+   "pass": true,
+   "misses": {
+    "n_misses": 0,
+    "verdict": "no misses"
+   }
+  },
+  "iii": {
+   "n_catalogs": 10,
+   "n_detected": 9,
+   "recovery_rate": 0.9,
+   "threshold": 0.8,
+   "detection_pass": true,
+   "amplitude_quoted": true,
+   "n_amplitudes": 10,
+   "amplitude_ratio_median": 1.012057984067156,
+   "amplitude_ratio_min": 0.951271774956096,
+   "amplitude_ratio_max": 1.0319785310883451,
+   "amplitude_in_band_fraction": 1.0,
+   "amplitude_pass": true,
+   "pass": true,
+   "misses": {
+    "n_misses": 1,
+    "plant_over_floor_ratios": [
+     2.0
+    ],
+    "all_plants_above_2x_floor": true,
+    "n_misses_pinned_at_their_own_p_floor": 1,
+    "verdict": "INSTRUMENT -- every plant sits at or above 2x the operative S-15 floor at its own N (\u00a7P7-8(d)), so the experiment had the declared power and the pipeline still did not return the signal.",
+    "note": "A miss whose best p sits AT its own resolution floor is budget-limited rather than instrument-limited: the test could not have produced a smaller p at any effect size. Those are counted separately above."
+   }
+  }
+ },
+ "plant_reports": {
+  "i": [
+   {
+    "what": "global plant :: moon_synodic_phase",
+    "planted_amplitude": 0.2989869482916714,
+    "N": 46586.30881071091,
+    "alpha": 0.00014025245441795232,
+    "vif": 24.081827389301417,
+    "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+    "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+    "operative_floor_A_min": 0.1494934741458357,
+    "required_plant_factor": 2.0,
+    "required_min_plant": 0.2989869482916714,
+    "margin_over_required": 0.0,
+    "amplitude_over_floor": 2.0,
+    "compliant": true,
+    "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes.",
+    "arm_aggregation": "global",
+    "feature": "moon_synodic_phase",
+    "phase_rad": 0.0,
+    "period_hint_days": 29.530588,
+    "block_days": 59.061176
+   }
+  ],
+  "ii": [
+   {
+    "what": "regional plant :: moon_synodic_phase :: region 0",
+    "planted_amplitude": 1.2421963525895428,
+    "N": 2698.8718445917184,
+    "alpha": 0.00014025245441795232,
+    "vif": 24.081827389301417,
+    "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+    "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+    "operative_floor_A_min": 0.6210981762947714,
+    "required_plant_factor": 2.0,
+    "required_min_plant": 1.2421963525895428,
+    "margin_over_required": 0.0,
+    "amplitude_over_floor": 2.0,
+    "compliant": true,
+    "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes.",
+    "arm_aggregation": "regional",
+    "region": 0,
+    "feature": "moon_synodic_phase",
+    "phase_rad": 0.0,
+    "n_cells": 172
+   },
+   {
+    "what": "regional plant :: moon_synodic_phase :: region 1",
+    "planted_amplitude": 0.6972240113900467,
+    "N": 8566.789421615307,
+    "alpha": 0.00014025245441795232,
+    "vif": 24.081827389301417,
+    "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+    "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+    "operative_floor_A_min": 0.3486120056950234,
+    "required_plant_factor": 2.0,
+    "required_min_plant": 0.6972240113900467,
+    "margin_over_required": 0.0,
+    "amplitude_over_floor": 2.0,
+    "compliant": true,
+    "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes.",
+    "arm_aggregation": "regional",
+    "region": 1,
+    "feature": "moon_synodic_phase",
+    "phase_rad": 1.2566370614359172,
+    "n_cells": 288
+   },
+   {
+    "what": "regional plant :: moon_synodic_phase :: region 2",
+    "planted_amplitude": 1.28045170444406,
+    "N": 2540.01544210485,
+    "alpha": 0.00014025245441795232,
+    "vif": 24.081827389301417,
+    "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+    "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+    "operative_floor_A_min": 0.64022585222203,
+    "required_plant_factor": 2.0,
+    "required_min_plant": 1.28045170444406,
+    "margin_over_required": 0.0,
+    "amplitude_over_floor": 2.0,
+    "compliant": true,
+    "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes.",
+    "arm_aggregation": "regional",
+    "region": 2,
+    "feature": "moon_synodic_phase",
+    "phase_rad": 2.5132741228718345,
+    "n_cells": 231
+   },
+   {
+    "what": "regional plant :: moon_synodic_phase :: region 3",
+    "planted_amplitude": 0.6494499142072007,
+    "N": 9873.506912208955,
+    "alpha": 0.00014025245441795232,
+    "vif": 24.081827389301417,
+    "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+    "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+    "operative_floor_A_min": 0.32472495710360033,
+    "required_plant_factor": 2.0,
+    "required_min_plant": 0.6494499142072007,
+    "margin_over_required": 0.0,
+    "amplitude_over_floor": 2.0,
+    "compliant": true,
+    "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes.",
+    "arm_aggregation": "regional",
+    "region": 3,
+    "feature": "moon_synodic_phase",
+    "phase_rad": 3.7699111843077517,
+    "n_cells": 461
+   },
+   {
+    "what": "regional plant :: moon_synodic_phase :: region 4",
+    "planted_amplitude": 0.429536277032002,
+    "N": 22571.63739427922,
+    "alpha": 0.00014025245441795232,
+    "vif": 24.081827389301417,
+    "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+    "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+    "operative_floor_A_min": 0.214768138516001,
+    "required_plant_factor": 2.0,
+    "required_min_plant": 0.429536277032002,
+    "margin_over_required": 0.0,
+    "amplitude_over_floor": 2.0,
+    "compliant": true,
+    "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes.",
+    "arm_aggregation": "regional",
+    "region": 4,
+    "feature": "moon_synodic_phase",
+    "phase_rad": 5.026548245743669,
+    "n_cells": 444
+   }
+  ],
+  "iii": [
+   {
+    "what": "global plant :: annual_phase",
+    "planted_amplitude": 0.2989869482916714,
+    "N": 46586.30881071091,
+    "alpha": 0.00014025245441795232,
+    "vif": 24.081827389301417,
+    "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+    "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+    "operative_floor_A_min": 0.1494934741458357,
+    "required_plant_factor": 2.0,
+    "required_min_plant": 0.2989869482916714,
+    "margin_over_required": 0.0,
+    "amplitude_over_floor": 2.0,
+    "compliant": true,
+    "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes.",
+    "arm_aggregation": "global",
+    "feature": "annual_phase",
+    "phase_rad": 0.0,
+    "period_hint_days": 365.24219,
+    "block_days": 730.48438
+   }
+  ]
+ },
+ "per_catalog": [
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_000",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "c49f88beba903ffdbbe3cac487ca687cdb9623673bc443932156d9fbecda59af",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.6401149125097937,
+   "max_stat_t_obs": 1.5476556281631393,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 165.7,
+   "regions_R": 5,
+   "tag": "null_000",
+   "n_events_simulated": 46493.0,
+   "wall_seconds": 165.8,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 0])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_001",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "d0599f927886f911c6a747b6a482c5f3b53495cfef959b82da5c9ea8a6d6fe4d",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.273308957952468,
+   "max_stat_t_obs": 2.098785527000902,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 275.3,
+   "regions_R": 5,
+   "tag": "null_001",
+   "n_events_simulated": 46785.0,
+   "wall_seconds": 275.6,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 1])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_002",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "d68faa377b2338dae7c5d2d93c42d3a2780130b33efa360bd841d4bbe38875df",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.1722381822930269,
+   "max_stat_t_obs": 2.3159136379446736,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 235.9,
+   "regions_R": 5,
+   "tag": "null_002",
+   "n_events_simulated": 46647.0,
+   "wall_seconds": 236.0,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 2])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_003",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "4295954c8983b150358c1ebf4bdd7f73fe8c9e8826894ef90ed341ca85330e1a",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.467746147819274,
+   "max_stat_t_obs": 1.7701720097048321,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 204.1,
+   "regions_R": 5,
+   "tag": "null_003",
+   "n_events_simulated": 46538.0,
+   "wall_seconds": 204.3,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 3])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_004",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "a2107ffbd0776bb62ddc333efdcd5622769445cb3cb6e26405f2a85a1a7030ba",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.7764429354922956,
+   "max_stat_t_obs": 1.3927536681773962,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 199.3,
+   "regions_R": 5,
+   "tag": "null_004",
+   "n_events_simulated": 46315.0,
+   "wall_seconds": 199.5,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 4])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_005",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "e82da54e532c61bec6fb313bd7bf007c5306b681ce12d94b47ef800d4e5ed8f1",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.04753199268738574,
+   "max_stat_t_obs": 2.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 190.8,
+   "regions_R": 5,
+   "tag": "null_005",
+   "n_events_simulated": 46464.0,
+   "wall_seconds": 191.0,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 5])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_006",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "943f91e1020449d594fbfe1e3417906604e1d40f88506c43fd408a42efb7bc19",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.3282841472969444,
+   "max_stat_t_obs": 1.9864882707212272,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 143.3,
+   "regions_R": 5,
+   "tag": "null_006",
+   "n_events_simulated": 46526.0,
+   "wall_seconds": 143.4,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 6])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_007",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "48ea42dd48c8352616f3d1901bfea2cc7900bb263c46f0c8fc3faa0aac2bb4ab",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.9273961869939932,
+   "max_stat_t_obs": 1.12976702630065,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 123.7,
+   "regions_R": 5,
+   "tag": "null_007",
+   "n_events_simulated": 46661.0,
+   "wall_seconds": 123.8,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 7])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_008",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "7f74996435afcb2562727f0ecc2187ee0a1c02bc8b2659bb7cadcd4307b65e37",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.06894750587620789,
+   "max_stat_t_obs": 2.737987326333431,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 129.7,
+   "regions_R": 5,
+   "tag": "null_008",
+   "n_events_simulated": 46635.0,
+   "wall_seconds": 129.8,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 8])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_009",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "145df97079d47288988aa2cecef8fd17696dca2b05abeae3ae6aa064611e3938",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.8246278401671455,
+   "max_stat_t_obs": 1.3135724221297713,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 125.5,
+   "regions_R": 5,
+   "tag": "null_009",
+   "n_events_simulated": 46600.0,
+   "wall_seconds": 125.6,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 9])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_010",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "c54b79f60405b8d386c315ee848c31925884587fe226472b7e90cbc90db93e17",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.837163750326456,
+   "max_stat_t_obs": 1.2886191401860947,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 124.2,
+   "regions_R": 5,
+   "tag": "null_010",
+   "n_events_simulated": 46396.0,
+   "wall_seconds": 124.3,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 10])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_011",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "7124eb54d6003ee5349a3aaa8895f2a549405fa3c23aee7e57d0f70d293c4178",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.21990075737790546,
+   "max_stat_t_obs": 2.1939192819831552,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 120.6,
+   "regions_R": 5,
+   "tag": "null_011",
+   "n_events_simulated": 46219.0,
+   "wall_seconds": 120.7,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 11])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_012",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "a6e97a23eabac253a0b07b5881aed9847d71f538ada88d1dca1858ecbd1a6d8a",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.92400104465918,
+   "max_stat_t_obs": 1.1565741049831124,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 119.6,
+   "regions_R": 5,
+   "tag": "null_012",
+   "n_events_simulated": 46565.0,
+   "wall_seconds": 119.7,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 12])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_013",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "570635961e258861a29739110c13559f9aa0c86edb4483e2f3e2cb3c00ec8677",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.9054583442151998,
+   "max_stat_t_obs": 1.1557615799904404,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 120.4,
+   "regions_R": 5,
+   "tag": "null_013",
+   "n_events_simulated": 46806.0,
+   "wall_seconds": 120.5,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 13])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_014",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "244aec69a7e5ceb2f95a819f2a0a2892a2945bfa13ff30365e4858bb5c1603dc",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.07913293288064768,
+   "max_stat_t_obs": 2.7080241029559877,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 123.1,
+   "regions_R": 5,
+   "tag": "null_014",
+   "n_events_simulated": 46503.0,
+   "wall_seconds": 123.2,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 14])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_015",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "fe4a8a1275ed339ad84f41be674d9d03300a8c05c330d523297e6cad42236640",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.231000261164795,
+   "max_stat_t_obs": 2.1765451859137324,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 119.8,
+   "regions_R": 5,
+   "tag": "null_015",
+   "n_events_simulated": 46736.0,
+   "wall_seconds": 119.9,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 15])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_016",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "f7004d3ce11c360936ee761ae61d9367ee7a05d64c7e24affa5aa576a00cefdc",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.6237921128231915,
+   "max_stat_t_obs": 1.568145016554751,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 119.8,
+   "regions_R": 5,
+   "tag": "null_016",
+   "n_events_simulated": 46515.0,
+   "wall_seconds": 119.9,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 16])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_017",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "556dce25e7ca6ecbd391c9451a961ec212d3c842d27209df527bc379b7277d37",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.21389396709323583,
+   "max_stat_t_obs": 2.212017504075951,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 119.7,
+   "regions_R": 5,
+   "tag": "null_017",
+   "n_events_simulated": 46750.0,
+   "wall_seconds": 119.8,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 17])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_018",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "b5624abf340113563fd58586076cfd0a02317e949d29211a762d6ff574820c4d",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.48015147558109167,
+   "max_stat_t_obs": 1.7635414308058188,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 119.4,
+   "regions_R": 5,
+   "tag": "null_018",
+   "n_events_simulated": 46857.0,
+   "wall_seconds": 119.5,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 18])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_019",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "cac1e8a7bb206f5745e5d908052de136a4da05bd23e6cfd075aaf587210c059e",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 121.3,
+   "regions_R": 5,
+   "tag": "null_019",
+   "n_events_simulated": 46590.0,
+   "wall_seconds": 121.4,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 19])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_020",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "d068fd87c95df5d94d32bd2cde2b5a2e793a484be268de82e8b982e0e60ecb6f",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.6999216505615043,
+   "max_stat_t_obs": 1.4879160149159325,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 124.6,
+   "regions_R": 5,
+   "tag": "null_020",
+   "n_events_simulated": 46375.0,
+   "wall_seconds": 124.7,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 20])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_021",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "4fbaf42a64b65421c0831e946471396295cc1528bc75285e1beaf2929341677a",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.41107338730739096,
+   "max_stat_t_obs": 1.8427226768534437,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 124.1,
+   "regions_R": 5,
+   "tag": "null_021",
+   "n_events_simulated": 46624.0,
+   "wall_seconds": 124.2,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 21])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_022",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "0db15a59f048a58e240df6e0c8e5cb49251fb11cdc4cde92aa3691be6c94bf3d",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.9159049360146252,
+   "max_stat_t_obs": 1.17739757967491,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 118.9,
+   "regions_R": 5,
+   "tag": "null_022",
+   "n_events_simulated": 46505.0,
+   "wall_seconds": 119.0,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 22])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_023",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "cd279e3caadca4d750b98bba824d7a7a30bbdbcd70382dd23fa09ceafc34d64a",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.4788456516061635,
+   "max_stat_t_obs": 1.7379873263334307,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 122.2,
+   "regions_R": 5,
+   "tag": "null_023",
+   "n_events_simulated": 46737.0,
+   "wall_seconds": 122.3,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 23])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_024",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "a08a3c4f989f395c2dfd7bf009e653947b2e08044769c47a5bf05bad09693575",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.15199791068164012,
+   "max_stat_t_obs": 2.365601422133781,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 123.4,
+   "regions_R": 5,
+   "tag": "null_024",
+   "n_events_simulated": 46314.0,
+   "wall_seconds": 123.5,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 24])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_025",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "078de78ba78d7a73e5256c1e8fffc93f0a09663d5a0505eb3b07edef4e314a5d",
+   "n_tests": 157,
+   "n_bh_survivors": 2,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:length_of_day:0",
+    "regsum_score_2Rdf:length_of_day:1"
+   ],
+   "max_stat_p": 0.20867067119352312,
+   "max_stat_t_obs": 2.212017504075951,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 2
+    }
+   },
+   "elapsed_seconds": 128.5,
+   "regions_R": 5,
+   "tag": "null_025",
+   "n_events_simulated": 46687.0,
+   "wall_seconds": 128.6,
+   "engine_n_pass": 2,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 25])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_026",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "7433add85b0250f4c14f5442bbb83646cdfaea8a75fa0dca9ffd3279b44b6b16",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.899582136328023,
+   "max_stat_t_obs": 1.2147984814455566,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 124.8,
+   "regions_R": 5,
+   "tag": "null_026",
+   "n_events_simulated": 46898.0,
+   "wall_seconds": 124.9,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 26])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_027",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "f4931d1ed1a18533183ee3e39640f653f6d400f94f9ce206eacd1951423d5c2b",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.019456777226429876,
+   "max_stat_t_obs": 3.2820553706837066,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 122.1,
+   "regions_R": 5,
+   "tag": "null_027",
+   "n_events_simulated": 46660.0,
+   "wall_seconds": 122.2,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 27])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_028",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "ff651a343ce4070ad1d9eb6de6ea40286e82e6691ea6e7878534c57e8788801d",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.36719770174980415,
+   "max_stat_t_obs": 1.9156324134577336,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 121.2,
+   "regions_R": 5,
+   "tag": "null_028",
+   "n_events_simulated": 46439.0,
+   "wall_seconds": 121.3,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 28])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_null_029",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "008aed65ae47c7ffaea3e76dc1d900059464052b02a62db2e1830eaa66b4e53e",
+   "n_tests": 157,
+   "n_bh_survivors": 0,
+   "bh_survivor_names": [],
+   "max_stat_p": 0.6375032645599373,
+   "max_stat_t_obs": 1.5205033821195244,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 157,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 120.4,
+   "regions_R": 5,
+   "tag": "null_029",
+   "n_events_simulated": 46598.0,
+   "wall_seconds": 120.5,
+   "engine_n_pass": 0,
+   "engine_n_tests": 157,
+   "kind": "null",
+   "arm": null,
+   "seed_note": "SeedSequence([20260812, 0, 29])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_000",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "184d302235bd79ecb0662128aa0e4149b7ea7ec56522e978871f53555614652c",
+   "n_tests": 157,
+   "n_bh_survivors": 6,
+   "bh_survivor_names": [
+    "circular-linear:spring_neap_phase:mag",
+    "spearman:perigee_syzygy:mag",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 153,
+     "n_survivors": 6
+    },
+    "UNRESOLVED": {
+     "n": 4,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 161.2,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2030.3830635063675,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(3) one-decade cap: the 95% CI upper end 1.29e-31 is below the floor 1e-05 = 0.1/(N_max+1). Beyond one decade the shape parameter dominates the answer and the CI stops meaning anything.",
+    "recovered_amplitude_log_rate": 0.29969170984149884,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0023571649326308,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_000",
+   "n_events_simulated": 46759.0,
+   "wall_seconds": 161.3,
+   "engine_n_pass": 6,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 0])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_001",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "d56a53d1e7b5821db6bb224aeef2c8656349888a4772fa36077c112aaa38d445",
+   "n_tests": 157,
+   "n_bh_survivors": 7,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:spring_neap_phase:0",
+    "glm_poisson_offset_etas:perigee_syzygy:0",
+    "glm_poisson_offset_etas:declination_product:0",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 153,
+     "n_survivors": 6
+    },
+    "UNRESOLVED": {
+     "n": 3,
+     "n_survivors": 0
+    },
+    "GPD_EXTRAPOLATED": {
+     "n": 1,
+     "n_survivors": 1
+    }
+   },
+   "elapsed_seconds": 155.3,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": false,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": false,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.5830853663476874,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2014.677750370032,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(3) one-decade cap: the 95% CI upper end 1.4e-15 is below the floor 1e-05 = 0.1/(N_max+1). Beyond one decade the shape parameter dominates the answer and the CI stops meaning anything.",
+    "recovered_amplitude_log_rate": 0.2989354454018466,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 0.999827742013091,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_001",
+   "n_events_simulated": 46622.0,
+   "wall_seconds": 155.4,
+   "engine_n_pass": 7,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 1])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_002",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "31894ea3c16fdffab5a5fb307855bf8718c7f57eece11a662c8702dc48a947cc",
+   "n_tests": 157,
+   "n_bh_survivors": 3,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 153,
+     "n_survivors": 3
+    },
+    "UNRESOLVED": {
+     "n": 4,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 155.2,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 1846.0517557504074,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(3) one-decade cap: the 95% CI upper end 4.62e-40 is below the floor 1e-05 = 0.1/(N_max+1). Beyond one decade the shape parameter dominates the answer and the CI stops meaning anything.",
+    "recovered_amplitude_log_rate": 0.2859499148003936,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 0.956395977932255,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_002",
+   "n_events_simulated": 46610.0,
+   "wall_seconds": 155.3,
+   "engine_n_pass": 3,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 2])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_003",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "031ec57775ce675fdf80ce49127e63a7beecd00522d16fb18cebfe77bf820832",
+   "n_tests": 157,
+   "n_bh_survivors": 6,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:spring_neap_phase:0",
+    "glm_poisson_offset_etas:perigee_syzygy:0",
+    "glm_poisson_offset_etas:declination_product:0",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 154,
+     "n_survivors": 6
+    },
+    "UNRESOLVED": {
+     "n": 3,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 225.0,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2025.5225207628737,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(3) one-decade cap: the 95% CI upper end 1.19e-34 is below the floor 1e-05 = 0.1/(N_max+1). Beyond one decade the shape parameter dominates the answer and the CI stops meaning anything.",
+    "recovered_amplitude_log_rate": 0.3001920984639234,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0040307785310962,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_003",
+   "n_events_simulated": 46496.0,
+   "wall_seconds": 225.1,
+   "engine_n_pass": 6,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 3])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_004",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "b7d968bdca3e2449a1fa47f0cfcbb5f04b9dd35afbf2120cba9c46fb8331293e",
+   "n_tests": 157,
+   "n_bh_survivors": 4,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:declination_product:0",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 153,
+     "n_survivors": 3
+    },
+    "UNRESOLVED": {
+     "n": 3,
+     "n_survivors": 0
+    },
+    "GPD_EXTRAPOLATED": {
+     "n": 1,
+     "n_survivors": 1
+    }
+   },
+   "elapsed_seconds": 155.9,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 1922.8736570803176,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(3) one-decade cap: the 95% CI upper end 6.72e-63 is below the floor 1e-05 = 0.1/(N_max+1). Beyond one decade the shape parameter dominates the answer and the CI stops meaning anything.",
+    "recovered_amplitude_log_rate": 0.29304631460858244,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 0.980130792608065,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_004",
+   "n_events_simulated": 46264.0,
+   "wall_seconds": 156.0,
+   "engine_n_pass": 4,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 4])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_005",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "f498232712d5b710f42cdf9a4ed7ab02465627842a68eebbc1a7805b7a22af4c",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:spring_neap_phase:0",
+    "glm_poisson_offset_etas:perigee_syzygy:0",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 153,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 4,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 158.7,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2085.8426373792277,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(3) one-decade cap: the 95% CI upper end 0 is below the floor 1e-05 = 0.1/(N_max+1). Beyond one decade the shape parameter dominates the answer and the CI stops meaning anything.",
+    "recovered_amplitude_log_rate": 0.3043578897578355,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0179637990783619,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_005",
+   "n_events_simulated": 46599.0,
+   "wall_seconds": 158.8,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 5])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_006",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "390694919cdc84c3cb9f1ef2d795d89a30ba93d4b4ecf16a08b5f83899181b5b",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:declination_product:0",
+    "glm_poisson_offset_etas:Ap_geomagnetic:14",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 154,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 3,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 216.4,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2030.5348629463936,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(3) one-decade cap: the 95% CI upper end 2.03e-44 is below the floor 1e-05 = 0.1/(N_max+1). Beyond one decade the shape parameter dominates the answer and the CI stops meaning anything.",
+    "recovered_amplitude_log_rate": 0.29992834798790335,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0031486314088653,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_006",
+   "n_events_simulated": 46683.0,
+   "wall_seconds": 216.5,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 6])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_007",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "6d24e30e23c871e3cc93bfc0cbfe9d57cac6458070279e5286d84001eefdf4df",
+   "n_tests": 157,
+   "n_bh_survivors": 3,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 153,
+     "n_survivors": 3
+    },
+    "UNRESOLVED": {
+     "n": 4,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 155.3,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2090.4880811474122,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(3) one-decade cap: the 95% CI upper end 0 is below the floor 1e-05 = 0.1/(N_max+1). Beyond one decade the shape parameter dominates the answer and the CI stops meaning anything.",
+    "recovered_amplitude_log_rate": 0.30526807537947365,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0210080310317586,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_007",
+   "n_events_simulated": 46424.0,
+   "wall_seconds": 155.4,
+   "engine_n_pass": 3,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 7])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_008",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "d66feeb778417b803346f095359df7ca2e125fdeb9eb97c49899987fa8b2a3fa",
+   "n_tests": 157,
+   "n_bh_survivors": 4,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:spring_neap_phase:0",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 153,
+     "n_survivors": 4
+    },
+    "UNRESOLVED": {
+     "n": 4,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 168.5,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 1883.8040143350515,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(3) one-decade cap: the 95% CI upper end 5.29e-16 is below the floor 1e-05 = 0.1/(N_max+1). Beyond one decade the shape parameter dominates the answer and the CI stops meaning anything.",
+    "recovered_amplitude_log_rate": 0.29033815222103465,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 0.971072997935015,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_008",
+   "n_events_simulated": 46161.0,
+   "wall_seconds": 168.6,
+   "engine_n_pass": 4,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 8])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_i_009",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "263b32d9dbe5fa6005157e4fd3fe2d32f6bdc3f12b84e78d0a8cbb2df5feaf05",
+   "n_tests": 157,
+   "n_bh_survivors": 4,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:declination_product:0",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 154,
+     "n_survivors": 4
+    },
+    "UNRESOLVED": {
+     "n": 3,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 227.3,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": false,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": false,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.5830853663476874,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 1961.3265020942126,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(1a) Anderson-Darling gate FAILED: p_AD = 0.0100 < 0.05. The exceedances are not GPD, so no extrapolation.",
+    "recovered_amplitude_log_rate": 0.29582743973521425,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 0.9894326204721989,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_i_009",
+   "n_events_simulated": 46333.0,
+   "wall_seconds": 227.4,
+   "engine_n_pass": 4,
+   "engine_n_tests": 157,
+   "kind": "plant_i",
+   "arm": "i",
+   "seed_note": "SeedSequence([20260812, 1, 9])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_000",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "0d80f109a5a6b671e742f5abb439c69d347af369b06ed102908cc16e50e2f7b9",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.061243144424131625,
+   "max_stat_t_obs": 2.804934115964044,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 166.3,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.061243144424131625,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 2.804934115964044,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8430.321172679007,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_000",
+   "n_events_simulated": 46478.0,
+   "wall_seconds": 166.4,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 0])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_001",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "e456a5dc82e6f4e905ed400c12d0e80e3c58a0fa0587e921c863a706d47957cf",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 168.3,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8630.832894449364,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_001",
+   "n_events_simulated": 46382.0,
+   "wall_seconds": 168.5,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 1])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_002",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "bc7d13411711de116e671c3cd090858596651ceaf0357d15bbf3c89bd287ca8e",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.0733873073909637,
+   "max_stat_t_obs": 2.7080241029559877,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 188.2,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.0733873073909637,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 2.7080241029559877,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8551.6504438968,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_002",
+   "n_events_simulated": 46541.0,
+   "wall_seconds": 188.3,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 2])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_003",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "80614ec7cc27bc4637b08fef3206a790c7ec4a466ce7fd6d15f2d0765c51888d",
+   "n_tests": 157,
+   "n_bh_survivors": 7,
+   "bh_survivor_names": [
+    "circular-linear:moon_draconic_phase:depth",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0",
+    "regsum_score_2Rdf:b_value_90d:0"
+   ],
+   "max_stat_p": 0.17876730216766779,
+   "max_stat_t_obs": 2.2820553706837066,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 7
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 200.1,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.17876730216766779,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 2.2820553706837066,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8769.612346917416,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_003",
+   "n_events_simulated": 46616.0,
+   "wall_seconds": 200.2,
+   "engine_n_pass": 7,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 3])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_004",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "0063a5e91a9bddde1f1b1c316a3ae99461d34c3a9dd055cad349af0ad01672b2",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 237.0,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8405.829340219825,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_004",
+   "n_events_simulated": 46480.0,
+   "wall_seconds": 237.1,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 4])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_005",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "bd518da97c217f3fb41cef8f27cafe69cbaa89ec88d38bfa45fd6862fd7ca585",
+   "n_tests": 157,
+   "n_bh_survivors": 6,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:b_value_90d:0",
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 6
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 272.1,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8846.42105318921,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_005",
+   "n_events_simulated": 46304.0,
+   "wall_seconds": 272.3,
+   "engine_n_pass": 6,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 5])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_006",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "5d9d0e55853da1f70abbc2512e5a14574ee9f4521a3f0902849cd32ce9a4d116",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.672107599895534,
+   "max_stat_t_obs": 1.5130474997399326,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 215.2,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.672107599895534,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 1.5130474997399326,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8872.64263767025,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_006",
+   "n_events_simulated": 46884.0,
+   "wall_seconds": 215.3,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 6])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_007",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "227e36f7febf6c480343fd20efce095b7c01d225de772af822063993e63d2f26",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 261.9,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8696.774555874475,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_007",
+   "n_events_simulated": 46656.0,
+   "wall_seconds": 262.0,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 7])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_008",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "c1652050d85aea0343583fc250f1b82abd45e93bc7cec27f4e9640e8fe9e32b8",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.04256986158265866,
+   "max_stat_t_obs": 2.9810253750197253,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 249.6,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.04256986158265866,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 2.9810253750197253,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8772.916344449744,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_008",
+   "n_events_simulated": 46025.0,
+   "wall_seconds": 249.8,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 8])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_ii_009",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "f24dcaa6cc5c190064e98885afc7213ce6af43903657f3a0803643e274b5d35b",
+   "n_tests": 157,
+   "n_bh_survivors": 5,
+   "bh_survivor_names": [
+    "regsum_score_2Rdf:moon_synodic_phase:0",
+    "regsum_score_2Rdf:sun_moon_elongation:0",
+    "regsum_score_2Rdf:spring_neap_phase:0",
+    "regsum_score_2Rdf:perigee_syzygy:0",
+    "regsum_score_2Rdf:declination_product:0"
+   ],
+   "max_stat_p": 0.29851136066858186,
+   "max_stat_t_obs": 2.0207925018912127,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 5
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 239.2,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": false,
+    "max_stat_detection": false,
+    "max_stat_p": 0.29851136066858186,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 2.0207925018912127,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 8885.55692260465,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "labelled at assembly (no extrapolation path)",
+    "recovered_amplitude_log_rate": null,
+    "truth_amplitude": null,
+    "amplitude_ratio": null,
+    "amplitude_unresolved": true
+   },
+   "tag": "plant_ii_009",
+   "n_events_simulated": 46494.0,
+   "wall_seconds": 241.3,
+   "engine_n_pass": 5,
+   "engine_n_tests": 157,
+   "kind": "plant_ii",
+   "arm": "ii",
+   "seed_note": "SeedSequence([20260812, 2, 9])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_000",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "51057cb82dfee8d27bf3314cd8fa5ba6c282823aec933c2834d94cbc78089e65",
+   "n_tests": 157,
+   "n_bh_survivors": 2,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:annual_phase:0",
+    "regsum_score_2Rdf:annual_phase:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 154,
+     "n_survivors": 2
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    },
+    "GPD_EXTRAPOLATED": {
+     "n": 1,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 480.2,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2199.43173811304,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "GPD candidate CONFIRMED by a targeted single-test Monte Carlo at N = 393623 >= 10/p_gpd (\u00a7P6-2(6)); the brute-force p is the only number written to stubs.json",
+    "recovered_amplitude_log_rate": 0.3074455333815515,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0282908171684755,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_000",
+   "n_events_simulated": 46810.0,
+   "wall_seconds": 482.1,
+   "engine_n_pass": 2,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 0])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_001",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "8be3512bf8fc05f4d10caeb551017ccf4abf6d3e2de350565179337d5a37647d",
+   "n_tests": 157,
+   "n_bh_survivors": 2,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:annual_phase:0",
+    "regsum_score_2Rdf:annual_phase:0"
+   ],
+   "max_stat_p": 0.18555758683729434,
+   "max_stat_t_obs": 2.240662685525481,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 2
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 472.7,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": true,
+    "max_stat_detection": false,
+    "max_stat_p": 0.18555758683729434,
+    "max_stat_T_planted": 2.240662685525481,
+    "max_stat_T_family_max": 2.240662685525481,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2120.2968622515023,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "GPD candidate CONFIRMED by a targeted single-test Monte Carlo at N = 206842 >= 10/p_gpd (\u00a7P6-2(6)); the brute-force p is the only number written to stubs.json",
+    "recovered_amplitude_log_rate": 0.30249092101245284,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.011719483879822,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_001",
+   "n_events_simulated": 46576.0,
+   "wall_seconds": 472.8,
+   "engine_n_pass": 2,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 1])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_002",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "be6d9756ee6031870d56372a53eada9356bba5e42cf28092279084e492fbda85",
+   "n_tests": 157,
+   "n_bh_survivors": 13,
+   "bh_survivor_names": [
+    "circular-linear:perigean_spring_beat:mag",
+    "glm_poisson_offset_etas:b_value_90d:0",
+    "glm_poisson_offset_etas:b_value_90d:1",
+    "glm_poisson_offset_etas:b_value_90d:3",
+    "glm_poisson_offset_etas:b_value_90d:7",
+    "glm_poisson_offset_etas:b_value_90d:14",
+    "glm_poisson_offset_etas:b_value_90d:30",
+    "regsum_score_2Rdf:annual_phase:0",
+    "regsum_score_2Rdf:b_value_90d:0",
+    "regsum_score_2Rdf:b_value_90d:1",
+    "regsum_score_2Rdf:b_value_90d:3",
+    "regsum_score_2Rdf:b_value_90d:7",
+    "regsum_score_2Rdf:b_value_90d:14"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 153,
+     "n_survivors": 13
+    },
+    "UNRESOLVED": {
+     "n": 4,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 384.2,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": false,
+    "bh_survivor": false,
+    "bh_eligible": false,
+    "max_stat_covered": true,
+    "max_stat_detection": false,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 2.0328570132925936,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2190.3218767806256,
+    "best_p_method": "UNRESOLVED",
+    "best_p_method_reason": "\u00a7P6-2(1a) Anderson-Darling gate FAILED: p_AD = 0.0149 < 0.05. The exceedances are not GPD, so no extrapolation.",
+    "recovered_amplitude_log_rate": 0.30611526359900315,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0238415601351865,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_002",
+   "n_events_simulated": 47011.0,
+   "wall_seconds": 384.3,
+   "engine_n_pass": 13,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 2])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_003",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "8caac39949d3eafbfa502dc6d68010b9640311729cbd0321e2c6ca624d0e8646",
+   "n_tests": 157,
+   "n_bh_survivors": 2,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:annual_phase:0",
+    "regsum_score_2Rdf:annual_phase:0"
+   ],
+   "max_stat_p": 0.1533037346565683,
+   "max_stat_t_obs": 2.3278128612443814,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 2
+    },
+    "UNRESOLVED": {
+     "n": 1,
+     "n_survivors": 0
+    },
+    "GPD_EXTRAPOLATED": {
+     "n": 1,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 369.2,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": true,
+    "max_stat_detection": false,
+    "max_stat_p": 0.1533037346565683,
+    "max_stat_T_planted": 2.3278128612443814,
+    "max_stat_T_family_max": 2.3278128612443814,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 1881.0571720340865,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "GPD candidate CONFIRMED by a targeted single-test Monte Carlo at N = 468260 >= 10/p_gpd (\u00a7P6-2(6)); the brute-force p is the only number written to stubs.json",
+    "recovered_amplitude_log_rate": 0.28441784499012474,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 0.951271774956096,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_003",
+   "n_events_simulated": 46614.0,
+   "wall_seconds": 369.4,
+   "engine_n_pass": 2,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 3])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_004",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "24f91e35c754de8b80af195b500dd4272b5450b38b6d76d1d258ed439e5e4bd4",
+   "n_tests": 157,
+   "n_bh_survivors": 4,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:annual_phase:0",
+    "lomb_scargle_peak:period_392.6d:None",
+    "lomb_scargle_peak:period_340.4d:None",
+    "regsum_score_2Rdf:annual_phase:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 154,
+     "n_survivors": 2
+    },
+    "UNRESOLVED": {
+     "n": 1,
+     "n_survivors": 0
+    },
+    "GPD_EXTRAPOLATED": {
+     "n": 2,
+     "n_survivors": 2
+    }
+   },
+   "elapsed_seconds": 412.5,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2028.8006509512275,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "GPD candidate CONFIRMED by a targeted single-test Monte Carlo at N = 324219 >= 10/p_gpd (\u00a7P6-2(6)); the brute-force p is the only number written to stubs.json",
+    "recovered_amplitude_log_rate": 0.29433782624507915,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 0.9844504180762538,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_004",
+   "n_events_simulated": 47006.0,
+   "wall_seconds": 412.7,
+   "engine_n_pass": 4,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 4])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_005",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "c2751b44afd6dad220ff650d8f99c96504be34f60ceacc913c06ac1325fb3cce",
+   "n_tests": 157,
+   "n_bh_survivors": 2,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:annual_phase:0",
+    "regsum_score_2Rdf:annual_phase:0"
+   ],
+   "max_stat_p": 0.1483416035518412,
+   "max_stat_t_obs": 2.3526364449694137,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 154,
+     "n_survivors": 2
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    },
+    "GPD_EXTRAPOLATED": {
+     "n": 1,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 428.3,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": true,
+    "max_stat_detection": false,
+    "max_stat_p": 0.1483416035518412,
+    "max_stat_T_planted": 2.098785527000902,
+    "max_stat_T_family_max": 2.3526364449694137,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2074.497941824894,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "GPD candidate CONFIRMED by a targeted single-test Monte Carlo at N = 321106 >= 10/p_gpd (\u00a7P6-2(6)); the brute-force p is the only number written to stubs.json",
+    "recovered_amplitude_log_rate": 0.2974474832334282,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 0.9948510626733398,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_005",
+   "n_events_simulated": 47087.0,
+   "wall_seconds": 428.4,
+   "engine_n_pass": 2,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 5])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_006",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "a3d60076de83317dc6949f8ab107738b7a47e6d84130985a9e6755cca4c7317c",
+   "n_tests": 157,
+   "n_bh_survivors": 4,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:annual_phase:0",
+    "lomb_scargle_peak:period_343.7d:None",
+    "lomb_scargle_peak:period_392.6d:None",
+    "regsum_score_2Rdf:annual_phase:0"
+   ],
+   "max_stat_p": 0.00013058239749281798,
+   "max_stat_t_obs": 3.8841153620116686,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 154,
+     "n_survivors": 2
+    },
+    "UNRESOLVED": {
+     "n": 1,
+     "n_survivors": 0
+    },
+    "GPD_EXTRAPOLATED": {
+     "n": 2,
+     "n_survivors": 2
+    }
+   },
+   "elapsed_seconds": 419.3,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.00013058239749281798,
+    "max_stat_T_planted": 3.8841153620116686,
+    "max_stat_T_family_max": 3.8841153620116686,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2167.094485623266,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "GPD candidate CONFIRMED by a targeted single-test Monte Carlo at N = 390189 >= 10/p_gpd (\u00a7P6-2(6)); the brute-force p is the only number written to stubs.json",
+    "recovered_amplitude_log_rate": 0.3046823321818271,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0190489381650187,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_006",
+   "n_events_simulated": 46940.0,
+   "wall_seconds": 419.4,
+   "engine_n_pass": 4,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 6])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_007",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "27a33fe8d8686fdcd8774bd8134038df97d310e41e8aae8585930952f2aebdd7",
+   "n_tests": 157,
+   "n_bh_survivors": 2,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:annual_phase:0",
+    "regsum_score_2Rdf:annual_phase:0"
+   ],
+   "max_stat_p": 0.04021937842778794,
+   "max_stat_t_obs": 2.929872852572344,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 154,
+     "n_survivors": 2
+    },
+    "UNRESOLVED": {
+     "n": 3,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 369.0,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": true,
+    "max_stat_detection": true,
+    "max_stat_p": 0.04021937842778794,
+    "max_stat_T_planted": 2.929872852572344,
+    "max_stat_T_family_max": 2.929872852572344,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2211.475634805735,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "GPD candidate CONFIRMED by a targeted single-test Monte Carlo at N = 298782 >= 10/p_gpd (\u00a7P6-2(6)); the brute-force p is the only number written to stubs.json",
+    "recovered_amplitude_log_rate": 0.308548111712626,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0319785310883451,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_007",
+   "n_events_simulated": 46739.0,
+   "wall_seconds": 369.2,
+   "engine_n_pass": 2,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 7])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_008",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "81663227587fa77a9098f65e92499843f3c428a01ff4e5f9258719618e129b77",
+   "n_tests": 157,
+   "n_bh_survivors": 2,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:annual_phase:0",
+    "regsum_score_2Rdf:annual_phase:0"
+   ],
+   "max_stat_p": 0.0668581875163228,
+   "max_stat_t_obs": 2.7080241029559877,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 154,
+     "n_survivors": 2
+    },
+    "UNRESOLVED": {
+     "n": 2,
+     "n_survivors": 0
+    },
+    "GPD_EXTRAPOLATED": {
+     "n": 1,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 434.4,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": true,
+    "max_stat_detection": false,
+    "max_stat_p": 0.0668581875163228,
+    "max_stat_T_planted": 2.7080241029559877,
+    "max_stat_T_family_max": 2.7080241029559877,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2139.455681413524,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "GPD candidate CONFIRMED by a targeted single-test Monte Carlo at N = 360894 >= 10/p_gpd (\u00a7P6-2(6)); the brute-force p is the only number written to stubs.json",
+    "recovered_amplitude_log_rate": 0.30242594005830403,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.0115021467869487,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_008",
+   "n_events_simulated": 47029.0,
+   "wall_seconds": 434.6,
+   "engine_n_pass": 2,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 8])"
+  },
+  {
+   "session_dir": "engine/out/gate_r1/sessions/session_plant_iii_009",
+   "config_hash": "c6791d578baa",
+   "artifact_hash": "1b7bfb1de6f9d82d167c340b2995aa5404b60d7a5efd2b62d7bfad079459a1ca",
+   "n_tests": 157,
+   "n_bh_survivors": 2,
+   "bh_survivor_names": [
+    "glm_poisson_offset_etas:annual_phase:0",
+    "regsum_score_2Rdf:annual_phase:0"
+   ],
+   "max_stat_p": 0.17994254374510316,
+   "max_stat_t_obs": 2.1939192819831552,
+   "max_stat_floor": 0.00013058239749281798,
+   "max_stat_n_covered": 53,
+   "max_stat_n_replicates": 7657,
+   "p_method_counts": {
+    "MC_RESOLVED": {
+     "n": 155,
+     "n_survivors": 2
+    },
+    "UNRESOLVED": {
+     "n": 1,
+     "n_survivors": 0
+    },
+    "GPD_EXTRAPOLATED": {
+     "n": 1,
+     "n_survivors": 0
+    }
+   },
+   "elapsed_seconds": 378.6,
+   "regions_R": 5,
+   "planted_recovery": {
+    "detected": true,
+    "bh_survivor": true,
+    "bh_eligible": true,
+    "max_stat_covered": true,
+    "max_stat_detection": false,
+    "max_stat_p": 0.17994254374510316,
+    "max_stat_T_planted": 2.1939192819831552,
+    "max_stat_T_family_max": 2.1939192819831552,
+    "n_rows": 1,
+    "best_lag": 0,
+    "best_p_raw": 9.999000099990002e-05,
+    "best_p_floor": 9.999000099990002e-05,
+    "best_chi2": 2140.823743463704,
+    "best_p_method": "MC_RESOLVED",
+    "best_p_method_reason": "GPD candidate CONFIRMED by a targeted single-test Monte Carlo at N = 401474 >= 10/p_gpd (\u00a7P6-2(6)); the brute-force p is the only number written to stubs.json",
+    "recovered_amplitude_log_rate": 0.3026933352884671,
+    "truth_amplitude": 0.2989869482916714,
+    "amplitude_ratio": 1.01239648425449,
+    "amplitude_unresolved": false
+   },
+   "tag": "plant_iii_009",
+   "n_events_simulated": 46966.0,
+   "wall_seconds": 378.7,
+   "engine_n_pass": 2,
+   "engine_n_tests": 157,
+   "kind": "plant_iii",
+   "arm": "iii",
+   "seed_note": "SeedSequence([20260812, 3, 9])"
+  }
+ ],
+ "sandbox": {
+  "sessions": "engine/out/gate_r1/sessions",
+  "ledger": "engine/out/gate_r1/EXPLORE_COUNT_SANDBOX.jsonl",
+  "artifact_registry": "engine/out/gate_r1/sessions/artifact_registry.jsonl",
+  "real_ledger_untouched": "engine/EXPLORE_COUNT.jsonl"
+ }
+}
