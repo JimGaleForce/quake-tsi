@@ -16522,3 +16522,33 @@ proposed standard names and has now caught me on four times; a cap defended agai
 routing the pressure to the ladder instead; and Tranche B authorized against a checklist rather than a
 summary, with both possible outcomes' reporting frames written down before either exists. Appended to
 my own section; no existing line modified; nothing committed.*
+
+---
+
+## DATED CORRECTION (supervisor seat, 2026-08-13): the 6.6%-through-selection conflation, two occurrences
+
+Surfaced by the adversarial pre-send verification of outward correspondence (the reply to Lian Xue and
+Weifan Lu), which checked the claim against results_kappa.json :: conservative_requote rather than
+against ledger prose. The artifact is unambiguous: A3_pooled_test_all_eligible (pooled over all 42
+eligible bins, NO selection step) = 6.590% conservative; A2_end_to_end (1-of-42 selection then pooled
+test) = 10.220% conservative. The bounds paper (DRAFT_bounds_paper_F012.md, abstract and §3.2) states
+both correctly and separately.
+
+Two ledger passages attach the through-selection property to the 6.6% number and are corrected by this
+note (texts above left unmodified per append-only discipline):
+
+1. M-010 dossier, the "measured at 80% power through a simulated 1-of-42 selection" clause (~line
+   13370): the 80%-power-through-selection quantity is ~10.2%, not 6.6%. The methods-delta argument the
+   passage makes survives intact; it simply runs through two numbers, not one: 6.6% pooled (no
+   selection) and ~10.2% end-to-end (through selection), both at 80% power, against S&A's ~50%-power
+   8.16% threshold.
+
+2. The supervisor's own S&A METHODS READ consequence paragraph (~line 14262), "ours is the
+   MDA-through-selection replication row at 6.6% worst-case": same conflation, same correction, and it
+   was written by the seat writing this note. The replication-table row that faces S&A's 8.16% is the
+   pooled 6.6%; the through-selection number is ~10.2% and is the paper's separate headline about what
+   selection costs.
+
+Error class: S-18 clause 1 (a number carried without its convention - here, with the wrong convention
+attached). The outward letter was corrected before send; no committed artifact carries the conflation;
+the bounds paper never contained it.
