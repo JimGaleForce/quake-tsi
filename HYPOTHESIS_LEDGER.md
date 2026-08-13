@@ -15452,3 +15452,153 @@ disposition: it is evidence about attempt 1's sample, not about attempt 2's esti
 *Popper seat, 2026-08-12. The licence is three scored comparisons away and `--gpd` stays blocked until
 they land. A bar bent by 2.4% in the direction of the result it is judging is worth less than the four
 runs it would have saved. Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+## §P7-10. F4-58 ITEM (ii) — READING A RATIFIED. The floor is ADOPTED, Tranche B is priced, and the real slope becomes a named open question with a measurement attached.
+
+*2026-08-12, commit `8d07ee1`, `results_f4_58_vif_control.json`. Control: 24 ETAS-Poisson catalogues of
+true VIF = 1, 3,576 measurements, estimator imported rather than reimplemented. Control VIF median
+0.98–1.02 and FLAT across 30–800 d blocks (log-log slope −0.0016 +/- 0.0022, p = 0.47) against the real
++0.329 +/- 0.108, p = 0.006. Real/control ratios 15.5x–230x at matched block lengths. Share of the real
+VIF = 24.08 reproduced by null-width at long blocks: 4.1%.*
+
+### (a) RATIFIED. Reading A stands, and my Reading B is refuted in its own predicted signature.
+
+**This is a better control than I asked for.** I asked whether the block bootstrap manufactures
+inflation on data whose true VIF is 1. It does not: the control sits at 1.00 and, decisively, it is
+**flat** — and flatness is a *slope* property, which is exactly the property my mechanism predicted
+would be non-flat. Reading B is not merely unsupported; **it is falsified on the statistic it itself
+nominated.** 4.1% attribution at long blocks is a bounded residual, not a live alternative.
+
+**The nuance is an honest correction to my mechanism and I adopt it.** Long blocks add **variance
+without bias** — IQR 0.81–1.22 at 800 d against 0.96–1.05 at 30 d, median flat. My §P7-8(b) reasoning
+said "a null built from ten blocks is enormously variable *by construction*", which is confirmed; what
+I wrongly assumed is that variability would move the median. It does not, and a mechanism that adds
+spread without shifting centre cannot produce a slope in medians. **Estimator noise is not estimator
+bias, and I conflated them.**
+
+**Is lag-0-only disqualifying? NO, and the reason is order-of-magnitude rather than taste.** The
+mechanism under test would have had to manufacture a factor of ~24. A lag changes only which design
+column enters, and the worst measured lag-induced departure from the lag-0 column space anywhere in
+this engine is min R² = 0.905 (§P5-0, `spring_neap_phase` at lag 15) — a percent-scale perturbation of
+a quantity that would need to move by a factor of twenty-four. **A caveat worth percents cannot rescue
+a mechanism that is short by a factor of twenty.** The 2,000-vs-50,000 boot caveat is likewise
+correctly characterised by the builder as resolution, not expectation, and 3,576 measurements supply
+ample resolution on an aggregate.
+
+**One technical refinement I do require, because it bites in the anti-conservative direction.** The
+identity `VIF = chi2_obs / chi2_ppf(1 − p_boot, df)` **censors** when `p_boot` sits at its resolution
+floor: `chi2_ppf` saturates, the ratio is pushed down, and **VIF is understated for exactly the most
+significant tests** — which understates the S-15 floor, the one direction that can manufacture a
+claim. **Rule: measurements whose `p_boot` is at the floor are excluded from the VIF median and
+reported separately with their count.** Cheap, and it closes the only anti-conservative seam in the
+measurement.
+
+### (b) Status: ADOPTED — with the scalar replaced by the fitted curve, because a flat median is anti-conservative at long blocks.
+
+> **The §P7-8(b) floor moves from ADOPTED-PROVISIONALLY to ADOPTED.** Both gates in §P7-8(b) are
+> released: the floor **may** now retire catalog entries on floor grounds and **may** be quoted in
+> external artifacts, with its scope attached.
+>
+> **Scope, carried wherever it is quoted:** measured on 2-df phase features, lag 0, global daily-binned
+> count statistic, exploration window `[365, 8081)`, ETAS-v1 baseline. **Not licensed** for mark-axis
+> statistics (different units — see (c)), for 1-df linear features without their own check, or for any
+> sub-daily band.
+
+**And the flat 24.08 is retired as the operative number in favour of the fitted curve.** A positive
+slope means a single median **understates** the floor for long-block features and overstates it for
+short ones — and understating a floor is the anti-conservative direction. At the fitted slope, around a
+median block of ~110 d:
+
+| block length | fitted VIF | vs flat 24.08 |
+|---|---|---|
+| 30 d | ~15.7 | flat is 1.5x too strict |
+| 60 d | ~19.7 | flat slightly strict |
+| 200 d | ~29.3 | **flat is too lenient** |
+| 800 d | ~46.3 | **flat is ~1.9x too lenient** |
+
+> **RULED.** The S-15 floor uses **`VIF(block_days)` from the fitted relation, evaluated at its upper
+> 1-sigma bound**, and never a scalar below the fitted value at that block length. The flat median is
+> permitted only where it is the more conservative of the two. Decadal features — the ones the flat
+> median flatters most — are exactly the ones the 2026-08-11 build already burned itself on with F10.7.
+
+### (c) Tranche B, priced finally and operatively.
+
+**Declared test count: the exact integer frozen in the config hash before the run, at Kepler's ~1,000**
+(17 second-moment + 34 omnibus + ~161 mark + 68 already-declared §P5-5(3) ladder + 32 linear ladder +
+17 two-stage + 31 bilinear + declared overhead). **The tranche is ADMITTED and runs.** What the floor
+changes is not whether it runs but what it may say.
+
+**Precondition, priced at 0: F4-58M, the mark-axis VIF.** The same identity applied to the mark tests
+already on disk — `VIF_mark = stat_obs / null_ppf(1 − p_block_bootstrap)` — at **zero new surrogate
+cost**, exactly as F4-58 was. It is needed because `block_events = 500` over ~46,585 events is ~93
+blocks and the mark null is inflated by its own construction, unmeasured.
+
+**The mark-axis floor, in correlation units, now operative rather than demanded.** For a rank or
+circular-linear correlation on `n` events at Tranche B's alpha = 1.0e-4 (z = 3.891):
+
+    rho_min = sqrt(VIF_mark) * (z_alpha + z_0.80) / sqrt(n - 1)
+            = sqrt(VIF_mark) * 4.732 / sqrt(n - 1)
+
+At n = 46,585 that is **0.0219 at VIF_mark = 1**, 0.0439 at 4, 0.0658 at 9, **0.1074 at 24**. F9-10
+declares its floor from the measured `VIF_mark` before it runs, or it does not run.
+
+> **The S-15 headline for Tranche B must state, in the headline and not in a footnote:**
+> **(i)** the floor formula, its `VIF(block_days)`, and the tranche's own alpha;
+> **(ii)** the fraction of declared tests UNMEASURABLE for amplitude at the declared effect of
+> interest — on the count path at a ~15% floor this is essentially all of them, and it is printed, not
+> omitted;
+> **(iii)** that **detection results are adjudicated against surrogate-calibrated nulls and are NOT
+> gated by the amplitude floor** — the tranche's detection statistics (F9-01, F9-04, F10-14) are
+> unaffected in their ability to reject, which is why the tranche survives;
+> **(iv)** that **a null from this tranche bounds non-sinusoidal and second-moment structure at ~15%,
+> not at the ~5.6% this programme is accustomed to quoting**;
+> **(v)** the mark-axis floor separately, in correlation units, with its own `VIF_mark`.
+>
+> **Per-feature amplitude quotes on the count path are UNRESOLVED and are not printed.**
+
+### (d) The open residual: NAMED, with a measurement assigned and a falsifiable prediction.
+
+Null-width is refuted, so the real +0.329 slope needs an owner. **The leading candidate is not a
+property of the bootstrap but of the target: excess low-frequency power in the ETAS residual.** ETAS
+absorbs short-timescale clustering well and long-timescale drift poorly; a score statistic at a
+feature's own frequency measures the target's power there; and `block_days = 2 x period` for cyclic
+features means **block length is a proxy for period, i.e. for frequency**. Under this reading the
+governing variable was never block length or feature identity — **it is frequency**, and the
+confounding the builder correctly flags (block length confounded with feature identity across
+features) **dissolves**, because both are proxies for the same third thing.
+
+> **F4-59, ASSIGNED. Prediction:** `VIF(feature)` tracks the **spectral excess of the real residual
+> over the ETAS-Poisson simulated residual at that feature's own frequency**. Compute both power
+> spectra — the Lomb-Scargle machinery and the recorded `ar1_phi` already exist in `period_scan` — and
+> regress `log VIF` on log spectral-excess-at-frequency. **Pass:** the frequency term absorbs the
+> +0.329 block-length slope, which then goes insignificant. **Fail:** it does not, and the slope
+> remains unexplained and must be carried as such in every S-15 declaration.
+> **Read it against `results_k009.json` and `exp_k009_residual_whiteness.py`, which is this
+> programme's existing evidence on residual structure**, rather than as a fresh question.
+>
+> **Consequence if it passes, and it is a large practical saving:** VIF becomes **frequency-indexed**,
+> a one-dimensional calibration curve replaces a per-feature lookup table, and **any new feature at
+> period P inherits its floor from the curve with no new measurement.** For a 281-entry catalog that is
+> the difference between a calibration and a chore.
+
+### Ratifications, briefly.
+
+**The `--mag` fix and the artifact-hash invariant are accepted, and the backfill is better than the
+fix.** Backfilling the invariant over 106 sessions and having it fire on **exactly** the known incident
+is a positive and a negative control on the new invariant in one run — the invariant detects the thing
+it was built for and does not cry wolf on 105 others. That is how a guard should enter service.
+
+**And §P7-8(d) paid for itself before the gate ran.** The per-region plant at 0.35 against a required
+0.36 was a real violation that would have produced a **G-M1 failure recorded against the pipeline for
+power reasons**. It was caught by a floor that did not exist a day earlier. Recorded because the
+counterfactual — an instrument condemned for our own arithmetic — is the specific failure this seat
+exists to prevent.
+
+*Popper seat, 2026-08-12. Reading A ratified on a control that refuted my mechanism using the very
+statistic my mechanism nominated; floor adopted and its scalar retired in favour of the fitted curve
+because a flat median flatters exactly the decadal features this build has already been burned by;
+Tranche B admitted with its amplitude claims withdrawn and its detection claims intact; and the
+unexplained slope handed to F4-59 with a prediction that would turn a lookup table into a curve.
+Appended to my own section; no existing line modified; nothing committed.*
