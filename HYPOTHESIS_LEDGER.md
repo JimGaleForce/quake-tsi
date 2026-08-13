@@ -16897,3 +16897,454 @@ survivors moved to UNMEASURABLE rather than to null, because scoring them as mis
 the more flattering error; a gate held against a scoped lift whose scope contained the defect; and a
 retraction from another seat checked into my own arithmetic, where it cost one table row and no
 conclusion. Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+# PROPOSED (Kepler) — Sand Point seed (Jim, 2026-08-13): K-092..K-093
+
+*Seed, verbatim as received: the 2025-07-16 20:37:41 UTC M7.3 ~99 km SSE of Sand Point, Alaska, and
+"most of the eq's in THAT REGION across history seem to be at the same relative position below
+neutral on the solid-earth tide measurements". Mine the CLASS: region-specific tidal-phase
+concentration at a consistent phase.*
+
+*Everything below is PROPOSED. I do not adjudicate and I have run no phase statistic on any catalogue
+this session — deliberately, and see §K92-0(3) for why that abstention is part of the design rather
+than diligence. The only numbers below that come from data are event COUNTS and TIMESTAMPS; every
+other number is arithmetic on the program's own frozen constants.*
+
+## §K92-0. WHAT THE SEED IS, WHAT THE ENGINE CAN DO ABOUT IT, AND THE THREE THINGS THAT MUST BE SAID FIRST
+
+**(1) Provenance, stated flatly: this is a LOOK, and the region that generated the hypothesis cannot
+confirm it.** Jim's observation is an eyeball scan of the Alaska-Aleutian phase distribution. That is
+a legitimate and valuable generator — it is exactly what mine mode is for — and it is *not* evidence,
+by the engine's own rule (`engine/mine.py:84`, GENERATOR_NOT_EVIDENCE). **Alaska-Aleutians is hereby
+declared EXPLORATION-ONLY for this hypothesis family.** No Alaska number from this family may be
+quoted, scored, entered into a BH family, or counted toward a survivor, in either direction. It may
+produce one thing only: a **pre-declared phase convention and a pre-declared direction**, which are
+then carried unchanged into held-out regions.
+
+**(2) The held-out discipline is REGIONAL, not temporal, and here is why the temporal split does not
+save us.** The engine's exploration window is day-index [365, 8081) from t0 = 1995-01-01, i.e.
+**1996-01-01 → 2017-02-15**; the holdout is 2017-02-15 → 2026-08-10. The seeding M7.3
+(`us7000qd1y`, 2025-07-16 20:37:41.667 UTC, 54.5652 N, −160.4689 E, 38.0 km, M7.3, present in
+`data/comcat_world/Alaska-Aleutians.csv`) is **in the holdout window**. That is *not* a licence — it
+is a second constraint. Two consequences, both binding:
+
+  - Jim's claim is about *"most of the eq's in THAT REGION across history"*, which spans the
+    exploration window. **The region is looked-at on both sides of the split.** A temporal held-out
+    test in Alaska would be a test of a region whose exploration half generated the hypothesis, which
+    is the weakest form of holdout there is.
+  - The seeding event itself sits in the holdout. Per `engine/SPEC.md:82`, *"no holdout hash may be
+    spent from mine mode."* **Citing the M7.3's own tidal phase as corroboration is a holdout spend**,
+    and an n = 1 one at that. It may appear in the entry as the *seed* and nowhere else.
+
+  **Therefore the confirmation set is other regions**, and there is a bookkeeping trap in the way:
+  `exp_m_world_transfer.py:72-85` and `PATTERN_PROTOCOL.md:151` label Alaska-Aleutians `"holdout"`
+  and Japan/Chile/Indonesia `"train"`. **For K-092 those roles are INVERTED.** Held-out-ness is a
+  property of a *hypothesis*, not of a region, and EXP-M's labels must not leak into this family's
+  bookkeeping. I am naming it now so nobody discovers it in a report footer later.
+
+**(3) The look-elsewhere hazard, stated in the entry that benefits from it, because it is severe.**
+The Shumagin/Sand Point patch has produced **five M ≥ 7.2 events in ~150 km since 2020**: M7.8
+2020-07-22, M7.6 2020-10-19, **M8.2 2021-07-29**, M7.2 2023-07-16, M7.3 2025-07-16. This is the most
+eye-drawing segment on Earth for the last six years. A hypothesis born there is born in the one place
+a human eye was guaranteed to be looking, and *nothing in the statistics of the region can correct
+for that* — only a held-out region can. Note also, and treat it as a warning rather than a clue:
+**2023-07-16 and 2025-07-16 are the same calendar date**. Calendar-date coincidences are the classic
+signature of a look-elsewhere artifact and this family should expect to meet more of them.
+
+Worse for power than for prior: **those five events are one interacting sequence.** The Alaska box's
+3,714 M ≥ 4.5 events are dominated by a handful of aftershock cascades, so the effective sample size
+is far below the nominal one — which is the whole ballgame, see §K92-0(6).
+
+**(4) CAN THE ENGINE MEASURE JIM'S OBSERVATION TODAY? No, and the blocker is not the one the seed
+would guess.** Three separate walls, in increasing order of cost to remove:
+
+  - **Wall 1 — the day-binning sinc, which is exact and which the seed's band sits under.** The
+    miner's target is daily domain counts; summing a sinusoid of period P over an exact 24 h window
+    multiplies it by |sinc(π·Δt/P)|. Computed in §K87-0(a).1 and re-affirmed in `MINING_CATALOG.md`
+    F1-19/F1-20: **M2 (12.4206 h) → 0.0348 (28.7× suppression); K1 → 0.0027 (366×); S1 and S2 →
+    exactly 0.** A solid-earth tide "position below neutral" is a **semidiurnal-dominated** quantity.
+    **The band Jim is reading is the band the count path notches out.** No amount of Kuiper, regsum,
+    or surrogates recovers a signal multiplied by 0.0348 — and this is why `MINING_CATALOG.md` prices
+    F1-19..F1-29 at **"0 now; 31 after F9-15"**.
+  - **Wall 2 — the sub-daily arm exists and is FROZEN OFF.** This is the part of the picture that has
+    changed since §K87-0 and it must be stated accurately in both directions. The event-time
+    machinery is now BUILT: `ephemeris.ephemeris_table_at` (`engine/ephemeris.py:173`) evaluates at
+    continuous day offsets, and `marks_ext.event_time_feature_values` (`engine/marks_ext.py:260`)
+    re-derives features at each event's own `day_float` — with `marks_ext.py:29-36` making exactly
+    the §K87-0 correction binding in code: *"Evaluating a DAY-BINNED feature at an event does not
+    escape day-binning."* But the arm is gated: `observer.assert_subdaily_gate`
+    (`engine/observer.py:323`) hard-refuses until the F7-01/02/03 observer controls exist, per
+    §P7-3(3) — *escaping the sinc means escaping the notch that was protecting us from the S1/S2
+    detection cycle.* Tranche B ran with the arm **frozen off** (`engine/tranche_b.py:519, 708`).
+    **So: the sub-daily gap is a gate, not a missing build.** That is a genuinely cheaper position
+    than K-090 described, and it should be credited as such.
+  - **Wall 3 — and this is the real one — THERE IS NO SOLID-EARTH TIDE IN THE ENGINE AT ALL.**
+    `ephemeris_table*` takes no latitude, longitude, or depth and returns **geocentric** quantities;
+    the closest object is `tidal_potential_proxy = (400000/r)³·P₂(sin δ)` (`engine/mine.py:336`), a
+    zonal geocentric scalar that is not a site quantity and not a stress. `MINING_CATALOG.md:341`
+    names this exactly: **F1-30 `site_local_tidal_stress_tensor` | INFRASTRUCTURE — "the missing
+    build" … "this is the single largest gap in the engine."**
+
+  > **The honest answer to the task as posed: the current engine cannot measure per-event
+  > solid-earth tidal phase at event time, anywhere, for any region. Jim's observation is not
+  > weakly measured by our instrument; it is not measured at all.** Any "Alaska phase distribution"
+  > the engine could print today would be the *geocentric zonal proxy at each event's timestamp* —
+  > a different physical quantity, correlated with the site tide at fortnightly and monthly periods
+  > and essentially uncorrelated with it at the semidiurnal period that carries "below neutral".
+  > Printing one and calling it Jim's observation would be the single most misleading thing this
+  > family could emit.
+
+**(5) THE SMALLEST BUILD THAT WOULD, in four items, with the two that are already owed marked as
+such.**
+
+  1. **[owed debt, not new]** Clear the F9-10 sub-daily gate: the F7-01/02/03 observer controls, per
+     §P7-3(3). Non-negotiable and not this family's to skip.
+  2. **[NEW, small, zero downloads]** `engine/sitetide.py` — degree-2 solid-Earth body tide from
+     Love numbers (h₂, k₂, l₂) at (lat, lon, depth, t), driven by the **existing**
+     `ephemeris.sun_position` / `moon_position`. Deliverable: `S(lat, lon, depth, day_float)` for a
+     declared scalar (areal/volumetric strain, or vertical displacement, or the P₂-resolved normal
+     stress on a declared receiver plane), plus `dS/dt`, plus the analytic-signal phase
+     θ = atan2(−(dS/dt)/ω̄, S). **This is F1-30 Tier 1 and it needs no new dependency** — the
+     ephemeris accuracy (`ephemeris.py:7-16`: lunar longitude ~0.2°) is ample for a phase whose
+     semidiurnal period is 12.42 h, since 0.2° of lunar longitude is ~25 s of tidal phase.
+  3. **[NEW, small]** Port Kuiper/Watson from the count path to the **event path**. Today
+     `circstat.kuiper_watson` takes `(theta, counts, offset)` — per-day phase, daily counts, ETAS λ
+     (`engine/circstat.py:348`). The event-phase form takes `(theta_i, λ_i)`; the null is
+     ETAS-simulated **event times**, which `aliasing_audit_period` already constructs. ~100 lines and
+     it inherits an instrument whose recovery is already demonstrated
+     (`engine/recovery_curve.py:7`: 0.9992 at 1.5×, 1.0000 at 2×).
+  4. **[NEW, zero cost, and it is a GATE]** The declared phase convention, S-9, written one way,
+     **before** the run: which scalar, which sign, what "neutral" means. See §K92-0(7) — this is not
+     bookkeeping, it is the difference between a falsifiable claim and an unfalsifiable one.
+
+  **Not in the smallest build, and deliberately: ocean loading.** See K-093.
+
+**(6) THE POWER ARITHMETIC, WHICH DECIDES WHETHER THIS FAMILY IS MEASURABLE AT ALL.** Under the
+program's own S-15 floor formula (§P7-1(b)), A_min = √VIF · (z_α + z_0.80) · √(2/N), with the
+two-sided α = 0.05 pair summing to 2.8016, and F4-58's **measured VIF ≈ 24.1 for 2-df phase
+features** (`engine/regions.py:44-48`). Counts are measured from disk this session:
+
+| set | N (exploration window) | A_min, VIF = 1 | A_min, VIF = 24.1 | ÷ Kuiper narrow-arc gain π/2 |
+| --- | ---: | ---: | ---: | ---: |
+| **Alaska-Aleutians (EXPLORATION-ONLY)** | 2,501 | 7.9% | **38.9%** | 24.8% |
+| Japan | 9,298 | 4.1% | 20.1% | 12.8% |
+| Chile | 6,677 | 4.9% | 23.7% | 15.1% |
+| Indonesia | 16,456 | 3.1% | 15.1% | 9.6% |
+| Philippines | 4,844 | 5.7% | 27.9% | 17.8% |
+| Mexico | 1,346 | 10.8% | 53.0% | 33.8% |
+| **held-out subduction, pooled (5 boxes)** | **38,621** | **2.02%** | **9.90%** | **6.30%** |
+| non-subduction control set (7 boxes) | 6,379 | 5.0% | 24.4% | 15.5% |
+
+*(Provenance: N by direct count of `data/comcat_world/*.csv` restricted to 1996-01-01 → 2017-02-15;
+the π/2 factor is §P7-17's own correction of the catalogue's overstatement — "Kuiper gain over
+Rayleigh for a single narrow arc is π/2 ≈ 1.57", and the catalogue's "nearly invisible to it and
+obvious to Kuiper" **must not propagate**. Whether F4-58's VIF, measured on the daily-count path,
+transfers to an event-phase Kuiper statistic is an OPEN question I am not entitled to answer; the
+bracket [VIF = 1, VIF = 24.1] is the honest span and D-5 below measures it.)*
+
+> **The S-15 verdict this family must accept in advance, and it is unusual: THIS ENTRY IS
+> MEASURABLE IF AND ONLY IF THE SEED IS ROUGHLY LITERAL.** If "most of the eq's" means a
+> concentration of order 50%, Alaska alone clears even the VIF-24.1 floor and the five held-out
+> subduction boxes clear it individually. If the true effect is at the scale the literature reports
+> for tidal triggering of shallow thrusts (percent to low tens of percent), **Alaska is UNMEASURABLE
+> under S-15 and only the pooled held-out set has any chance at all.** That is a real kill condition,
+> it is declared before the run, and it means a null in Alaska scores *neither way*.
+
+**(7) THE ARTIFACT THAT WOULD MANUFACTURE THIS EXACT OBSERVATION, computed, because it is the single
+strongest reason to doubt the seed and it belongs in the entry that inherits the seed.** "Below
+neutral" is a statement about a **level**, not a phase — and a level read off a sinusoid has a
+non-uniform null *even when the phase is perfectly uniform*. If θ ~ U[0, 2π) and u = sin θ is the
+normalised tidal level, then
+
+  f(u) = 1 / (π√(1 − u²)) on (−1, 1)   — the **arcsine density, which peaks at the extremes.**
+
+Consequences, exact:
+  - P(u < 0) = **0.500** exactly. "Most events below neutral" at 50% is the null, not a finding.
+  - P(u ∈ [−1, −0.5]) — the **bottom quarter of the min–max range** — = (1/π)·(π/3) = **1/3.**
+
+**So a scatter in which one third of a region's events fall in the lowest quarter of the tidal range,
+bunched toward the trough, is EXACTLY what a uniform-phase null looks like** — and it is precisely
+what an eye reads as "at the same relative position below neutral", because the null's densest
+below-neutral place *is* the trough. This is not a criticism of the seed; the seed asked for a class
+to be mined and this is the first thing the mining must control for. **The operative correction is
+that the test must be on PHASE against a uniform null, never on LEVEL against an eyeballed null**,
+and D-4 below makes the artifact reproduce on demand so nobody has to take my word for it.
+
+This is also why I ran no phase statistic this session. **A second look at Alaska by me would add a
+second undeclared multiplicity to a hypothesis whose entire problem is that it was born from a look.**
+
+---
+
+**K-092 — REGION-LOCAL TIDAL-PHASE CONCENTRATION AT A CONSISTENT PHASE: the crust's response to the
+solid-earth tide is REGIONALLY COHERENT and GLOBALLY INCOHERENT, so every global tidal null this
+program owns is a null about the wrong object — and the observable is arc CONCENTRATION, not the arc's
+angle.**
+
+*Lens: invert the domain sum, then invert the statistic. §K87-0(d)(i) already established that a
+global domain sum cancels a coherent regional signal with region-dependent phase; §P6-4 Rule 4.2 built
+`regsum` to kill exactly that blind spot. But regsum tests whether **some** region has a signal — it
+sums quadratic forms and is deliberately phase-incoherent. The seed asks a sharper question that
+regsum was not built for: does **one named region** hold its events at **one phase**, persistently,
+over decades? That is a concentration statement about a single arc, which is Kuiper-shaped; and it is
+region-local, which is regsum-shaped. **Both instruments exist. Neither has ever been pointed at this
+question, because the question requires a site tide the engine does not compute.***
+
+- **Claim, in the form that survives §K92-0(7) and the ocean-loading problem simultaneously.** For
+  each region r, let θᵢ be the phase of a declared solid-earth-tide scalar at each event's own
+  (lat, lon, depth, t). The claim is that the **concentration** of {θᵢ} — Kuiper's V, Watson's U²,
+  and the first resultant length R₁ — is significantly above its ETAS-simulated null in **subduction
+  thrust regions and not in transform/collision/rift regions**, and that the concentration is
+  **stable across disjoint decades within a region**. *The claim is deliberately NOT about the value
+  of the angle ψ.* See the next bullet for why that restraint is the design and not a hedge.
+- **Why concentration and not angle — the argument that keeps this alive under Popper's existing
+  ruling.** Popper has already ruled (§P5-2, K-090(c)) that *"a body-tide-only local feature in
+  coastal and subduction settings is not a caveat-bearing measurement, it is an UNMEASURABLE cell
+  under S-15"*, because ocean loading in those settings is comparable to or larger than the body
+  tide. **Jim's observation is a body-tide observation in the single most ocean-loaded subduction
+  setting on Earth**, so that ruling lands on this entry head-on. The transformation that survives
+  it: **ocean loading is not noise, it is a filter.** At a fixed constituent frequency ω the loading
+  contribution is a linear, quasi-deterministic function of the body tide with a region-specific
+  admittance A(ω)e^{iφ(ω)}; total = body · (1 + Ae^{iφ}). **In the single-constituent limit that is
+  an amplitude scaling and a phase ROTATION — under which arc concentration is EXACTLY invariant and
+  only ψ moves.** With several constituents carrying different admittances the invariance is
+  approximate rather than exact, and the size of the degradation is itself computable by simulation
+  once the admittances are known (which is K-093's data). **So: a body-tide-only instrument is a
+  biased estimator of ψ and an approximately unbiased detector of concentration.** Reporting
+  concentration and refusing to report ψ is therefore not a weaker claim — it is the claim the
+  instrument is entitled to make, and it is the same shape as §P7-20's existing carve-out that *"the
+  K-091 gate binds on reporting an absolute psi, not a differenced one."*
+- **Test / data / statistic / null.**
+  - *Catalogues:* **on disk.** `data/comcat_world/*.csv`, 13 boxes, M ≥ 4.5, 1995-01-01 → 2026-08-09,
+    **sub-second UTC timestamps retained** through `datasets.catalog_arrays` → `day_float`. Two
+    segments named in the ask are **not** on disk and are one ComCat query each with the existing
+    downloader (`exp_m_world_transfer.py`): **Kuril** (the Japan box stops at 46 N) and **Cascadia**
+    (the California box stops at 42 N).
+  - *Tidal series:* **does not exist** for any region. Two candidate routes, and I recommend running
+    **both** because their disagreement is itself a measurement: **(i)** the Love-number closed form
+    (`sitetide.py`, item 2 of §K92-0(5)) — no download, body tide only; **(ii)** the **Xue-Lu-style
+    SPOTL route** — `data/xue_lu_zenodo/` already contains a SPOTL **solid-earth + TPXO ocean
+    loading** series (`INVENTORY.md:22`) with `calc_stress.py` for the tensor rotation, but it is
+    computed at **one reference point, 117 °W / 35 °N**, and per `CORRECTIONS.md` (2026-08-13) its
+    native sampling is **dt = 6000 s (~50 yr), values in nanostrain, not Pa** — two facts that were
+    wrong in the program's own files until this week and that any reuse must carry. **Route (ii)
+    generalised to Alaska/Japan/Chile is a SPOTL install + an FES2014/TPXO grid download**, which is
+    the honest cost line and is a DOWNLOAD + INFRASTRUCTURE item, not a flag.
+  - *Statistic:* Kuiper V and Watson U² on **event phases** (not daily counts), reported **beside
+    Rayleigh and beside the second circular moment** — §P7-17 makes the four-way comparison mandatory
+    because the Kuiper-vs-Rayleigh gain is a factor 1.57, not a qualitative difference, and because
+    a three-arc response is Kuiper-100%/Rayleigh-0% while a pure sinusoid is the reverse.
+  - *Null:* ETAS simulation of **event times** from the frozen params
+    (`engine/out/cache/etas_params_k080_0p5deg.json`), never a phase permutation — permuting phases
+    destroys the clustering that carries the entire VIF problem, which is the failure mode this
+    family is most exposed to.
+  - *Per-region licence:* per §P7-1(d), a region may quote an amplitude only if it individually
+    clears its own S-15 floor at its own N. The table in §K92-0(6) says which ones can, under which
+    VIF assumption, **before** the run.
+  - *A note on regsum that must not be skipped:* the frozen partition rule is `R2b-lon6-active`
+    (`engine/regions.py:57`) — **six 60° longitude sectors**, and S-9 permits exactly one rule id.
+    Alaska-Aleutians (−180 to −140) falls entirely inside sector 0 (−180 to −120), which by accident
+    nearly isolates it. **That accident is not a licence**: a K-092 per-region battery needs a
+    *tectonic* partition, which is a **new declared rule id**, hash-affecting, and it must be
+    declared from exploration-window data only (Rule 4.1). And the K-080 census cell list may
+    **never** be the selector (`engine/regions.py:5-7`) — which also means I may not propose "run it
+    where the oases are."
+- **Pass / fail, declared now.** **PASS:** the pooled held-out subduction set (Japan, Chile,
+  Indonesia, Philippines, Mexico — **Alaska excluded by construction**) shows concentration above the
+  ETAS null at the pre-declared α, **with the same sign/direction of the pre-declared convention that
+  Alaska generated**, and the non-subduction control set does not, and the effect is stable across
+  two disjoint decades. **FAIL:** any of those four fails. **NEITHER WAY (S-15):** any region whose
+  measured effect lands below its own floor in §K92-0(6) — which, at VIF = 24.1, is most of them
+  individually, and is the reason the pooled statistic is the headline rather than a per-region
+  league table.
+- **Expected effect size if real.** If the seed is literal: R₁ ≳ 0.2 in subduction boxes, i.e. a 20%+
+  concentration, trivially clearing every floor above. If the effect is at the scale the literature
+  reports for tidal triggering of shallow thrusts: a few percent excess, i.e. R₁ ~ 0.02–0.05 — which
+  clears the pooled VIF = 1 floor (2.0%) and **fails** the pooled VIF = 24.1 floor (9.9%). **The
+  entire verdict therefore turns on the VIF measurement, which is why D-5 is not optional and why I
+  am putting it ahead of the science in the tranche order.**
+- **Honest prior on the NULL** (probability the headline is null at demonstrated power): **0.8** for
+  the pooled held-out subduction arm at the literal-seed effect size; **0.55** for a *weaker*
+  version — concentration present but far smaller than the seed suggests. I put the second below 0.5
+  not because of the seed but because of the prior art (next bullet); the seed's contribution is that
+  it points at a region and a band, not that it is evidence.
+- **Why this might be dismissed too quickly — three ways, and the third is the one I expect.**
+  (i) *"Static tidal-phase maps are a corpse (R2-1(d))."* They are, and I am bound by it. **This is
+  not a map and not a forecast.** The corpse was *"phase predicts where and when"*; this is *"a named
+  region holds its events at one phase persistently"*, which is a property of a distribution, has no
+  cell-level susceptibility parameter, produces no hazard number, and would be **entirely consistent
+  with the K-035 bound of |modulation| < 6.3%** if the concentration is small. If any arm of this
+  drifts toward "phase predicts", kill it on sight — I am saying so in advance, exactly as I did for
+  K-087..K-091.
+  (ii) *"Global nulls already cover this."* They cover a **globally coherent, fortnightly-to-annual,
+  day-binned** modulation at a ~5.6% bound. This entry is **regionally coherent, semidiurnal, and
+  event-time** — three axes on which the existing null is silent by construction, two of them by
+  exact zeros.
+  (iii) *"It came from an eyeball on a region that just had five M7+."* **Correct, and it is the
+  strongest objection**, which is why §K92-0(1)–(3) hand the region back and why the Alaska arm is
+  unscoreable in both directions before anything runs.
+
+**Prior-art hooks for Merton — the setting is not novel and the program should say so first.** I have
+NOT verified these citations this session and they are handed over as leads with their expected
+classification, not as claims:
+  1. **Cochran, Vidale & Tanaka (2004, Science), "Earth tides can trigger shallow thrust fault
+     earthquakes."** The canonical result, and it is *the same class as this entry*: the effect is
+     found in **shallow subduction thrusts** and is strongest where **ocean tides are large** — which
+     is simultaneously the strongest prior-art hook and the strongest argument that K-092's
+     "concentration is invariant, ψ is not" restraint is doing real work. Expect **REDISCOVERY** on
+     the setting; the open question for Merton is whether anyone has published the *region-local
+     concentration, ψ withheld* form.
+  2. **Tanaka, Ohtake & Sato (2002, JGR)** and **Tanaka (2010, GRL, pre-2004 Sumatra M9.1)** and
+     **Tanaka (2012, Tonga)** — tidal-phase *alignment increasing before* great earthquakes. This is
+     the closest published relative of the seed and it makes a prediction K-092 does not: the
+     concentration should be **non-stationary**, rising in the years before a great event. That is a
+     free second-order test and I flag it as such rather than folding it in.
+  3. **Ide, Yabe & Tanaka (2016, Nature Geoscience)** — tidal sensitivity of earthquake
+     size-frequency statistics; the "tidal sensitivity as a state variable" framing.
+  4. **Métivier et al. (2009)** global tidal triggering; **Tsuruoka, Ohtake & Hayakawa (1995)**;
+     **Vidale et al. (1998)** — the influential California *null*, which matters because California
+     is in our control set. **Beeler & Lockner (2003)** — the rate-and-state account of *why* the
+     effect must be small and period-dependent, i.e. the theoretical reason to expect the literal
+     reading of the seed to be wrong.
+  5. **Hough (2018)**, on preferred days for great earthquakes — the look-elsewhere caution, and the
+     right adversarial citation for §K92-0(3).
+  6. **The program's own K-080** — *and here the hook cuts both ways, which is why I am stating it
+     rather than using it.* All **89 live oases lie in Japan/Kuril (65) and Indonesia/Philippines
+     (24)**, i.e. entirely in subduction settings, which is consistent with "subduction is the
+     favourable setting" as a general proposition. **But K-080 records ZERO oases in
+     Alaska-Aleutians** (`HYPOTHESIS_LEDGER.md:14124`). So K-080 corroborates the *class* and
+     conspicuously fails to corroborate the *region that generated the hypothesis*. Additionally,
+     Rule 4.1 forbids the census from ever being a selector here, so this is background, not design
+     input.
+
+---
+
+**K-093 — THE ONE NOBODY ASKED FOR: TURN OCEAN LOADING FROM THE BLOCKER INTO THE EXPERIMENT — the
+across-region SPREAD of tidal-phase offsets is a zero-free-parameter test of WHICH STRESS THE CRUST
+IS ACTUALLY RESPONDING TO, and it is runnable from public tide-gauge harmonic constants without
+SPOTL, without FES2014, and without resolving K-092 at all.**
+
+*Lens: invert the nuisance, in the K-091 move. Ocean loading is the reason Popper declared body-tide
+local features UNMEASURABLE in subduction settings. But a nuisance that is **region-specific,
+independently measurable, and enters as a known phase rotation** is not a nuisance — it is a
+**dial we did not know we could turn**. Nobody asked whether the crust responds to the body tide or
+to the total tide, because everyone assumed you needed the total tide to ask. You do not. You need
+the body tide plus the across-region variation in the admittance.*
+
+- **Claim.** Let ψ_r be the observed concentration angle in region r measured against the **body-tide
+  only** phase, and let φ_r be the region's **ocean-loading phase lag** at the dominant constituent,
+  obtained independently. Then:
+  - **If the crust responds to the BODY tide:** ψ_r is the same in every region up to noise, and
+    **the regression of ψ_r on φ_r has slope 0.**
+  - **If the crust responds to the TOTAL tide (body + load):** ψ_r must be rotated region-by-region
+    by the loading lag, and **the regression has slope ≈ +1.**
+  **There is no free parameter.** Two mechanisms, two integer slopes, one regression over ~8–13
+  regions. This is the cleanest identification statement I have been able to write in this ledger,
+  and it is a question the whole tidal-triggering literature answers by assumption.
+- **Why this is cheap, which is the entry's real point.** φ_r does **not** require SPOTL or a global
+  ocean model. Ocean-loading phase at a coastal site is dominated by the **local co-oscillating
+  tide**, whose M2 amplitude and Greenwich phase lag are **published harmonic constants for tens of
+  thousands of tide gauges** (NOAA CO-OPS for US waters — which covers Alaska-Aleutians, the
+  Aleutian chain, Cascadia and California directly — plus IHO/UHSLC internationally). **That is a
+  small, public, scriptable download, not an oceanography build.** A crude φ_r from the nearest
+  gauge's M2 phase lag is enough to separate slope 0 from slope 1, because the across-region spread
+  in M2 phase lag is of order **±100°** — enormous compared with the ~15° angular precision the
+  regression needs.
+- **The second, sharper use, which is what makes it a gate rather than a curiosity.** If the slope
+  comes back ≈ 1, then **K-092's "concentration is invariant to loading" argument is confirmed
+  empirically and its ψ-withholding becomes justified rather than defensive** — and, better, the
+  measured φ_r become a **de-rotation** that lets the held-out regions' phases be **stacked
+  coherently**, converting five separate under-powered per-region tests into one pooled test at the
+  38,621-event floor. If the slope comes back ≈ 0, the body tide alone is the driver, the whole
+  ocean-loading objection to K-090(c) and K-092 **evaporates**, and F1-30's expensive tier becomes
+  unnecessary — **which would be the single largest cost saving available to this program's tidal
+  family.** Either answer is worth more than K-092's own headline.
+- **Test / data.** Regions: the 13 boxes on disk plus Kuril and Cascadia. ψ_r from K-092's event-phase
+  fits against the `sitetide.py` body-tide phase (so K-093 **consumes** K-092's build but not its
+  verdict). φ_r from tide-gauge M2 harmonic constants — **DOWNLOAD, small**. Statistic: circular-linear
+  regression of ψ_r on φ_r, slope with CI; report **both** hypotheses' predicted slopes on the same
+  axes. Null: a permutation of the region↔φ_r assignment (n = 13! but 10⁵ shuffles suffice), which is
+  the correct null because it destroys exactly the correspondence being claimed and preserves
+  everything else.
+- **Pass / fail.** **PASS for total-tide:** slope CI excludes 0 and contains 1. **PASS for
+  body-tide:** slope CI excludes 1 and contains 0. **FAIL / uninformative:** CI contains both — which
+  at 13 regions with ±100° leverage would itself be informative about the ψ estimates' noise, and
+  which is the outcome I would bet on if the per-region ψ are as noisy as §K92-0(6) suggests.
+- **Expected if real.** Ocean-loading stress amplitude in Aleutian/Cascadia-class settings is
+  commonly quoted as comparable to or larger than the body tide; if so the total-tide slope should be
+  near 1 with an intercept absorbing the common receiver-plane geometry. **Honest prior:** 0.45 that
+  the regression is too noisy to separate the two at 13 regions — i.e. **the most likely outcome is
+  that this entry returns a measurement of our own angular precision rather than a mechanism**, which
+  is a K-091-shaped outcome and is why I would still run it early.
+- **Why this might be dismissed too quickly.** *"You can't get loading phase from a tide gauge; that's
+  water height, not crustal stress."* Correct, and it does not matter for **this** statistic: the
+  regression needs φ_r to be **monotonically related** to the true loading phase **across** regions,
+  not equal to it. A constant offset lands in the intercept and a constant scale would show up as a
+  slope ≠ 1 that is still ≠ 0 — and the test is 0-versus-not-0 first. **The objection would be fatal
+  to an absolute-ψ claim and is nearly harmless to a slope claim**, which is the whole reason the
+  entry is written as a regression.
+
+---
+
+## §K92-1. PROPOSED TRANCHE SKETCH FOR POPPER'S PRICING — "TRANCHE D, REGIONAL PHASE CONCENTRATION"
+
+*Counts below are Kepler's arithmetic and are offered to be corrected, not adopted. Nothing here is
+licensed. The ordering is deliberate: every measurement of our own instrument precedes every
+measurement of the crust, per the K-091 precedent.*
+
+| # | piece | status | priced count | note |
+|---|---|---|---:|---|
+| **D-0** | Phase-convention declaration (S-9, one way): which scalar, which sign, what "neutral" is; plus the provenance question to Jim — *which display was he reading?* | **READY** | 0 | A **gate**. Without it the direction is chosen after the look and the entry is unfalsifiable. Zero cost, and it should be answered before D-1 is written. |
+| **D-1** | Arcsine/level-vs-phase artifact control: simulate a uniform-phase catalogue, render it as a "level below neutral" scatter, confirm 1/3 of events land in the lowest quarter of range. | **READY** | 0 (control) | Pure simulation, no catalogue. Reproduces §K92-0(7) on demand. Its value is that it is the cheapest thing here that can embarrass the seed, so it goes first. |
+| **D-2** | Measure VIF for the **event-phase** Kuiper/Watson/R₁ statistic, per region, by ETAS simulation from the frozen params. | **READY** | 0 (instrument) | **The entire verdict turns on this** (§K92-0(6)). F4-58's 24.1 was measured on the daily-count path and its transfer is unproven. |
+| **D-3** | `engine/sitetide.py` — Love-number degree-2 body tide at (lat, lon, depth, t). | **INFRASTRUCTURE** (small; no download, no new dependency) | 0 (build) | F1-30 Tier 1. ~200 lines on the existing ephemeris. Acceptance test: recover the known M2/O1/K1 constituent periods and the ~40 cm equatorial vertical-displacement scale. |
+| **D-4** | Port Kuiper / Watson / R₁ / 2nd moment from the count path to the **event path**; ETAS event-time null. | **INFRASTRUCTURE** (small) | 0 (build) | ~100 lines; reuses `aliasing_audit_period`'s null. **Carries a live debt: §P7-21(c) mandates the periodic-feature p fix (`p_boot` only) before B-2, and F9-04's Tranche B result must be recomputed under the corrected rule.** That fix must land here too or the new statistics inherit the same plateau-crossing defect. |
+| **D-5** | Clear the **F9-10 sub-daily gate**: F7-01/02/03 observer controls. | **INFRASTRUCTURE** (owed debt, not this family's) | 0 | `observer.assert_subdaily_gate` hard-refuses until this exists. **Nothing sub-daily runs before it.** |
+| **D-6** | Download **Kuril** and **Cascadia** boxes (ComCat, existing downloader). | **DOWNLOAD** (small) | 0 (data) | Two queries. Needed because the ask names both and neither box exists. |
+| **D-7** | **EXPLORATION-ONLY, UNSCORED:** generator-grade mine-mode look at Alaska-Aleutians' event-phase distribution, exploration window (1996-01-01 → 2017-02-15, N = 2,501) only. | READY *after* D-3/D-4/D-5 | **0 — unpriced by construction** | Its **only** legitimate output is the pre-declared convention and direction for D-8. It appends to `EXPLORE_COUNT.jsonl` and spends **no** holdout hash. It cannot pass and it cannot fail. |
+| **D-8** | **THE CONFIRMATION:** held-out subduction set (Japan, Chile, Indonesia, Philippines, Mexico, + Kuril, + Cascadia), 3 declared phases × 4 statistics × 7 regions, Alaska excluded. | READY *after* D-3..D-6 | **84** | Plus **12** phase-incoherent regional-sum tests (3 × 4) under a **new declared tectonic partition rule id** — hash-affecting, Rule 4.1, exploration-window-derived. **Subtotal 96.** |
+| **D-9** | **THE CONTROL:** non-subduction set (California, Turkey, Himalaya, Iceland, Iran, Greece-Aegean, Caribbean), same 3 × 4. | READY *after* D-3..D-6 | **84** | A negative control that must come back null for D-8 to mean anything. Priced, not free. |
+| **D-10** | **K-093:** tide-gauge M2 harmonic constants; circular-linear regression of ψ_r on φ_r. | **DOWNLOAD** (small, public: NOAA CO-OPS / UHSLC) | **1** | One slope, one CI, two pre-declared integer predictions. |
+| **D-11** | *Deferred, named so it is not discovered late:* full SPOTL + FES2014/TPXO per-region ocean-loading series. | **DOWNLOAD + INFRASTRUCTURE** (heavy) | 0 | F1-30 Tier 2. **D-10 may make this unnecessary**, which is the argument for sequencing D-10 before it. |
+| | **TOTAL PRICED (D-8 + D-9 + D-10)** | | **181** | Alaska contributes **zero** priced tests. |
+
+**Five things I want Popper to rule on, stated as questions rather than smuggled as assumptions.**
+1. Does F4-58's VIF ≈ 24.1 bind an **event-phase** statistic, or must D-2 measure it fresh before any
+   floor in §K92-0(6) is quotable? (My reading: fresh, and the table is a bracket until then.)
+2. Is **concentration-without-ψ** sufficient to escape the K-090(c) UNMEASURABLE ruling for body-tide-
+   only features in subduction settings, or does that ruling bind regardless of which moment is
+   reported? **If it binds regardless, K-092 is dead on the current build and D-11 becomes mandatory**
+   — and I would rather be told that now than after D-3 is written.
+3. Does a **new tectonic partition rule id** violate S-9's "one rule, written one way", or does S-9
+   scope per-family? (`engine/regions.py:24-26` reads as global; if it is global, D-8's regsum arm
+   cannot run and the entry loses its region-local instrument.)
+4. Is 3 declared phases the right family size, or does S-8 require the full 17-feature cyclic family
+   to be declared and priced even where 14 of them are physically irrelevant to a semidiurnal
+   question?
+5. **Should D-7 run at all?** It has no scientific output and it carries a real risk: a second look at
+   Alaska by this program, even an unscored one, makes the eventual convention *more* look-dependent,
+   not less. **A defensible alternative is to declare the convention from PHYSICS and from the
+   published literature alone — Cochran 2004's reported favourable phase — and never look at Alaska
+   again.** That is stricter than the seed asks for and I think it is the better design; I am not
+   entitled to choose it.
+
+*Kepler, Sand Point seed. Two entries, K-092 and K-093, both PROPOSED, neither licensed, neither a
+forecast. The region that generated the hypothesis is handed back unscoreable in both directions
+before anything runs, and the honest answer to the central question is a negative one: **this engine
+cannot measure per-event solid-earth tidal phase at event time for any region on Earth, so Jim's
+observation is presently unmeasured rather than weakly measured** — the site tide is F1-30, the
+declared missing build. The entry that follows from the seed (K-092) is therefore written around what
+a body-tide-only instrument is entitled to say, and the entry nobody asked for (K-093) exists because
+the objection that makes K-092 hard — ocean loading — turns out to be, at zero-parameter cost and
+from free public data, the only clean way anyone has to ask which stress the crust is actually
+answering to. And §K92-0(7) is written against the seed on purpose: one third of events in the lowest
+quarter of the tidal range is exactly what a uniform-phase null looks like, and it is exactly what an
+eye calls a pattern.*
+
+**AUDIT.** Appended to this file only; **zero existing lines modified**; nothing committed; no
+holdout hash spent; no phase statistic computed on any catalogue this session. Data touched
+(read-only): `data/comcat_world/*.csv` (event counts and timestamps only), `results_k080_census.json`
+(key listing only). Code read, not run: `engine/{mine,mine_session,ephemeris,marks_ext,circstat,
+regions,observer,datasets,cli}.py`, `MINING_CATALOG.md`, `CORRECTIONS.md`, `XUE_LU_PROTOCOL.md`,
+`RESPONSE_XUE_QUESTIONS.md`, `exp_m_world_transfer.py`.
