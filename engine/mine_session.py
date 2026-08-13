@@ -231,6 +231,38 @@ def assert_task_keys_unique(keys):
     return digests
 
 
+DETERMINISM_THREAD_VARS = ("OMP_NUM_THREADS", "OPENBLAS_NUM_THREADS",
+                           "MKL_NUM_THREADS", "NUMEXPR_NUM_THREADS")
+
+
+def pin_parent_threads():
+    """§P7-21(2): pin BLAS/OMP to one thread IN THE PARENT, not only in workers.
+
+    The worker pool already pins these (`_run_tasks_parallel` sets them before the
+    pool is created, because spawned children inherit `os.environ` at creation). The
+    PARENT was never pinned, and the parent does real numerical work: the ETAS fit,
+    the max-statistic matrix, the BH reduction. A multi-threaded BLAS reduction sums
+    its partial products in whatever order the threads finish, so the same matrix
+    product can differ in the last bits between two runs on the same machine -- which
+    is the shape of the residual 2.5e-6 drift measured on 19 GLM-path fields.
+
+    Returns the previous values so a caller can state what it changed. Pinning costs
+    parent-side wall clock and buys reproducibility; it is therefore opt-in via the
+    determinism flag rather than always on.
+    """
+    prev = {}
+    for v in DETERMINISM_THREAD_VARS:
+        prev[v] = os.environ.get(v)
+        os.environ[v] = "1"
+    try:                      # already-imported BLAS ignores the env var
+        from threadpoolctl import threadpool_limits
+        threadpool_limits(1)
+        prev["threadpoolctl"] = "applied"
+    except Exception:         # noqa: BLE001 -- optional dependency
+        prev["threadpoolctl"] = "unavailable (env vars set only)"
+    return prev
+
+
 def resolve_jobs(jobs):
     """--jobs N; 0 means auto = max(1, cpu_count() - 2). Never returns < 1."""
     j = int(jobs)
@@ -1514,7 +1546,7 @@ def prepare(cfg, verbose=True):
 
 
 def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
-        ledger_path=None, prepared=None):
+        ledger_path=None, prepared=None, determinism=None):
     """`prepared` reuses an already-built context; `ledger_path` redirects the ledger.
 
     `prepared` is the tuple `prepare(cfg)` returns. It exists for the throughput
@@ -1550,6 +1582,21 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         ckpt = Checkpoint(os.path.join(session_dir, "checkpoint.json"), cfg, ch)
         ckpt.save()
 
+    # DETERMINISM is an EXECUTION detail and is deliberately NOT in the config hash,
+    # for exactly the reason `--jobs` is not: the same sweep run with pinned threads
+    # is the same sweep. Putting it in the config would change the hash and the audit
+    # would no longer be an audit OF THE DECLARED EXPERIMENT.
+    determinism = determinism or {}
+    if determinism.get("pin_threads"):
+        ckpt.state["determinism"] = {
+            "pin_threads": True,
+            "previous_env": pin_parent_threads(),
+            "rule": ("§P7-21(2): parent-side BLAS/OMP pinned to one thread. The "
+                     "worker pool was already pinned; the parent was not, and the "
+                     "parent does the ETAS fit, the max-statistic matrix and the BH "
+                     "reduction. A threaded reduction's summation order is not "
+                     "fixed, which is the shape of the residual float drift."),
+        }
     t_start = time.time()
     (ctx, base, y, window, counts, offset, marks, feats,
      dl_log, t0) = prepared if prepared is not None else prepare(cfg,
@@ -2310,7 +2357,22 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
 
     # One ledger line per SESSION, not per invocation: a resumed session is the same
     # sweep continued, so counting it twice would inflate the reported multiplicity.
-    if not ckpt.state.get("ledger_logged"):
+    if determinism.get("no_ledger_line"):
+        ckpt.state["ledger_suppressed"] = {
+            "reason": ("§P7-21(3): this is a DETERMINISM AUDIT of an ALREADY "
+                       "DECLARED experiment -- same config hash, same declaration, "
+                       "and per §P7-17(2) a re-execution of declared rows is "
+                       "REPLICATION and is not re-priced. A second EXPLORE_COUNT "
+                       "line would record a second declaration that was never "
+                       "made, inflating this programme's recorded multiplicity "
+                       "with an audit."),
+            "config_hash": splits.config_hash(cfg),
+        }
+        ckpt.save()
+        if verbose:
+            print("session ledger       -> SUPPRESSED (§P7-21(3) determinism audit; "
+                  "no new declaration, no new EXPLORE_COUNT line)")
+    elif not ckpt.state.get("ledger_logged"):
         splits._append_jsonl(ledger_path,
                              ledger_record(
                                  cfg, n_tests, session_dir,

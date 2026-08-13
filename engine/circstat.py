@@ -91,6 +91,55 @@ PHASE_TIE_TOL = 1e-9
 # `_kuiper_watson_core` for why snapping them to exact zero is load-bearing.
 CDF_NOISE_FLOOR = 1e-12
 
+# §P7-21: THE STATISTIC TIE TOLERANCE, and the defect it repairs.
+#
+# Kuiper's V and Watson's U^2 on a PERIODIC feature produce a shift null with MASS
+# POINTS: a circular shift of the (counts, offset) pair against a deterministic cycle
+# lands on a small number of distinct configurations, so the surrogate statistics
+# pile up on plateaus rather than spreading continuously. A `>=` count across a
+# plateau is a STEP FUNCTION of the observed value -- and the twin-session audit
+# measured exactly that: 2e-8 of float jitter in T_obs moved 5 `kuiper_V`
+# `p_circular_shift` values by up to 0.147. The p did not drift, it JUMPED, because
+# the comparison crossed a tie.
+#
+# Two repairs, for two different cases:
+#   * PERIODIC features -- the shift null is provably powerless there (a shift
+#     preserves the very spectrum a fixed-frequency test measures), it is NOT part of
+#     `p_raw`, and it was the only unstable field. It is no longer computed at all:
+#     not stored as an unstable number, not stored as a stable-but-meaningless one --
+#     ABSENT, with its reason on the row.
+#   * APERIODIC features -- the shift null is real there and is retained, so it is
+#     made TIE-TOLERANT and MID-RANK: ties count as half, which is the standard
+#     randomisation-test treatment of a discrete null and is CONTINUOUS in the
+#     observed value where a plain `>=` count is a step.
+STAT_TIE_RTOL = 1e-9
+
+PERIODIC_SHIFT_OMITTED = (
+    "NOT COMPUTED (§P7-21): for a periodic feature the circular-shift null is "
+    "provably powerless -- a shift preserves the target's power spectrum, which is "
+    "exactly what a fixed-frequency test measures -- so it is not part of p_raw. Its "
+    "surrogate distribution has mass points, and a >= count across a plateau turns "
+    "float jitter into a p-value JUMP (measured: 2e-8 in T_obs -> 0.147 in p). "
+    "Omitted rather than reported unstable.")
+
+
+def tie_tolerant_p(draws, observed, n_used=None, rtol=STAT_TIE_RTOL):
+    """Mid-rank empirical p: ties within `rtol` count as half (§P7-21).
+
+        p = (1 + #{draw > obs} + 0.5 * #{draw ~= obs}) / (1 + n)
+
+    Continuous in `observed` where a plain `>=` count is a step. That is the whole
+    repair: two runs whose statistics differ in the 8th decimal now differ in the p
+    by O(1/n) rather than by a whole plateau's worth of probability mass.
+    """
+    d = np.asarray(draws, dtype=np.float64)
+    o = float(observed)
+    tol = float(rtol) * max(abs(o), 1.0)
+    n = int(d.size if n_used is None else n_used)
+    gt = int((d > o + tol).sum())
+    eq = int((np.abs(d - o) <= tol).sum())
+    return float((1.0 + gt + 0.5 * eq) / (1.0 + n))
+
 AMBIGUITY_NOTE = (
     "MINING_CATALOG F9-01 Pit: the second moment is driven by ANY two-lobed "
     "structure, including a semidiurnal or half-cycle response, so a hit is "
@@ -157,7 +206,10 @@ def second_moment_test(theta, counts, offset, n_surr, rng, block_days=90.0,
     offset = np.asarray(offset, dtype=np.float64)
     X2 = doubled_angle_design(th)
     S = M.score_stat_all_shifts(X2, counts, offset)
-    p_shift, n_used = M.empirical_p(S, n_surr, rng, min_shift=min_shift)
+    if periodic:
+        p_shift, n_used = None, 0     # §P7-21: powerless, and not part of p_raw
+    else:
+        p_shift, n_used = M.empirical_p(S, n_surr, rng, min_shift=min_shift)
     Sb = M.score_stat_block_bootstrap(X2, counts, offset, int(n_surr), rng,
                                       mean_block=float(block_days))
     p_boot = M.bootstrap_p(S[0], Sb)
@@ -173,8 +225,13 @@ def second_moment_test(theta, counts, offset, n_surr, rng, block_days=90.0,
         "test": "second_circular_moment_score", "df": 2,
         "statistic": float(S[0]), "chi2_score": float(S[0]),
         "p_parametric": M.chi2_sf(S[0], 2),
-        "p_circular_shift": p_shift, "p_block_bootstrap": p_boot, "p_raw": p,
-        "n_surrogates": min(n_used, int(n_surr)),
+        "p_circular_shift": p_shift,
+        "p_circular_shift_note": (PERIODIC_SHIFT_OMITTED if p_shift is None else
+                                  "exhaustive enumeration; the 2-df score null is "
+                                  "continuous, so §P7-21's mass-point defect does "
+                                  "not arise here"),
+        "p_block_bootstrap": p_boot, "p_raw": p,
+        "n_surrogates": (min(n_used, int(n_surr)) if n_used else int(n_surr)),
         "block_days": float(block_days),
         "null": ("block-bootstrap (periodic feature)" if periodic
                  else "max(circular-shift, block-bootstrap)"),
@@ -316,7 +373,7 @@ def _kw_batch(counts, offset, idx, order, ends):
 
 
 def kuiper_watson_shift_null(theta, counts, offset, n_surr, rng, min_shift=30,
-                             chunk=SHIFT_CHUNK):
+                             chunk=SHIFT_CHUNK, periodic=False):
     """Circular-shift surrogates of the (counts, offset) PAIR against fixed phases.
 
     Exactly `score_stat_all_shifts`' construction -- shifting the pair preserves both
@@ -335,6 +392,10 @@ def kuiper_watson_shift_null(theta, counts, offset, n_surr, rng, min_shift=30,
     ends = phase_group_ends(th[order])
     obs = kuiper_watson(th, counts, offset, order=order, ends=ends)
 
+    if periodic:
+        # §P7-21: not computed at all -- see PERIODIC_SHIFT_OMITTED.
+        return None, None, 0, obs
+
     ok = np.arange(n)
     ok = ok[(ok >= int(min_shift)) & (ok <= n - int(min_shift))]
     if ok.size == 0:
@@ -342,15 +403,19 @@ def kuiper_watson_shift_null(theta, counts, offset, n_surr, rng, min_shift=30,
     if int(n_surr) < ok.size:
         ok = rng.choice(ok, size=int(n_surr), replace=False)
     base = np.arange(n)
-    ge_v = ge_u = 0
+    dv, du = [], []
     for a in range(0, ok.size, int(chunk)):
         k = ok[a:a + int(chunk)]
         idx = (base[None, :] - k[:, None]) % n       # roll the pair by k
         Vs, U2s = _kw_batch(counts, offset, idx, order, ends)
-        ge_v += int((Vs >= obs["V_star"]).sum())
-        ge_u += int((U2s >= obs["U2_star"]).sum())
-    return ((1.0 + ge_v) / (1.0 + ok.size), (1.0 + ge_u) / (1.0 + ok.size),
-            int(ok.size), obs)
+        dv.append(Vs)
+        du.append(U2s)
+    dv = np.concatenate(dv) if dv else np.zeros(0)
+    du = np.concatenate(du) if du else np.zeros(0)
+    # §P7-21: MID-RANK, tie-tolerant. The plateau problem is real here even for an
+    # aperiodic feature; it is merely smaller.
+    return (tie_tolerant_p(dv, obs["V_star"], ok.size),
+            tie_tolerant_p(du, obs["U2_star"], ok.size), int(ok.size), obs)
 
 
 def kuiper_watson_block_bootstrap(theta, counts, offset, n_boot, rng,
@@ -388,7 +453,7 @@ def omnibus_test(theta, counts, offset, n_surr, rng, block_days=90.0,
     only whichever won would be a forking path with a statistic for a knob.
     """
     p_v, p_u, n_used, obs = kuiper_watson_shift_null(
-        theta, counts, offset, n_surr, rng, min_shift=min_shift)
+        theta, counts, offset, n_surr, rng, min_shift=min_shift, periodic=periodic)
     bV, bU = kuiper_watson_block_bootstrap(theta, counts, offset, int(n_surr), rng,
                                            mean_block=float(block_days))
     rows = []
@@ -402,9 +467,12 @@ def omnibus_test(theta, counts, offset, n_surr, rng, block_days=90.0,
             "V": obs["V"], "U2": obs["U2"],
             "V_star": obs["V_star"], "U2_star": obs["U2_star"],
             "n_events": obs["n_events"],
-            "p_circular_shift": float(p_shift), "p_block_bootstrap": float(p_boot),
+            "p_circular_shift": (None if p_shift is None else float(p_shift)),
+            "p_circular_shift_note": (PERIODIC_SHIFT_OMITTED if p_shift is None
+                                      else "mid-rank, tie-tolerant (§P7-21)"),
+            "p_block_bootstrap": float(p_boot),
             "p_raw": float(p_boot if periodic else max(p_shift, p_boot)),
-            "n_surrogates": int(min(n_used, int(n_surr))),
+            "n_surrogates": int(min(n_used, int(n_surr)) if n_used else int(n_surr)),
             "block_days": float(block_days),
             "null": ("block-bootstrap (periodic feature)" if periodic
                      else "max(circular-shift, block-bootstrap)"),

@@ -579,6 +579,59 @@ def assert_frozen_identity(cfg):
     return {"strata_sha256": sha, "config_hash": ch, "ok": True}
 
 
+DETERMINISM_AUDIT = {"pin_threads": True, "no_ledger_line": True}
+
+
+def determinism_twin(jobs=8, seed=20260813, verbose=True):
+    """§P7-21(3): run the FROZEN declaration twice and compare artifact hashes.
+
+    NOT a new declaration. Same config hash, same strata, same declared 171 -- and
+    per §P7-17(2) a re-execution of already-declared rows is REPLICATION, which is
+    not re-priced. So no EXPLORE_COUNT line is appended by either twin; the ledger
+    suppression is recorded in each session's checkpoint with its reason.
+
+    The artifact content hash covers the test ROWS only -- not timings, not the
+    session id -- so it answers exactly one question: did these two runs compute the
+    same numbers? §P7-21 makes a bit-for-bit match the gate.
+    """
+    cfg = frozen_config(seed=seed)
+    ident = assert_frozen_identity(cfg)
+    print("=" * 78)
+    print("§P7-21(3) DETERMINISM TWIN -- the frozen declaration, run twice")
+    print("=" * 78)
+    print("config hash  : %s (UNCHANGED -- determinism is an execution detail)"
+          % ident["config_hash"])
+    print("strata sha256: %s" % ident["strata_sha256"])
+    print("ledger       : NO new EXPLORE_COUNT line (audit, not declaration)")
+    print("=" * 78, flush=True)
+    prepared = ms.prepare(cfg, verbose=verbose)
+    out = []
+    for i in (1, 2):
+        sd = os.path.join(M.MINE_DIR, "session_p721_twin%d" % i)
+        print("--- TWIN %d -> %s ---" % (i, sd), flush=True)
+        r = ms.run(cfg, verbose=verbose, resume=False, session_dir=sd, jobs=int(jobs),
+                   prepared=prepared, determinism=DETERMINISM_AUDIT)
+        st = json.load(open(os.path.join(sd, "checkpoint.json"), encoding="utf-8"))
+        rows = []
+        for k, v in sorted(st["results"].items()):
+            if isinstance(v, list):
+                rows += [t for t in v if isinstance(t, dict) and "test" in t]
+            elif isinstance(v, dict) and k == "period_scan":
+                rows += v.get("peaks", [])
+        out.append({"twin": i, "session_dir": sd,
+                    "artifact_hash": ms.artifact_content_hash(rows),
+                    "n_rows": len(rows), "n_pass": r["n_pass"],
+                    "ledger_suppressed": bool(st.get("ledger_suppressed")),
+                    "rows": rows})
+    match = out[0]["artifact_hash"] == out[1]["artifact_hash"]
+    print("=" * 78)
+    print("TWIN 1 artifact hash: %s" % out[0]["artifact_hash"])
+    print("TWIN 2 artifact hash: %s" % out[1]["artifact_hash"])
+    print("MATCH: %s -> §P7-21 gate %s" % (match, "LIFTS" if match else "HOLDS"))
+    print("=" * 78, flush=True)
+    return out, match
+
+
 def run(jobs=8, session_dir=None, seed=20260813, verbose=True):
     """Execute the frozen 171-test declaration on REAL data. Parent-only ledger."""
     t_open = _dt.datetime.now(_dt.timezone.utc).isoformat()
@@ -780,8 +833,13 @@ def main(argv=None):
     ap.add_argument("--run", action="store_true",
                     help="EXECUTE the frozen declaration on REAL data (§P7-19)")
     ap.add_argument("--jobs", type=int, default=8)
+    ap.add_argument("--twin", action="store_true",
+                    help="§P7-21(3) determinism audit: run the frozen declaration "
+                         "TWICE and compare artifact hashes (no ledger line)")
     ap.add_argument("--session-dir", default=None)
     a = ap.parse_args(argv)
+    if getattr(a, "twin", False):
+        return determinism_twin(jobs=a.jobs, seed=a.seed)
     if a.run:
         return run(jobs=a.jobs, session_dir=a.session_dir, seed=a.seed)
     d = declaration(seed=a.seed, subdaily=a.subdaily)
