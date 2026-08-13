@@ -1,0 +1,1186 @@
+{
+  "id": "F4-59",
+  "title": "Is VIF frequency-indexed? log VIF regressed on the residual spectral excess at each feature's own frequency",
+  "ruling": "HYPOTHESIS_LEDGER.md \u00a7P7-10(d), ASSIGNED",
+  "version": 1,
+  "priced_tests": 0,
+  "priced_tests_note": "Zero, per \u00a7P7-1(c) as invoked by \u00a7P7-10. Every simulation here is drawn from a KNOWN generating process (Poisson from the fitted ETAS lambda) to characterise our own estimator; no rejection about the Earth is made, no BH vector is entered, and NO EXPLORE_COUNT.jsonl line is written.",
+  "state_class": "MEASUREMENT / calibration on existing artifacts. The PREDICTION was registered by Popper in \u00a7P7-10(d) BEFORE this script existed (ledger commit bbd85ee), so the pass/fail rule is pre-registered, not chosen here.",
+  "generated_at": "2026-08-13T02:35:13.932504+00:00",
+  "construction": {
+    "window": [
+      365,
+      8081
+    ],
+    "n_days": 7716,
+    "n_events_observed": 46585.0,
+    "etas_expected": 46586.30881071091,
+    "etas_cache": "D:/CODE/git/quake/replication/engine/out/cache/etas_params_f4_58_control_1deg.json",
+    "n_sim_catalogs": 200,
+    "sim_construction": "counts ~ Poisson(lambda) independently per day",
+    "taper": "Hann, identical for real and simulated series",
+    "band_half_width_bins": 4,
+    "core_bins_excluded": 1,
+    "seed": 20260812,
+    "vif_source": "results_f4_58_vif.json v2 (post-\u00a7P7-10(a) censoring), primary session session_20260811T022953, per-feature median VIF"
+  },
+  "per_feature": [
+    {
+      "feature": "half_draconic_phase",
+      "family": 2,
+      "kind": "phase",
+      "df": 2,
+      "periodic": true,
+      "block_days": 30.0,
+      "peak_bin": 567,
+      "peak_frequency_cpd": 0.0734836702954899,
+      "peak_period_days": 13.608465608465607,
+      "band_bins": [
+        563,
+        571
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 151.18290275380116,
+      "P_sim_band": 6.044906468507598,
+      "median_power_bin": 567,
+      "median_power_period_days": 13.608465608465607,
+      "spectral_excess": 25.009965586965663,
+      "spectral_excess_core_included": 33.44310786659109,
+      "spectral_excess_at_median_power_freq": 25.009965586965663,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 62.638222204994015,
+      "spectral_excess_null_p97_5": 2.111554638351962,
+      "vif_median": 19.913497064045504,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "moon_abs_declination",
+      "family": 1,
+      "kind": "linear",
+      "df": 1,
+      "periodic": true,
+      "block_days": 30.0,
+      "peak_bin": 565,
+      "peak_frequency_cpd": 0.07322446863659927,
+      "peak_period_days": 13.656637168141593,
+      "band_bins": [
+        561,
+        569
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 217.52808130565396,
+      "P_sim_band": 6.184832603835212,
+      "median_power_bin": 565,
+      "median_power_period_days": 13.656637168141593,
+      "spectral_excess": 35.17121565598475,
+      "spectral_excess_core_included": 26.510163583902038,
+      "spectral_excess_at_median_power_freq": 35.17121565598475,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 20.670654423124365,
+      "spectral_excess_null_p97_5": 2.0818891648127793,
+      "vif_median": 18.77160642336241,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "tidal_potential_proxy",
+      "family": 2,
+      "kind": "linear",
+      "df": 1,
+      "periodic": true,
+      "block_days": 800.0,
+      "peak_bin": 565,
+      "peak_frequency_cpd": 0.07322446863659927,
+      "peak_period_days": 13.656637168141593,
+      "band_bins": [
+        561,
+        569
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 217.52808130565396,
+      "P_sim_band": 6.184832603835212,
+      "median_power_bin": 565,
+      "median_power_period_days": 13.656637168141593,
+      "spectral_excess": 35.17121565598475,
+      "spectral_excess_core_included": 26.510163583902038,
+      "spectral_excess_at_median_power_freq": 35.17121565598475,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 24.257181144530403,
+      "spectral_excess_null_p97_5": 2.0818891648127793,
+      "vif_median": 27.817247698067156,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "length_of_day",
+      "family": 3,
+      "kind": "linear",
+      "df": 1,
+      "periodic": false,
+      "block_days": 404.0,
+      "peak_bin": 565,
+      "peak_frequency_cpd": 0.07322446863659927,
+      "peak_period_days": 13.656637168141593,
+      "band_bins": [
+        561,
+        569
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 217.52808130565396,
+      "P_sim_band": 6.184832603835212,
+      "median_power_bin": 42,
+      "median_power_period_days": 183.7142857142857,
+      "spectral_excess": 35.17121565598475,
+      "spectral_excess_core_included": 26.510163583902038,
+      "spectral_excess_at_median_power_freq": 66.74336580868653,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 78.5413529949208,
+      "spectral_excess_null_p97_5": 2.0818891648127793,
+      "vif_median": 226.33416156597437,
+      "vif_n_usable": 31
+    },
+    {
+      "feature": "spring_neap_phase",
+      "family": 2,
+      "kind": "phase",
+      "df": 2,
+      "periodic": true,
+      "block_days": 30.0,
+      "peak_bin": 523,
+      "peak_frequency_cpd": 0.06778123379989633,
+      "peak_period_days": 14.753346080305926,
+      "band_bins": [
+        519,
+        527
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 142.0338735443744,
+      "P_sim_band": 6.240616270116163,
+      "median_power_bin": 523,
+      "median_power_period_days": 14.753346080305926,
+      "spectral_excess": 22.75959094368905,
+      "spectral_excess_core_included": 18.97741493402809,
+      "spectral_excess_at_median_power_freq": 22.75959094368905,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 8.796433671715565,
+      "spectral_excess_null_p97_5": 2.2270819699465623,
+      "vif_median": 17.992557515608322,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "perigee_syzygy",
+      "family": 2,
+      "kind": "linear",
+      "df": 1,
+      "periodic": true,
+      "block_days": 800.0,
+      "peak_bin": 523,
+      "peak_frequency_cpd": 0.06778123379989633,
+      "peak_period_days": 14.753346080305926,
+      "band_bins": [
+        519,
+        527
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 142.0338735443744,
+      "P_sim_band": 6.240616270116163,
+      "median_power_bin": 523,
+      "median_power_period_days": 14.753346080305926,
+      "spectral_excess": 22.75959094368905,
+      "spectral_excess_core_included": 18.97741493402809,
+      "spectral_excess_at_median_power_freq": 22.75959094368905,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 8.66006434295975,
+      "spectral_excess_null_p97_5": 2.2270819699465623,
+      "vif_median": 15.993107829659657,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "declination_product",
+      "family": 2,
+      "kind": "linear",
+      "df": 1,
+      "periodic": true,
+      "block_days": 730.48438,
+      "peak_bin": 304,
+      "peak_frequency_cpd": 0.03939865215137377,
+      "peak_period_days": 25.38157894736842,
+      "band_bins": [
+        300,
+        308
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 139.01062167089862,
+      "P_sim_band": 6.108588884178726,
+      "median_power_bin": 302,
+      "median_power_period_days": 25.549668874172188,
+      "spectral_excess": 22.756584917825585,
+      "spectral_excess_core_included": 26.785881727976736,
+      "spectral_excess_at_median_power_freq": 23.809040776254506,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 28.878462211089197,
+      "spectral_excess_null_p97_5": 2.1455830036915384,
+      "vif_median": 18.497069549833377,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "moon_draconic_phase",
+      "family": 1,
+      "kind": "phase",
+      "df": 2,
+      "periodic": true,
+      "block_days": 54.424442,
+      "peak_bin": 284,
+      "peak_frequency_cpd": 0.0368066355624676,
+      "peak_period_days": 27.169014084507044,
+      "band_bins": [
+        280,
+        288
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 206.39743451467947,
+      "P_sim_band": 6.256538020849408,
+      "median_power_bin": 284,
+      "median_power_period_days": 27.169014084507044,
+      "spectral_excess": 32.98908019528958,
+      "spectral_excess_core_included": 38.17793180232512,
+      "spectral_excess_at_median_power_freq": 32.98908019528958,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 39.22924999352244,
+      "spectral_excess_null_p97_5": 2.2931472356582328,
+      "vif_median": 24.081827389301417,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "moon_declination",
+      "family": 1,
+      "kind": "linear",
+      "df": 1,
+      "periodic": true,
+      "block_days": 54.424442,
+      "peak_bin": 283,
+      "peak_frequency_cpd": 0.03667703473302229,
+      "peak_period_days": 27.26501766784452,
+      "band_bins": [
+        279,
+        287
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 226.78122241339304,
+      "P_sim_band": 6.2850513791953135,
+      "median_power_bin": 283,
+      "median_power_period_days": 27.26501766784452,
+      "spectral_excess": 36.08263619993322,
+      "spectral_excess_core_included": 33.757986893107784,
+      "spectral_excess_at_median_power_freq": 36.08263619993322,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 20.409238335820543,
+      "spectral_excess_null_p97_5": 2.1066667875205494,
+      "vif_median": 24.961665935534526,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "moon_anomalistic_phase",
+      "family": 1,
+      "kind": "phase",
+      "df": 2,
+      "periodic": true,
+      "block_days": 55.1091,
+      "peak_bin": 280,
+      "peak_frequency_cpd": 0.036288232244686365,
+      "peak_period_days": 27.557142857142857,
+      "band_bins": [
+        276,
+        284
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 158.74538959818418,
+      "P_sim_band": 6.137838355257347,
+      "median_power_bin": 280,
+      "median_power_period_days": 27.557142857142857,
+      "spectral_excess": 25.863403434567694,
+      "spectral_excess_core_included": 23.97457765194395,
+      "spectral_excess_at_median_power_freq": 25.863403434567694,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 22.384219330921727,
+      "spectral_excess_null_p97_5": 2.0924818035090955,
+      "vif_median": 20.882635105972014,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "moon_distance",
+      "family": 1,
+      "kind": "linear",
+      "df": 1,
+      "periodic": true,
+      "block_days": 55.1091,
+      "peak_bin": 280,
+      "peak_frequency_cpd": 0.036288232244686365,
+      "peak_period_days": 27.557142857142857,
+      "band_bins": [
+        276,
+        284
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 158.74538959818418,
+      "P_sim_band": 6.137838355257347,
+      "median_power_bin": 280,
+      "median_power_period_days": 27.557142857142857,
+      "spectral_excess": 25.863403434567694,
+      "spectral_excess_core_included": 23.97457765194395,
+      "spectral_excess_at_median_power_freq": 25.863403434567694,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 22.595998802639077,
+      "spectral_excess_null_p97_5": 2.0924818035090955,
+      "vif_median": 22.23011214438842,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "moon_synodic_phase",
+      "family": 1,
+      "kind": "phase",
+      "df": 2,
+      "periodic": true,
+      "block_days": 59.061176,
+      "peak_bin": 261,
+      "peak_frequency_cpd": 0.03382581648522551,
+      "peak_period_days": 29.563218390804597,
+      "band_bins": [
+        257,
+        265
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 185.36571280363887,
+      "P_sim_band": 5.979616115812823,
+      "median_power_bin": 261,
+      "median_power_period_days": 29.563218390804597,
+      "spectral_excess": 30.999600846189384,
+      "spectral_excess_core_included": 26.7188239962452,
+      "spectral_excess_at_median_power_freq": 30.999600846189384,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 18.041281178457982,
+      "spectral_excess_null_p97_5": 2.176534457325871,
+      "vif_median": 24.38489403442799,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "sun_moon_elongation",
+      "family": 1,
+      "kind": "linear",
+      "df": 1,
+      "periodic": true,
+      "block_days": 59.061176,
+      "peak_bin": 261,
+      "peak_frequency_cpd": 0.03382581648522551,
+      "peak_period_days": 29.563218390804597,
+      "band_bins": [
+        257,
+        265
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 185.36571280363887,
+      "P_sim_band": 5.979616115812823,
+      "median_power_bin": 261,
+      "median_power_period_days": 29.563218390804597,
+      "spectral_excess": 30.999600846189384,
+      "spectral_excess_core_included": 26.7188239962452,
+      "spectral_excess_at_median_power_freq": 30.999600846189384,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 17.97260091318769,
+      "spectral_excess_null_p97_5": 2.176534457325871,
+      "vif_median": 21.086987799879623,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "annual_synodic_beat",
+      "family": 2,
+      "kind": "phase",
+      "df": 2,
+      "periodic": true,
+      "block_days": 64.25644254682459,
+      "peak_bin": 240,
+      "peak_frequency_cpd": 0.031104199066874026,
+      "peak_period_days": 32.15,
+      "band_bins": [
+        236,
+        244
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 174.79338002732584,
+      "P_sim_band": 5.880837543201199,
+      "median_power_bin": 240,
+      "median_power_period_days": 32.15,
+      "spectral_excess": 29.72253165357431,
+      "spectral_excess_core_included": 32.81603020765237,
+      "spectral_excess_at_median_power_freq": 29.72253165357431,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 39.11064529655463,
+      "spectral_excess_null_p97_5": 2.0910704127125808,
+      "vif_median": 22.51056487782564,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "eclipse_year_beat",
+      "family": 2,
+      "kind": "phase",
+      "df": 2,
+      "periodic": true,
+      "block_days": 693.2404463279086,
+      "peak_bin": 22,
+      "peak_frequency_cpd": 0.0028512182477967857,
+      "peak_period_days": 350.72727272727275,
+      "band_bins": [
+        18,
+        26
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 528.4292471761419,
+      "P_sim_band": 6.3966795971443595,
+      "median_power_bin": 22,
+      "median_power_period_days": 350.72727272727275,
+      "spectral_excess": 82.60992897190694,
+      "spectral_excess_core_included": 87.73113269168877,
+      "spectral_excess_at_median_power_freq": 82.60992897190694,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 121.17383155211317,
+      "spectral_excess_null_p97_5": 2.2851589110788346,
+      "vif_median": 73.987517956193,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "annual_phase",
+      "family": 1,
+      "kind": "phase",
+      "df": 2,
+      "periodic": true,
+      "block_days": 730.48438,
+      "peak_bin": 21,
+      "peak_frequency_cpd": 0.0027216174183514776,
+      "peak_period_days": 367.4285714285714,
+      "band_bins": [
+        17,
+        25
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 602.6553593786836,
+      "P_sim_band": 6.243307712335809,
+      "median_power_bin": 21,
+      "median_power_period_days": 367.4285714285714,
+      "spectral_excess": 96.5282166355392,
+      "spectral_excess_core_included": 99.18777237712774,
+      "spectral_excess_at_median_power_freq": 96.5282166355392,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 98.39822649766877,
+      "spectral_excess_null_p97_5": 2.173919297152801,
+      "vif_median": 67.08992322969881,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "sun_declination",
+      "family": 1,
+      "kind": "linear",
+      "df": 1,
+      "periodic": true,
+      "block_days": 730.48438,
+      "peak_bin": 21,
+      "peak_frequency_cpd": 0.0027216174183514776,
+      "peak_period_days": 367.4285714285714,
+      "band_bins": [
+        17,
+        25
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 602.6553593786836,
+      "P_sim_band": 6.243307712335809,
+      "median_power_bin": 21,
+      "median_power_period_days": 367.4285714285714,
+      "spectral_excess": 96.5282166355392,
+      "spectral_excess_core_included": 99.18777237712774,
+      "spectral_excess_at_median_power_freq": 96.5282166355392,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 98.39827929806587,
+      "spectral_excess_null_p97_5": 2.173919297152801,
+      "vif_median": 61.14478283535468,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "perigean_spring_beat",
+      "family": 2,
+      "kind": "phase",
+      "df": 2,
+      "periodic": true,
+      "block_days": 800.0,
+      "peak_bin": 19,
+      "peak_frequency_cpd": 0.0024624157594608604,
+      "peak_period_days": 406.10526315789474,
+      "band_bins": [
+        15,
+        23
+      ],
+      "n_band_bins": 6,
+      "P_real_band": 523.0744684433731,
+      "P_sim_band": 6.1777840417373655,
+      "median_power_bin": 19,
+      "median_power_period_days": 406.10526315789474,
+      "spectral_excess": 84.67024177430942,
+      "spectral_excess_core_included": 97.31997721248155,
+      "spectral_excess_at_median_power_freq": 84.67024177430942,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 126.57064468660884,
+      "spectral_excess_null_p97_5": 2.4744416712721904,
+      "vif_median": 79.2334621398866,
+      "vif_n_usable": 1
+    },
+    {
+      "feature": "deep_fraction_30d",
+      "family": 4,
+      "kind": "linear",
+      "df": 1,
+      "periodic": false,
+      "block_days": 104.0,
+      "peak_bin": 4,
+      "peak_frequency_cpd": 0.0005184033177812338,
+      "peak_period_days": 1929.0,
+      "band_bins": [
+        1,
+        8
+      ],
+      "n_band_bins": 5,
+      "P_real_band": 487.3198985432011,
+      "P_sim_band": 5.72908868602729,
+      "median_power_bin": 39,
+      "median_power_period_days": 197.84615384615384,
+      "spectral_excess": 85.06063097464848,
+      "spectral_excess_core_included": 85.34022325517729,
+      "spectral_excess_at_median_power_freq": 101.65985708003014,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 63.29244253742871,
+      "spectral_excess_null_p97_5": 2.390156688289107,
+      "vif_median": 53.37910520715261,
+      "vif_n_usable": 31
+    },
+    {
+      "feature": "mean_depth_30d",
+      "family": 4,
+      "kind": "linear",
+      "df": 1,
+      "periodic": false,
+      "block_days": 108.0,
+      "peak_bin": 4,
+      "peak_frequency_cpd": 0.0005184033177812338,
+      "peak_period_days": 1929.0,
+      "band_bins": [
+        1,
+        8
+      ],
+      "n_band_bins": 5,
+      "P_real_band": 487.3198985432011,
+      "P_sim_band": 5.72908868602729,
+      "median_power_bin": 45,
+      "median_power_period_days": 171.46666666666667,
+      "spectral_excess": 85.06063097464848,
+      "spectral_excess_core_included": 85.34022325517729,
+      "spectral_excess_at_median_power_freq": 71.79473071682426,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 60.199952138132716,
+      "spectral_excess_null_p97_5": 2.390156688289107,
+      "vif_median": 64.15813830841022,
+      "vif_n_usable": 31
+    },
+    {
+      "feature": "b_value_90d",
+      "family": 4,
+      "kind": "linear",
+      "df": 1,
+      "periodic": false,
+      "block_days": 800.0,
+      "peak_bin": 3,
+      "peak_frequency_cpd": 0.00038880248833592535,
+      "peak_period_days": 2572.0,
+      "band_bins": [
+        1,
+        7
+      ],
+      "n_band_bins": 4,
+      "P_real_band": 559.7546128280586,
+      "P_sim_band": 5.78857872192613,
+      "median_power_bin": 13,
+      "median_power_period_days": 593.5384615384615,
+      "spectral_excess": 96.69983595589802,
+      "spectral_excess_core_included": 89.84669903065374,
+      "spectral_excess_at_median_power_freq": 44.8675056414513,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 61.900935694986735,
+      "spectral_excess_null_p97_5": 2.577851090364547,
+      "vif_median": 120.92490228236106,
+      "vif_n_usable": 31
+    },
+    {
+      "feature": "Ap_geomagnetic",
+      "family": 3,
+      "kind": "linear",
+      "df": 1,
+      "periodic": false,
+      "block_days": 30.0,
+      "peak_bin": 1,
+      "peak_frequency_cpd": 0.00012960082944530845,
+      "peak_period_days": 7716.0,
+      "band_bins": [
+        3,
+        5
+      ],
+      "n_band_bins": 3,
+      "P_real_band": 526.1590593634342,
+      "P_sim_band": 6.1341458667113615,
+      "median_power_bin": 741,
+      "median_power_period_days": 10.412955465587045,
+      "spectral_excess": 85.77543977536983,
+      "spectral_excess_core_included": 103.1505364778793,
+      "spectral_excess_at_median_power_freq": 12.144061389918905,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 32.463441428698964,
+      "spectral_excess_null_p97_5": 3.0113014663792517,
+      "vif_median": 48.22310235115155,
+      "vif_n_usable": 31
+    },
+    {
+      "feature": "F107_solar_flux",
+      "family": 3,
+      "kind": "linear",
+      "df": 1,
+      "periodic": false,
+      "block_days": 800.0,
+      "peak_bin": 1,
+      "peak_frequency_cpd": 0.00012960082944530845,
+      "peak_period_days": 7716.0,
+      "band_bins": [
+        3,
+        5
+      ],
+      "n_band_bins": 3,
+      "P_real_band": 526.1590593634342,
+      "P_sim_band": 6.1341458667113615,
+      "median_power_bin": 2,
+      "median_power_period_days": 3858.0,
+      "spectral_excess": 85.77543977536983,
+      "spectral_excess_core_included": 103.1505364778793,
+      "spectral_excess_at_median_power_freq": 67.22129476971001,
+      "spectral_excess_design_weighted_DIAGNOSTIC": 94.90208882786527,
+      "spectral_excess_null_p97_5": 3.0113014663792517,
+      "vif_median": 260.43019155919353,
+      "vif_n_usable": 31
+    }
+  ],
+  "regressions": {
+    "a_block_only": {
+      "n": 23,
+      "dof": 21,
+      "r2": 0.30551986239704465,
+      "rmse_log10": 0.3044906069440509,
+      "terms": {
+        "intercept": {
+          "coef": 0.8679210079647846,
+          "se": 0.24775968014260052,
+          "t": 3.503076075434244,
+          "p": 0.002116932024161016
+        },
+        "log10_block_days": {
+          "coef": 0.32945716133927877,
+          "se": 0.10839256524640972,
+          "t": 3.0394811728121858,
+          "p": 0.006232326042276813
+        }
+      }
+    },
+    "b_excess_only": {
+      "n": 23,
+      "dof": 21,
+      "r2": 0.553538945739142,
+      "rmse_log10": 0.2441382209225505,
+      "terms": {
+        "intercept": {
+          "coef": -0.1588185182523774,
+          "se": 0.34762182373523154,
+          "t": -0.45687154087696913,
+          "p": 0.6524541000509683
+        },
+        "log10_spectral_excess": {
+          "coef": 1.0622895492009312,
+          "se": 0.20818573142500504,
+          "t": 5.102604976477943,
+          "p": 4.7059369039821615e-05
+        }
+      }
+    },
+    "c_excess_plus_block": {
+      "n": 23,
+      "dof": 20,
+      "r2": 0.619313788473424,
+      "rmse_log10": 0.2310054404950591,
+      "terms": {
+        "intercept": {
+          "coef": -0.24355811720564202,
+          "se": 0.3320662211058722,
+          "t": -0.7334624894833514,
+          "p": 0.47178724736528327
+        },
+        "log10_spectral_excess": {
+          "coef": 0.8868627836128655,
+          "se": 0.21842519880473263,
+          "t": 4.060258562043025,
+          "p": 0.0006110574549425769
+        },
+        "log10_block_days": {
+          "coef": 0.1695018656536815,
+          "se": 0.0911828472331558,
+          "t": 1.8589227118589848,
+          "p": 0.0778166498102073
+        }
+      }
+    },
+    "d_frequency_only": {
+      "n": 23,
+      "dof": 21,
+      "r2": 0.4572671620246006,
+      "rmse_log10": 0.269176433702018,
+      "terms": {
+        "intercept": {
+          "coef": 1.090156167518425,
+          "se": 0.13267597679670246,
+          "t": 8.21668092324548,
+          "p": 5.351224251178375e-08
+        },
+        "log10_peak_frequency_cpd": {
+          "coef": -0.25001008789270207,
+          "se": 0.05943686957850047,
+          "t": -4.206313180112969,
+          "p": 0.00039673167543243144
+        }
+      }
+    },
+    "e_excess_core_included": {
+      "n": 23,
+      "dof": 21,
+      "r2": 0.48900235121097035,
+      "rmse_log10": 0.26118813008414693,
+      "terms": {
+        "intercept": {
+          "coef": 0.1343416444491609,
+          "se": 0.33053548214525064,
+          "t": 0.40643637886393624,
+          "p": 0.6885342080861698
+        },
+        "log10_spectral_excess_core_included": {
+          "coef": 0.8896134587506899,
+          "se": 0.1984475193802455,
+          "t": 4.482865099694699,
+          "p": 0.00020483020669218773
+        }
+      }
+    },
+    "f_excess_at_median_power_freq": {
+      "n": 23,
+      "dof": 21,
+      "r2": 0.4436899465228452,
+      "rmse_log10": 0.2725225471646772,
+      "terms": {
+        "intercept": {
+          "coef": 0.09884995927946583,
+          "se": 0.3701732422520393,
+          "t": 0.26703701941849706,
+          "p": 0.7920455058022431
+        },
+        "log10_spectral_excess_medfreq": {
+          "coef": 0.9304601448205744,
+          "se": 0.22735619277612967,
+          "t": 4.092521665933985,
+          "p": 0.0005208142836536249
+        }
+      }
+    },
+    "g_excess_medfreq_plus_block": {
+      "n": 23,
+      "dof": 20,
+      "r2": 0.4927021671514733,
+      "rmse_log10": 0.2666675299985306,
+      "terms": {
+        "intercept": {
+          "coef": 0.07907644369309641,
+          "se": 0.36249945342567025,
+          "t": 0.2181422425490936,
+          "p": 0.8295286583211866
+        },
+        "log10_spectral_excess_medfreq": {
+          "coef": 0.7252768865082653,
+          "se": 0.2669856674675709,
+          "t": 2.716538656878876,
+          "p": 0.0132878201162644
+        },
+        "log10_block_days": {
+          "coef": 0.15835977575724264,
+          "se": 0.11392241789566473,
+          "t": 1.3900668427023348,
+          "p": 0.17978737278547416
+        }
+      }
+    },
+    "h_design_weighted_excess_DIAGNOSTIC_near_circular": {
+      "n": 23,
+      "dof": 21,
+      "r2": 0.5880640972262168,
+      "rmse_log10": 0.2345086182514263,
+      "terms": {
+        "intercept": {
+          "coef": 0.3416171445600951,
+          "se": 0.23422981699488754,
+          "t": 1.4584699289909426,
+          "p": 0.15950635173723196
+        },
+        "log10_spectral_excess_design_weighted": {
+          "coef": 0.7908029467181049,
+          "se": 0.14443123385179044,
+          "t": 5.47529038995537,
+          "p": 1.9690028014560855e-05
+        }
+      }
+    },
+    "collinearity": {
+      "pearson_r_logE_logBlock": 0.4320477850140602,
+      "pearson_r_logE_logFreq": -0.8943771743679436,
+      "spearman_logE_logVIF": [
+        0.8400223876874363,
+        5.334081257959483e-07
+      ],
+      "spearman_logBlock_logVIF": [
+        0.5061297371629355,
+        0.013732624882243331
+      ]
+    },
+    "verdict_sensitivity_to_band": {
+      "band=+/-2 core=+/-0": {
+        "block_coef": 0.21752167403258268,
+        "block_p": 0.07376630076456527,
+        "excess_coef": 0.5421046326522082,
+        "excess_p": 0.05631958048280965,
+        "r2": 0.42377388748065437,
+        "verdict": "MIXED"
+      },
+      "band=+/-2 core=+/-1": {
+        "block_coef": 0.2146464793804904,
+        "block_p": 0.071147841555268,
+        "excess_coef": 0.5146734326913678,
+        "excess_p": 0.04027587588809243,
+        "r2": 0.4401720437064569,
+        "verdict": "PASS"
+      },
+      "band=+/-4 core=+/-0": {
+        "block_coef": 0.18495026495738762,
+        "block_p": 0.07819296736847557,
+        "excess_coef": 0.7837600488024177,
+        "excess_p": 0.003637299013001145,
+        "r2": 0.5496453203140476,
+        "verdict": "PASS"
+      },
+      "band=+/-4 core=+/-1": {
+        "block_coef": 0.1695018656536815,
+        "block_p": 0.0778166498102073,
+        "excess_coef": 0.8868627836128655,
+        "excess_p": 0.0006110574549425769,
+        "r2": 0.619313788473424,
+        "verdict": "PASS"
+      },
+      "band=+/-4 core=+/-2": {
+        "block_coef": 0.222620864702534,
+        "block_p": 0.026118769563505232,
+        "excess_coef": 0.676245550995306,
+        "excess_p": 0.0022671654894173155,
+        "r2": 0.5690995594829784,
+        "verdict": "FAIL"
+      },
+      "band=+/-8 core=+/-0": {
+        "block_coef": 0.18515819097548913,
+        "block_p": 0.06039874258105999,
+        "excess_coef": 1.2011158566861917,
+        "excess_p": 0.0011778239621312542,
+        "r2": 0.594863530944224,
+        "verdict": "PASS"
+      },
+      "band=+/-8 core=+/-1": {
+        "block_coef": 0.18829172765072652,
+        "block_p": 0.04033090874405893,
+        "excess_coef": 1.3391578482641326,
+        "excess_p": 0.00030381766531749604,
+        "r2": 0.6438801003318372,
+        "verdict": "FAIL"
+      },
+      "band=+/-8 core=+/-2": {
+        "block_coef": 0.24350554111792938,
+        "block_p": 0.01257022071805998,
+        "excess_coef": 1.1688842688940324,
+        "excess_p": 0.0014600541384155426,
+        "r2": 0.586563957713952,
+        "verdict": "FAIL"
+      },
+      "band=+/-16 core=+/-0": {
+        "block_coef": 0.2376940036821551,
+        "block_p": 0.02250796118307953,
+        "excess_coef": 0.9942329030999613,
+        "excess_p": 0.005824610737117168,
+        "r2": 0.5295559472528353,
+        "verdict": "FAIL"
+      },
+      "band=+/-16 core=+/-1": {
+        "block_coef": 0.2447006984839325,
+        "block_p": 0.0167493056135524,
+        "excess_coef": 1.0256208154271131,
+        "excess_p": 0.004163417668650154,
+        "r2": 0.5439536595874744,
+        "verdict": "FAIL"
+      },
+      "band=+/-16 core=+/-2": {
+        "block_coef": 0.26302302077043077,
+        "block_p": 0.011511500427998407,
+        "excess_coef": 0.9607555601624457,
+        "excess_p": 0.006644429120080499,
+        "r2": 0.5238117377425238,
+        "verdict": "FAIL"
+      }
+    }
+  },
+  "one_curve_feasibility": {
+    "question": "Does a frequency-indexed curve reproduce a feature's VIF well enough to REPLACE its measurement, which is \u00a7P7-10(d)'s stated practical payoff?",
+    "one_curve_rmse_log10": 0.2441382209225505,
+    "one_curve_scatter_factor": 1.7544387902212637,
+    "worst_curve_residual_factor": 7.4313879290464335,
+    "worst_feature": "length_of_day",
+    "worst_5_curve_residuals": [
+      {
+        "feature": "length_of_day",
+        "block_days": 404.0,
+        "peak_period_days": 13.656637168141593,
+        "block_over_period": 29.582685329186106,
+        "vif_median": 226.33416156597437,
+        "curve_residual_factor": 7.4313879290464335
+      },
+      {
+        "feature": "F107_solar_flux",
+        "block_days": 800.0,
+        "peak_period_days": 7716.0,
+        "block_over_period": 0.10368066355624676,
+        "vif_median": 260.43019155919353,
+        "curve_residual_factor": 3.316794682171606
+      },
+      {
+        "feature": "Ap_geomagnetic",
+        "block_days": 30.0,
+        "peak_period_days": 7716.0,
+        "block_over_period": 0.0038880248833592537,
+        "vif_median": 48.22310235115155,
+        "curve_residual_factor": 0.6141612402099783
+      },
+      {
+        "feature": "moon_abs_declination",
+        "block_days": 30.0,
+        "peak_period_days": 13.656637168141593,
+        "block_over_period": 2.1967340590979783,
+        "vif_median": 18.77160642336241,
+        "curve_residual_factor": 0.616341291205054
+      },
+      {
+        "feature": "deep_fraction_30d",
+        "block_days": 104.0,
+        "peak_period_days": 1929.0,
+        "block_over_period": 0.05391394504924832,
+        "vif_median": 53.37910520715261,
+        "curve_residual_factor": 0.6858975998842046
+      }
+    ],
+    "same_frequency_different_vif": [
+      {
+        "peak_bin": 1,
+        "period_days": 7716.0,
+        "features": [
+          "Ap_geomagnetic",
+          "F107_solar_flux"
+        ],
+        "vif": [
+          48.22310235115155,
+          260.43019155919353
+        ],
+        "max_over_min": 5.400527524396708
+      },
+      {
+        "peak_bin": 4,
+        "period_days": 1929.0,
+        "features": [
+          "deep_fraction_30d",
+          "mean_depth_30d"
+        ],
+        "vif": [
+          53.37910520715261,
+          64.15813830841022
+        ],
+        "max_over_min": 1.2019335666910589
+      },
+      {
+        "peak_bin": 21,
+        "period_days": 367.4285714285714,
+        "features": [
+          "annual_phase",
+          "sun_declination"
+        ],
+        "vif": [
+          67.08992322969881,
+          61.14478283535468
+        ],
+        "max_over_min": 1.0972305423073083
+      },
+      {
+        "peak_bin": 261,
+        "period_days": 29.563218390804597,
+        "features": [
+          "moon_synodic_phase",
+          "sun_moon_elongation"
+        ],
+        "vif": [
+          24.38489403442799,
+          21.086987799879623
+        ],
+        "max_over_min": 1.1563953214108273
+      },
+      {
+        "peak_bin": 280,
+        "period_days": 27.557142857142857,
+        "features": [
+          "moon_anomalistic_phase",
+          "moon_distance"
+        ],
+        "vif": [
+          20.882635105972014,
+          22.23011214438842
+        ],
+        "max_over_min": 1.0645261975597637
+      },
+      {
+        "peak_bin": 523,
+        "period_days": 14.753346080305926,
+        "features": [
+          "spring_neap_phase",
+          "perigee_syzygy"
+        ],
+        "vif": [
+          17.992557515608322,
+          15.993107829659657
+        ],
+        "max_over_min": 1.1250194588346758
+      },
+      {
+        "peak_bin": 565,
+        "period_days": 13.656637168141593,
+        "features": [
+          "moon_abs_declination",
+          "tidal_potential_proxy",
+          "length_of_day"
+        ],
+        "vif": [
+          18.77160642336241,
+          27.817247698067156,
+          226.33416156597437
+        ],
+        "max_over_min": 12.057261188061544
+      }
+    ],
+    "max_within_frequency_vif_ratio": 12.057261188061544,
+    "reading": "A frequency curve that leaves a factor-F scatter cannot retire a per-feature measurement unless the floor is quoted at the curve's UPPER band, i.e. curve x F, which is the same conservative construction \u00a7P7-10(b) already imposed on VIF(block_days) at its upper 1-sigma."
+  },
+  "verdict": "MIXED",
+  "verdict_detail": {
+    "verdict_at_default_band": "PASS",
+    "default_band": "half = 4 bins, core excluded = 1 bins",
+    "band_settings_PASS": 4,
+    "band_settings_FAIL": 6,
+    "band_settings_total": 11,
+    "why_mixed": "The \u00a7P7-10(d) pass/fail rule is pre-registered; the smoothing band used to estimate the excess is NOT (the ledger specifies no band), and it is an analyst choice made in this script. The rule returns PASS at 4 of 11 band settings and FAIL at 6, so the reported verdict is MIXED: the excess term absorbs roughly HALF the block-length slope at every setting (0.3295 -> 0.17..0.26) but whether the remainder clears p = 0.05 depends on a free parameter, and a slope may not be declared absorbed on that basis.",
+    "block_slope_alone": {
+      "coef": 0.32945716133927877,
+      "se": 0.10839256524640972,
+      "t": 3.0394811728121858,
+      "p": 0.006232326042276813
+    },
+    "block_slope_after_excess": {
+      "coef": 0.1695018656536815,
+      "se": 0.0911828472331558,
+      "t": 1.8589227118589848,
+      "p": 0.0778166498102073
+    },
+    "excess_slope_after_block": {
+      "coef": 0.8868627836128655,
+      "se": 0.21842519880473263,
+      "t": 4.060258562043025,
+      "p": 0.0006110574549425769
+    },
+    "excess_slope_alone": {
+      "coef": 1.0622895492009312,
+      "se": 0.20818573142500504,
+      "t": 5.102604976477943,
+      "p": 4.7059369039821615e-05
+    },
+    "rule": "PASS iff the block-length coefficient in regression (c) is consistent with 0 (p > 0.05) while the excess term is retained (p <= 0.05); FAIL iff the block-length slope survives at p <= 0.05; MIXED otherwise."
+  },
+  "k009_reconciliation": {
+    "what_k009_is": "K-009 (results_k009.json, exp_k009_residual_whiteness.py, run 2026-08-09): residual whiteness of a spatio-temporal ETAS on SCSN southern California, 0.2-degree cells, WEEKLY bins, 2010-2018, 20 ETAS simulations. DIFFERENT catalog, DIFFERENT region, DIFFERENT binning, DIFFERENT baseline fit from the series used here.",
+    "k009_headline": {
+      "lag1_weekly_ACF": 0.09577815962373364,
+      "null_lag1_97.5": 0.002275373007532008,
+      "PRIMARY_TIME_weeks": ">52",
+      "residual_correlation_TIME_days": 364.0,
+      "TIME_censored": true,
+      "state_class": "first-run (confirmatory scoring; prediction POST-registered, see pre_registration)",
+      "known_caveat_carried": "K-009's own robustness arm: excluding the 2010 El Mayor-Cucapah year, results_k009.json robustness_excluding_2010.SURVIVES = False (acf1 0.0958 -> 0.0382). K-009's low-frequency excess is therefore partly carried by one large sequence, and this reconciliation does not lean on it."
+    },
+    "this_series_matched_statistics": {
+      "daily_residual_acf1": 0.4311010666746414,
+      "daily_null_acf1_p97_5": 0.02330115153206157,
+      "weekly_residual_acf1": 0.3104103782601845,
+      "weekly_null_acf1_p97_5": 0.05368330448558946,
+      "note": "computed on THIS script's series (global ComCat M>=4.5, 1-degree domain-summed daily counts, engine ETAS-v1) against the same 200 ETAS-Poisson catalogs used for the spectra."
+    },
+    "band_profile_of_excess": {
+      "2-7 d": {
+        "n_bins": 2756,
+        "P_real": 47.371686574277426,
+        "P_sim": 6.20115872647174,
+        "excess": 7.6391669144115575,
+        "excess_null_p97_5": 1.051097554902649
+      },
+      "7-30 d": {
+        "n_bins": 845,
+        "P_real": 120.64136376952763,
+        "P_sim": 6.166275331479593,
+        "excess": 19.564705966604937,
+        "excess_null_p97_5": 1.1024043694333545
+      },
+      "30-90 d": {
+        "n_bins": 172,
+        "P_real": 228.21348588307265,
+        "P_sim": 6.145949274512724,
+        "excess": 37.13234126898425,
+        "excess_null_p97_5": 1.2306952211038882
+      },
+      "90-365 d": {
+        "n_bins": 64,
+        "P_real": 333.8188938809345,
+        "P_sim": 6.148069674133128,
+        "excess": 54.29653721808263,
+        "excess_null_p97_5": 1.3897755758631354
+      },
+      "365-1000 d": {
+        "n_bins": 14,
+        "P_real": 390.7586217944122,
+        "P_sim": 6.108095277918776,
+        "excess": 63.973891043748786,
+        "excess_null_p97_5": 1.7861074244539656
+      },
+      "1000-4000 d": {
+        "n_bins": 6,
+        "P_real": 387.7056139467225,
+        "P_sim": 6.0890970873746575,
+        "excess": 63.672102510995366,
+        "excess_null_p97_5": 2.367647672071524
+      }
+    },
+    "reconciliation_statement": "AGREEMENT IN SIGN AND KIND, DISAGREEMENT IN MAGNITUDE, AND ONE CORRECTION TO THE MECHANISM'S PREMISE.\n(1) K-009 found the ETAS residual NOT white, with excess correlation out to its 52-week censoring cap. This series agrees and is not marginal about it: weekly residual ACF1 = 0.3104 against an ETAS-Poisson null 97.5th percentile of 0.0537, and the excess is monotone in period across every band measured. Nothing here contradicts K-009.\n(2) The MAGNITUDES differ by ~3x on the matched weekly statistic (0.3104 here vs 0.0958 in K-009). That is expected rather than troubling: K-009 residualises a SPATIO-TEMPORAL ETAS on 0.2-degree SCSN cells, while this series is a global domain-SUMMED daily count against a temporal ETAS-v1 offset, which cannot absorb spatially localised sequences at all. The comparison is directional, not quantitative, and is not used as one.\n(3) CORRECTION TO \u00a7P7-10(d)'s PREMISE, stated loudly because it is the mechanism's own reasoning: the ledger says 'ETAS absorbs short-timescale clustering well and long-timescale drift poorly'. The band profile only half-supports that. The excess IS strongly monotone in period (7.6x at 2-7 d rising to 64.0x beyond 365 d), so the DIRECTION is right; but 7.6x at 2-7 days is not 'absorbed well' by any reading. On this series the ETAS offset leaves large residual power at ALL timescales and merely leaves MORE at long ones. Any claim that the count-path VIF is a purely low-frequency phenomenon is not supported here."
+  },
+  "caveats": [
+    "The feature frequency is the PEAK of the feature's own design periodogram, not block_days/2. block_days is clipped to [30, 800] d and for the non-cyclic families it is 4x an autocorrelation time, so block_days/2 is not the period for a substantial minority of features; using it would have made the regressor a relabelling of the regressor it is supposed to displace.",
+    "The primary spectral excess EXCLUDES the central +/- 1 Fourier bins around the feature's own frequency, because the feature's own bin is close to chi2_obs, the numerator of the VIF being regressed. The core-included variant is reported as regression (e); if the two differ materially, the core-included one is the contaminated one.",
+    "23 features, so regression (c) has 20 residual degrees of freedom and the two regressors are correlated (r reported under `collinearity`). A MIXED outcome would be a statement about this design's resolving power.",
+    "Per-feature VIF for families 3 and 4 is a median over 31 lags while the spectrum is lag-free; a lag shifts a design's phase, not its frequency, so the frequency assignment is lag-invariant even though the VIF is not.",
+    "The ETAS-Poisson null is white by construction, so P_sim is an estimate of a FLAT spectrum; the excess ratio is therefore essentially P_real(f) / mean(lambda) and inherits none of the null's own frequency structure. This is a property of the chosen null, not an assumption.",
+    "engine/out/cache/etas_params.json is NOT read or written by this script; the 1-degree fit comes from etas_params_f4_58_control_1deg.json via the f4_58_control_prep.npz cache."
+  ],
+  "fitted_curve": "VIF = 10^-0.1588 * E^1.0623  (E = residual spectral excess at the feature's own frequency), R2 = 0.554, RMSE = 0.244 in log10 VIF = a 1.75x scatter factor. The exponent is consistent with 1 (1.0623 +/- 0.2082), which is the mechanism's OWN quantitative prediction: an inflation that IS the spectral excess, not merely correlated with it.",
+  "residual_candidate_if_not_absorbed": {
+    "what_survives": "a POSITIVE block-length coefficient of +0.17 to +0.26 (from +0.3295 unconditionally), retained at every band setting tested, i.e. the frequency term absorbs roughly HALF the slope and no more.",
+    "named_candidate": "BLOCK-PRESERVED LOW-FREQUENCY POWER IN THE SURROGATES. The block bootstrap resamples blocks of block_days, so a surrogate retains whatever structure lives WITHIN a block and destroys what lives across blocks. On the real target -- which this run measures to carry a 54x to 64x residual spectral excess at periods of 90 d and longer -- a LONGER block preserves more of that real low-frequency power in the surrogates, which WIDENS the bootstrap null, which raises p_boot, which lowers chi2.ppf(1 - p_boot) and so raises VIF through the identity. Crucially this candidate is CONSISTENT with the \u00a7P7-10(a) ratified control result rather than in tension with it: the control's target is white by construction, so it has no low-frequency power for a long block to preserve, and the control's VIF is correspondingly FLAT in block length. The mechanism predicts an effect that can exist only on the real target, which is exactly where it is seen.",
+    "supporting_observation": "The two largest UPWARD departures from the one-frequency curve are length_of_day (VIF 226, 7.4x above the curve) and F107_solar_flux (VIF 260, 3.3x above it). Both are family-3 covariates whose block_days comes from 4x an autocorrelation time (404 d and 800 d) rather than 2x a period. Stated precisely, because the numbers do not support a tidier claim: length_of_day is the case where the block is long relative to the feature's own spectral peak (block / peak period = 29.6), whereas F107 and Ap_geomagnetic peak at the record-length bin itself, where the excess is estimated from only a handful of Fourier bins and the frequency assignment is weakest. The outliers are therefore consistent with the candidate but do not by themselves evidence it; see `one_curve_feasibility.worst_5_curve_residuals`.",
+    "how_to_kill_it": "Re-run the F4-58 identity on the REAL target at the \u00a7P7-8(b) forced BLOCK_LADDER (that arm exists only for the simulated control today). If the residual slope is block-preserved real power, VIF on the real target must rise with FORCED block length at FIXED feature -- a within-feature slope, which removes the across-feature confounding entirely. If it does not, this candidate is dead and the slope is still unowned.",
+    "cost": "one control-sized sweep on the real target; no new declared tests."
+  }
+}

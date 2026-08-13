@@ -12,6 +12,34 @@ variance inflation. Zero new surrogates are drawn: every input is read from
 (feature, kind, df, chi2_score, p_raw, block_days) per test.
 
 Priced tests: 0. This makes no rejection and enters no BH vector (§P7-1(c)).
+
+AMENDMENT 2026-08-12 (§P7-10(a), REQUIRED REFINEMENT -- censoring)
+-----------------------------------------------------------------
+§P7-10(a) rules that the identity CENSORS whenever `p_boot` sits at its Monte
+Carlo resolution floor: `chi2.ppf(1 - p, df)` saturates, the ratio is pushed
+down, and VIF is UNDERSTATED for exactly the most significant tests -- the
+anti-conservative direction, because an understated VIF understates the S-15
+floor. Rule as written: "measurements whose `p_boot` is at the floor are
+excluded from the VIF median and reported separately with their count."
+
+Implemented here as follows.
+
+  * The block-bootstrap resolution floor is `1 / (B + 1)` with B = the session's
+    configured `n_surrogates` (bootstrap_p returns (1 + #ge) / (1 + B)).
+    VERIFIED on disk: every `p_block_bootstrap` in all four sessions lies exactly
+    on the 1/(B+1) lattice (0 rows off-grid of 2,169), so the floor is exact and
+    not inferred.
+  * The circular-shift floor is `1 / (n_used + 1)` with `n_used` = the recorded
+    per-row `n_surrogates` (empirical_p returns (1 + #ge) / (1 + n_used)).
+  * `p_raw` = p_boot for periodic features, else max(p_shift, p_boot); its own
+    attainable floor is therefore max(floor_shift, floor_boot) for the
+    non-periodic case. Both flags are recorded; the OPERATIVE exclusion is the
+    ledger's literal one (`p_block_bootstrap` at floor), which is the wider of
+    the two exclusions and so the conservative choice.
+
+Version 2 of `results_f4_58_vif.json` carries the censoring block; the version-1
+headline numbers are preserved verbatim under `superseded_v1_2026_08_12` so that
+nothing already quoted in the ledger is silently overwritten.
 """
 
 from __future__ import annotations
@@ -64,6 +92,27 @@ def vif_of(chi2_obs, p, df):
     return float(chi2_obs / ref), "OK"
 
 
+FLOOR_EPS = 1e-12
+
+
+def resolution_floors(t, n_surr_cfg, periodic):
+    """(floor_boot, floor_shift, floor_p_raw) for one checkpoint test row.
+
+    bootstrap_p  -> (1 + #ge) / (1 + B),        B = config n_surrogates
+    empirical_p  -> (1 + #ge) / (1 + n_used),   n_used = row 'n_surrogates'
+    """
+    floor_boot = (1.0 / (n_surr_cfg + 1.0)) if n_surr_cfg else None
+    n_used = t.get("n_surrogates")
+    floor_shift = (1.0 / (n_used + 1.0)) if n_used else None
+    if periodic or t.get("p_circular_shift") is None:
+        floor_raw = floor_boot
+    elif floor_boot is None:
+        floor_raw = floor_shift
+    else:
+        floor_raw = max(floor_boot, floor_shift or 0.0)
+    return floor_boot, floor_shift, floor_raw
+
+
 def summarize(vals):
     a = np.asarray([v for v in vals if v is not None and np.isfinite(v)], dtype=float)
     if a.size == 0:
@@ -93,7 +142,13 @@ def analyze(session: str, label: str):
             continue
         v, st = vif_of(chi2_obs, p, df)
         status_counts[st] += 1
-        censored = bool(n_sur and p is not None and p <= 1.0 / (n_sur + 1.0) + 1e-12)
+        periodic = (t.get("null") == "block-bootstrap (periodic feature)")
+        f_boot, f_shift, f_raw = resolution_floors(t, n_sur, periodic)
+        p_boot = t.get("p_block_bootstrap")
+        boot_at_floor = bool(f_boot is not None and p_boot is not None
+                             and p_boot <= f_boot + FLOOR_EPS)
+        used_at_floor = bool(f_raw is not None and p is not None
+                             and p <= f_raw + FLOOR_EPS)
         rows.append(
             {
                 "feature": t.get("feature"),
@@ -105,9 +160,21 @@ def analyze(session: str, label: str):
                 "null": t.get("null"),
                 "chi2_obs": chi2_obs,
                 "p_raw": p,
+                "p_block_bootstrap": p_boot,
+                "p_circular_shift": t.get("p_circular_shift"),
                 "vif": v,
                 "status": st,
-                "p_at_surrogate_floor": censored,
+                # §P7-10(a). `censored` is the OPERATIVE exclusion flag.
+                "censored": boot_at_floor,
+                "p_boot_at_resolution_floor": boot_at_floor,
+                "p_used_at_resolution_floor": used_at_floor,
+                "resolution_floor_boot": f_boot,
+                "resolution_floor_shift": f_shift,
+                "resolution_floor_p_used": f_raw,
+                # legacy field name kept so nothing downstream breaks; it was
+                # computed against the CONFIG surrogate count applied to p_raw,
+                # which is the v1 definition.
+                "p_at_surrogate_floor": used_at_floor,
             }
         )
 
@@ -115,11 +182,17 @@ def analyze(session: str, label: str):
     for r in rows:
         per_feature.setdefault(r["feature"], []).append(r)
 
+    # §P7-10(a): every median below is taken over UNCENSORED rows only.
+    def keep(r):
+        return r["status"] == "OK" and not r["censored"]
+
     feature_table = []
     for feat, rs in sorted(per_feature.items()):
-        usable = [r["vif"] for r in rs if r["status"] == "OK"]
+        usable = [r["vif"] for r in rs if keep(r)]
+        cens = [r["vif"] for r in rs if r["status"] == "OK" and r["censored"]]
         blk = [r["block_days"] for r in rs if r["block_days"] is not None]
         s = summarize(usable)
+        sc = summarize(cens)
         feature_table.append(
             {
                 "feature": feat,
@@ -130,25 +203,53 @@ def analyze(session: str, label: str):
                 "null": rs[0]["null"],
                 "n_tests": len(rs),
                 "n_usable": 0 if s is None else s["n"],
+                "n_censored": len(cens),
                 "vif_median": None if s is None else s["median"],
                 "vif_q25": None if s is None else s["q25"],
                 "vif_q75": None if s is None else s["q75"],
+                "vif_median_censored_rows": None if sc is None else sc["median"],
             }
         )
 
-    all_usable = [r["vif"] for r in rows if r["status"] == "OK"]
+    all_usable = [r["vif"] for r in rows if keep(r)]
     overall = summarize(all_usable)
+
+    # ---- §P7-10(a) censoring report -------------------------------------
+    ok_rows = [r for r in rows if r["status"] == "OK"]
+    cens_rows = [r for r in ok_rows if r["censored"]]
+    censoring = {
+        "rule": ("§P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo "
+                 "resolution floor 1/(B+1) are EXCLUDED from every median below "
+                 "and reported here with their count. chi2.ppf saturates there, "
+                 "so VIF is understated -- the anti-conservative direction."),
+        "B_block_bootstrap": n_sur,
+        "resolution_floor_p_boot": (None if not n_sur else 1.0 / (n_sur + 1.0)),
+        "n_rows_scored": len(ok_rows),
+        "n_censored_excluded": len(cens_rows),
+        "n_censored_by_p_used_at_floor": sum(1 for r in ok_rows
+                                             if r["p_used_at_resolution_floor"]),
+        "censored_rows": [
+            {k: r[k] for k in ("feature", "lag", "df", "block_days", "chi2_obs",
+                               "p_raw", "p_block_bootstrap", "vif")}
+            for r in cens_rows
+        ],
+        "censored_vif_summary": summarize([r["vif"] for r in cens_rows]),
+        "note_score_vs_mark": (
+            "Only rows carrying `chi2_score` (the GLM score tests) enter F4-58 at "
+            "all; the mark-axis rows (spearman / circular-linear) have no chi2 and "
+            "are scored separately in F4-58M, where the censoring rule DOES bite."),
+    }
 
     # Robustness: the identity over-estimates VIF for any test carrying real
     # signal (chi2_obs inflated for a reason other than dispersion). Restricting
     # to tests whose surrogate p is comfortably null (p_raw > 0.10) removes that
     # contamination at the cost of a mild downward selection on chi2_obs.
-    null_only = [r["vif"] for r in rows if r["status"] == "OK" and r["p_raw"] > 0.10]
+    null_only = [r["vif"] for r in rows if keep(r) and r["p_raw"] > 0.10]
     overall_null_only = summarize(null_only)
     # Phase features only (df == 2) -- these are the objects the region battery
     # will actually test, so this is the VIF that feeds the R arithmetic.
-    df2 = [r["vif"] for r in rows if r["status"] == "OK" and r["df"] == 2]
-    df2_null = [r["vif"] for r in rows if r["status"] == "OK" and r["df"] == 2 and r["p_raw"] > 0.10]
+    df2 = [r["vif"] for r in rows if keep(r) and r["df"] == 2]
+    df2_null = [r["vif"] for r in rows if keep(r) and r["df"] == 2 and r["p_raw"] > 0.10]
     overall_df2 = summarize(df2)
     overall_df2_null_only = summarize(df2_null)
 
@@ -184,8 +285,42 @@ def analyze(session: str, label: str):
         "overall_vif_df2_phase": overall_df2,
         "overall_vif_df2_phase_null_only": overall_df2_null_only,
         "block_length_dependence": block_dep,
+        "censoring_P7_10a": censoring,
         "per_feature": feature_table,
         "_rows": rows,
+    }
+
+
+def _superseded_snapshot(path):
+    """Preserve the v1 numbers already quoted in the ledger, verbatim.
+
+    Returns the block to store under `superseded_v1_2026_08_12`. If the file on
+    disk is already v2+, its existing superseded block is carried forward
+    unchanged (so re-running never destroys the v1 record).
+    """
+    if not os.path.exists(path):
+        return {"note": "no prior results file on disk at first v2 write"}
+    with open(path, "r", encoding="utf-8") as fh:
+        old = json.load(fh)
+    if old.get("version"):
+        return old.get("superseded_v1_2026_08_12",
+                       {"note": "prior file was already v2+ and carried no v1 block"})
+    return {
+        "note": ("Version 1 of this file, written 2026-08-12 before the §P7-10(a) "
+                 "censoring refinement. These are the numbers quoted in "
+                 "HYPOTHESIS_LEDGER.md §P7-8 and §P7-10 and they are preserved "
+                 "verbatim here rather than overwritten."),
+        "v1_verdict": old.get("verdict"),
+        "v1_per_session_overall": {
+            s["session"]: {
+                "overall_vif": s.get("overall_vif"),
+                "overall_vif_df2_phase": s.get("overall_vif_df2_phase"),
+                "overall_vif_df2_phase_null_only": s.get("overall_vif_df2_phase_null_only"),
+                "block_length_dependence": s.get("block_length_dependence"),
+            }
+            for s in old.get("sessions", [])
+        },
+        "v1_R_selection_arithmetic": old.get("R_selection_arithmetic"),
     }
 
 
@@ -195,6 +330,13 @@ def main():
         "title": "Per-feature variance inflation factor (VIF) from existing session output",
         "ruling": "HYPOTHESIS_LEDGER.md §P7-1(c) (F4-58 RE-SPECIFIED); floor formula §P7-1(b)",
         "identity": "VIF(test) = chi2_obs / chi2.ppf(1 - p_surrogate, df)",
+        "version": 2,
+        "version_note": (
+            "v2, 2026-08-12: §P7-10(a) censoring refinement applied -- rows whose "
+            "p_block_bootstrap sits at its Monte Carlo resolution floor are excluded "
+            "from every median and reported separately with their count (see "
+            "`censoring_P7_10a` per session and `correction_2026_08_12`). v1 headline "
+            "numbers preserved under `superseded_v1_2026_08_12`."),
         "priced_tests": 0,
         "priced_tests_note": (
             "Zero new surrogates drawn and zero new tests declared. This is a re-reading of "
@@ -331,6 +473,51 @@ def main():
     ]
 
     path = os.path.join(REPO, "results_f4_58_vif.json")
+    out["superseded_v1_2026_08_12"] = _superseded_snapshot(path)
+
+    # ---- §P7-10(a) correction block: what the censoring rule moved ---------
+    prev = out["superseded_v1_2026_08_12"].get("v1_per_session_overall") or {}
+    moved = {}
+    for s in out["sessions"]:
+        p1 = prev.get(s["session"], {})
+        def _pair(new, old_block, key):
+            o = (old_block or {}).get(key) if isinstance(old_block, dict) else None
+            return {
+                "v1_median": None if not o else o.get("median"),
+                "v2_median": None if not new else new.get("median"),
+                "v1_n": None if not o else o.get("n"),
+                "v2_n": None if not new else new.get("n"),
+            }
+        moved[s["session"]] = {
+            "n_censored_excluded": s["censoring_P7_10a"]["n_censored_excluded"],
+            "overall_vif": _pair(s["overall_vif"], p1, "overall_vif"),
+            "overall_vif_df2_phase": _pair(s["overall_vif_df2_phase"], p1,
+                                           "overall_vif_df2_phase"),
+            "overall_vif_df2_phase_null_only": _pair(
+                s["overall_vif_df2_phase_null_only"], p1,
+                "overall_vif_df2_phase_null_only"),
+            "block_length_dependence_v2": s["block_length_dependence"],
+            "block_length_dependence_v1": p1.get("block_length_dependence"),
+        }
+    total_cens = sum(s["censoring_P7_10a"]["n_censored_excluded"] for s in out["sessions"])
+    out["correction_2026_08_12"] = {
+        "ruling": "HYPOTHESIS_LEDGER.md §P7-10(a), REQUIRED REFINEMENT",
+        "applied": ("rows with p_block_bootstrap at the 1/(B+1) Monte Carlo "
+                    "resolution floor excluded from all medians"),
+        "total_rows_censored_across_sessions": total_cens,
+        "effect_on_quoted_numbers": (
+            "NONE. No GLM score-test row in any of the four sessions has "
+            "p_block_bootstrap at its resolution floor, so the exclusion set is "
+            "empty on the count path and every median is bitwise unchanged from "
+            "v1. The censoring seam is real but it does not bite here: the three "
+            "floor-censored rows on disk per session are MARK-axis rows "
+            "(spearman), which never entered F4-58 (they carry no chi2_score) and "
+            "which are scored in F4-58M instead."
+            if total_cens == 0 else
+            "SEE per-session v1/v2 medians below -- the exclusion set is non-empty."),
+        "per_session": moved,
+    }
+
     with open(path, "w", encoding="utf-8") as fh:
         json.dump(out, fh, indent=2)
     print("wrote %s" % path)
@@ -340,6 +527,12 @@ def main():
         print("    status:", s["status_counts"])
         print("    overall VIF:", s["overall_vif"])
         print("    block-length dependence:", s["block_length_dependence"])
+        c = s["censoring_P7_10a"]
+        print("    §P7-10(a) censoring: B=%s floor=%.3e scored=%d EXCLUDED=%d "
+              "(p_used-at-floor=%d)"
+              % (c["B_block_bootstrap"], c["resolution_floor_p_boot"] or 0.0,
+                 c["n_rows_scored"], c["n_censored_excluded"],
+                 c["n_censored_by_p_used_at_floor"]))
     print("\n--- per-feature VIF, primary session ---")
     print("%-28s %6s %10s %10s %10s %10s" % ("feature", "df", "block_d", "VIF_med", "q25", "q75"))
     for f in sorted(prim["per_feature"], key=lambda r: (r["block_days"] or 0)):

@@ -3,6 +3,8 @@
   "title": "Per-feature variance inflation factor (VIF) from existing session output",
   "ruling": "HYPOTHESIS_LEDGER.md \u00a7P7-1(c) (F4-58 RE-SPECIFIED); floor formula \u00a7P7-1(b)",
   "identity": "VIF(test) = chi2_obs / chi2.ppf(1 - p_surrogate, df)",
+  "version": 2,
+  "version_note": "v2, 2026-08-12: \u00a7P7-10(a) censoring refinement applied -- rows whose p_block_bootstrap sits at its Monte Carlo resolution floor are excluded from every median and reported separately with their count (see `censoring_P7_10a` per session and `correction_2026_08_12`). v1 headline numbers preserved under `superseded_v1_2026_08_12`.",
   "priced_tests": 0,
   "priced_tests_note": "Zero new surrogates drawn and zero new tests declared. This is a re-reading of statistics already computed and already declared in EXPLORE_COUNT.jsonl by the sessions listed below; it makes no rejection and enters no BH vector (\u00a7P7-1(c)). No new EXPLORE_COUNT.jsonl line is written by this script.",
   "prediction_on_record": {
@@ -70,6 +72,17 @@
         "loglog_slope_stderr": 0.1083925652464096,
         "loglog_p": 0.006232326042276756
       },
+      "censoring_P7_10a": {
+        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so VIF is understated -- the anti-conservative direction.",
+        "B_block_bootstrap": 50000,
+        "resolution_floor_p_boot": 1.999960000799984e-05,
+        "n_rows_scored": 203,
+        "n_censored_excluded": 0,
+        "n_censored_by_p_used_at_floor": 0,
+        "censored_rows": [],
+        "censored_vif_summary": null,
+        "note_score_vs_mark": "Only rows carrying `chi2_score` (the GLM score tests) enter F4-58 at all; the mark-axis rows (spearman / circular-linear) have no chi2 and are scored separately in F4-58M, where the censoring rule DOES bite."
+      },
       "per_feature": [
         {
           "feature": "Ap_geomagnetic",
@@ -80,9 +93,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 48.22310235115155,
           "vif_q25": 39.926774561548825,
-          "vif_q75": 52.906425216730725
+          "vif_q75": 52.906425216730725,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "F107_solar_flux",
@@ -93,9 +108,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 260.43019155919353,
           "vif_q25": 178.85434311523784,
-          "vif_q75": 291.67813064681104
+          "vif_q75": 291.67813064681104,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "annual_phase",
@@ -106,9 +123,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 67.08992322969881,
           "vif_q25": 67.08992322969881,
-          "vif_q75": 67.08992322969881
+          "vif_q75": 67.08992322969881,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "annual_synodic_beat",
@@ -119,9 +138,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 22.51056487782564,
           "vif_q25": 22.51056487782564,
-          "vif_q75": 22.51056487782564
+          "vif_q75": 22.51056487782564,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "b_value_90d",
@@ -132,9 +153,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 120.92490228236106,
           "vif_q25": 116.65922063989922,
-          "vif_q75": 124.89574735171747
+          "vif_q75": 124.89574735171747,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "declination_product",
@@ -145,9 +168,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 18.497069549833377,
           "vif_q25": 18.497069549833377,
-          "vif_q75": 18.497069549833377
+          "vif_q75": 18.497069549833377,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "deep_fraction_30d",
@@ -158,9 +183,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 53.37910520715261,
           "vif_q25": 52.663225933701405,
-          "vif_q75": 53.982778894564
+          "vif_q75": 53.982778894564,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "eclipse_year_beat",
@@ -171,9 +198,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 73.987517956193,
           "vif_q25": 73.987517956193,
-          "vif_q75": 73.987517956193
+          "vif_q75": 73.987517956193,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "half_draconic_phase",
@@ -184,9 +213,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 19.913497064045504,
           "vif_q25": 19.913497064045504,
-          "vif_q75": 19.913497064045504
+          "vif_q75": 19.913497064045504,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "length_of_day",
@@ -197,9 +228,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 226.33416156597437,
           "vif_q25": 210.69856360070688,
-          "vif_q75": 241.50913285049987
+          "vif_q75": 241.50913285049987,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "mean_depth_30d",
@@ -210,9 +243,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 64.15813830841022,
           "vif_q25": 63.33386832429018,
-          "vif_q75": 64.95310634242831
+          "vif_q75": 64.95310634242831,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_abs_declination",
@@ -223,9 +258,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 18.77160642336241,
           "vif_q25": 18.77160642336241,
-          "vif_q75": 18.77160642336241
+          "vif_q75": 18.77160642336241,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_anomalistic_phase",
@@ -236,9 +273,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 20.882635105972014,
           "vif_q25": 20.882635105972014,
-          "vif_q75": 20.882635105972014
+          "vif_q75": 20.882635105972014,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_declination",
@@ -249,9 +288,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 24.961665935534526,
           "vif_q25": 24.961665935534526,
-          "vif_q75": 24.961665935534526
+          "vif_q75": 24.961665935534526,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_distance",
@@ -262,9 +303,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 22.23011214438842,
           "vif_q25": 22.23011214438842,
-          "vif_q75": 22.23011214438842
+          "vif_q75": 22.23011214438842,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_draconic_phase",
@@ -275,9 +318,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 24.081827389301417,
           "vif_q25": 24.081827389301417,
-          "vif_q75": 24.081827389301417
+          "vif_q75": 24.081827389301417,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_synodic_phase",
@@ -288,9 +333,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 24.38489403442799,
           "vif_q25": 24.38489403442799,
-          "vif_q75": 24.38489403442799
+          "vif_q75": 24.38489403442799,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "perigean_spring_beat",
@@ -301,9 +348,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 79.2334621398866,
           "vif_q25": 79.2334621398866,
-          "vif_q75": 79.2334621398866
+          "vif_q75": 79.2334621398866,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "perigee_syzygy",
@@ -314,9 +363,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 15.993107829659657,
           "vif_q25": 15.993107829659657,
-          "vif_q75": 15.993107829659657
+          "vif_q75": 15.993107829659657,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "spring_neap_phase",
@@ -327,9 +378,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 17.992557515608322,
           "vif_q25": 17.992557515608322,
-          "vif_q75": 17.992557515608322
+          "vif_q75": 17.992557515608322,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "sun_declination",
@@ -340,9 +393,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 61.14478283535468,
           "vif_q25": 61.14478283535468,
-          "vif_q75": 61.14478283535468
+          "vif_q75": 61.14478283535468,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "sun_moon_elongation",
@@ -353,9 +408,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 21.086987799879623,
           "vif_q25": 21.086987799879623,
-          "vif_q75": 21.086987799879623
+          "vif_q75": 21.086987799879623,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "tidal_potential_proxy",
@@ -366,9 +423,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 27.817247698067156,
           "vif_q25": 27.817247698067156,
-          "vif_q75": 27.817247698067156
+          "vif_q75": 27.817247698067156,
+          "vif_median_censored_rows": null
         }
       ]
     },
@@ -431,6 +490,17 @@
         "loglog_slope_stderr": 0.08745624105182287,
         "loglog_p": 0.0070892350726036125
       },
+      "censoring_P7_10a": {
+        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so VIF is understated -- the anti-conservative direction.",
+        "B_block_bootstrap": 10000,
+        "resolution_floor_p_boot": 9.999000099990002e-05,
+        "n_rows_scored": 500,
+        "n_censored_excluded": 0,
+        "n_censored_by_p_used_at_floor": 0,
+        "censored_rows": [],
+        "censored_vif_summary": null,
+        "note_score_vs_mark": "Only rows carrying `chi2_score` (the GLM score tests) enter F4-58 at all; the mark-axis rows (spearman / circular-linear) have no chi2 and are scored separately in F4-58M, where the censoring rule DOES bite."
+      },
       "per_feature": [
         {
           "feature": "annual_phase",
@@ -441,9 +511,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 69.72511081096731,
           "vif_q25": 69.72511081096731,
-          "vif_q75": 69.72511081096731
+          "vif_q75": 69.72511081096731,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "annual_synodic_beat",
@@ -454,9 +526,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 23.4965218995666,
           "vif_q25": 22.930564343982304,
-          "vif_q75": 24.034383931194398
+          "vif_q75": 24.034383931194398,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "b_value_90d",
@@ -467,9 +541,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 120.92490228236106,
           "vif_q25": 116.65922063989922,
-          "vif_q75": 124.89574735171747
+          "vif_q75": 124.89574735171747,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "declination_product",
@@ -480,9 +556,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 19.764880466602474,
           "vif_q25": 18.241464794498434,
-          "vif_q75": 21.103814373930263
+          "vif_q75": 21.103814373930263,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "deep_fraction_30d",
@@ -493,9 +571,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 53.37910520715261,
           "vif_q25": 52.663225933701405,
-          "vif_q75": 53.982778894564
+          "vif_q75": 53.982778894564,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "eclipse_year_beat",
@@ -506,9 +586,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 74.63592234353924,
           "vif_q25": 73.96990022654785,
-          "vif_q75": 75.16996216667152
+          "vif_q75": 75.16996216667152,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "half_draconic_phase",
@@ -519,9 +601,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 20.222353727206148,
           "vif_q25": 20.222353727206148,
-          "vif_q75": 20.222353727206148
+          "vif_q75": 20.222353727206148,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "mean_depth_30d",
@@ -532,9 +616,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 64.15813830841022,
           "vif_q25": 63.33386832429018,
-          "vif_q75": 64.95310634242831
+          "vif_q75": 64.95310634242831,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_abs_declination",
@@ -545,9 +631,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 18.47872417525683,
           "vif_q25": 18.118393454744652,
-          "vif_q75": 19.17790035145626
+          "vif_q75": 19.17790035145626,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_anomalistic_phase",
@@ -558,9 +646,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 21.303543581192663,
           "vif_q25": 21.303543581192663,
-          "vif_q75": 21.303543581192663
+          "vif_q75": 21.303543581192663,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_declination",
@@ -571,9 +661,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 24.64419504762283,
           "vif_q25": 22.451344184339177,
-          "vif_q75": 25.259056501062823
+          "vif_q75": 25.259056501062823,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_distance",
@@ -584,9 +676,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 22.48552996513947,
           "vif_q25": 21.265790095782904,
-          "vif_q75": 23.38407662257849
+          "vif_q75": 23.38407662257849,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_draconic_phase",
@@ -597,9 +691,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 24.089401914492388,
           "vif_q25": 24.089401914492388,
-          "vif_q75": 24.089401914492388
+          "vif_q75": 24.089401914492388,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_synodic_phase",
@@ -610,9 +706,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 24.581322967359768,
           "vif_q25": 24.106028314018687,
-          "vif_q75": 25.009067913422136
+          "vif_q75": 25.009067913422136,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "perigean_spring_beat",
@@ -623,9 +721,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 78.26287039649154,
           "vif_q25": 77.88707862073943,
-          "vif_q75": 79.09455473199662
+          "vif_q75": 79.09455473199662,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "perigee_syzygy",
@@ -636,9 +736,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 15.802565159877757,
           "vif_q25": 15.411229299954472,
-          "vif_q75": 16.17134028882928
+          "vif_q75": 16.17134028882928,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "spring_neap_phase",
@@ -649,9 +751,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 17.752612678750967,
           "vif_q25": 17.461474624833293,
-          "vif_q75": 18.065302265510674
+          "vif_q75": 18.065302265510674,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "sun_declination",
@@ -662,9 +766,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 64.76162563685386,
           "vif_q25": 62.78352436403951,
-          "vif_q75": 66.54145897766713
+          "vif_q75": 66.54145897766713,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "sun_moon_elongation",
@@ -675,9 +781,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 23.750669359155214,
           "vif_q25": 22.78855395190931,
-          "vif_q75": 25.080584914284383
+          "vif_q75": 25.080584914284383,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "tidal_potential_proxy",
@@ -688,9 +796,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 28.32101180664276,
           "vif_q25": 27.74469430521888,
-          "vif_q75": 28.70487282904309
+          "vif_q75": 28.70487282904309,
+          "vif_median_censored_rows": null
         }
       ]
     },
@@ -753,6 +863,17 @@
         "loglog_slope_stderr": 0.0926721388723105,
         "loglog_p": 0.007324218558164907
       },
+      "censoring_P7_10a": {
+        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so VIF is understated -- the anti-conservative direction.",
+        "B_block_bootstrap": 10000,
+        "resolution_floor_p_boot": 9.999000099990002e-05,
+        "n_rows_scored": 500,
+        "n_censored_excluded": 0,
+        "n_censored_by_p_used_at_floor": 0,
+        "censored_rows": [],
+        "censored_vif_summary": null,
+        "note_score_vs_mark": "Only rows carrying `chi2_score` (the GLM score tests) enter F4-58 at all; the mark-axis rows (spearman / circular-linear) have no chi2 and are scored separately in F4-58M, where the censoring rule DOES bite."
+      },
       "per_feature": [
         {
           "feature": "annual_phase",
@@ -763,9 +884,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 76.17990096118989,
           "vif_q25": 76.17990096118989,
-          "vif_q75": 76.17990096118989
+          "vif_q75": 76.17990096118989,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "annual_synodic_beat",
@@ -776,9 +899,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 24.113859046541812,
           "vif_q25": 23.468676823145938,
-          "vif_q75": 24.691097753103534
+          "vif_q75": 24.691097753103534,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "b_value_90d",
@@ -789,9 +914,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 135.17649638433397,
           "vif_q25": 131.26361985962336,
-          "vif_q75": 141.10453114568213
+          "vif_q75": 141.10453114568213,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "declination_product",
@@ -802,9 +929,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 19.583876451560542,
           "vif_q25": 18.464030089735033,
-          "vif_q75": 21.449090181554602
+          "vif_q75": 21.449090181554602,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "deep_fraction_30d",
@@ -815,9 +944,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 59.95063692892485,
           "vif_q25": 59.02140626204627,
-          "vif_q75": 60.83495067243826
+          "vif_q75": 60.83495067243826,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "eclipse_year_beat",
@@ -828,9 +959,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 81.14848417720997,
           "vif_q25": 80.69545347662492,
-          "vif_q75": 81.91395738523987
+          "vif_q75": 81.91395738523987,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "half_draconic_phase",
@@ -841,9 +974,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 20.436180741557752,
           "vif_q25": 20.436180741557752,
-          "vif_q75": 20.436180741557752
+          "vif_q75": 20.436180741557752,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "mean_depth_30d",
@@ -854,9 +989,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 71.24618485033764,
           "vif_q25": 70.21952275740148,
-          "vif_q75": 71.5354757235379
+          "vif_q75": 71.5354757235379,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_abs_declination",
@@ -867,9 +1004,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 18.848908216076705,
           "vif_q25": 18.5994853243677,
-          "vif_q75": 19.36211446248773
+          "vif_q75": 19.36211446248773,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_anomalistic_phase",
@@ -880,9 +1019,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 21.91762722550289,
           "vif_q25": 21.91762722550289,
-          "vif_q75": 21.91762722550289
+          "vif_q75": 21.91762722550289,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_declination",
@@ -893,9 +1034,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 25.122100183117805,
           "vif_q25": 22.89910095168444,
-          "vif_q75": 25.976367115835586
+          "vif_q75": 25.976367115835586,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_distance",
@@ -906,9 +1049,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 23.05644507754619,
           "vif_q25": 21.775696923928432,
-          "vif_q75": 23.968556676747564
+          "vif_q75": 23.968556676747564,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_draconic_phase",
@@ -919,9 +1064,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 24.677825089987692,
           "vif_q25": 24.677825089987692,
-          "vif_q75": 24.677825089987692
+          "vif_q75": 24.677825089987692,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_synodic_phase",
@@ -932,9 +1079,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 25.203943682091136,
           "vif_q25": 24.660682760215085,
-          "vif_q75": 25.68043808499847
+          "vif_q75": 25.68043808499847,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "perigean_spring_beat",
@@ -945,9 +1094,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 85.58178256770054,
           "vif_q25": 85.15342096551876,
-          "vif_q75": 86.60138045790865
+          "vif_q75": 86.60138045790865,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "perigee_syzygy",
@@ -958,9 +1109,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 15.971677499185448,
           "vif_q25": 15.597150524734445,
-          "vif_q75": 16.34431334301113
+          "vif_q75": 16.34431334301113,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "spring_neap_phase",
@@ -971,9 +1124,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 17.960696088409406,
           "vif_q25": 17.65819467562706,
-          "vif_q75": 18.284478407970997
+          "vif_q75": 18.284478407970997,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "sun_declination",
@@ -984,9 +1139,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 69.65923326437134,
           "vif_q25": 67.78834596584124,
-          "vif_q75": 71.49620806605174
+          "vif_q75": 71.49620806605174,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "sun_moon_elongation",
@@ -997,9 +1154,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 24.519730312185384,
           "vif_q25": 23.370708040321304,
-          "vif_q75": 25.634188518971477
+          "vif_q75": 25.634188518971477,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "tidal_potential_proxy",
@@ -1010,9 +1169,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 30.844379117026122,
           "vif_q25": 30.07163309273598,
-          "vif_q75": 31.269233688802892
+          "vif_q75": 31.269233688802892,
+          "vif_median_censored_rows": null
         }
       ]
     },
@@ -1075,6 +1236,17 @@
         "loglog_slope_stderr": 0.08745624105182287,
         "loglog_p": 0.0070892350726036125
       },
+      "censoring_P7_10a": {
+        "rule": "\u00a7P7-10(a): rows whose p_block_bootstrap sits at its Monte Carlo resolution floor 1/(B+1) are EXCLUDED from every median below and reported here with their count. chi2.ppf saturates there, so VIF is understated -- the anti-conservative direction.",
+        "B_block_bootstrap": 10000,
+        "resolution_floor_p_boot": 9.999000099990002e-05,
+        "n_rows_scored": 500,
+        "n_censored_excluded": 0,
+        "n_censored_by_p_used_at_floor": 0,
+        "censored_rows": [],
+        "censored_vif_summary": null,
+        "note_score_vs_mark": "Only rows carrying `chi2_score` (the GLM score tests) enter F4-58 at all; the mark-axis rows (spearman / circular-linear) have no chi2 and are scored separately in F4-58M, where the censoring rule DOES bite."
+      },
       "per_feature": [
         {
           "feature": "annual_phase",
@@ -1085,9 +1257,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 69.72511081096731,
           "vif_q25": 69.72511081096731,
-          "vif_q75": 69.72511081096731
+          "vif_q75": 69.72511081096731,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "annual_synodic_beat",
@@ -1098,9 +1272,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 23.4965218995666,
           "vif_q25": 22.930564343982304,
-          "vif_q75": 24.034383931194398
+          "vif_q75": 24.034383931194398,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "b_value_90d",
@@ -1111,9 +1287,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 120.92490228236106,
           "vif_q25": 116.65922063989922,
-          "vif_q75": 124.89574735171747
+          "vif_q75": 124.89574735171747,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "declination_product",
@@ -1124,9 +1302,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 19.764880466602474,
           "vif_q25": 18.241464794498434,
-          "vif_q75": 21.103814373930263
+          "vif_q75": 21.103814373930263,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "deep_fraction_30d",
@@ -1137,9 +1317,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 53.37910520715261,
           "vif_q25": 52.663225933701405,
-          "vif_q75": 53.982778894564
+          "vif_q75": 53.982778894564,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "eclipse_year_beat",
@@ -1150,9 +1332,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 74.63592234353924,
           "vif_q25": 73.96990022654785,
-          "vif_q75": 75.16996216667152
+          "vif_q75": 75.16996216667152,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "half_draconic_phase",
@@ -1163,9 +1347,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 20.222353727206148,
           "vif_q25": 20.222353727206148,
-          "vif_q75": 20.222353727206148
+          "vif_q75": 20.222353727206148,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "mean_depth_30d",
@@ -1176,9 +1362,11 @@
           "null": "max(circular-shift, block-bootstrap)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 64.15813830841022,
           "vif_q25": 63.33386832429018,
-          "vif_q75": 64.95310634242831
+          "vif_q75": 64.95310634242831,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_abs_declination",
@@ -1189,9 +1377,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 18.47872417525683,
           "vif_q25": 18.118393454744652,
-          "vif_q75": 19.17790035145626
+          "vif_q75": 19.17790035145626,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_anomalistic_phase",
@@ -1202,9 +1392,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 21.303543581192663,
           "vif_q25": 21.303543581192663,
-          "vif_q75": 21.303543581192663
+          "vif_q75": 21.303543581192663,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_declination",
@@ -1215,9 +1407,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 24.64419504762283,
           "vif_q25": 22.451344184339177,
-          "vif_q75": 25.259056501062823
+          "vif_q75": 25.259056501062823,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_distance",
@@ -1228,9 +1422,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 22.48552996513947,
           "vif_q25": 21.265790095782904,
-          "vif_q75": 23.38407662257849
+          "vif_q75": 23.38407662257849,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_draconic_phase",
@@ -1241,9 +1437,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 1,
           "n_usable": 1,
+          "n_censored": 0,
           "vif_median": 24.089401914492388,
           "vif_q25": 24.089401914492388,
-          "vif_q75": 24.089401914492388
+          "vif_q75": 24.089401914492388,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "moon_synodic_phase",
@@ -1254,9 +1452,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 24.581322967359768,
           "vif_q25": 24.106028314018687,
-          "vif_q75": 25.009067913422136
+          "vif_q75": 25.009067913422136,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "perigean_spring_beat",
@@ -1267,9 +1467,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 78.26287039649154,
           "vif_q25": 77.88707862073943,
-          "vif_q75": 79.09455473199662
+          "vif_q75": 79.09455473199662,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "perigee_syzygy",
@@ -1280,9 +1482,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 15.802565159877757,
           "vif_q25": 15.411229299954472,
-          "vif_q75": 16.17134028882928
+          "vif_q75": 16.17134028882928,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "spring_neap_phase",
@@ -1293,9 +1497,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 17.752612678750967,
           "vif_q25": 17.461474624833293,
-          "vif_q75": 18.065302265510674
+          "vif_q75": 18.065302265510674,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "sun_declination",
@@ -1306,9 +1512,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 64.76162563685386,
           "vif_q25": 62.78352436403951,
-          "vif_q75": 66.54145897766713
+          "vif_q75": 66.54145897766713,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "sun_moon_elongation",
@@ -1319,9 +1527,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 23.750669359155214,
           "vif_q25": 22.78855395190931,
-          "vif_q75": 25.080584914284383
+          "vif_q75": 25.080584914284383,
+          "vif_median_censored_rows": null
         },
         {
           "feature": "tidal_potential_proxy",
@@ -1332,9 +1542,11 @@
           "null": "block-bootstrap (periodic feature)",
           "n_tests": 31,
           "n_usable": 31,
+          "n_censored": 0,
           "vif_median": 28.32101180664276,
           "vif_q25": 27.74469430521888,
-          "vif_q75": 28.70487282904309
+          "vif_q75": 28.70487282904309,
+          "vif_median_censored_rows": null
         }
       ]
     }
@@ -1480,5 +1692,369 @@
     "session_20260812T021707 is labelled mag_target 4.0 but its 550 test rows are BITWISE IDENTICAL to session_20260812T004857 (mag_target 4.5). Cause: engine/datasets.py CATALOG_MAG_FLOOR = 4.5, so the on-disk catalogue has no events below 4.5 and the two configs select the same events. It is NOT an independent replicate and is not counted as one.",
     "\u00a7P7-1(c) item (ii) -- confirmation by direct Poisson simulation from the fitted ETAS lambda through the identical code path -- was NOT run here. The measurement is item (i) only.",
     "The VIF measured here is the GLOBAL (domain-summed) series' dispersion. The per-REGION VIF is UNMEASURED; the region battery declares the global value and flags the substitution."
-  ]
+  ],
+  "superseded_v1_2026_08_12": {
+    "note": "Version 1 of this file, written 2026-08-12 before the \u00a7P7-10(a) censoring refinement. These are the numbers quoted in HYPOTHESIS_LEDGER.md \u00a7P7-8 and \u00a7P7-10 and they are preserved verbatim here rather than overwritten.",
+    "v1_verdict": {
+      "primary_session": "session_20260811T022953",
+      "median_vif": 66.11616361260958,
+      "median_vif_all_sessions": {
+        "session_20260811T022953": 66.11616361260958,
+        "session_20260812T004857": 24.89104262725845,
+        "session_20260812T012320": 25.484241392102867,
+        "session_20260812T021707": 24.89104262725845
+      },
+      "block_length_dependence_primary": {
+        "n_features": 23,
+        "spearman_rho": 0.5061297371629355,
+        "spearman_p": 0.013732624882243331,
+        "loglog_slope": 0.3294571613392788,
+        "loglog_slope_stderr": 0.1083925652464096,
+        "loglog_p": 0.006232326042276756
+      },
+      "popper_prediction": {
+        "predicted_median_vif": 3.9,
+        "predicted_block_length_dependence": "strong",
+        "kepler_alternative_median_vif": 9.7,
+        "kepler_alternative_block_length_dependence": "none",
+        "measured_median_vif_all_tests_primary": 66.11616361260958,
+        "measured_median_vif_df2_phase": 24.081827389301417,
+        "measured_block_length_dependence": {
+          "n_features": 23,
+          "spearman_rho": 0.5061297371629355,
+          "spearman_p": 0.013732624882243331,
+          "loglog_slope": 0.3294571613392788,
+          "loglog_slope_stderr": 0.1083925652464096,
+          "loglog_p": 0.006232326042276756
+        },
+        "verdict": "BOTH RECORDED VALUES FALSIFIED ON MAGNITUDE; POPPER'S DIRECTIONAL CLAIM CONFIRMED. The measured median VIF is 24.08 over 2-df phase features (stable to 3 significant figures across all four sessions on disk) and 24.9-66.1 over all score tests, against a predicted 3.9 and an alternative 9.7. Popper's \u00a7P7-1(c) falsification clause names only the 9.7-with-no-block-dependence branch; neither branch obtains, so the recorded disjunction is not decided by this measurement -- it is escaped by it. The block-length dependence Popper predicted IS present and is significant (Spearman rho = 0.51, p = 0.014; log-log slope +0.33 +/- 0.11, p = 0.006), so the decomposition's STRUCTURE stands and only its SCALE was wrong. Consequence: \u00a7P7-1(b)'s formula is vindicated as a formula (a scalar would have been wrong by ~2.5x) while Kepler's interim scalar 11.9/sqrt(N), ADOPTED PROVISIONALLY, is itself ~2.7x too optimistic -- the operative floor at Tranche-A alpha is 32.3/sqrt(N), i.e. 14.9% at N = 46,585, not 5.6%."
+      }
+    },
+    "v1_per_session_overall": {
+      "session_20260811T022953": {
+        "overall_vif": {
+          "n": 203,
+          "median": 66.11616361260958,
+          "mean": 115.74052983012824,
+          "q25": 53.21893047168274,
+          "q75": 178.85434311523784,
+          "min": 15.993107829659657,
+          "max": 317.8277501065009
+        },
+        "overall_vif_df2_phase": {
+          "n": 9,
+          "median": 24.081827389301417,
+          "mean": 38.89743103477325,
+          "q25": 20.882635105972014,
+          "q75": 67.08992322969881,
+          "min": 17.992557515608322,
+          "max": 79.2334621398866
+        },
+        "overall_vif_df2_phase_null_only": {
+          "n": 7,
+          "median": 24.081827389301417,
+          "mean": 36.596552041817255,
+          "q25": 21.69659999189883,
+          "q75": 45.7374086320634,
+          "min": 17.992557515608322,
+          "max": 79.2334621398866
+        },
+        "block_length_dependence": {
+          "n_features": 23,
+          "spearman_rho": 0.5061297371629355,
+          "spearman_p": 0.013732624882243331,
+          "loglog_slope": 0.3294571613392788,
+          "loglog_slope_stderr": 0.1083925652464096,
+          "loglog_p": 0.006232326042276756
+        }
+      },
+      "session_20260812T004857": {
+        "overall_vif": {
+          "n": 500,
+          "median": 24.89104262725845,
+          "mean": 42.066180019089444,
+          "q25": 21.027890561512976,
+          "q75": 64.26800296908958,
+          "min": 14.125357857399257,
+          "max": 131.51403775315038
+        },
+        "overall_vif_df2_phase": {
+          "n": 159,
+          "median": 24.581322967359768,
+          "mean": 43.514084250213365,
+          "q25": 22.873980691294218,
+          "q75": 75.12543255865937,
+          "min": 16.72194118807552,
+          "max": 81.3710700929836
+        },
+        "overall_vif_df2_phase_null_only": {
+          "n": 128,
+          "median": 24.092413419012814,
+          "mean": 36.00374605577557,
+          "q25": 21.033246117696034,
+          "q75": 37.211952835044094,
+          "min": 16.72194118807552,
+          "max": 81.3710700929836
+        },
+        "block_length_dependence": {
+          "n_features": 20,
+          "spearman_rho": 0.5335523233564065,
+          "spearman_p": 0.015401535320356326,
+          "loglog_slope": 0.26561238738299914,
+          "loglog_slope_stderr": 0.08745624105182287,
+          "loglog_p": 0.0070892350726036125
+        }
+      },
+      "session_20260812T012320": {
+        "overall_vif": {
+          "n": 500,
+          "median": 25.484241392102867,
+          "mean": 45.360381721175436,
+          "q25": 21.577672952601255,
+          "q75": 70.827266589651,
+          "min": 9.99630935519378,
+          "max": 152.30948450729588
+        },
+        "overall_vif_df2_phase": {
+          "n": 159,
+          "median": 25.241538561121835,
+          "mean": 46.57842746361256,
+          "q25": 23.386155135600504,
+          "q75": 81.74846357779042,
+          "min": 16.954192090611965,
+          "max": 89.19061765493572
+        },
+        "overall_vif_df2_phase_null_only": {
+          "n": 128,
+          "median": 24.660682760215085,
+          "mean": 38.196733563698366,
+          "q25": 21.547265604516607,
+          "q75": 39.36847267497389,
+          "min": 16.954192090611965,
+          "max": 89.19061765493572
+        },
+        "block_length_dependence": {
+          "n_features": 20,
+          "spearman_rho": 0.5350680970023053,
+          "spearman_p": 0.015057767439719203,
+          "loglog_slope": 0.28006641890821693,
+          "loglog_slope_stderr": 0.0926721388723105,
+          "loglog_p": 0.007324218558164907
+        }
+      },
+      "session_20260812T021707": {
+        "overall_vif": {
+          "n": 500,
+          "median": 24.89104262725845,
+          "mean": 42.066180019089444,
+          "q25": 21.027890561512976,
+          "q75": 64.26800296908958,
+          "min": 14.125357857399257,
+          "max": 131.51403775315038
+        },
+        "overall_vif_df2_phase": {
+          "n": 159,
+          "median": 24.581322967359768,
+          "mean": 43.514084250213365,
+          "q25": 22.873980691294218,
+          "q75": 75.12543255865937,
+          "min": 16.72194118807552,
+          "max": 81.3710700929836
+        },
+        "overall_vif_df2_phase_null_only": {
+          "n": 128,
+          "median": 24.092413419012814,
+          "mean": 36.00374605577557,
+          "q25": 21.033246117696034,
+          "q75": 37.211952835044094,
+          "min": 16.72194118807552,
+          "max": 81.3710700929836
+        },
+        "block_length_dependence": {
+          "n_features": 20,
+          "spearman_rho": 0.5335523233564065,
+          "spearman_p": 0.015401535320356326,
+          "loglog_slope": 0.26561238738299914,
+          "loglog_slope_stderr": 0.08745624105182287,
+          "loglog_p": 0.0070892350726036125
+        }
+      }
+    },
+    "v1_R_selection_arithmetic": {
+      "rule": "R_max(A_target) = (N/2) * (A_target / (sqrt(VIF)*(z_alpha + z_0.80)))^2",
+      "vif_used": 24.081827389301417,
+      "vif_used_source": "primary session, df=2 phase features, p_raw>0.10 (null-only) median",
+      "alpha": 0.00014025245441795232,
+      "alpha_source": "Tranche A, BH q=0.10 over 713 declared tests, most conservative rung",
+      "z_alpha": 3.8077226335883014,
+      "k = sqrt(VIF)*(z_alpha+z_0.80)": 22.815836055893325,
+      "R_max_by_target_amplitude": {
+        "A_target=0.05": 0.11186219520359546,
+        "A_target=0.10": 0.44744878081438183,
+        "A_target=0.20": 1.7897951232575273,
+        "A_target=0.30": 4.027039027329437,
+        "A_target=0.40": 7.159180493030109,
+        "A_target=0.50": 11.186219520359545,
+        "A_target=0.60": 16.108156109317747,
+        "A_target=0.75": 25.168993920808983,
+        "A_target=1.00": 44.74487808143818
+      }
+    }
+  },
+  "correction_2026_08_12": {
+    "ruling": "HYPOTHESIS_LEDGER.md \u00a7P7-10(a), REQUIRED REFINEMENT",
+    "applied": "rows with p_block_bootstrap at the 1/(B+1) Monte Carlo resolution floor excluded from all medians",
+    "total_rows_censored_across_sessions": 0,
+    "effect_on_quoted_numbers": "NONE. No GLM score-test row in any of the four sessions has p_block_bootstrap at its resolution floor, so the exclusion set is empty on the count path and every median is bitwise unchanged from v1. The censoring seam is real but it does not bite here: the three floor-censored rows on disk per session are MARK-axis rows (spearman), which never entered F4-58 (they carry no chi2_score) and which are scored in F4-58M instead.",
+    "per_session": {
+      "session_20260811T022953": {
+        "n_censored_excluded": 0,
+        "overall_vif": {
+          "v1_median": 66.11616361260958,
+          "v2_median": 66.11616361260958,
+          "v1_n": 203,
+          "v2_n": 203
+        },
+        "overall_vif_df2_phase": {
+          "v1_median": 24.081827389301417,
+          "v2_median": 24.081827389301417,
+          "v1_n": 9,
+          "v2_n": 9
+        },
+        "overall_vif_df2_phase_null_only": {
+          "v1_median": 24.081827389301417,
+          "v2_median": 24.081827389301417,
+          "v1_n": 7,
+          "v2_n": 7
+        },
+        "block_length_dependence_v2": {
+          "n_features": 23,
+          "spearman_rho": 0.5061297371629355,
+          "spearman_p": 0.013732624882243331,
+          "loglog_slope": 0.3294571613392788,
+          "loglog_slope_stderr": 0.1083925652464096,
+          "loglog_p": 0.006232326042276756
+        },
+        "block_length_dependence_v1": {
+          "n_features": 23,
+          "spearman_rho": 0.5061297371629355,
+          "spearman_p": 0.013732624882243331,
+          "loglog_slope": 0.3294571613392788,
+          "loglog_slope_stderr": 0.1083925652464096,
+          "loglog_p": 0.006232326042276756
+        }
+      },
+      "session_20260812T004857": {
+        "n_censored_excluded": 0,
+        "overall_vif": {
+          "v1_median": 24.89104262725845,
+          "v2_median": 24.89104262725845,
+          "v1_n": 500,
+          "v2_n": 500
+        },
+        "overall_vif_df2_phase": {
+          "v1_median": 24.581322967359768,
+          "v2_median": 24.581322967359768,
+          "v1_n": 159,
+          "v2_n": 159
+        },
+        "overall_vif_df2_phase_null_only": {
+          "v1_median": 24.092413419012814,
+          "v2_median": 24.092413419012814,
+          "v1_n": 128,
+          "v2_n": 128
+        },
+        "block_length_dependence_v2": {
+          "n_features": 20,
+          "spearman_rho": 0.5335523233564065,
+          "spearman_p": 0.015401535320356326,
+          "loglog_slope": 0.26561238738299914,
+          "loglog_slope_stderr": 0.08745624105182287,
+          "loglog_p": 0.0070892350726036125
+        },
+        "block_length_dependence_v1": {
+          "n_features": 20,
+          "spearman_rho": 0.5335523233564065,
+          "spearman_p": 0.015401535320356326,
+          "loglog_slope": 0.26561238738299914,
+          "loglog_slope_stderr": 0.08745624105182287,
+          "loglog_p": 0.0070892350726036125
+        }
+      },
+      "session_20260812T012320": {
+        "n_censored_excluded": 0,
+        "overall_vif": {
+          "v1_median": 25.484241392102867,
+          "v2_median": 25.484241392102867,
+          "v1_n": 500,
+          "v2_n": 500
+        },
+        "overall_vif_df2_phase": {
+          "v1_median": 25.241538561121835,
+          "v2_median": 25.241538561121835,
+          "v1_n": 159,
+          "v2_n": 159
+        },
+        "overall_vif_df2_phase_null_only": {
+          "v1_median": 24.660682760215085,
+          "v2_median": 24.660682760215085,
+          "v1_n": 128,
+          "v2_n": 128
+        },
+        "block_length_dependence_v2": {
+          "n_features": 20,
+          "spearman_rho": 0.5350680970023053,
+          "spearman_p": 0.015057767439719203,
+          "loglog_slope": 0.28006641890821693,
+          "loglog_slope_stderr": 0.0926721388723105,
+          "loglog_p": 0.007324218558164907
+        },
+        "block_length_dependence_v1": {
+          "n_features": 20,
+          "spearman_rho": 0.5350680970023053,
+          "spearman_p": 0.015057767439719203,
+          "loglog_slope": 0.28006641890821693,
+          "loglog_slope_stderr": 0.0926721388723105,
+          "loglog_p": 0.007324218558164907
+        }
+      },
+      "session_20260812T021707": {
+        "n_censored_excluded": 0,
+        "overall_vif": {
+          "v1_median": 24.89104262725845,
+          "v2_median": 24.89104262725845,
+          "v1_n": 500,
+          "v2_n": 500
+        },
+        "overall_vif_df2_phase": {
+          "v1_median": 24.581322967359768,
+          "v2_median": 24.581322967359768,
+          "v1_n": 159,
+          "v2_n": 159
+        },
+        "overall_vif_df2_phase_null_only": {
+          "v1_median": 24.092413419012814,
+          "v2_median": 24.092413419012814,
+          "v1_n": 128,
+          "v2_n": 128
+        },
+        "block_length_dependence_v2": {
+          "n_features": 20,
+          "spearman_rho": 0.5335523233564065,
+          "spearman_p": 0.015401535320356326,
+          "loglog_slope": 0.26561238738299914,
+          "loglog_slope_stderr": 0.08745624105182287,
+          "loglog_p": 0.0070892350726036125
+        },
+        "block_length_dependence_v1": {
+          "n_features": 20,
+          "spearman_rho": 0.5335523233564065,
+          "spearman_p": 0.015401535320356326,
+          "loglog_slope": 0.26561238738299914,
+          "loglog_slope_stderr": 0.08745624105182287,
+          "loglog_p": 0.0070892350726036125
+        }
+      }
+    }
+  }
 }
