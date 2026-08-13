@@ -74,10 +74,46 @@ from . import (circstat, clocks, dispositions as disp, floors, marks_ext, mine a
                mine_session as ms, observer, s15c, splits, stability,
                strata as strata_mod)
 
-# The declared feature count the mark axis multiplies against (F9-10's own price:
-# "7 marks x 23+ features"). Named so the de-duplication arithmetic -- 1 removed
-# mark x 23 features = 23 removed tests -- is derived rather than retyped.
-MARK_AXIS_FEATURES = 23
+# THE MARK AXIS'S FEATURE COUNT, and the §P7-18 correction to it.
+#
+# MINING_CATALOG F9-10 prices "7 marks x 23+ features". Three of those 23 are
+# DOWNLOAD features (`mine.DOWNLOADS`), and Tranche B's frozen config declares
+# `no_download=True` -- so the catalog's 23 was never buildable under B's own
+# config, and 18 priced mark slots would have entered the denominator and never
+# executed. §P7-18 lowered the axis to the 20 features B actually builds and
+# DEFERRED the three BY NAME.
+MARK_AXIS_FEATURES_CATALOG = 23
+MARK_AXIS_FEATURES = 20
+
+# Deferred to B-2 BY NAME (§P7-18 requires the names, not a count).
+DEFERRED_FEATURES_B2 = (
+    {"feature": "Ap_geomagnetic", "family": 3, "source": "GFZ daily Ap index",
+     "why_absent": "DOWNLOAD feature; B declares no_download=True",
+     "s15c": None},
+    {"feature": "F107_solar_flux", "family": 3,
+     "source": "Penticton F10.7 cm solar radio flux",
+     "why_absent": "DOWNLOAD feature; B declares no_download=True",
+     "s15c": ("AND it is UNMEASURABLE-BY-WINDOW on its own band anyway: F10.7's "
+              "11 y solar cycle gives 1.92 cycles in the 7,716 d window, below "
+              "S-15(c)'s 3. This is the feature whose z = 32 corpse the clause "
+              "retroactively explains -- deferring it costs the tranche nothing it "
+              "could have identified.")},
+    {"feature": "length_of_day", "family": 3, "source": "IERS finals.all LOD",
+     "why_absent": "DOWNLOAD feature; B declares no_download=True",
+     "s15c": None},
+)
+
+DEFERRAL_REASON_CLASS = "config-determined-not-result-determined"
+RATCHET_NOTE = (
+    "THE RATCHET (§P7-18). The declared integer FIXES AT CONFIG-HASH FREEZE. This "
+    "re-issue from 189 to 171 is legitimate precisely because its reason is "
+    "CONFIG-DETERMINED, NOT RESULT-DETERMINED: the three features were dropped "
+    "because B's own frozen `no_download=True` cannot build them, a fact knowable -- "
+    "and known -- before any datum was touched, and B has not been run. A change "
+    "with the same arithmetic but a result-determined reason would be S-9's forking "
+    "path wearing a correction's clothes. The distinction is the whole of the "
+    "ratchet, and it is recorded on the artifact rather than in a commit message so "
+    "it travels with the number.")
 
 TRANCHE_B_ID = "TRANCHE-B-STATISTICS"
 STRATA_FILE = os.path.join("engine", "configs", "strata_tranche_b.json")
@@ -99,9 +135,11 @@ COMPOSITION = (
      "arithmetic": "17 cyclic features x 2 statistics (Kuiper V, Watson U^2)",
      "note": "shape sensitivity, NOT band coverage (§P7-3(2))"},
     {"key": "mark_axis", "catalog": "F9-10", "stratum": "tb_mark_axis",
-     "test_kind": "markx", "n": 138, "class": "PRICED", "built": True,
-     "arithmetic": "6 SCORED marks x 23 features (7 declared marks less the "
-                   "de-duplicated `log_moment`, §P7-16)",
+     "test_kind": "markx", "n": 120, "class": "PRICED", "built": True,
+     "arithmetic": "6 SCORED marks x 20 BUILDABLE features (7 declared marks less "
+                   "the de-duplicated `log_moment` (§P7-16); 23 catalog features "
+                   "less the 3 DOWNLOAD features B's own config cannot build, "
+                   "deferred to B-2 by name (§P7-18))",
      "note": "its OWN §P6-3 stratum, reallocation justified by measurement "
              "(§P7-11(c)); sub-daily arm gated on F7-01/02/03 (§P7-3(3))"},
 
@@ -161,7 +199,8 @@ UNPRICED_RULE = (
     "distinction is now the rule rather than a case."
 )
 
-POPPER_RULED_DENOMINATOR = 189
+POPPER_RULED_DENOMINATOR = 171
+POPPER_RULED_DENOMINATOR_SUPERSEDED = 189      # §P7-16, superseded by §P7-18
 POPPER_HEADLINE_COUNT = 1000
 HEADLINE_RESOLUTION_NOTE = (
     "§P7-10(c) declared Tranche B at ~1,000 and itemised it as '17 second-moment + "
@@ -223,6 +262,7 @@ def row_enumeration(mark_axis_features=None):
     """
     inv = session_feature_inventory()
     n_exec_features = len(inv["cyclic"]) + len(inv["other_science"])
+    v1_marks = ("mag", "depth")
     declared = disp.enumerate_session_rows(
         inv["cyclic"], inv["other_science"], inv["controls"],
         n_period_peaks=int(ms.OVERNIGHT["n_peaks"]),
@@ -237,6 +277,7 @@ def row_enumeration(mark_axis_features=None):
         scored_marks=marks_ext.SCORED_MARK_NAMES)
     shortfall = (declared["totals"][disp.DECLARED]
                  - executed["totals"][disp.DECLARED])
+    supp = suppression_map_declaration(inv, v1_marks)
     return {
         "feature_inventory": inv,
         "declared_view": declared,
@@ -260,6 +301,56 @@ def row_enumeration(mark_axis_features=None):
                                len(marks_ext.SCORED_MARK_NAMES) * n_exec_features))),
         "n_genuinely_new": declared["n_genuinely_new_beyond_the_declared_statistics"],
         "genuinely_new_note": declared["genuinely_new_note"],
+        "suppression_map": supp,
+    }
+
+
+def suppression_map_declaration(inv=None, v1_marks=("mag", "depth")):
+    """§P7-18's suppression map, PROVED on representative rows before the run.
+
+    The map is produced by the same `dispositions.suppression_map` the session will
+    run, on one row pair per (feature, mark) the session will emit -- so the
+    declaration's map and the session's map cannot disagree about what was
+    suppressed or why.
+    """
+    inv = inv or session_feature_inventory()
+    feats = list(inv["cyclic"]) + list(inv["other_science"])
+    rows = []
+    for f in feats:
+        for mk in v1_marks:
+            rows.append({"test": "spearman", "feature": f, "mark": mk,
+                         "lag": None, "p_raw": None})
+            rows.append({"test": "spearman", "feature": f, "mark": mk,
+                         "lag": None, "mark_axis": "F9-10", "subdaily": False,
+                         "p_raw": None})
+    kept, suppressed, mp = disp.suppression_map(rows, subdaily=False)
+    # and the counterfactual that proves the suppression is CONDITIONAL, not blanket
+    rows_sd = []
+    for f in feats[:1]:
+        for mk in v1_marks[:1]:
+            rows_sd.append({"test": "spearman", "feature": f, "mark": mk,
+                            "lag": None, "p_raw": None})
+            rows_sd.append({"test": "spearman", "feature": f, "mark": mk,
+                            "lag": None, "mark_axis": "F9-10", "subdaily": True,
+                            "p_raw": None})
+    _k2, s2, mp2 = disp.suppression_map(rows_sd, subdaily=True)
+    return {
+        "n_suppressed": mp["n_suppressed"],
+        "active": mp["active"],
+        "rule": mp["rule"],
+        "shape_fields": mp["shape_fields"],
+        "n_features": len(feats), "v1_marks": list(v1_marks),
+        "entries_sample": mp["entries"][:4],
+        "entries_all_proved_same_shape": all(
+            "all %d shape coordinates equal" % len(mp["shape_fields"]) in e["proof"]
+            for e in mp["entries"]),
+        "counterfactual_subdaily_on": {
+            "n_suppressed": len(s2),
+            "verdict": ("the suppression LIFTS BY ITSELF: with the sub-daily arm on "
+                        "the F9-10 row reads the feature at event times, the shapes "
+                        "differ, and the v1 row is no longer a duplicate of "
+                        "anything. %d suppressed, as it must be." % len(s2)),
+        },
     }
 
 
@@ -297,7 +388,14 @@ def enumerate_declared():
     priced = sum(i["n"] for i in items if i["class"] == "PRICED")
     deferred = sum(i["n"] for i in items if i["class"] == "DEFERRED")
     unpriced = sum(i["n"] for i in items if i["class"] == "UNPRICED")
-    removed = len(marks_ext.DEDUPLICATED_MARKS) * MARK_AXIS_FEATURES
+    # §P7-16 de-duplicated `log_moment` against the CATALOG's 23-feature axis, and
+    # 23 is the number its 369 reconciliation is built from -- so that is the figure
+    # the reconciliation keeps. §P7-18 then lowered the axis to 20, on which the same
+    # de-duplication removes 20; the other 3 left with their features to B-2. Both
+    # are reported, because quoting either alone makes one of the two rulings not
+    # add up.
+    removed = len(marks_ext.DEDUPLICATED_MARKS) * MARK_AXIS_FEATURES_CATALOG
+    removed_now = len(marks_ext.DEDUPLICATED_MARKS) * MARK_AXIS_FEATURES
     return {
         "items": items,
         "bh_denominator_m": priced,
@@ -305,15 +403,26 @@ def enumerate_declared():
         "n_deferred_to_B2": deferred,
         "n_unpriced_controls": unpriced,
         "n_deduplicated_removed": removed,
+        "n_deduplicated_removed_on_current_axis": removed_now,
+        "n_deferred_features_B2": len(DEFERRED_FEATURES_B2),
+        "deferred_features_B2": [dict(f) for f in DEFERRED_FEATURES_B2],
+        "mark_axis_features_catalog": MARK_AXIS_FEATURES_CATALOG,
+        "mark_axis_features_declared": MARK_AXIS_FEATURES,
+        "superseded_denominator": POPPER_RULED_DENOMINATOR_SUPERSEDED,
+        "change_reason_class": DEFERRAL_REASON_CLASS,
+        "ratchet": RATCHET_NOTE,
         "ruled_denominator": POPPER_RULED_DENOMINATOR,
         "agrees_with_ruling": priced == POPPER_RULED_DENOMINATOR,
         "reconciliation": (
             "%d priced + %d deferred (B-2) + %d unpriced + %d de-duplicated = %d, "
             "against the ~1,000 headline §P7-10(c) carried from the catalog. "
             "RECONCILED EXACTLY at §P7-16; the residual is the catalog's own "
-            "'declared overhead', which was never scope."
+            "'declared overhead', which was never scope. §P7-18 then lowered the "
+            "mark axis from 6 x 23 to 6 x 20 -- the 3 DOWNLOAD features B's own "
+            "frozen config cannot build, deferred to B-2 BY NAME -- so m moved "
+            "189 -> 171, %s."
             % (priced, deferred, unpriced, removed,
-               priced + deferred + unpriced + removed)),
+               priced + deferred + unpriced + removed, DEFERRAL_REASON_CLASS)),
         "deferred_note": DEFERRED_NOTE,
         "unpriced_rule": UNPRICED_RULE,
         "deduplication_rule": marks_ext.DEDUPLICATION_RULE,
@@ -364,20 +473,25 @@ def strata_document(q=M.FDR_Q):
         })
     return {
         "note": ("TRANCHE B (HYPOTHESIS_LEDGER.md §P7-3, §P7-10(c), §P7-14(d), "
-                 "§P7-15(b)), RE-ISSUED at the §P7-16 ruled integer, declared "
+                 "§P7-15(b)), RE-ISSUED at the §P7-18 ruled integer (189 -> 171, "
+                 "change reason CONFIG-DETERMINED-NOT-RESULT-DETERMINED), declared "
                  "BEFORE the run and frozen in the config hash by its own sha256 "
                  "(§P6-3(3)+(5)). PRICED BH denominator m = %d = 17 second-moment "
-                 "(F9-01) + 34 omnibus (F9-04) + 138 mark axis (F9-10, 6 scored "
-                 "marks x 23 features). RECONCILIATION against the ~1,000 headline: "
-                 "%s DEFERRED: %s UNPRICED: %s DE-DUPLICATED: %s q_s is FLAT at the "
-                 "declared q in every priced stratum: no budget is reallocated, so "
-                 "there is no prior to justify under §P6-3(2). The mark axis sits in "
-                 "its OWN stratum (§P7-11(c)) rather than in the v1 `mark` stratum, "
-                 "because 6 event-time marks are not the 2 day-binned marks that "
-                 "allocation was measured on."
+                 "(F9-01) + 34 omnibus (F9-04) + 120 mark axis (F9-10, 6 scored "
+                 "marks x 20 BUILDABLE features; the 3 DOWNLOAD features are "
+                 "deferred to B-2 BY NAME). RECONCILIATION against the ~1,000 "
+                 "headline: "
+                 "%s DEFERRED: %s UNPRICED: %s DE-DUPLICATED: %s SUPPRESSED: "
+                 "No budget is reallocated, so there is no prior to justify under "
+                 "§P6-3(2). The mark axis sits in its OWN stratum (§P7-11(c)) "
+                 "rather than in the v1 `mark` stratum, because 6 event-time marks "
+                 "are not the 2 day-binned marks that allocation was measured on."
+                 "%s RATCHET: %s DEFERRED FEATURES (B-2, by name): %s"
                  % (enum["bh_denominator_m"], enum["reconciliation"],
                     DEFERRED_NOTE, UNPRICED_RULE,
-                    marks_ext.DEDUPLICATION_RULE)),
+                    marks_ext.DEDUPLICATION_RULE,
+                    disp.SUPPRESSION_RULE, RATCHET_NOTE,
+                    ", ".join(f["feature"] for f in DEFERRED_FEATURES_B2))),
         "q": float(q),
         "m": int(enum["bh_denominator_m"]),
         "catch_all": "tb_second_moment",
@@ -529,6 +643,15 @@ def declaration(seed=20260813, subdaily=False, write=True):
             "adjudication": "the Popper seat's; this build supplies evidence only",
         },
         "row_enumeration_P7_17": row_enumeration(),
+        "ratchet_P7_18": {
+            "denominator_now": POPPER_RULED_DENOMINATOR,
+            "denominator_superseded": POPPER_RULED_DENOMINATOR_SUPERSEDED,
+            "change_reason_class": DEFERRAL_REASON_CLASS,
+            "rule": RATCHET_NOTE,
+            "fixes_at": "config-hash freeze",
+            "deferred_features_B2_by_name": [dict(f) for f in DEFERRED_FEATURES_B2],
+        },
+        "suppression_map_P7_18": row_enumeration()["suppression_map"],
         "open_items_before_the_run": [
             ("THE RUN GATE IS NOT DISCHARGED: the recovery-versus-amplitude curve "
              "is IN FLIGHT and the arm (i) anomaly is unruled (§P7-15(a), §P7-16)."),
@@ -609,9 +732,26 @@ def main(argv=None):
     print("TOTAL rows executed      : %d" % t["TOTAL"])
     print("GENUINELY NEW rows       : %d   -> the integer does NOT move"
           % _re["n_genuinely_new"])
+    print("SUPPRESSED (mapped)      : %d   (v1 mark rows, proved same-shape)"
+          % t[disp.SUPPRESSED])
     if _re["shortfall_flag"]:
         print("")
         print("SHORTFALL FLAG: " + _re["shortfall_flag"])
+    else:
+        print("shortfall                : 0 -- every priced slot is buildable "
+              "under B's own frozen config")
+    print("")
+    print("§P7-18 RATCHET: m 189 -> 171, reason class %s" % DEFERRAL_REASON_CLASS)
+    print("  deferred to B-2 BY NAME:")
+    for f in DEFERRED_FEATURES_B2:
+        print("    %-18s (family %d, %s)%s"
+              % (f["feature"], f["family"], f["why_absent"],
+                 "  [+ S-15(c) UNMEASURABLE-BY-WINDOW]" if f["s15c"] else ""))
+    _sm = _re["suppression_map"]
+    print("  suppression map: %d v1 mark rows suppressed, all proved same-shape "
+          "on %s; active = %s; with the sub-daily arm ON it lifts (%d suppressed)"
+          % (_sm["n_suppressed"], "/".join(_sm["shape_fields"]), _sm["active"],
+             _sm["counterfactual_subdaily_on"]["n_suppressed"]))
     print("")
     print("RUN STATUS: %s" % d["run_status"])
     print(RUN_GATE_NOTE)

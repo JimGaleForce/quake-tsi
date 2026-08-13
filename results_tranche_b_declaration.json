@@ -3,7 +3,7 @@
  "title": "EQ-24 v2 Tranche B -- the statistic tranche, DECLARATION PREPARED AND NOT RUN",
  "banner": "GENERATOR, NOT EVIDENCE. Nothing in this file is a result. It is a ranked list of hypotheses produced by an automated sweep over the EXPLORATION window only, with in-sample effect sizes. No line here may be quoted, cited, or reported as a finding. A candidate becomes evidence only by walking the ordinary path: written up as a K-entry, given a Popper ruling, and then tested ONCE against the frozen holdout (which costs a hash). This run spent no holdout hash.",
  "standing_warning_eq24": "the known ML-mining failure mode from M-008 (DeVries Nature net beaten by 2-parameter logistic -- Mignan & Broccardo 2019) quoted in the README as the standing warning: prefer the boring model; a boosted-tree find that a 2-param GLM can't reproduce after conditioning is treated as leakage until proven otherwise.",
- "prepared_utc": "2026-08-13T10:23:30.747793+00:00",
+ "prepared_utc": "2026-08-13T10:42:17.221830+00:00",
  "run_status": "GATED -- NOT RUN",
  "run_gate": "\u00a7P7-14(d) + \u00a7P7-15(b): Tranche B's BUILD is authorized and its RUN is gated on (i) the \u00a7P7-2(b) precondition builds and (ii) PER-STATISTIC G-M1 clearance for the new statistics and aggregations B introduces. As of \u00a7P7-16 the run is ALSO gated on (iii) the recovery-versus-amplitude curve \u00a7P7-15(a) assigned at price 0 -- IN FLIGHT -- and (iv) the Popper seat's ruling on the arm (i) anomaly (80% recovery at >= 2x the floor is what the formula predicts at 1x, so either the plants span a range or the global floor formula is ~2x anti-conservative). `engine/recovery_b.py` produces the evidence for (ii) on SIMULATED catalogues; it does not grant the clearance. This module refuses to run either way.",
  "count_reconciliation": {
@@ -35,10 +35,10 @@
     "catalog": "F9-10",
     "stratum": "tb_mark_axis",
     "test_kind": "markx",
-    "n": 138,
+    "n": 120,
     "class": "PRICED",
     "built": true,
-    "arithmetic": "6 SCORED marks x 23 features (7 declared marks less the de-duplicated `log_moment`, \u00a7P7-16)",
+    "arithmetic": "6 SCORED marks x 20 BUILDABLE features (7 declared marks less the de-duplicated `log_moment` (\u00a7P7-16); 23 catalog features less the 3 DOWNLOAD features B's own config cannot build, deferred to B-2 by name (\u00a7P7-18))",
     "note": "its OWN \u00a7P6-3 stratum, reallocation justified by measurement (\u00a7P7-11(c)); sub-daily arm gated on F7-01/02/03 (\u00a7P7-3(3))"
    },
    {
@@ -97,14 +97,44 @@
     "note": "UNPRICED under \u00a7P7-16's general rule (below). m_s = 0: declared so the rows have a stratum to route to, outside the priced denominator so they cannot be rejected and cannot consume budget."
    }
   ],
-  "bh_denominator_m": 189,
-  "n_priced": 189,
+  "bh_denominator_m": 171,
+  "n_priced": 171,
   "n_deferred_to_B2": 148,
   "n_unpriced_controls": 9,
   "n_deduplicated_removed": 23,
-  "ruled_denominator": 189,
+  "n_deduplicated_removed_on_current_axis": 20,
+  "n_deferred_features_B2": 3,
+  "deferred_features_B2": [
+   {
+    "feature": "Ap_geomagnetic",
+    "family": 3,
+    "source": "GFZ daily Ap index",
+    "why_absent": "DOWNLOAD feature; B declares no_download=True",
+    "s15c": null
+   },
+   {
+    "feature": "F107_solar_flux",
+    "family": 3,
+    "source": "Penticton F10.7 cm solar radio flux",
+    "why_absent": "DOWNLOAD feature; B declares no_download=True",
+    "s15c": "AND it is UNMEASURABLE-BY-WINDOW on its own band anyway: F10.7's 11 y solar cycle gives 1.92 cycles in the 7,716 d window, below S-15(c)'s 3. This is the feature whose z = 32 corpse the clause retroactively explains -- deferring it costs the tranche nothing it could have identified."
+   },
+   {
+    "feature": "length_of_day",
+    "family": 3,
+    "source": "IERS finals.all LOD",
+    "why_absent": "DOWNLOAD feature; B declares no_download=True",
+    "s15c": null
+   }
+  ],
+  "mark_axis_features_catalog": 23,
+  "mark_axis_features_declared": 20,
+  "superseded_denominator": 189,
+  "change_reason_class": "config-determined-not-result-determined",
+  "ratchet": "THE RATCHET (\u00a7P7-18). The declared integer FIXES AT CONFIG-HASH FREEZE. This re-issue from 189 to 171 is legitimate precisely because its reason is CONFIG-DETERMINED, NOT RESULT-DETERMINED: the three features were dropped because B's own frozen `no_download=True` cannot build them, a fact knowable -- and known -- before any datum was touched, and B has not been run. A change with the same arithmetic but a result-determined reason would be S-9's forking path wearing a correction's clothes. The distinction is the whole of the ratchet, and it is recorded on the artifact rather than in a commit message so it travels with the number.",
+  "ruled_denominator": 171,
   "agrees_with_ruling": true,
-  "reconciliation": "189 priced + 148 deferred (B-2) + 9 unpriced + 23 de-duplicated = 369, against the ~1,000 headline \u00a7P7-10(c) carried from the catalog. RECONCILED EXACTLY at \u00a7P7-16; the residual is the catalog's own 'declared overhead', which was never scope.",
+  "reconciliation": "171 priced + 148 deferred (B-2) + 9 unpriced + 23 de-duplicated = 351, against the ~1,000 headline \u00a7P7-10(c) carried from the catalog. RECONCILED EXACTLY at \u00a7P7-16; the residual is the catalog's own 'declared overhead', which was never scope. \u00a7P7-18 then lowered the mark axis from 6 x 23 to 6 x 20 -- the 3 DOWNLOAD features B's own frozen config cannot build, deferred to B-2 BY NAME -- so m moved 189 -> 171, config-determined-not-result-determined.",
   "deferred_note": "\u00a7P7-16: the four arms this build does not implement -- F9-05 (68, already-declared), F2-18..F2-25 (32), F10-14 (17), F10-08 (31), 148 tests in total -- are DEFERRED and return later as ONE B-2 declaration. They are NOT declared as empty strata here: a declared stratum with no implementation consumes budget through its m_s and produces nothing, which taxes the arms that did get built for scope that was never going to run. Deferring them is the honest denominator; re-declaring them together is the honest scope.",
   "unpriced_rule": "\u00a7P7-16, the general rule, stated in full because it generalises past this tranche: A CONTROL IS UNPRICED IF IT CAN ONLY CALIBRATE A REFERENCE OR CONDEMN OUR OWN INSTRUMENT. Multiplicity is owed on rejections we might MAKE, not on checks that can only unmake them -- the same principle \u00a7P7-5(3) applied to LORO. The F9-20 battery is priced because its controls are SURVIVABLE: a control there can 'win' and its survivor count is read as a false-positive rate, so it must face the same threshold as the real arm or F10-25's ratio is meaningless. The F7 observer controls are not that: a hit on `obs_mc_drift_365d` does not become a finding, it condemns a co-moving science row. Nothing about them can promote anything, so they owe nothing. The build's own instinct -- price them, on \u00a7P7-2(a)'s 'an unpriced control is an unaudited channel' -- was RIGHT FOR SURVIVABLE CONTROLS and wrong here; the distinction is now the rule rather than a case.",
   "deduplication_rule": "HYPOTHESIS_LEDGER.md \u00a7P7-16: `log_moment` is rank-identical to `mag` under both declared mark statistics (proved numerically by `redundancy_audit`), so it is DE-DUPLICATED rather than kept. A surviving duplicate would read as phantom replication -- one result appearing to be confirmed twice. Built and audited, not scored: the declared mark axis is 6 marks x 23 features = 138.",
@@ -112,12 +142,12 @@
  },
  "strata_file": {
   "path": "engine/configs/strata_tranche_b.json",
-  "sha256": "1131c629dcc008f58d8191469643e3d9196bec4078acf0fe1f093c6a1c77ca04",
-  "m": 189,
-  "m_declared": 189,
+  "sha256": "98516a02f6da4a3a3ef3c8e385f2e1dd7671404a70c0d4d04607926e09c74067",
+  "m": 171,
+  "m_declared": 171,
   "declared_total_check": {
-   "m_declared": 189,
-   "sum_m_s": 189,
+   "m_declared": 171,
+   "sum_m_s": 171,
    "ok": true
   },
   "q": 0.1,
@@ -205,11 +235,11 @@
    ],
    "alpha": 0.0001,
    "vif_mark_fallback": 4.575,
-   "n_declared_tests": 189
+   "n_declared_tests": 171
   },
   "strata": {
    "path": "strata_tranche_b.json",
-   "sha256": "1131c629dcc008f58d8191469643e3d9196bec4078acf0fe1f093c6a1c77ca04",
+   "sha256": "98516a02f6da4a3a3ef3c8e385f2e1dd7671404a70c0d4d04607926e09c74067",
    "q": 0.1,
    "strata": [
     {
@@ -235,7 +265,7 @@
      "feature_family": null,
      "test_kind": "markx",
      "region": null,
-     "m_s": 138,
+     "m_s": 120,
      "q_s": 0.1,
      "note": ""
     },
@@ -256,17 +286,17 @@
     "7|glm": "tb_controls"
    },
    "catch_all": "tb_second_moment",
-   "m": 189,
-   "m_declared": 189,
+   "m": 171,
+   "m_declared": 171,
    "declared_total_check": {
-    "m_declared": 189,
-    "sum_m_s": 189,
+    "m_declared": 171,
+    "sum_m_s": 171,
     "ok": true
    },
-   "note": "TRANCHE B (HYPOTHESIS_LEDGER.md \u00a7P7-3, \u00a7P7-10(c), \u00a7P7-14(d), \u00a7P7-15(b)), RE-ISSUED at the \u00a7P7-16 ruled integer, declared BEFORE the run and frozen in the config hash by its own sha256 (\u00a7P6-3(3)+(5)). PRICED BH denominator m = 189 = 17 second-moment (F9-01) + 34 omnibus (F9-04) + 138 mark axis (F9-10, 6 scored marks x 23 features). RECONCILIATION against the ~1,000 headline: 189 priced + 148 deferred (B-2) + 9 unpriced + 23 de-duplicated = 369, against the ~1,000 headline \u00a7P7-10(c) carried from the catalog. RECONCILED EXACTLY at \u00a7P7-16; the residual is the catalog's own 'declared overhead', which was never scope. DEFERRED: \u00a7P7-16: the four arms this build does not implement -- F9-05 (68, already-declared), F2-18..F2-25 (32), F10-14 (17), F10-08 (31), 148 tests in total -- are DEFERRED and return later as ONE B-2 declaration. They are NOT declared as empty strata here: a declared stratum with no implementation consumes budget through its m_s and produces nothing, which taxes the arms that did get built for scope that was never going to run. Deferring them is the honest denominator; re-declaring them together is the honest scope. UNPRICED: \u00a7P7-16, the general rule, stated in full because it generalises past this tranche: A CONTROL IS UNPRICED IF IT CAN ONLY CALIBRATE A REFERENCE OR CONDEMN OUR OWN INSTRUMENT. Multiplicity is owed on rejections we might MAKE, not on checks that can only unmake them -- the same principle \u00a7P7-5(3) applied to LORO. The F9-20 battery is priced because its controls are SURVIVABLE: a control there can 'win' and its survivor count is read as a false-positive rate, so it must face the same threshold as the real arm or F10-25's ratio is meaningless. The F7 observer controls are not that: a hit on `obs_mc_drift_365d` does not become a finding, it condemns a co-moving science row. Nothing about them can promote anything, so they owe nothing. The build's own instinct -- price them, on \u00a7P7-2(a)'s 'an unpriced control is an unaudited channel' -- was RIGHT FOR SURVIVABLE CONTROLS and wrong here; the distinction is now the rule rather than a case. DE-DUPLICATED: HYPOTHESIS_LEDGER.md \u00a7P7-16: `log_moment` is rank-identical to `mag` under both declared mark statistics (proved numerically by `redundancy_audit`), so it is DE-DUPLICATED rather than kept. A surviving duplicate would read as phantom replication -- one result appearing to be confirmed twice. Built and audited, not scored: the declared mark axis is 6 marks x 23 features = 138. q_s is FLAT at the declared q in every priced stratum: no budget is reallocated, so there is no prior to justify under \u00a7P6-3(2). The mark axis sits in its OWN stratum (\u00a7P7-11(c)) rather than in the v1 `mark` stratum, because 6 event-time marks are not the 2 day-binned marks that allocation was measured on."
+   "note": "TRANCHE B (HYPOTHESIS_LEDGER.md \u00a7P7-3, \u00a7P7-10(c), \u00a7P7-14(d), \u00a7P7-15(b)), RE-ISSUED at the \u00a7P7-18 ruled integer (189 -> 171, change reason CONFIG-DETERMINED-NOT-RESULT-DETERMINED), declared BEFORE the run and frozen in the config hash by its own sha256 (\u00a7P6-3(3)+(5)). PRICED BH denominator m = 171 = 17 second-moment (F9-01) + 34 omnibus (F9-04) + 120 mark axis (F9-10, 6 scored marks x 20 BUILDABLE features; the 3 DOWNLOAD features are deferred to B-2 BY NAME). RECONCILIATION against the ~1,000 headline: 171 priced + 148 deferred (B-2) + 9 unpriced + 23 de-duplicated = 351, against the ~1,000 headline \u00a7P7-10(c) carried from the catalog. RECONCILED EXACTLY at \u00a7P7-16; the residual is the catalog's own 'declared overhead', which was never scope. \u00a7P7-18 then lowered the mark axis from 6 x 23 to 6 x 20 -- the 3 DOWNLOAD features B's own frozen config cannot build, deferred to B-2 BY NAME -- so m moved 189 -> 171, config-determined-not-result-determined. DEFERRED: \u00a7P7-16: the four arms this build does not implement -- F9-05 (68, already-declared), F2-18..F2-25 (32), F10-14 (17), F10-08 (31), 148 tests in total -- are DEFERRED and return later as ONE B-2 declaration. They are NOT declared as empty strata here: a declared stratum with no implementation consumes budget through its m_s and produces nothing, which taxes the arms that did get built for scope that was never going to run. Deferring them is the honest denominator; re-declaring them together is the honest scope. UNPRICED: \u00a7P7-16, the general rule, stated in full because it generalises past this tranche: A CONTROL IS UNPRICED IF IT CAN ONLY CALIBRATE A REFERENCE OR CONDEMN OUR OWN INSTRUMENT. Multiplicity is owed on rejections we might MAKE, not on checks that can only unmake them -- the same principle \u00a7P7-5(3) applied to LORO. The F9-20 battery is priced because its controls are SURVIVABLE: a control there can 'win' and its survivor count is read as a false-positive rate, so it must face the same threshold as the real arm or F10-25's ratio is meaningless. The F7 observer controls are not that: a hit on `obs_mc_drift_365d` does not become a finding, it condemns a co-moving science row. Nothing about them can promote anything, so they owe nothing. The build's own instinct -- price them, on \u00a7P7-2(a)'s 'an unpriced control is an unaudited channel' -- was RIGHT FOR SURVIVABLE CONTROLS and wrong here; the distinction is now the rule rather than a case. DE-DUPLICATED: HYPOTHESIS_LEDGER.md \u00a7P7-16: `log_moment` is rank-identical to `mag` under both declared mark statistics (proved numerically by `redundancy_audit`), so it is DE-DUPLICATED rather than kept. A surviving duplicate would read as phantom replication -- one result appearing to be confirmed twice. Built and audited, not scored: the declared mark axis is 6 marks x 23 features = 138. SUPPRESSED: No budget is reallocated, so there is no prior to justify under \u00a7P6-3(2). The mark axis sits in its OWN stratum (\u00a7P7-11(c)) rather than in the v1 `mark` stratum, because 6 event-time marks are not the 2 day-binned marks that allocation was measured on.\u00a7P7-18: the v1 two-mark rows (`marks:<f>` on mag and depth) and the F9-10 mark axis rows for the same two marks are the SAME SHAPE while the sub-daily arm is OFF -- same feature, same mark, same statistic, same time base -- so the v1 rows are SUPPRESSED, not tagged. Tagging them REPLICATION would have been wrong twice over: a replication is CROSS-SESSION (\u00a7P7-17(2) as clarified), and a within-session same-shape row carries no information while reading as phantom replication. THE SUPPRESSION IS CONDITIONAL AND IT LIFTS ITSELF: turn the sub-daily arm on and the F9-10 row's time base becomes `event-times`, the shapes stop matching, and the v1 row is no longer a duplicate of anything. RATCHET: THE RATCHET (\u00a7P7-18). The declared integer FIXES AT CONFIG-HASH FREEZE. This re-issue from 189 to 171 is legitimate precisely because its reason is CONFIG-DETERMINED, NOT RESULT-DETERMINED: the three features were dropped because B's own frozen `no_download=True` cannot build them, a fact knowable -- and known -- before any datum was touched, and B has not been run. A change with the same arithmetic but a result-determined reason would be S-9's forking path wearing a correction's clothes. The distinction is the whole of the ratchet, and it is recorded on the artifact rather than in a commit message so it travels with the number. DEFERRED FEATURES (B-2, by name): Ap_geomagnetic, F107_solar_flux, length_of_day"
   }
  },
- "config_hash": "148f634603fba2422d63223ad0f41e0ae00cb75a2d1084bee7c7297a3e4f7716",
+ "config_hash": "114d4e9d8004b06b62cdd3b7bb3a3560eff2bb055c3c0d6b0082b5f42b197087",
  "floors": {
   "count_path_alpha": 0.0001,
   "count_path_vif": 24.081827389301417,
@@ -542,7 +572,7 @@
    "log_moment"
   ],
   "deduplication_rule": "HYPOTHESIS_LEDGER.md \u00a7P7-16: `log_moment` is rank-identical to `mag` under both declared mark statistics (proved numerically by `redundancy_audit`), so it is DE-DUPLICATED rather than kept. A surviving duplicate would read as phantom replication -- one result appearing to be confirmed twice. Built and audited, not scored: the declared mark axis is 6 marks x 23 features = 138.",
-  "n_scored_tests": 138,
+  "n_scored_tests": 120,
   "definitions": {
    "mag": "event magnitude (the v1 mark, unchanged)",
    "depth": "hypocentral depth, km (the v1 mark, unchanged)",
@@ -643,12 +673,12 @@
      "detail": "17 cyclic features x 2 statistics"
     },
     {
-     "n": 138,
+     "n": 120,
      "test": "markx",
      "disposition": "DECLARED",
      "parent": null,
      "why": "F9-10, priced",
-     "detail": "6 scored marks x 23 features"
+     "detail": "6 scored marks x 20 features"
     },
     {
      "n": 17,
@@ -669,9 +699,9 @@
     {
      "n": 40,
      "test": "spearman / circular-linear",
-     "disposition": "REPLICATION-OF-DECLARED",
+     "disposition": "SUPPRESSED",
      "parent": null,
-     "why": "the v1 2-mark axis, already declared. NOTE: with the sub-daily arm OFF these are the SAME TESTS as the markx `mag`/`depth` rows in this same session -- an intra-session duplicate of exactly the kind \u00a7P7-16 de-duplicated `log_moment` for. Flagged.",
+     "why": "\u00a7P7-18: SAME SHAPE as the F9-10 `mag`/`depth` rows in this same session while the sub-daily arm is off (same feature, mark, statistic, time base). A within-session same-shape row is a DUPLICATE, not a replication: it is SUPPRESSED with a proved shape map, and the suppression lifts by itself if the sub-daily arm turns on.",
      "detail": "20 features x 2 v1 marks"
     },
     {
@@ -693,19 +723,21 @@
    ],
    "totals": {
     "COMPONENT-OF": 17,
-    "REPLICATION-OF-DECLARED": 143,
-    "DECLARED": 189,
+    "REPLICATION-OF-DECLARED": 103,
+    "DECLARED": 171,
     "UNPRICED-CONTROL": 9,
-    "TOTAL": 358
+    "SUPPRESSED": 40,
+    "TOTAL": 340
    },
    "rule": {
     "COMPONENT-OF": "exists only as part of another row's claim (F9-01's R1 beside R2; F9-04's Rayleigh beside Kuiper -- the comparison IS the claim). Owes no multiplicity because it makes no independent rejection, and MUST NOT be able to make one: it appears only inside its parent's record and never standalone.",
     "REPLICATION-OF-DECLARED": "a re-execution of a row already declared elsewhere. Not re-priced. Where the test-key digest matches the prior session, p-invariance is a FREE \u00a7P6-5 determinism check and is wired.",
     "DECLARED": "a genuinely new independent row. These, and only these, are m.",
-    "UNPRICED-CONTROL": "\u00a7P7-16: a control that can only calibrate a reference or condemn our own instrument. Declared at m_s = 0."
+    "UNPRICED-CONTROL": "\u00a7P7-16: a control that can only calibrate a reference or condemn our own instrument. A PRICING class, not a disposition. Declared at m_s = 0.",
+    "SUPPRESSED": "\u00a7P7-18: a WITHIN-SESSION same-shape duplicate. NOT EMITTED, so it has no disposition -- it has no standing. Suppression is proved same-shape (feature, mark, statistic, time base) and mapped, and it LIFTS automatically if the shapes stop matching (e.g. the sub-daily arm turning on)."
    },
    "n_genuinely_new_beyond_the_declared_statistics": 0,
-   "genuinely_new_note": "Every executed row is a COMPONENT-OF, a REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, or one of the three DECLARED statistics. NO row falls outside the taxonomy, so no genuinely-new independent hypothesis is executed beyond the priced ones and the integer does not move on this account."
+   "genuinely_new_note": "Every executed row is a COMPONENT-OF, a (cross-session) REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, a SUPPRESSED within-session duplicate, or one of the DECLARED statistics. NO row falls outside the taxonomy, so no genuinely-new independent hypothesis is executed beyond the priced ones and the integer does not move on this account."
   },
   "executed_view": {
    "rows": [
@@ -752,9 +784,9 @@
     {
      "n": 40,
      "test": "spearman / circular-linear",
-     "disposition": "REPLICATION-OF-DECLARED",
+     "disposition": "SUPPRESSED",
      "parent": null,
-     "why": "the v1 2-mark axis, already declared. NOTE: with the sub-daily arm OFF these are the SAME TESTS as the markx `mag`/`depth` rows in this same session -- an intra-session duplicate of exactly the kind \u00a7P7-16 de-duplicated `log_moment` for. Flagged.",
+     "why": "\u00a7P7-18: SAME SHAPE as the F9-10 `mag`/`depth` rows in this same session while the sub-daily arm is off (same feature, mark, statistic, time base). A within-session same-shape row is a DUPLICATE, not a replication: it is SUPPRESSED with a proved shape map, and the suppression lifts by itself if the sub-daily arm turns on.",
      "detail": "20 features x 2 v1 marks"
     },
     {
@@ -776,26 +808,280 @@
    ],
    "totals": {
     "COMPONENT-OF": 17,
-    "REPLICATION-OF-DECLARED": 143,
+    "REPLICATION-OF-DECLARED": 103,
     "DECLARED": 171,
     "UNPRICED-CONTROL": 9,
+    "SUPPRESSED": 40,
     "TOTAL": 340
    },
    "rule": {
     "COMPONENT-OF": "exists only as part of another row's claim (F9-01's R1 beside R2; F9-04's Rayleigh beside Kuiper -- the comparison IS the claim). Owes no multiplicity because it makes no independent rejection, and MUST NOT be able to make one: it appears only inside its parent's record and never standalone.",
     "REPLICATION-OF-DECLARED": "a re-execution of a row already declared elsewhere. Not re-priced. Where the test-key digest matches the prior session, p-invariance is a FREE \u00a7P6-5 determinism check and is wired.",
     "DECLARED": "a genuinely new independent row. These, and only these, are m.",
-    "UNPRICED-CONTROL": "\u00a7P7-16: a control that can only calibrate a reference or condemn our own instrument. Declared at m_s = 0."
+    "UNPRICED-CONTROL": "\u00a7P7-16: a control that can only calibrate a reference or condemn our own instrument. A PRICING class, not a disposition. Declared at m_s = 0.",
+    "SUPPRESSED": "\u00a7P7-18: a WITHIN-SESSION same-shape duplicate. NOT EMITTED, so it has no disposition -- it has no standing. Suppression is proved same-shape (feature, mark, statistic, time base) and mapped, and it LIFTS automatically if the shapes stop matching (e.g. the sub-daily arm turning on)."
    },
    "n_genuinely_new_beyond_the_declared_statistics": 0,
-   "genuinely_new_note": "Every executed row is a COMPONENT-OF, a REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, or one of the three DECLARED statistics. NO row falls outside the taxonomy, so no genuinely-new independent hypothesis is executed beyond the priced ones and the integer does not move on this account."
+   "genuinely_new_note": "Every executed row is a COMPONENT-OF, a (cross-session) REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, a SUPPRESSED within-session duplicate, or one of the DECLARED statistics. NO row falls outside the taxonomy, so no genuinely-new independent hypothesis is executed beyond the priced ones and the integer does not move on this account."
   },
-  "mark_axis_features_declared": 23,
+  "mark_axis_features_declared": 20,
   "mark_axis_features_executed": 20,
-  "declared_minus_executed": 18,
-  "shortfall_flag": "F9-10 is priced at 23 features (MINING_CATALOG's '7 marks x 23+ features'), but B's frozen config sets `no_download=True` and therefore builds 20. 18 priced mark slots would never execute. That is LEGAL -- \u00a7P6-3 rule 3 counts an unexecuted test as a NON-REJECTION against its declared m_s -- and it is not free: those slots tax the rows that do run. It is REPORTED, not resolved: lowering the mark axis to 120 moves the integer \u00a7P7-16 just fixed, and the integer is the Popper seat's.",
+  "declared_minus_executed": 0,
+  "shortfall_flag": null,
   "n_genuinely_new": 0,
-  "genuinely_new_note": "Every executed row is a COMPONENT-OF, a REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, or one of the three DECLARED statistics. NO row falls outside the taxonomy, so no genuinely-new independent hypothesis is executed beyond the priced ones and the integer does not move on this account."
+  "genuinely_new_note": "Every executed row is a COMPONENT-OF, a (cross-session) REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, a SUPPRESSED within-session duplicate, or one of the DECLARED statistics. NO row falls outside the taxonomy, so no genuinely-new independent hypothesis is executed beyond the priced ones and the integer does not move on this account.",
+  "suppression_map": {
+   "n_suppressed": 40,
+   "active": true,
+   "rule": "\u00a7P7-18: the v1 two-mark rows (`marks:<f>` on mag and depth) and the F9-10 mark axis rows for the same two marks are the SAME SHAPE while the sub-daily arm is OFF -- same feature, same mark, same statistic, same time base -- so the v1 rows are SUPPRESSED, not tagged. Tagging them REPLICATION would have been wrong twice over: a replication is CROSS-SESSION (\u00a7P7-17(2) as clarified), and a within-session same-shape row carries no information while reading as phantom replication. THE SUPPRESSION IS CONDITIONAL AND IT LIFTS ITSELF: turn the sub-daily arm on and the F9-10 row's time base becomes `event-times`, the shapes stop matching, and the v1 row is no longer a duplicate of anything.",
+   "shape_fields": [
+    "feature",
+    "mark",
+    "statistic",
+    "time_base"
+   ],
+   "n_features": 20,
+   "v1_marks": [
+    "mag",
+    "depth"
+   ],
+   "entries_sample": [
+    {
+     "suppressed": {
+      "source": "v1 mark axis",
+      "shape": {
+       "feature": "moon_synodic_phase",
+       "mark": "mag",
+       "statistic": "spearman",
+       "time_base": "day-binned"
+      }
+     },
+     "survivor": {
+      "source": "F9-10 mark axis (declared and priced)",
+      "shape": {
+       "feature": "moon_synodic_phase",
+       "mark": "mag",
+       "statistic": "spearman",
+       "time_base": "day-binned"
+      }
+     },
+     "proof": "all 4 shape coordinates equal: feature='moon_synodic_phase', mark='mag', statistic='spearman', time_base='day-binned'",
+     "lifts_if": "the sub-daily arm turns on: the survivor's time_base becomes 'event-times (sub-daily)', the shapes differ, and this suppression is void"
+    },
+    {
+     "suppressed": {
+      "source": "v1 mark axis",
+      "shape": {
+       "feature": "moon_synodic_phase",
+       "mark": "depth",
+       "statistic": "spearman",
+       "time_base": "day-binned"
+      }
+     },
+     "survivor": {
+      "source": "F9-10 mark axis (declared and priced)",
+      "shape": {
+       "feature": "moon_synodic_phase",
+       "mark": "depth",
+       "statistic": "spearman",
+       "time_base": "day-binned"
+      }
+     },
+     "proof": "all 4 shape coordinates equal: feature='moon_synodic_phase', mark='depth', statistic='spearman', time_base='day-binned'",
+     "lifts_if": "the sub-daily arm turns on: the survivor's time_base becomes 'event-times (sub-daily)', the shapes differ, and this suppression is void"
+    },
+    {
+     "suppressed": {
+      "source": "v1 mark axis",
+      "shape": {
+       "feature": "moon_anomalistic_phase",
+       "mark": "mag",
+       "statistic": "spearman",
+       "time_base": "day-binned"
+      }
+     },
+     "survivor": {
+      "source": "F9-10 mark axis (declared and priced)",
+      "shape": {
+       "feature": "moon_anomalistic_phase",
+       "mark": "mag",
+       "statistic": "spearman",
+       "time_base": "day-binned"
+      }
+     },
+     "proof": "all 4 shape coordinates equal: feature='moon_anomalistic_phase', mark='mag', statistic='spearman', time_base='day-binned'",
+     "lifts_if": "the sub-daily arm turns on: the survivor's time_base becomes 'event-times (sub-daily)', the shapes differ, and this suppression is void"
+    },
+    {
+     "suppressed": {
+      "source": "v1 mark axis",
+      "shape": {
+       "feature": "moon_anomalistic_phase",
+       "mark": "depth",
+       "statistic": "spearman",
+       "time_base": "day-binned"
+      }
+     },
+     "survivor": {
+      "source": "F9-10 mark axis (declared and priced)",
+      "shape": {
+       "feature": "moon_anomalistic_phase",
+       "mark": "depth",
+       "statistic": "spearman",
+       "time_base": "day-binned"
+      }
+     },
+     "proof": "all 4 shape coordinates equal: feature='moon_anomalistic_phase', mark='depth', statistic='spearman', time_base='day-binned'",
+     "lifts_if": "the sub-daily arm turns on: the survivor's time_base becomes 'event-times (sub-daily)', the shapes differ, and this suppression is void"
+    }
+   ],
+   "entries_all_proved_same_shape": true,
+   "counterfactual_subdaily_on": {
+    "n_suppressed": 0,
+    "verdict": "the suppression LIFTS BY ITSELF: with the sub-daily arm on the F9-10 row reads the feature at event times, the shapes differ, and the v1 row is no longer a duplicate of anything. 0 suppressed, as it must be."
+   }
+  }
+ },
+ "ratchet_P7_18": {
+  "denominator_now": 171,
+  "denominator_superseded": 189,
+  "change_reason_class": "config-determined-not-result-determined",
+  "rule": "THE RATCHET (\u00a7P7-18). The declared integer FIXES AT CONFIG-HASH FREEZE. This re-issue from 189 to 171 is legitimate precisely because its reason is CONFIG-DETERMINED, NOT RESULT-DETERMINED: the three features were dropped because B's own frozen `no_download=True` cannot build them, a fact knowable -- and known -- before any datum was touched, and B has not been run. A change with the same arithmetic but a result-determined reason would be S-9's forking path wearing a correction's clothes. The distinction is the whole of the ratchet, and it is recorded on the artifact rather than in a commit message so it travels with the number.",
+  "fixes_at": "config-hash freeze",
+  "deferred_features_B2_by_name": [
+   {
+    "feature": "Ap_geomagnetic",
+    "family": 3,
+    "source": "GFZ daily Ap index",
+    "why_absent": "DOWNLOAD feature; B declares no_download=True",
+    "s15c": null
+   },
+   {
+    "feature": "F107_solar_flux",
+    "family": 3,
+    "source": "Penticton F10.7 cm solar radio flux",
+    "why_absent": "DOWNLOAD feature; B declares no_download=True",
+    "s15c": "AND it is UNMEASURABLE-BY-WINDOW on its own band anyway: F10.7's 11 y solar cycle gives 1.92 cycles in the 7,716 d window, below S-15(c)'s 3. This is the feature whose z = 32 corpse the clause retroactively explains -- deferring it costs the tranche nothing it could have identified."
+   },
+   {
+    "feature": "length_of_day",
+    "family": 3,
+    "source": "IERS finals.all LOD",
+    "why_absent": "DOWNLOAD feature; B declares no_download=True",
+    "s15c": null
+   }
+  ]
+ },
+ "suppression_map_P7_18": {
+  "n_suppressed": 40,
+  "active": true,
+  "rule": "\u00a7P7-18: the v1 two-mark rows (`marks:<f>` on mag and depth) and the F9-10 mark axis rows for the same two marks are the SAME SHAPE while the sub-daily arm is OFF -- same feature, same mark, same statistic, same time base -- so the v1 rows are SUPPRESSED, not tagged. Tagging them REPLICATION would have been wrong twice over: a replication is CROSS-SESSION (\u00a7P7-17(2) as clarified), and a within-session same-shape row carries no information while reading as phantom replication. THE SUPPRESSION IS CONDITIONAL AND IT LIFTS ITSELF: turn the sub-daily arm on and the F9-10 row's time base becomes `event-times`, the shapes stop matching, and the v1 row is no longer a duplicate of anything.",
+  "shape_fields": [
+   "feature",
+   "mark",
+   "statistic",
+   "time_base"
+  ],
+  "n_features": 20,
+  "v1_marks": [
+   "mag",
+   "depth"
+  ],
+  "entries_sample": [
+   {
+    "suppressed": {
+     "source": "v1 mark axis",
+     "shape": {
+      "feature": "moon_synodic_phase",
+      "mark": "mag",
+      "statistic": "spearman",
+      "time_base": "day-binned"
+     }
+    },
+    "survivor": {
+     "source": "F9-10 mark axis (declared and priced)",
+     "shape": {
+      "feature": "moon_synodic_phase",
+      "mark": "mag",
+      "statistic": "spearman",
+      "time_base": "day-binned"
+     }
+    },
+    "proof": "all 4 shape coordinates equal: feature='moon_synodic_phase', mark='mag', statistic='spearman', time_base='day-binned'",
+    "lifts_if": "the sub-daily arm turns on: the survivor's time_base becomes 'event-times (sub-daily)', the shapes differ, and this suppression is void"
+   },
+   {
+    "suppressed": {
+     "source": "v1 mark axis",
+     "shape": {
+      "feature": "moon_synodic_phase",
+      "mark": "depth",
+      "statistic": "spearman",
+      "time_base": "day-binned"
+     }
+    },
+    "survivor": {
+     "source": "F9-10 mark axis (declared and priced)",
+     "shape": {
+      "feature": "moon_synodic_phase",
+      "mark": "depth",
+      "statistic": "spearman",
+      "time_base": "day-binned"
+     }
+    },
+    "proof": "all 4 shape coordinates equal: feature='moon_synodic_phase', mark='depth', statistic='spearman', time_base='day-binned'",
+    "lifts_if": "the sub-daily arm turns on: the survivor's time_base becomes 'event-times (sub-daily)', the shapes differ, and this suppression is void"
+   },
+   {
+    "suppressed": {
+     "source": "v1 mark axis",
+     "shape": {
+      "feature": "moon_anomalistic_phase",
+      "mark": "mag",
+      "statistic": "spearman",
+      "time_base": "day-binned"
+     }
+    },
+    "survivor": {
+     "source": "F9-10 mark axis (declared and priced)",
+     "shape": {
+      "feature": "moon_anomalistic_phase",
+      "mark": "mag",
+      "statistic": "spearman",
+      "time_base": "day-binned"
+     }
+    },
+    "proof": "all 4 shape coordinates equal: feature='moon_anomalistic_phase', mark='mag', statistic='spearman', time_base='day-binned'",
+    "lifts_if": "the sub-daily arm turns on: the survivor's time_base becomes 'event-times (sub-daily)', the shapes differ, and this suppression is void"
+   },
+   {
+    "suppressed": {
+     "source": "v1 mark axis",
+     "shape": {
+      "feature": "moon_anomalistic_phase",
+      "mark": "depth",
+      "statistic": "spearman",
+      "time_base": "day-binned"
+     }
+    },
+    "survivor": {
+     "source": "F9-10 mark axis (declared and priced)",
+     "shape": {
+      "feature": "moon_anomalistic_phase",
+      "mark": "depth",
+      "statistic": "spearman",
+      "time_base": "day-binned"
+     }
+    },
+    "proof": "all 4 shape coordinates equal: feature='moon_anomalistic_phase', mark='depth', statistic='spearman', time_base='day-binned'",
+    "lifts_if": "the sub-daily arm turns on: the survivor's time_base becomes 'event-times (sub-daily)', the shapes differ, and this suppression is void"
+   }
+  ],
+  "entries_all_proved_same_shape": true,
+  "counterfactual_subdaily_on": {
+   "n_suppressed": 0,
+   "verdict": "the suppression LIFTS BY ITSELF: with the sub-daily arm on the F9-10 row reads the feature at event times, the shapes differ, and the v1 row is no longer a duplicate of anything. 0 suppressed, as it must be."
+  }
  },
  "open_items_before_the_run": [
   "THE RUN GATE IS NOT DISCHARGED: the recovery-versus-amplitude curve is IN FLIGHT and the arm (i) anomaly is unruled (\u00a7P7-15(a), \u00a7P7-16)."

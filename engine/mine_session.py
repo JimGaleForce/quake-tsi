@@ -1885,23 +1885,32 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     if tb_on:
         cyc_names = [f.name for f in cyc_feats]
         prior_keys = set()
+        # §P7-18: within-session same-shape duplicates are SUPPRESSED before anything
+        # is tagged. Order matters -- a suppressed row must never acquire a
+        # disposition, because a disposition is a statement about a row that stands.
+        tests, suppressed, supp_map = disp.suppression_map(
+            tests, subdaily=bool(tb_cfg.get("subdaily")))
         disp.tag_rows(tests, prior_keys=prior_keys, cyclic_features=cyc_names)
         disp.assert_one_disposition(tests)
         tests, moved = disp.attach_components(tests)
+        ckpt.state["suppression_map"] = supp_map
         ckpt.state["dispositions"] = {
-            "counts": disp.counts_by_disposition(tests + moved),
+            "counts": disp.counts_by_disposition(tests + moved + suppressed),
             "n_component_rows_attached_to_parents": len(moved),
-            "rule": dict(disp.DISPOSITION_RULE),
+            "n_suppressed_within_session_duplicates": len(suppressed),
+            "rule": dict(disp.CLASS_RULE),
             "note": ("§P7-17: COMPONENT-OF rows are removed from the standalone "
                      "test list and attached inside their parents' records. They "
                      "are NOT deleted -- they are half of a claim and the claim "
                      "needs them -- they are simply never readable alone."),
         }
         if verbose:
-            print("§P7-17 dispositions: "
+            print("§P7-17/§P7-18 row classes: "
                   + ", ".join(f"{k} = {v}" for k, v in
                               sorted(ckpt.state["dispositions"]["counts"].items()))
-                  + f"; {len(moved)} component row(s) attached to parents")
+                  + f"; {len(moved)} component row(s) attached to parents, "
+                  f"{len(suppressed)} within-session duplicate(s) suppressed "
+                  f"(map: {supp_map['n_suppressed']} proved same-shape)")
 
     n_tests = len(tests)
     # §P6-2(5): every row carries a p_method. Rows produced by a path that predates

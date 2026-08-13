@@ -16,19 +16,37 @@ because all three assume every executed row is the same KIND of thing. They are 
   A component owes no multiplicity because it makes no independent rejection -- and
   it must never be able to make one, which is what the enforcement below is for.
 
-  **REPLICATION-OF-DECLARED.** A re-execution of a row already declared elsewhere
-  (Tranche A's 550, the period scan, the v1 mark axis). Not re-priced -- paying twice
-  for the same hypothesis inflates the denominator without adding a hypothesis. And
-  it comes with a dividend §P7-17 makes mandatory rather than optional: **where the
-  re-execution shares a test-key digest with the prior session, its p MUST be
-  bitwise identical, and that is a free §P6-5 determinism check** on data we are
-  running anyway.
+  **REPLICATION-OF-DECLARED -- CROSS-SESSION ONLY (§P7-18 clarifying §P7-17(2)).**
+  A re-execution, IN A LATER SESSION, of a row already declared in an earlier one
+  (Tranche A's 550, the period scan). Not re-priced -- paying twice for the same
+  hypothesis inflates the denominator without adding a hypothesis. And it comes with
+  a dividend §P7-17 makes mandatory rather than optional: **where the re-execution
+  shares a test-key digest with the prior session, its p MUST be bitwise identical,
+  and that is a free §P6-5 determinism check** on data we are running anyway.
+
+  **A WITHIN-SESSION same-shape row is NOT a replication. It is a DUPLICATE, and it
+  is SUPPRESSED (§P7-18).** The distinction is not bookkeeping. A cross-session
+  replication is a second observation of the same hypothesis made under a different
+  declaration, and its agreement with the first is INFORMATION (that is the whole
+  determinism dividend). A within-session duplicate is the same statistic on the
+  same data in the same table twice: it carries no information, and it reads as
+  phantom replication -- one result appearing to be confirmed twice, which is the
+  hazard §P7-16 de-duplicated `log_moment` for. Suppression is proved, not asserted:
+  see `same_shape` and `suppression_map`.
 
   **DECLARED.** A genuinely new independent row. These, and only these, are `m`.
 
-  **UNPRICED-CONTROL.** §P7-16's class, carried here so that "exactly one tag per
-  row" is true of every row rather than of most of them. A control that can only
-  calibrate a reference or condemn our own instrument.
+**THE TAXONOMY IS THREE TAGS (§P7-18).** COMPONENT-OF, REPLICATION-OF-DECLARED,
+DECLARED -- and every EXECUTED, PRICEABLE row carries exactly one. Two further
+classes exist and are deliberately NOT dispositions, because calling them
+dispositions would blur what a disposition is for:
+
+  **UNPRICED-CONTROL** (§P7-16) is a PRICING class, not a disposition: a control that
+  can only calibrate a reference or condemn our own instrument owes no multiplicity,
+  so the question "which kind of test is this" never arises for it.
+
+  **SUPPRESSED** (§P7-18) is not a property of an executed row at all -- a suppressed
+  row is one that is NOT EMITTED. It has no disposition because it has no standing.
 
 THE ENFORCEMENT IS THE POINT, NOT THE LABEL
 -------------------------------------------
@@ -54,8 +72,15 @@ from . import mine as M
 COMPONENT = "COMPONENT-OF"
 REPLICATION = "REPLICATION-OF-DECLARED"
 DECLARED = "DECLARED"
-UNPRICED_CONTROL = "UNPRICED-CONTROL"
-DISPOSITIONS = (COMPONENT, REPLICATION, DECLARED, UNPRICED_CONTROL)
+
+# §P7-18: THREE tags. This tuple is the taxonomy and nothing else belongs in it.
+DISPOSITIONS = (COMPONENT, REPLICATION, DECLARED)
+
+# Two further classes that are NOT dispositions -- see the module docstring for why
+# the distinction is kept rather than collapsed for tidiness.
+UNPRICED_CONTROL = "UNPRICED-CONTROL"     # §P7-16: a pricing class
+SUPPRESSED = "SUPPRESSED"                 # §P7-18: not emitted, so not a row
+ROW_CLASSES = DISPOSITIONS + (UNPRICED_CONTROL, SUPPRESSED)
 
 DISPOSITION_RULE = {
     COMPONENT: ("exists only as part of another row's claim (F9-01's R1 beside R2; "
@@ -67,9 +92,17 @@ DISPOSITION_RULE = {
                   "re-priced. Where the test-key digest matches the prior session, "
                   "p-invariance is a FREE §P6-5 determinism check and is wired."),
     DECLARED: ("a genuinely new independent row. These, and only these, are m."),
-    UNPRICED_CONTROL: ("§P7-16: a control that can only calibrate a reference or "
-                       "condemn our own instrument. Declared at m_s = 0."),
 }
+
+CLASS_RULE = dict(DISPOSITION_RULE)
+CLASS_RULE[UNPRICED_CONTROL] = (
+    "§P7-16: a control that can only calibrate a reference or condemn our own "
+    "instrument. A PRICING class, not a disposition. Declared at m_s = 0.")
+CLASS_RULE[SUPPRESSED] = (
+    "§P7-18: a WITHIN-SESSION same-shape duplicate. NOT EMITTED, so it has no "
+    "disposition -- it has no standing. Suppression is proved same-shape (feature, "
+    "mark, statistic, time base) and mapped, and it LIFTS automatically if the "
+    "shapes stop matching (e.g. the sub-daily arm turning on).")
 
 # The parent statistics a first-moment GLM row is a COMPONENT of.
 COMPONENT_PARENT_TESTS = ("second_circular_moment_score", "kuiper_V", "watson_U2")
@@ -115,7 +148,10 @@ def tag_rows(tests, prior_keys=None, cyclic_features=None):
                    "Rayleigh form beside Kuiper -- the comparison IS the claim")
         elif key in prior:
             tag, parent, why = (REPLICATION, None,
-                                "already declared in a prior session; not re-priced")
+                                "already declared in a PRIOR SESSION; not re-priced. "
+                                "Cross-session only (§P7-18): a within-session "
+                                "same-shape row is a DUPLICATE and is suppressed, "
+                                "not tagged")
         else:
             tag, parent, why = (DECLARED, None,
                                 "not a component, not a prior declaration -- "
@@ -127,23 +163,126 @@ def tag_rows(tests, prior_keys=None, cyclic_features=None):
 
 
 def assert_one_disposition(tests):
-    """Exactly one tag per row, and it must be a declared tag."""
-    bad = [t for t in tests if t.get("disposition") not in DISPOSITIONS]
+    """Exactly one class per row, drawn from the three tags or the pricing class.
+
+    SUPPRESSED never appears here: a suppressed row is not emitted, so if one
+    reaches this function something upstream failed to suppress it.
+    """
+    leaked = [t for t in tests if t.get("disposition") == SUPPRESSED]
+    if leaked:
+        raise MultipleDispositions(
+            "§P7-18: %d SUPPRESSED row(s) reached the emitted test list. A suppressed "
+            "row is not emitted at all; if it is here, `suppression_map` was not "
+            "applied. First: %r"
+            % (len(leaked), {k: leaked[0].get(k)
+                             for k in ("test", "feature", "mark")}))
+    bad = [t for t in tests
+           if t.get("disposition") not in (DISPOSITIONS + (UNPRICED_CONTROL,))]
     if bad:
         raise MultipleDispositions(
             "§P7-17: %d row(s) carry no valid disposition tag (first: %r). Every "
-            "executed row carries exactly one of %r."
+            "executed priceable row carries exactly one of %r; a control carries "
+            "%r, which is a PRICING class and not a disposition (§P7-18)."
             % (len(bad), {k: bad[0].get(k) for k in ("test", "feature", "lag",
                                                      "mark", "disposition")},
-               list(DISPOSITIONS)))
+               list(DISPOSITIONS), UNPRICED_CONTROL))
     return {"n_rows": len(tests), "ok": True}
 
 
 def counts_by_disposition(tests):
-    out = {d: 0 for d in DISPOSITIONS}
+    out = {d: 0 for d in ROW_CLASSES}
     for t in tests:
         out[t["disposition"]] = out.get(t["disposition"], 0) + 1
     return out
+
+
+# ------------------------- §P7-18: within-session duplicates, PROVED and mapped -
+# The declared shape of a mark row. Four coordinates, and the fourth is the one that
+# does the work: two rows testing the same feature against the same mark with the
+# same statistic are STILL different tests if one reads the feature on the day
+# lattice and the other at event times. That is the entire content of F9-10's
+# escape from the sinc, so it is a shape coordinate and not a footnote.
+SHAPE_FIELDS = ("feature", "mark", "statistic", "time_base")
+DAY_BINNED = "day-binned"
+EVENT_TIMES = "event-times (sub-daily)"
+
+SUPPRESSION_RULE = (
+    "§P7-18: the v1 two-mark rows (`marks:<f>` on mag and depth) and the F9-10 mark "
+    "axis rows for the same two marks are the SAME SHAPE while the sub-daily arm is "
+    "OFF -- same feature, same mark, same statistic, same time base -- so the v1 "
+    "rows are SUPPRESSED, not tagged. Tagging them REPLICATION would have been "
+    "wrong twice over: a replication is CROSS-SESSION (§P7-17(2) as clarified), and "
+    "a within-session same-shape row carries no information while reading as "
+    "phantom replication. THE SUPPRESSION IS CONDITIONAL AND IT LIFTS ITSELF: turn "
+    "the sub-daily arm on and the F9-10 row's time base becomes `event-times`, the "
+    "shapes stop matching, and the v1 row is no longer a duplicate of anything.")
+
+
+def row_shape(t, subdaily_default=False):
+    """The declared shape of a row. Declare-then-prove: this IS the declaration."""
+    if t.get("mark_axis") == "F9-10":
+        tb = EVENT_TIMES if t.get("subdaily", subdaily_default) else DAY_BINNED
+    else:
+        # the v1 mark axis reads the feature at its DAY value, always
+        tb = DAY_BINNED
+    return {"feature": t.get("feature"), "mark": t.get("mark"),
+            "statistic": t.get("test"), "time_base": tb}
+
+
+def same_shape(a, b, subdaily_default=False):
+    """True when two rows are the same test. The PROOF half of declare-then-prove."""
+    sa, sb = row_shape(a, subdaily_default), row_shape(b, subdaily_default)
+    return all(sa[f] == sb[f] for f in SHAPE_FIELDS), sa, sb
+
+
+def suppression_map(tests, subdaily=False):
+    """Suppress within-session same-shape duplicates. Returns (kept, suppressed, map).
+
+    The SURVIVOR is always the F9-10 row and the suppressed one always the v1 row,
+    and the direction is not arbitrary: the F9-10 row is the one this tranche
+    DECLARED and priced, and the v1 row is the one the engine emits by inheritance.
+    Suppressing the declared row and keeping the inherited one would leave the
+    tranche's own priced slot unfilled.
+    """
+    declared = {}
+    for t in tests:
+        if t.get("mark_axis") == "F9-10":
+            sh = row_shape(t, subdaily)
+            declared[tuple(sh[f] for f in SHAPE_FIELDS)] = t
+    kept, suppressed, mapping = [], [], []
+    for t in tests:
+        if t.get("mark_axis") == "F9-10" or t.get("mark") is None:
+            kept.append(t)
+            continue
+        sh = row_shape(t, subdaily)
+        key = tuple(sh[f] for f in SHAPE_FIELDS)
+        parent = declared.get(key)
+        if parent is None:
+            kept.append(t)
+            continue
+        ok, sa, sb = same_shape(t, parent, subdaily)
+        assert ok, "suppression_map matched two rows of different shape"
+        t["disposition"] = SUPPRESSED
+        suppressed.append(t)
+        mapping.append({
+            "suppressed": {"source": "v1 mark axis", "shape": sa},
+            "survivor": {"source": "F9-10 mark axis (declared and priced)",
+                         "shape": sb},
+            "proof": ("all %d shape coordinates equal: %s"
+                      % (len(SHAPE_FIELDS),
+                         ", ".join("%s=%r" % (f, sa[f]) for f in SHAPE_FIELDS))),
+            "lifts_if": ("the sub-daily arm turns on: the survivor's time_base "
+                         "becomes %r, the shapes differ, and this suppression is "
+                         "void" % EVENT_TIMES),
+        })
+    return kept, suppressed, {
+        "rule": SUPPRESSION_RULE,
+        "subdaily_arm": bool(subdaily),
+        "active": (not subdaily),
+        "n_suppressed": len(suppressed),
+        "shape_fields": list(SHAPE_FIELDS),
+        "entries": mapping,
+    }
 
 
 # -------------------------------------------------------------- enforcement ---
@@ -272,7 +411,7 @@ def replication_invariance(tests, prior_tests, seed, prior_seed):
                     "different master seeds, so no digest matches. The check costs "
                     "nothing and would become live the moment a replication session "
                     "declares the prior session's master seed."),
-        "rule": DISPOSITION_RULE[REPLICATION],
+        "rule": CLASS_RULE[REPLICATION],
     }
 
 
@@ -318,12 +457,13 @@ def enumerate_session_rows(cyclic_features, other_science_features,
     add(n_other * other_lags, "glm_poisson_offset_etas", REPLICATION, None,
         "already declared (K-089-R tranche 1 / Tranche A's 550); not re-priced",
         "%d non-cyclic science features x %d lags" % (n_other, other_lags))
-    add((n_cyc + n_other) * len(v1_marks), "spearman / circular-linear", REPLICATION,
+    add((n_cyc + n_other) * len(v1_marks), "spearman / circular-linear", SUPPRESSED,
         None,
-        "the v1 2-mark axis, already declared. NOTE: with the sub-daily arm OFF "
-        "these are the SAME TESTS as the markx `mag`/`depth` rows in this same "
-        "session -- an intra-session duplicate of exactly the kind §P7-16 "
-        "de-duplicated `log_moment` for. Flagged.",
+        "§P7-18: SAME SHAPE as the F9-10 `mag`/`depth` rows in this same session "
+        "while the sub-daily arm is off (same feature, mark, statistic, time base). "
+        "A within-session same-shape row is a DUPLICATE, not a replication: it is "
+        "SUPPRESSED with a proved shape map, and the suppression lifts by itself if "
+        "the sub-daily arm turns on.",
         "%d features x %d v1 marks" % (n_cyc + n_other, len(v1_marks)))
     add(n_period_peaks, "lomb_scargle_peak", REPLICATION, None,
         "the period scan runs in every session and is already declared",
@@ -335,14 +475,15 @@ def enumerate_session_rows(cyclic_features, other_science_features,
         "our own instrument", "%d count-path control features x lag 0" % n_ctl)
 
     totals = {d: sum(r["n"] for r in rows if r["disposition"] == d)
-              for d in DISPOSITIONS}
+              for d in ROW_CLASSES}
     totals["TOTAL"] = sum(r["n"] for r in rows)
     return {"rows": rows, "totals": totals,
-            "rule": dict(DISPOSITION_RULE),
+            "rule": dict(CLASS_RULE),
             "n_genuinely_new_beyond_the_declared_statistics": 0,
             "genuinely_new_note": (
-                "Every executed row is a COMPONENT-OF, a REPLICATION-OF-DECLARED, an "
-                "UNPRICED-CONTROL, or one of the three DECLARED statistics. NO row "
+                "Every executed row is a COMPONENT-OF, a (cross-session) "
+                "REPLICATION-OF-DECLARED, an UNPRICED-CONTROL, a SUPPRESSED "
+                "within-session duplicate, or one of the DECLARED statistics. NO row "
                 "falls outside the taxonomy, so no genuinely-new independent "
                 "hypothesis is executed beyond the priced ones and the integer does "
                 "not move on this account.")}

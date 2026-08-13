@@ -334,17 +334,18 @@ def test_harmonic_amplitude_recovers_a_planted_modulation():
 
 # ======================================================== the declaration =====
 def test_declaration_reconciles_exactly_at_the_ruled_integer():
-    """§P7-16: 189 priced + 148 deferred + 9 unpriced + 23 de-duplicated."""
+    """§P7-18: 171 priced + 148 deferred + 9 unpriced + 23 de-duplicated."""
     e = tranche_b.enumerate_declared()
-    assert e["bh_denominator_m"] == 189
+    assert e["bh_denominator_m"] == 171
     assert e["agrees_with_ruling"] is True
     assert e["n_deferred_to_B2"] == 148
     assert e["n_unpriced_controls"] == 9
-    assert e["n_deduplicated_removed"] == 23
+    assert e["n_deduplicated_removed"] == 23          # §P7-16, catalog 23-feature axis
+    assert e["n_deduplicated_removed_on_current_axis"] == 20   # §P7-18's 20
     named = {i["key"]: i["n"] for i in e["items"]}
     assert named["second_moment"] == 17 and named["omnibus"] == 34
-    assert named["mark_axis"] == 138          # 6 SCORED marks x 23 features
-    assert 17 + 34 + 138 == e["n_priced"]
+    assert named["mark_axis"] == 120          # 6 SCORED marks x 20 BUILDABLE
+    assert 17 + 34 + 120 == e["n_priced"]
     # every PRICED arm is actually implemented -- the deferred ones are the unbuilt
     assert all(i["built"] for i in e["items"] if i["class"] == "PRICED")
     assert not any(i["built"] for i in e["items"] if i["class"] == "DEFERRED")
@@ -372,7 +373,8 @@ def test_f7_controls_are_unpriced_and_outside_the_denominator():
 
 
 def test_the_ruled_denominator_supersedes_the_headline():
-    assert tranche_b.POPPER_RULED_DENOMINATOR == 189
+    assert tranche_b.POPPER_RULED_DENOMINATOR == 171
+    assert tranche_b.POPPER_RULED_DENOMINATOR_SUPERSEDED == 189
     assert "SUPERSEDED" in tranche_b.HEADLINE_RESOLUTION_NOTE
     assert "may not be quoted" in tranche_b.HEADLINE_RESOLUTION_NOTE
 
@@ -590,10 +592,22 @@ def _tagged(cyclic=("moon_synodic_phase",), prior=()):
     return disp.tag_rows(rows, prior_keys=prior, cyclic_features=cyclic)
 
 
+def test_the_taxonomy_is_three_tags_plus_two_non_dispositions():
+    """§P7-18: DISPOSITIONS is exactly three. UNPRICED-CONTROL is a PRICING class
+    and SUPPRESSED is not a property of an executed row at all."""
+    assert disp.DISPOSITIONS == (disp.COMPONENT, disp.REPLICATION, disp.DECLARED)
+    assert len(disp.DISPOSITIONS) == 3
+    assert disp.UNPRICED_CONTROL not in disp.DISPOSITIONS
+    assert disp.SUPPRESSED not in disp.DISPOSITIONS
+    assert set(disp.ROW_CLASSES) == set(disp.DISPOSITIONS) | {
+        disp.UNPRICED_CONTROL, disp.SUPPRESSED}
+
+
 def test_every_row_carries_exactly_one_disposition():
     rows = _tagged(prior=PRIOR)
     assert disp.assert_one_disposition(rows)["ok"] is True
-    assert all(r["disposition"] in disp.DISPOSITIONS for r in rows)
+    assert all(r["disposition"] in disp.DISPOSITIONS + (disp.UNPRICED_CONTROL,)
+               for r in rows)
     c = disp.counts_by_disposition(rows)
     assert c[disp.DECLARED] == 4          # 1 moment2 + 2 omnibus + 1 markx
     assert c[disp.COMPONENT] == 1
@@ -684,8 +698,8 @@ def test_replication_invariance_reports_not_comparable_across_seeds():
 def test_assert_declared_row_count_passes_at_the_ruled_integer():
     e = tranche_b.row_enumeration()
     n = e["declared_view"]["totals"][disp.DECLARED]
-    assert n == 189
-    assert S.assert_declared_row_count(n, 189)["ok"] is True
+    assert n == 171
+    assert S.assert_declared_row_count(n, 171)["ok"] is True
 
 
 def test_assert_declared_row_count_raises_on_a_genuinely_new_row():
@@ -716,25 +730,143 @@ def test_the_three_identities_see_three_different_failures():
 
 # ------------------------------------------------------- the enumeration itself -
 def test_row_enumeration_finds_no_genuinely_new_rows():
-    """§P7-17's expectation, CHECKED rather than assumed: m stays 189."""
+    """§P7-18's enumeration, CHECKED rather than assumed."""
     e = tranche_b.row_enumeration()
     assert e["n_genuinely_new"] == 0
     t = e["declared_view"]["totals"]
-    assert t[disp.DECLARED] == 189
+    assert t[disp.DECLARED] == 171
     assert t[disp.COMPONENT] == 17            # one per cyclic feature, lag 0
+    assert t[disp.REPLICATION] == 103         # 93 GLM lag rows + 10 period peaks
     assert t[disp.UNPRICED_CONTROL] == 9
-    assert t[disp.REPLICATION] == t["TOTAL"] - 189 - 17 - 9
-    assert set(t) - {"TOTAL"} == set(disp.DISPOSITIONS)
+    assert t[disp.SUPPRESSED] == 40           # the v1 mark rows, mapped
+    assert t["TOTAL"] == 171 + 17 + 103 + 9 + 40
+    assert set(t) - {"TOTAL"} == set(disp.ROW_CLASSES)
 
 
-def test_row_enumeration_reports_the_mark_axis_shortfall():
-    """A priced slot the frozen config cannot execute is legal and is not free."""
+def test_the_mark_axis_shortfall_is_closed_by_the_re_declaration():
+    """§P7-18 lowered the axis to what B can build, so the shortfall is now zero."""
     e = tranche_b.row_enumeration()
-    assert e["mark_axis_features_declared"] == 23
+    assert e["mark_axis_features_declared"] == 20
     assert e["mark_axis_features_executed"] == 20
-    assert e["declared_minus_executed"] == 18
-    assert "REPORTED, not resolved" in e["shortfall_flag"]
+    assert e["declared_minus_executed"] == 0
+    assert e["shortfall_flag"] is None
     assert e["executed_view"]["totals"][disp.DECLARED] == 171
+
+
+def test_the_three_download_features_are_deferred_to_b2_by_name():
+    """§P7-18 requires the NAMES, not a count."""
+    names = [f["feature"] for f in tranche_b.DEFERRED_FEATURES_B2]
+    assert names == ["Ap_geomagnetic", "F107_solar_flux", "length_of_day"]
+    assert all(f["family"] == 3 for f in tranche_b.DEFERRED_FEATURES_B2)
+    assert all("no_download=True" in f["why_absent"]
+               for f in tranche_b.DEFERRED_FEATURES_B2)
+    # one of them is S-15(c)-unmeasurable on its own band anyway
+    f107 = [f for f in tranche_b.DEFERRED_FEATURES_B2
+            if f["feature"] == "F107_solar_flux"][0]
+    assert "UNMEASURABLE-BY-WINDOW" in f107["s15c"]
+    assert floors.unmeasurable_by_window(11.0 * 365.25)
+    # and the deferred features are real: they are what `download_features` builds
+    assert set(names) == {"Ap_geomagnetic", "F107_solar_flux", "length_of_day"}
+
+
+def test_the_ratchet_records_a_config_determined_reason():
+    """§P7-18: the integer fixes at config-hash freeze; the reason CLASS is what
+    makes a re-issue legitimate rather than a forking path."""
+    assert tranche_b.DEFERRAL_REASON_CLASS == \
+        "config-determined-not-result-determined"
+    assert "FIXES AT CONFIG-HASH FREEZE" in tranche_b.RATCHET_NOTE
+    assert "result-determined reason would be S-9's forking path" \
+        in tranche_b.RATCHET_NOTE
+    e = tranche_b.enumerate_declared()
+    assert e["change_reason_class"] == tranche_b.DEFERRAL_REASON_CLASS
+    assert e["superseded_denominator"] == 189
+
+
+# ------------------------ §P7-18: within-session duplicates, proved and mapped --
+def _mark_pair(subdaily=False, feature="moon_synodic_phase", mark="mag"):
+    v1 = {"test": "spearman", "feature": feature, "mark": mark, "lag": None,
+          "p_raw": 0.4}
+    f9 = {"test": "spearman", "feature": feature, "mark": mark, "lag": None,
+          "mark_axis": "F9-10", "subdaily": subdaily, "p_raw": 0.4}
+    return [v1, f9]
+
+
+def test_same_shape_is_declared_then_proved_on_four_coordinates():
+    assert disp.SHAPE_FIELDS == ("feature", "mark", "statistic", "time_base")
+    v1, f9 = _mark_pair(subdaily=False)
+    ok, sa, sb = disp.same_shape(v1, f9)
+    assert ok and sa == sb
+    assert sa["time_base"] == disp.DAY_BINNED
+    # different mark -> different shape
+    other = dict(f9, mark="depth")
+    assert not disp.same_shape(v1, other)[0]
+
+
+def test_the_sub_daily_arm_makes_the_shapes_differ():
+    """The time base is a SHAPE coordinate, which is the whole of F9-10's escape."""
+    v1, f9 = _mark_pair(subdaily=True)
+    ok, sa, sb = disp.same_shape(v1, f9, subdaily_default=True)
+    assert not ok
+    assert sa["time_base"] == disp.DAY_BINNED
+    assert sb["time_base"] == disp.EVENT_TIMES
+
+
+def test_within_session_duplicates_are_suppressed_not_tagged_replication():
+    rows = _mark_pair(subdaily=False)
+    kept, suppressed, mp = disp.suppression_map(rows, subdaily=False)
+    assert len(suppressed) == 1 and len(kept) == 1
+    # the SURVIVOR is the declared-and-priced F9-10 row, never the inherited one
+    assert kept[0]["mark_axis"] == "F9-10"
+    assert suppressed[0]["disposition"] == disp.SUPPRESSED
+    assert suppressed[0].get("mark_axis") is None
+    assert mp["active"] is True and mp["n_suppressed"] == 1
+    e = mp["entries"][0]
+    assert "all 4 shape coordinates equal" in e["proof"]
+    assert "sub-daily arm turns on" in e["lifts_if"]
+    # and it is NOT a replication: replication is cross-session only
+    disp.tag_rows(kept, prior_keys=set(), cyclic_features=set())
+    assert kept[0]["disposition"] == disp.DECLARED
+
+
+def test_the_suppression_lifts_by_itself_when_the_sub_daily_arm_turns_on():
+    rows = _mark_pair(subdaily=True)
+    kept, suppressed, mp = disp.suppression_map(rows, subdaily=True)
+    assert suppressed == [] and len(kept) == 2
+    assert mp["active"] is False and mp["n_suppressed"] == 0
+
+
+def test_a_suppressed_row_reaching_the_emitted_list_raises():
+    rows = _mark_pair(subdaily=False)
+    _k, suppressed, _m = disp.suppression_map(rows, subdaily=False)
+    with pytest.raises(disp.MultipleDispositions) as exc:
+        disp.assert_one_disposition(suppressed)
+    assert "not emitted" in str(exc.value)
+
+
+def test_declaration_carries_the_suppression_map_with_its_counterfactual():
+    sm = tranche_b.suppression_map_declaration()
+    assert sm["n_suppressed"] == 40
+    assert sm["active"] is True
+    assert sm["entries_all_proved_same_shape"] is True
+    assert sm["counterfactual_subdaily_on"]["n_suppressed"] == 0
+    assert "LIFTS BY ITSELF" in sm["counterfactual_subdaily_on"]["verdict"]
+
+
+def test_session_suppresses_the_v1_mark_rows_and_records_the_map(tmp_path):
+    cfg = _cfg(tmp_path, tranche_b_on=True)
+    out = ms.run(cfg, verbose=False, resume=False,
+                 session_dir=str(tmp_path / "sess_supp"), jobs=1,
+                 ledger_path=str(tmp_path / "ledger_supp.jsonl"),
+                 prepared=_prepared())
+    st = json.load(open(os.path.join(out["session_dir"], "checkpoint.json"),
+                        encoding="utf-8"))
+    mp = st["suppression_map"]
+    assert mp["active"] is True
+    assert mp["n_suppressed"] > 0
+    assert all("shape coordinates equal" in e["proof"] for e in mp["entries"])
+    assert st["dispositions"]["n_suppressed_within_session_duplicates"] == \
+        mp["n_suppressed"]
+    assert st["dispositions"]["counts"][disp.SUPPRESSED] == mp["n_suppressed"]
 
 
 def test_session_tags_and_attaches_dispositions_end_to_end(tmp_path):
