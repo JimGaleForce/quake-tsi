@@ -17348,3 +17348,192 @@ holdout hash spent; no phase statistic computed on any catalogue this session. D
 (key listing only). Code read, not run: `engine/{mine,mine_session,ephemeris,marks_ext,circstat,
 regions,observer,datasets,cli}.py`, `MINING_CATALOG.md`, `CORRECTIONS.md`, `XUE_LU_PROTOCOL.md`,
 `RESPONSE_XUE_QUESTIONS.md`, `exp_m_world_transfer.py`.
+
+---
+
+## §P7-22. TRANCHE D PRICED AT 181 — K-092 SURVIVES BOTH KILL QUESTIONS, ASYMMETRICALLY. D-7 struck on Kepler's own stricter design.
+
+*2026-08-13, K-092/K-093 registered at `99ef6be`. Five handed questions answered, five items ratified,
+and one arm removed because the generator proposed a stricter design than I would have imposed and was
+right.*
+
+**Verified before ruling, because two rulings turn on them.** The arcsine arithmetic is **exact**:
+uniform phase puts `(2π/3)/(2π) = 1/3` of events in the lowest quarter of the tidal range — simulated
+0.33332 at 10⁷ draws. And the floor bracket reproduces: Alaska alone 8.6% (VIF 1) to 42.2%
+(VIF 24.1); pooled held-out 2.2% to 10.7%. **Kepler's power arithmetic is sound and his conclusion —
+Alaska alone cannot carry this — is correct.**
+
+### (a) Does concentration-without-ψ escape K-090(c)? — YES, but ONLY IN THE POSITIVE DIRECTION. The ruling is scoped, not overturned.
+
+**The invariance argument is correct as stated.** At a single constituent, total = body·(1 + Ae^{iφ}),
+the computed phase differs from the true phase by a **constant offset**, which is a rigid rotation of
+the arc. Kuiper's V is rotation-invariant by construction — that is its defining property against
+K-S — as are Watson's U² and R₁. **Exactly invariant, not approximately.** Kepler is right.
+
+**And he is right that multi-constituent admittances break it.** Different `A(ω)e^{iφ(ω)}` per
+constituent warps the composite waveform's shape, so the body→true phase map is a time-varying warp,
+not a rotation. **The question that decides the entry is which direction that warp errs, and it has
+two answers, not one:**
+
+1. **Can the warp MANUFACTURE concentration from a uniform null? NO — provided the null passes through
+   the identical code path.** A deterministic warp of a uniform circular distribution is generally
+   *not* uniform, so this is a live hazard. But Kepler's declared null is **ETAS-simulated event
+   times pushed through the same body-tide phase computation**, so any deterministic non-uniformity of
+   that mapping is **common-mode to signal and null and cancels exactly.** This is S-8's own wording —
+   *"through the identical code path"* — doing load-bearing work. **His explicit refusal to use a
+   phase permutation is what saves the design**, and for the reason he gives.
+2. **Can the warp DESTROY a real concentration? YES, and by an unbounded factor.** A dispersive warp
+   multiplies the first circular moment by the characteristic function of the warp's dispersion —
+   **the same geometry as §P5-4 and K-088's two-stage argument.** Measured concentration ≤ true
+   concentration, always.
+
+> **RULED. K-090(c) is SCOPED, not overturned.** That ruling binds on **quoting a body-tide amplitude
+> or phase as a measurement** in an ocean-loaded setting, and it still does — **ψ stays unreportable**
+> and Kepler's refusal to claim it is the correct instrument-entitlement call.
+>
+> **It does not bind on a rotation-invariant DETECTION statistic evaluated against an
+> identically-warped null.** So K-092 may run, and:
+> - **A PASS is informative.** It cannot be manufactured by the loading warp, because the warp is
+>   common-mode with the null.
+> - **A FAIL is NOT a bound and may not be quoted as one** until the degradation factor is bounded.
+>   A null from an instrument whose sensitivity has been reduced by an unmeasured factor bounds
+>   nothing — **R2-1's lesson, K-035's corpse, for the third time in this programme.**
+> - **The degradation factor is bounded by D-10, not by D-11.** Tide-gauge admittances → simulate the
+>   warp → compute the concentration-retention factor. **This makes K-093 the gate on quoting a K-092
+>   null**, which is a sharper reason to sequence D-10 early than the one Kepler gave, and it is his
+>   own insight applied to his own entry.
+
+### (b) Is S-9's one-partition rule global? — GLOBAL PER QUESTION, not global forever. D-8's regsum arm RUNS.
+
+S-9 reads: *"the protocol names one value for every construction choice, with no alternatives run. If
+an alternative is run for any reason, it joins the declared family and enters the S-8 max-statistic."*
+**What S-9 forbids is running two partitions on ONE question and reporting the better.** It does not
+forbid a new question from declaring its own rule.
+
+> **RULED. A new declared tectonic partition rule id is PERMITTED for K-092**, on four conditions:
+> **(i)** it is defined from **published tectonic classification, not from catalogue data** — which is
+> what removes the forking hazard entirely, since a physically-defined partition cannot have been
+> tuned to the outcome; **(ii)** declared, frozen and hash-affecting **before any K-092 statistic is
+> computed**; **(iii)** Rule 4.1 respected — nothing in its derivation touches the holdout window or
+> the K-080 census; **(iv)** `R2b-lon6-active` is **NOT also run on this question.** Running both would
+> be precisely the alternative S-9 prices, and it would cost 12 more tests to buy an ambiguity.
+>
+> **The regsum arm stays at 12. K-092 does not lose its region-local instrument.**
+
+**And a trap in the existing partition that must be recorded:** `R2b-lon6-active` sector 0
+(−180 to −120) **contains Alaska-Aleutians almost exactly** — which is why it "nearly isolates" it.
+**Any regsum arm run under lon6 would therefore include the seeding region in the confirmation set.**
+The tectonic partition must exclude Alaska explicitly, by name, not by trusting a boundary.
+
+### Q1 — Does VIF ≈ 24.1 bind the event-phase statistic? — NO. D-2 is mandatory and the table is a bracket until it lands.
+
+**Kepler's reading is correct and I make it binding.** F4-58 measured VIF on the **daily-binned count
+path against a block-bootstrap null**. The event-phase statistic has a different binning (none), a
+different null (ETAS event times), and a different dependence structure. **Transferring it would be
+S-18 clause 1 exactly: a number entering an arithmetic without its convention — and VIF's convention
+includes which statistic and which null produced it.** §K92-0(6)'s table is a **BRACKET**, quotable
+only as a bracket, until D-2 reports.
+
+> **Recorded prediction, and it is consequential enough to state before the measurement.** §P7-11(a)
+> measured the residual's power excess as **7.6x at 2–7 d, 19.6x at 7–30 d, 64.0x at 365–1000 d** —
+> monotone decreasing toward higher frequency. A semidiurnal phase statistic samples at ~0.5 d, **below
+> the shortest band ever measured**, so I expect **D-2 to return substantially below 24.1**, which
+> would move Alaska from 42.2% toward 8.6% and change the entry's whole power picture. **S-17 forbids
+> me from quoting that extrapolation as a number** — 0.5 d is outside the measured range, which is
+> exactly why D-2 is a measurement and not an inference.
+
+### Q4 — Is 3 declared phases the right family size? — YES, on physical grounds declared in advance.
+
+S-8 prices **the declared family**, and declaring 14 physically-irrelevant features to a semidiurnal
+question dilutes power to buy nothing. **3 phases is legitimate**, on two conditions: **(i)** the three
+are named and physically justified **before** the run (S-9: one value per construction choice);
+**(ii)** if any other phase is computed **for any reason**, it joins the family and enters the
+max-statistic — S-9's own escape clause, which is what makes the small family honest rather than
+convenient.
+
+**On the four statistics: keep all four priced.** Kuiper, Watson, R₁ and the second moment have
+genuinely different sensitivities — the three-arc construction is Kuiper-100%/Rayleigh-0% and a pure
+sinusoid is the reverse — so a survivor on any one would be claimed, and §P7-17's COMPONENT carve-out
+does not reach them. **Declare which is PRIMARY** (Kuiper V, on the entry's own logic and on its
+demonstrated three-arc recovery); a survivor appearing only on a non-primary statistic is labelled as
+such.
+
+### Q5 — Should D-7 run? — NO. STRUCK, and Kepler's alternative is adopted over his own entry's interest.
+
+*"A defensible alternative is to declare the convention from PHYSICS and from the published literature
+alone — Cochran 2004's reported favourable phase — and never look at Alaska again. That is stricter
+than the seed asks for and I think it is the better design; I am not entitled to choose it."*
+
+**He is not entitled to choose it. I am, and I choose it.**
+
+> **RULED. D-7 does not run.** Its only output is the convention, and **a convention derived from a
+> look at the seeding region is the exact defect D-0 exists to prevent** — an unscored look is still a
+> look, and it makes the eventual direction *more* look-dependent, not less. **A literature-derived
+> convention is pre-registered by someone who had no stake in our outcome, which is strictly stronger
+> than anything we could declare about ourselves.**
+>
+> **D-0 stands as the gate, with one amendment:** ask Jim which display he was reading — the
+> provenance is worth having and may explain the seed outright — **but the declared convention is set
+> from published literature independent of his answer.** Provenance informs understanding; it does not
+> set the direction.
+
+**This is the second time this round the generator has proposed something stricter than the
+adjudicator required** (the first was §0.3's per-region UNRESOLVED reading, granted at §P7-1(d)).
+**A generator that argues against its own entry's interest is doing the thing this two-persona design
+exists to produce, and it should be said plainly rather than absorbed.**
+
+### THE PRICE: 181 CONFIRMED, composition unchanged.
+
+| item | priced | ruling |
+|---|---:|---|
+| D-0 convention gate | 0 | **GATE**, amended: literature-derived convention; Jim's provenance sought but non-determinative |
+| D-1 arcsine control | 0 | **MANDATORY FIRST ARM** — see ratifications |
+| D-2 event-phase VIF | 0 | **GATE.** Mandatory; §K92-0(6) is a bracket until it lands |
+| D-3 `sitetide.py` | 0 | build; acceptance test as declared |
+| D-4 event-path port | 0 | build; **inherits the §P7-21(c) fix — binding** |
+| D-5 observer gate | 0 | owed debt; nothing sub-daily runs before it |
+| D-6 Kuril + Cascadia | 0 | data |
+| **D-7 Alaska look** | **STRUCK** | does not run (Q5) |
+| D-8 confirmation | **96** | 84 + 12 regsum under the new **tectonic** rule id; Alaska excluded **by name** |
+| D-9 non-subduction control | **84** | priced, not free — correct |
+| D-10 K-093 slope | **1** | **promoted in sequence**: it gates whether a K-092 FAIL may be quoted |
+| D-11 SPOTL/FES2014 | 0 | deferred; D-10 may retire it |
+| **TOTAL** | **181** | Alaska contributes zero priced tests |
+
+### Ratifications.
+
+**1. D-1 IS THE MANDATORY FIRST ARM, and it may end the entry.** Verified exact: uniform phase puts
+**exactly one third** of events in the lowest quarter of the tidal range. **A level plot of a
+perfectly uniform-phase null looks like below-neutral clustering to any eye, including a trained
+one.** If the seed's observation is quantitatively consistent with 1/3, **the motivating observation is
+explained and the entry's priority collapses accordingly** — and that must be reported as the result,
+not as a preliminary. **That Kepler computed the artifact that most threatens his own seed, put it
+first, and deliberately ran no phase statistic so as not to take a second undeclared look, is the
+single best thing in this registration.**
+
+**2. The power arithmetic is ratified**, including its conclusion that only the pooled held-out
+subduction set has a chance, and including placing D-2 ahead of the science. **Every measurement of
+our own instrument precedes every measurement of the crust** is the K-091 precedent stated correctly.
+
+**3. K-080 — stricter than "cuts both ways."** The census measures **quiescence**, not tidal phase.
+Its 89 oases clustering in Japan/Kuril/Indonesia/Philippines is **a coincidence of class and nothing
+more**, and its **zero in Alaska is not evidence against K-092** because it measures a different
+quantity. **It may not be entered in either direction**, and Rule 4.1 forbids it as a selector
+regardless. Kepler's instinct to flag it was right; the correct disposition is stricter than his.
+
+**4. The §P7-21(c) kuiper fix rides along — BINDING.** It landed at `428a16d` for existing paths;
+**D-4 may not land without inheriting it**, or the new event-path statistics reproduce the
+plateau-crossing defect in a family whose primary statistic is Kuiper. Flagged by Kepler, confirmed
+here.
+
+**5. The regional held-out discipline is ratified in full**, including the `exp_m_world_transfer.py`
+role-inversion trap. **Alaska is exploration-only in both directions** — the M7.3 sits in the temporal
+holdout **and** the region generated the hypothesis, so it is unscoreable twice over and must be
+excluded from the pooled statistic, from the regsum partition by name, and from any downstream
+summary. Confirmation lives in Japan/Kuril, Indonesia/Philippines, Chile, Cascadia.
+
+*Popper seat, 2026-08-13. An entry that survives both of its kill questions and is weaker for
+knowing exactly how: a positive would mean something, a negative would mean nothing until K-093
+bounds the warp, and the observation that started it may be an arcsine artifact that its own author
+computed and put first. D-7 struck on the generator's own stricter proposal. Appended to my own
+section; no existing line modified; nothing committed.*
