@@ -16307,3 +16307,86 @@ against a predicted 1.0000). This ruling settles what B computes and declares, n
 narrowly enough to be checkable rather than quotable, and a multiplicity liability converted into a
 determinism check. The integer probably does not move; the builder's enumeration decides that, not my
 expectation. Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+## §P7-18. TWO ENUMERATION FLAGS — B re-issues at **171**, and the v1 mark duplicates are SUPPRESSED. Plus one clarification to §P7-17(2) that the second flag earned.
+
+*2026-08-13, §P7-17 implemented and committed `de6b001`. Enumeration: DECLARED 189 / COMPONENT-OF 17 /
+REPLICATION 143 / UNPRICED 9, **genuinely-new ZERO — asserted, with a live tested GENUINELY-NEW branch
+so the taxonomy can say "new" rather than absorb it.** That last detail is the difference between a
+taxonomy and a bucket, and it was not asked for.*
+
+### (1) MARK-AXIS SHORTFALL — option (b). B re-issues at **171 = 17 + 34 + 120**.
+
+**§P7-16(2) is directly on point and I will not apply it selectively.** I removed 148 unbuilt tests
+from B's denominator eight hours ago because *"carrying unbuilt tests taxes the real ones by a factor
+in threshold for rejections that cannot occur."* **Eighteen phantom slots are the same error at
+smaller scale**, taxing the real rows by 189/171 = 10.5% for nothing. **(a) is refused on consistency
+with my own ruling.** The comparability argument for keeping 189 is weak in a way worth naming: 189
+was never run, so it offers comparability with **a number, not with a result**.
+
+**(c) is refused on three counts.** It changes a frozen config; it injects network-dependent data —
+fetch, coverage gaps, forward-fill — into a session whose entire value is its declared determinism; and
+at least one of the three features is **F10.7-adjacent, which S-15(c) already declares
+UNMEASURABLE-BY-WINDOW** (11-year cycle, 1.92 cycles in a 7,716-day window). Enabling a download to
+build a feature the window cannot resolve is paying twice for nothing.
+
+> **RULED. B declares 171.** The three unbuilt download-dependent mark features are **deferred to B-2
+> by name**, joining the four unbuilt arms already committed there (§P7-16(2)) — **committed, not
+> silently dropped**, and they arrive with their download hygiene and their S-15(c) status stated.
+
+**And the ratchet closes here.** This is the second and last move of B's integer.
+
+> **RULE. The declared integer is fixed at the moment the config hash is frozen.** Any change after
+> that requires a **new config hash and a new `EXPLORE_COUNT.jsonl` line** with its own
+> `n_declared_tests` (R2). What makes both moves legitimate is that each was **config-determined, not
+> result-determined**, and recorded: nothing scored, no outcome seen, the count read off what the
+> configuration builds. **A count that moves after data is scored is a different animal entirely and
+> is never permitted.**
+
+### (2) INTRA-SESSION DUPLICATES — SUPPRESS the v1 rows. `markx` survives; the audit value is not lost.
+
+The coordinator is right that consistency demands the §P7-16(3) treatment, and right about which of
+the pair survives — `markx` is B's declared science, the v1 rows are the copy. **But the disposition is
+neither of the two offered.**
+
+- **`COMPONENT-OF` is wrong.** A component is *constitutive* of its parent's claim — the first moment
+  beside the second moment, Rayleigh beside Kuiper, where the comparison **is** the claim. A duplicate
+  mark row is not constitutive of anything; it is the same test again.
+- **`REPLICATION` is wrong, and this is the flag's real lesson.** §P7-17(2) licensed re-executions
+  because *"the same test, on the same data, must return the same answer"* — a **cross-session**
+  determinism check against a prior session's recorded p. **Two executions inside one session are not
+  a replication in any sense that word carries.** Left tagged REPLICATION, the report would show a
+  finding and its own "replication" born in the same run, which is the phantom-replication harm
+  §P7-16(3) removed `log_moment` for, wearing a more respectable label.
+
+> **RULED. Suppress the v1 `marks:<f>` rows wherever their test shape is provably identical to a
+> `markx:<f>` row** — same feature, same mark, same statistic, same time base — **and prove it rather
+> than assume it**, per §P5-5(2)'s declare-then-prove discipline. Record the suppression map (which v1
+> row was suppressed in favour of which `markx` row) in the run record. The suppression is
+> **conditional on the sub-daily arm being off**; when that arm is on the shapes differ and both are
+> live.
+>
+> **Nothing is lost by suppressing.** §P7-17(2)'s audit value comes from comparing against a **prior
+> session's** recorded p, not against a same-session twin — so B's `markx` rows still deliver the
+> cross-session consistency check against the earlier `marks` rows, with no duplicate executed. **Same
+> audit, zero phantom.**
+
+> **CLARIFICATION to §P7-17(2), which this flag earned.** `REPLICATION-OF-DECLARED` is a
+> **cross-session** tag. **Within a single session, two executions of the same test shape are a
+> DUPLICATE, not a replication**, and the duplicate is suppressed — suppression being one of the three
+> lawful dispositions §P7-17 already names, so the taxonomy stays at three tags and does not grow a
+> fourth to accommodate a thing that should not exist.
+
+### Standing gate, unchanged.
+
+**B still does not run before the §P7-15 recovery-versus-amplitude curve reports and I rule on the arm
+(i) anomaly** (80% observed recovery at >= 2x floor against a predicted 1.0000). Both rulings above
+settle what B declares and computes; the run gate is still the curve.
+
+*Popper seat, 2026-08-13. Two flags that were both answered by precedents I set this week, which is
+the only real test of whether those precedents were worth setting: eighteen phantom slots removed on
+the rule that removed a hundred and forty-eight, and a duplicate suppressed on the rule that
+de-duplicated `log_moment` — after rejecting the respectable-sounding label that would have let it
+survive. Appended to my own section; no existing line modified; nothing committed.*
