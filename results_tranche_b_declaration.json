@@ -3,9 +3,9 @@
  "title": "EQ-24 v2 Tranche B -- the statistic tranche, DECLARATION PREPARED AND NOT RUN",
  "banner": "GENERATOR, NOT EVIDENCE. Nothing in this file is a result. It is a ranked list of hypotheses produced by an automated sweep over the EXPLORATION window only, with in-sample effect sizes. No line here may be quoted, cited, or reported as a finding. A candidate becomes evidence only by walking the ordinary path: written up as a K-entry, given a Popper ruling, and then tested ONCE against the frozen holdout (which costs a hash). This run spent no holdout hash.",
  "standing_warning_eq24": "the known ML-mining failure mode from M-008 (DeVries Nature net beaten by 2-parameter logistic -- Mignan & Broccardo 2019) quoted in the README as the standing warning: prefer the boring model; a boosted-tree find that a 2-param GLM can't reproduce after conditioning is treated as leakage until proven otherwise.",
- "prepared_utc": "2026-08-13T09:40:39.959927+00:00",
+ "prepared_utc": "2026-08-13T10:02:32.288892+00:00",
  "run_status": "GATED -- NOT RUN",
- "run_gate": "\u00a7P7-14(d) + \u00a7P7-15(b): Tranche B's BUILD is authorized and its RUN is gated on (i) the \u00a7P7-2(b) precondition builds and (ii) PER-STATISTIC G-M1 clearance for the new statistics and aggregations B introduces. `engine/recovery_b.py` produces the evidence for (ii) on SIMULATED catalogues; it does not grant the clearance, which is the Popper seat's. This module refuses to run either way.",
+ "run_gate": "\u00a7P7-14(d) + \u00a7P7-15(b): Tranche B's BUILD is authorized and its RUN is gated on (i) the \u00a7P7-2(b) precondition builds and (ii) PER-STATISTIC G-M1 clearance for the new statistics and aggregations B introduces. As of \u00a7P7-16 the run is ALSO gated on (iii) the recovery-versus-amplitude curve \u00a7P7-15(a) assigned at price 0 -- IN FLIGHT -- and (iv) the Popper seat's ruling on the arm (i) anomaly (80% recovery at >= 2x the floor is what the formula predicts at 1x, so either the plants span a range or the global floor formula is ~2x anti-conservative). `engine/recovery_b.py` produces the evidence for (ii) on SIMULATED catalogues; it does not grant the clearance. This module refuses to run either way.",
  "count_reconciliation": {
   "items": [
    {
@@ -14,7 +14,7 @@
     "stratum": "tb_second_moment",
     "test_kind": "moment2",
     "n": 17,
-    "new": true,
+    "class": "PRICED",
     "built": true,
     "arithmetic": "17 cyclic features x 1 new statistic",
     "note": "the second circular moment, as the 2-df score on the doubled angle"
@@ -25,7 +25,7 @@
     "stratum": "tb_omnibus",
     "test_kind": "omnibus",
     "n": 34,
-    "new": true,
+    "class": "PRICED",
     "built": true,
     "arithmetic": "17 cyclic features x 2 statistics (Kuiper V, Watson U^2)",
     "note": "shape sensitivity, NOT band coverage (\u00a7P7-3(2))"
@@ -35,30 +35,30 @@
     "catalog": "F9-10",
     "stratum": "tb_mark_axis",
     "test_kind": "markx",
-    "n": 161,
-    "new": true,
+    "n": 138,
+    "class": "PRICED",
     "built": true,
-    "arithmetic": "7 marks x 23 features",
+    "arithmetic": "6 SCORED marks x 23 features (7 declared marks less the de-duplicated `log_moment`, \u00a7P7-16)",
     "note": "its OWN \u00a7P6-3 stratum, reallocation justified by measurement (\u00a7P7-11(c)); sub-daily arm gated on F7-01/02/03 (\u00a7P7-3(3))"
    },
    {
     "key": "ladder_reoccupied",
     "catalog": "F9-05",
-    "stratum": "tb_ladder",
+    "stratum": null,
     "test_kind": "ladder",
     "n": 68,
-    "new": false,
+    "class": "DEFERRED",
     "built": false,
     "arithmetic": "the \u00a7P5-5(3) tranche-3 ladder, DECLARED 2026-08-11",
-    "note": "RE-OCCUPIED, not new scope (\u00a7P7-3). Occupies its 68 slots in the BH denominator and may not be presented as new."
+    "note": "already-declared; deferred to B-2 with the other unbuilt arms"
    },
    {
     "key": "linear_ladder",
     "catalog": "F2-18..F2-25",
-    "stratum": "tb_linear_ladder",
+    "stratum": null,
     "test_kind": "ladder_linear",
     "n": 32,
-    "new": true,
+    "class": "DEFERRED",
     "built": false,
     "arithmetic": "8 linear cyclic features x 4 new rungs",
     "note": "not a new estimator; inherits the existing ladder discipline (\u00a7P7-3(4)), so it carries no S-17 recovery demand of its own"
@@ -66,10 +66,10 @@
    {
     "key": "two_stage",
     "catalog": "F10-14",
-    "stratum": "tb_two_stage",
+    "stratum": null,
     "test_kind": "two_stage",
     "n": 17,
-    "new": true,
+    "class": "DEFERRED",
     "built": false,
     "arithmetic": "1 model x 17 cyclic features",
     "note": "K-088's object; inherits \u00a7P5-3's two mandated null repairs and may NOT be reported as a fresh design (\u00a7P7-3(5))"
@@ -77,10 +77,10 @@
    {
     "key": "bilinear",
     "catalog": "F10-08",
-    "stratum": "tb_bilinear",
+    "stratum": null,
     "test_kind": "bilinear",
     "n": 31,
-    "new": true,
+    "class": "DEFERRED",
     "built": false,
     "arithmetic": "the full bilinear perigee-syzygy interaction x 31 lags",
     "note": "priced as a transform per \u00a7P7-5(5)"
@@ -91,30 +91,37 @@
     "stratum": "tb_controls",
     "test_kind": "glm",
     "n": 9,
-    "new": true,
+    "class": "UNPRICED",
     "built": true,
     "arithmetic": "the count-path observer control features x 1 lag (computed from engine/observer.py, not retyped)",
-    "note": "PRICED, on \u00a7P7-2(a)'s own reasoning that an unpriced control is an unaudited channel -- which sits in tension with MINING_CATALOG F7-01's 'Price: 31 as a covariate; 0 as a control'. Flagged, priced the conservative way, not resolved here."
+    "note": "UNPRICED under \u00a7P7-16's general rule (below). m_s = 0: declared so the rows have a stratum to route to, outside the priced denominator so they cannot be rejected and cannot consume budget."
    }
   ],
-  "n_new_scope": 301,
-  "n_reoccupied_already_declared": 68,
-  "bh_denominator_m": 369,
-  "n_in_arms_this_build_implements": 221,
-  "n_in_arms_declared_but_not_built": 148,
-  "popper_headline": 1000,
-  "gap_vs_headline": 631,
-  "agrees_with_headline": false,
-  "discrepancy_note": "\u00a7P7-10(c) declares Tranche B at ~1,000 and itemises it as '17 second-moment + 34 omnibus + ~161 mark + 68 already-declared ladder + 32 linear ladder + 17 two-stage + 31 bilinear + declared overhead'. THOSE SEVEN ITEMS SUM TO 360. The residual 'declared overhead' would therefore have to be ~640 -- 178% of the named scope -- which is not an overhead, it is a majority. MINING_CATALOG's own Tranche B section gives the same seven numbers and the same ~1,000 headline, so the gap originates in the catalog and was carried into the ruling verbatim. THIS BUILD DOES NOT RESOLVE IT: the declared integer is reserved to the Popper seat (\u00a7P7-10(c): 'the exact integer frozen in the config hash before the run'), and the choice moves every BH threshold in the tranche. Reported, flagged, and left open.",
-  "reoccupied_identification": "the 68 are F9-05, the \u00a7P5-5(3) tranche-3 harmonic ladder declared 2026-08-11. \u00a7P7-3 requires the report to say WHICH 68 they are; this is that sentence.",
-  "not_built_flag": "arms declared but NOT implemented in this build: ladder_reoccupied (F9-05, 68), linear_ladder (F2-18..F2-25, 32), two_stage (F10-14, 17), bilinear (F10-08, 31). A declared stratum with no rows is legal -- \u00a7P6-3 rule 3 counts errored/absent tests as NON-REJECTIONS against their declared m_s -- but it is not free, and B must either build them or re-declare without them before the run."
+  "bh_denominator_m": 189,
+  "n_priced": 189,
+  "n_deferred_to_B2": 148,
+  "n_unpriced_controls": 9,
+  "n_deduplicated_removed": 23,
+  "ruled_denominator": 189,
+  "agrees_with_ruling": true,
+  "reconciliation": "189 priced + 148 deferred (B-2) + 9 unpriced + 23 de-duplicated = 369, against the ~1,000 headline \u00a7P7-10(c) carried from the catalog. RECONCILED EXACTLY at \u00a7P7-16; the residual is the catalog's own 'declared overhead', which was never scope.",
+  "deferred_note": "\u00a7P7-16: the four arms this build does not implement -- F9-05 (68, already-declared), F2-18..F2-25 (32), F10-14 (17), F10-08 (31), 148 tests in total -- are DEFERRED and return later as ONE B-2 declaration. They are NOT declared as empty strata here: a declared stratum with no implementation consumes budget through its m_s and produces nothing, which taxes the arms that did get built for scope that was never going to run. Deferring them is the honest denominator; re-declaring them together is the honest scope.",
+  "unpriced_rule": "\u00a7P7-16, the general rule, stated in full because it generalises past this tranche: A CONTROL IS UNPRICED IF IT CAN ONLY CALIBRATE A REFERENCE OR CONDEMN OUR OWN INSTRUMENT. Multiplicity is owed on rejections we might MAKE, not on checks that can only unmake them -- the same principle \u00a7P7-5(3) applied to LORO. The F9-20 battery is priced because its controls are SURVIVABLE: a control there can 'win' and its survivor count is read as a false-positive rate, so it must face the same threshold as the real arm or F10-25's ratio is meaningless. The F7 observer controls are not that: a hit on `obs_mc_drift_365d` does not become a finding, it condemns a co-moving science row. Nothing about them can promote anything, so they owe nothing. The build's own instinct -- price them, on \u00a7P7-2(a)'s 'an unpriced control is an unaudited channel' -- was RIGHT FOR SURVIVABLE CONTROLS and wrong here; the distinction is now the rule rather than a case.",
+  "deduplication_rule": "HYPOTHESIS_LEDGER.md \u00a7P7-16: `log_moment` is rank-identical to `mag` under both declared mark statistics (proved numerically by `redundancy_audit`), so it is DE-DUPLICATED rather than kept. A surviving duplicate would read as phantom replication -- one result appearing to be confirmed twice. Built and audited, not scored: the declared mark axis is 6 marks x 23 features = 138.",
+  "built_check": "every PRICED arm is implemented in this build: True"
  },
  "strata_file": {
   "path": "engine/configs/strata_tranche_b.json",
-  "sha256": "3e1ee7b2ae56deb2130c35acf0c2139de2034ada74744eebb66def444468d872",
-  "m": 369,
+  "sha256": "1131c629dcc008f58d8191469643e3d9196bec4078acf0fe1f093c6a1c77ca04",
+  "m": 189,
+  "m_declared": 189,
+  "declared_total_check": {
+   "m_declared": 189,
+   "sum_m_s": 189,
+   "ok": true
+  },
   "q": 0.1,
-  "n_strata": 8
+  "n_strata": 4
  },
  "config": {
   "engine_version": "1.1.0",
@@ -176,7 +183,7 @@
    "omnibus": true,
    "mark_axis": true,
    "subdaily": false,
-   "marks": [
+   "marks_declared": [
     "mag",
     "depth",
     "log_moment",
@@ -185,13 +192,24 @@
     "cluster_member",
     "lon_sector"
    ],
+   "marks_scored": [
+    "mag",
+    "depth",
+    "dist_nearest_prior_km",
+    "dt_prior_days",
+    "cluster_member",
+    "lon_sector"
+   ],
+   "marks_deduplicated": [
+    "log_moment"
+   ],
    "alpha": 0.0001,
    "vif_mark_fallback": 4.575,
-   "n_declared_tests": 369
+   "n_declared_tests": 189
   },
   "strata": {
    "path": "strata_tranche_b.json",
-   "sha256": "3e1ee7b2ae56deb2130c35acf0c2139de2034ada74744eebb66def444468d872",
+   "sha256": "1131c629dcc008f58d8191469643e3d9196bec4078acf0fe1f093c6a1c77ca04",
    "q": 0.1,
    "strata": [
     {
@@ -217,72 +235,38 @@
      "feature_family": null,
      "test_kind": "markx",
      "region": null,
-     "m_s": 161,
-     "q_s": 0.1,
-     "note": ""
-    },
-    {
-     "name": "tb_ladder",
-     "feature_family": null,
-     "test_kind": "ladder",
-     "region": null,
-     "m_s": 68,
-     "q_s": 0.1,
-     "note": ""
-    },
-    {
-     "name": "tb_linear_ladder",
-     "feature_family": null,
-     "test_kind": "ladder_linear",
-     "region": null,
-     "m_s": 32,
-     "q_s": 0.1,
-     "note": ""
-    },
-    {
-     "name": "tb_two_stage",
-     "feature_family": null,
-     "test_kind": "two_stage",
-     "region": null,
-     "m_s": 17,
-     "q_s": 0.1,
-     "note": ""
-    },
-    {
-     "name": "tb_bilinear",
-     "feature_family": null,
-     "test_kind": "bilinear",
-     "region": null,
-     "m_s": 31,
+     "m_s": 138,
      "q_s": 0.1,
      "note": ""
     },
     {
      "name": "tb_controls",
-     "feature_family": null,
+     "feature_family": 7,
      "test_kind": "glm",
      "region": null,
-     "m_s": 9,
+     "m_s": 0,
      "q_s": 0.1,
-     "note": ""
+     "note": "\u00a7P7-16, the general rule, stated in full because it generalises past this tranche: A CONTROL IS UNPRICED IF IT CAN ONLY CALIBRATE A REFERENCE OR CONDEMN OUR OWN INSTRUMENT. Multiplicity is owed on rejections we might MAKE, not on checks that can only unmake them -- the same principle \u00a7P7-5(3) applied to LORO. The F9-20 battery is priced because its controls are SURVIVABLE: a control there can 'win' and its survivor count is read as a false-positive rate, so it must face the same threshold as the real arm or F10-25's ratio is meaningless. The F7 observer controls are not that: a hit on `obs_mc_drift_365d` does not become a finding, it condemns a co-moving science row. Nothing about them can promote anything, so they owe nothing. The build's own instinct -- price them, on \u00a7P7-2(a)'s 'an unpriced control is an unaudited channel' -- was RIGHT FOR SURVIVABLE CONTROLS and wrong here; the distinction is now the rule rather than a case."
     }
    ],
    "by_key": {
     "*|moment2": "tb_second_moment",
     "*|omnibus": "tb_omnibus",
     "*|markx": "tb_mark_axis",
-    "*|ladder": "tb_ladder",
-    "*|ladder_linear": "tb_linear_ladder",
-    "*|two_stage": "tb_two_stage",
-    "*|bilinear": "tb_bilinear",
-    "*|glm": "tb_controls"
+    "7|glm": "tb_controls"
    },
    "catch_all": "tb_second_moment",
-   "m": 369,
-   "note": "TRANCHE B (HYPOTHESIS_LEDGER.md \u00a7P7-3, \u00a7P7-10(c), \u00a7P7-14(d), \u00a7P7-15(b)), declared BEFORE the run and frozen in the config hash by its own sha256 (\u00a7P6-3(3)+(5)). BH denominator m = 369 = 301 new scope + 68 re-occupied already-declared slots (the F9-05 \u00a7P5-5(3) tranche-3 ladder, 2026-08-11). q_s is FLAT at the declared q in every stratum: no budget is reallocated, so there is no prior to justify under \u00a7P6-3(2). The mark axis sits in its OWN stratum (\u00a7P7-11(c)) rather than in the v1 `mark` stratum, because 7 event-time marks are not the 2 day-binned marks that allocation was measured on. COUNT DISCREPANCY, CARRIED NOT RESOLVED: \u00a7P7-10(c) declares Tranche B at ~1,000 and itemises it as '17 second-moment + 34 omnibus + ~161 mark + 68 already-declared ladder + 32 linear ladder + 17 two-stage + 31 bilinear + declared overhead'. THOSE SEVEN ITEMS SUM TO 360. The residual 'declared overhead' would therefore have to be ~640 -- 178% of the named scope -- which is not an overhead, it is a majority. MINING_CATALOG's own Tranche B section gives the same seven numbers and the same ~1,000 headline, so the gap originates in the catalog and was carried into the ruling verbatim. THIS BUILD DOES NOT RESOLVE IT: the declared integer is reserved to the Popper seat (\u00a7P7-10(c): 'the exact integer frozen in the config hash before the run'), and the choice moves every BH threshold in the tranche. Reported, flagged, and left open."
+   "m": 189,
+   "m_declared": 189,
+   "declared_total_check": {
+    "m_declared": 189,
+    "sum_m_s": 189,
+    "ok": true
+   },
+   "note": "TRANCHE B (HYPOTHESIS_LEDGER.md \u00a7P7-3, \u00a7P7-10(c), \u00a7P7-14(d), \u00a7P7-15(b)), RE-ISSUED at the \u00a7P7-16 ruled integer, declared BEFORE the run and frozen in the config hash by its own sha256 (\u00a7P6-3(3)+(5)). PRICED BH denominator m = 189 = 17 second-moment (F9-01) + 34 omnibus (F9-04) + 138 mark axis (F9-10, 6 scored marks x 23 features). RECONCILIATION against the ~1,000 headline: 189 priced + 148 deferred (B-2) + 9 unpriced + 23 de-duplicated = 369, against the ~1,000 headline \u00a7P7-10(c) carried from the catalog. RECONCILED EXACTLY at \u00a7P7-16; the residual is the catalog's own 'declared overhead', which was never scope. DEFERRED: \u00a7P7-16: the four arms this build does not implement -- F9-05 (68, already-declared), F2-18..F2-25 (32), F10-14 (17), F10-08 (31), 148 tests in total -- are DEFERRED and return later as ONE B-2 declaration. They are NOT declared as empty strata here: a declared stratum with no implementation consumes budget through its m_s and produces nothing, which taxes the arms that did get built for scope that was never going to run. Deferring them is the honest denominator; re-declaring them together is the honest scope. UNPRICED: \u00a7P7-16, the general rule, stated in full because it generalises past this tranche: A CONTROL IS UNPRICED IF IT CAN ONLY CALIBRATE A REFERENCE OR CONDEMN OUR OWN INSTRUMENT. Multiplicity is owed on rejections we might MAKE, not on checks that can only unmake them -- the same principle \u00a7P7-5(3) applied to LORO. The F9-20 battery is priced because its controls are SURVIVABLE: a control there can 'win' and its survivor count is read as a false-positive rate, so it must face the same threshold as the real arm or F10-25's ratio is meaningless. The F7 observer controls are not that: a hit on `obs_mc_drift_365d` does not become a finding, it condemns a co-moving science row. Nothing about them can promote anything, so they owe nothing. The build's own instinct -- price them, on \u00a7P7-2(a)'s 'an unpriced control is an unaudited channel' -- was RIGHT FOR SURVIVABLE CONTROLS and wrong here; the distinction is now the rule rather than a case. DE-DUPLICATED: HYPOTHESIS_LEDGER.md \u00a7P7-16: `log_moment` is rank-identical to `mag` under both declared mark statistics (proved numerically by `redundancy_audit`), so it is DE-DUPLICATED rather than kept. A surviving duplicate would read as phantom replication -- one result appearing to be confirmed twice. Built and audited, not scored: the declared mark axis is 6 marks x 23 features = 138. q_s is FLAT at the declared q in every priced stratum: no budget is reallocated, so there is no prior to justify under \u00a7P6-3(2). The mark axis sits in its OWN stratum (\u00a7P7-11(c)) rather than in the v1 `mark` stratum, because 6 event-time marks are not the 2 day-binned marks that allocation was measured on."
   }
  },
- "config_hash": "2d0a34d88c44ee90d8fc3e3aec23af06bac087a40c9aa2adc95b0a8fbda516f9",
+ "config_hash": "148f634603fba2422d63223ad0f41e0ae00cb75a2d1084bee7c7297a3e4f7716",
  "floors": {
   "count_path_alpha": 0.0001,
   "count_path_vif": 24.081827389301417,
@@ -537,7 +521,7 @@
   "status": "BUILT and FROZEN now per \u00a7P7-4, whose consumer is Tranche C. Tranche B declares no clock scan, so no F8-15 control is owed by B -- `clocks.assert_random_clock_control` is what will refuse a C scan that forgets one."
  },
  "mark_axis": {
-  "marks": [
+  "declared_marks": [
    "mag",
    "depth",
    "log_moment",
@@ -546,6 +530,19 @@
    "cluster_member",
    "lon_sector"
   ],
+  "scored_marks": [
+   "mag",
+   "depth",
+   "dist_nearest_prior_km",
+   "dt_prior_days",
+   "cluster_member",
+   "lon_sector"
+  ],
+  "deduplicated_marks": [
+   "log_moment"
+  ],
+  "deduplication_rule": "HYPOTHESIS_LEDGER.md \u00a7P7-16: `log_moment` is rank-identical to `mag` under both declared mark statistics (proved numerically by `redundancy_audit`), so it is DE-DUPLICATED rather than kept. A surviving duplicate would read as phantom replication -- one result appearing to be confirmed twice. Built and audited, not scored: the declared mark axis is 6 marks x 23 features = 138.",
+  "n_scored_tests": 138,
   "definitions": {
    "mag": "event magnitude (the v1 mark, unchanged)",
    "depth": "hypocentral depth, km (the v1 mark, unchanged)",
@@ -589,5 +586,9 @@
   "harness": "engine/recovery_b.py -- SIMULATION ONLY",
   "adjudication": "the Popper seat's; this build supplies evidence only"
  },
+ "open_items_before_the_run": [
+  "THE GLM AXIS HAS NO DECLARED STRATUM IN B. The engine executes the count-path GLM sweep on every science feature in every session, and B's partition declares strata only for `moment2`, `omnibus`, `markx` and the unpriced `glm` controls (family 7). A science GLM row (family 1/2) therefore falls to `catch_all`, which would put it in the 17-slot second-moment stratum and `strata._bh_within` would refuse to run. This is a REAL choice owed before B runs -- suppress the GLM axis in B (it re-runs already-declared tests), or declare a GLM stratum and price it -- and it is NOT resolved here: either answer changes the declared integer the \u00a7P7-16 ruling just fixed.",
+  "THE RUN GATE IS NOT DISCHARGED: the recovery-versus-amplitude curve is IN FLIGHT and the arm (i) anomaly is unruled (\u00a7P7-15(a), \u00a7P7-16)."
+ ],
  "what_none_of_this_licenses": "any run. This is a DECLARATION prepared before the fact, on no data at all. It licenses nothing, bounds nothing, and may not be entered for or against any ledger entry."
 }

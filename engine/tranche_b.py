@@ -18,26 +18,47 @@ identity `sum_s m_s q_s = m q`, and the config hash that binds them. All four ar
 produced here and none of them may be edited after B's first result is looked at --
 that is what makes the difference between a declaration and a description.
 
-THE COUNT RECONCILIATION, AND THE DISCREPANCY IT SURFACES
----------------------------------------------------------
-§P7-10(c) states the declared integer as *"Kepler's ~1,000 (17 second-moment + 34
-omnibus + ~161 mark + 68 already-declared §P5-5(3) ladder + 32 linear ladder + 17
-two-stage + 31 bilinear + declared overhead)"*, and MINING_CATALOG's Tranche B
-section gives the same list. **Those seven named items sum to 360, not to ~1,000.**
-`enumerate_declared()` computes the sum from the item list rather than quoting the
-headline, and reports the gap. **This module does not resolve it.** Choosing a
-denominator is an adjudication with direct consequences for every BH threshold in the
-tranche, and §P7-10(c) reserves the integer to the Popper seat ("the exact integer
-frozen in the config hash before the run"). The build's job is to make the
-discrepancy impossible to miss, which is what `COUNT_DISCREPANCY_NOTE` is for.
+THE COUNT, RECONCILED EXACTLY AT §P7-16 -- FOUR CLASSES, NOT ONE NUMBER
+-----------------------------------------------------------------------
+§P7-10(c) declared B at ~1,000 and itemised it as seven arms that sum to **360**.
+The build reported that gap rather than choosing a denominator; §P7-16 resolved it,
+and the resolution is a taxonomy rather than an arithmetic correction. What used to
+be one undifferentiated "declared count" is four things with four different
+accounting consequences:
 
-THE 68 ARE RE-OCCUPIED, NOT NEW
--------------------------------
-§P7-3: *"68 of it is the §P5-5(3) tranche-3 ladder, already declared in 2026-08-11.
-Already-declared is not free -- it still occupies its 68 slots in this session's BH
-denominator -- but it may not be presented as new scope, and the report must say
-which 68 they are."*  Handled exactly as Tranche A handled its 550 (`tranche_a.py`):
-carried in the denominator, excluded from the new-scope figure, and labelled.
+  **PRICED -- 189.** 17 second-moment (F9-01) + 34 omnibus (F9-04) + 138 mark axis
+  (F9-10). Enters the BH denominator; can be rejected. This is `m`.
+
+  **DEFERRED -- 148.** The four arms this build does not implement (F9-05 68,
+  F2-18..F2-25 32, F10-14 17, F10-08 31). They get **no strata here** and return as
+  **ONE B-2 declaration**. A declared stratum with no implementation consumes budget
+  and produces nothing, taxing the arms that were built for scope that was never
+  going to run -- and §P7-16 ruled over-declaration a **defect, not a virtue**
+  (a 5.3x needless threshold tax, and a resolvability count about a fiction).
+
+  **UNPRICED -- 9.** The F7 observer controls, under §P7-16's new general rule:
+  *a control is PRICED if it can produce a survivor mistakable for a finding about
+  the world, and UNPRICED if it can only calibrate a reference or condemn our own
+  instrument.* They are declared at `m_s = 0` -- present so a control row has a
+  stratum to route to, outside the denominator so it can neither be rejected nor
+  consume budget. (The build's F9-20-style instinct to price them was right for
+  SURVIVABLE controls and wrong for these; the distinction is now the rule.)
+
+  **DE-DUPLICATED -- 23.** `log_moment` is rank-identical to `mag` under both
+  declared mark statistics, proved numerically. **De-duplicate, do not keep**: a
+  surviving duplicate reads as phantom replication.
+
+189 + 148 + 9 + 23 = 369. **The ~1,000 headline is WITHDRAWN** -- an unsummed
+aggregate published beside its own itemisation -- and may not be quoted.
+
+THE ASSERTION THAT MAKES THIS CHECKABLE
+---------------------------------------
+§P7-16 mandated `sum_s m_s == m` beside the budget identity
+(`strata.assert_partition_total`). `assert_budget_identity` derives `m` from the
+strata and so is satisfied by any consistent table, including one whose total
+disagrees with the integer the tranche was declared at -- which is precisely the
+failure that produced the ~1,000. The partition file now carries `"m": 189` and
+refuses to load if the table does not add up to it.
 """
 
 from __future__ import annotations
@@ -53,6 +74,11 @@ from . import (circstat, clocks, floors, marks_ext, mine as M,
                mine_session as ms, observer, s15c, splits, stability,
                strata as strata_mod)
 
+# The declared feature count the mark axis multiplies against (F9-10's own price:
+# "7 marks x 23+ features"). Named so the de-duplication arithmetic -- 1 removed
+# mark x 23 features = 23 removed tests -- is derived rather than retyped.
+MARK_AXIS_FEATURES = 23
+
 TRANCHE_B_ID = "TRANCHE-B-STATISTICS"
 STRATA_FILE = os.path.join("engine", "configs", "strata_tranche_b.json")
 RESULTS_JSON = "results_tranche_b_declaration.json"
@@ -65,67 +91,97 @@ RESULTS_JSON = "results_tranche_b_declaration.json"
 # against their declared m_s. That is legal and it is not free, so it is printed.
 COMPOSITION = (
     {"key": "second_moment", "catalog": "F9-01", "stratum": "tb_second_moment",
-     "test_kind": "moment2", "n": 17, "new": True, "built": True,
+     "test_kind": "moment2", "n": 17, "class": "PRICED", "built": True,
      "arithmetic": "17 cyclic features x 1 new statistic",
      "note": "the second circular moment, as the 2-df score on the doubled angle"},
     {"key": "omnibus", "catalog": "F9-04", "stratum": "tb_omnibus",
-     "test_kind": "omnibus", "n": 34, "new": True, "built": True,
+     "test_kind": "omnibus", "n": 34, "class": "PRICED", "built": True,
      "arithmetic": "17 cyclic features x 2 statistics (Kuiper V, Watson U^2)",
      "note": "shape sensitivity, NOT band coverage (§P7-3(2))"},
     {"key": "mark_axis", "catalog": "F9-10", "stratum": "tb_mark_axis",
-     "test_kind": "markx", "n": 161, "new": True, "built": True,
-     "arithmetic": "7 marks x 23 features",
+     "test_kind": "markx", "n": 138, "class": "PRICED", "built": True,
+     "arithmetic": "6 SCORED marks x 23 features (7 declared marks less the "
+                   "de-duplicated `log_moment`, §P7-16)",
      "note": "its OWN §P6-3 stratum, reallocation justified by measurement "
              "(§P7-11(c)); sub-daily arm gated on F7-01/02/03 (§P7-3(3))"},
-    {"key": "ladder_reoccupied", "catalog": "F9-05", "stratum": "tb_ladder",
-     "test_kind": "ladder", "n": 68, "new": False, "built": False,
+
+    # ---- DEFERRED: returns later as ONE B-2 declaration, NOT as strata here ----
+    {"key": "ladder_reoccupied", "catalog": "F9-05", "stratum": None,
+     "test_kind": "ladder", "n": 68, "class": "DEFERRED", "built": False,
      "arithmetic": "the §P5-5(3) tranche-3 ladder, DECLARED 2026-08-11",
-     "note": "RE-OCCUPIED, not new scope (§P7-3). Occupies its 68 slots in the BH "
-             "denominator and may not be presented as new."},
-    {"key": "linear_ladder", "catalog": "F2-18..F2-25", "stratum": "tb_linear_ladder",
-     "test_kind": "ladder_linear", "n": 32, "new": True, "built": False,
+     "note": "already-declared; deferred to B-2 with the other unbuilt arms"},
+    {"key": "linear_ladder", "catalog": "F2-18..F2-25", "stratum": None,
+     "test_kind": "ladder_linear", "n": 32, "class": "DEFERRED", "built": False,
      "arithmetic": "8 linear cyclic features x 4 new rungs",
      "note": "not a new estimator; inherits the existing ladder discipline "
              "(§P7-3(4)), so it carries no S-17 recovery demand of its own"},
-    {"key": "two_stage", "catalog": "F10-14", "stratum": "tb_two_stage",
-     "test_kind": "two_stage", "n": 17, "new": True, "built": False,
+    {"key": "two_stage", "catalog": "F10-14", "stratum": None,
+     "test_kind": "two_stage", "n": 17, "class": "DEFERRED", "built": False,
      "arithmetic": "1 model x 17 cyclic features",
      "note": "K-088's object; inherits §P5-3's two mandated null repairs and may "
              "NOT be reported as a fresh design (§P7-3(5))"},
-    {"key": "bilinear", "catalog": "F10-08", "stratum": "tb_bilinear",
-     "test_kind": "bilinear", "n": 31, "new": True, "built": False,
+    {"key": "bilinear", "catalog": "F10-08", "stratum": None,
+     "test_kind": "bilinear", "n": 31, "class": "DEFERRED", "built": False,
      "arithmetic": "the full bilinear perigee-syzygy interaction x 31 lags",
      "note": "priced as a transform per §P7-5(5)"},
+
+    # ---- UNPRICED: F7 controls, under §P7-16's new general rule ----------------
     {"key": "observer_controls", "catalog": "F7-01/02/03", "stratum": "tb_controls",
-     "test_kind": "glm", "n": None, "new": True, "built": True,
+     "test_kind": "glm", "n": None, "class": "UNPRICED", "built": True,
      "arithmetic": "the count-path observer control features x 1 lag "
                    "(computed from engine/observer.py, not retyped)",
-     "note": "PRICED, on §P7-2(a)'s own reasoning that an unpriced control is an "
-             "unaudited channel -- which sits in tension with MINING_CATALOG "
-             "F7-01's 'Price: 31 as a covariate; 0 as a control'. Flagged, priced "
-             "the conservative way, not resolved here."},
+     "note": "UNPRICED under §P7-16's general rule (below). m_s = 0: declared so "
+             "the rows have a stratum to route to, outside the priced denominator "
+             "so they cannot be rejected and cannot consume budget."},
 )
 
+DEFERRED_LABEL = "B-2"
+DEFERRED_NOTE = (
+    "§P7-16: the four arms this build does not implement -- F9-05 (68, "
+    "already-declared), F2-18..F2-25 (32), F10-14 (17), F10-08 (31), 148 tests in "
+    "total -- are DEFERRED and return later as ONE B-2 declaration. They are NOT "
+    "declared as empty strata here: a declared stratum with no implementation "
+    "consumes budget through its m_s and produces nothing, which taxes the arms "
+    "that did get built for scope that was never going to run. Deferring them is "
+    "the honest denominator; re-declaring them together is the honest scope.")
+
+UNPRICED_RULE = (
+    "§P7-16, the general rule, stated in full because it generalises past this "
+    "tranche: A CONTROL IS UNPRICED IF IT CAN ONLY CALIBRATE A REFERENCE OR CONDEMN "
+    "OUR OWN INSTRUMENT. Multiplicity is owed on rejections we might MAKE, not on "
+    "checks that can only unmake them -- the same principle §P7-5(3) applied to "
+    "LORO. The F9-20 battery is priced because its controls are SURVIVABLE: a "
+    "control there can 'win' and its survivor count is read as a false-positive "
+    "rate, so it must face the same threshold as the real arm or F10-25's ratio is "
+    "meaningless. The F7 observer controls are not that: a hit on `obs_mc_drift_365d` "
+    "does not become a finding, it condemns a co-moving science row. Nothing about "
+    "them can promote anything, so they owe nothing. "
+    "The build's own instinct -- price them, on §P7-2(a)'s 'an unpriced control is "
+    "an unaudited channel' -- was RIGHT FOR SURVIVABLE CONTROLS and wrong here; the "
+    "distinction is now the rule rather than a case."
+)
+
+POPPER_RULED_DENOMINATOR = 189
 POPPER_HEADLINE_COUNT = 1000
-COUNT_DISCREPANCY_NOTE = (
-    "§P7-10(c) declares Tranche B at ~1,000 and itemises it as '17 second-moment + "
+HEADLINE_RESOLUTION_NOTE = (
+    "§P7-10(c) declared Tranche B at ~1,000 and itemised it as '17 second-moment + "
     "34 omnibus + ~161 mark + 68 already-declared ladder + 32 linear ladder + 17 "
-    "two-stage + 31 bilinear + declared overhead'. THOSE SEVEN ITEMS SUM TO 360. "
-    "The residual 'declared overhead' would therefore have to be ~640 -- 178% of the "
-    "named scope -- which is not an overhead, it is a majority. MINING_CATALOG's own "
-    "Tranche B section gives the same seven numbers and the same ~1,000 headline, so "
-    "the gap originates in the catalog and was carried into the ruling verbatim. "
-    "THIS BUILD DOES NOT RESOLVE IT: the declared integer is reserved to the Popper "
-    "seat (§P7-10(c): 'the exact integer frozen in the config hash before the run'), "
-    "and the choice moves every BH threshold in the tranche. Reported, flagged, and "
-    "left open.")
+    "two-stage + 31 bilinear + declared overhead'. Those seven items sum to 360, so "
+    "the residual 'declared overhead' would have had to be ~640 -- 178% of the named "
+    "scope. §P7-16 RESOLVED it: the overhead was never scope. What is left is 189 "
+    "priced, 148 deferred to a single B-2 declaration, 9 unpriced controls and 23 "
+    "de-duplicated. The ~1,000 headline is SUPERSEDED and may not be quoted.")
 
 RUN_GATE_NOTE = (
     "§P7-14(d) + §P7-15(b): Tranche B's BUILD is authorized and its RUN is gated on "
     "(i) the §P7-2(b) precondition builds and (ii) PER-STATISTIC G-M1 clearance for "
-    "the new statistics and aggregations B introduces. `engine/recovery_b.py` "
-    "produces the evidence for (ii) on SIMULATED catalogues; it does not grant the "
-    "clearance, which is the Popper seat's. This module refuses to run either way.")
+    "the new statistics and aggregations B introduces. As of §P7-16 the run is ALSO "
+    "gated on (iii) the recovery-versus-amplitude curve §P7-15(a) assigned at price "
+    "0 -- IN FLIGHT -- and (iv) the Popper seat's ruling on the arm (i) anomaly (80% "
+    "recovery at >= 2x the floor is what the formula predicts at 1x, so either the "
+    "plants span a range or the global floor formula is ~2x anti-conservative). "
+    "`engine/recovery_b.py` produces the evidence for (ii) on SIMULATED catalogues; "
+    "it does not grant the clearance. This module refuses to run either way.")
 
 
 class TrancheBRunGated(RuntimeError):
@@ -146,83 +202,110 @@ def observer_control_count():
 
 
 def enumerate_declared():
-    """The count reconciliation. Sums the ITEMS; never quotes the headline."""
+    """The §P7-16 reconciliation: 189 priced + 148 deferred + 9 unpriced + 23 removed.
+
+    Three classes and a removal, each with a different accounting consequence, all
+    of which used to be one undifferentiated "declared count":
+
+      PRICED    enters the BH denominator and can be rejected.        -> m = 189
+      DEFERRED  does not enter anything; returns as ONE B-2
+                declaration when it is built.                         -> 148
+      UNPRICED  declared with m_s = 0 so its rows have a stratum to
+                route to; can neither be rejected nor consume budget. -> 9
+      REMOVED   de-duplicated, so it is not a test at all.            -> 23
+    """
     items = []
     for it in COMPOSITION:
         n = it["n"]
         if n is None:
             n = observer_control_count()
         items.append(dict(it, n=int(n)))
-    new = sum(i["n"] for i in items if i["new"])
-    reoccupied = sum(i["n"] for i in items if not i["new"])
-    total = new + reoccupied
-    built = sum(i["n"] for i in items if i["built"])
+    priced = sum(i["n"] for i in items if i["class"] == "PRICED")
+    deferred = sum(i["n"] for i in items if i["class"] == "DEFERRED")
+    unpriced = sum(i["n"] for i in items if i["class"] == "UNPRICED")
+    removed = len(marks_ext.DEDUPLICATED_MARKS) * MARK_AXIS_FEATURES
     return {
         "items": items,
-        "n_new_scope": new,
-        "n_reoccupied_already_declared": reoccupied,
-        "bh_denominator_m": total,
-        "n_in_arms_this_build_implements": built,
-        "n_in_arms_declared_but_not_built": total - built,
-        "popper_headline": POPPER_HEADLINE_COUNT,
-        "gap_vs_headline": POPPER_HEADLINE_COUNT - total,
-        "agrees_with_headline": abs(POPPER_HEADLINE_COUNT - total) <= 50,
-        "discrepancy_note": COUNT_DISCREPANCY_NOTE,
-        "reoccupied_identification": (
-            "the 68 are F9-05, the §P5-5(3) tranche-3 harmonic ladder declared "
-            "2026-08-11. §P7-3 requires the report to say WHICH 68 they are; this "
-            "is that sentence."),
-        "not_built_flag": (
-            "arms declared but NOT implemented in this build: %s. A declared "
-            "stratum with no rows is legal -- §P6-3 rule 3 counts errored/absent "
-            "tests as NON-REJECTIONS against their declared m_s -- but it is not "
-            "free, and B must either build them or re-declare without them before "
-            "the run."
-            % ", ".join("%s (%s, %d)" % (i["key"], i["catalog"], i["n"])
-                        for i in items if not i["built"])),
+        "bh_denominator_m": priced,
+        "n_priced": priced,
+        "n_deferred_to_B2": deferred,
+        "n_unpriced_controls": unpriced,
+        "n_deduplicated_removed": removed,
+        "ruled_denominator": POPPER_RULED_DENOMINATOR,
+        "agrees_with_ruling": priced == POPPER_RULED_DENOMINATOR,
+        "reconciliation": (
+            "%d priced + %d deferred (B-2) + %d unpriced + %d de-duplicated = %d, "
+            "against the ~1,000 headline §P7-10(c) carried from the catalog. "
+            "RECONCILED EXACTLY at §P7-16; the residual is the catalog's own "
+            "'declared overhead', which was never scope."
+            % (priced, deferred, unpriced, removed,
+               priced + deferred + unpriced + removed)),
+        "deferred_note": DEFERRED_NOTE,
+        "unpriced_rule": UNPRICED_RULE,
+        "deduplication_rule": marks_ext.DEDUPLICATION_RULE,
+        "built_check": (
+            "every PRICED arm is implemented in this build: %s"
+            % all(i["built"] for i in items if i["class"] == "PRICED")),
     }
 
 
 # ------------------------------------------------------------ strata file -----
 def strata_document(q=M.FDR_Q):
-    """The declared §P6-3 partition for Tranche B. Flat q_s: no reallocation, no prior.
+    """The declared §P6-3 partition for Tranche B, at the §P7-16 ruled integer.
 
-    §P6-3 rule 2: any DEPARTURE from the flat budget is a prior that must carry its
-    justification in the file itself, before the run. B declares none -- every
-    stratum gets the declared q -- so there is nothing to justify and the budget
-    identity `sum_s m_s q_s = m q` holds by construction. §P7-11(c) reallocated the
-    MARK arm's q_s in Tranche A on measured grounds; B does not inherit that
-    reallocation, because B's mark arm is a different arm (7 marks, event-time) and
-    the measurement that justified the old allocation is not a measurement of this
-    one.
+    THREE THINGS THIS FILE DOES THAT THE FIRST DRAFT DID NOT.
+
+    1. **It declares its own total.** `"m": 189` sits beside the strata table and
+       `strata.assert_partition_total` refuses to load the file if the table does
+       not add up to it. The first draft's headline and its itemisation disagreed by
+       631 and nothing in the code could see it; now nothing can carry that.
+    2. **It declares no strata for the DEFERRED arms.** A stratum with a declared
+       `m_s` and no implementation consumes budget and produces nothing, taxing the
+       arms that were built. The four unbuilt arms return as ONE B-2 declaration.
+    3. **The F7 controls sit at `m_s = 0`.** They are DECLARED -- `stratum_of` must
+       have somewhere to route a control row, and an undeclared row raises -- but
+       they are outside the priced denominator, so they can neither be rejected
+       (`_bh_within` returns no rejections at `m_s <= 0`) nor consume budget.
+
+    §P6-3 rule 2: `q_s` is FLAT at the declared `q` in every priced stratum, so no
+    budget is reallocated and there is no prior to justify. §P7-11(c) reallocated the
+    MARK arm's `q_s` in Tranche A on measured grounds; B does not inherit that -- B's
+    mark arm is a different arm (6 event-time marks, not 2 day-binned ones) and the
+    measurement that justified the old allocation is not a measurement of this one.
     """
     enum = enumerate_declared()
     strata = []
     for it in enum["items"]:
+        if it["class"] == "DEFERRED":
+            continue
+        unpriced = it["class"] == "UNPRICED"
         strata.append({
             "name": it["stratum"],
-            "feature_family": None,
+            "feature_family": (observer.OBSERVER_FAMILY if unpriced else None),
             "test_kind": it["test_kind"],
             "region": None,
-            "m_s": int(it["n"]),
+            "m_s": (0 if unpriced else int(it["n"])),
             "q_s": float(q),
-            "note": "",
+            "note": (UNPRICED_RULE if unpriced else ""),
         })
     return {
         "note": ("TRANCHE B (HYPOTHESIS_LEDGER.md §P7-3, §P7-10(c), §P7-14(d), "
-                 "§P7-15(b)), declared BEFORE the run and frozen in the config hash "
-                 "by its own sha256 (§P6-3(3)+(5)). BH denominator m = %d = %d new "
-                 "scope + %d re-occupied already-declared slots (the F9-05 "
-                 "§P5-5(3) tranche-3 ladder, 2026-08-11). q_s is FLAT at the "
-                 "declared q in every stratum: no budget is reallocated, so there "
-                 "is no prior to justify under §P6-3(2). The mark axis sits in its "
-                 "OWN stratum (§P7-11(c)) rather than in the v1 `mark` stratum, "
-                 "because 7 event-time marks are not the 2 day-binned marks that "
-                 "allocation was measured on. COUNT DISCREPANCY, CARRIED NOT "
-                 "RESOLVED: %s"
-                 % (enum["bh_denominator_m"], enum["n_new_scope"],
-                    enum["n_reoccupied_already_declared"], COUNT_DISCREPANCY_NOTE)),
+                 "§P7-15(b)), RE-ISSUED at the §P7-16 ruled integer, declared "
+                 "BEFORE the run and frozen in the config hash by its own sha256 "
+                 "(§P6-3(3)+(5)). PRICED BH denominator m = %d = 17 second-moment "
+                 "(F9-01) + 34 omnibus (F9-04) + 138 mark axis (F9-10, 6 scored "
+                 "marks x 23 features). RECONCILIATION against the ~1,000 headline: "
+                 "%s DEFERRED: %s UNPRICED: %s DE-DUPLICATED: %s q_s is FLAT at the "
+                 "declared q in every priced stratum: no budget is reallocated, so "
+                 "there is no prior to justify under §P6-3(2). The mark axis sits in "
+                 "its OWN stratum (§P7-11(c)) rather than in the v1 `mark` stratum, "
+                 "because 6 event-time marks are not the 2 day-binned marks that "
+                 "allocation was measured on."
+                 % (enum["bh_denominator_m"], enum["reconciliation"],
+                    DEFERRED_NOTE, UNPRICED_RULE,
+                    marks_ext.DEDUPLICATION_RULE)),
         "q": float(q),
+        "m": int(enum["bh_denominator_m"]),
         "catch_all": "tb_second_moment",
         "strata": strata,
     }
@@ -235,12 +318,13 @@ def write_strata_file(path=STRATA_FILE, q=M.FDR_Q):
     raw = json.dumps(doc, indent=1).encode("utf-8")
     with open(path, "wb") as fh:
         fh.write(raw)
-    part = strata_mod.load_partition(path, q=q)
-    strata_mod.assert_budget_identity(part["strata"], q)
+    part = strata_mod.load_partition(path, q=q)          # asserts sum_s m_s == m
+    strata_mod.assert_budget_identity(part["strata"], q)  # asserts sum_s m_s q_s = m q
     return {"path": path.replace("\\", "/"),
             "sha256": hashlib.sha256(raw).hexdigest(),
-            "m": int(part["m"]), "q": float(q),
-            "n_strata": len(part["strata"])}
+            "m": int(part["m"]), "m_declared": part["m_declared"],
+            "declared_total_check": part["declared_total_check"],
+            "q": float(q), "n_strata": len(part["strata"])}
 
 
 # ---------------------------------------------------------------- config ------
@@ -265,6 +349,9 @@ def frozen_config(seed=20260813, subdaily=False, strata=STRATA_FILE):
     assert cfg["strata"]["m"] == enum["bh_denominator_m"], (
         "strata file declares m = %s, enumeration says %s"
         % (cfg["strata"]["m"], enum["bh_denominator_m"]))
+    assert cfg["strata"]["m_declared"] == POPPER_RULED_DENOMINATOR, (
+        "the partition's declared total is %s, the §P7-16 ruled integer is %s"
+        % (cfg["strata"]["m_declared"], POPPER_RULED_DENOMINATOR))
     return cfg
 
 
@@ -337,7 +424,11 @@ def declaration(seed=20260813, subdaily=False, write=True):
                        "will refuse a C scan that forgets one."),
         },
         "mark_axis": {
-            "marks": list(marks_ext.MARK_NAMES),
+            "declared_marks": list(marks_ext.MARK_NAMES),
+            "scored_marks": list(marks_ext.SCORED_MARK_NAMES),
+            "deduplicated_marks": list(marks_ext.DEDUPLICATED_MARKS),
+            "deduplication_rule": marks_ext.DEDUPLICATION_RULE,
+            "n_scored_tests": len(marks_ext.SCORED_MARK_NAMES) * MARK_AXIS_FEATURES,
             "definitions": dict(marks_ext.MARK_DEFINITIONS),
             "subdaily_note": marks_ext.SUBDAILY_NOTE,
         },
@@ -358,6 +449,20 @@ def declaration(seed=20260813, subdaily=False, write=True):
             "harness": "engine/recovery_b.py -- SIMULATION ONLY",
             "adjudication": "the Popper seat's; this build supplies evidence only",
         },
+        "open_items_before_the_run": [
+            ("THE GLM AXIS HAS NO DECLARED STRATUM IN B. The engine executes the "
+             "count-path GLM sweep on every science feature in every session, and "
+             "B's partition declares strata only for `moment2`, `omnibus`, `markx` "
+             "and the unpriced `glm` controls (family 7). A science GLM row "
+             "(family 1/2) therefore falls to `catch_all`, which would put it in "
+             "the 17-slot second-moment stratum and `strata._bh_within` would "
+             "refuse to run. This is a REAL choice owed before B runs -- suppress "
+             "the GLM axis in B (it re-runs already-declared tests), or declare a "
+             "GLM stratum and price it -- and it is NOT resolved here: either "
+             "answer changes the declared integer the §P7-16 ruling just fixed."),
+            ("THE RUN GATE IS NOT DISCHARGED: the recovery-versus-amplitude curve "
+             "is IN FLIGHT and the arm (i) anomaly is unruled (§P7-15(a), §P7-16)."),
+        ],
         "what_none_of_this_licenses": (
             "any run. This is a DECLARATION prepared before the fact, on no data at "
             "all. It licenses nothing, bounds nothing, and may not be entered for "
@@ -374,24 +479,31 @@ def main(argv=None):
     d = declaration(seed=a.seed, subdaily=a.subdaily)
     e = d["count_reconciliation"]
     print("=" * 78)
-    print("TRANCHE B -- DECLARATION PREPARED, RUN GATED")
+    print("TRANCHE B -- DECLARATION RE-ISSUED AT THE §P7-16 RULED INTEGER, RUN GATED")
     print("=" * 78)
-    print("| item | catalog | tests | scope | built |")
-    print("| --- | --- | ---: | --- | --- |")
+    print("| item | catalog | tests | class | stratum | m_s | built |")
+    print("| --- | --- | ---: | --- | --- | ---: | --- |")
     for it in e["items"]:
-        print("| %s | %s | %d | %s | %s |"
-              % (it["key"], it["catalog"], it["n"],
-                 "NEW" if it["new"] else "re-occupied",
+        ms_ = ("-" if it["class"] == "DEFERRED"
+               else "0" if it["class"] == "UNPRICED" else str(it["n"]))
+        print("| %s | %s | %d | %s | %s | %s | %s |"
+              % (it["key"], it["catalog"], it["n"], it["class"],
+                 it["stratum"] or "(none -- B-2)", ms_,
                  "yes" if it["built"] else "NO"))
     print("")
-    print("new scope                : %d" % e["n_new_scope"])
-    print("re-occupied (F9-05, 68)  : %d" % e["n_reoccupied_already_declared"])
-    print("BH denominator m         : %d" % e["bh_denominator_m"])
-    print("Popper headline          : ~%d   -> gap %d"
-          % (e["popper_headline"], e["gap_vs_headline"]))
-    print("strata file              : %s (sha256 %s, m = %s)"
-          % (d["strata_file"]["path"], str(d["strata_file"]["sha256"])[:16],
-             d["strata_file"]["m"]))
+    print("PRICED BH denominator m  : %d   (ruled %d -- %s)"
+          % (e["bh_denominator_m"], e["ruled_denominator"],
+             "AGREES" if e["agrees_with_ruling"] else "DISAGREES"))
+    print("DEFERRED to one B-2 decl : %d" % e["n_deferred_to_B2"])
+    print("UNPRICED (F7 controls)   : %d  (m_s = 0, outside the denominator)"
+          % e["n_unpriced_controls"])
+    print("DE-DUPLICATED, removed   : %d  (log_moment x %d features)"
+          % (e["n_deduplicated_removed"], MARK_AXIS_FEATURES))
+    print("reconciliation           : %s" % e["reconciliation"])
+    print("")
+    print("strata file              : %s (sha256 %s)"
+          % (d["strata_file"]["path"], str(d["strata_file"]["sha256"])[:16]))
+    print("  sum_s m_s == m         : %s" % (d["strata_file"]["declared_total_check"],))
     print("config hash              : %s" % d["config_hash"])
     print("count-path floor A_min   : %.4f at N = 46,585, alpha = %.1e"
           % (d["floors"]["count_path_A_min_at_46585"],
@@ -399,14 +511,13 @@ def main(argv=None):
     print("mark-axis floor rho_min  : %.4f at n = 46,585, VIF_mark = %.3f"
           % (d["floors"]["mark_axis_rho_min_at_46585"],
              d["floors"]["mark_axis_vif_fallback"]))
-    print("S-15(c) unmeasurable     : %d entries (cut at period > %.0f d)"
+    print("S-15(c) unmeasurable     : %d entries (cut at period > %.0f d; "
+          "period grid UNCHANGED at %.0f d, band reported not clamped)"
           % (d["s15c_sweep"]["n_unmeasurable_by_window"],
-             d["s15c_sweep"]["cut_period_days"]))
+             d["s15c_sweep"]["cut_period_days"], ms.PERIOD_MAX))
     print("")
     print("RUN STATUS: %s" % d["run_status"])
     print(RUN_GATE_NOTE)
-    print("")
-    print("COUNT DISCREPANCY: " + COUNT_DISCREPANCY_NOTE)
     with open(a.json, "w", encoding="utf-8") as fh:
         json.dump(d, fh, indent=1, default=float)
     print("\nwrote %s" % a.json)

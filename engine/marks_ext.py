@@ -48,10 +48,13 @@ same test run twice. `redundancy_audit` PROVES that numerically rather than asse
 it (§P5-5(2)'s declare-then-prove discipline, applied to the transform axis exactly
 as §P7-5(5) extends it there).
 
-**This module does not resolve it.** Dropping the 23 would lower the declared count,
-which is an adjudication, not a build decision; keeping them is the conservative
-direction (a larger denominator can only make BH stricter). The audit is reported
-with the declaration and the Popper seat decides. Nothing here is evidence.
+**RULED at §P7-16: de-duplicate, do not keep.** The build's reasoning (a larger
+denominator can only make BH stricter, so keeping is the conservative direction) was
+answered with a better one: *a surviving duplicate reads as phantom replication* --
+the cost is not 23 wasted slots, it is two identical rows in a results table looking
+like one result confirmed twice, which no BH threshold protects against. `log_moment`
+is therefore BUILT and AUDITED but not SCORED (`SCORED_MARK_NAMES`), and the declared
+mark axis is 6 x 23 = 138. Nothing here is evidence.
 """
 
 from __future__ import annotations
@@ -64,7 +67,26 @@ from . import ephemeris as eph, mine as M
 # rank statistic; every one of them is reduced to ranks by `mine.mark_test`.
 MARK_NAMES = ("mag", "depth", "log_moment", "dist_nearest_prior_km",
               "dt_prior_days", "cluster_member", "lon_sector")
-N_MARKS = len(MARK_NAMES)
+
+# §P7-16: DE-DUPLICATED, not merely flagged. `log_moment = 1.5 M + 9.1` is strictly
+# increasing in `mag`, both declared mark statistics rank the mark before doing
+# anything else, and `redundancy_audit` proves the two tests are bit-identical. The
+# ruling: *de-duplicate, do not keep -- a surviving duplicate reads as phantom
+# replication.* That is the sharper reason and it is the one recorded here: the cost
+# of keeping it is not 23 wasted slots in the denominator, it is that two identical
+# rows in a results table look like one result confirmed twice.
+#
+# The mark is still BUILT and still AUDITED -- the identity proof needs both series
+# to exist -- it is simply not SCORED, so the declared mark axis is 6 x 23 = 138.
+DEDUPLICATED_MARKS = ("log_moment",)
+DEDUPLICATION_RULE = (
+    "HYPOTHESIS_LEDGER.md §P7-16: `log_moment` is rank-identical to `mag` under both "
+    "declared mark statistics (proved numerically by `redundancy_audit`), so it is "
+    "DE-DUPLICATED rather than kept. A surviving duplicate would read as phantom "
+    "replication -- one result appearing to be confirmed twice. Built and audited, "
+    "not scored: the declared mark axis is 6 marks x 23 features = 138.")
+SCORED_MARK_NAMES = tuple(m for m in MARK_NAMES if m not in DEDUPLICATED_MARKS)
+N_MARKS = len(SCORED_MARK_NAMES)
 
 # Declared constants. Frozen here, before any run, per S-9: one declared value each,
 # no alternatives tried.
@@ -218,6 +240,9 @@ def redundancy_audit(mark_values):
                              "%d events" % (a, b, ranks[a].size)})
     return {
         "n_marks_examined": len(names),
+        "deduplicated": list(DEDUPLICATED_MARKS),
+        "deduplication_rule": DEDUPLICATION_RULE,
+        "n_scored_marks": len(SCORED_MARK_NAMES),
         "n_rank_identical_pairs": len(pairs),
         "pairs": pairs,
         "expected": ("log_moment = %.1f*mag + %.1f is strictly increasing, and both "
@@ -225,9 +250,9 @@ def redundancy_audit(mark_values):
                      "predicted before it is measured -- which is what makes the "
                      "measurement a check rather than a discovery"
                      % (MOMENT_A, MOMENT_B)),
-        "disposition": ("REPORTED, NOT ACTED ON. Dropping a declared test lowers the "
-                        "BH denominator, which is an adjudication and not a build "
-                        "decision. Keeping it is the conservative direction."),
+        "disposition": ("ACTED ON (§P7-16): the duplicate is DE-DUPLICATED, not "
+                        "kept. Built and audited so this proof can be made; not "
+                        "scored, so it cannot read as phantom replication."),
     }
 
 

@@ -270,7 +270,14 @@ def test_log_moment_is_proved_rank_identical_to_mag():
     aud = marks_ext.redundancy_audit(built)
     pairs = {(p["a"], p["b"]) for p in aud["pairs"]}
     assert ("mag", "log_moment") in pairs or ("log_moment", "mag") in pairs
-    assert "REPORTED, NOT ACTED ON" in aud["disposition"]
+    # §P7-16: ACTED ON. The duplicate is built and audited (this proof needs both
+    # series) but NOT scored -- a surviving duplicate would read as phantom
+    # replication, one result appearing to be confirmed twice.
+    assert "ACTED ON" in aud["disposition"]
+    assert aud["deduplicated"] == ["log_moment"]
+    assert aud["n_scored_marks"] == 6
+    assert "log_moment" not in marks_ext.SCORED_MARK_NAMES
+    assert len(marks_ext.SCORED_MARK_NAMES) * 23 == 138
     # and the consequence, measured: the two mark tests are the SAME test
     th = np.mod(2 * np.pi * np.arange(built["mag"].size) / 29.53, 2 * np.pi)
     a = M.mark_test(th, built["mag"], "phase", 100, np.random.default_rng(1))
@@ -326,27 +333,48 @@ def test_harmonic_amplitude_recovers_a_planted_modulation():
 
 
 # ======================================================== the declaration =====
-def test_declaration_enumerates_and_flags_the_gap_without_resolving_it():
+def test_declaration_reconciles_exactly_at_the_ruled_integer():
+    """§P7-16: 189 priced + 148 deferred + 9 unpriced + 23 de-duplicated."""
     e = tranche_b.enumerate_declared()
-    assert e["n_reoccupied_already_declared"] == 68
-    assert e["bh_denominator_m"] == e["n_new_scope"] + 68
+    assert e["bh_denominator_m"] == 189
+    assert e["agrees_with_ruling"] is True
+    assert e["n_deferred_to_B2"] == 148
+    assert e["n_unpriced_controls"] == 9
+    assert e["n_deduplicated_removed"] == 23
     named = {i["key"]: i["n"] for i in e["items"]}
     assert named["second_moment"] == 17 and named["omnibus"] == 34
-    assert named["mark_axis"] == 161
-    assert e["agrees_with_headline"] is False
-    assert e["gap_vs_headline"] > 500
-    assert "DOES NOT RESOLVE" in e["discrepancy_note"]
-    assert "68" in e["reoccupied_identification"]
+    assert named["mark_axis"] == 138          # 6 SCORED marks x 23 features
+    assert 17 + 34 + 138 == e["n_priced"]
+    # every PRICED arm is actually implemented -- the deferred ones are the unbuilt
+    assert all(i["built"] for i in e["items"] if i["class"] == "PRICED")
+    assert not any(i["built"] for i in e["items"] if i["class"] == "DEFERRED")
 
 
-def test_strata_file_satisfies_the_budget_identity(tmp_path):
-    p = str(tmp_path / "strata_tranche_b.json")
-    info = tranche_b.write_strata_file(p)
-    part = S.load_partition(p, q=M.FDR_Q)
-    S.assert_budget_identity(part["strata"], M.FDR_Q)
-    assert info["m"] == tranche_b.enumerate_declared()["bh_denominator_m"]
-    doc = json.loads(open(p, encoding="utf-8").read())
-    assert "COUNT DISCREPANCY" in doc["note"]
+def test_deferred_arms_get_no_strata_and_return_as_one_b2_declaration():
+    doc = tranche_b.strata_document()
+    names = {s["name"] for s in doc["strata"]}
+    assert names == {"tb_second_moment", "tb_omnibus", "tb_mark_axis", "tb_controls"}
+    assert "B-2" in tranche_b.DEFERRED_NOTE
+    assert "consumes budget" in tranche_b.DEFERRED_NOTE
+
+
+def test_f7_controls_are_unpriced_and_outside_the_denominator():
+    """§P7-16's general rule: a control that can only condemn owes no multiplicity."""
+    doc = tranche_b.strata_document()
+    ctl = [s for s in doc["strata"] if s["name"] == "tb_controls"][0]
+    assert ctl["m_s"] == 0
+    assert ctl["note"] == tranche_b.UNPRICED_RULE
+    assert "can only calibrate a reference or condemn" in ctl["note"].lower()
+    # declared, so a control row has somewhere to route ...
+    # ... and at m_s = 0 it can never be rejected
+    q, passed, thr = S._bh_within([1e-12, 1e-9], 0, 0.10)
+    assert passed.size == 0 and thr == 0.0
+
+
+def test_the_ruled_denominator_supersedes_the_headline():
+    assert tranche_b.POPPER_RULED_DENOMINATOR == 189
+    assert "SUPERSEDED" in tranche_b.HEADLINE_RESOLUTION_NOTE
+    assert "may not be quoted" in tranche_b.HEADLINE_RESOLUTION_NOTE
 
 
 def test_the_declaration_refuses_to_run():
@@ -478,3 +506,55 @@ def test_subdaily_arm_runs_and_is_labelled_when_the_gate_is_satisfied(tmp_path):
     rows = st["results"][[k for k in st["results"] if k.startswith("markx:")][0]]
     assert any(r["subdaily"] for r in rows)
     assert all("subdaily" in r for r in rows)
+
+
+# ============================ §P7-16: the grid stays, the band gets labelled ==
+def test_window_clause_census_labels_and_never_filters():
+    tests = [
+        {"test": "lomb_scargle_peak", "feature": "period_scan",
+         "period_days": 3800.0, "p_raw": 0.002},
+        {"test": "lomb_scargle_peak", "feature": "period_scan",
+         "period_days": 2600.0, "p_raw": 0.03},
+        {"test": "lomb_scargle_peak", "feature": "period_scan",
+         "period_days": 400.0, "p_raw": 0.4},
+        {"test": "glm_poisson_offset_etas", "feature": "x", "p_raw": 0.5},
+    ]
+    cen = ms.window_clause_census(tests, 7716.0)
+    assert cen["cut_period_days"] == pytest.approx(2572.0)
+    assert cen["period_scan_max_days"] == pytest.approx(ms.PERIOD_MAX)
+    assert cen["grid_unchanged"] is True
+    assert cen["n_rows_with_a_period"] == 3
+    # BOTH rows in the 2572-4000 d band are labelled ...
+    assert cen["n_unmeasurable_by_window"] == 2
+    assert {r["period_days"] for r in cen["rows"]} == {3800.0, 2600.0}
+    # ... labelled on the row itself ...
+    assert tests[0]["s15c_verdict"] == floors.UNMEASURABLE_BY_WINDOW
+    assert tests[0]["s15c_scored"] is False
+    assert tests[2]["s15c_verdict"] == floors.MEASURABLE_BY_WINDOW
+    # ... and NOTHING was removed: labelling is not filtering
+    assert len(tests) == 4
+    assert "REPORTED UNMEASURABLE-BY-WINDOW" in cen["disposition"]
+
+
+def test_period_grid_is_not_clamped():
+    """§P7-16: PERIOD_MAX stays at 4000 d. The band is reported, not removed."""
+    assert ms.PERIOD_MAX == 4000.0
+    assert ms.PERIOD_MAX > floors.max_identifiable_period(7716.0)
+
+
+def test_session_report_prints_the_unmeasurable_by_window_section(tmp_path):
+    cfg = _cfg(tmp_path, tranche_b_on=True)
+    out = ms.run(cfg, verbose=False, resume=False,
+                 session_dir=str(tmp_path / "sess_s15c"), jobs=1,
+                 ledger_path=str(tmp_path / "ledger_s15c.jsonl"),
+                 prepared=_prepared())
+    st = json.load(open(os.path.join(out["session_dir"], "checkpoint.json"),
+                        encoding="utf-8"))
+    cen = st["s15c_window_clause"]
+    assert cen["grid_unchanged"] is True
+    assert cen["n_rows_with_a_period"] > 0
+    txt = open(os.path.join(out["session_dir"], "report.md"),
+               encoding="utf-8").read()
+    if cen["n_unmeasurable_by_window"]:
+        assert "UNMEASURABLE-BY-WINDOW" in txt
+        assert "The period grid is UNCHANGED" in txt

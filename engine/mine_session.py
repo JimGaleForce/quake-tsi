@@ -93,6 +93,11 @@ from scipy import stats
 
 from . import gpd_tail, floors, regions as regions_mod, strata as strata_mod
 from . import circstat, marks_ext, observer as observer_mod
+# `write_report` binds a LOCAL named `floors` (a list of p-value floors),
+# which shadows the module for the whole function body. This alias is how
+# the S-15(c) section reaches the module without renaming a local that
+# predates it.
+from . import floors as floors_mod
 
 QUICK = {
     "n_surrogates": 200, "n_periods": 800, "n_peaks": 5,
@@ -554,7 +559,7 @@ def marksx_task(f, window, fe_day, marks, ext_marks, n_surr, rng, seed=0,
         vals = f.values[window][fe_day]
         subdaily = False
     rows = []
-    for mk in marks_ext.MARK_NAMES:
+    for mk in marks_ext.SCORED_MARK_NAMES:
         if mk not in ext_marks:
             continue
         r = M.mark_test(vals, ext_marks[mk], f.kind, n_surr, rng)
@@ -575,6 +580,58 @@ def marksx_task(f, window, fe_day, marks, ext_marks, n_surr, rng, seed=0,
         r.update(_window_clause(f))
         rows.append(r)
     return rows
+
+
+def window_clause_census(tests, record_days):
+    """S-15(c) over every row that carries a period -- LABEL, never a grid change.
+
+    §P7-16 settled the period-scan grid question in the direction that costs nothing
+    and hides nothing: **`PERIOD_MAX` stays at 4,000 d and peaks between record/3 and
+    4,000 d are REPORTED as UNMEASURABLE-BY-WINDOW.** Clamping the grid would have
+    been a change to a declared config value (a new declaration under §P6-3 rule 5)
+    AND it would have made the affected band invisible rather than labelled -- a scan
+    that silently cannot look somewhere is worse than one that looks and says the
+    answer is not identifiable there.
+
+    So this annotates and counts; it does not filter, and it does not touch any
+    p-value. An UNMEASURABLE-BY-WINDOW row is scored NEITHER WAY in the S-15 headline
+    fraction -- it is not a null and it is not a detection -- and the row keeps its
+    place in the BH vector because the declared denominator is the declaration.
+    """
+    cut = floors.max_identifiable_period(float(record_days))
+    flagged = []
+    for t in tests:
+        p = t.get("period_days")
+        if not p or not np.isfinite(float(p)) or float(p) <= 0:
+            continue
+        rep = floors.window_report(float(p), float(record_days),
+                                   name=str(t.get("feature")))
+        t["s15c"] = rep
+        t["s15c_verdict"] = rep["verdict"]
+        t["s15c_scored"] = rep["scored"]
+        if rep["verdict"] == floors.UNMEASURABLE_BY_WINDOW:
+            flagged.append({"test": t["test"], "feature": t.get("feature"),
+                            "period_days": float(p),
+                            "cycles_in_window": rep["cycles_in_window"],
+                            "p_raw": float(t.get("p_raw", float("nan")))})
+    n_per = sum(1 for t in tests if t.get("period_days"))
+    return {
+        "clause": floors.WINDOW_CLAUSE,
+        "clause_source": floors.WINDOW_CLAUSE_SOURCE,
+        "record_days": float(record_days),
+        "cut_period_days": cut,
+        "period_scan_max_days": float(PERIOD_MAX),
+        "grid_unchanged": True,
+        "n_rows_with_a_period": int(n_per),
+        "n_unmeasurable_by_window": len(flagged),
+        "rows": sorted(flagged, key=lambda r: -r["period_days"]),
+        "disposition": (
+            "§P7-16: the period grid is UNCHANGED (PERIOD_MAX = %.0f d) and every "
+            "peak above %.0f d is REPORTED UNMEASURABLE-BY-WINDOW. Labelled, not "
+            "clamped: a scan that silently cannot look somewhere is worse than one "
+            "that looks and says the answer is not identifiable there."
+            % (float(PERIOD_MAX), cut)),
+    }
 
 
 def _window_clause(f):
@@ -1279,7 +1336,9 @@ def build_config(args, preset):
             "omnibus": bool(getattr(args, "tb_omnibus", True)),
             "mark_axis": bool(getattr(args, "tb_mark_axis", True)),
             "subdaily": bool(getattr(args, "tb_subdaily", False)),
-            "marks": list(marks_ext.MARK_NAMES),
+            "marks_declared": list(marks_ext.MARK_NAMES),
+            "marks_scored": list(marks_ext.SCORED_MARK_NAMES),
+            "marks_deduplicated": list(marks_ext.DEDUPLICATED_MARKS),
             "alpha": floors.ALPHA_TRANCHE_B,
             "vif_mark_fallback": floors.VIF_MARK_FALLBACK,
             "n_declared_tests": (int(getattr(args, "tb_declared", 0) or 0) or None),
@@ -1879,6 +1938,20 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     # ---- Tranche A read-outs. All priced at 0: each reports a property of the
     # run and makes no rejection (§P7-2(a)).
     tranche_a = None
+    # ---- S-15(c), on EVERY session (§P7-14(c) + §P7-16) ---------------------
+    # Unconditional: the clause is a property of the analysis WINDOW, not of a
+    # tranche, so a session that never heard of Tranche B still gets its
+    # long-period peaks labelled rather than quietly scored.
+    s15c_census = window_clause_census(tests, float(counts.size))
+    ckpt.state["s15c_window_clause"] = s15c_census
+    if verbose and s15c_census["n_rows_with_a_period"]:
+        print(f"S-15(c): {s15c_census['n_unmeasurable_by_window']}/"
+              f"{s15c_census['n_rows_with_a_period']} rows with a period are "
+              f"UNMEASURABLE-BY-WINDOW (cut at "
+              f"{s15c_census['cut_period_days']:.0f} d over a "
+              f"{s15c_census['record_days']:.0f} d window; grid UNCHANGED at "
+              f"{s15c_census['period_scan_max_days']:.0f} d)")
+
     if cfg.get("controls", {}).get("enabled"):
         tranche_a = {
             "label": M.F9_20_LABEL,
@@ -2578,6 +2651,46 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
       + (f" **{_cen.get(gpd_tail.P_GPD, 0)} extrapolated survivor(s) are labelled "
          f"{gpd_tail.CANDIDATE_LABEL} and emit no stub** (§P6-2(6))."
          if _cen.get(gpd_tail.P_GPD, 0) else ""))
+    # ---- S-15(c) UNMEASURABLE-BY-WINDOW (§P7-14(c), §P7-16) ------------------
+    _wc = state.get("s15c_window_clause")
+    if _wc and _wc["n_rows_with_a_period"]:
+        A("")
+        A("## S-15(c) UNMEASURABLE-BY-WINDOW -- identifiability, not power")
+        A("")
+        A(f"*A periodic feature with fewer than "
+          f"{floors_mod.MIN_CYCLES_IN_WINDOW:g} full cycles in the analysis window is "
+          f"UNMEASURABLE-BY-WINDOW **regardless of N**. Over this "
+          f"{_wc['record_days']:.0f} d window the cut falls at "
+          f"**period > {_wc['cut_period_days']:.0f} d**. This is an "
+          f"IDENTIFIABILITY limit and is orthogonal to the S-15 power floor: a "
+          f"feature can pass `a_min` and fail this, and no amount of N repairs it. "
+          f"Threshold inherited from `mine.py:harmonic_ladder`'s "
+          f"`hi_cap = record/3`. ({floors_mod.WINDOW_CLAUSE_SOURCE})*")
+        A("")
+        A(f"**The period grid is UNCHANGED** at "
+          f"{_wc['period_scan_max_days']:.0f} d (§P7-16). Peaks between "
+          f"{_wc['cut_period_days']:.0f} d and "
+          f"{_wc['period_scan_max_days']:.0f} d are REPORTED here rather than "
+          f"removed from the scan: a scan that silently cannot look somewhere is "
+          f"worse than one that looks and says the answer is not identifiable "
+          f"there.")
+        A("")
+        A(f"**{_wc['n_unmeasurable_by_window']} of "
+          f"{_wc['n_rows_with_a_period']}** rows carrying a period are "
+          f"UNMEASURABLE-BY-WINDOW. They are **scored NEITHER WAY**: not a null, "
+          f"not a detection, and removed from both numerators of the S-15 headline "
+          f"fraction.")
+        if _wc["rows"]:
+            A("")
+            A("| test | feature | period (d) | cycles in window | p_raw | verdict |")
+            A("| --- | --- | ---: | ---: | ---: | --- |")
+            for r in _wc["rows"][:40]:
+                A(f"| `{r['test']}` | `{r['feature']}` | {r['period_days']:.4g} | "
+                  f"{r['cycles_in_window']:.3g} | {r['p_raw']:.4g} | "
+                  f"{floors_mod.UNMEASURABLE_BY_WINDOW} |")
+            if len(_wc["rows"]) > 40:
+                A(f"| ... | *{len(_wc['rows']) - 40} more* | | | | |")
+
     # ---- TRANCHE A (§P7-2): the control arm, R3, and S-15 per stratum --------
     _ta = state.get("tranche_a")
     if _ta:

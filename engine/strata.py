@@ -195,10 +195,17 @@ def load_partition(path, q=0.10):
     catch_all = doc.get("catch_all")
     if catch_all is not None and str(catch_all) not in seen:
         raise ValueError(f"catch_all {catch_all!r} is not a declared stratum")
+    # §P7-16. An OPTIONAL declared total, checked against the table it heads. It is
+    # optional so that every partition file written before the rule keeps loading
+    # unchanged; it is checked the moment it is present, which is the point.
+    m_declared = doc.get("m")
+    total_check = assert_partition_total(out, m_declared)
     return {"path": os.path.basename(path), "sha256": sha, "q": q_decl,
             "strata": out, "by_key": by_key,
             "catch_all": None if catch_all is None else str(catch_all),
             "m": int(sum(r["m_s"] for r in out)),
+            "m_declared": (None if m_declared is None else int(m_declared)),
+            "declared_total_check": total_check,
             "note": str(doc.get("note", ""))}
 
 
@@ -229,6 +236,43 @@ def assert_budget_identity(strata, q, rtol=1e-9):
             + "\n".join(f"    {s['name']}: m_s = {s['m_s']}, q_s = {s['q_s']}"
                         for s in strata))
     return {"m": m, "q": float(q), "sum_ms_qs": lhs, "m_q": rhs, "ok": True}
+
+
+# --------------------------------------- rule 1b: the declared-total identity --
+class PartitionTotalMismatch(ValueError):
+    """Raised when a partition's declared total m != sum_s m_s. Refuses to run."""
+
+
+def assert_partition_total(strata, m_declared):
+    """§P7-16: `sum_s m_s == m`, where `m` is the integer the DECLARATION states.
+
+    WHY THIS EXISTS, and it is not redundant with `assert_budget_identity`. That
+    assertion derives `m` from the strata themselves (`m = sum_s m_s`) and then
+    checks `sum_s m_s q_s == m q` -- so it is satisfied by ANY consistent table,
+    including one whose total silently disagrees with the integer the tranche was
+    declared at. The failure it cannot see is exactly the one Tranche B's build
+    surfaced: a headline count of ~1,000 sitting on top of an itemisation that sums
+    to 360. A denominator and a headline that disagree are not a typo; they are two
+    different multiplicity corrections, and whichever one a reader picks up changes
+    every BH threshold in the tranche.
+
+    So the declared integer is now checkable rather than merely stated: a partition
+    file may carry `"m": <int>`, and if it does, the file must add up to it.
+    """
+    if m_declared is None:
+        return None
+    total = int(sum(int(s["m_s"]) for s in strata))
+    if total != int(m_declared):
+        raise PartitionTotalMismatch(
+            f"§P7-16 VIOLATED: the partition DECLARES m = {int(m_declared)} but its "
+            f"strata sum to {total} (difference {total - int(m_declared):+d}). A "
+            f"declared denominator that disagrees with its own itemisation is two "
+            f"different multiplicity corrections wearing one number, and every BH "
+            f"threshold in the tranche depends on which one is read. Refusing to "
+            f"run.\n"
+            + "\n".join(f"    {s['name']}: m_s = {s['m_s']}" for s in strata)
+            + f"\n    ----\n    sum = {total}, declared = {int(m_declared)}")
+    return {"m_declared": int(m_declared), "sum_m_s": total, "ok": True}
 
 
 def flat_partition(m, q=0.10, name=UNSTRATIFIED):
