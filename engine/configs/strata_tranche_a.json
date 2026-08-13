@@ -1,0 +1,25 @@
+{
+ "note": "TRANCHE A (HYPOTHESIS_LEDGER.md §P7-2), declared BEFORE the run and frozen in the config hash by its own sha256 (§P6-3(3)+(5)). TWO STRATA IN ONE DECLARED VECTOR. `f9_20_negative_controls` is the F9-20 arm-1 battery: 23 declared certain-zero-effect features x 31 lags = 713 PRICED tests, which §P7-2(a) rules must be counted in the multiplicity and must enter the BH vector as their own stratum -- because an unpriced control is an unaudited channel through which arbitrary features can be run and read, and because F10-25's survivor ratio only means anything if the two arms face the same threshold. `real_declared` is the already-declared K-089-R tranche-1 sweep (session_20260812T004857, 550 tests): already-declared is NOT free -- it still occupies its 550 slots in this session's BH denominator -- but it is NOT new scope and is not presented as any. q_s is FLAT at the declared q in both strata: no budget is reallocated between the arms, so there is no prior to justify under §P6-3(2), and the two arms are as close to a common threshold as a stratified procedure permits. The residual difference is the BH line q_s/m_s -- 0.10/713 in the control stratum against 0.10/550 in the real stratum -- and it is reported per stratum rather than hidden, together with the S-8 max-statistic, which is the partition-INVARIANT instrument and is the confirmatory number under arbitrary dependence.",
+ "q": 0.10,
+ "catch_all": "real_declared",
+ "strata": [
+  {
+   "name": "f9_20_negative_controls",
+   "feature_family": 9,
+   "test_kind": "glm",
+   "region": null,
+   "m_s": 713,
+   "q_s": 0.10,
+   "note": ""
+  },
+  {
+   "name": "real_declared",
+   "feature_family": null,
+   "test_kind": null,
+   "region": null,
+   "m_s": 550,
+   "q_s": 0.10,
+   "note": ""
+  }
+ ]
+}

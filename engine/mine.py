@@ -148,7 +148,9 @@ class Feature:
     """
 
     def __init__(self, name, family, kind, values, describe="", lags=(0,),
-                 causality_exempt=False, period_hint=None):
+                 causality_exempt=False, period_hint=None, control=False,
+                 periodic_override=None, control_of=None,
+                 block_days_override=None):
         self.name = name
         self.family = int(family)
         self.kind = kind
@@ -157,6 +159,27 @@ class Feature:
         self.lags = tuple(int(l) for l in lags)
         self.causality_exempt = bool(causality_exempt)
         self.period_hint = period_hint
+        # F9-20 arm 1. A CONTROL feature is a declared certain-zero-effect line run
+        # through the unmodified pipeline on the REAL data. It is priced (§P7-2(a)),
+        # it sits in its own declared stratum, and a survivor on it is a MEASURED
+        # FALSE POSITIVE rather than a finding.
+        self.control = bool(control)
+        self.control_of = control_of
+        # A control must face THE SAME NULL as the feature it calibrates, and
+        # `periodic` decides which null is primary. Deriving it from `family` would
+        # silently hand every control the shift+bootstrap max while its donor got
+        # the bootstrap alone -- two arms at two thresholds, which is exactly what
+        # §P7-2(a) says makes F10-25's ratio meaningless. So it is carried, not
+        # inferred, whenever a donor exists.
+        self._periodic = None if periodic_override is None else bool(periodic_override)
+        # Same reason as `periodic_override`, one level down. `block_days` for a
+        # feature with no period hint is read off the SAMPLE autocorrelation, and a
+        # phase-randomised surrogate has the donor's spectrum exactly but its own
+        # realisation -- so the measured e-folding lag drifts a few percent and the
+        # control would be bootstrapped in blocks the donor never used. Carried,
+        # not re-measured, so the two arms share the null exactly.
+        self._block_days = (None if block_days_override is None
+                            else float(block_days_override))
 
     @property
     def periodic(self):
@@ -166,7 +189,12 @@ class Feature:
         the target's power spectrum, which is exactly what a fixed-frequency test
         measures), so the block bootstrap is the primary null. See
         `score_stat_block_bootstrap`.
+
+        An F9-20 control carries its donor's value explicitly (`periodic_override`)
+        so that the control arm and the real arm are scored under the same null.
         """
+        if self._periodic is not None:
+            return self._periodic
         return self.family in (1, 2)
 
     @property
@@ -188,6 +216,8 @@ class Feature:
         Clipped to [30, 800] days: 800 d over a 7716-day window is only ~10 blocks,
         which is exactly as brutal as a decadal claim on 21 years of data deserves.
         """
+        if self._block_days is not None:
+            return float(self._block_days)
         if self.period_hint:
             base = 2.0 * float(self.period_hint)
         else:
@@ -452,6 +482,188 @@ def catalog_features(ctx, marks, lags):
         Feature("mean_depth_30d", 4, "linear", depth30,
                 "trailing 30 d global mean hypocentral depth, km (causal)", lags=lags),
     ]
+
+
+# ====================== F9-20 arm 1: the negative-control battery ==========
+# MINING_CATALOG.md F9-20, priced and RULED at §P7-2(a) of HYPOTHESIS_LEDGER.md.
+#
+# WHAT THIS IS. A declared set of features with certain-zero effect, run inside the
+# SAME session, at the SAME lags, under the SAME nulls, against the SAME real data
+# as the real arm. Its survivor count is the tranche's own false-positive rate
+# MEASURED under the actual dependence structure of the actual data, which is worth
+# more than the theorem BH rests on.
+#
+# WHY IT IS PRICED, in Popper's own words (§P7-2(a), a ruling he drafted the
+# opposite way first and reversed after Kepler's entry text caught him): "If
+# controls are unpriced, 'control' becomes an unaudited channel through which
+# arbitrary features can be run and read -- and F10-25's survivor ratio only means
+# anything if the two arms face the same threshold, which requires them in the same
+# declared vector." So: 23 features x 31 lags = 713 declared tests, in their own
+# declared §P6-3 stratum, inside the identity sum_s m_s q_s = m q.
+#
+# THE MATCHING IS THE WHOLE DESIGN, and the catalog says so: "synthetic cycles must
+# be matched in period, autocorrelation and amplitude distribution to the real
+# features or the calibration is not a calibration." Two devices deliver that here:
+#
+#   * the 20 MATCHED controls are built one-per-real-feature. A phase donor gets a
+#     random-phase cycle at the donor's own period; a linear donor gets a FOURIER
+#     PHASE-RANDOMISED surrogate of the donor's own series, which preserves the
+#     donor's power spectrum EXACTLY and therefore its autocorrelation exactly. The
+#     donor's `period_hint` and `periodic` flag are copied, so `block_days` -- the
+#     bootstrap block length, which §P7-1(c) shows is a function of the feature's own
+#     timescale -- is identical between a control and the feature it calibrates.
+#   * the 3 NAMED controls are the catalog's own mechanism-free lines (F1-35, F1-36,
+#     F2-09): real astronomical or calendrical periods with a physically certain zero
+#     effect. They are the scale rulers, and they carry the mechanism-free label into
+#     the output because the catalog is explicit that the distinction "must survive
+#     into the report text or it will be misread".
+#
+# A control is NOT mark-tested and NOT regionalised: F9-20 prices 23 x 31 GLM tests
+# and nothing else, and a battery that quietly grew a mark axis would be a different
+# declaration than the one that was priced.
+F9_20_RULE_ID = "F9-20-v1"
+F9_20_LAGS = tuple(range(0, 31))
+F9_20_N_MATCHED = 20
+F9_20_N_NAMED = 3
+F9_20_N_DECLARED_TESTS = (F9_20_N_MATCHED + F9_20_N_NAMED) * len(F9_20_LAGS)  # 713
+F9_20_FAMILY = 9
+F9_20_LABEL = ("F9-20 arm 1 -- NEGATIVE-CONTROL FEATURE BATTERY (null features, "
+               "real data, real pipeline)")
+F9_20_MECHANISM_FREE = (
+    "MECHANISM-FREE NULL-CALIBRATION LINE. This feature is not a hypothesis. No "
+    "output from it is evidence for or against any physical claim, and a survivor "
+    "on it is a MEASURED FALSE POSITIVE (§P7-2(a)), never a finding.")
+
+# Low-precision mean elements. Precision is irrelevant here BY CONSTRUCTION: these
+# lines exist to have a real period and a certain-zero effect, and an arcminute of
+# longitude error changes neither.
+JUPITER_ORBIT_DAYS = 4332.589
+SATURN_ORBIT_DAYS = 10759.22
+EARTH_ORBIT_DAYS = 365.256363
+JUPITER_SATURN_SYNODIC_DAYS = 1.0 / abs(1.0 / JUPITER_ORBIT_DAYS
+                                        - 1.0 / SATURN_ORBIT_DAYS)   # 7253.5 d
+JUPITER_SYNODIC_DAYS = 1.0 / abs(1.0 / EARTH_ORBIT_DAYS
+                                 - 1.0 / JUPITER_ORBIT_DAYS)         # 398.88 d
+METONIC_DAYS = 6939.688
+JUPITER_A_AU = 5.20288
+EARTH_A_AU = 1.0
+
+
+def _control_rng(master_seed, name):
+    """A stream addressed by (master seed, control name) and by nothing else.
+
+    Same discipline as every other stream in this engine: not a call-order spawn,
+    not a task index -- a hash of a canonical key, so the battery a session builds
+    is a function of its declared config and reproduces exactly on a re-run.
+    """
+    return np.random.default_rng(
+        seed_sequence_for(test_key(master_seed, name, "f9_20_control_build")))
+
+
+def phase_randomised_surrogate(x, rng):
+    """A Fourier phase-randomised surrogate: EXACT power spectrum, random phases.
+
+    The amplitude spectrum is preserved bit-for-bit and only the phases are redrawn,
+    so the surrogate has the donor's autocorrelation function EXACTLY and its
+    alignment with the target not at all. That is precisely the null F9-20 needs:
+    a feature that looks like the real one to every second-order statistic and
+    cannot, by construction, carry a real effect.
+    """
+    x = np.asarray(x, dtype=np.float64)
+    n = x.size
+    mu = float(x.mean())
+    F = np.fft.rfft(x - mu)
+    ph = rng.uniform(0.0, 2.0 * np.pi, F.size)
+    ph[0] = 0.0
+    if n % 2 == 0:                      # the Nyquist bin is real; keep it real
+        ph[-1] = 0.0
+    y = np.fft.irfft(np.abs(F) * np.exp(1j * ph), n)
+    return y + mu
+
+
+def negative_control_features(t0, n_days, donors, lags=F9_20_LAGS, seed=0):
+    """The 23 F9-20 controls: 3 named mechanism-free lines + 20 matched surrogates.
+
+    `donors` is the REAL feature list of this session, in declared order. Exactly
+    `F9_20_N_MATCHED` of them are used, and the function REFUSES rather than
+    silently shrink the battery if fewer are available -- the declared integer 713
+    is the price that was paid, and a battery that quietly ran 600 tests would be a
+    different declaration than the one in the ledger.
+    """
+    lags = tuple(int(l) for l in lags)
+    t = np.arange(int(n_days), dtype=np.float64)
+    out = []
+
+    # ---- the 3 NAMED mechanism-free lines (F1-35, F1-36, F2-09) ------------
+    # F1-35: Jupiter's tidal potential at Earth, ~1e-5 of the Moon's. There is no
+    # mechanism. It is the perfect scale-calibration null and the catalog labels it
+    # so in its own entry.
+    lam_e = 2.0 * np.pi * t / EARTH_ORBIT_DAYS
+    lam_j = 2.0 * np.pi * t / JUPITER_ORBIT_DAYS
+    r_ej = np.sqrt(EARTH_A_AU ** 2 + JUPITER_A_AU ** 2
+                   - 2.0 * EARTH_A_AU * JUPITER_A_AU * np.cos(lam_j - lam_e))
+    out.append(Feature(
+        "nc_planetary_tide_jupiter", F9_20_FAMILY, "linear", (1.0 / r_ej) ** 3,
+        "F1-35 Jupiter tidal potential at Earth (r_EJ^-3). " + F9_20_MECHANISM_FREE,
+        lags=lags, causality_exempt=True, period_hint=JUPITER_SYNODIC_DAYS,
+        control=True, periodic_override=True, control_of="F1-35 (named)"))
+
+    ph0 = _control_rng(seed, "nc_jupiter_saturn_synodic_phase").uniform(0.0, 1.0)
+    out.append(Feature(
+        "nc_jupiter_saturn_synodic_phase", F9_20_FAMILY, "phase",
+        np.mod(2.0 * np.pi * (t / JUPITER_SATURN_SYNODIC_DAYS + ph0), 2.0 * np.pi),
+        f"F1-36 Jupiter-Saturn synodic phase ({JUPITER_SATURN_SYNODIC_DAYS:.1f} d). "
+        + F9_20_MECHANISM_FREE, lags=lags, causality_exempt=True,
+        period_hint=JUPITER_SATURN_SYNODIC_DAYS, control=True,
+        periodic_override=True, control_of="F1-36 (named)"))
+
+    ph0 = _control_rng(seed, "nc_metonic_phase").uniform(0.0, 1.0)
+    out.append(Feature(
+        "nc_metonic_phase", F9_20_FAMILY, "phase",
+        np.mod(2.0 * np.pi * (t / METONIC_DAYS + ph0), 2.0 * np.pi),
+        f"F2-09 Metonic phase ({METONIC_DAYS:.1f} d), CALENDRICAL not physical. "
+        + F9_20_MECHANISM_FREE, lags=lags, causality_exempt=True,
+        period_hint=METONIC_DAYS, control=True, periodic_override=True,
+        control_of="F2-09 (named)"))
+
+    # ---- the 20 MATCHED controls, one per real feature in declared order ---
+    real = [f for f in donors if not getattr(f, "control", False)]
+    if len(real) < F9_20_N_MATCHED:
+        raise ValueError(
+            f"F9-20 declares {F9_20_N_MATCHED} matched controls but this session "
+            f"offers only {len(real)} real features to match against. The declared "
+            f"integer {F9_20_N_DECLARED_TESTS} is the price already paid in "
+            f"EXPLORE_COUNT.jsonl; running a smaller battery would be a different "
+            f"declaration. Refusing to run.")
+    for f in real[:F9_20_N_MATCHED]:
+        rng = _control_rng(seed, "nc_match_" + f.name)
+        if f.kind == "phase":
+            p = float(f.period_hint or EARTH_ORBIT_DAYS)
+            vals = np.mod(2.0 * np.pi * (t / p + rng.uniform(0.0, 1.0)),
+                          2.0 * np.pi)
+            how = f"random-phase cycle at the donor's own period ({p:.4g} d)"
+        else:
+            vals = phase_randomised_surrogate(f.values[:int(n_days)], rng)
+            how = ("Fourier phase-randomised surrogate of the donor series "
+                   "(power spectrum, and therefore autocorrelation, preserved "
+                   "EXACTLY; phase alignment destroyed)")
+        out.append(Feature(
+            "nc_match_" + f.name, F9_20_FAMILY, f.kind, vals,
+            f"F9-20 matched negative control for `{f.name}`: {how}. "
+            + F9_20_MECHANISM_FREE,
+            lags=lags, causality_exempt=True, period_hint=f.period_hint,
+            control=True, periodic_override=bool(f.periodic),
+            control_of=f.name, block_days_override=f.block_days))
+
+    n_tests = sum(len(f.lags) for f in out)
+    if n_tests != F9_20_N_DECLARED_TESTS:
+        raise RuntimeError(
+            f"F9-20 built {len(out)} controls x lags = {n_tests} tests, but the "
+            f"declared price is {F9_20_N_DECLARED_TESTS} "
+            f"({F9_20_N_NAMED} named + {F9_20_N_MATCHED} matched, "
+            f"{len(F9_20_LAGS)} lags). The declaration is the authority; refusing "
+            f"to run a battery that is not the one that was priced.")
+    return out
 
 
 # =============================================== optional data downloads ===

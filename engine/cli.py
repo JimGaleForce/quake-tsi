@@ -369,6 +369,12 @@ def main(argv=None):
                     help="K-089-R tranche 1: scan lags 0..30 d for the 13 "
                          "lag-unscanned cyclic features (8 linear + 5 non-lag-free "
                          "phase); +390 tests, priced at the declared count")
+    mi.add_argument("--controls", action="store_true",
+                    help="F9-20 arm 1 (Tranche A, §P7-2): add the negative-control "
+                         "feature battery -- 3 named mechanism-free lines + 20 "
+                         "matched null surrogates x 31 lags = 713 PRICED tests in "
+                         "their own declared stratum. GLM only; no mark or regional "
+                         "axis. Hash-affecting.")
     mi.add_argument("--surrogates", type=int, default=None,
                     help="override the preset surrogate count")
     mi.add_argument("--no-download", action="store_true",

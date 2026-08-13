@@ -89,7 +89,9 @@ import traceback
 import numpy as np
 
 from . import (baseline as bl, datasets, design, mine as M, splits, __version__)
-from . import gpd_tail, regions as regions_mod, strata as strata_mod
+from scipy import stats
+
+from . import gpd_tail, floors, regions as regions_mod, strata as strata_mod
 
 QUICK = {
     "n_surrogates": 200, "n_periods": 800, "n_peaks": 5,
@@ -1112,6 +1114,19 @@ def build_config(args, preset):
             "target_amplitude": float(getattr(args, "region_target_amplitude", None)
                                       or REGION_TARGET_AMPLITUDE_DEFAULT),
         }
+    # F9-20 arm 1 (§P7-2). The control battery CHANGES THE DECLARED FAMILY -- 713
+    # priced tests enter the BH vector -- so it is hash-affecting, and inserted only
+    # when on, so a default run's config, hash and resumable sessions are unchanged.
+    if getattr(args, "controls", False):
+        cfg["controls"] = {
+            "enabled": True,
+            "rule_id": M.F9_20_RULE_ID,
+            "n_named": M.F9_20_N_NAMED,
+            "n_matched": M.F9_20_N_MATCHED,
+            "lags": list(M.F9_20_LAGS),
+            "n_declared_tests": int(M.F9_20_N_DECLARED_TESTS),
+            "family": M.F9_20_FAMILY,
+        }
     path = getattr(args, "strata", None)
     if path:
         # §P6-3(3)+(5): the partition FILE CONTENT is hash-affecting (its sha256 is
@@ -1173,6 +1188,22 @@ def prepare(cfg, verbose=True):
                                            enabled=cfg["downloads"], verbose=verbose)
     feats += dl_feats
     feats += M.catalog_features(ctx, all_marks, lags)
+    # F9-20 arm 1, LAST, so the matched controls take the REAL feature list in its
+    # declared order as donors and no control can ever become a donor for another.
+    ctl_cfg = cfg.get("controls")
+    if ctl_cfg and ctl_cfg.get("enabled"):
+        ctls = M.negative_control_features(t0, ctx.n_days, feats,
+                                           lags=tuple(ctl_cfg["lags"]),
+                                           seed=int(cfg["seed"]))
+        feats += ctls
+        if verbose:
+            print(f"{M.F9_20_LABEL}: {len(ctls)} controls "
+                  f"({ctl_cfg['n_named']} named mechanism-free + "
+                  f"{ctl_cfg['n_matched']} matched surrogates) x "
+                  f"{len(ctl_cfg['lags'])} lags = "
+                  f"{ctl_cfg['n_declared_tests']} PRICED tests in their own "
+                  f"declared stratum (§P7-2(a)); GLM only -- no mark axis, no "
+                  f"regional axis")
     if verbose:
         by_fam = {}
         for f in feats:
@@ -1319,12 +1350,17 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     period_keys = period_task_keys(cfg, n_surr)
     # §P6-4 Rule 4.2 costs ONE task per feature (all its lags inside); the optional
     # battery (Rule 4.3/4.4) costs R x that and is priced as such in the banner.
-    regsum_keys = [f"regsum:{f.name}" for f in feats] if regpart else []
+    # F9-20 prices 23 controls x 31 lags = 713 GLM tests AND NOTHING ELSE. A control
+    # is therefore excluded from the mark axis and the regional axis by name: a
+    # battery that quietly grew a mark test per control would be running 759 tests
+    # under a declaration that says 713.
+    sci_feats = [f for f in feats if not getattr(f, "control", False)]
+    regsum_keys = [f"regsum:{f.name}" for f in sci_feats] if regpart else []
     region_keys = ([f"region:{r}:{f.name}"
-                    for r in range(regpart["R"]) for f in feats]
+                    for r in range(regpart["R"]) for f in sci_feats]
                    if (regpart and reg_cfg.get("battery")) else [])
     task_keys = ([f"glm:{f.name}" for f in feats]
-                 + [f"marks:{f.name}" for f in feats]
+                 + [f"marks:{f.name}" for f in sci_feats]
                  + period_keys + regsum_keys + region_keys)
 
     # Every random stream in the session is addressed by a canonical test key.
@@ -1335,6 +1371,8 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         for lag in f.lags:
             all_keys.append(M.test_key(cfg["seed"], f.name, "glm", lag=lag,
                                        null_type="block_bootstrap"))
+        if getattr(f, "control", False):
+            continue
         for mk in ("mag", "depth"):
             all_keys.append(M.test_key(cfg["seed"], f.name, f"mark_{mk}",
                                        null_type="block_bootstrap"))
@@ -1350,14 +1388,14 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     # (it consumes every region at once) and each battery test by its integer id,
     # so a battery test and its sum can never share a stream.
     if regpart:
-        for f in feats:
+        for f in sci_feats:
             for lag in f.lags:
                 all_keys.append(M.test_key(cfg["seed"], f.name, "regsum", lag=lag,
                                            null_type="circular_shift",
                                            region="ALL"))
         if reg_cfg.get("battery"):
             for r in range(regpart["R"]):
-                for f in feats:
+                for f in sci_feats:
                     for lag in f.lags:
                         all_keys.append(M.test_key(
                             cfg["seed"], f.name, "region", lag=lag,
@@ -1438,7 +1476,7 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                       f"(lag {best['lag']}, {best['pct_rate_modulation']:+.2f}%/sd)")
 
         # ------------------------------------------ (c) mark tests ---------
-        for f in feats:
+        for f in sci_feats:
             key = f"marks:{f.name}"
             if ckpt.done(key):
                 if verbose:
@@ -1529,7 +1567,7 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         for t in ckpt.state["results"][f"glm:{f.name}"]:
             t["order_key"] = [0, i, int(t["lag"]), 0, f.name]
             tests.append(t)
-        for j, t in enumerate(ckpt.state["results"][f"marks:{f.name}"]):
+        for j, t in enumerate(ckpt.state["results"].get(f"marks:{f.name}", [])):
             t["order_key"] = [0, i, -1, 1 + j, f.name]
             tests.append(t)
     for j, t in enumerate(ckpt.state["results"]["period_scan"]["peaks"]):
@@ -1596,6 +1634,56 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         t["passes_fdr"] = bool(pa)
     ckpt.state["bh"] = bh_meta
     ckpt.state["p_method_census"] = gpd_tail.census(tests)
+
+    # ---- §P6-6 R3 / §P6-4(4.7) item 3: the winner's-curse LABEL, on EVERY row --
+    # Not only on survivors, and not only on the ranked table. At this scale every
+    # quoted amplitude is the maximum of a search and is upward-biased by selection;
+    # a label that appears only where somebody remembered to put it is not a label.
+    for t in tests:
+        if t.get("amplitude_label"):
+            continue
+        if ("amplitude_log_rate" in t or "pct_rate_modulation" in t
+                or t.get("test") == "lomb_scargle_peak"):
+            t["amplitude_label"] = SELECTION_BIASED
+
+    # ---- Tranche A read-outs. All priced at 0: each reports a property of the
+    # run and makes no rejection (§P7-2(a)).
+    tranche_a = None
+    if cfg.get("controls", {}).get("enabled"):
+        tranche_a = {
+            "label": M.F9_20_LABEL,
+            "declared": dict(cfg["controls"]),
+            "F10_25_control_calibration": control_calibration(tests, strata_decl),
+            "R3_F9_17_winners_curse": winners_curse_report(tests),
+            "S15_by_stratum": s15_by_stratum(tests, float(counts.sum()),
+                                             strata_decl),
+        }
+        ckpt.state["tranche_a"] = tranche_a
+        if verbose:
+            cc = tranche_a["F10_25_control_calibration"]
+            wc = tranche_a["R3_F9_17_winners_curse"]
+            print(f"  F9-20 control arm: {cc['control_arm']['n_survivors']} "
+                  f"survivor(s) of {cc['control_arm']['n_executed']} executed "
+                  f"({cc['control_arm']['n_declared']} declared), vs "
+                  f"q*m = {cc['control_arm']['expected_false_by_chance_q_times_m']:.1f} "
+                  f"expected by chance")
+            print(f"  real arm:          {cc['real_arm']['n_survivors']} "
+                  f"survivor(s) of {cc['real_arm']['n_executed']} executed "
+                  f"({cc['real_arm']['n_declared']} declared), vs "
+                  f"q*m = {cc['real_arm']['expected_false_by_chance_q_times_m']:.1f}")
+            print(f"  R3 winner's curse: top-{wc['selection_size_k']} median "
+                  f"amplitude real {wc['real_arm_median_amplitude_top_k']:.4f} vs "
+                  f"null {wc['null_arm_median_amplitude_top_k']:.4f} "
+                  f"(excess {wc['excess_over_null_top_k']:+.4f}); every amplitude "
+                  f"labelled {SELECTION_BIASED}")
+            for r in tranche_a["S15_by_stratum"]["rows"]:
+                print(f"  S-15 {r['stratum']}: {r['n_measurable']} MEASURABLE / "
+                      f"{r['n_unmeasurable']} UNMEASURABLE of "
+                      f"{r['n_count_path_rows']} count-path rows at target "
+                      f"{tranche_a['S15_by_stratum']['target_amplitude']:.0%} "
+                      f"(A_min {r['A_min_min']:.4f}..{r['A_min_max']:.4f}, "
+                      f"alpha_s = {r['alpha_s']:.4g}); max obs/floor "
+                      f"{r['max_obs_over_floor']:.3f}")
 
     # Per-test resolution floors, which are HETEROGENEOUS once the ladder is on
     # (and already heterogeneous without it, because the enumeration floor is set
@@ -1753,6 +1841,345 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
             "elapsed": ckpt.state["elapsed_seconds"]}
 
 
+# =================== TRANCHE A: F10-25, R3/F9-17, S-15 per stratum ==========
+# All three are PRICED AT 0 (§P7-2(a)): each reports a property of the run rather
+# than making a rejection. They are computed here, in the parent, from rows that
+# already exist -- no new surrogate, no new test, no new declaration.
+
+SELECTION_BIASED = "SELECTION-BIASED UPPER BOUND"
+# §P6-4 Finding B's own reference rate modulation. Declared BEFORE the run, not
+# chosen after seeing which floors it makes measurable.
+S15_TARGET_AMPLITUDE = 0.20
+# The programme's own standing bound on sinusoidal rate modulation, carried as a
+# SECOND and stricter S-15 reference so the headline cannot be read as "measurable"
+# at a target this programme would actually care about.
+S15_TARGET_STANDING_BOUND = 0.056
+
+
+def is_control_row(t):
+    """A row belonging to the F9-20 negative-control arm."""
+    return int(t.get("family", -1)) == M.F9_20_FAMILY
+
+
+def measured_vif_table(path=None, session="session_20260812T004857"):
+    """Per-feature MEASURED VIF (F4-58), §P7-12(a)(1)'s primary.
+
+    Returns `{feature: {...}}` for the named session, or `{}` if the measurement
+    file is unreadable. §P7-12(a)(3) reinstates the pooled flat 24.08 as the
+    acceptable fallback wherever a per-feature measurement does not exist, on its
+    measured <=8% accuracy across the whole 30-800 d block ladder -- so a missing
+    file DEGRADES the floor's precision and never blocks the run.
+    """
+    p = path or os.path.join(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__))), floors.RESULTS_JSON)
+    try:
+        with open(p, "r", encoding="utf-8") as fh:
+            doc = json.load(fh)
+    except (OSError, json.JSONDecodeError):
+        return {}
+    for s in doc.get("sessions", []):
+        if s.get("session") != session:
+            continue
+        out = {}
+        for r in s.get("per_feature", []):
+            v = r.get("vif_median")
+            if v:
+                out[str(r["feature"])] = {
+                    "vif": float(v), "block_days": r.get("block_days"),
+                    "df": r.get("df"), "n_usable": r.get("n_usable")}
+        return out
+    return {}
+
+
+def s15_by_stratum(tests, n_events, strata_decl, vif_table=None,
+                   target=S15_TARGET_AMPLITUDE):
+    """§P6-4(4.7) item 2: the measurable/unmeasurable count and fraction, PER STRATUM.
+
+    The floor is §P7-1(b) as re-measured by §P7-8(a) and finalised by §P7-12:
+
+        A_min = sqrt(VIF) * (z_alpha + z_0.80) * sqrt(2/N)
+
+    with the FEATURE'S OWN measured VIF where F4-58 has one (§P7-12(a)(1)) and the
+    pooled flat 24.08 where it does not (§P7-12(a)(3)), and with `alpha` the DECLARED
+    operating threshold OF THE STRATUM THE ROW RUNS IN -- q_s / m_s, the most
+    conservative BH rung inside that stratum. That last point is §P7-1(b)'s whole
+    reason for being a formula instead of a scalar: the multiplicity term is a
+    property of the declared count, so two strata of different size do not share a
+    floor and a scalar carried between them is wrong in both.
+    """
+    vif_table = measured_vif_table() if vif_table is None else vif_table
+    rows = []
+    for s in strata_decl:
+        nm = s["name"]
+        alpha = float(s["q_s"]) / max(int(s["m_s"]), 1)
+        sel = [t for t in tests if t.get("stratum") == nm
+               and t.get("test") == "glm_poisson_offset_etas"]
+        meas = unmeas = 0
+        best_ratio, best_row, fl_all = 0.0, None, []
+        for t in sel:
+            rec = vif_table.get(t["feature"])
+            vif = float(rec["vif"]) if rec else floors.MEASURED_VIF_DF2_PHASE
+            fl = floors.a_min(vif, alpha, n_events)
+            obs = math.expm1(float(t.get("amplitude_log_rate", 0.0)))
+            t["a_min_formula"] = fl
+            t["a_min_vif"] = vif
+            t["a_min_vif_source"] = ("F4-58 per-feature measurement (§P7-12(a)(1))"
+                                     if rec else
+                                     "pooled flat 24.08 fallback (§P7-12(a)(3))")
+            t["a_min_alpha"] = alpha
+            t["obs_amplitude_fraction"] = obs
+            t["obs_over_floor"] = (obs / fl) if fl > 0 else float("inf")
+            ok = fl <= float(target)
+            t["s15"] = "MEASURABLE" if ok else "UNMEASURABLE"
+            meas += int(ok)
+            unmeas += int(not ok)
+            fl_all.append(fl)
+            if t["obs_over_floor"] > best_ratio:
+                best_ratio, best_row = t["obs_over_floor"], t
+        n = meas + unmeas
+        rows.append({
+            "stratum": nm, "m_s": int(s["m_s"]), "q_s": float(s["q_s"]),
+            "alpha_s": alpha, "n_count_path_rows": n,
+            "n_measurable": meas, "n_unmeasurable": unmeas,
+            "fraction_unmeasurable": (unmeas / n) if n else float("nan"),
+            "A_min_min": (min(fl_all) if fl_all else None),
+            "A_min_max": (max(fl_all) if fl_all else None),
+            "n_measurable_at_standing_bound": sum(
+                1 for f in fl_all if f <= S15_TARGET_STANDING_BOUND),
+            "max_obs_over_floor": best_ratio,
+            "max_obs_over_floor_row": (None if best_row is None else
+                                       "%s lag %s" % (best_row["feature"],
+                                                      best_row.get("lag"))),
+        })
+    return {
+        "target_amplitude": float(target),
+        "second_reference_amplitude": S15_TARGET_STANDING_BOUND,
+        "conventions": (
+            "S-18: every number here carries its convention. alpha is TWO-SIDED and "
+            "is q_s/m_s, the stratum's most conservative BH rung; power is fixed at "
+            "80%; A_min is a SINUSOIDAL rate-modulation amplitude as a fraction of "
+            "the baseline rate; N is the domain event count in the mining window. "
+            "The second reference (5.6%) is the programme's own standing bound, "
+            "carried so a MEASURABLE verdict at the declared 20% cannot be read as "
+            "measurable at an amplitude this programme would care about."),
+        "N_events": float(n_events),
+        "vif_rule": ("§P7-12(a): the feature's OWN measured VIF where F4-58 has one "
+                     "(a direct read, not a fit); the pooled flat 24.08 as the "
+                     "acceptable fallback where it does not, accurate to <=8% "
+                     "across the 30-800 d block ladder (+0.5% at 30 d, -7.5% at "
+                     "800 d). The §P7-10(b) curve is SUPERSEDED and is not used."),
+        "n_features_with_own_vif": len(vif_table),
+        "rows": rows,
+    }
+
+
+def _decl(by_name, names):
+    return int(sum(by_name[n]["m_s"] for n in names if n in by_name))
+
+
+def control_calibration(tests, strata_decl):
+    """F10-25 + F9-20's own read-out: survivors per arm against expectation.
+
+    F10-25 is "the ratio of survivors among real features to survivors among the
+    F9-20 negative controls", and the catalog is explicit that it means nothing
+    unless the two arms ran in the same tranche, at the same lags, under the same
+    nulls -- which is why the controls are in THIS session and THIS vector rather
+    than in a run of their own.
+    """
+    ctl = [t for t in tests if is_control_row(t)]
+    real = [t for t in tests if not is_control_row(t)]
+    by_name = {s["name"]: s for s in strata_decl}
+    ctl_strata = sorted({t.get("stratum") for t in ctl})
+    real_strata = sorted({t.get("stratum") for t in real})
+
+    def _exp(names):
+        return float(sum(by_name[n]["m_s"] * by_name[n]["q_s"]
+                         for n in names if n in by_name))
+
+    n_ctl_s = sum(1 for t in ctl if t["passes_fdr"])
+    n_real_s = sum(1 for t in real if t["passes_fdr"])
+    return {
+        "control_arm": {
+            "strata": ctl_strata, "n_declared": _decl(by_name, ctl_strata),
+            "n_executed": len(ctl), "n_survivors": n_ctl_s,
+            "expected_false_by_chance_q_times_m": _exp(ctl_strata),
+            "survivors_are": ("MEASURED FALSE POSITIVES (§P7-2(a)). A survivor in "
+                              "the control stratum is never reported as a finding."),
+        },
+        "real_arm": {
+            "strata": real_strata, "n_declared": _decl(by_name, real_strata),
+            "n_executed": len(real), "n_survivors": n_real_s,
+            "expected_false_by_chance_q_times_m": _exp(real_strata),
+        },
+        "F10_25_survivor_ratio": ((n_real_s / n_ctl_s) if n_ctl_s else None),
+        "F10_25_note": (
+            "UNDEFINED when the control arm has zero survivors, and that is the "
+            "expected outcome of an honest machine at this scale rather than a "
+            "failure of the statistic. The interpretable object at zero survivors is "
+            "the PAIR of counts against the pair of q*m expectations, printed above "
+            "rather than collapsed into a ratio with a zero denominator."),
+        "what_a_control_survivor_would_mean": (
+            "a measured false positive under the ACTUAL dependence structure of the "
+            "ACTUAL data -- the number BH's theorem assumes rather than measures, "
+            "and the reason §P7-2(a) priced this battery instead of exempting it."),
+    }
+
+
+def winners_curse_report(tests, top_k=10):
+    """R3 / F9-17 (§P6-4(4.7) item 3, §P6-6 R3). The label, and the null comparison.
+
+    R3 accepts EITHER a selection-debiased estimate OR the `SELECTION-BIASED UPPER
+    BOUND` label plus the median effect among survivors of an equal-sized null run.
+    This build takes the second branch, and the F9-20 control arm IS the null run:
+    null features, real data, same lags, same nulls, same session, same vector.
+
+    THE SIZE MISMATCH IS STATED WITH ITS DIRECTION DERIVED, not asserted (S-18
+    clause 4). The control arm declares 713 count-path tests against the real arm's
+    500, so the null arm is the LARGER search; a fixed upper order statistic of a
+    larger sample from the same null is stochastically larger, so the null arm's
+    selected median is if anything an OVER-estimate of the selection inflation a
+    size-matched null would show. The comparison therefore UNDER-states the real
+    arm's excess and cannot manufacture one.
+    """
+    def _amp(t):
+        return abs(math.expm1(float(t.get("amplitude_log_rate", 0.0))))
+
+    def _p(t):
+        return float(t.get("p_bh", t["p_raw"]))
+
+    rows = [t for t in tests if t.get("test") == "glm_poisson_offset_etas"]
+    ctl = sorted((t for t in rows if is_control_row(t)),
+                 key=lambda t: (_p(t), t.get("order_key", [])))
+    real = sorted((t for t in rows if not is_control_row(t)),
+                  key=lambda t: (_p(t), t.get("order_key", [])))
+    n_real_surv = sum(1 for t in real if t["passes_fdr"])
+
+    # DEDUPLICATE THE LAG AXIS BEFORE SELECTING, and this is not cosmetic. At long
+    # period the 31 lags of one feature are near-identical columns: a raw top-10 by
+    # p can be ten lags of a SINGLE feature, and a "median amplitude among the top
+    # 10" computed on that is one feature's amplitude quoted ten times. The primary
+    # comparison therefore takes each feature's own best row and then the top k
+    # FEATURES. The row-level figure is kept beside it, labelled, because it is what
+    # a naive reader would compute and the difference is worth seeing.
+    def _best_per_feature(seq):
+        seen, out = set(), []
+        for t in seq:                       # already sorted by p
+            if t["feature"] in seen:
+                continue
+            seen.add(t["feature"])
+            out.append(t)
+        return out
+
+    ctl_f, real_f = _best_per_feature(ctl), _best_per_feature(real)
+    k = min(max(int(n_real_surv), int(top_k)), len(ctl_f), len(real_f))
+    k_rows = min(max(int(n_real_surv), int(top_k)), len(ctl), len(real))
+
+    def _med(seq):
+        v = [_amp(t) for t in seq]
+        return float(np.median(v)) if v else float("nan")
+
+    return {
+        "rule": "§P6-6 R3 / §P6-4(4.7) item 3, implemented as F9-17.",
+        "branch_taken": ("LABEL + NULL-RUN MEDIAN. Every amplitude this session "
+                         "reports carries `" + SELECTION_BIASED + "`; the median "
+                         "effect among an equal-sized selection from the F9-20 null "
+                         "arm is printed beside it."),
+        "label_applied_to_every_amplitude": SELECTION_BIASED,
+        "n_real_survivors": int(n_real_surv),
+        "selection_size_k": int(k),
+        "selection_rule": ("each feature's own smallest p_bh, then the k features "
+                           "with the smallest of those, k = max(number of real "
+                           "survivors, %d). Declared here rather than chosen after "
+                           "seeing the numbers, and IDENTICAL in both arms -- an "
+                           "unequal selection rule compares a maximum against a "
+                           "mean and calls the difference physics." % int(top_k)),
+        "real_arm_median_amplitude_top_k": _med(real_f[:k]),
+        "null_arm_median_amplitude_top_k": _med(ctl_f[:k]),
+        "real_arm_max_amplitude_top_k": max((_amp(t) for t in real_f[:k]),
+                                            default=float("nan")),
+        "null_arm_max_amplitude_top_k": max((_amp(t) for t in ctl_f[:k]),
+                                            default=float("nan")),
+        "real_arm_top_k_features": [t["feature"] for t in real_f[:k]],
+        "null_arm_top_k_features": [t["feature"] for t in ctl_f[:k]],
+        "real_arm_median_amplitude_all": _med(real),
+        "null_arm_median_amplitude_all": _med(ctl),
+        "excess_over_null_top_k": _med(real_f[:k]) - _med(ctl_f[:k]),
+        "row_level_secondary": {
+            "note": ("the same statistic WITHOUT lag-axis deduplication -- what a "
+                     "naive top-k by p returns. Reported so the deduplication is "
+                     "visible as a choice rather than hidden as a default."),
+            "k": int(k_rows),
+            "real_arm_median_amplitude": _med(real[:k_rows]),
+            "null_arm_median_amplitude": _med(ctl[:k_rows]),
+            "n_distinct_real_features_in_top_k": len({t["feature"]
+                                                      for t in real[:k_rows]}),
+            "n_distinct_null_features_in_top_k": len({t["feature"]
+                                                      for t in ctl[:k_rows]}),
+        },
+        "kind_balance": (
+            "the 20 matched controls copy their donor's `kind`, so the null arm "
+            "carries the same mix of 2-df phase and 1-df linear columns as the real "
+            "arm; the two medians are not comparing a phase amplitude against a "
+            "per-sd slope."),
+        "size_mismatch": {
+            "n_real_count_path": len(real), "n_null_count_path": len(ctl),
+            "direction_of_bias": (
+                "the null arm is the LARGER search (%d vs %d count-path rows), so "
+                "its selected median is stochastically the larger; the comparison "
+                "therefore UNDER-states the real arm's excess and cannot "
+                "manufacture one." % (len(ctl), len(real))),
+            "derivation": (
+                "a fixed upper order statistic of a larger sample drawn from the "
+                "same distribution is stochastically larger; both arms are drawn "
+                "under the same null by construction, so n is the only asymmetry "
+                "left. Derived, not asserted -- S-18 candidate clause 4."),
+        },
+        "what_this_does_not_buy": (
+            "a debiased estimate. The label is a LABEL: it says the number is an "
+            "upper bound, not how much of it is selection. Nothing here licenses "
+            "quoting any amplitude as an effect size."),
+    }
+
+
+def rank_stability(ref_tests, other_tests, top_k=100, label=""):
+    """R4 (reseeding) and F10-24 (data resampling): top-k rank correlation.
+
+    §P7-2(b) is explicit that these are ADJACENT, BOTH REQUIRED, and must never be
+    conflated: R4 asks whether the RNG moves the ranking, F10-24 whether the DATA
+    moves it. Same statistic, two different failure modes, so the caller supplies
+    the label and it is carried into the output.
+    """
+    def _key(t):
+        return (t["test"], t["feature"], t.get("lag"), t.get("mark"))
+
+    def _rank(ts):
+        s = sorted(ts, key=lambda t: (float(t.get("p_bh", t["p_raw"])),
+                                      t.get("order_key", [])))
+        return {_key(t): i for i, t in enumerate(s)}
+
+    ra, rb = _rank(ref_tests), _rank(other_tests)
+    top = [k for k, v in sorted(ra.items(), key=lambda kv: kv[1])[:top_k]]
+    common = [k for k in top if k in rb]
+    if len(common) < 3:
+        return {"label": label, "n_top": top_k, "n_common": len(common),
+                "spearman_rho": None,
+                "verdict": "NOT COMPUTABLE (fewer than 3 shared rows)"}
+    a = np.array([ra[k] for k in common], dtype=float)
+    b = np.array([rb[k] for k in common], dtype=float)
+    rho = float(stats.spearmanr(a, b).statistic)
+    top_b = {k for k, v in sorted(rb.items(), key=lambda kv: kv[1])[:top_k]}
+    overlap = len(set(top) & top_b)
+    return {
+        "label": label, "n_top": top_k, "n_common": len(common),
+        "spearman_rho": rho,
+        "top_k_set_overlap": overlap,
+        "top_k_set_overlap_fraction": overlap / max(len(top), 1),
+        "verdict": ("STABLE" if rho >= 0.9 else
+                    "PARTIALLY STABLE" if rho >= 0.5 else
+                    "UNSTABLE -- the ranking is noise and the banner must say so"),
+    }
+
+
 # ------------------------------------------------------------------ report ---
 def _row_effect(t):
     if t["test"] in ("glm_poisson_offset_etas", "glm_poisson_offset_etas_region"):
@@ -1896,6 +2323,128 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
       + (f" **{_cen.get(gpd_tail.P_GPD, 0)} extrapolated survivor(s) are labelled "
          f"{gpd_tail.CANDIDATE_LABEL} and emit no stub** (§P6-2(6))."
          if _cen.get(gpd_tail.P_GPD, 0) else ""))
+    # ---- TRANCHE A (§P7-2): the control arm, R3, and S-15 per stratum --------
+    _ta = state.get("tranche_a")
+    if _ta:
+        A("")
+        A(f"## TRANCHE A -- {_ta['label']}")
+        A("")
+        for line in _wrap(
+            "This session runs TWO ARMS IN ONE DECLARED VECTOR, at the same lags, "
+            "under the same nulls, against the same real data, with one config "
+            "hash. The REAL arm is the already-declared K-089-R tranche-1 sweep, "
+            "re-occupying its slots in this session's BH denominator and presented "
+            "as NO NEW SCOPE. The CONTROL arm is F9-20's negative-control battery: "
+            "declared certain-zero-effect features, PRICED at 713 tests in their "
+            "own declared stratum per HYPOTHESIS_LEDGER.md §P7-2(a), because an "
+            "unpriced control is an unaudited channel and because F10-25's ratio "
+            "means nothing unless both arms face the same threshold."
+        ):
+            A(line)
+        A("")
+        cc = _ta["F10_25_control_calibration"]
+        A("### F10-25 -- the survivor ratio, and what chance alone buys per arm")
+        A("")
+        A("| arm | declared m_s | executed | survivors | expected by chance (q*m) |")
+        A("| --- | ---: | ---: | ---: | ---: |")
+        for nm, d in (("REAL (already declared)", cc["real_arm"]),
+                      ("F9-20 CONTROL (new price)", cc["control_arm"])):
+            A(f"| {nm} | {d['n_declared']} | {d['n_executed']} | "
+              f"**{d['n_survivors']}** | "
+              f"{d['expected_false_by_chance_q_times_m']:.1f} |")
+        A("")
+        rat = cc["F10_25_survivor_ratio"]
+        A(f"- **F10-25 survivor ratio (real : control) = "
+          f"{'UNDEFINED' if rat is None else format(rat, '.3g')}**")
+        for line in _wrap(cc["F10_25_note"]):
+            A("  " + line)
+        A("")
+        for line in _wrap("A survivor in the control stratum is "
+                          + cc["what_a_control_survivor_would_mean"]
+                          + " It is a MEASURED FALSE POSITIVE (\u00a7P7-2(a)) and is "
+                          + "never reported as a finding."):
+            A(line)
+        A("")
+        wc = _ta["R3_F9_17_winners_curse"]
+        A("### R3 / F9-17 -- winner's curse (§P6-4(4.7) item 3)")
+        A("")
+        for line in _wrap(wc["branch_taken"]):
+            A(line)
+        A("")
+        A(f"| quantity | REAL arm | F9-20 NULL arm |")
+        A("| --- | ---: | ---: |")
+        A(f"| count-path rows | {wc['size_mismatch']['n_real_count_path']} | "
+          f"{wc['size_mismatch']['n_null_count_path']} |")
+        A(f"| median amplitude, top-{wc['selection_size_k']} by p | "
+          f"{wc['real_arm_median_amplitude_top_k']:.4f} | "
+          f"{wc['null_arm_median_amplitude_top_k']:.4f} |")
+        A(f"| max amplitude, top-{wc['selection_size_k']} by p | "
+          f"{wc['real_arm_max_amplitude_top_k']:.4f} | "
+          f"{wc['null_arm_max_amplitude_top_k']:.4f} |")
+        A(f"| median amplitude, all rows | "
+          f"{wc['real_arm_median_amplitude_all']:.4f} | "
+          f"{wc['null_arm_median_amplitude_all']:.4f} |")
+        A("")
+        A(f"- selection rule: {wc['selection_rule']}")
+        A(f"- excess of the real arm over the null arm at top-"
+          f"{wc['selection_size_k']}: **{wc['excess_over_null_top_k']:+.4f}** "
+          f"(fractional rate modulation)")
+        A(f"- size mismatch, direction DERIVED not asserted: "
+          f"{wc['size_mismatch']['direction_of_bias']} "
+          f"{wc['size_mismatch']['derivation']}")
+        A(f"- **WHAT THIS DOES NOT BUY:** {wc['what_this_does_not_buy']}")
+        A(f"- {wc['kind_balance']}")
+        _rl = wc["row_level_secondary"]
+        A(f"- without lag-axis deduplication the same statistic reads real "
+          f"{_rl['real_arm_median_amplitude']:.4f} vs null "
+          f"{_rl['null_arm_median_amplitude']:.4f} over the top-{_rl['k']} ROWS, "
+          f"which span only {_rl['n_distinct_real_features_in_top_k']} real and "
+          f"{_rl['n_distinct_null_features_in_top_k']} null distinct features. "
+          f"{_rl['note']}")
+        A("")
+        s15 = _ta["S15_by_stratum"]
+        A("### S-15 per stratum (§P6-4(4.7) item 2) under the §P7-12 floors")
+        A("")
+        A(f"| stratum | m_s | alpha_s | count-path rows | MEASURABLE | "
+          f"UNMEASURABLE | A_min range | measurable at {s15['second_reference_amplitude']:.1%} | max obs/floor |")
+        A("| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |")
+        for r in s15["rows"]:
+            A(f"| `{r['stratum']}` | {r['m_s']} | {r['alpha_s']:.4g} | "
+              f"{r['n_count_path_rows']} | {r['n_measurable']} | "
+              f"{r['n_unmeasurable']} | "
+              + (f"{r['A_min_min']:.4f}..{r['A_min_max']:.4f}"
+                 if r["A_min_min"] is not None else "n/a")
+              + f" | {r['n_measurable_at_standing_bound']} | "
+              f"{r['max_obs_over_floor']:.3f} |")
+        A("")
+        A(f"- declared S-15 target amplitude: "
+          f"**{s15['target_amplitude']:.0%}** rate modulation; second reference "
+          f"**{s15['second_reference_amplitude']:.1%}** (the programme's own "
+          f"standing bound), N = {s15['N_events']:.0f} events.")
+        for line in _wrap(s15["conventions"]):
+            A("  " + line)
+        for line in _wrap(s15["vif_rule"]):
+            A("  " + line)
+        A(f"- per-feature measured VIF available for "
+          f"{s15['n_features_with_own_vif']} features; every other row uses the "
+          f"pooled flat 24.08 fallback.")
+        for line in _wrap(
+            "ASYMMETRY, STATED RATHER THAN AVERAGED AWAY. F4-58 has a per-feature "
+            "VIF for every REAL feature and none for any CONTROL, so the real arm "
+            "runs on measured floors spanning the full 30-800 d block ladder while "
+            "the control arm runs on the single pooled fallback. The control "
+            "stratum's floor is therefore uniform where the real stratum's is not, "
+            "and any cross-arm comparison of obs/floor inherits that. Direction, "
+            "DERIVED rather than asserted: the real arm's measured VIFs run 15.8 to "
+            "120.9 with a median above the pooled 24.08, so the real arm's floors "
+            "are on the whole HIGHER and its obs/floor ratios on the whole LOWER "
+            "than they would be under a common VIF. The asymmetry therefore "
+            "flatters the CONTROL arm, which is the safe direction for a "
+            "calibration whose whole purpose is to catch the real arm claiming too "
+            "much."
+        ):
+            A("  " + line)
+        A("")
     m = max(state["n_tests"], 1)
     bh_thresh = cfg["fdr_q"] / m
     floors = [t.get("p_floor", 1.0 / (cfg["n_surrogates"] + 1.0)) for t in tests]
@@ -2464,6 +3013,16 @@ def write_stubs(session_dir, cfg, tests):
             "where": _row_where(t),
             "effect_size": _row_effect(t),
             "rate_modulation": _amp_note(t),
+            # §P6-6 R3: the label is on the STUB, not only in the report prose. A
+            # stub is the object that travels; an unlabelled amplitude inside one
+            # is exactly how a selection maximum gets read as an effect size.
+            "amplitude_label": t.get("amplitude_label"),
+            "a_min_formula": t.get("a_min_formula"),
+            "a_min_vif": t.get("a_min_vif"),
+            "a_min_vif_source": t.get("a_min_vif_source"),
+            "s15": t.get("s15"),
+            "obs_over_floor": t.get("obs_over_floor"),
+            "is_negative_control": is_control_row(t),
             "p_raw": t["p_raw"],
             # §P6-2(5): the label is on EVERY row, so a reader never has to infer
             # which kind of number they are looking at.

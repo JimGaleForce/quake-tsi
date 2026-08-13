@@ -1,0 +1,537 @@
+{
+ "id": "TRANCHE-A-F9-20-arm1",
+ "title": "EQ-24 v2 Tranche A -- F9-20 arm 1 on real data, with R3, F10-25, F10-24 and R4",
+ "banner": "GENERATOR, NOT EVIDENCE. Nothing in this file is a result. It is a ranked list of hypotheses produced by an automated sweep over the EXPLORATION window only, with in-sample effect sizes. No line here may be quoted, cited, or reported as a finding. A candidate becomes evidence only by walking the ordinary path: written up as a K-entry, given a Popper ruling, and then tested ONCE against the frozen holdout (which costs a hash). This run spent no holdout hash.",
+ "standing_warning_eq24": "the known ML-mining failure mode from M-008 (DeVries Nature net beaten by 2-parameter logistic -- Mignan & Broccardo 2019) quoted in the README as the standing warning: prefer the boring model; a boosted-tree find that a 2-param GLM can't reproduce after conditioning is treated as leakage until proven otherwise.",
+ "opened_utc": "2026-08-13T07:17:41.036980+00:00",
+ "closed_utc": "2026-08-13T08:36:57.524414+00:00",
+ "count_reconciliation": {
+  "priced_new_this_tranche": 713,
+  "priced_new_source": "MINING_CATALOG.md F9-20 (~23 features x 31 lags = 713), CONFIRMED at HYPOTHESIS_LEDGER.md \u00a7P7-2(a) as the declared integer",
+  "already_declared_reoccupying_slots": 550,
+  "bh_denominator_m": 1263,
+  "priced_at_zero": {
+   "F4-58": "ALREADY DONE and committed; consumed here as floor input",
+   "F9-19": "IS G-M1 arm (ii)-extended; ALREADY RUN in the v2 gate",
+   "R1": "null DATA arm; ALREADY RUN in the v2 gate",
+   "F9-17/R3": "reports a property of the run; no rejection",
+   "F10-24": "audit; demote-only; no rejection",
+   "R4": "audit; demote-only; no rejection",
+   "F10-25": "a ratio of two counts already in the vector"
+  }
+ },
+ "config": {
+  "engine_version": "1.1.0",
+  "mode": "mine",
+  "preset": "overnight",
+  "n_surrogates": 10000,
+  "n_periods": 3000,
+  "n_peaks": 10,
+  "lags": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30
+  ],
+  "tranche1": true,
+  "tranche1_lags": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9,
+   10,
+   11,
+   12,
+   13,
+   14,
+   15,
+   16,
+   17,
+   18,
+   19,
+   20,
+   21,
+   22,
+   23,
+   24,
+   25,
+   26,
+   27,
+   28,
+   29,
+   30
+  ],
+  "fdr_q": 0.1,
+  "baseline": "etas",
+  "mag_target": 4.5,
+  "grid": {
+   "dlat": 1.0,
+   "dlon": 1.0
+  },
+  "explore_frac": 0.7,
+  "data_dir": "data/comcat_world",
+  "downloads": false,
+  "seed": 20260811,
+  "controls": {
+   "enabled": true,
+   "rule_id": "F9-20-v1",
+   "n_named": 3,
+   "n_matched": 20,
+   "lags": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+   ],
+   "n_declared_tests": 713,
+   "family": 9
+  },
+  "strata": {
+   "path": "strata_tranche_a.json",
+   "sha256": "a9fa22ccff07663711159dd29c042ad141705367b21f0117a3aa05da46dba370",
+   "q": 0.1,
+   "strata": [
+    {
+     "name": "f9_20_negative_controls",
+     "feature_family": 9,
+     "test_kind": "glm",
+     "region": null,
+     "m_s": 713,
+     "q_s": 0.1,
+     "note": ""
+    },
+    {
+     "name": "real_declared",
+     "feature_family": null,
+     "test_kind": null,
+     "region": null,
+     "m_s": 550,
+     "q_s": 0.1,
+     "note": ""
+    }
+   ],
+   "by_key": {
+    "9|glm": "f9_20_negative_controls",
+    "*|*": "real_declared"
+   },
+   "catch_all": "real_declared",
+   "m": 1263,
+   "note": "TRANCHE A (HYPOTHESIS_LEDGER.md \u00a7P7-2), declared BEFORE the run and frozen in the config hash by its own sha256 (\u00a7P6-3(3)+(5)). TWO STRATA IN ONE DECLARED VECTOR. `f9_20_negative_controls` is the F9-20 arm-1 battery: 23 declared certain-zero-effect features x 31 lags = 713 PRICED tests, which \u00a7P7-2(a) rules must be counted in the multiplicity and must enter the BH vector as their own stratum -- because an unpriced control is an unaudited channel through which arbitrary features can be run and read, and because F10-25's survivor ratio only means anything if the two arms face the same threshold. `real_declared` is the already-declared K-089-R tranche-1 sweep (session_20260812T004857, 550 tests): already-declared is NOT free -- it still occupies its 550 slots in this session's BH denominator -- but it is NOT new scope and is not presented as any. q_s is FLAT at the declared q in both strata: no budget is reallocated between the arms, so there is no prior to justify under \u00a7P6-3(2), and the two arms are as close to a common threshold as a stratified procedure permits. The residual difference is the BH line q_s/m_s -- 0.10/713 in the control stratum against 0.10/550 in the real stratum -- and it is reported per stratum rather than hidden, together with the S-8 max-statistic, which is the partition-INVARIANT instrument and is the confirmatory number under arbitrary dependence."
+  }
+ },
+ "config_hash": "dd559dff44e7271b68c892c313c59407612bbd839fc580ab587d66dbbd0d8759",
+ "strata_file": "engine\\configs\\strata_tranche_a.json",
+ "strata_sha256": "a9fa22ccff07663711159dd29c042ad141705367b21f0117a3aa05da46dba370",
+ "priced_session": {
+  "session_dir": "engine\\out\\mine\\session_20260813T001742",
+  "stubs": "engine\\out\\mine\\session_20260813T001742\\stubs.json",
+  "n_tests": 1263,
+  "n_pass": 0,
+  "elapsed": 1040.3
+ },
+ "bh": {
+  "table": [
+   {
+    "stratum": "f9_20_negative_controls",
+    "m_s": 713,
+    "q_s": 0.1,
+    "threshold_s": 0.0,
+    "bh_line_smallest": 0.00014025245441795232,
+    "n_executed": 713,
+    "n_eligible": 713,
+    "n_not_rejected_by_accounting": 0,
+    "n_pass": 0,
+    "expected_false_discoveries": 71.3,
+    "note": ""
+   },
+   {
+    "stratum": "real_declared",
+    "m_s": 550,
+    "q_s": 0.1,
+    "threshold_s": 0.0,
+    "bh_line_smallest": 0.00018181818181818183,
+    "n_executed": 550,
+    "n_eligible": 550,
+    "n_not_rejected_by_accounting": 0,
+    "n_pass": 0,
+    "expected_false_discoveries": 55.0,
+    "note": ""
+   }
+  ],
+  "identity": {
+   "m": 1263,
+   "q": 0.1,
+   "sum_ms_qs": 126.3,
+   "m_q": 126.30000000000001,
+   "ok": true
+  }
+ },
+ "max_statistic": {
+  "global": {
+   "p": 0.3190127970749543,
+   "n_tests": 1213,
+   "n_replicates": 7657,
+   "t_obs": 2.929872852572344,
+   "floor": 0.00013058239749281798,
+   "statistic": "max over tests of -log10(empirical p within own null)"
+  },
+  "per_stratum": [
+   {
+    "p": 0.17772264298772525,
+    "n_tests": 713,
+    "n_replicates": 7657,
+    "t_obs": 2.929872852572344,
+    "floor": 0.00013058239749281798,
+    "statistic": "max over tests of -log10(empirical p within own null)",
+    "stratum": "f9_20_negative_controls",
+    "global_p": 0.3190127970749543,
+    "global_n_tests": 1213
+   },
+   {
+    "p": 0.2341342387046226,
+    "n_tests": 500,
+    "n_replicates": 7657,
+    "t_obs": 2.804934115964044,
+    "floor": 0.00013058239749281798,
+    "statistic": "max over tests of -log10(empirical p within own null)",
+    "stratum": "real_declared",
+    "global_p": 0.3190127970749543,
+    "global_n_tests": 1213
+   }
+  ],
+  "note": "THE ANTI-REPARTITION GUARANTEE IS S-8, NOT BH (\u00a7P6-3(4)). The global max-statistic p is computed over the WHOLE declared family from surrogates carried on a COMMON replicate index, so it is invariant to how that family is partitioned -- which is exactly what makes stratification a discipline rather than a knob. Any cross-stratum statement is printed adjacent to it.",
+  "n_covered": 1213,
+  "n_declared": 1263,
+  "coverage_note": "1213 of 1263 declared tests carry a SHARED surrogate index (the exhaustive circular-shift enumeration) and are therefore in the joint max-statistic null. Mark tests resample along the event sequence and period peaks resample the residual series; neither shares that index, so they are NOT COVERED rather than folded in.",
+  "seconds": 8.89
+ },
+ "tranche_a": {
+  "label": "F9-20 arm 1 -- NEGATIVE-CONTROL FEATURE BATTERY (null features, real data, real pipeline)",
+  "declared": {
+   "enabled": true,
+   "rule_id": "F9-20-v1",
+   "n_named": 3,
+   "n_matched": 20,
+   "lags": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30
+   ],
+   "n_declared_tests": 713,
+   "family": 9
+  },
+  "F10_25_control_calibration": {
+   "control_arm": {
+    "strata": [
+     "f9_20_negative_controls"
+    ],
+    "n_declared": 713,
+    "n_executed": 713,
+    "n_survivors": 0,
+    "expected_false_by_chance_q_times_m": 71.3,
+    "survivors_are": "MEASURED FALSE POSITIVES (\u00a7P7-2(a)). A survivor in the control stratum is never reported as a finding."
+   },
+   "real_arm": {
+    "strata": [
+     "real_declared"
+    ],
+    "n_declared": 550,
+    "n_executed": 550,
+    "n_survivors": 0,
+    "expected_false_by_chance_q_times_m": 55.0
+   },
+   "F10_25_survivor_ratio": null,
+   "F10_25_note": "UNDEFINED when the control arm has zero survivors, and that is the expected outcome of an honest machine at this scale rather than a failure of the statistic. The interpretable object at zero survivors is the PAIR of counts against the pair of q*m expectations, printed above rather than collapsed into a ratio with a zero denominator.",
+   "what_a_control_survivor_would_mean": "a measured false positive under the ACTUAL dependence structure of the ACTUAL data -- the number BH's theorem assumes rather than measures, and the reason \u00a7P7-2(a) priced this battery instead of exempting it."
+  },
+  "R3_F9_17_winners_curse": {
+   "rule": "\u00a7P6-6 R3 / \u00a7P6-4(4.7) item 3, implemented as F9-17.",
+   "branch_taken": "LABEL + NULL-RUN MEDIAN. Every amplitude this session reports carries `SELECTION-BIASED UPPER BOUND`; the median effect among an equal-sized selection from the F9-20 null arm is printed beside it.",
+   "label_applied_to_every_amplitude": "SELECTION-BIASED UPPER BOUND",
+   "n_real_survivors": 0,
+   "selection_size_k": 10,
+   "selection_rule": "each feature's own smallest p_bh, then the k features with the smallest of those, k = max(number of real survivors, 10). Declared here rather than chosen after seeing the numbers, and IDENTICAL in both arms -- an unequal selection rule compares a maximum against a mean and calls the difference physics.",
+   "real_arm_median_amplitude_top_k": 0.052443280573833906,
+   "null_arm_median_amplitude_top_k": 0.05097586562917153,
+   "real_arm_max_amplitude_top_k": 0.13972505857866044,
+   "null_arm_max_amplitude_top_k": 0.21103011977221095,
+   "real_arm_top_k_features": [
+    "mean_depth_30d",
+    "deep_fraction_30d",
+    "eclipse_year_beat",
+    "moon_declination",
+    "half_draconic_phase",
+    "sun_moon_elongation",
+    "moon_abs_declination",
+    "perigee_syzygy",
+    "perigean_spring_beat",
+    "moon_distance"
+   ],
+   "null_arm_top_k_features": [
+    "nc_jupiter_saturn_synodic_phase",
+    "nc_metonic_phase",
+    "nc_match_declination_product",
+    "nc_match_eclipse_year_beat",
+    "nc_match_half_draconic_phase",
+    "nc_match_perigee_syzygy",
+    "nc_match_mean_depth_30d",
+    "nc_match_sun_moon_elongation",
+    "nc_match_sun_declination",
+    "nc_match_moon_declination"
+   ],
+   "real_arm_median_amplitude_all": 0.025508133671417986,
+   "null_arm_median_amplitude_all": 0.029890122310523966,
+   "excess_over_null_top_k": 0.0014674149446623763,
+   "row_level_secondary": {
+    "note": "the same statistic WITHOUT lag-axis deduplication -- what a naive top-k by p returns. Reported so the deduplication is visible as a choice rather than hidden as a default.",
+    "k": 10,
+    "real_arm_median_amplitude": 0.1252600573741207,
+    "null_arm_median_amplitude": 0.21103011977221095,
+    "n_distinct_real_features_in_top_k": 3,
+    "n_distinct_null_features_in_top_k": 1
+   },
+   "kind_balance": "the 20 matched controls copy their donor's `kind`, so the null arm carries the same mix of 2-df phase and 1-df linear columns as the real arm; the two medians are not comparing a phase amplitude against a per-sd slope.",
+   "size_mismatch": {
+    "n_real_count_path": 500,
+    "n_null_count_path": 713,
+    "direction_of_bias": "the null arm is the LARGER search (713 vs 500 count-path rows), so its selected median is stochastically the larger; the comparison therefore UNDER-states the real arm's excess and cannot manufacture one.",
+    "derivation": "a fixed upper order statistic of a larger sample drawn from the same distribution is stochastically larger; both arms are drawn under the same null by construction, so n is the only asymmetry left. Derived, not asserted -- S-18 candidate clause 4."
+   },
+   "what_this_does_not_buy": "a debiased estimate. The label is a LABEL: it says the number is an upper bound, not how much of it is selection. Nothing here licenses quoting any amplitude as an effect size."
+  },
+  "S15_by_stratum": {
+   "target_amplitude": 0.2,
+   "second_reference_amplitude": 0.056,
+   "conventions": "S-18: every number here carries its convention. alpha is TWO-SIDED and is q_s/m_s, the stratum's most conservative BH rung; power is fixed at 80%; A_min is a SINUSOIDAL rate-modulation amplitude as a fraction of the baseline rate; N is the domain event count in the mining window. The second reference (5.6%) is the programme's own standing bound, carried so a MEASURABLE verdict at the declared 20% cannot be read as measurable at an amplitude this programme would care about.",
+   "N_events": 46585.0,
+   "vif_rule": "\u00a7P7-12(a): the feature's OWN measured VIF where F4-58 has one (a direct read, not a fit); the pooled flat 24.08 as the acceptable fallback where it does not, accurate to <=8% across the 30-800 d block ladder (+0.5% at 30 d, -7.5% at 800 d). The \u00a7P7-10(b) curve is SUPERSEDED and is not used.",
+   "n_features_with_own_vif": 20,
+   "rows": [
+    {
+     "stratum": "f9_20_negative_controls",
+     "m_s": 713,
+     "q_s": 0.1,
+     "alpha_s": 0.00014025245441795232,
+     "n_count_path_rows": 713,
+     "n_measurable": 713,
+     "n_unmeasurable": 0,
+     "fraction_unmeasurable": 0.0,
+     "A_min_min": 0.1494955741489046,
+     "A_min_max": 0.1494955741489046,
+     "n_measurable_at_standing_bound": 0,
+     "max_obs_over_floor": 1.4116144974433502,
+     "max_obs_over_floor_row": "nc_jupiter_saturn_synodic_phase lag 23"
+    },
+    {
+     "stratum": "real_declared",
+     "m_s": 550,
+     "q_s": 0.1,
+     "alpha_s": 0.00018181818181818183,
+     "n_count_path_rows": 500,
+     "n_measurable": 313,
+     "n_unmeasurable": 187,
+     "fraction_unmeasurable": 0.374,
+     "A_min_min": 0.11941573771482242,
+     "A_min_max": 0.3303358006704546,
+     "n_measurable_at_standing_bound": 0,
+     "max_obs_over_floor": 0.5385447968288715,
+     "max_obs_over_floor_row": "eclipse_year_beat lag 14"
+    }
+   ]
+  }
+ },
+ "p_method_census": {
+  "MC_RESOLVED": 1263,
+  "GPD_EXTRAPOLATED": 0,
+  "UNRESOLVED": 0
+ },
+ "audits_priced_zero": [
+  {
+   "kind": "reseed",
+   "seed": 20260812,
+   "session_dir": "engine\\out\\tranche_a\\session_audit_reseed_20260812",
+   "resample_meta": null,
+   "n_tests": 1263,
+   "n_pass": 0,
+   "elapsed": 917.9
+  },
+  {
+   "kind": "reseed",
+   "seed": 20260813,
+   "session_dir": "engine\\out\\tranche_a\\session_audit_reseed_20260813",
+   "resample_meta": null,
+   "n_tests": 1263,
+   "n_pass": 0,
+   "elapsed": 973.8
+  },
+  {
+   "kind": "resample",
+   "seed": 90260812,
+   "session_dir": "engine\\out\\tranche_a\\session_audit_resample_90260812",
+   "resample_meta": {
+    "block_days": 365,
+    "n_blocks": 22,
+    "n_window_days": 7716,
+    "block_boundary_fraction": 0.0821917808219178,
+    "block_boundary_note": "the share of positions whose 0..30 d lag history crosses a block join and is therefore artificial. Stated, not hidden: it is the price of resampling a series that is being tested at a lag.",
+    "n_distinct_days_drawn": 4651,
+    "n_events_after_resample": 50657,
+    "n_events_before": 46585
+   },
+   "n_tests": 1263,
+   "n_pass": 64,
+   "elapsed": 996.3
+  },
+  {
+   "kind": "resample",
+   "seed": 90260813,
+   "session_dir": "engine\\out\\tranche_a\\session_audit_resample_90260813",
+   "resample_meta": {
+    "block_days": 365,
+    "n_blocks": 22,
+    "n_window_days": 7716,
+    "block_boundary_fraction": 0.0821917808219178,
+    "block_boundary_note": "the share of positions whose 0..30 d lag history crosses a block join and is therefore artificial. Stated, not hidden: it is the price of resampling a series that is being tested at a lag.",
+    "n_distinct_days_drawn": 4086,
+    "n_events_after_resample": 46149,
+    "n_events_before": 46585
+   },
+   "n_tests": 1263,
+   "n_pass": 258,
+   "elapsed": 824.2
+  }
+ ],
+ "rank_stability": {
+  "R4_reseeding": [
+   {
+    "label": "R4: master seed 20260811 vs 20260812 (same data)",
+    "n_top": 100,
+    "n_common": 100,
+    "spearman_rho": 0.9257605760576058,
+    "top_k_set_overlap": 91,
+    "top_k_set_overlap_fraction": 0.91,
+    "verdict": "STABLE"
+   },
+   {
+    "label": "R4: master seed 20260812 vs 20260813 (same data)",
+    "n_top": 100,
+    "n_common": 100,
+    "spearman_rho": 0.9215121512151213,
+    "top_k_set_overlap": 92,
+    "top_k_set_overlap_fraction": 0.92,
+    "verdict": "STABLE"
+   }
+  ],
+  "F10_24_data_resampling": [
+   {
+    "label": "F10-24: original window vs block resample 90260812 (same seed)",
+    "n_top": 100,
+    "n_common": 100,
+    "spearman_rho": 0.4869726972697269,
+    "top_k_set_overlap": 83,
+    "top_k_set_overlap_fraction": 0.83,
+    "verdict": "UNSTABLE -- the ranking is noise and the banner must say so"
+   },
+   {
+    "label": "F10-24: block resample 90260812 vs 90260813 (same seed)",
+    "n_top": 100,
+    "n_common": 100,
+    "spearman_rho": 0.04429642964296429,
+    "top_k_set_overlap": 22,
+    "top_k_set_overlap_fraction": 0.22,
+    "verdict": "UNSTABLE -- the ranking is noise and the banner must say so"
+   }
+  ],
+  "never_conflate": "\u00a7P7-2(b): R4 and F10-24 are ADJACENT AND BOTH REQUIRED. R4 asks whether the RNG moves the ranking; F10-24 asks whether the DATA does. Different failure modes, labelled so they are never conflated."
+ },
+ "what_none_of_this_licenses": "nothing. This is a GENERATOR on the exploration window under a v1 ETAS baseline, blind through the diurnal and semidiurnal band by two exact zeros, blind to the second phase moment, and forbidden from being entered for or against any ledger entry. A survivor in the control stratum is a measured false positive; a survivor in the real stratum is a hypothesis stub and nothing more.",
+ "supervisor_annotation": "## SUPERVISOR ANNOTATION -- three things the automated banner above does not say\n\n*Added by the parent after the run, 2026-08-13. No number computed by the session is\nchanged, added to, or removed by this section; it states three readings of numbers\nalready printed above that a reader would otherwise have to derive.*\n\n### 1. Zero survivors here is a MEASUREMENT, not a resolution artifact\n\nThe console line \"1263 of 1263 declared tests have a resolution floor ABOVE the BH\nthreshold\" is computed against the FLAT threshold `q/m = 0.10/1263 = 7.9e-5`, which\nis not the threshold this session actually operated at. Under the declared partition\nthe smallest BH rung is `q_s/m_s` **inside each stratum**: `0.10/713 = 1.40e-4` in the\ncontrol stratum and `0.10/550 = 1.82e-4` in the real stratum. The resolution floors\nare `1.00e-4` (Monte Carlo, 10,000 surrogates) and `1.31e-4` (the exhaustive\ncircular-shift enumeration, set by record length). **Both stratified rungs sit ABOVE\nboth floors, so a single test in either arm could have rejected and none did.** The\nsmallest p anywhere in the session is `1.9e-3` (a mark test), an order of magnitude\naway from its own rung. The flat-threshold line stays in the report unedited because\nit is what the engine computes and correcting it in place would hide the difference;\nthis note is the correction.\n\n### 2. The control arm's `max obs/floor = 1.412` is one under-resolved line, and the\ncatalog already said so\n\nEvery one of the 62 control rows with `p < 0.05`, and the whole of the control arm's\n`max obs/floor = 1.412`, comes from exactly two of the 23 controls:\n`nc_jupiter_saturn_synodic_phase` (7253 d, **1.06 cycles in a 7716 d window**) and\n`nc_metonic_phase` (6940 d, 1.11 cycles). **Excluding those two lines, the smallest p\namong the remaining 651 control rows is 0.056 and the largest `obs/floor` is 0.942.**\n\n`MINING_CATALOG.md` declares both of them **\"S15: UNMEASURABLE by window\"** in their\nown entries (F1-36, F2-09). The S-15 machinery in this report does not reproduce that\nverdict, and the gap is worth naming precisely: the \u00a7P7-1(b) floor formula prices\nMULTIPLICITY and DISPERSION at a given `N`, and says nothing about whether the record\nis long enough to identify the cycle at all. A sinusoid observed over 1.06 periods is\nnot separable from a trend, its fitted amplitude is not an amplitude, and no floor\ncomputed from `N` alone will notice. **The formula's `MEASURABLE` verdict on those two\nrows is a formula output and must not be read as a claim that a 19.9-year cycle is\nmeasurable in a 21-year window.** The catalog's per-entry declaration is the stricter\nand correct one and it governs.\n\nThat this is visible at all is the battery working as designed: the two lines were put\nin the catalog precisely as mechanism-free calibration rulers, and what they measured\nis a limit of the floor formula rather than anything about the Earth.\n\n### 3. F10-24's instability is real, and its SIZE is an upper bound\n\nThe two data-resampled audit runs produced **64 and 258 rows passing FDR** against\n**zero** in the priced session. They are audit runs, they are priced at 0, they are\ndemote-only, and nothing in them may promote anything -- but the number is diagnostic\nabout the RESAMPLE and it must be read before the rank correlation is.\n\nA moving-block bootstrap that re-indexes the target, the ETAS offset, the features and\nthe marks on ONE common index preserves alignment inside each block, which is what\nmakes it a stability instrument rather than a null. It also **duplicates blocks**:\n4651 and 4086 of 7716 window days were distinct in the two draws. A duplicated block\nduplicates whatever chance alignment it contains, while the block-bootstrap null\nre-drawn inside the resampled series does not know the series was built that way. The\nresampled data therefore carries stronger effective dependence than its own null\nassumes, and the 64/258 survivor counts are the size of that effect.\n\n**Direction, derived rather than asserted (S-18 candidate clause 4).** A resample that\ninflates false positives injects independent noise into the ordering, and independent\nnoise can only reduce a rank correlation, never raise it. **So the measured\n`rho = 0.487` and `rho = 0.044` are LOWER bounds on the ranking's true stability, and\nthe instability verdict they carry is an UPPER bound on its fragility.** The verdict\n\"the ranking moves when the data moves\" stands as measured. The claim \"the ranking is\nnoise\" does not follow from these numbers alone, and is not made here.\n\nTwo further numbers belong beside the correlations, because the rank statistic alone\ncompresses them away: the top-100 **set overlap** is 83/100 between the priced session\nand the first resample, against 22/100 between the two resamples. Membership near the\ntop is considerably more stable than order within it against the original run, and\nconsiderably less stable between two independent resamples -- which is itself a\nstatement about the variance of this resampling scheme rather than about the Earth.\n\n### What none of this licenses\n\nNothing. This session is a GENERATOR on the exploration window under a v1 ETAS\nbaseline; it is blind through the diurnal and semidiurnal band by two exact zeros of\nday-binning and global longitude summation, blind to the second phase moment, gated by\nG-M1, and forbidden from being entered for or against any ledger entry. It emitted no\nstub. A survivor in the control stratum would have been a measured false positive; a\nsurvivor in the real stratum would have been a hypothesis stub and nothing more. There\nwere none of either."
+}
