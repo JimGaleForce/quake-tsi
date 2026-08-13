@@ -16108,3 +16108,121 @@ premise-dependent, and only part (a) is superseded.**
 appending rather than by editing, and the clearance granted in full — with one arithmetic gap between
 predicted and observed recovery flagged loudly enough that it cannot be inherited silently by whatever
 quotes this bound next. Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+## §P7-16. TRANCHE B'S DECLARATION — the integer is 189, not ~1,000. Four adjudications before B declares.
+
+*2026-08-13, machinery committed `3677a8d`, every S-17 recovery harness passing on sim. The count
+reconciles exactly: **189 declared + 148 deferred + 9 unpriced + 23 de-duplicated = 369**, the
+builder's enumeration.*
+
+### (1) THE COUNT — declared integer **189**. My "~1,000" is withdrawn, and it was wrong on its face.
+
+**§P7-10(c) published a headline of ~1,000 alongside an itemisation that sums to 360, in the same
+sentence.** I carried Kepler's aggregate verbatim and never checked it against the parts I had just
+listed. The builder's 369 is the honest enumeration of what exists; my 360 plus the 9 F7 controls **is
+369**, so the two reconcile exactly and the ~631 gap was never anything but a number nobody had added
+up.
+
+> **RULED. Tranche B declares 189 = 17 (F9-01 second moment) + 34 (F9-04 Kuiper/Watson) + 138 (F9-10
+> mark axis, after the §P7-16(3) de-duplication) + 0 (F7 observer controls, unpriced per (4)).**
+> Frozen as an exact integer in the config hash.
+
+**Over-declaring is not a virtue and must stop being treated as one.** Declaring 1,000 where 189 will
+run makes the BH threshold **5.3x stricter than the run requires**, throws away power for nothing, and
+makes §P6-1(5)'s resolvability count a report about a fiction. The conservative-looking direction is
+not the honest one here; **the honest declaration is the true one.**
+
+> **Code assertion, alongside the §P6-3(1) budget identity already enforced:** `sum_s m_s == m`. A
+> declared total that is not the sum of its declared strata fails the run. Two lines, and it makes this
+> class of error impossible rather than merely embarrassing.
+
+### (2) THE FOUR UNBUILT ARMS — re-declare B without them; they return as B-2, as ONE declaration.
+
+F9-05 ladder (68 re-occupied), F2-18..25 linear lag ladder (32), F10-14 two-stage (17), F10-08 bilinear
+(31) — **148 tests, 40% of the enumeration.** Empty declared strata are legal (§P6-3(3)) but they are
+not free: carrying 148 unbuilt tests taxes the 189 real ones by a factor of 1.8 in threshold **for
+rejections that cannot occur**. §P7-5(3)'s principle governs: *multiplicity is owed on rejections you
+might make*, and **an unbuilt arm makes none.**
+
+> **RULED. B declares 189 and does not carry the unbuilt arms.** The four arms are **committed now, by
+> name and by count, as TRANCHE B-2**, to be declared as **one single declaration when built** — never
+> four separate small ones.
+
+**The salami hazard, named and closed.** Splitting a declaration and re-declaring the leftovers piece
+by piece would give each piece a small `m` and a lenient threshold — the exact abuse a single
+declaration exists to prevent. **The guarantee is S-8, not BH:** §P6-3(4) established that the global
+max-statistic p is **invariant to how the family is partitioned**, so **the max-statistic must be
+reported across B ∪ B-2 combined**, whatever the partition. BH runs within each declaration; the
+partition-proof number is the max-statistic, and it is the one that goes in any summary sentence.
+**F10-14 additionally inherits §P5-3's two mandated null repairs when it is built — it is K-088's
+object, not a fresh design.**
+
+### (3) `log_moment` vs `mag` — DE-DUPLICATE. This is a proven identity, not a judgement call.
+
+`log M0 = 1.5 M_w + 9.1` is an **affine increasing** transform, so it preserves ranks exactly; and
+`mark_test` reduces the mark to `rm = _ranks(mark)` before **both** declared statistics (Spearman and
+circular-linear). **The two marks are therefore the same test, provably, not empirically.** 23 of 161
+mark tests were the same test twice.
+
+> **RULED. De-duplicate; the mark axis declares 138.** This is §P5-5(2) and §P7-5(5) applied to the
+> mark axis: a transform whose column space (here, rank order) is identical to its parent is **FREE**,
+> and §P5-0's standing rule is that *a feature declared PRICED that measures at 1.0 is a **missed
+> saving***. Prove it numerically before dropping — rank correlation exactly 1.0 — and record the
+> proof, per the declare-then-prove discipline.
+
+**Keeping the duplicate is not the conservative choice, and that framing should not survive this
+ruling.** It inflates the denominator with a test that can never yield an independent rejection, and —
+the actual harm — **if the pair survives, a reader sees two survivors where there is one.** A
+fictitious multiplicity that can manufacture a phantom replication is worse than the power it costs.
+
+### (4) F7 OBSERVER CONTROLS — **UNPRICED (0)**. The builder followed §P7-2(a) correctly; §P7-2(a) does not reach this case.
+
+The tension is real and it is mine to resolve, because §P7-2(a) (controls **are** counted) and
+§P7-5(3) (checks that can only unmake owe nothing) both apply and point opposite ways. **The
+distinguishing test, ruled here and general:**
+
+> **A control is PRICED if it can produce a survivor a reader could mistake for a finding about the
+> world. A control is UNPRICED if it can only calibrate a reference or condemn our own instrument.**
+
+F9-20's synthetic cycles are run as features, produce comparable statistics, can "survive", and feed
+F10-25's survivor ratio — **priced, and §P7-2(a) stands unamended.** F7-01/02/03 measure the observer's
+detection modulation `A_ref` to serve as a **denominator** in G-M1 arm (i), whose only possible verdict
+is to destroy the sinc model and condemn the pipeline. It cannot produce a false finding about the
+Earth. **Unpriced — the catalog's F7-01 price-0 note was right and I confirm it.** Same disposition,
+same reason, as LORO (§P7-5(3)) and the demote-only Mc ladder (§P7-5(4)).
+
+### Ratifications, and one grid call.
+
+**F9-04's overstatement corrected — accepted, with credit.** The builder derived that the maximum
+Kuiper gain over Rayleigh for a single narrow arc is **pi/2 ≈ 1.57**, so the catalog's *"nearly
+invisible to it and obvious to Kuiper"* is an overstatement and **must not propagate**. The replacement
+construction is better than the claim it replaces: **three equally-spaced 5%-duty arcs whose first AND
+second harmonics vanish exactly — Kuiper 100%, Rayleigh 0%, second moment 0%.** That is a positive
+control demonstrating a signal invisible to **both** existing statistics and visible to the new one,
+which is the strongest possible justification for adding a statistic — and it simultaneously proves
+**F9-01 and F9-04 are not redundant with each other.** Two implementation hazards found and fixed
+against the day-lattice negative is the harness working as designed.
+
+**S-15(c) sweep ratified: 6 of 36 UNMEASURABLE-BY-WINDOW.** My three predicted (solar 11 y at 1.92
+cycles, Metonic 1.11, Jupiter-Saturn 1.06) plus lunar nodal 18.6 y (1.14), saros (1.17) and apsidal
+8.85 y (2.39) — all verified below the 3-cycle cut in the 7,716-day window.
+
+**PERIOD_MAX = 4000 d against the 2,572 d cut — do NOT change the grid.** Changing a declared grid is a
+new declaration and buys nothing here. **Keep PERIOD_MAX = 4000 and report the 2,572–4,000 d band as
+UNMEASURABLE-BY-WINDOW in the output.** That is S-15's own mandate — *printed rather than omitted* —
+it requires no re-declaration, and it preserves comparability with the 2026-08-11 session which used
+the same grid. Silently truncating would have been the worse of the two available errors.
+
+### Standing gate, restated so it is not lost among four adjudications.
+
+**B does not run before the §P7-15 recovery-versus-amplitude curve reports and I rule on the arm (i)
+anomaly** — 80% observed recovery at >= 2x floor against a predicted 1.0000. That gate is unchanged by
+anything above; these four rulings settle what B *declares*, not when it *runs*.
+
+*Popper seat, 2026-08-13. A headline of mine withdrawn for contradicting its own itemisation, 148
+unbuilt tests removed from a denominator they were taxing, 23 duplicate tests removed on a proof rather
+than a preference, and one control class returned to zero on a distinction that reconciles two of my
+own rulings instead of leaving them in tension. Appended to my own section; no existing line modified;
+nothing committed.*
