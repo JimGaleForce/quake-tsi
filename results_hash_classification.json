@@ -1,0 +1,849 @@
+{
+  "id": "P7-20(7)-HASH-CLASSIFICATION",
+  "title": "Classification of the tranche-B artifact-hash difference on identical science",
+  "ruling": "HYPOTHESIS_LEDGER.md \u00a7P7-20(7); invariant dual of \u00a7P7-8(c); determinism requirement \u00a7P6-5",
+  "generated_at": "2026-08-13T17:40:55.563577+00:00",
+  "priced_tests": 0,
+  "priced_tests_note": "Zero per \u00a7P7-1(c). This is an estimator/infrastructure measurement on artifacts already on disk. No surrogate drawn, no rejection made, no BH vector entered, NO EXPLORE_COUNT.jsonl line written.",
+  "state_class": "INFRASTRUCTURE AUDIT on existing artifacts. Not a hypothesis test about the Earth; makes no claim about seismicity.",
+  "repo_state": {
+    "head": "88e6708",
+    "tests": "402 passed",
+    "sessions_untouched": true
+  },
+  "sessions": {
+    "A": {
+      "session": "session_20260813T091153",
+      "config_hash": "114d4e9d8004",
+      "artifact_hash": "13eea5f35b82d53a2f2f9cac3a8a373f7a3a2c7ccf497f8bcb40432e81630eef",
+      "n_tests": 283,
+      "elapsed_seconds": 696.9
+    },
+    "B": {
+      "session": "session_20260813T092628",
+      "config_hash": "114d4e9d8004",
+      "artifact_hash": "b44e0f9af06e8bdaf3ffdb6a151bfa8b329efe51ce4e3bbefbdd68c6690d5cbb",
+      "n_tests": 283,
+      "elapsed_seconds": 759.9
+    },
+    "config_hash_identical": true,
+    "config_dicts_identical": true,
+    "artifact_hash_identical": false,
+    "hash_scope": "engine/mine_session.py:artifact_content_hash hashes ckpt.state['tests'] ONLY -- explicitly not timings, not the session id, not the creation timestamp. A timestamp/path explanation is therefore excluded a priori by the function's own construction, and the diff below confirms it."
+  },
+  "VERDICT": "CASE_B_INVARIANCE_FAILURE",
+  "gate_status": "NOT LIFTED",
+  "gate_statement": "\u00a7P7-20(7) case (b). Numerical fields DIFFER between two sessions with an identical config hash. This is a \u00a7P6-5 determinism defect and, per the ruling, tranche B's results are SUSPECT until it is resolved. No canonical hash is emitted: the only hash that would make these two artifacts agree is one that excludes the numbers, which is the one thing artifact_content_hash exists to include.",
+  "difference_summary": {
+    "n_numeric_field_paths_differing": 20,
+    "n_material_field_paths": 1,
+    "n_float_noise_field_paths": 19,
+    "n_non_numeric_differences": 0,
+    "n_structural_differences": 0,
+    "non_numeric_differences": [],
+    "structural_differences": [],
+    "benign_field_candidates_considered": [
+      "session",
+      "session_dir",
+      "recorded",
+      "created",
+      "elapsed_seconds",
+      "task_seconds",
+      "generated_at"
+    ],
+    "benign_fields_found_in_hashed_content": [],
+    "benign_explanation_available": false
+  },
+  "sibling_artifacts": {
+    "note": "The ruling asks for checkpoint.json, stubs.json AND report.md. The other two were diffed as whole files.",
+    "stubs.json": {
+      "differing_lines": 1,
+      "differences": [
+        "\"session\": session id only"
+      ],
+      "classification": "BENIGN (identity field only)"
+    },
+    "report.md": {
+      "differing_lines": 3,
+      "differences": [
+        "title line: session id",
+        "elapsed 696.9 s vs 759.9 s (wall time)",
+        "the quoted artifact content hash itself"
+      ],
+      "classification": "BENIGN (identity, wall-time, and the hash under classification)"
+    },
+    "reading": "The human-readable artifacts are benign-only: every rendered number in report.md is identical, because the report rounds. The entire difference lives in the FULL-PRECISION test rows inside checkpoint.json -- which is exactly the content artifact_content_hash covers and exactly the content a reader of the report cannot see. That is an argument for the hash, not against it: without it this would have been invisible."
+  },
+  "numeric_fields": [
+    {
+      "field": "p_circular_shift",
+      "n_differing_values": 5,
+      "n_differing_rows": 5,
+      "max_relative_difference": 0.1469194312796207,
+      "max_absolute_difference": 0.024288325933664118,
+      "class": "MATERIAL",
+      "examples": [
+        {
+          "row": 135,
+          "A": 0.16531731522590754,
+          "B": 0.14102898929224342,
+          "rel": 0.1469194312796207
+        },
+        {
+          "row": 143,
+          "A": 0.15003917471924785,
+          "B": 0.14324889004962132,
+          "rel": 0.04525674499564835
+        },
+        {
+          "row": 157,
+          "A": 0.4896839905980674,
+          "B": 0.48628884826325414,
+          "rel": 0.006933333333333299
+        }
+      ]
+    },
+    {
+      "field": "p_parametric",
+      "n_differing_values": 119,
+      "n_differing_rows": 119,
+      "max_relative_difference": 2.5282414161066322e-06,
+      "max_absolute_difference": 2.131560422613532e-08,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 0,
+          "A": 0.24798246975174976,
+          "B": 0.24798244843614553,
+          "rel": 8.595609297493465e-08
+        },
+        {
+          "row": 1,
+          "A": 0.06514281429288936,
+          "B": 0.0651428224029876,
+          "rel": 1.24497188586329e-07
+        },
+        {
+          "row": 2,
+          "A": 0.00013674946742773319,
+          "B": 0.0001367494979636229,
+          "rel": 2.2329800227691296e-07
+        }
+      ]
+    },
+    {
+      "field": "chi2_score",
+      "n_differing_values": 119,
+      "n_differing_rows": 119,
+      "max_relative_difference": 1.9732926640829624e-07,
+      "max_absolute_difference": 5.049343258178851e-06,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 0,
+          "A": 1.3346341400135746,
+          "B": 1.3346342603177892,
+          "rel": 9.014021156751956e-08
+        },
+        {
+          "row": 1,
+          "A": 3.4013568261223486,
+          "B": 3.401356620752175,
+          "rel": 6.03788970856108e-08
+        },
+        {
+          "row": 2,
+          "A": 14.54640310035927,
+          "B": 14.546402679642746,
+          "rel": 2.892237495597955e-08
+        }
+      ]
+    },
+    {
+      "field": "bits_per_event",
+      "n_differing_values": 119,
+      "n_differing_rows": 119,
+      "max_relative_difference": 1.9507165427398157e-07,
+      "max_absolute_difference": 7.350482895962518e-11,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 0,
+          "A": 2.067506985791949e-05,
+          "B": 2.067507172229812e-05,
+          "rel": 9.017519526335189e-08
+        },
+        {
+          "row": 1,
+          "A": 5.2629665533837e-05,
+          "B": 5.2629662357363036e-05,
+          "rel": 6.035519949932205e-08
+        },
+        {
+          "row": 2,
+          "A": 0.00022488331833241023,
+          "B": 0.00022488331183322327,
+          "rel": 2.890026261670706e-08
+        }
+      ]
+    },
+    {
+      "field": "beta[]",
+      "n_differing_values": 137,
+      "n_differing_rows": 119,
+      "max_relative_difference": 1.934209990477545e-07,
+      "max_absolute_difference": 4.4082444639048646e-10,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 0,
+          "A": -0.005165899733978404,
+          "B": -0.005165899967254323,
+          "rel": 4.515687893557169e-08
+        },
+        {
+          "row": 1,
+          "A": 0.008263433272973528,
+          "B": 0.008263433024302734,
+          "rel": 3.009291487100177e-08
+        },
+        {
+          "row": 2,
+          "A": 0.017114757358107448,
+          "B": 0.017114757112950026,
+          "rel": 1.432432940830291e-08
+        }
+      ]
+    },
+    {
+      "field": "pct_rate_modulation",
+      "n_differing_values": 129,
+      "n_differing_rows": 129,
+      "max_relative_difference": 9.868164137469269e-08,
+      "max_absolute_difference": 9.977957304840857e-08,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 0,
+          "A": 0.5179266000361338,
+          "B": 0.5179266234845548,
+          "rel": 4.527363514336485e-08
+        },
+        {
+          "row": 1,
+          "A": 0.8297669676138097,
+          "B": 0.8297669425403997,
+          "rel": 3.021741162702823e-08
+        },
+        {
+          "row": 2,
+          "A": 1.7262053933019494,
+          "B": 1.7262053683630096,
+          "rel": 1.4447260968435955e-08
+        }
+      ]
+    },
+    {
+      "field": "amplitude_log_rate",
+      "n_differing_values": 119,
+      "n_differing_rows": 119,
+      "max_relative_difference": 9.866465327883881e-08,
+      "max_absolute_difference": 5.542565434391022e-10,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 0,
+          "A": 0.005165899733978404,
+          "B": 0.005165899967254323,
+          "rel": 4.515687893557169e-08
+        },
+        {
+          "row": 1,
+          "A": 0.008263433272973528,
+          "B": 0.008263433024302734,
+          "rel": 3.009291487100177e-08
+        },
+        {
+          "row": 2,
+          "A": 0.017114757358107448,
+          "B": 0.017114757112950026,
+          "rel": 1.432432940830291e-08
+        }
+      ]
+    },
+    {
+      "field": "components[].chi2_score",
+      "n_differing_values": 51,
+      "n_differing_rows": 51,
+      "max_relative_difference": 6.957592611949078e-08,
+      "max_absolute_difference": 8.678453937704944e-07,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 112,
+          "A": 39.947005745380395,
+          "B": 39.94700572098447,
+          "rel": 6.107071868930505e-10
+        },
+        {
+          "row": 113,
+          "A": 16.329830862076378,
+          "B": 16.32983063865776,
+          "rel": 1.3681624679846756e-08
+        },
+        {
+          "row": 114,
+          "A": 55.21861382889272,
+          "B": 55.21861385062873,
+          "rel": 3.9363550180817087e-10
+        }
+      ]
+    },
+    {
+      "field": "statistic",
+      "n_differing_values": 51,
+      "n_differing_rows": 51,
+      "max_relative_difference": 3.786782354464253e-08,
+      "max_absolute_difference": 1.4759129669528193e-06,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 112,
+          "A": 27.39147767609965,
+          "B": 27.391477137132433,
+          "rel": 1.967645644736217e-08
+        },
+        {
+          "row": 113,
+          "A": 34.14543289087431,
+          "B": 34.14543275829385,
+          "rel": 3.882816797541089e-09
+        },
+        {
+          "row": 114,
+          "A": 91.85747058309025,
+          "B": 91.85747036915012,
+          "rel": 2.3290443847538923e-09
+        }
+      ]
+    },
+    {
+      "field": "components[].amplitude_log_rate",
+      "n_differing_values": 51,
+      "n_differing_rows": 51,
+      "max_relative_difference": 3.4716588165556024e-08,
+      "max_absolute_difference": 3.379931542979442e-10,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 112,
+          "A": 0.04118292512904165,
+          "B": 0.041182925111948675,
+          "rel": 4.1504999503771195e-10
+        },
+        {
+          "row": 113,
+          "A": 0.02647173311711544,
+          "B": 0.026471732936397662,
+          "rel": 6.8268207732605865e-09
+        },
+        {
+          "row": 114,
+          "A": 0.048554143578635106,
+          "B": 0.048554143588980365,
+          "rel": 2.130664574985591e-10
+        }
+      ]
+    },
+    {
+      "field": "U2_star",
+      "n_differing_values": 34,
+      "n_differing_rows": 34,
+      "max_relative_difference": 1.5254493178493364e-08,
+      "max_absolute_difference": 4.2441659964254086e-08,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 129,
+          "A": 1.3621249777476483,
+          "B": 1.3621249709380396,
+          "rel": 4.999253934829322e-09
+        },
+        {
+          "row": 130,
+          "A": 1.3621249777476483,
+          "B": 1.3621249709380396,
+          "rel": 4.999253934829322e-09
+        },
+        {
+          "row": 131,
+          "A": 0.74153829979849,
+          "B": 0.7415382930650533,
+          "rel": 9.080362671670089e-09
+        }
+      ]
+    },
+    {
+      "field": "U2",
+      "n_differing_values": 34,
+      "n_differing_rows": 34,
+      "max_relative_difference": 1.5254493110663753e-08,
+      "max_absolute_difference": 9.110428611600746e-13,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 129,
+          "A": 2.9239059493400314e-05,
+          "B": 2.923905934722683e-05,
+          "rel": 4.999254008287826e-09
+        },
+        {
+          "row": 130,
+          "A": 2.9239059493400314e-05,
+          "B": 2.923905934722683e-05,
+          "rel": 4.999254008287826e-09
+        },
+        {
+          "row": 131,
+          "A": 1.5917689506211977e-05,
+          "B": 1.5917689361673583e-05,
+          "rel": 9.080362652001208e-09
+        }
+      ]
+    },
+    {
+      "field": "ladder.rungs[].fold_lr",
+      "n_differing_values": 49,
+      "n_differing_rows": 10,
+      "max_relative_difference": 1.470339475652283e-08,
+      "max_absolute_difference": 4.4032167352270335e-06,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 102,
+          "A": 133.13050424754704,
+          "B": 133.13050461993316,
+          "rel": 2.7971510102382596e-09
+        },
+        {
+          "row": 102,
+          "A": 365.8115741567101,
+          "B": 365.81157656556024,
+          "rel": 6.584947838652172e-09
+        },
+        {
+          "row": 102,
+          "A": 748.9820020734783,
+          "B": 748.9820056291419,
+          "rel": 4.7473285047468635e-09
+        }
+      ]
+    },
+    {
+      "field": "harmonic_over_fundamental",
+      "n_differing_values": 17,
+      "n_differing_rows": 17,
+      "max_relative_difference": 1.3002605160758483e-08,
+      "max_absolute_difference": 9.285973656680824e-09,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 112,
+          "A": 0.8333862566003498,
+          "B": 0.833386248739128,
+          "rel": 9.432867079801086e-09
+        },
+        {
+          "row": 113,
+          "A": 1.4457447039421532,
+          "B": 1.4457447111008437,
+          "rel": 4.951559202869991e-09
+        },
+        {
+          "row": 114,
+          "A": 1.2944522208365403,
+          "B": 1.2944522190284355,
+          "rel": 1.39681074968062e-09
+        }
+      ]
+    },
+    {
+      "field": "first_moment_amplitude_log_rate",
+      "n_differing_values": 17,
+      "n_differing_rows": 17,
+      "max_relative_difference": 9.847917000350963e-09,
+      "max_absolute_difference": 3.379931542979442e-10,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 112,
+          "A": 0.04118292512904165,
+          "B": 0.041182925111948675,
+          "rel": 4.1504999503771195e-10
+        },
+        {
+          "row": 113,
+          "A": 0.02647173311711544,
+          "B": 0.026471732936397662,
+          "rel": 6.8268207732605865e-09
+        },
+        {
+          "row": 114,
+          "A": 0.048554143578635106,
+          "B": 0.048554143588980365,
+          "rel": 2.130664574985591e-10
+        }
+      ]
+    },
+    {
+      "field": "power",
+      "n_differing_values": 10,
+      "n_differing_rows": 10,
+      "max_relative_difference": 7.4145711069691856e-09,
+      "max_absolute_difference": 2.231978924599476e-11,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 102,
+          "A": 0.0055606992783485175,
+          "B": 0.005560699293560687,
+          "rel": 2.7356575845660056e-09
+        },
+        {
+          "row": 103,
+          "A": 0.005210452095137555,
+          "B": 0.005210452100114607,
+          "rel": 9.552053566961464e-10
+        },
+        {
+          "row": 104,
+          "A": 0.003387031548836193,
+          "B": 0.003387031557471185,
+          "rel": 2.5494276862938257e-09
+        }
+      ]
+    },
+    {
+      "field": "V",
+      "n_differing_values": 34,
+      "n_differing_rows": 34,
+      "max_relative_difference": 5.318803091554867e-09,
+      "max_absolute_difference": 1.5166878863936972e-10,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 129,
+          "A": 0.0210261630831676,
+          "B": 0.021026162971333577,
+          "rel": 5.318803091554867e-09
+        },
+        {
+          "row": 130,
+          "A": 0.0210261630831676,
+          "B": 0.021026162971333577,
+          "rel": 5.318803091554867e-09
+        },
+        {
+          "row": 131,
+          "A": 0.017693495677790883,
+          "B": 0.017693495605291487,
+          "rel": 4.09751677657545e-09
+        }
+      ]
+    },
+    {
+      "field": "V_star",
+      "n_differing_values": 34,
+      "n_differing_rows": 34,
+      "max_relative_difference": 5.318803083502252e-09,
+      "max_absolute_difference": 3.2759198020926306e-08,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 129,
+          "A": 4.541476656904226,
+          "B": 4.541476632749006,
+          "rel": 5.318803083502252e-09
+        },
+        {
+          "row": 130,
+          "A": 4.541476656904226,
+          "B": 4.541476632749006,
+          "rel": 5.318803083502252e-09
+        },
+        {
+          "row": 131,
+          "A": 3.821648166709533,
+          "B": 3.8216481510502653,
+          "rel": 4.097516824481067e-09
+        }
+      ]
+    },
+    {
+      "field": "ar1_phi",
+      "n_differing_values": 10,
+      "n_differing_rows": 10,
+      "max_relative_difference": 8.668203425513929e-10,
+      "max_absolute_difference": 3.736962961298218e-10,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 102,
+          "A": 0.43111158963570145,
+          "B": 0.43111159000939775,
+          "rel": 8.668203425513929e-10
+        },
+        {
+          "row": 103,
+          "A": 0.43111158963570145,
+          "B": 0.43111159000939775,
+          "rel": 8.668203425513929e-10
+        },
+        {
+          "row": 104,
+          "A": 0.43111158963570145,
+          "B": 0.43111159000939775,
+          "rel": 8.668203425513929e-10
+        }
+      ]
+    },
+    {
+      "field": "se[]",
+      "n_differing_values": 137,
+      "n_differing_rows": 119,
+      "max_relative_difference": 4.059562437948364e-10,
+      "max_absolute_difference": 1.831817683650705e-12,
+      "class": "FLOAT_NOISE",
+      "examples": [
+        {
+          "row": 0,
+          "A": 0.00447162659088208,
+          "B": 0.0044716265912706915,
+          "rel": 8.690615770225917e-11
+        },
+        {
+          "row": 1,
+          "A": 0.0044806013620740355,
+          "B": 0.004480601362505329,
+          "rel": 9.625803649939069e-11
+        },
+        {
+          "row": 2,
+          "A": 0.004487469324458327,
+          "B": 0.004487469325069993,
+          "rel": 1.3630516178366474e-10
+        }
+      ]
+    }
+  ],
+  "material_differences": {
+    "definition": "relative difference > 1e-05, i.e. larger than IEEE-754 reduction-order noise can account for",
+    "n_fields": 1,
+    "fields": [
+      "p_circular_shift"
+    ],
+    "rows": [
+      {
+        "row": 135,
+        "field": "p_circular_shift",
+        "feature": "annual_phase",
+        "test": "kuiper_V",
+        "mark": null,
+        "stratum": "tb_omnibus",
+        "A": 0.16531731522590754,
+        "B": 0.14102898929224342,
+        "n_surrogates": 7657,
+        "implied_exceedance_count_A": 1265,
+        "implied_exceedance_count_B": 1079,
+        "implied_count_delta": 186,
+        "statistic_A": 8.540599930637399,
+        "statistic_B": 8.54059995298946,
+        "statistic_delta": 2.2352061535002576e-08,
+        "p_raw_identical": true,
+        "p_method": "MC_RESOLVED",
+        "disposition": "DECLARED",
+        "bh_eligible": true,
+        "passes_fdr": false
+      },
+      {
+        "row": 143,
+        "field": "p_circular_shift",
+        "feature": "sun_declination",
+        "test": "kuiper_V",
+        "mark": null,
+        "stratum": "tb_omnibus",
+        "A": 0.15003917471924785,
+        "B": 0.14324889004962132,
+        "n_surrogates": 7657,
+        "implied_exceedance_count_A": 1148,
+        "implied_exceedance_count_B": 1096,
+        "implied_count_delta": 52,
+        "statistic_A": 8.540599930637411,
+        "statistic_B": 8.54059995298946,
+        "statistic_delta": 2.23520491005047e-08,
+        "p_raw_identical": true,
+        "p_method": "MC_RESOLVED",
+        "disposition": "DECLARED",
+        "bh_eligible": true,
+        "passes_fdr": false
+      },
+      {
+        "row": 157,
+        "field": "p_circular_shift",
+        "feature": "perigee_syzygy",
+        "test": "kuiper_V",
+        "mark": null,
+        "stratum": "tb_omnibus",
+        "A": 0.4896839905980674,
+        "B": 0.48628884826325414,
+        "n_surrogates": 7657,
+        "implied_exceedance_count_A": 3749,
+        "implied_exceedance_count_B": 3723,
+        "implied_count_delta": 26,
+        "statistic_A": 8.770013231909859,
+        "statistic_B": 8.770013247660023,
+        "statistic_delta": 1.575016383981165e-08,
+        "p_raw_identical": true,
+        "p_method": "MC_RESOLVED",
+        "disposition": "DECLARED",
+        "bh_eligible": true,
+        "passes_fdr": false
+      },
+      {
+        "row": 159,
+        "field": "p_circular_shift",
+        "feature": "declination_product",
+        "test": "kuiper_V",
+        "mark": null,
+        "stratum": "tb_omnibus",
+        "A": 0.15003917471924785,
+        "B": 0.14324889004962132,
+        "n_surrogates": 7657,
+        "implied_exceedance_count_A": 1148,
+        "implied_exceedance_count_B": 1096,
+        "implied_count_delta": 52,
+        "statistic_A": 8.540599930637411,
+        "statistic_B": 8.54059995298946,
+        "statistic_delta": 2.23520491005047e-08,
+        "p_raw_identical": true,
+        "p_method": "MC_RESOLVED",
+        "disposition": "DECLARED",
+        "bh_eligible": true,
+        "passes_fdr": false
+      },
+      {
+        "row": 161,
+        "field": "p_circular_shift",
+        "feature": "tidal_potential_proxy",
+        "test": "kuiper_V",
+        "mark": null,
+        "stratum": "tb_omnibus",
+        "A": 0.24758422564638286,
+        "B": 0.2628623661530426,
+        "n_surrogates": 7657,
+        "implied_exceedance_count_A": 1895,
+        "implied_exceedance_count_B": 2012,
+        "implied_count_delta": -117,
+        "statistic_A": 9.557557164494531,
+        "statistic_B": 9.557557197253729,
+        "statistic_delta": 3.2759198020926306e-08,
+        "p_raw_identical": true,
+        "p_method": "MC_RESOLVED",
+        "disposition": "DECLARED",
+        "bh_eligible": true,
+        "passes_fdr": false
+      }
+    ],
+    "mechanism": "The circular-shift null for kuiper_V on a strictly periodic day-lattice feature is MASSIVELY TIED: whole-period shifts reproduce the statistic, so the surrogate distribution has mass points. T_obs moves by ~2e-8 (the float noise above) and crosses a plateau, moving the exceedance count by up to 186 of 7657 surrogates in one step -- a 0.024 jump in p. Row 161 moves in the OPPOSITE direction to its T_obs shift, which shows the SURROGATE statistics jitter on the same plateau too. The 1e-8 cause is float non-determinism; the 1e-1 effect is the null's own degeneracy amplifying it. Both are defects; the second is the one that makes 'identical science' false at the reported-number level.",
+    "mechanism_status": "MECHANISM INFERRED from the recorded values (statistic deltas, implied exceedance counts, and the direction reversal on row 161). NOT confirmed by instrumenting a re-run. UNVERIFIED as to the root cause of the underlying 1e-8 jitter -- BLAS thread count / reduction order is the leading candidate and was not tested here."
+  },
+  "float_noise_differences": {
+    "n_fields": 19,
+    "max_relative_difference_over_all_noise_fields": 2.5282414161066322e-06,
+    "reading": "19 field paths differ at <= 2.6e-6 relative. That is consistent with non-associative floating-point reduction (thread count, BLAS kernel selection, or accumulation order) in the GLM fit and the statistics derived from it. It is NOT benign under \u00a7P6-5, which requires determinism outright; it is merely small."
+  },
+  "science_invariance": {
+    "outcome_fields_checked": [
+      "p_raw",
+      "p_bh",
+      "bh_eligible",
+      "bh_ineligible_reason",
+      "passes_fdr",
+      "disposition",
+      "disposition_parent",
+      "disposition_reason",
+      "p_method",
+      "p_method_reason",
+      "p_floor",
+      "bh_q",
+      "stratum",
+      "family",
+      "order_key",
+      "feature",
+      "mark",
+      "test",
+      "kind",
+      "lag",
+      "n_events",
+      "n_surrogates",
+      "rho_min",
+      "mark_floor",
+      "s15c_verdict",
+      "p_fwer_max_stat",
+      "p_block_bootstrap",
+      "gpd",
+      "floor_monte_carlo",
+      "floor_enumeration",
+      "block_days"
+    ],
+    "n_outcome_field_differences": 0,
+    "outcome_field_differences": [],
+    "bh_block_identical": true,
+    "dispositions_identical": true,
+    "data_log_identical": true,
+    "n_tests_identical": true,
+    "max_statistic_identical_modulo_nan": true,
+    "max_statistic_note": "The max_statistic blocks compare unequal ONLY because three empty strata carry NaN and NaN != NaN in Python. Every finite field is bit-identical: global p = 1.3058239749281798e-4, t_obs = 3.8841153620116686, n_tests = 102, in both.",
+    "reading": "The SCIENCE reproduced: 34 survivors, identical BH identity (m = 171, q = 0.10), identical p_raw / p_bh / disposition / passes_fdr on all 283 rows. What did NOT reproduce is the ARTIFACT. \u00a7P7-20(7) does not offer a 'science reproduced so the hash may differ' branch, and it should not: the branch that exists is (b)."
+  },
+  "canonical_hash_experiment": {
+    "attempted": true,
+    "fields_that_would_have_to_be_excluded": [
+      "U2",
+      "U2_star",
+      "V",
+      "V_star",
+      "amplitude_log_rate",
+      "ar1_phi",
+      "beta",
+      "bits_per_event",
+      "chi2_score",
+      "components",
+      "first_moment_amplitude_log_rate",
+      "harmonic_over_fundamental",
+      "p_circular_shift",
+      "p_parametric",
+      "pct_rate_modulation",
+      "power",
+      "rungs",
+      "se",
+      "statistic"
+    ],
+    "hash_A_after_exclusion": "6a98a3049611605e5434129ebb98b14133be35c57b544ab9d697e04a5961c90a",
+    "hash_B_after_exclusion": "6a98a3049611605e5434129ebb98b14133be35c57b544ab9d697e04a5961c90a",
+    "match_after_exclusion": true,
+    "ADMISSIBLE": false,
+    "why_inadmissible": "Every excluded field is a NUMERICAL RESULT -- beta, se, statistic, chi2_score, p_parametric, p_circular_shift, amplitude_log_rate, U2, V, power, ar1_phi, fold_lr. A 'canonical hash' over the remaining fields would answer 'did these two runs agree on their labels?', not \u00a7P7-8(c)'s question 'did these two runs compute the same numbers?'. Emitting it would convert a determinism defect into a hash that cannot detect determinism defects. The experiment is recorded to show the remedy was tried and refused, not to offer it."
+  },
+  "what_would_lift_the_gate": [
+    "Root-cause the ~1e-7 jitter. Leading candidate, UNTESTED: BLAS / OpenMP thread count varying between the two runs (n_jobs is null in both configs, so any threading is implicit). Pin threads and re-run twice; if the artifact hashes then agree, the defect is environmental and fixable by declaration.",
+    "Independently, fix p_circular_shift's mass-point degeneracy: on a tied null the (1 + #{T_surr >= T_obs}) / (1 + B) count is discontinuous in T_obs at machine precision. A mid-rank / randomised-tie p, or an explicit tie tolerance, makes it continuous. NOTE this field is a DIAGNOSTIC in tranche B -- p_raw = p_block_bootstrap on all 5 affected rows and p_method is MC_RESOLVED -- so no tranche-B rejection depends on it. That is luck about this configuration, not a property of the estimator.",
+    "Re-run the two sessions under the pinned environment and require artifact_content_hash to AGREE. \u00a7P7-8(c) already carries the forward invariant (differing configs -> differing artifacts); the dual (identical config -> identical artifact) should be added as an executable check, not only as a ledger sentence."
+  ],
+  "caveats": [
+    "SCOPE. This classifies the difference between these two specific sessions. It does not establish that other sessions in artifact_hashes.jsonl are deterministic; no other pair with an identical config hash was checked here.",
+    "The mechanism for the p_circular_shift jump is INFERRED from recorded values, not instrumented. The tie/mass-point account explains the observed 186-count step and the direction reversal on row 161, but the surrogate distributions themselves are not stored in the checkpoint, so it is not directly verified.",
+    "No claim is made that tranche B's science is WRONG. The claim is the one \u00a7P7-20(7) authorises: the invariance audit failed, so the results are SUSPECT until resolved. The observed outcome invariance (zero differing outcome fields) is evidence the science is robust to this particular perturbation, and is recorded as such -- but it is one draw of the perturbation, not a bound on it.",
+    "Neither session directory was modified. The registry engine/out/mine/artifact_hashes.jsonl was not appended to: artifact_content_hash is called directly, not check_build_invariant."
+  ]
+}
