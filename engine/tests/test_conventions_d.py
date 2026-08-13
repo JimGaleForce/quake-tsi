@@ -62,8 +62,8 @@ def test_provenance_is_required_for_the_scalar_and_not_for_the_direction():
     """§P7-23(D) amends §P7-22 Q5, and only one half of it moved."""
     assert D0.PROVENANCE_JIM["determinative_for_scalar"] is True
     assert D0.PROVENANCE_JIM["determinative_for_direction"] is False
-    assert D0.PROVENANCE_JIM["status"].startswith("REQUIRED")
-    assert D0.PROVENANCE_JIM["answer"] is None
+    assert D0.PROVENANCE_JIM["status"].startswith("RECEIVED")
+    assert D0.PROVENANCE_JIM["answer"] is not None and "earth-tides-globe" in D0.PROVENANCE_JIM["answer"]
     # the direction is fixed by the literature and an answer does not move it
     assert "does not set the direction" in D0.PROVENANCE_JIM["rule"]
     # the answer's prose is not hashed -- the scalar it fixes is
@@ -71,14 +71,17 @@ def test_provenance_is_required_for_the_scalar_and_not_for_the_direction():
 
 
 def test_a_frozen_quadrant_claim_is_refused_until_provenance_answers():
-    """§P7-23(D): 'below neutral and falling' is a different quadrant in each scalar."""
-    with pytest.raises(D0.ScalarProvenanceRequired):
-        D0.assert_scalar_provenance("the D-12 frozen quadrant claim")
-    D0.PROVENANCE_JIM["answer"] = "the NOAA tide-prediction water-level plot"
+    """§P7-23(D): 'below neutral and falling' is a different quadrant in each scalar.
+    The answer was RECEIVED 2026-08-13; the refusal path is preserved by clearing it
+    temporarily, so the gate is proven to be a gate and the received state a state."""
+    saved = D0.PROVENANCE_JIM["answer"]
     try:
-        assert D0.assert_scalar_provenance().startswith("the NOAA")
-    finally:
         D0.PROVENANCE_JIM["answer"] = None
+        with pytest.raises(D0.ScalarProvenanceRequired):
+            D0.assert_scalar_provenance("the D-12 frozen quadrant claim")
+    finally:
+        D0.PROVENANCE_JIM["answer"] = saved
+    assert "earth-tides-globe" in D0.assert_scalar_provenance()
 
 
 def test_the_default_scalar_is_labelled_provisional_and_says_what_it_does_not_license():
