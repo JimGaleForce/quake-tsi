@@ -15902,3 +15902,117 @@ change any conclusion is the right place to pay full price for a principle.**
 rather than accepted, the instruction it produced survives on better ground than it was issued with,
 and the fallback moves 2.6% in the direction informative censoring demands. Appended to my own section;
 no existing line modified; nothing committed.*
+
+---
+
+## §P7-14. TRANCHE A — CLEARS ON THE ARMS IT RAN, DOES NOT YET CLEAR AS A WHOLE. B's build authorized; B's run gated on G-M1.
+
+*2026-08-13, commit `497b196`, `results_tranche_a.json`, `session_20260813T001742`. Count
+reconciliation exact (713 new = F9-20 battery; 550 re-occupied K-089-R slots; BH denominator 1,263,
+one declaration, budget identity asserted). **Zero survivors in both strata** against 71.3 expected by
+chance in the controls alone; smallest p 1.9e-3; max-statistic global p **0.319**. No stub, no hash.*
+
+### (a) Clearance: PARTIAL, and the distinction is the whole ruling.
+
+**What cleared, and it cleared well.** The negative-control battery is **exactly quiet** — zero
+survivors where the banner's own arithmetic (q x m = 0.1 x 713 = 71.3) says an uncalibrated machine
+would have produced dozens. The max-statistic at p = 0.319 is the S-8 confirmatory number and it is
+unremarkable, which is what an honest instrument on a null looks like. The winner's-curse arm is
+stronger than it sounds: **the null max exceeds the real max**, i.e. the best feature in the real data
+is *less* extreme than chance produced in the controls. **Zero is a measurement here, not a silence**,
+because the operative rungs sit above both floors — that qualification is what separates this from
+every "we found nothing" in the literature, and the report is right to lead with it.
+
+**What has not reported, and therefore cannot clear.** §P7-2's Tranche A contents include **F9-19
+(planted-signal recovery per band AND aggregation = G-M1 arm (ii))** and its reconciliation partner
+**R1 (>= 30 ETAS-sim catalogues end-to-end)**; the **F7-01/02/03 observer controls** and **F8-15**
+builds are likewise not in this artifact. Kepler's own pass definition for the tranche required
+recovery ratios in [0.8, 1.2] with phase error < 15 deg *at each declared band and aggregation*.
+
+> **RULED. Tranche A's negative-control and audit arms CLEAR. Tranche A as a whole does NOT clear
+> until F9-19/G-M1 arm (ii) and R1 report.** And the consequence that matters:
+>
+> **Zero survivors is currently a statement about the MACHINE, not about the EARTH.** Absent
+> demonstrated recovery, "zero survivors" is equally consistent with *there is nothing there* and *the
+> instrument cannot see it*. That is R2-1's lesson and K-035's corpse verbatim — **a null from a
+> detector of unmeasured sensitivity bounds nothing** — and it is exactly why G-M1 exists. The
+> zero-survivor result may be recorded and reported **as a property of the pipeline**; it may **not**
+> be quoted as a bound on any physical modulation until G-M1 arm (ii) clears at the band and
+> aggregation in question (§P6-4 banner item 5).
+
+### (b) F10-24 is CONFIRMATORY, not worrying — and it becomes a discriminating statistic for B.
+
+The R4/F10-24 gap (reseeding rho 0.926/0.922 against data-resampling rho 0.487/0.044) reads as alarming
+and is not. **With zero survivors, the tranche is ranking noise, and noise is supposed to reorder under
+resampling.** A high F10-24 here would have been the anomaly. **So the two arms are consistent: the
+ranking is robust to the RNG (R4, as it must be) and mobile under the data (F10-24, as it should be
+when there is nothing to hold it still).** The measurer's bounding is also correct and correctly
+stated — the moving-block resample perturbs the dependence structure, so the measured rho is a lower
+bound on stability, and "the ranking moves with the data" is the claim the evidence supports while
+"the ranking is noise" is not.
+
+**This converts F10-24 from an audit into a prediction with teeth for B.**
+
+> **CONDITION ON TRANCHE B.** Every candidate that surfaces in B carries a **mandatory
+> resampling-stability line**: (i) R4 reseeding stability, (ii) F10-24 data-resampling selection
+> frequency in the top-k, (iii) the explicit statement that (ii) is a **lower** bound. **Label, do not
+> kill:** a candidate below a pre-declared stability threshold is tagged **UNSTABLE** and may not be
+> written up as a K-entry without that tag — but it is not deleted, because the metric is biased low
+> by construction and a hard kill on a biased-low statistic would discard true positives.
+> **And the sharp version:** Tranche A has now supplied the **null baseline** for this statistic
+> (0.487 / 0.044). **A genuine candidate in B should show resampling stability markedly above that
+> baseline**; one that does not is indistinguishable from the noise Tranche A just characterised. The
+> R4 pair alone is **not** sufficient — it measures the RNG, and the RNG was never the threat.
+
+### (c) The two window-unresolved control lines — S-15 gains a clause, and the threshold already exists in our own code.
+
+`nc_jupiter_saturn_synodic` (1.06 cycles in window) and `nc_metonic` (1.11 cycles) produced p < 0.05
+in a battery designed to produce nothing. **That is not a control failure; it is the controls doing
+their job and surfacing a gap in my own floor formula.** §P7-1(b) prices **multiplicity** and
+**dispersion** and is **silent on identifiability**: a feature with ~1 cycle in the window is not
+distinguishable from a trend or an offset, so the fitted "period" is reporting record length, not
+periodicity. No amount of N fixes it.
+
+**And this program already settled the threshold, in code, with a written justification.**
+`mine.py:harmonic_ladder` refuses any rung longer than **record/3**: *"with fewer than three observed
+cycles an epoch fold is not measuring a period, and a ladder that 'wins' at 5827 d on 7716 days is
+reporting the record length."* I adopt that existing rule rather than invent a competing one — it is
+stricter than the catalog's `< 2 cycles` and it is already implemented.
+
+> ### S-15(c). UNMEASURABLE-BY-WINDOW — CANDIDATE CLAUSE, for the usual adoption path.
+>
+> **A periodic feature with fewer than 3 full cycles in the analysis window is UNMEASURABLE-BY-WINDOW
+> regardless of N**, declared before the run, reported in the headline fraction, and scored neither
+> way. This is an **identifiability** limit and is orthogonal to S-15's power floor; a feature can pass
+> the amplitude floor and fail this, which is precisely what just happened. Threshold inherited from
+> `mine.py:harmonic_ladder`'s `hi_cap = record/3`.
+
+**Catalog-wide handling: sweep all 281 entries and flag before B is declared.** In the 7,716-day
+exploration window the cut is **period > 2,572 d**, which takes out Metonic (1.11 cycles),
+Jupiter-Saturn synodic (1.06) — **and, importantly, the 11-year solar cycle at 1.92 cycles.** That last
+one is not hypothetical: `mine.py`'s own docstring records an earlier build handing **F10.7 a p at the
+resolution floor with z = 32**, an artifact of exactly this class. **The clause retroactively explains
+a known corpse, which is the best evidence a new rule can have.**
+
+### (d) Tranche B's BUILD — AUTHORIZED. Its run and its reporting are separately gated.
+
+> **AUTHORIZED NOW:** the §P7-2(b) precondition builds — F7-01/02/03 observer controls, F8-15, and the
+> new statistics with their §P7-3 S-17 recovery demands (F9-01's *sinusoid* negative control, F9-04's
+> narrow-arc positive and lattice negative, F9-10's mark-path G-M1 arm (i) re-run), plus F4-58M as its
+> zero-priced precondition and the §P7-11(c)/§P7-13 mark-axis dispositions.
+>
+> **GATED:** B's **run** begins when F9-19/G-M1 arm (ii) reports. B's **reporting of any bound** is
+> gated per band and per aggregation, and B introduces new aggregations, so each new statistic clears
+> G-M1 in its own right. **Nothing about this sequencing is new** — it is §P7-2's gate and §P6-4's
+> banner item 5, applied. The build is the long pole and it should start today; the gate lands on the
+> run, not on the hammer.
+
+**Declared counts, unchanged:** B at ~1,000 as an exact frozen integer (§P7-10(c)), mark arm in its own
+§P6-3 stratum with the reallocation justified by measurement (§P7-11(c)), floors per §P7-12(a) with the
+§P7-13 fallback.
+
+*Popper seat, 2026-08-13. A negative-control battery that came back exactly quiet, a winner's-curse
+arm where the null beat the real data, a stability result that looks bad and is confirmatory, and two
+control rows that found a hole in my own floor formula that our own code had already patched
+elsewhere. Tranche A clears what it ran. Zero survivors is a fact about the machine until G-M1 makes
+it a fact about the Earth. Appended to my own section; no existing line modified; nothing committed.*
