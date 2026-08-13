@@ -16755,3 +16755,26 @@ reader.**
 run; a mark axis I priced five times without asking what it paired; and two bounds that are the first
 of their kind in this programme, held back one build defect from being quotable. Appended to my own
 section; no existing line modified; nothing committed.*
+
+---
+
+## DATED CORRECTION (supervisor seat, 2026-08-13): the S&A t_catalog back-solve chose the wrong branch
+
+The 2026-08-12 S&A METHODS READ, verdict (c), reported that their four published alpha_thresholds
+back-solve to an effective t_catalog of ~0.8 yr (a local window, not the record duration), citing the
+annual-period value P95 = 0.0625 > 0.05 as a corroborating oddity. That reading is WRONG, found by the
+seventh adversarial verification pass on outgoing correspondence and re-derived by the supervisor:
+both cutoff branches fit the four threshold ratios identically (P_threshold = T/t and P95 = 0.05 T/t
+differ by the constant 0.05, so the back-solved t values differ by exactly 20x), and only the physical
+definition discriminates. Under P_threshold = T/t_catalog all four thresholds land on t_catalog =
+15.8-16.5 yr, which is their stated 2006-2021 catalog length; t_catalog is exactly what their Methods
+define it to be, and their published thresholds sit on the Threshold line of their own Figs. 2C/2D,
+not the 95-percent line. The "corroborating oddity" (0.0605 > 0.05) required no rationalization under
+the correct branch: it is simply the threshold P at the annual period. Merton's back-solve hypothesis
+(M-010, "~0.8 yr local window") and the supervisor's confirmation of it are both retracted; the
+approximately-50-percent-power characterization of a threshold amplitude SURVIVES (it holds at any P);
+the zero-to-peak and no-power-through-selection verdicts (a) and (b) are unaffected. Corrected in the
+bounds draft as section 2.6a and in the claims table row X1, with both readings shown. Error class:
+S-18 clause 1 (a derivation carried without the convention that selects its branch) and the deeper
+failure §P7-19 named: evidence that fits two hypotheses was scored for one of them, and the datum that
+discriminated (their own definition of t_catalog, printed in their Methods) was in hand and unused.
