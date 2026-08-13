@@ -17907,3 +17907,130 @@ orders of magnitude, which is the best possible demonstration that strong claims
 discount. The expensive part was moved to where the risk actually is: the null-validity layer, built
 once per property class and reused forever. Appended to my own section; no existing line modified;
 nothing committed.*
+
+---
+
+# PROPOSED (Kepler) — the SEARCHER seed (Jim, 2026-08-13): K-094
+
+*Seed, attributed to Jim Gale, 2026-08-13, compressed from his words: "the agent version of what I
+did with Sand Point — look at a few earthquakes in a region, notice coincidences across MANY
+properties at once (solid tide, aurora/geomagnetic storms, time of day, day of week, anything), then
+at scale ML-statistically test ALL properties x ALL regions; anything outside null gets QUICKLY
+promoted to a properly tested theory regionally AND globally; chase cross-region variants (another
+region matching in a different quadrant); and honor small n with strong concentration — in THIS odd
+region all 14 major quakes in 100 years are on a Monday, still significant." And, unprompted:
+"I understand that often most ARE outside of null."*
+
+*PROPOSED. No claim. No licence sought beyond pricing. The full design is
+`replication/SEARCHER.md`, written this session; this entry registers it, states the one relaxation
+it asks for, and hands Popper the pricing question.*
+
+## K-094 — THE SEARCHER: a concentration scan over a (region x property x magnitude-stratum) lattice, whose ONLY licensed output is a mechanically generated freeze file
+
+**One-line claim (the thing to be tested, not asserted).** For some declared regions and some
+declared per-event properties, the events of that region are concentrated on that property at a rate
+that a matched control arm and a full-ETAS null do not reproduce — and the rate at which such
+apparent concentrations occur under the matched null is itself a measurable constant this field has
+never published.
+
+**The inversion that generated it.** The miner asks *"does this feature predict the count?"* — a
+regression on a target. Jim's Sand Point move asks the inverted question: *"forget the target; given
+the events, is there any coordinate of the world on which they PILE UP?"* No target, no regression,
+unbinned, per-event. **The unit of analysis stops being the daily bin and becomes the event's
+position in a property space.** That inversion is why the SEARCHER needs machinery the miner does not
+have (`engine/properties.py` does not exist) and why it can see things the miner structurally cannot:
+the miner's target absorbs exactly the structure the SEARCHER is looking for.
+
+**Second inversion, and it is the one I care about more.** The expected outcome is that the control
+arm matches the real arm — Jim said so himself. **That is not a failure; it is the calibration
+constant for every coincidence claim ever made in seismology**, including this program's own. Nobody
+publishes "here is how often a property x region lattice manufactures a p < 1e-6 concentration under
+a matched null." We would.
+
+**Test spec.**
+- **Data.** On disk: 13 ComCat region CSVs, `engine/sitetide.py`, `engine/ephemeris.py` +
+  `data/lunar_grid_1980_2027.npz`, `engine/marks_ext.py`, `engine/observer.py`,
+  `engine/circstat_event.py`, `engine/strata.py`, `engine/regions_d.py`, `engine/clocks.py`.
+  Downloadable and small: Kp/Ap (GFZ), Dst (WDC Kyoto), OMNI solar wind (NASA), IERS EOP C04.
+  Does not exist and must be built: the per-event property join, the lattice runner, the freeze
+  generator (SEARCHER.md §S8.2, B1/B2/B3).
+- **Statistic.** One primary per property type, declared in advance with no alternatives run (S-9):
+  **Kuiper V event-path** for phase properties (rotation-invariant, which is what survives the
+  unknown admittance offsets §P7-22(a) ruled on); **exact multinomial max-cell binomial tail against
+  the catalogue's own empirical base rates** for categorical; **dwell-time-corrected concentration**
+  for level properties.
+- **Null.** Full ETAS with triggering, event times pushed through the **identical property code
+  path** — never a property permutation (§P7-22(a); §P7-23(A) condition 3).
+- **Controls.** F7 observer features computed per region per stratum and reported beside every cell;
+  the matched control arm scanned identically and **counted in the same multiplicity** (the F9-20
+  correction ratified at §P7-6).
+- **Pass.** `n_survivors_real` materially exceeds `n_survivors_control`, AND at least one promoted
+  candidate's frozen within-region and cross-region arms score against their pre-declared thresholds.
+- **Fail.** `n_real ≈ n_control` — which yields the calibration constant, and is publishable as a
+  bound of a kind this program has produced twice already (F9-01, F9-04).
+
+**Expected effect size if real.** A single-quadrant concentration at n = 14 gives an analytic
+1.5e-12 on a 7-cell categorical and 9.5e-7 on a 4-cell one; the arithmetic in SEARCHER.md §S6 shows
+14-of-14 survives full Bonferroni pricing at every plausible lattice size (m up to ~3.5e6) by four to
+five orders of magnitude, **and that 10-of-14 does not survive at all (0.68 after m = 336,000)**.
+The instrument is therefore a detector of near-total concentration at small n and of nothing weaker,
+which is exactly the regime §P7-23 ruled Alaska could occupy.
+
+**THE ONE RELAXATION I AM ASKING FOR, flagged rather than assumed.** §P7-4 condition 1 restricted
+C1's output to two integers — no names, no ranked list. **A scan whose output is an integer cannot
+promote anything, so the SEARCHER cannot exist under that condition.** I propose instead: the ranked
+list (capped at a declared K) may leave the run **if and only if** the ranking function, the
+promotion threshold, the freeze template, and the confirmation design are all declared and hashed
+**before** the scan, and the only thing a hit may do is instantiate that template. **The scan chooses
+which hypothesis is frozen; it never chooses how it is tested, what threshold it faces, or what
+counts as a pass.** If Popper refuses this, the design is dead and should be told so before B1 is
+written rather than after.
+
+**Why this might be dismissed too quickly.** Because "scan everything against everything" is the
+canonical p-hacking sentence and the reflex is to refuse it. The reflex is right about the scan and
+wrong about the architecture: **the scan produces no p-values that anyone is allowed to quote.** It
+produces commitments. Every number this program would ever claim from a SEARCHER hit comes from a
+frozen, hashed, pre-registered test run afterwards on events the scan did not touch — the K-092
+pattern, generated mechanically instead of by hand. The thing that made K-092 defensible was not that
+a human found it; it was `K092_FREEZE.md`. **The SEARCHER is a machine for producing K092_FREEZE.md
+files, and that is the entire claim being made for it.** Dismissing it as p-hacking is dismissing the
+freeze file, which this program already ruled is priced at 0 and needs no licence (§P7-23(B)).
+
+**Second reason it might be dismissed too quickly.** The human-schedule arm looks indefensible after
+tranche B measured real diurnal and weekly observer structure this week. It is indefensible **below
+M6**. At **M >= 6.0 global the catalogue is complete — there is no detection to miss, so a weekday
+concentration there cannot be a detection artifact.** Three residual channels survive that carve-out
+(magnitude assignment near the threshold, historical completeness start-year, and nothing else that
+I can name) and all three are handled in SEARCHER.md §S3.4(F7-d) by declared audits rather than by
+assertion. **The correct disposition is not "day-of-week is artifact" but "day-of-week is a pure
+observer measurement below M6 and a live scientific question at and above it," and both halves are
+worth running.**
+
+**Price sketch handed to Popper (SEARCHER.md §S9, TRANCHE S).** Gates S-0..S-3 at 0 (lattice,
+property join, **demonstrated recovery on synthetic**, F7 baseline); the scan pair S-4/S-5
+EXPLORATORY-UNPRICED under Rule 4.4 with the §P7-4 conditions as amended above; freeze generation
+S-6 at 0; **priced confirmation S-7..S-9 at ~90–100**; prospective logs S-10 at 0. The shape is the
+same one §P7-23 found for K-092 — free scan, small priced confirmation, free prospective arm that
+actually settles it — and I do not think a scan can have any other shape in this program.
+
+**On the transformer framing Jim drew** (attention over the lattice, promotion as the head): apt as a
+metaphor, and genuinely valuable later as a **learned RANKER for scan ordering** trained on scored
+freeze outcomes. Stated flatly so it is never misremembered: **a learned ranker changes what gets
+tested first and never what counts as evidence.** The threshold stays frozen and
+candidate-independent; the ranker cannot exist before a scored corpus exists; and its training set is
+a holdout spend if it touches holdout-window outcomes (Rule 4.1). A ranker over a frozen evidential
+layer is safe; over an unfrozen one it is the most efficient p-hacking engine that could be built
+here.
+
+**Also owed, and recorded rather than glossed.** The K-092 freeze shipped a priority-fact sentence
+that its own verification output contradicted, because the pipeline did not gate on the check
+(S-18 clause 1, per the dated correction in `K092_FREEZE.md`). **The freeze generator therefore emits
+priority facts as assertions that must pass and refuses to write the file if any fails.** That defect
+is closed in code by this design or the design is not worth building.
+
+*Kepler, 2026-08-13. One entry, K-094, PROPOSED, not licensed, not evidence, nothing claimed. Design
+in `replication/SEARCHER.md` (new file, zero existing lines modified). The seed is Jim's, including
+the small-n principle Popper ratified at §P7-23 and the honest warning that most cells will be
+outside null. Appended to my own new section; no existing ledger line modified; nothing committed.
+No phase, concentration, or day-of-week statistic was run on any real catalogue in the writing of
+this entry.*
