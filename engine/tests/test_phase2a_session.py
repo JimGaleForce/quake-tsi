@@ -70,7 +70,13 @@ def _calibration(tmp_path, passing=True):
     p.write_text(json.dumps({
         "rule": "§P6-2(7)", "pass": bool(passing), "coverage": 0.96,
         "coverage_bar": 0.90, "worst_understatement": 1.4,
-        "understatement_bar": 3.0, "n_comparisons": 27, "n_fitted": 27}),
+        "understatement_bar": 3.0, "ci_method": "BCa",
+        # §P7-7(b) as resolved by §P7-9(1): a licensing artifact must carry >= 125
+        # SCORED comparisons -- gated-out rows entered neither bar. So this fixture
+        # is sized like the decisive set (144 run, 13 gated out, 131 scored) rather
+        # than the legacy 27, and `n_scored` is stated explicitly because that is
+        # the number `assert_calibrated` checks.
+        "n_comparisons": 144, "n_fitted": 131, "n_scored": 131}),
         encoding="utf-8")
     return str(p)
 

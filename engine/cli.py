@@ -409,7 +409,7 @@ def main(argv=None):
                          "emits NO stub")
     mi.add_argument("--gpd-calibration", default=None,
                     help="path to the §P6-2(7) calibration artifact (default "
-                         "engine/out/audit_gpd.json). --gpd REFUSES TO RUN without "
+                         "engine/out/audit_gpd_bca.json). --gpd REFUSES TO RUN without "
                          "a PASSING one: an instrument that has not demonstrated "
                          "recovery in the range it reports in may not report there")
     mi.add_argument("--strata", default=None,
@@ -419,6 +419,39 @@ def main(argv=None):
                          "ASSERTS sum_s m_s q_s == m q and REFUSES TO RUN on "
                          "violation. Default UNSTRATIFIED (flat BH). The FILE "
                          "CONTENT is hash-affecting")
+    mi.add_argument("--regsum", action="store_true",
+                    help="§P6-4 Rule 4.2: the PHASE-INCOHERENT regional statistic. "
+                         "Partitions the domain into R declared regions from "
+                         "EXPLORATION-WINDOW data only (Rule 4.1), computes the "
+                         "per-region 2-df score statistic and SUMS it to 2R df -- "
+                         "one test per (feature, lag), which kills the "
+                         "§K87-0(d)(i) domain-sum cancellation blind spot at zero "
+                         "multiplicity cost. Per-region amplitudes are reported "
+                         "UNRESOLVED (§P7-1(d)). Hash-affecting")
+    mi.add_argument("--regions", action="store_true",
+                    help="§P6-4 Rule 4.3/4.4: ALSO run the per-region battery, one "
+                         "test per (feature, lag, region), priced at R x the "
+                         "declared count, with region as a stratum axis and an "
+                         "S-15 measurable/unmeasurable verdict per region from the "
+                         "§P7-1(b) FORMULA floor. Implies --regsum. Hash-affecting")
+    mi.add_argument("--region-sectors", type=int, default=None,
+                    help="R before the activity threshold (default 6, chosen from "
+                         "the F4-58 VIF measurement -- see results_f4_58_vif.json)")
+    mi.add_argument("--region-min-fraction", type=float, default=None,
+                    help="a longitude sector is retained only if it holds at least "
+                         "this fraction of in-window events (default 0.01)")
+    mi.add_argument("--region-vif", type=float, default=None,
+                    help="declared VIF for the §P7-1(b) floor formula. Default is "
+                         "the F4-58 MEASUREMENT (24.08, 2-df phase features), not "
+                         "the 3.94 §P7-1(a) inferred. Hash-affecting")
+    mi.add_argument("--region-alpha", type=float, default=None,
+                    help="declared operating threshold of the tranche this runs in "
+                         "(default 0.10/713 = Tranche A at BH q=0.10). "
+                         "Hash-affecting")
+    mi.add_argument("--region-target-amplitude", type=float, default=None,
+                    help="declared effect of interest, as a rate-modulation "
+                         "fraction (default 0.20 -- §P6-4 Finding B's own reference "
+                         "amplitude). Hash-affecting")
     mi.set_defaults(fn=cmd_mine)
 
     args = p.parse_args(argv)

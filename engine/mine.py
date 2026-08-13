@@ -765,29 +765,111 @@ def score_stat_block_bootstrap(X, y, offset, n_boot, rng, mean_block=90.0,
     the feature's own timescale.
     """
     X = np.asarray(X, dtype=np.float64)
-    n, k = X.shape
+    n, _k = X.shape
     y = np.asarray(y, dtype=np.float64)
     off = np.asarray(offset, dtype=np.float64)
-    pairs = [(i, j) for i in range(k) for j in range(i, k)]
-    XX = {(i, j): X[:, i] * X[:, j] for i, j in pairs}
+    pre = _score_rows_precompute(X)
     out = np.empty(int(n_boot))
     done = 0
     while done < n_boot:
         b = int(min(chunk, n_boot - done))
         idx = block_bootstrap_idx(n, b, mean_block, rng)
-        ys = y[idx]
-        os_ = off[idx]
-        lam0 = os_ * (ys.sum(axis=1) / os_.sum(axis=1))[:, None]
-        d = ys - lam0
-        U = d @ X
-        A = lam0 @ X
-        W = lam0.sum(axis=1)
-        V = np.empty((b, k, k))
-        for i, j in pairs:
-            v = lam0 @ XX[(i, j)] - A[:, i] * A[:, j] / W
-            V[:, i, j] = v
-            V[:, j, i] = v
-        out[done:done + b] = _quadform(V, U)
+        out[done:done + b] = _score_rows(y[idx], off[idx], pre)
+        done += b
+    return out
+
+
+def _score_rows_precompute(X):
+    """The design-only part of the batched score statistic, hoisted out of the loop."""
+    X = np.asarray(X, dtype=np.float64)
+    k = X.shape[1]
+    pairs = [(i, j) for i in range(k) for j in range(i, k)]
+    return {"X": X, "k": k, "pairs": pairs,
+            "XX": {(i, j): X[:, i] * X[:, j] for i, j in pairs}}
+
+
+def _score_rows(ys, os_, pre):
+    """Rao score statistic for beta=0, one value per ROW of a (b, n) batch.
+
+    Factored out of `score_stat_block_bootstrap` unchanged so that the per-region
+    statistic (§P6-4 Rule 4.2) is computed by literally the same arithmetic as the
+    global one -- the regional sum must not be a second, subtly different, test.
+    """
+    X, k, pairs, XX = pre["X"], pre["k"], pre["pairs"], pre["XX"]
+    ys = np.atleast_2d(np.asarray(ys, dtype=np.float64))
+    os_ = np.atleast_2d(np.asarray(os_, dtype=np.float64))
+    b = ys.shape[0]
+    lam0 = os_ * (ys.sum(axis=1) / os_.sum(axis=1))[:, None]
+    d = ys - lam0
+    U = d @ X
+    A = lam0 @ X
+    W = lam0.sum(axis=1)
+    V = np.empty((b, k, k))
+    for i, j in pairs:
+        v = lam0 @ XX[(i, j)] - A[:, i] * A[:, j] / W
+        V[:, i, j] = v
+        V[:, j, i] = v
+    return _quadform(V, U)
+
+
+# ------------------------------- §P6-4 Rule 4.2: the 2R-df phase-incoherent sum -
+# The blind spot §K87-0(d)(i) named is that a coherent regional signal with
+# REGION-DEPENDENT PHASE is cancelled by the domain sum before any test runs. The
+# cure is not more tests, it is a statistic that cannot cancel: a sum of per-region
+# 2-df quadratic forms. Each term is |U_r|^2 in the V_r metric, which is
+# non-negative and phase-blind, so R regions in antiphase ADD rather than cancel.
+# One test per (feature, lag); the sum is the tested statistic and every surrogate
+# goes through the same sum.
+def score_stat_regions(X, C, O):
+    """Per-region score statistics, (R,). C and O are (R, n_days)."""
+    return _score_rows(C, O, _score_rows_precompute(X))
+
+
+def score_stat_regsum(X, C, O):
+    """The tested statistic: sum of the per-region score statistics, ~ chi2(R*df)."""
+    return float(np.sum(score_stat_regions(X, C, O)))
+
+
+def score_stat_regsum_all_shifts(X, C, O):
+    """The regional sum under EVERY common circular shift of the (C, O) pair.
+
+    A single shift applied to all regions at once is one surrogate world: it
+    destroys alignment with the deterministic feature while preserving every
+    region's own serial structure AND the cross-region dependence. Index 0 is the
+    observed sum. Exhaustive, exact, and it goes through the same sum as the
+    observed statistic -- which is the requirement, not a convenience.
+    """
+    C = np.atleast_2d(np.asarray(C, dtype=np.float64))
+    O = np.atleast_2d(np.asarray(O, dtype=np.float64))
+    total = None
+    for r in range(C.shape[0]):
+        s = score_stat_all_shifts(X, C[r], O[r])
+        total = s if total is None else total + s
+    return total
+
+
+def score_stat_regsum_block_bootstrap(X, C, O, n_boot, rng, mean_block=90.0,
+                                      chunk=200):
+    """Block-bootstrap null for the regional SUM, (n_boot,).
+
+    ONE index draw per surrogate, shared by every region. That is deliberate: the
+    regions are spatially dependent, and resampling them on independent indices
+    would manufacture a narrower null than the data supports. Sharing the index
+    keeps the cross-region covariance of the real series in every surrogate world.
+    """
+    C = np.atleast_2d(np.asarray(C, dtype=np.float64))
+    O = np.atleast_2d(np.asarray(O, dtype=np.float64))
+    R, n = C.shape
+    pre = _score_rows_precompute(X)
+    out = np.zeros(int(n_boot))
+    done = 0
+    while done < n_boot:
+        b = int(min(chunk, n_boot - done))
+        idx = block_bootstrap_idx(n, b, mean_block, rng)
+        acc = np.zeros(b)
+        for r in range(R):
+            acc += _score_rows(C[r][idx], O[r][idx], pre)
+        out[done:done + b] = acc
         done += b
     return out
 

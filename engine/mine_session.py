@@ -88,7 +88,7 @@ import traceback
 import numpy as np
 
 from . import (baseline as bl, design, mine as M, splits, __version__)
-from . import gpd_tail, strata as strata_mod
+from . import gpd_tail, regions as regions_mod, strata as strata_mod
 
 QUICK = {
     "n_surrogates": 200, "n_periods": 800, "n_peaks": 5,
@@ -289,6 +289,156 @@ def glm_task(f, window, counts, offset, n_surr, rng_for_lag, ladder=None, seed=0
             other_floor=(0.0 if f.periodic else 1.0 / (n_used + 1.0)),
             enabled=want_draws))
         rows.append(row)
+    return rows
+
+
+# --------------------- §P6-4 Rule 4.2: the 2R-df phase-incoherent regional sum -
+def _region_unresolved_rows(f, X, C, O, part, reg_cfg):
+    """Per-region amplitudes, COMPUTED and reported UNRESOLVED.
+
+    §P6-4 Rule 4.3 as AMENDED by §P7-1(d): these are not quoted and never enter the
+    ranked list. They are carried so that a future lower-Mc regional catalogue can
+    pass the conditional clause on the arithmetic instead of on a re-argument, and
+    each row states, in itself, the rule that makes it unresolved and the floor it
+    failed.
+    """
+    per_region = M.score_stat_regions(X, C, O)
+    rows = []
+    for r, meta in enumerate(part["regions"]):
+        fit = M.glm_fit(X, C[r], O[r])
+        b = np.asarray(fit["beta"])
+        amp = float(np.hypot(*b)) if f.kind == "phase" else float(abs(b[0]))
+        n_r = float(C[r].sum())
+        floor = regions_mod.a_min(reg_cfg["vif"], reg_cfg["alpha"], n_r)
+        clears = amp <= 0.0 or False  # a per-region amplitude clears only via `floor`
+        clears = bool(amp >= 0.0 and floor <= float(reg_cfg["target_amplitude"]))
+        rows.append({
+            "region": int(r),
+            "lon_lo": meta["lon_lo"], "lon_hi": meta["lon_hi"],
+            "n_events_in_window": n_r,
+            "chi2_score_region": float(per_region[r]),
+            "amplitude_log_rate": amp,
+            "pct_rate_modulation": 100.0 * (math.exp(amp) - 1.0),
+            "beta": fit["beta"], "se": fit["se"],
+            "a_min_formula": floor,
+            "a_min_pct": 100.0 * floor,
+            "s15": "MEASURABLE" if clears else "UNMEASURABLE",
+            # The label is on the row itself, not inferred by the reader.
+            "p_method": regions_mod.UNRESOLVED,
+            "p_method_reason": regions_mod.UNRESOLVED_RULE,
+            "quotable": bool(clears),
+        })
+    return rows
+
+
+def regsum_task(f, window, C, O, n_surr, rng_for_lag, part, reg_cfg, seed=0):
+    """One 2R-df regional-sum test per (feature, lag). Rule 4.2, priced 1 test each.
+
+    The tested statistic is the SUM of the per-region score statistics, and every
+    surrogate -- circular shift and block bootstrap alike -- is pushed through the
+    identical sum (`M.score_stat_regsum_*`). A null built region-by-region and then
+    summed after the fact would not be the null of this statistic.
+    """
+    R = int(part["R"])
+    rows = []
+    for lag in f.lags:
+        rng = rng_for_lag(lag)
+        X = f.design(window, lag)
+        S = M.score_stat_regsum_all_shifts(X, C, O)
+        p_shift, n_used = M.empirical_p(S, n_surr, rng)
+        Sb = M.score_stat_regsum_block_bootstrap(X, C, O, n_surr, rng,
+                                                 mean_block=f.block_days)
+        p_boot = M.bootstrap_p(S[0], Sb)
+        p = p_boot if f.periodic else max(p_shift, p_boot)
+        df = R * int(f.df)
+        row = {
+            "feature": f.name, "family": f.family, "kind": f.kind, "lag": int(lag),
+            "test": "regsum_score_2Rdf", "df": df, "R": R,
+            "region": None,
+            "region_rule_id": part["rule_id"], "region_digest": part["digest"],
+            "chi2_score": float(S[0]),
+            "p_parametric": M.chi2_sf(S[0], df),
+            "p_circular_shift": p_shift, "p_block_bootstrap": p_boot,
+            "block_days": f.block_days,
+            "null": ("block-bootstrap (periodic feature), regional sum"
+                     if f.periodic else
+                     "max(circular-shift, block-bootstrap), regional sum"),
+            "p_raw": p, "n_surrogates": min(n_used, n_surr),
+            # The sum is a DETECTION statistic over the full event count, not a
+            # per-region estimator -- §P7-1(d). It has no single amplitude and does
+            # not get one invented for the ranked list.
+            "amplitude_log_rate": None, "pct_rate_modulation": None,
+            "amplitude_note": (
+                "NO SINGLE AMPLITUDE. The 2R-df sum is a detection statistic over "
+                "the full event count, not an estimator (§P7-1(d)). Per-region "
+                "amplitudes are carried in `regions_unresolved` and are UNRESOLVED."),
+            "regions_unresolved": _region_unresolved_rows(f, X, C, O, part, reg_cfg),
+        }
+        rows.append(row)
+    return rows
+
+
+def region_battery_task(f, window, C, O, r, n_surr, rng_for_lag, part, reg_cfg,
+                        seed=0):
+    """Optional per-region battery (§P6-4 Rule 4.3/4.4), one test per (feature, lag).
+
+    Priced at R x the declared count and stratified on `region` (§P6-4 Rule 4.5;
+    engine.strata already carries the region axis). Every row states its own
+    §P7-1(b) floor and its S-15 verdict, and a row below its floor is scored
+    neither way (Rule 4.4).
+    """
+    rows = []
+    meta = part["regions"][int(r)]
+    n_r = float(C[int(r)].sum())
+    floor = regions_mod.a_min(reg_cfg["vif"], reg_cfg["alpha"], n_r)
+    measurable = floor <= float(reg_cfg["target_amplitude"])
+    for lag in f.lags:
+        rng = rng_for_lag(lag)
+        X = f.design(window, lag)
+        c, o = C[int(r)], O[int(r)]
+        fit = M.glm_fit(X, c, o)
+        S = M.score_stat_all_shifts(X, c, o)
+        p_shift, n_used = M.empirical_p(S, n_surr, rng)
+        Sb = M.score_stat_block_bootstrap(X, c, o, n_surr, rng,
+                                          mean_block=f.block_days)
+        p_boot = M.bootstrap_p(S[0], Sb)
+        p = p_boot if f.periodic else max(p_shift, p_boot)
+        b = np.asarray(fit["beta"])
+        amp = float(np.hypot(*b)) if f.kind == "phase" else float(abs(b[0]))
+        rows.append({
+            "feature": f.name, "family": f.family, "kind": f.kind, "lag": int(lag),
+            "test": "glm_poisson_offset_etas_region", "df": int(f.df),
+            "region": int(r),
+            "lon_lo": meta["lon_lo"], "lon_hi": meta["lon_hi"],
+            "region_rule_id": part["rule_id"], "region_digest": part["digest"],
+            "n_events_in_window": n_r,
+            "beta": fit["beta"], "se": fit["se"],
+            "amplitude_log_rate": amp,
+            "pct_rate_modulation": 100.0 * (math.exp(amp) - 1.0),
+            "bits_per_event": fit["bits_per_event"],
+            "chi2_score": float(S[0]), "p_parametric": M.chi2_sf(S[0], f.df),
+            "p_circular_shift": p_shift, "p_block_bootstrap": p_boot,
+            "block_days": f.block_days,
+            "null": ("block-bootstrap (periodic feature)" if f.periodic
+                     else "max(circular-shift, block-bootstrap)"),
+            "p_raw": p, "n_surrogates": min(n_used, n_surr),
+            "converged": fit["converged"],
+            "a_min_formula": floor, "a_min_pct": 100.0 * floor,
+            "s15": "MEASURABLE" if measurable else "UNMEASURABLE",
+            # Rule 4.4: an unmeasurable cell is scored NEITHER way and may not emit
+            # a stub. `bh_eligible` False keeps it out of the BH vector entirely.
+            "bh_eligible": bool(measurable),
+            "p_method": (gpd_tail.P_MC_RESOLVED if measurable
+                         else regions_mod.UNRESOLVED),
+            "p_method_reason": (
+                "region clears its own §P7-1(b) floor at the declared tranche alpha"
+                if measurable else
+                "§P6-4 Rule 4.4 + §P7-1(d): region does not clear its own §P7-1(b) "
+                "floor (A_min = %.4f > target %.4f); scored neither way, no stub."
+                % (floor, float(reg_cfg["target_amplitude"]))),
+            "amplitude_label": ("SELECTION-BIASED UPPER BOUND"
+                                if measurable else regions_mod.UNRESOLVED),
+        })
     return rows
 
 
@@ -576,6 +726,22 @@ def dispatch_task(key, W):
                           task_rng(seed, name, "marks", None,
                                    null_type="circular_shift"),
                           ladder, seed=seed, gpd=gpd)
+    if kind == "regsum":
+        f = W["feats"][name]
+        return regsum_task(f, W["window"], W["reg_counts"], W["reg_offset"], n_surr,
+                           lambda lag: task_rng(seed, name, "regsum", lag,
+                                                null_type="circular_shift",
+                                                region="ALL"),
+                           W["partition"], W["regions_cfg"], seed=seed)
+    if kind == "region":
+        r_txt, _, fname = name.partition(":")
+        r = int(r_txt)
+        f = W["feats"][fname]
+        return region_battery_task(
+            f, W["window"], W["reg_counts"], W["reg_offset"], r, n_surr,
+            lambda lag: task_rng(seed, fname, "region", lag,
+                                 null_type="circular_shift", region=r),
+            W["partition"], W["regions_cfg"], seed=seed)
     if key == "period_obs":
         return period_obs_task(W["days"], W["resid"], W["cfg"])
     if kind == "psurr":
@@ -736,6 +902,19 @@ class Checkpoint:
 
 
 # ------------------------------------------------------------------- driver ---
+# ---- declared inputs to the §P7-1(b) floor, all three MEASURED or DECLARED -----
+# VIF: F4-58 as re-specified in §P7-1(c), measured over existing session output --
+# median over 2-df phase-feature tests with a clearly-null surrogate p. See
+# `results_f4_58_vif.json` and `f4_58_vif.py`. NOT the 3.94 §P7-1(a) inferred.
+REGION_VIF_DEFAULT = 24.081827389301417
+# alpha: the DECLARED operating threshold of the tranche this runs in -- Tranche A
+# (§P7-2, ~713 declared tests) under BH at q = 0.10, most conservative rung.
+REGION_ALPHA_DEFAULT = 0.10 / 713.0
+# target amplitude: §P6-4 Finding B's own reference rate modulation (20%), not a
+# number chosen after seeing what R it produces.
+REGION_TARGET_AMPLITUDE_DEFAULT = 0.20
+
+
 def build_config(args, preset):
     cfg = {
         "engine_version": __version__,
@@ -799,6 +978,29 @@ def build_config(args, preset):
             # re-calibration is a new licence and a new experiment.
             "calibration": gpd_tail.assert_calibrated(
                 getattr(args, "gpd_calibration", None)),
+        }
+    # §P6-4 Rule 4.2/4.5. The partition RULE, the declared VIF, the declared tranche
+    # alpha and the declared target amplitude are all hash-affecting: a run under a
+    # different partition or a different floor is a different experiment and may not
+    # resume an existing session. Inserted ONLY when the regional statistic is on,
+    # so a default run's config -- and therefore its hash, and therefore its
+    # resumable sessions -- stays byte-identical to phase 2a.
+    if getattr(args, "regsum", False) or getattr(args, "regions", False):
+        cfg["regions"] = {
+            "enabled": True,
+            "rule_id": regions_mod.REGION_RULE_ID,
+            "n_sectors": int(getattr(args, "region_sectors", None)
+                             or regions_mod.N_SECTORS),
+            "min_event_fraction": float(
+                getattr(args, "region_min_fraction", None)
+                if getattr(args, "region_min_fraction", None) is not None
+                else regions_mod.MIN_EVENT_FRACTION),
+            "battery": bool(getattr(args, "regions", False)),
+            "vif": float(getattr(args, "region_vif", None) or REGION_VIF_DEFAULT),
+            "alpha": float(getattr(args, "region_alpha", None)
+                           or REGION_ALPHA_DEFAULT),
+            "target_amplitude": float(getattr(args, "region_target_amplitude", None)
+                                      or REGION_TARGET_AMPLITUDE_DEFAULT),
         }
     path = getattr(args, "strata", None)
     if path:
@@ -915,6 +1117,64 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     ckpt.state["data_log"] = dl_log
     ckpt.state["window"] = [window.start, window.stop]
 
+    # ---- §P6-4 Rule 4.1/4.2/4.5: the region partition -----------------------
+    # Built from EXPLORATION-WINDOW data only (`y[:, window]`); the K-080 census
+    # list is not reachable from here. The RULE is in the config hash; the realised
+    # partition's digest is pinned in the checkpoint so a resumed session cannot
+    # silently re-partition under it.
+    regpart = reg_counts = reg_offset = None
+    reg_cfg = cfg.get("regions")
+    if reg_cfg and reg_cfg.get("enabled"):
+        regpart = regions_mod.build_regions(
+            ctx, y, window,
+            n_sectors=int(reg_cfg["n_sectors"]),
+            min_event_fraction=float(reg_cfg["min_event_fraction"]))
+        prev = ckpt.state.get("regions", {}).get("digest")
+        if prev and prev != regpart["digest"]:
+            raise RuntimeError(
+                f"region partition digest changed on resume ({prev} -> "
+                f"{regpart['digest']}). The declared partition is frozen (§P6-4 Rule "
+                f"4.5); refusing to continue a session under a different one.")
+        reg_counts, reg_offset = regions_mod.regional_series(
+            y, base.rate(window), regpart["region_of_cell"], window, regpart["R"])
+        floors = regions_mod.region_floor_table(
+            regpart, reg_cfg["vif"], reg_cfg["alpha"], reg_cfg["target_amplitude"])
+        r_sum, lam = regions_mod.max_R_for_sum(
+            reg_cfg["vif"], reg_cfg["alpha"], float(counts.sum()),
+            reg_cfg["target_amplitude"])
+        r_bat, r_bat_real = regions_mod.max_R_for_per_region_battery(
+            reg_cfg["vif"], reg_cfg["alpha"], float(counts.sum()),
+            reg_cfg["target_amplitude"])
+        state_part = {k: v for k, v in regpart.items() if k != "region_of_cell"}
+        state_part["floors"] = floors
+        state_part["R_arithmetic"] = {
+            "vif": reg_cfg["vif"], "alpha": reg_cfg["alpha"],
+            "target_amplitude": reg_cfg["target_amplitude"],
+            "N_window": float(counts.sum()),
+            "noncentrality_at_target": lam,
+            "max_R_for_2Rdf_sum_at_80pct_power": int(r_sum),
+            "max_R_for_per_region_battery": int(r_bat),
+            "max_R_for_per_region_battery_real": r_bat_real,
+            "R_declared": int(regpart["R"]),
+            "sum_measurable": bool(regpart["R"] <= r_sum),
+        }
+        ckpt.state["regions"] = state_part
+        if verbose:
+            print(f"regions: rule {regpart['rule_id']} -> R = {regpart['R']} "
+                  f"({regpart['n_cells_assigned']}/{regpart['n_cells_total']} cells, "
+                  f"{regpart['n_events_assigned']:.0f} events assigned, "
+                  f"{regpart['n_events_excluded']:.0f} excluded), digest "
+                  f"{regpart['digest']}")
+            print(f"  §P7-1(b) floor inputs: VIF = {reg_cfg['vif']:.4g} (F4-58), "
+                  f"alpha = {reg_cfg['alpha']:.4g}, target amplitude = "
+                  f"{reg_cfg['target_amplitude']:.3g}")
+            print(f"  2R-df SUM at R = {regpart['R']}: "
+                  f"{'MEASURABLE' if regpart['R'] <= r_sum else 'UNMEASURABLE'} "
+                  f"(max R with 80% power = {r_sum})")
+            print(f"  PER-REGION battery: {floors['n_unmeasurable']}/"
+                  f"{len(floors['rows'])} regions UNMEASURABLE per S-15 "
+                  f"(max R whose per-region floor resolves the target = {r_bat})")
+
     # ---- K-089 clause 3, restated by §P5-5: prove FREE numerically BEFORE the scan --
     axis_audit = M.scan_axis_audit(feats, bool(cfg.get("tranche1")))
     inv = M.lag_invariance_audit(feats, window)
@@ -947,9 +1207,15 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     # each surrogate draws from its own index-addressable child sequence, so their
     # position in this list is presentational only (see M.surrogate_seed_sequence).
     period_keys = period_task_keys(cfg, n_surr)
+    # §P6-4 Rule 4.2 costs ONE task per feature (all its lags inside); the optional
+    # battery (Rule 4.3/4.4) costs R x that and is priced as such in the banner.
+    regsum_keys = [f"regsum:{f.name}" for f in feats] if regpart else []
+    region_keys = ([f"region:{r}:{f.name}"
+                    for r in range(regpart["R"]) for f in feats]
+                   if (regpart and reg_cfg.get("battery")) else [])
     task_keys = ([f"glm:{f.name}" for f in feats]
                  + [f"marks:{f.name}" for f in feats]
-                 + period_keys)
+                 + period_keys + regsum_keys + region_keys)
 
     # Every random stream in the session is addressed by a canonical test key.
     # Two tests sharing a digest would share a stream, which is a silent
@@ -968,6 +1234,24 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     for _nt in M.PERIOD_NULLS:
         all_keys.append(M.test_key(cfg["seed"], "period_scan", "period",
                                    null_type=_nt))
+    # The regional streams use the `region` field that phase 1 reserved in
+    # TEST_KEY_FIELDS -- no field was added, so every OTHER declared digest in this
+    # session is byte-identical to phase 2a. The regsum test is keyed region="ALL"
+    # (it consumes every region at once) and each battery test by its integer id,
+    # so a battery test and its sum can never share a stream.
+    if regpart:
+        for f in feats:
+            for lag in f.lags:
+                all_keys.append(M.test_key(cfg["seed"], f.name, "regsum", lag=lag,
+                                           null_type="circular_shift",
+                                           region="ALL"))
+        if reg_cfg.get("battery"):
+            for r in range(regpart["R"]):
+                for f in feats:
+                    for lag in f.lags:
+                        all_keys.append(M.test_key(
+                            cfg["seed"], f.name, "region", lag=lag,
+                            null_type="circular_shift", region=r))
     digests = assert_task_keys_unique(all_keys)
     n_declared_streams = len(all_keys)
     if len(digests) != n_declared_streams:            # belt and braces
@@ -1019,6 +1303,8 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         "n_surr": n_surr, "ladder": ladder, "cfg": cfg,
         "gpd": cfg.get("gpd"),
         "period_chunk": M.PERIOD_SURROGATE_CHUNK,
+        "partition": regpart, "regions_cfg": reg_cfg,
+        "reg_counts": reg_counts, "reg_offset": reg_offset,
     }
 
     if n_jobs == 1:
@@ -1076,6 +1362,24 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                   f"({M.period_n_mc(n_surr)} AR(1) + {M.period_n_mc(n_surr)} "
                   f"permutation surrogates in chunks of "
                   f"{M.PERIOD_SURROGATE_CHUNK})")
+
+        # ------------------------------ (d) regional sum + battery ---------
+        # These run through `dispatch_task` on per-task derived streams in BOTH
+        # drivers, so --jobs 1 and --jobs N are bit-identical here (the design-B
+        # choice already made for the period scan).
+        for key in regsum_keys + region_keys:
+            if ckpt.done(key):
+                if verbose:
+                    print(f"  [skip, checkpointed] {key}")
+                continue
+            t_f = time.perf_counter()
+            res = dispatch_task(key, payload)
+            ckpt.record_seconds(key, time.perf_counter() - t_f)
+            ckpt.put(key, res)
+            if verbose:
+                best = min(res, key=lambda r: r["p_raw"])
+                print(f"  {key:<40s} {len(res):>2d} lag(s) in "
+                      f"{time.perf_counter()-t_f:5.1f}s   best p={best['p_raw']:.4g}")
     else:
         _run_tasks_parallel(ckpt, task_keys, payload, n_jobs, verbose=verbose)
 
@@ -1121,6 +1425,19 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     for j, t in enumerate(ckpt.state["results"]["period_scan"]["peaks"]):
         t["order_key"] = [1, j, -1, 0, str(t["feature"])]
         tests.append(t)
+    # Regional rows sort AFTER the phase-2a families and before nothing, on a
+    # leading ordinal of their own, so adding them cannot perturb the order -- and
+    # therefore the BH tie-breaks -- of any pre-existing row.
+    for i, f in enumerate(feats):
+        for t in ckpt.state["results"].get(f"regsum:{f.name}", []):
+            t["order_key"] = [2, i, int(t["lag"]), 0, f.name]
+            tests.append(t)
+    if regpart and reg_cfg.get("battery"):
+        for r in range(regpart["R"]):
+            for i, f in enumerate(feats):
+                for t in ckpt.state["results"].get(f"region:{r}:{f.name}", []):
+                    t["order_key"] = [3, i, int(t["lag"]), 1 + r, f.name]
+                    tests.append(t)
     tests.sort(key=lambda t: t["order_key"])
 
     n_tests = len(tests)
@@ -1128,6 +1445,14 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     # the labelling (or by a resumed checkpoint written before it) are labelled here
     # rather than left blank, because "no label" is exactly what rule 5 forbids.
     for t in tests:
+        # §P6-4 Rule 4.4 + §P7-1(d): an UNRESOLVED row already carries its label and
+        # its reason and is INELIGIBLE for rejection. Re-labelling it MC_RESOLVED
+        # here would silently put an unmeasurable region back into the BH vector,
+        # which is precisely what the rule forbids -- so it is excluded by name.
+        if t.get("p_method") == regions_mod.UNRESOLVED:
+            t["p_bh"] = float(t["p_raw"])
+            t["bh_eligible"] = False
+            continue
         if t.get("p_method") not in gpd_tail.P_METHODS:
             t["p_method"] = gpd_tail.P_MC_RESOLVED
             t["p_bh"] = float(t["p_raw"])
@@ -1300,16 +1625,25 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
 
 # ------------------------------------------------------------------ report ---
 def _row_effect(t):
-    if t["test"] == "glm_poisson_offset_etas":
+    if t["test"] in ("glm_poisson_offset_etas", "glm_poisson_offset_etas_region"):
         if t["kind"] == "phase":
             return f"amp {t['amplitude_log_rate']:.4f} log-rate"
         return f"beta {t['beta'][0]:+.4f} +/- {t['se'][0]:.4f} /sd"
+    if t["test"] == "regsum_score_2Rdf":
+        # §P7-1(d): the sum has no amplitude and is not given one.
+        return (f"chi2 {t['chi2_score']:.2f} on {t['df']} df "
+                f"(R = {t['R']}); NO AMPLITUDE -- detection statistic, not estimator")
     if t["test"] == "lomb_scargle_peak":
         return f"LS power {t['power']:.4f}"
     return f"{t['test']} {t['effect']:+.4f}"
 
 
 def _row_where(t):
+    if t["test"] == "regsum_score_2Rdf":
+        return f"lag {t['lag']} d, all {t['R']} regions summed ({t['region_rule_id']})"
+    if t["test"] == "glm_poisson_offset_etas_region":
+        return (f"lag {t['lag']} d, region {t['region']} "
+                f"[{t['lon_lo']:+.0f}, {t['lon_hi']:+.0f}) deg lon")
     if t["test"] == "glm_poisson_offset_etas":
         return f"lag {t['lag']} d"
     if t["test"] == "lomb_scargle_peak":
@@ -1318,9 +1652,11 @@ def _row_where(t):
 
 
 def _amp_note(t):
+    if t["test"] == "regsum_score_2Rdf":
+        return t["amplitude_note"]
     if t["test"] == "lomb_scargle_peak":
         return f"+/-{t['pct_rate_modulation']:.1f}% folded rate"
-    if t["test"] == "glm_poisson_offset_etas":
+    if t["test"] in ("glm_poisson_offset_etas", "glm_poisson_offset_etas_region"):
         return f"+/-{t['pct_rate_modulation']:.2f}% rate"
     return "rank correlation (no rate amplitude)"
 
@@ -1455,6 +1791,64 @@ def write_report(session_dir, cfg, state, tests, feats, counts, offset, marks,
       f"(kind=mine, n_tests={state['n_tests']}), so holdout multiplicity reporting "
       f"includes this sweep. No holdout hash was spent.")
     A("")
+
+    # ------------------------- §P6-4 Rule 4.7: the region banner, five lines ----
+    rp = state.get("regions")
+    if rp:
+        rc = cfg.get("regions", {})
+        ar = rp["R_arithmetic"]
+        fl = rp["floors"]
+        n_regsum = sum(1 for t in tests if t["test"] == "regsum_score_2Rdf")
+        n_batt = sum(1 for t in tests
+                     if t["test"] == "glm_poisson_offset_etas_region")
+        A("## Region battery (§P6-4 Rules 4.1-4.7, §P7-1(b)/(d))")
+        A("")
+        A(f"- **Partition rule `{rp['rule_id']}`, R = {rp['R']}, digest "
+          f"`{rp['digest']}`.** Selector: {rp['selector']}. The K-080 census cell "
+          f"list is NOT the selector (§P6-4 Finding A); "
+          f"{rp['n_cells_assigned']}/{rp['n_cells_total']} cells assigned, "
+          f"{rp['n_events_assigned']:.0f} events in, {rp['n_events_excluded']:.0f} "
+          f"excluded by the activity threshold.")
+        A(f"- **Declared test count from this axis: {n_regsum} regional-sum tests"
+          + (f" + {n_batt} per-region battery tests (R x the declared count)"
+             if n_batt else " (battery OFF)")
+          + f"**; at q = {M.FDR_Q} over {len(tests)} declared tests, "
+            f"{M.FDR_Q * len(tests):.1f} survivors are expected BY CHANCE.")
+        A(f"- **S-15, from the FORMULA (§P7-1(b)) not a scalar:** "
+          f"`A_min = sqrt(VIF)*(z_alpha + z_0.80)*sqrt(2/N)` with **VIF = "
+          f"{fl['vif']:.4g}** (MEASURED, F4-58 per §P7-1(c) -- not the 3.94 "
+          f"§P7-1(a) inferred), **alpha = {fl['alpha']:.4g}** (declared tranche "
+          f"threshold, z = {fl['z_alpha']:.3f}), target amplitude "
+          f"{fl['target_amplitude']:.3g}. Per-region: "
+          f"**{fl['n_unmeasurable']}/{len(fl['rows'])} regions UNMEASURABLE "
+          f"({100.0*fl['fraction_unmeasurable']:.0f}%)**.")
+        A(f"- **The 2R-df SUM at R = {rp['R']} is "
+          f"{'MEASURABLE' if ar['sum_measurable'] else 'UNMEASURABLE'}**: at the "
+          f"declared target amplitude the sum has 80% power up to R = "
+          f"{ar['max_R_for_2Rdf_sum_at_80pct_power']} "
+          f"(non-centrality {ar['noncentrality_at_target']:.1f} on "
+          f"N = {ar['N_window']:.0f} events). The per-region battery's own floor "
+          f"resolves the target only up to R = "
+          f"{ar['max_R_for_per_region_battery']} "
+          f"({ar['max_R_for_per_region_battery_real']:.2f} before flooring) -- "
+          f"which is §P7-1(d)'s anticipated outcome, stated rather than hidden.")
+        A("- **Per-region amplitudes are UNRESOLVED and are not quoted** (§P6-4 "
+          "Rule 4.3 as amended by §P7-1(d)); they appear in `stubs.json` under "
+          "`region_amplitudes_unresolved`, labelled, and never in the ranked list. "
+          "The quotable object is the summed statistic alone.")
+        A("- **G-M1 restated (§P6-4 Rule 4.7 item 5):** no output here may be "
+          "entered for or against any ledger entry until G-M1 clears, and no bound "
+          "may be reported at any aggregation level without demonstrated "
+          "planted-signal recovery AT THAT AGGREGATION. Recovery at the regional "
+          "aggregation is demonstrated at engine-test level in "
+          "`engine/tests/test_regsum.py`; that is NOT the full G-M1 run.")
+        A("")
+        A("| region | lon | N events | A_min (formula) | S-15 |")
+        A("|---|---|---:|---:|---|")
+        for r in fl["rows"]:
+            A(f"| {r['region']} | [{r['lon_lo']:+.0f}, {r['lon_hi']:+.0f}) | "
+              f"{r['n_events']:.0f} | {r['a_min_pct']:.1f}% | {r['s15']} |")
+        A("")
 
     # ---------------------------------- §P6-3: the stratum table + S-8 ---------
     bh_meta = state.get("bh")
@@ -1925,6 +2319,35 @@ def write_stubs(session_dir, cfg, tests):
                           "only then -- freeze a config and spend ONE holdout hash "
                           "via `python -u -m engine.cli run --mode holdout`."),
         })
+    # §P6-4 Rule 4.3 as AMENDED by §P7-1(d). Per-region amplitudes are COMPUTED and
+    # carried here, labelled UNRESOLVED with the rule that makes them unresolved.
+    # They are deliberately NOT in `stubs` and NOT in the report's ranked list: this
+    # block is the whole of their existence in the output.
+    unresolved = []
+    for t in sorted(tests, key=lambda t: t.get("order_key", [])):
+        for r in t.get("regions_unresolved", []) or []:
+            if r.get("quotable"):
+                continue
+            unresolved.append(dict(
+                r, feature=t["feature"], lag=t["lag"], test=t["test"],
+                region_rule_id=t.get("region_rule_id"),
+                region_digest=t.get("region_digest"),
+                why_not_a_stub=regions_mod.UNRESOLVED_RULE,
+            ))
+    for t in tests:
+        if (t.get("test") == "glm_poisson_offset_etas_region"
+                and t.get("p_method") == regions_mod.UNRESOLVED):
+            unresolved.append({
+                "feature": t["feature"], "lag": t["lag"], "test": t["test"],
+                "region": t["region"], "n_events_in_window": t["n_events_in_window"],
+                "amplitude_log_rate": t["amplitude_log_rate"],
+                "pct_rate_modulation": t["pct_rate_modulation"],
+                "a_min_formula": t["a_min_formula"], "s15": t["s15"],
+                "p_method": regions_mod.UNRESOLVED,
+                "p_method_reason": t["p_method_reason"],
+                "why_not_a_stub": regions_mod.UNRESOLVED_RULE,
+            })
+
     payload = {
         "banner": M.GENERATOR_NOT_EVIDENCE,
         "standing_warning_eq24": M.MIGNAN_BROCCARDO,
@@ -1932,6 +2355,9 @@ def write_stubs(session_dir, cfg, tests):
         "config": cfg,
         "n_tests": len(tests),
         "n_stubs": len(entries),
+        "n_region_amplitudes_unresolved": len(unresolved),
+        "region_amplitudes_unresolved_rule": regions_mod.UNRESOLVED_RULE,
+        "region_amplitudes_unresolved": unresolved,
         "p_method_census": gpd_tail.census(tests),
         "p_method_census_line": gpd_tail.census_line(gpd_tail.census(tests),
                                                      len(tests)),
@@ -1945,6 +2371,15 @@ def write_stubs(session_dir, cfg, tests):
 
 
 def _observable(t):
+    if t["test"] == "regsum_score_2Rdf":
+        return (f"Daily M>=4.5 occurrence rate depends on `{t['feature']}` at lag "
+                f"{t['lag']} d in AT LEAST ONE of {t['R']} declared regions, with "
+                f"ARBITRARY per-region phase, after ETAS residualization "
+                f"(phase-incoherent 2R-df sum, §P6-4 Rule 4.2).")
+    if t["test"] == "glm_poisson_offset_etas_region":
+        return (f"Daily M>=4.5 occurrence rate in region {t['region']} "
+                f"[{t['lon_lo']:+.0f}, {t['lon_hi']:+.0f}) deg longitude depends on "
+                f"`{t['feature']}` at lag {t['lag']} d, after ETAS residualization.")
     if t["test"] == "lomb_scargle_peak":
         return (f"Global daily M>={4.5} occurrence residual against etas-v1 carries a "
                 f"periodicity at {t['ladder']['winning_period_days']:.4g} d.")

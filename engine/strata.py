@@ -118,6 +118,14 @@ def _test_kind(row):
         return "glm"
     if t == "lomb_scargle_peak":
         return "period"
+    # §P6-4 Rule 4.5: region is a declared stratum axis. The 2R-df sum is ONE test
+    # over all regions and is keyed with region=None; the per-region battery is
+    # keyed with the integer region id, so a partition file can price the two
+    # separately (and price each region separately) without touching this function.
+    if t == "regsum_score_2Rdf":
+        return "regsum"
+    if t == "glm_poisson_offset_etas_region":
+        return "region"
     if t in ("spearman", "circular-linear") or row.get("mark") is not None:
         return "mark"
     return str(t)

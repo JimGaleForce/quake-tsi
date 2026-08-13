@@ -27,6 +27,8 @@ site and named in this docstring so the trace is not lost:
   RULE 2  never a point estimate: the reported number is `p_ci_upper`, the upper end
           of the 95% bootstrap CI. `p_point` is carried for diagnosis ONLY and no
           downstream consumer may read it.                    -> `gpd_tail_p`
+          The interval is BCa (bias-corrected and accelerated) -- see THE INTERVAL,
+          below. There is exactly ONE interval estimator.
   RULE 3  one-decade cap: nothing below 0.1/(N_max+1). Below it -> UNRESOLVED,
           never "very significant".                           -> `gpd_tail_p`
   RULE 4  FORBIDDEN on the all-shifts enumeration null -- ~8,000 circular-shift
@@ -46,6 +48,47 @@ site and named in this docstring so the trace is not lost:
           test kinds, GPD-at-2,000-surrogates CI vs brute force at N = 1e6; accept
           only if the CI covers in >= 90% of cases and never understates by more
           than 3x.                                            -> `engine/audit_gpd.py`
+          §P7-7(b) tightened the DESIGN (not the bars): the licensing set must be
+          >= 125 FRESH comparisons, because at n = 26 the harness could not resolve
+          its own 90% threshold. §P7-9(1) resolved that count to mean SCORED
+          comparisons -- rows the gates threw out entered neither bar and carry no
+          power.                                              -> `assert_calibrated`
+
+THE INTERVAL: BCa, AND WHY IT IS THE ONLY ONE (§P7-7(a)). Attempt 1 used the
+percentile bootstrap and scored UNRESOLVED-AT-DESIGN-RESOLUTION: 22/26 = 84.6%
+coverage, whose exact 95% interval [0.675, 0.946] contains the 90% bar, so 26
+comparisons could not tell a broken estimator from a working one. Every one of the
+four misses was upper-edge under-coverage of a percentile interval on a strongly
+right-skewed tail quantity, which is exactly the failure mode bias-correction and
+acceleration exist to repair, so §P7-7 pre-declared ONE swap:
+
+    p_lo = G^-1(alpha1), p_hi = G^-1(alpha2),  G = the bootstrap ECDF of p*,
+    alpha_j = Phi( z0 + (z0 + z_j) / (1 - a (z0 + z_j)) ),   z_j = the normal
+                                                             quantiles of the level
+    z0 = Phi^-1( #{p*_b < p_hat} / B )        bias correction
+    a  = sum d_i^3 / (6 (sum d_i^2)^{3/2}),   d_i = mean(p_(.)) - p_(i)
+                                              over the JACKKNIFE of the surrogate set
+
+BCa REPLACES the percentile interval everywhere -- `p_ci_lower`/`p_ci_upper`, and
+therefore `p_report` and everything BH sees, are BCa. The percentile endpoints
+survive ONLY as `p_ci_lower_percentile`/`p_ci_upper_percentile`, a labelled
+reference column for the audit table. They are NOT selectable and no consumer may
+read them: running BCa and percentile and studentised and reporting whichever
+passes is the forking path §P7-7(a) names as what would make the swap inadmissible.
+The one exception is DEGENERATE ARITHMETIC -- z0 or a non-finite, the BCa
+denominator 1 - a(z0+z) non-positive, or alpha1 >= alpha2 -- where there is no BCa
+interval to report at all; there the percentile endpoints are used as the defined
+fallback and the row is FLAGGED (`bca.fallback`), so a fallback can never be
+mistaken for a BCa result or chosen because it looked better.
+
+BOTH resamplings re-derive u, zeta, xi and beta FROM SCRATCH. The bootstrap
+resamples the whole surrogate set and the jackknife deletes from it, and both route
+through the single function `_tail_p_from_sample`, so neither can condition on a
+quantity estimated off the full sample. That conditioning was the phase-2a defect
+(the old interval priced only GPD parameter uncertainty, holding u and zeta fixed);
+its repair was a CORRECTNESS fix and it stands, and the shared helper is what makes
+the jackknife's estimand identical to the bootstrap's by construction rather than by
+inspection.
 
 THE ANDERSON-DARLING METHOD, STATED (the gotcha `scipy.stats.anderson` does not
 cover). scipy's `anderson` supports norm/expon/logistic/gumbel/extreme1 and has no
@@ -84,6 +127,26 @@ GPD_N_AD_BOOT = 200             # parametric-bootstrap replicates for p_AD
 GPD_MIN_EXCEEDANCES = 25        # below this an MLE tail fit is not an estimate
 GPD_DECADES = 1.0               # rule 3: one decade below the MC floor and no more
 GPD_CONFIRM_FACTOR = 10.0       # rule 6: brute force at N >= 10 / p_gpd
+
+# BCa (§P7-7(a)). The jackknife that supplies the acceleration is PER-POINT --
+# delete one surrogate, re-derive u, zeta, xi, beta, recompute p -- up to
+# GPD_JACKKNIFE_MAX_POINTS. It is not an approximation and at the engine's declared
+# N = 2,000 it costs ~8 s per test against a brute-force reference arm of 130-350 s,
+# so the exact version is affordable and is what runs. Above the cap the per-point
+# cost is linear in n and would start to dominate, so the jackknife becomes a
+# GROUPED (delete-d) jackknife over GPD_JACKKNIFE_GROUPS contiguous blocks of the
+# surrogate index -- the surrogates are iid draws, so contiguous blocks are an
+# arbitrary partition and carry no ordering. Which one ran is recorded per row in
+# `bca.jackknife`, so the table never has to be trusted on this point.
+GPD_JACKKNIFE_MAX_POINTS = 2500
+GPD_JACKKNIFE_GROUPS = 250
+# §P7-7(b), as resolved by §P7-9: the licensing set must be >= 125 SCORED
+# comparisons -- not 125 run. A comparison that the gates threw out contributed
+# nothing to either bar, so counting it toward the design's power would be counting
+# an absence as evidence. The first BCa run made exactly this mistake in my favour:
+# 135 run, 13 gated out, 122 scored, and it was three short. Bars unchanged, design
+# enlarged -- 26 comparisons cannot resolve a 90% threshold.
+GPD_MIN_CALIBRATION_COMPARISONS = 125
 
 P_MC_RESOLVED = "MC_RESOLVED"
 P_GPD = "GPD_EXTRAPOLATED"
@@ -274,6 +337,200 @@ def xi_stability(S, rng, quantiles=GPD_STABILITY_QS, n_boot=GPD_N_BOOT,
             "rule": "xi CIs at top {5,10,20}% must share a common point"}
 
 
+# ------------------------------------------------- the estimand, one recipe only
+def _tail_p_from_sample(S, s_obs, threshold_q, min_exceedances=2):
+    """p = zeta * SF_GPD(s_obs - u), with u, zeta, xi, beta ALL re-derived from S.
+
+    THE single recipe. The point estimate, every bootstrap replicate and every
+    jackknife replicate call this and nothing else, so no replicate can condition on
+    a quantity estimated off the full sample -- the estimand is the extrapolated p
+    and each replicate must re-estimate the whole chain that produces it. Returns
+    None (never raises, never a partial answer) whenever the chain cannot be run:
+    too few exceedances, an observed statistic that no longer clears the replicate's
+    own threshold, a failed MLE, or a non-finite p.
+    """
+    S = np.asarray(S, dtype=np.float64).ravel()
+    n = S.size
+    if n < 1:
+        return None
+    u = float(np.quantile(S, threshold_q))
+    exc = S[S > u] - u
+    if exc.size < int(min_exceedances) or float(s_obs) <= u:
+        return None
+    try:
+        xi, _loc, beta = stats.genpareto.fit(exc, floc=0.0)
+    except Exception:
+        return None
+    zeta = exc.size / float(n)
+    p = float(zeta * stats.genpareto.sf(float(s_obs) - u, xi, loc=0.0, scale=beta))
+    if not np.isfinite(p):
+        return None
+    return {"p": p, "u": u, "zeta": float(zeta), "xi": float(xi),
+            "beta": float(beta), "n_exceed": int(exc.size)}
+
+
+def _bootstrap_ps(S, s_obs, rng, threshold_q=GPD_THRESHOLD_Q, n_boot=GPD_N_BOOT):
+    """Nonparametric bootstrap of the extrapolated p, resampling the WHOLE set."""
+    S = np.asarray(S, dtype=np.float64).ravel()
+    n = S.size
+    ps = []
+    for _ in range(int(n_boot)):
+        r = _tail_p_from_sample(S[rng.integers(0, n, size=n)], s_obs, threshold_q)
+        if r is not None:
+            ps.append(r["p"])
+    return np.asarray(ps, dtype=np.float64)
+
+
+def _jackknife_ps(S, s_obs, threshold_q=GPD_THRESHOLD_Q,
+                  max_points=GPD_JACKKNIFE_MAX_POINTS,
+                  groups=GPD_JACKKNIFE_GROUPS):
+    """Leave-one-out (or grouped delete-d) jackknife of the extrapolated p.
+
+    Returns (values, mode). `mode` is reported so the acceleration's provenance is
+    on the row: "leave-one-out" is the exact jackknife, "grouped-<g>" is the
+    delete-d jackknife used only when n exceeds the declared cap.
+    """
+    S = np.asarray(S, dtype=np.float64).ravel()
+    n = S.size
+    if n < 3:
+        return np.asarray([], dtype=np.float64), "none"
+    if n <= int(max_points):
+        blocks = [(i, i + 1) for i in range(n)]
+        mode = "leave-one-out"
+    else:
+        g = int(min(groups, n))
+        edges = np.linspace(0, n, g + 1).astype(int)
+        blocks = [(int(edges[k]), int(edges[k + 1])) for k in range(g)
+                  if edges[k + 1] > edges[k]]
+        mode = f"grouped-{len(blocks)}"
+    vals = []
+    for lo, hi in blocks:
+        sub = np.concatenate([S[:lo], S[hi:]])
+        r = _tail_p_from_sample(sub, s_obs, threshold_q)
+        if r is not None:
+            vals.append(r["p"])
+    return np.asarray(vals, dtype=np.float64), mode
+
+
+def bca_interval(theta_hat, boot, jack, level=GPD_CI_LEVEL):
+    """§P7-7(a). The BCa interval, plus the percentile endpoints as a REFERENCE only.
+
+    Returns a dict:
+      lo, hi          the interval the estimator reports. BCa, unless `fallback`.
+      percentile      [lo, hi] of the plain percentile interval -- diagnosis and the
+                      audit's reference column. NEVER an alternative the caller may
+                      select; see the module docstring.
+      z0, a           the two corrections, so a reader can recompute the endpoints
+      alpha_lo/_hi    the adjusted probability levels actually read off the ECDF
+      fallback        True iff the BCa arithmetic was degenerate and the percentile
+                      endpoints were used instead
+      notes           every guard that fired, in words
+
+    The degenerate cases are enumerated rather than smoothed over:
+      * fewer than 20 valid bootstrap replicates -> no ECDF worth inverting
+      * every replicate on one side of the point estimate -> z0 = +-inf, so the
+        fraction is clamped to +-1/(2B) (the standard continuity guard) and flagged
+      * a jackknife with no spread -> sum d^2 = 0 -> a := 0, which degrades BCa to
+        BC, the correct limit rather than a division by zero
+      * 1 - a(z0 + z) <= 0 -> the BCa map is undefined at this level; fall back.
+        This is a GUARD, not a routine outcome: |sum d^3| <= (sum d^2)^{3/2} for any
+        real vector, so |a| <= 1/6 always, and the denominator can only go
+        non-positive if |z0 + z| > 6 -- which the z0 clamp keeps out of reach at any
+        B this estimator will ever run at.
+      * alpha_lo >= alpha_hi -> the map inverted the interval; fall back
+    """
+    boot = np.asarray(boot, dtype=np.float64).ravel()
+    boot = boot[np.isfinite(boot)]
+    B = int(boot.size)
+    lo_pct = (1.0 - float(level)) / 2.0 * 100.0
+    out = {"lo": None, "hi": None, "percentile": None, "z0": None, "a": None,
+           "alpha_lo": None, "alpha_hi": None, "n_boot": B, "n_jack": 0,
+           "jackknife": None, "fallback": False, "level": float(level),
+           "notes": [], "method": "BCa (bias-corrected and accelerated) bootstrap"}
+    if B < 20:
+        out["notes"].append(f"only {B} valid bootstrap replicates (< 20); no "
+                            f"interval can be formed")
+        return out
+    perc = [float(np.percentile(boot, lo_pct)),
+            float(np.percentile(boot, 100.0 - lo_pct))]
+    out["percentile"] = perc
+
+    # ---- bias correction z0. Ties with the point estimate are split, so that a
+    # discrete pile-up at theta_hat does not push z0 down by its whole mass.
+    below = float(np.count_nonzero(boot < float(theta_hat)))
+    ties = float(np.count_nonzero(boot == float(theta_hat)))
+    frac = (below + 0.5 * ties) / B
+    eps = 0.5 / B
+    if frac <= 0.0 or frac >= 1.0:
+        out["notes"].append(
+            f"every bootstrap replicate lies on one side of the point estimate "
+            f"(fraction below = {frac:.3g}); z0 would be infinite, so the fraction "
+            f"is clamped to {eps:.3g} from the boundary")
+        frac = min(max(frac, eps), 1.0 - eps)
+    z0 = float(stats.norm.ppf(frac))
+    if not np.isfinite(z0):                                  # pragma: no cover
+        out["notes"].append("z0 is not finite; falling back to percentile")
+        out["fallback"] = True
+        out["lo"], out["hi"] = perc
+        return out
+    out["z0"] = z0
+
+    # ---- acceleration a, from the jackknife of the estimand
+    jack = np.asarray(jack, dtype=np.float64).ravel()
+    jack = jack[np.isfinite(jack)]
+    out["n_jack"] = int(jack.size)
+    a = 0.0
+    if jack.size < 3:
+        out["notes"].append(f"jackknife produced only {jack.size} valid replicates "
+                            f"(< 3); acceleration set to 0, which degrades BCa to "
+                            f"the bias-corrected interval")
+    else:
+        d = float(jack.mean()) - jack
+        s2 = float(np.sum(d * d))
+        s3 = float(np.sum(d ** 3))
+        if s2 <= 0.0:
+            out["notes"].append("jackknife replicates are identical (sum d^2 = 0); "
+                                "acceleration set to 0")
+        else:
+            a = s3 / (6.0 * s2 ** 1.5)
+    if not np.isfinite(a):                                   # pragma: no cover
+        out["notes"].append("acceleration is not finite; set to 0")
+        a = 0.0
+    out["a"] = float(a)
+
+    # ---- the adjusted levels
+    z_lo = float(stats.norm.ppf((1.0 - float(level)) / 2.0))
+    z_hi = float(stats.norm.ppf(1.0 - (1.0 - float(level)) / 2.0))
+
+    def _adj(z):
+        den = 1.0 - a * (z0 + z)
+        if not np.isfinite(den) or den <= 0.0:
+            return None
+        v = float(stats.norm.cdf(z0 + (z0 + z) / den))
+        return v if np.isfinite(v) else None
+
+    al, ah = _adj(z_lo), _adj(z_hi)
+    if al is None or ah is None or not (al < ah):
+        out["notes"].append(
+            f"the BCa map is degenerate at z0 = {z0:.4g}, a = {a:.4g} "
+            f"(alpha_lo = {al}, alpha_hi = {ah}); the percentile endpoints are used "
+            f"and this row is FLAGGED as a fallback, not reported as BCa")
+        out["fallback"] = True
+        out["lo"], out["hi"] = perc
+        return out
+    if al < eps or ah > 1.0 - eps:
+        out["notes"].append(
+            f"adjusted levels ({al:.4g}, {ah:.4g}) run past the outermost bootstrap "
+            f"order statistic; clamped to [{eps:.3g}, {1 - eps:.3g}] -- the ECDF "
+            f"holds no information beyond its own extremes")
+        al = max(al, eps)
+        ah = min(ah, 1.0 - eps)
+    out["alpha_lo"], out["alpha_hi"] = float(al), float(ah)
+    out["lo"] = float(np.percentile(boot, 100.0 * al))
+    out["hi"] = float(np.percentile(boot, 100.0 * ah))
+    return out
+
+
 # --------------------------------------------------------------- the estimator --
 def gpd_floor(n_max, decades=GPD_DECADES):
     """RULE 3. The hard floor: one decade below the Monte Carlo floor 1/(N_max+1)."""
@@ -362,12 +619,13 @@ def gpd_tail_p(S, s_obs, n_max, null_type, rng, threshold_q=GPD_THRESHOLD_Q,
                          "the range being used.")
         return out
 
-    zeta = exc.size / float(n)                    # P(X > u), the exceedance rate
-    def _p_of(xi_, beta_):
-        return float(zeta * stats.genpareto.sf(s_obs - u, xi_, loc=0.0,
-                                               scale=beta_))
-    p_point = _p_of(xi, beta)
+    point = _tail_p_from_sample(S, s_obs, threshold_q)
+    if point is None:                                        # pragma: no cover
+        out["reason"] = "the point extrapolation could not be formed"
+        return out
+    p_point = point["p"]
     out["p_point"] = p_point
+    out["zeta"] = point["zeta"]                   # P(X > u), the exceedance rate
 
     # RULE 2: the 95% bootstrap CI, and the UPPER end of it is the answer.
     #
@@ -376,34 +634,34 @@ def gpd_tail_p(S, s_obs, n_max, null_type, rng, threshold_q=GPD_THRESHOLD_Q,
     # rate zeta = n_exc/n fixed at their sample values, so the interval prices only
     # the GPD parameter uncertainty and is too narrow by the two other sources. The
     # §P6-2(7) calibration MEASURED that: with the exceedances-only bootstrap the CI
-    # covered the brute-force p in 22 of 26 cases (84.6%), below the rule's 90% bar,
-    # and the misses were near-misses of a CI that was simply too tight. Resampling
-    # S itself and re-deriving u, zeta and (xi, beta) on every replicate propagates
-    # all three, which is what a bootstrap of this estimator has to do.
-    ps = []
-    n_arr = S.size
-    for _ in range(int(n_boot)):
-        Sb = S[rng.integers(0, n_arr, size=n_arr)]
-        ub = float(np.quantile(Sb, threshold_q))
-        eb = Sb[Sb > ub] - ub
-        if eb.size < 2 or s_obs <= ub:
-            continue
-        try:
-            xib, _l, betab = stats.genpareto.fit(eb, floc=0.0)
-        except Exception:
-            continue
-        pb = float((eb.size / float(n_arr))
-                   * stats.genpareto.sf(s_obs - ub, xib, loc=0.0, scale=betab))
-        if np.isfinite(pb):
-            ps.append(pb)
-    if len(ps) < 20:
+    # covered the brute-force p in 22 of 26 cases (84.6%). Resampling S itself and
+    # re-deriving u, zeta and (xi, beta) on every replicate propagates all three,
+    # which is what a bootstrap of this estimator has to do. That was a CORRECTNESS
+    # repair and it stands; the JACKKNIFE below is held to the identical standard by
+    # sharing `_tail_p_from_sample` with the bootstrap.
+    ps = _bootstrap_ps(S, s_obs, rng, threshold_q=threshold_q, n_boot=n_boot)
+    if ps.size < 20:
         out["reason"] = "bootstrap CI could not be formed (too few valid refits)"
         return out
-    lo_pct = (1.0 - level) / 2.0 * 100.0
-    p_lo = float(np.percentile(ps, lo_pct))
-    p_hi = float(np.percentile(ps, 100.0 - lo_pct))
+    out["n_boot_ok"] = int(ps.size)
+
+    # §P7-7(a): BCa. Bias correction from the bootstrap distribution's position
+    # relative to the point estimate; acceleration from the jackknife of the SAME
+    # estimand, the extrapolated p.
+    jack, jmode = _jackknife_ps(S, s_obs, threshold_q=threshold_q)
+    bca = bca_interval(p_point, ps, jack, level=level)
+    bca["jackknife"] = jmode
+    out["bca"] = bca
+    if bca["lo"] is None or bca["hi"] is None:               # pragma: no cover
+        out["reason"] = ("bootstrap CI could not be formed ("
+                         + "; ".join(bca["notes"]) + ")")
+        return out
+    p_lo, p_hi = bca["lo"], bca["hi"]
     out["p_ci_lower"], out["p_ci_upper"] = p_lo, p_hi
-    out["n_boot_ok"] = len(ps)
+    # REFERENCE ONLY (§P7-7(a)): the percentile endpoints are kept so the audit can
+    # print what the superseded estimator would have said. Nothing reads them.
+    out["p_ci_lower_percentile"] = bca["percentile"][0]
+    out["p_ci_upper_percentile"] = bca["percentile"][1]
 
     # RULE 3: one decade and no further. Note the test is on the number we would
     # REPORT (the CI upper end), not on the point estimate -- reporting a CI-upper
@@ -432,8 +690,21 @@ def compact(g):
         return None
     keep = ("p_method", "p_point", "p_ci_lower", "p_ci_upper", "u", "xi", "beta",
             "n_exceed", "n_surrogates", "threshold_q", "floor", "mc_floor",
-            "null_type", "reason")
+            "null_type", "reason",
+            # reference only, never read by a consumer (§P7-7(a))
+            "p_ci_lower_percentile", "p_ci_upper_percentile")
     out = {k: g.get(k) for k in keep}
+    b = g.get("bca") or {}
+    out["ci_method"] = "BCa" if (b and not b.get("fallback")) else (
+        "percentile-fallback" if b else None)
+    out["bca_z0"] = b.get("z0")
+    out["bca_a"] = b.get("a")
+    out["bca_alpha_lo"] = b.get("alpha_lo")
+    out["bca_alpha_hi"] = b.get("alpha_hi")
+    out["bca_jackknife"] = b.get("jackknife")
+    out["bca_n_jack"] = b.get("n_jack")
+    out["bca_fallback"] = b.get("fallback")
+    out["bca_notes"] = b.get("notes")
     ad = g.get("ad") or {}
     out["p_ad"] = ad.get("p_ad")
     out["ad_a2"] = ad.get("a2")
@@ -517,7 +788,13 @@ def price_row(p_mc, mc_n_max, s_obs, S_surr, null_type, rng, other_p=0.0,
 
 
 # ------------------------------------------- rule 7: calibration before default -
-CALIBRATION_PATH = os.path.join("engine", "out", "audit_gpd.json")
+# The licensing artifact is the BCa one. `audit_gpd.json` -- the phase-2a percentile
+# run -- is NOT it and can never become it: §P7-7(c) scored that attempt UNRESOLVED
+# at its design's resolution, and §P7-7(b) requires the licensing set to be >= 125
+# FRESH comparisons, which the 26-comparison legacy set is not. Pointing the default
+# here is what makes "the legacy subset licenses nothing" structural.
+CALIBRATION_PATH = os.path.join("engine", "out", "audit_gpd_bca.json")
+LEGACY_CALIBRATION_PATH = os.path.join("engine", "out", "audit_gpd.json")
 
 
 class NotCalibratedError(RuntimeError):
@@ -540,7 +817,10 @@ def load_calibration(path=None):
             "worst_understatement": doc.get("worst_understatement"),
             "understatement_bar": doc.get("understatement_bar"),
             "n_comparisons": doc.get("n_comparisons"),
-            "n_fitted": doc.get("n_fitted")}
+            "n_fitted": doc.get("n_fitted"),
+            "n_scored": doc.get("n_scored"),
+            "ci_method": doc.get("ci_method"),
+            "set": doc.get("set")}
 
 
 def assert_calibrated(path=None):
@@ -567,6 +847,34 @@ def assert_calibrated(path=None):
             f"understatement {cal['worst_understatement']}x against a bar of "
             f"{cal['understatement_bar']}x. The estimator may not report until it "
             f"clears. Refusing to run.")
+    # §P7-9(1): the count is SCORED comparisons. `n_comparisons` is how many were
+    # RUN, and the two differ by every row the gates threw out -- rows that entered
+    # neither bar and so cannot have contributed power to either. An artifact that
+    # does not state its scored count cannot be checked against the design and is
+    # refused rather than given the benefit of the doubt.
+    n_scored = cal.get("n_scored")
+    if n_scored is None:
+        raise NotCalibratedError(
+            f"§P7-9(1): the calibration at {p} does not report `n_scored`, so the "
+            f"size of the set that actually entered the two bars is unknown. The "
+            f"design is stated in SCORED comparisons and cannot be checked against "
+            f"a run count. Re-run `python -u -m engine.audit_gpd`. Refusing to run.")
+    if int(n_scored) < GPD_MIN_CALIBRATION_COMPARISONS:
+        raise NotCalibratedError(
+            f"§P7-9(1): the calibration at {p} SCORED only {n_scored} comparisons "
+            f"(of {cal.get('n_comparisons')} run), below the required decisive set "
+            f"of {GPD_MIN_CALIBRATION_COMPARISONS}. Gated-out rows entered neither "
+            f"bar, so counting them toward the design's power would count an "
+            f"absence as evidence. A set this size cannot resolve its own 90% "
+            f"coverage bar -- attempt 1's 22/26 ran an exact 95% interval of "
+            f"[0.675, 0.946], which CONTAINS the bar. A pass on an underpowered "
+            f"design is not a pass. Refusing to run.")
+    if cal.get("ci_method") not in (None, "BCa"):
+        raise NotCalibratedError(
+            f"§P7-7(a): the calibration at {p} was produced with interval method "
+            f"'{cal['ci_method']}', not the declared BCa estimator. A licence is "
+            f"issued to the estimator that was calibrated and to no other. "
+            f"Refusing to run.")
     return cal
 
 
