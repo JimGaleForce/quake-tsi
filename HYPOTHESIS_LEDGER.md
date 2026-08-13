@@ -16226,3 +16226,84 @@ unbuilt tests removed from a denominator they were taxing, 23 duplicate tests re
 than a preference, and one control class returned to zero on a distinction that reconciles two of my
 own rulings instead of leaving them in tension. Appended to my own section; no existing line modified;
 nothing committed.*
+
+---
+
+## §P7-17. THE UNDECLARED GLM AXIS IN TRANCHE B — (c) is refused by my own rule; the answer is a three-way split, and m most likely stays 189.
+
+*2026-08-13, §P7-16 implemented and committed `0055014` (m = 189, strata `1131c629`). **Ratified in
+passing:** `assert_partition_total` shipped with a test showing the budget identity alone is blind to a
+lying headline. That is exactly why I asked for it — `Σ m_s q_s = m q` is satisfied by any `m` you
+care to write down, so it validates the allocation and not the arithmetic. The second assertion closes
+the seam the first one cannot see.*
+
+**The governing principle, which the three options were circling:**
+
+> **The engine may not compute a science-eligible test that no declaration covers.** There are exactly
+> three lawful dispositions — **declare it**, **suppress it**, or **prove it is not an independent
+> test**. There is no fourth, and "compute it but do not count it" is not one of them.
+
+### (c) is REFUSED, on the rule I wrote two rulings ago.
+
+The coordinator anticipated this correctly. §P7-16(4): *a control is unpriced only if it can
+calibrate a reference or condemn our own instrument.* **A count-path GLM row on a science feature is a
+live hypothesis about the Earth** — it can produce a survivor, and a computed, printed, BH-ineligible
+science row is precisely the laundering channel §P7-2(a) closed when I reversed myself on the negative
+controls. **"Unpriced audit context" would put science rows in the report with no denominator behind
+them.** Refused.
+
+### The three-way split, which is the actual answer.
+
+**1. COMPONENT rows — computed, no new declaration, never independently rejectable.** For F9-01 the
+first-moment GLM **is not a separate hypothesis; it is part of the second-moment claim.** One cannot
+assert "two-lobed structure with a vanishing first moment" without measuring the first moment. Same for
+Rayleigh beside Kuiper — the builder's own three-arc construction is the proof: **Kuiper 100%,
+Rayleigh 0%, second moment 0%. The comparison IS the claim.** A constitutive companion statistic owes
+no separate declaration because it makes no separate rejection.
+
+> **Enforcement, and it is what keeps this from being a loophole:** a component row appears **only
+> inside its parent statistic's record**, is labelled `COMPONENT-OF <parent>`, and **may never appear
+> in `stubs.json`, in any ranked list, or in any table of its own.** If it appears standalone anywhere,
+> it is an independent test and owes a declaration. Checkable in code, and it should be.
+
+**2. RE-EXECUTIONS of already-declared rows — permitted, not re-priced, and they become an audit
+asset.** Where a B feature's GLM row was already declared (the 259 original or the 550 re-occupied
+slots), re-running it is not new multiplicity: **the declaration exists and a test cannot be owed
+twice.** Label them `REPLICATION-OF-DECLARED` and report them as replications, never as fresh results.
+
+> **And take the free thing this hands us:** the same test, on the same data, must return the same
+> answer. Any re-executed row whose p differs from its prior session's p by more than MC error is a
+> **flag** under §P6-5's invariance discipline. **A liability in the multiplicity accounting is an
+> asset in the determinism audit**, and B gets a cross-session consistency check at zero cost.
+
+**3. GENUINELY NEW independent GLM rows — declare and price, or suppress. Builder's choice, declared
+in advance.** These are option (b) or option (a) applied only where they actually bite. If B's own
+scientific question does not include "does this feature modulate the daily rate", **suppress** —
+§P7-16(2)'s principle runs both ways: *do not declare tests you will not use, and do not run tests you
+will not declare.* If the question is wanted, **declare and price it**, and the integer moves once,
+before declaration, exactly as offered.
+
+### Expected consequence: m stays 189 — but the builder enumerates, I do not presume.
+
+Kepler's own framing of this tranche is **"THE STATISTIC TRANCHE (new statistics on old features)"**,
+and F9-01's 17 second-moment features match the 17 existing cyclic features (9 family-1 + 8 family-2).
+**If every B feature pre-exists, then every B GLM row is either a component (1) or a re-execution (2),
+no row is genuinely new, and m = 189 stands unchanged.** That is my expectation and it is not a
+finding: **the builder enumerates against the three categories above and the count follows the
+enumeration.** If any genuinely-new independent row exists, the integer moves once and B declares after
+it, not before.
+
+> **One assertion to add while the partition code is open:** every executed test row carries exactly
+> one disposition tag — `DECLARED` (in a stratum, BH-eligible), `COMPONENT-OF <parent>`, or
+> `REPLICATION-OF-DECLARED <session>` — and **the count of `DECLARED` rows equals `m`**. An untagged
+> executed row fails the run. That is the same shape as `assert_partition_total`: the identity that
+> catches the error the previous assertion is structurally blind to.
+
+**Standing gate, unchanged and restated:** B still does not run before the §P7-15
+recovery-versus-amplitude curve reports and I rule on the arm (i) anomaly (80% observed at >= 2x floor
+against a predicted 1.0000). This ruling settles what B computes and declares, not when it runs.
+
+*Popper seat, 2026-08-13. An option refused by a rule I wrote two days ago, a carve-out defined
+narrowly enough to be checkable rather than quotable, and a multiplicity liability converted into a
+determinism check. The integer probably does not move; the builder's enumeration decides that, not my
+expectation. Appended to my own section; no existing line modified; nothing committed.*
