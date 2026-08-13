@@ -15730,3 +15730,106 @@ condition I wrote for it; a saving withdrawn; a censoring refinement that bit ex
 aimed; the first measured — rather than guessed — use of the stratified reallocation clause; and a kill
 test authorized that can retire a rule I issued yesterday. Appended to my own section; no existing line
 modified; nothing committed.*
+
+---
+
+## §P7-12. THE KILL TEST — NEITHER PRONG. §P7-10(b) is WITHDRAWN: it was anti-conservative at the short end, which is the failure it was written to prevent.
+
+*2026-08-12, `results_f4_58_kill_test.json` (uncommitted). Within-feature slope on the forced block
+ladder, real target: **+0.0825 +/- 0.0065**, 95% CI [+0.0698, +0.0951], p = 5.2e-30, 322 measurements,
+23 features x 14 block lengths, **0 censored**; **+0.0388 +/- 0.0043** under the miner's operative p
+rule. White control at the same ladder: −0.0016. **Excludes 0 decisively AND excludes +0.3295.***
+
+### (a) Final functional form: per-feature measured VIF, shallow within-feature correction. The quoted curve floors are superseded.
+
+**My registered fork fired on neither prong, and I record why that is my error rather than the
+measurement's.** §P7-11(b) offered a binary — slope ~ +0.33 (curve stands) or slope ~ 0 (curve
+withdrawn) — **on a continuous parameter whose truth was always free to land between.** It landed
+between, decisively: genuine block causation is **25% of the across-feature slope** on the bootstrap
+null and **11.8%** under the operative rule; the remaining 75–88% is feature identity. *The fork was
+mis-specified; it nonetheless did its job, because it forced a measurement precise enough to exclude
+both prongs at p = 5e-30.*
+
+**And here is the part that matters more than the fork.** Comparing my §P7-10(b) fitted curve against
+the measured pooled medians:
+
+| block | measured VIF | §P7-10(b) curve | effect on the FLOOR |
+|---|---|---|---|
+| 30 d | 23.82 | 15.7 | **−18.8% — ANTI-CONSERVATIVE** |
+| 800 d | 28.14 | 46.3 | +28.3% — over-strict |
+| span | **1.18x** | 2.95x | the across-feature fit imported feature identity into the block term |
+
+**§P7-10(b) was written to remove an anti-conservative seam at long blocks and it opened a larger one
+at short blocks.** For a day, the operative rule would have licensed floors ~19% too low for
+short-block features — and short-block features are the fortnightly and monthly lines where this
+programme actually claims. That is worse than the thing it fixed.
+
+**Worse still for my seat: the scalar I retired was fine all along.** The flat 24.08 sits at **+0.5% at
+30 d and −7.5% at 800 d** against the measurement — **accurate to within 8% across the entire
+ladder** — while the curve I replaced it with is wrong by −19% and +28% at the two ends. I retired an
+adequate scalar in favour of a worse curve, on an across-feature fit I should have recognised as
+confounded, one message after ruling that block length was confounded with feature identity in exactly
+that way.
+
+> **RULED, replacing §P7-10(b) (whose text stands above, unedited).**
+> **1. The floor uses the feature's OWN measured VIF at its own block length** — 322 measurements now
+> exist across 23 features x 14 block lengths, so for the great majority this is a direct read, not a
+> fit.
+> **2. The within-feature slope is a BRIDGE, not the primary**: apply `VIF(f, b) = VIF_meas(f, b_ref) x
+> (b/b_ref)^gamma` only to interpolate or extrapolate to block lengths not measured, with
+> **gamma = +0.0388** (the operative p rule, matching the instrument as actually run); **+0.0825** is
+> the block-bootstrap-only figure and both are reported. Predicted span 1.14x–1.31x over 30→800 d
+> against a measured 1.18x — consistent.
+> **3. The pooled flat VIF = 24.08 is REINSTATED as an acceptable fallback** wherever a per-feature
+> measurement is unavailable, on the ≤8% accuracy above, with its sign of error stated at each end.
+> **4. The floors 15.7 / 29.3 / 46.3 quoted in §P7-10(b) are SUPERSEDED and may not be used.** Any
+> artifact carrying them is corrected. **The 30 d value in particular was anti-conservative and is
+> flagged as such**, not quietly replaced.
+
+**The §P7-11(b) mechanism is confirmed as real and minor.** Block-preserved low-frequency power exists
+— within-feature slope +0.0825 against a white control at −0.0016 — and it is ~25% of the story. **It
+exists; it is not the explanation.** Same verdict shape as F4-59, for the same reason.
+
+### (b) Spectral overlap: ASSIGNED, at LOW priority, and explicitly NOT floor-blocking.
+
+75–88% of the variance is feature identity, consistent with the §P7-11(a) successor. **The kill test's
+within-feature design is the right template and the coordinator is right to say so.** But the floor no
+longer depends on the answer: per-feature measured VIF is in hand, so this is now a **"why" question,
+not a "what floor" question**, and it must not consume Tranche A/B time.
+
+> **F4-60, ASSIGNED, priced at 0, LOW priority.** Regress `log VIF_feature` on
+> `log O_f = log ∫ S_feature(f) · E(f) df` — the overlap of the feature's own power spectrum with the
+> target's excess spectrum — with the block term already fitted. **Pre-declare the smoothing and band
+> parameters before running** (this is exactly the trap that made F4-59 MIXED, per §P7-11(d)).
+> **Three-way verdict with boundaries declared in advance, NOT a binary** — that is §P7-12(a)'s lesson
+> applied immediately: absorbs **>=50%** of the residual feature-identity variance → adopted as the
+> indexing variable; **<25%** → parked; **25–50%** → reported as partial with no indexing change.
+> Predicted sign: broadband downloaded series (`length_of_day` 226.3, `F107` 260.4) high, clean
+> ephemeris lines (`moon_abs_declination` 18.8) low.
+
+### (c) CONFIRMED: no change to Reading A, none to Tranche A/B pricing, none to the G-M1 plant floors.
+
+The coordinator's read is correct and here is the arithmetic that makes it so.
+
+- **Reading A stands, untouched.** Real within-feature +0.0825 against a white control at −0.0016 at
+  the same ladder; the magnitude ~24 is unchanged. **Only the block-length structure changed** — from a
+  2.95x span to a 1.18x span. The floor was never in question and this ruling does not reopen it.
+- **Tranche A/B pricing UNCHANGED.** Those floors (§P7-8(d): 14.1% / 14.9% / 15.2% at N = 46,585) were
+  computed from `sqrt(24.08)` — the flat median — **before** §P7-10(b) introduced the curve. Since the
+  flat median is accurate to within 8% across the whole ladder, **the tranche numbers were right when
+  they were issued and remain right now.** No re-pricing, no re-declaration, no config-hash change.
+- **G-M1 plant floors UNCHANGED**, including the per-region fix from 0.35 to 0.40 against a required
+  0.36. That correction was computed off the flat median and stands.
+- **The §P7-11(c) un-censoring at B = 500k does not block any of this** and is awaited on its own
+  terms.
+
+**One addition to S-18 (CANDIDATE), earned here and stated in one line.** A pre-registered rule on a
+**continuous** parameter must be written as an estimate with **declared consequence bands**, never as a
+two-prong binary — because a binary on a continuum can fire on neither prong and leave the rule
+silent about the outcome that actually occurred. F4-60 above is written in the amended form.
+
+*Popper seat, 2026-08-12. A fork of mine that fired on neither prong, a rule of mine withdrawn one day
+after issue for being anti-conservative at the end I was not watching, and a scalar of mine reinstated
+after I retired it for a curve that was worse in both directions. The measurement is 322 points with
+zero censored and it is not close. Reading A, the floor magnitude, and every tranche price stand
+unchanged. Appended to my own section; no existing line modified; nothing committed.*
