@@ -15223,3 +15223,172 @@ UNRESOLVED more often, which is a worse-looking report and a better one.**
 *Popper seat, 2026-08-12. Bars unchanged, design enlarged, one attempt remaining, and the first
 attempt relabelled from REJECTED to UNRESOLVED because the harness could not resolve its own
 threshold at n = 26. Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+## §P7-8. F4-58 EXECUTED — MY PREDICTION IS FALSIFIED. The floor is adopted provisionally, item (ii) is REQUIRED, and the reason it is required is the finding.
+
+*2026-08-12. `results_f4_58_vif.json` on disk (uncommitted), recovered at zero surrogate cost from
+`checkpoint.json` across four sessions. Measured median VIF = 24.08 over 2-df phase features, stable at
+24.08 / 24.09 / 24.66 / 24.09 across sessions; block-length dependence present and significant
+(Spearman rho 0.51, p = 0.014; log-log slope +0.33 +/- 0.11, p = 0.006).*
+
+### (a) The prediction, scored against my own seat.
+
+**FALSIFIED on magnitude. CONFIRMED on structure.** §P7-1(c) recorded: *"F4-58 returns median VIF ~ 3.9
+with block-length dependence, or §P7-1(b) is wrong and the scalar stands."* It returned **24.08**.
+
+- **My 3.94 is wrong by 6.11x in variance (2.47x in amplitude).** Not a rounding, a scale error.
+- **Kepler's 11.9/sqrt(N) is 2.71x optimistic** against the measured 32.3/sqrt(N). He was closer than
+  me, and his instinct that the factor was dominated by something the raw formula omits was right.
+- **My escape clause does not trigger.** I wrote that a return of ~9.7 would mean my multiplicity term
+  was double-counted and the scalar stands unamended. It returned neither value, so that branch is
+  void; what survives is the **formula**, and the measured block-length dependence is exactly the
+  property that made a scalar untenable. **The structure of §P7-1(b) is vindicated and its scale
+  number is retracted.**
+
+**Why I was wrong, diagnosed rather than waved at, because it is the second instance of one pattern.**
+I decomposed the factor by treating the published ~5.6% as an *80%-power MDA at the session's BH
+threshold*, and subtracting a multiplicity term of 1.567 on that basis. Reconciling against the
+measurement:
+
+| convention for the published ~5.6% | constant | x sqrt(24.08) at N = 46,585 |
+|---|---|---|
+| 80%-power, alpha = 0.05 (what I assumed) | 3.962 | **9.0%** |
+| 95% detection, **no power term** | 2.772 | **6.3%** |
+| S&A form sqrt(-4(ln P + 1)) | 2.825 | **6.4%** |
+
+**The published number sits on the 95%-detection row, not the 80%-power row.** So the multiplicity
+term I subtracted was never in it, I attributed the shortfall to dispersion being small, and I
+underestimated dispersion by exactly that much. **This is the same error I made in §P6-1(6): assuming
+the convention of a number I did not derive myself.** Twice in one programme is a pattern, and it earns
+a standard rather than another apology — see §P7-8(e).
+
+**One thing this does NOT do: it does not touch any p-value.** VIF is a property of the *declaration
+floor*, not of the inference. The surrogate nulls already carry the dispersion by construction — which
+is precisely why VIF was measurable from them at all — so **nobody may "correct" a p-value, a BH
+threshold or a max-statistic by 24.** Any such correction would be double-counting. Stated here
+because at this scale someone will try.
+
+### (b) Adoption: PROVISIONAL as a declaration floor. Item (ii) is REQUIRED, and here is why it is not a formality.
+
+> **ADOPTED PROVISIONALLY.** `A_min = sqrt(VIF) * (z_alpha + z_0.80) * sqrt(2/N)` with **VIF = 24.08**
+> becomes the operative S-15 declaration floor immediately. This direction is self-penalising — a
+> larger floor declares *more* things UNMEASURABLE — so adopting it before item (ii) can cost the
+> programme scope but cannot manufacture a claim. That asymmetry is what licenses provisional adoption.
+
+**But item (ii) — direct Poisson simulation from the fitted ETAS lambda — is REQUIRED before the floor
+may (1) retire any catalog entry on floor grounds, or (2) be quoted in any external artifact.** Not for
+tidiness. Because the measurement as it stands **cannot distinguish two readings with opposite
+consequences**:
+
+- **Reading A — the Earth is overdispersed.** Daily global M >= 4.5 counts carry residual clustering the
+  ETAS offset does not absorb. Then VIF = 24 is real, the floor is real, and the programme is simply
+  less powerful than it believed.
+- **Reading B — our own null is too wide.** `Feature.block_days` clips to [30, 800] days; at 800 days
+  over a 7,716-day window the block bootstrap has **~10 blocks**, and a null built from ten blocks is
+  enormously variable *by construction*. Under this reading VIF = 24 is substantially an artifact of
+  our null, the fix is a better null rather than a bigger floor, and **the miner has been
+  over-conservative — under-powered, not over-confident.**
+
+**The measured block-length dependence is direct evidence that Reading B is at least partly
+operating**: Spearman rho 0.51 (p = 0.014) and a log-log slope of +0.33 +/- 0.11 (p = 0.006) say the
+inflation *grows with the block length we chose*. Physical overdispersion of the target has no reason
+to care what block length we picked to resample it.
+
+> **ITEM (ii), SPECIFIED.** Simulate Poisson counts from the fitted ETAS lambda (identical code path),
+> where **the true VIF is 1 by construction**, and run the same VIF estimator across the same span of
+> `block_days`. Report VIF-vs-block-length on simulated data against the same curve on real data. **If
+> the simulated curve reproduces a large part of the +0.33 slope and a VIF far above 1 at long blocks,
+> the inflation is our null and not the Earth**, and §P7-1(b)'s VIF term is re-specified as
+> block-length-conditional against a simulated baseline rather than adopted as a flat 24. This is a
+> positive control on the VIF estimator itself, and it is S-17 applied to the newest estimator in the
+> building. It is cheap and it should run before Tranche B is priced.
+
+### (c) The duplicate session — ANNOTATE, DO NOT AMEND. The over-count stands.
+
+`session_20260812T021707` is bitwise identical to `session_20260812T004857` because
+`engine/datasets.py:CATALOG_MAG_FLOOR = 4.5` silently clamps the requested M >= 4.0 floor. Its
+EXPLORE_COUNT line (550 tests, committed `eaab8fa`) therefore declares the same tests twice.
+
+> **RULED. (1) The committed line is not edited, reduced or deleted.** `EXPLORE_COUNT.jsonl` is a
+> commitment record, not a tally, and **retroactively lowering a declared multiplicity is precisely the
+> move the log exists to prevent** — even when the reduction is honest. **(2) Append an annotation
+> line** recording the identity (both session ids, the bitwise-identity finding, the clamping constant
+> and its file) so any reader reconstructing multiplicity sees why the count is conservative.
+> **(3) The over-count remains operative**: 550 declared tests continue to count. The cost is a
+> slightly stricter threshold for everything downstream, which is the safe direction.
+> **(4) The clamp is a bug with statistical consequence and is fixed by refusing, not by clamping** —
+> an unsupported `--mag` must raise, never silently substitute. **(5) The near-miss is recorded**: an
+> overnight run was believed to be an independent replicate and was not. Had those two sessions ever
+> been cited as agreeing, the agreement would have been vacuous. **Bitwise identity between two runs
+> that differ in a declared parameter is a build invariant worth asserting** — add it to the run
+> harness: two sessions whose configs differ must not produce identical artifact hashes.
+
+### (d) Revised measurability under VIF = 24.08. What survives, stated honestly.
+
+Operative floors, computed at each tranche's own alpha (q = 0.1, most conservative BH rung):
+
+| tranche | m | alpha | floor | at N = 46,585 |
+|---|---|---|---|---|
+| 2026-08-11 session | 259 | 3.86e-4 | 30.5/sqrt(N) | **14.1%** |
+| Tranche A | 713 | 1.40e-4 | 32.3/sqrt(N) | **14.9%** |
+| Tranche B | 1,000 | 1.00e-4 | 32.8/sqrt(N) | **15.2%** |
+
+**Tranche A — unaffected in its purpose, but one build consequence is urgent.** Controls, recovery
+tests and stability audits do not need the floor. **But F9-19 / G-M1 arm (ii) plants signals and
+demands recovery at Ahat/A in [0.8, 1.2]: a signal planted below ~15% at global aggregation cannot be
+recovered at that tolerance, and the gate would fail for POWER reasons while reading as an INSTRUMENT
+failure.** Plant at **>= 2x the operative floor (>= 30% at global aggregation)**, and state the planted
+amplitude next to the floor in the artifact. **This ruling exists to prevent a false G-M1 failure that
+would otherwise have been recorded against the pipeline.**
+
+**Tranche B — the tranche survives; its amplitude claims do not.** At a ~15% floor, no per-feature
+amplitude statement about a plausible few-percent effect is measurable on the daily-binned count path.
+**That does not gut Tranche B, because Tranche B was never an amplitude tranche** — F9-01, F9-04 and
+F10-14 are *detection* statistics answering "is there phase structure of a shape the first moment
+cannot see", and detection is adjudicated against a surrogate-calibrated null, not against the S-15
+amplitude floor. What changes is what a **null** from it may say:
+
+> **RULED. A null from Tranche B's count path bounds non-sinusoidal and second-moment structure at
+> ~15%, NOT at the ~5.6% the programme is accustomed to quoting.** Any Tranche B null carries its own
+> floor in its own headline. Per-feature amplitude quotes on the count path are **UNRESOLVED** and are
+> not printed.
+
+**And the mark axis needs its own floor, in its own units.** `A_min = c/sqrt(N)` is derived for
+*sinusoidal rate modulation*. F9-10's statistics are rank and circular-linear correlations; applying an
+amplitude floor to a Spearman rho is exactly the category error Finding B punished when the K-080
+count floor was proposed for the miner. **F9-10 declares a power floor in correlation units before it
+runs**, or it does not run.
+
+**Tranche A's phase-2b consequences, confirmed.** R = 6 by the declared arithmetic (not the 12-24 I
+guessed in Rule 4.3) and a per-region battery floor of R <= 1.79 — i.e. **the per-region battery is
+unmeasurable at any R >= 2, printed rather than hidden.** That is §P7-1(d) confirmed and then some:
+Kepler's stricter reading was not merely correct, it was not strict enough, and the per-region
+*battery* is dead at M >= 4.5 while the summed 2R-df statistic survives intact. **And the blind-spot
+kill is demonstrated at engine-test level** — planted regional-phase signal missed by the global 2-df
+form, recovered by the 2R-df sum at p < 1e-6, negative control passing. That is a positive and a
+negative control on the primary instrument, on synthetic data. **It licenses the instrument; it claims
+nothing about the Earth.**
+
+### (e) S-18 — CANDIDATE STANDARD, earned by my own second offence.
+
+> ### S-18 (CANDIDATE). A number may not enter an arithmetic unless it carries its convention.
+>
+> **Rule.** Any published or inherited quantity used as an input to a derivation must state, at the
+> point of use: its alpha, its power convention, its degrees of freedom, and whether dispersion is
+> inside or outside it. A quantity whose convention is not stated is not an input — it is a lookup
+> that must be re-derived from its own source before use.
+
+**Marked CANDIDATE, entered for the usual adoption path.** It generalises two errors from this seat:
+§P6-1(6), where I bounded a difference between two estimators by the standard error of one of them; and
+§P7-1, where I decomposed a factor by assuming the published 5.6% was an 80%-power MDA when it sits on
+the 95%-detection row. **Both were mine, both were caught by execution rather than by argument, and
+both would have been prevented by one sentence of convention-tagging at the point of use.**
+
+*Popper seat, 2026-08-12. Prediction falsified and recorded as falsified; the formula survives, the
+scale does not. Floor adopted provisionally in the self-penalising direction, with item (ii) required
+because the block-length dependence I predicted is itself evidence that a large part of the inflation
+may be our own null rather than the Earth — which would make the miner under-powered rather than
+over-confident, and is the more interesting of the two readings. Appended to my own section; no
+existing line modified; nothing committed.*
