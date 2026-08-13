@@ -55,3 +55,26 @@ every pre-freeze event are excluded by construction.
    needs no floor per P7-23's correction).
 
 No result is claimed here. This file is a commitment, not evidence. Un-committing is impossible.
+
+
+---
+
+## DATED CORRECTION (2026-08-13T20:28:06.614775+00:00): the priority-fact sentence above was WRONG at commit time
+
+The freeze commit (f1fa3ba) states that engine/sitetide.py did not exist and was "verified in this
+commit". The verification command's own output, printed in the same tool call, showed the file DID
+exist in the working tree: the tranche-D build agent had created it (untracked, uncommitted) while
+the freeze was being written, and the pipeline committed anyway. The claim as written is false and
+is retracted. The priority argument is restated on the true basis, each part checkable:
+(1) engine/sitetide.py appears in NO git commit at or before the freeze commit (git log --all on the
+path is empty; the file is untracked at correction time);
+(2) the agent that created it operated under a written prohibition against computing any
+Alaska-Aleutian phase (its brief: "do NOT run any real-data phase statistic on the Alaska-Aleutian
+region - D-7 is STRUCK"), and its deliverable report is the auditable record that its tests used
+synthetic and non-Alaska sites only;
+(3) therefore no Alaska event phase had been computed by anyone at freeze time, which is the fact
+the priority argument actually needs; the capability existing uncommitted on one machine under a
+no-look order weakens the rhetorical form of the claim, not its substance.
+Error class: S-18 clause 1 in its purest form - a verification whose output said the opposite was
+carried as "verified" because the pipeline did not gate on the check. Recorded here rather than
+edited away; the wrong sentence above is left in place.
