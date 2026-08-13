@@ -15602,3 +15602,131 @@ because a flat median flatters exactly the decadal features this build has alrea
 Tranche B admitted with its amplitude claims withdrawn and its detection claims intact; and the
 unexplained slope handed to F4-59 with a prediction that would turn a lookup table into a curve.
 Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+## §P7-11. F4-59 DISPOSITION — mechanism confirmed, pass condition NOT met. The kill test is authorized, and it puts my own §P7-10(b) rule at risk.
+
+*2026-08-12, three §P7-10 measurements executed and committed. (1) Censoring: zero count-axis rows
+censored across 2,169 p-values, medians unchanged bitwise. (2) F4-58M: VIF_mark median 4.345 over 43
+scored; 3 censored rows are saturated LOWER BOUNDS at 17.2 / 28.2 / 38.7; all 43 observed statistics
+sit below their own floors (max obs/floor 0.77). (3) F4-59: MIXED, stated without softening.*
+
+### (a) F4-59: the mechanism is CONFIRMED as a contributor and REJECTED as the explanation. VIF stays per-feature.
+
+**My quantitative prediction came in and it does not save the rule.** I predicted the exponent on
+spectral excess would be exactly 1; measured 1.0623 +/- 0.2082, which is 0.30 sigma away. R² = 0.554
+alone. **The mechanism is real.** But §P7-10(d) wrote the pass condition myself: *"Pass: the frequency
+term absorbs the +0.329 block-length slope, which then goes insignificant."* The block coefficient
+remains **+0.17 to +0.26 with p straddling 0.05** across 11 smoothing settings, PASS 4 / FAIL 6 /
+MIXED 1. **The slope does not go insignificant. By my own written rule, F4-59 does not pass**, and I do
+not get to rescue it because I like the mechanism and predicted its exponent correctly. Confirmed as
+*a* contributor, rejected as *the* explanation.
+
+**The one-curve payoff fails independently and decisively.** Features sharing a frequency do not share
+a VIF: 12.1x spread at 13.66 d (`moon_abs_declination` 18.8, `tidal_potential_proxy` 27.8,
+`length_of_day` 226.3) and 5.4x at record length (`Ap` 48.2, `F107` 260.4). Frequency is not the
+governing variable.
+
+> **RULED. VIF stays PER-FEATURE**, on the fitted block curve of §P7-10(b) (itself now contingent —
+> see (b)). **The frequency curve is a diagnostic cross-check only and may never substitute for a
+> measured per-feature value.** The "one curve, no new measurement" saving is withdrawn.
+
+**The successor hypothesis, named so it is not rediscovered.** The within-frequency spread is not
+noise and it has a shape: the extreme values sit on **downloaded broadband series** (`length_of_day`,
+`F107`), the modest ones on **clean ephemeris lines**. A score statistic's null width is driven by the
+**overlap of the feature's own power spectrum with the target's excess spectrum**, not by a single
+frequency index — and `length_of_day` at a nominal 13.66 d carries enormous decadal power that
+`moon_abs_declination` does not. **A spectral-overlap integral would explain both the confirmed
+exponent and the 12.1x spread that killed the single-frequency index.** Test it only if (b) does not
+settle the matter; the spectra already exist.
+
+**And a correction to my own premise, recorded loudly because it travels further than this ruling.**
+§P7-10(d) reasoned that "ETAS absorbs short-timescale clustering well and long-timescale drift
+poorly." **The measurement says it absorbs neither well**: the residual power excess is **7.6x at
+2–7 d**, 19.6x at 7–30 d, 64.0x at 365–1000 d. More at long timescales, yes — but a 7.6x excess at
+2–7 days is a statement about **ETAS-v1's misfit that matters far beyond VIF**. It bears on every
+ETAS-baselined result this programme owns, and `SPEC.md`'s baseline caveat — *"etas-v1 (isotropic
+kernel; anisotropy/mechanism NOT absorbed)"* — may be understating what is unabsorbed. **Flagged with
+a pointer, not claimed**: it is owed a look before the next artifact leans on the ETAS baseline.
+K-009 reconciled directionally, its own robustness caveat carried rather than leaned on — correct
+handling.
+
+### (b) The kill test — AUTHORIZED, and it puts my §P7-10(b) rule at risk. Say so up front.
+
+**Authorized: the F4-58 identity on the REAL target at the §P7-8(b) forced block ladder, giving a
+within-feature slope with the across-feature confound removed. One control-sized sweep, zero declared
+tests.** It is the discriminating measurement and it is free.
+
+**Why the named candidate is the strongest yet: it is the first one consistent with BOTH observations.**
+Block-preserved low-frequency power in the surrogates explains the real slope (longer blocks preserve
+more of a target that has 7.6–64x excess power) **and** the flat control (the control's ETAS-Poisson
+target has no such power to preserve). My refuted Reading B failed precisely because it predicted
+inflation on white data. **This is a neighbouring mechanism, not a rehabilitation of mine** — and the
+distinction matters: under it the block-bootstrap null is **correct** to be wide, and what is wrong is
+the theoretical chi² reference. **So Reading A stands whatever the kill test returns.** The kill test
+decides the floor's **functional form**, not whether the floor is real. Nobody should read this section
+as reopening the floor.
+
+> **Pre-register before running, and this time including the analysis parameters (see (d)):** the block
+> ladder values, the regression form, and the verdict rule. **Outcomes and their consequences, both
+> binding:**
+> **within-feature slope ~ +0.33** → block length is causal within feature; **§P7-10(b)'s fitted block
+> curve stands**.
+> **within-feature slope ~ 0** → the across-feature slope was feature-identity confounding;
+> **§P7-10(b) is WRONG and reverts to per-feature measured VIF with no block term**, and I withdraw it.
+> A rule of mine is on the line here and that is the correct position for it to be in.
+
+### (c) The mark axis — detection-only, its own stratum, and the three censored features are UNMEASURABLE by declaration.
+
+**First, the vindication, because it earned it on first application.** My §P7-10(a) censoring warning
+found **zero** rows on the count axis and **exactly three** on the mark axis, and those three are
+saturated lower bounds 4–9x above the median. The refinement was not hygiene; it was the only thing
+standing between us and three floors computed from saturated statistics.
+
+1. **The mark arm proceeds as DETECTION-ONLY, and its honest product is a bound.** All 43 observed
+   statistics sit below their own floors, **max obs/floor = 0.77 — not one mark statistic reached its
+   own floor.** That number is the S-15 headline for the arm, printed first, not buried: it is the
+   cleanest possible statement of an instrument reporting what it cannot see.
+2. **The mark arm gets its own stratum under §P6-3, with a small declared `q_s`, and the freed budget
+   goes to the live strata.** A family that cannot detect at current N is a **measured** dead family,
+   not a guessed one — so this is **the first legitimate use of §P6-3's reallocation clause in this
+   programme**, and the justification written into the config's note field is this measurement.
+   Reallocation stays inside `Σ m_s q_s = m q`. Without this, ~161 predictably-null tests tax every
+   live test in Tranche B for nothing.
+3. **The three censored features (`b_value`, depth drift) are UNMEASURABLE BY DECLARATION, not given a
+   floor.** A floor computed from a saturated **lower bound** on VIF is itself a lower bound on the
+   floor — using it would understate the floor, which is the exact anti-conservative move the
+   refinement exists to prevent. **A censored VIF cannot produce a valid floor.** To un-censor: re-run
+   those three at a bootstrap count large enough that `p_boot` leaves the lattice edge — three
+   features, cheap, the §P6-1 ladder logic applied to a calibration.
+
+### (d) The band-robustness lesson — S-9 was always sufficient; the gap was in what we recognised as a construction choice.
+
+**This is not a new standard. It is S-9, and S-9 already covers it**: *"the protocol names one value
+for every construction choice, with no alternatives run."* What the programme failed to recognise is
+that **the analysis pipeline's own free parameters are construction choices** — smoothing bands,
+binning, kernel widths, threshold sets, core definitions. F4-59's rule was pre-registered in its
+statistic and its verdict and left 11 settings free, and the verdict flipped across them: 4 / 6 / 1.
+
+> **Clarifying gloss on S-9 (appended, S-9's text unmodified).** Construction choices include the
+> **evaluation** pipeline's free parameters, not only the covariate-construction ones. **Where a rule's
+> verdict depends on a parameter the rule does not name, the rule is not pre-registered** — it is a
+> family of rules, and it must be declared as one.
+>
+> **Added to S-18 (CANDIDATE), which is the right home because it is the same genus:** a pre-registered
+> **rule** must name every free parameter of its own evaluation, exactly as a pre-registered **number**
+> must carry its convention. Unspecified either way, it is not an input — it is a lookup to be
+> re-derived.
+
+**And the measurer's handling was exactly right and should be the template.** Faced with an
+unspecified parameter, they **swept all 11 settings and reported the full distribution of verdicts**
+rather than choosing one and calling it the answer. **A verdict that flips across an unspecified
+parameter is reported as flipping.** That is what turned a rescuable "PASS" into an honest MIXED, and
+it is why (a) could be ruled at all.
+
+*Popper seat, 2026-08-12. A mechanism whose exponent I predicted to 0.30 sigma, failed on the pass
+condition I wrote for it; a saving withdrawn; a censoring refinement that bit exactly where it was
+aimed; the first measured — rather than guessed — use of the stratified reallocation clause; and a kill
+test authorized that can retire a rule I issued yesterday. Appended to my own section; no existing line
+modified; nothing committed.*
