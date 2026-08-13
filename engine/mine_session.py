@@ -148,21 +148,35 @@ def rung_rng_factory(master_seed, feature, kind, lag=None, null_type=None,
     return lambda i: np.random.default_rng(M.rung_seed_sequence(parent, i))
 
 
-def ledger_record(cfg, n_tests, session_dir):
+def ledger_record(cfg, n_tests, session_dir, n_declared=None, dispositions=None):
     """The one line a completed session appends to the exploration ledger.
 
     `n_declared_tests` is stated explicitly and by name alongside `n_tests` so a
-    reader never has to infer whether the count meant DECLARED or SURVIVING. They
-    are the same number here -- the declared family size -- and saying so costs one
-    field and removes an ambiguity that would otherwise be resolved by guessing.
+    reader never has to infer whether the count meant DECLARED or SURVIVING.
+
+    THEY ARE NO LONGER THE SAME NUMBER, and §P7-17/§P7-18 are why. A session EXECUTES
+    more rows than it DECLARES: components of other rows, cross-session
+    replications, unpriced controls. `n_declared_tests` is the PRICED count -- the
+    BH denominator, the thing multiplicity is owed on -- and `n_tests` is what ran.
+    Writing the executed count into the declared field would inflate this programme's
+    recorded multiplicity with rows that were never hypotheses, which is the opposite
+    error to the one this ledger exists to prevent and just as wrong. The disposition
+    census travels on the same line so the difference is auditable rather than
+    asserted.
 
     Parent-only: workers never see this function, let alone the ledger path.
     """
     return {
         "ts": _dt.datetime.now(_dt.timezone.utc).isoformat(),
         "kind": "mine",
+        "dispositions": (dict(dispositions) if dispositions else None),
+        "n_declared_rule": (
+            "§P7-17/§P7-18: n_declared_tests is the PRICED count (the BH "
+            "denominator); n_tests is what executed. Components, cross-session "
+            "replications and unpriced controls execute and are not priced."
+            if n_declared is not None and int(n_declared) != int(n_tests) else None),
         "n_tests": int(n_tests),
-        "n_declared_tests": int(n_tests),
+        "n_declared_tests": int(n_tests if n_declared is None else n_declared),
         "hash": splits.config_hash(cfg),
         "config": cfg,
         "session_dir": session_dir.replace("\\", "/"),
@@ -580,6 +594,63 @@ def marksx_task(f, window, fe_day, marks, ext_marks, n_surr, rng, seed=0,
         r.update(_window_clause(f))
         rows.append(r)
     return rows
+
+
+LADDER_ESCALATION_RULE = (
+    "§P7-19(c)(2): for a floor-pinned DECLARED row -- one whose p SITS AT its own "
+    "Monte Carlo resolution floor, so the only thing we know is that the answer is "
+    "somewhere at or below 1/(N_max+1) -- the principled route is LADDER ESCALATION "
+    "AT A RAISED N_max: targeted brute-force Monte Carlo on that row alone, NOT "
+    "extrapolation. The distinction is the whole of §P6-2: extrapolation buys "
+    "resolution with a tail MODEL whose calibration was rejected at 22/26 and is "
+    "still unlicensed, while brute force buys the same resolution with compute and "
+    "no new assumption. The cost is linear in the resolution demanded and is paid "
+    "only on the rows that need it.")
+
+
+def floor_pinned_escalation(tests, n_surr, cfg=None):
+    """Identify floor-pinned DECLARED rows and emit the exact escalation recipe.
+
+    HOOK, NOT AUTO-RUN. The escalation is a targeted re-run at a raised N_max, and
+    raising N_max after seeing which rows pinned is legitimate ONLY because the
+    trigger is a RESOLUTION fact (the p equals its floor) and not a RESULT fact (the
+    p looks interesting) -- but the two are one keystroke apart, so the recipe is
+    emitted for a separate, declared invocation rather than executed inside the run
+    that discovered the need. Every row's required N_max is derived from the
+    resolution it needs, and both are printed.
+    """
+    rows = []
+    for t in tests:
+        if t.get("disposition") and t["disposition"] != disp.DECLARED:
+            continue
+        fl = t.get("floor_monte_carlo")
+        if fl is None:
+            continue
+        p = float(t.get("p_raw", 1.0))
+        eff = float(t.get("p_floor", fl))   # `test_floor` writes p_floor
+        if p > eff * 1.000001:
+            continue
+        rows.append({
+            "test": t.get("test"), "feature": t.get("feature"),
+            "lag": t.get("lag"), "mark": t.get("mark"),
+            "stratum": t.get("stratum"), "p_raw": p,
+            "floor_monte_carlo": float(fl),
+            "floor_enumeration": t.get("floor_enumeration"),
+            "n_max_now": int(round(1.0 / max(fl, 1e-300)) - 1),
+            "n_max_required_for_10x": int(round(10.0 / max(fl, 1e-300)) - 1),
+            "route": "targeted brute-force MC at raised N_max (NOT extrapolation)",
+        })
+    return {
+        "rule": LADDER_ESCALATION_RULE,
+        "n_floor_pinned_declared_rows": len(rows),
+        "rows": rows,
+        "status": ("NOT REQUIRED this run: no DECLARED row is floor-pinned"
+                   if not rows else
+                   "SEQUENCED NEXT: %d DECLARED row(s) are floor-pinned; the "
+                   "escalation is a separate declared invocation at the stated "
+                   "N_max, not a silent continuation of this run" % len(rows)),
+        "n_surrogates_this_run": int(n_surr),
+    }
 
 
 def window_clause_census(tests, record_days):
@@ -1404,6 +1475,18 @@ def prepare(cfg, verbose=True):
                                            enabled=cfg["downloads"], verbose=verbose)
     feats += dl_feats
     feats += M.catalog_features(ctx, all_marks, lags)
+    # TRANCHE B: the F7 observer controls. UNPRICED (§P7-16, m_s = 0) and declared
+    # so that (a) §P7-3(3)'s sub-daily gate has a declared set to read, and (b) a
+    # science row that co-moves with an instrument state is visible rather than
+    # inferred. They are CONTROL features, so the engine already keeps them off the
+    # mark and regional axes by name.
+    if (cfg.get("tranche_b") or {}).get("enabled"):
+        obs_feats = observer_mod.observer_features(all_marks, ctx.n_days)
+        feats += obs_feats
+        if verbose:
+            print(f"F7 observer controls: {len(obs_feats)} declared "
+                  f"({len(observer_mod.count_path_features(obs_feats))} on the "
+                  f"count path, 1 sub-daily-only), UNPRICED at m_s = 0 (§P7-16)")
     # F9-20 arm 1, LAST, so the matched controls take the REAL feature list in its
     # declared order as donors and no control can ever become a donor for another.
     ctl_cfg = cfg.get("controls")
@@ -1925,6 +2008,18 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
             t["p_bh"] = float(t["p_raw"])
             t["bh_eligible"] = False
             continue
+        # §P7-17/§P7-18: ONLY `DECLARED` rows are priced, so only they may enter the
+        # priced BH vector. A REPLICATION row was paid for in an earlier session and
+        # an UNPRICED-CONTROL was never paid for at all; letting either compete for
+        # rejections inside a denominator sized for 171 declared hypotheses would be
+        # the multiplicity understatement this engine refuses. They keep their p,
+        # their stratum label and their reporting -- they simply cannot be rejected.
+        if t.get("disposition") and t["disposition"] != disp.DECLARED:
+            t["p_bh"] = float(t["p_raw"])
+            t["bh_eligible"] = False
+            t["bh_ineligible_reason"] = (
+                "%s (§P7-17/§P7-18): not priced in m, therefore not eligible for a "
+                "rejection inside the priced vector" % t["disposition"])
         if t.get("p_method") not in gpd_tail.P_METHODS:
             t["p_method"] = gpd_tail.P_MC_RESOLVED
             t["p_bh"] = float(t["p_raw"])
@@ -2078,8 +2173,53 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
             f"in the joint max-statistic null. Mark tests resample along the event "
             f"sequence and period peaks resample the residual series; neither "
             f"shares that index, so they are NOT COVERED rather than folded in.")
+        # §P7-19(c)(1): the mandatory DETECTED-BY-MAX-STAT reporting class.
+        det = strata_mod.max_statistic_detections(ms_mat, ms_obs, q=M.FDR_Q)
+        n_detected = n_detected_ineligible = 0
+        detected_rows = []
+        for k, i in enumerate(ms_idx):
+            t = tests[i]
+            t["p_fwer_max_stat"] = float(det["p_fwer"][k])
+            if not bool(det["detected"][k]):
+                continue
+            n_detected += 1
+            if t.get("bh_eligible", True) and not t.get("passes_fdr"):
+                continue
+            if not t.get("bh_eligible", True):
+                n_detected_ineligible += 1
+                t["reporting_class"] = strata_mod.DETECTED_BY_MAX_STAT
+                t["reporting_class_rule"] = strata_mod.DETECTED_BY_MAX_STAT_RULE
+                detected_rows.append({
+                    "test": t.get("test"), "feature": t.get("feature"),
+                    "lag": t.get("lag"), "mark": t.get("mark"),
+                    "stratum": t.get("stratum"),
+                    "disposition": t.get("disposition"),
+                    "p_raw": float(t.get("p_raw", float("nan"))),
+                    "p_fwer_max_stat": float(det["p_fwer"][k]),
+                    "p_method": t.get("p_method"),
+                    "bh_ineligible_reason": t.get("bh_ineligible_reason"),
+                })
+        ms["detected_by_max_stat"] = {
+            "class": strata_mod.DETECTED_BY_MAX_STAT,
+            "rule": strata_mod.DETECTED_BY_MAX_STAT_RULE,
+            "q": float(M.FDR_Q),
+            "n_covered": len(ms_idx),
+            "n_detected_at_q": int(n_detected),
+            "n_detected_and_bh_ineligible": int(n_detected_ineligible),
+            "rows": detected_rows,
+            "reading": ("a row in this list was DETECTED by the joint max-statistic "
+                        "and was INELIGIBLE for BH. It is NOT a non-survivor and may "
+                        "not be reported as one."),
+        }
         ms["seconds"] = round(time.perf_counter() - t_ms, 2)
         ckpt.state["max_statistic"] = ms
+        ckpt.state["floor_pinned_escalation"] = floor_pinned_escalation(
+            tests, n_surr, cfg)
+        if verbose:
+            print(f"  §P7-19(c)(1) DETECTED-BY-MAX-STAT: {n_detected} of "
+                  f"{len(ms_idx)} covered rows detected at q = {M.FDR_Q}; "
+                  f"{n_detected_ineligible} of them BH-INELIGIBLE and therefore "
+                  f"reported in this class rather than as non-survivors")
         if verbose:
             print(f"  S-8 max-statistic (§P6-3(4)), GLOBAL and "
                   f"partition-invariant: p = {ms['global']['p']:.4g} over "
@@ -2160,17 +2300,29 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                        marks, base, window, build_invariant=invariant)
     stubs = write_stubs(session_dir, cfg, tests)
 
+    # THE DECLARED COUNT for the ledger line. With the §P7-17 taxonomy on, it is the
+    # number of PRICED (DECLARED) rows; without it, every executed row is priced and
+    # the two coincide, which is the pre-§P7-17 behaviour byte for byte.
+    _n_declared = n_tests
+    _dcounts = (ckpt.state.get("dispositions") or {}).get("counts")
+    if _dcounts and disp.DECLARED in _dcounts:
+        _n_declared = int(_dcounts[disp.DECLARED])
+
     # One ledger line per SESSION, not per invocation: a resumed session is the same
     # sweep continued, so counting it twice would inflate the reported multiplicity.
     if not ckpt.state.get("ledger_logged"):
         splits._append_jsonl(ledger_path,
-                             ledger_record(cfg, n_tests, session_dir))
+                             ledger_record(
+                                 cfg, n_tests, session_dir,
+                                 n_declared=_n_declared,
+                                 dispositions=(ckpt.state.get("dispositions") or {})
+                                 .get("counts")))
         ckpt.state["ledger_logged"] = True
         ckpt.save()
         if verbose:
             print(f"session ledger       -> {ledger_path} "
                   f"(kind=mine, n_tests={n_tests}, "
-                  f"n_declared_tests={n_tests})")
+                  f"n_declared_tests={_n_declared})")
     elif verbose:
         print(f"session ledger       -> already logged for this session "
               f"(resumed run; multiplicity is not double-counted)")

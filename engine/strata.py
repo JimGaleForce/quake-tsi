@@ -96,12 +96,21 @@ def stratum_of(row, partition):
     """The stratum a result row belongs to. Falls back to the declared catch-all."""
     if partition is None:
         return UNSTRATIFIED
-    key = stratum_key(row.get("family"), _test_kind(row), row.get("region"))
-    if key in partition["by_key"]:
-        return partition["by_key"][key]
-    key2 = stratum_key(row.get("family"), _test_kind(row), None)
-    if key2 in partition["by_key"]:
-        return partition["by_key"][key2]
+    kind = _test_kind(row)
+    fam = row.get("family")
+    # MOST SPECIFIC FIRST, then widen. A declared `feature_family: null` means ANY
+    # family -- that is what the nullable field and `stratum_key`'s "*" rendering
+    # have always meant -- so a stratum declared for a TEST KIND across all families
+    # must match a row that HAS a family. Without the wildcard step such a stratum
+    # could only ever be reached through `catch_all`, which silently dumps a whole
+    # declared test kind into whichever stratum happens to be the fallback. Caught in
+    # pre-flight for Tranche B: 159 `markx`/`moment2`/`omnibus` rows were routing to
+    # a 17-slot stratum and the run refused, correctly, at the wrong place.
+    for k in (stratum_key(fam, kind, row.get("region")),
+              stratum_key(fam, kind, None),
+              stratum_key(None, kind, None)):
+        if k in partition["by_key"]:
+            return partition["by_key"][k]
     if partition.get("catch_all"):
         return partition["catch_all"]
     raise KeyError(
@@ -492,6 +501,48 @@ def max_statistic_p(null_matrix, observed, columns=None):
             "n_replicates": int(n), "t_obs": to,
             "floor": float(1.0 / (n + 1.0)),
             "statistic": "max over tests of -log10(empirical p within own null)"}
+
+
+DETECTED_BY_MAX_STAT = "DETECTED-BY-MAX-STAT"
+DETECTED_BY_MAX_STAT_RULE = (
+    "§P7-19(c)(1), MANDATORY REPORTING CLASS. A row that the S-8 max-statistic "
+    "DETECTS while it is INELIGIBLE for BH -- because its p is UNRESOLVED at a GPD "
+    "gate, or because it sits outside the priced vector -- must never read as a "
+    "non-survivor. It was not tested and found wanting; it was detected by the one "
+    "instrument that is exact under arbitrary dependence, and then excluded from "
+    "the other by a resolvability rule. Those are different facts and the report "
+    "prints the count. This EXTENDS §P6-1(5)'s resolvability count to the SATURATED "
+    "end: §P6-1(5) counts rows whose p could not be resolved DOWNWARD far enough to "
+    "reject; this counts rows whose statistic was extreme enough that the joint null "
+    "flagged it anyway.")
+
+
+def max_statistic_detections(null_matrix, observed, q=0.10):
+    """Per-test FAMILY-WISE p under the shared-index max null, and who it detects.
+
+    For test i: `p_fwer[i] = P(max_j T_j >= T_i)` over the shared surrogate worlds.
+    That is the exact family-wise-adjusted p under arbitrary dependence -- the same
+    construction as `max_statistic_p`, read per column instead of at the family
+    maximum. A row with `p_fwer <= q` is DETECTED BY THE MAX-STATISTIC.
+
+    This is deliberately NOT a second multiplicity procedure competing with BH: it
+    controls FWER, is strictly more conservative than the BH vector, and exists so
+    that a row BH could not even consider is not silently reported as a null.
+    """
+    A = np.asarray(null_matrix, dtype=np.float64)
+    obs = np.asarray(observed, dtype=np.float64).ravel()
+    T = np.empty(A.shape)
+    t_obs = np.empty(obs.size)
+    for i in range(obs.size):
+        T[:, i], t_obs[i] = _null_ranks(A[:, i], obs[i])
+    tn = T.max(axis=1)
+    n = tn.size
+    p_fwer = np.array([(1.0 + int((tn >= t_obs[i]).sum())) / (1.0 + n)
+                       for i in range(obs.size)])
+    return {"p_fwer": p_fwer, "t_obs": t_obs, "n_replicates": int(n),
+            "floor": float(1.0 / (n + 1.0)), "q": float(q),
+            "detected": (p_fwer <= float(q)),
+            "rule": DETECTED_BY_MAX_STAT_RULE}
 
 
 def max_statistic_report(null_matrix, observed, stratum_names, strata=None):

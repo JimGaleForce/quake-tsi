@@ -548,9 +548,118 @@ def frozen_config(seed=20260813, subdaily=False, strata=STRATA_FILE):
     return cfg
 
 
-def run(*_a, **_k):
-    """REFUSED. B's run is gated; this exists so the refusal is executable."""
-    raise TrancheBRunGated(RUN_GATE_NOTE)
+# ---------------------------------------------------------------- THE RUN -----
+# §P7-19: TRANCHE B IS AUTHORIZED TO RUN ON REAL DATA. The refusal above is retired
+# and replaced by a driver that asserts the FROZEN identifiers before it touches
+# anything: a run whose strata sha256 or config hash differs from the declaration is
+# not the declared experiment, and it stops rather than proceeding under a new one.
+FROZEN_STRATA_SHA256 = ("98516a02f6da4a3a3ef3c8e385f2e1dd"
+                        "7671404a70c0d4d04607926e09c74067")
+FROZEN_CONFIG_HASH = ("114d4e9d8004b06b62cdd3b7bb3a3560"
+                      "eff2bb055c3c0d6b0082b5f42b197087")
+RESULTS_RUN_JSON = "results_tranche_b.json"
+
+
+class FrozenIdentityMismatch(RuntimeError):
+    """The config or strata about to run is not the one that was declared."""
+
+
+def assert_frozen_identity(cfg):
+    """The declaration's identifiers, checked before the run rather than after."""
+    sha = cfg["strata"]["sha256"]
+    ch = splits.config_hash(cfg)
+    if sha != FROZEN_STRATA_SHA256 or ch != FROZEN_CONFIG_HASH:
+        raise FrozenIdentityMismatch(
+            "the config about to run is NOT the declared one. "
+            "strata sha256 declared %s, about to run %s; "
+            "config hash declared %s, about to run %s. "
+            "§P6-3 rule 5: a changed partition or config is a NEW declaration and a "
+            "new EXPLORE_COUNT line, not a continuation. Stopping."
+            % (FROZEN_STRATA_SHA256, sha, FROZEN_CONFIG_HASH, ch))
+    return {"strata_sha256": sha, "config_hash": ch, "ok": True}
+
+
+def run(jobs=8, session_dir=None, seed=20260813, verbose=True):
+    """Execute the frozen 171-test declaration on REAL data. Parent-only ledger."""
+    t_open = _dt.datetime.now(_dt.timezone.utc).isoformat()
+    cfg = frozen_config(seed=seed)
+    ident = assert_frozen_identity(cfg)
+    enum = enumerate_declared()
+    strata_mod.assert_partition_total(cfg["strata"]["strata"],
+                                      cfg["strata"]["m_declared"])
+    strata_mod.assert_budget_identity(cfg["strata"]["strata"], cfg["fdr_q"])
+
+    print("=" * 78)
+    print("TRANCHE B -- EXECUTING THE FROZEN 171-TEST DECLARATION (§P7-19)")
+    print("=" * 78)
+    print(M.GENERATOR_NOT_EVIDENCE)
+    print("")
+    print("declared m (priced)      : %d = 17 F9-01 + 34 F9-04 + 120 F9-10"
+          % enum["bh_denominator_m"])
+    print("strata sha256            : %s" % ident["strata_sha256"])
+    print("config hash              : %s" % ident["config_hash"])
+    print("sub-daily arm            : %s (frozen)"
+          % ("ON" if cfg["tranche_b"]["subdaily"] else "OFF"))
+    print("dispositions (§P7-17/18) : DECLARED 171, COMPONENT-OF 17, "
+          "REPLICATION 103, UNPRICED 9, SUPPRESSED 40")
+    print("=" * 78, flush=True)
+
+    prepared = ms.prepare(cfg, verbose=verbose)
+    out = ms.run(cfg, verbose=verbose, resume=False, session_dir=session_dir,
+                 jobs=int(jobs), prepared=prepared)
+
+    with open(os.path.join(out["session_dir"], "checkpoint.json"),
+              encoding="utf-8") as fh:
+        st = json.load(fh)
+
+    # The three identities, re-asserted against what ACTUALLY ran (§P7-16/§P7-17).
+    counts = st.get("dispositions", {}).get("counts", {})
+    checks = {
+        "partition_total": strata_mod.assert_partition_total(
+            cfg["strata"]["strata"], cfg["strata"]["m_declared"]),
+        "budget_identity": strata_mod.assert_budget_identity(
+            cfg["strata"]["strata"], cfg["fdr_q"]),
+        "declared_row_count": strata_mod.assert_declared_row_count(
+            int(counts.get(disp.DECLARED, -1)), enum["bh_denominator_m"]),
+    }
+
+    payload = {
+        "id": TRANCHE_B_ID + "-RUN",
+        "title": "EQ-24 v2 Tranche B -- the statistic tranche, EXECUTED on real data",
+        "banner": M.GENERATOR_NOT_EVIDENCE,
+        "standing_warning_eq24": M.MIGNAN_BROCCARDO,
+        "authorised_by": "HYPOTHESIS_LEDGER.md §P7-19",
+        "opened_utc": t_open,
+        "closed_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(),
+        "frozen_identity": ident,
+        "count_reconciliation": enum,
+        "assertions": checks,
+        "dispositions": st.get("dispositions"),
+        "suppression_map": st.get("suppression_map"),
+        "config": cfg,
+        "session": {k: v for k, v in out.items() if k != "report"},
+        "bh": st.get("bh"),
+        "max_statistic": st.get("max_statistic"),
+        "detected_by_max_stat": (st.get("max_statistic") or {}).get(
+            "detected_by_max_stat"),
+        "floor_pinned_escalation": st.get("floor_pinned_escalation"),
+        "s15c_window_clause": st.get("s15c_window_clause"),
+        "p_method_census": st.get("p_method_census"),
+        "f9_10_marks": st.get("f9_10_marks"),
+        "f9_10_redundancy_audit": st.get("f9_10_redundancy_audit"),
+        "axis_audit": st.get("axis_audit"),
+        "what_none_of_this_licenses": (
+            "nothing beyond what §P7-19 pre-registered. This is a GENERATOR on the "
+            "exploration window under a v1 ETAS baseline, in-sample, no holdout hash "
+            "spent, blind through the diurnal and semidiurnal band by two exact "
+            "zeros, and with the sub-daily mark arm OFF. No output may be entered "
+            "for or against any ledger entry."),
+    }
+    with open(RESULTS_RUN_JSON, "w", encoding="utf-8") as fh:
+        json.dump(payload, fh, indent=1, default=float)
+    print("")
+    print("wrote %s" % RESULTS_RUN_JSON)
+    return payload
 
 
 # ----------------------------------------------------------- the declaration --
@@ -668,7 +777,13 @@ def main(argv=None):
     ap.add_argument("--seed", type=int, default=20260813)
     ap.add_argument("--subdaily", action="store_true")
     ap.add_argument("--json", default=RESULTS_JSON)
+    ap.add_argument("--run", action="store_true",
+                    help="EXECUTE the frozen declaration on REAL data (§P7-19)")
+    ap.add_argument("--jobs", type=int, default=8)
+    ap.add_argument("--session-dir", default=None)
     a = ap.parse_args(argv)
+    if a.run:
+        return run(jobs=a.jobs, session_dir=a.session_dir, seed=a.seed)
     d = declaration(seed=a.seed, subdaily=a.subdaily)
     e = d["count_reconciliation"]
     print("=" * 78)

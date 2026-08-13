@@ -122,7 +122,31 @@ class DeterminismViolation(AssertionError):
 
 
 # ------------------------------------------------------------------ tagging ---
-def tag_rows(tests, prior_keys=None, cyclic_features=None):
+def default_replication_rule(t, cyclic):
+    """The REPLICATION set as enumerated in the declaration and ratified at §P7-18.
+
+    Not discovered at runtime and not inferred from a prior checkpoint: a row is a
+    replication because the DECLARATION said which rows are replications, and the
+    declaration said it before the run. Two families:
+
+      * the period scan -- it runs in every session and is already declared;
+      * the count-path GLM sweep on NON-CYCLIC science features -- K-089-R tranche 1
+        / Tranche A's 550, re-executed here and not re-priced.
+
+    A cyclic feature's lag-0 GLM is NOT here: that one is a COMPONENT of F9-01/F9-04
+    and is handled before this rule is reached.
+    """
+    if t.get("test") == "lomb_scargle_peak":
+        return True
+    if (t.get("test") == "glm_poisson_offset_etas"
+            and t.get("feature") not in cyclic
+            and not (t.get("control") or t.get("family") == 7)):
+        return True
+    return False
+
+
+def tag_rows(tests, prior_keys=None, cyclic_features=None,
+             replication_rule=default_replication_rule):
     """Assign exactly one disposition to every row. Returns the rows, annotated.
 
     `prior_keys` is the set of `(test, feature, lag, mark)` tuples already declared
@@ -146,7 +170,8 @@ def tag_rows(tests, prior_keys=None, cyclic_features=None):
             parent = "F9-01/F9-04 on %s" % t.get("feature")
             why = ("the first moment inside the second-moment claim, and the "
                    "Rayleigh form beside Kuiper -- the comparison IS the claim")
-        elif key in prior:
+        elif key in prior or (replication_rule is not None
+                              and replication_rule(t, cyc)):
             tag, parent, why = (REPLICATION, None,
                                 "already declared in a PRIOR SESSION; not re-priced. "
                                 "Cross-session only (§P7-18): a within-session "

@@ -379,9 +379,17 @@ def test_the_ruled_denominator_supersedes_the_headline():
     assert "may not be quoted" in tranche_b.HEADLINE_RESOLUTION_NOTE
 
 
-def test_the_declaration_refuses_to_run():
-    with pytest.raises(tranche_b.TrancheBRunGated):
-        tranche_b.run()
+def test_the_run_asserts_the_frozen_identity_before_touching_anything():
+    """§P7-19 authorized the run, so the refusal is retired -- and replaced by a
+    check that what runs IS what was declared (§P6-3 rule 5)."""
+    cfg = tranche_b.frozen_config()
+    ident = tranche_b.assert_frozen_identity(cfg)
+    assert ident["strata_sha256"] == tranche_b.FROZEN_STRATA_SHA256
+    assert ident["config_hash"] == tranche_b.FROZEN_CONFIG_HASH
+    bent = json.loads(json.dumps(cfg))
+    bent["strata"]["sha256"] = "0" * 64
+    with pytest.raises(tranche_b.FrozenIdentityMismatch):
+        tranche_b.assert_frozen_identity(bent)
 
 
 def test_declared_strata_route_the_new_kinds():
@@ -623,12 +631,31 @@ def test_first_moment_glm_on_a_cyclic_feature_is_a_component_not_a_hypothesis():
     assert "comparison IS the claim" in comp["disposition_reason"]
 
 
+def test_the_declared_replication_rule_is_a_declaration_not_a_discovery():
+    """§P7-18's enumeration named WHICH rows are replications, before the run. The
+    rule is that enumeration in code -- it does not consult a prior checkpoint."""
+    cyc = {"moon_synodic_phase"}
+    assert disp.default_replication_rule(
+        {"test": "lomb_scargle_peak", "feature": "period_scan"}, cyc)
+    assert disp.default_replication_rule(
+        {"test": "glm_poisson_offset_etas", "feature": "b_value_90d"}, cyc)
+    # a CYCLIC feature's GLM is a component, not a replication
+    assert not disp.default_replication_rule(
+        {"test": "glm_poisson_offset_etas", "feature": "moon_synodic_phase"}, cyc)
+    # an F7 control is neither
+    assert not disp.default_replication_rule(
+        {"test": "glm_poisson_offset_etas", "feature": "obs_mc_drift_365d",
+         "family": 7, "control": True}, cyc)
+
+
 def test_a_row_that_is_nobodys_component_and_nobodys_prior_is_declared_new():
     """The taxonomy must be able to SAY a row is new -- otherwise it hides them."""
-    rows = _tagged(prior=())          # the b_value row is in no prior declaration
-    newish = [r for r in rows if r["feature"] == "b_value_90d"][0]
-    assert newish["disposition"] == disp.DECLARED
-    assert "GENUINELY NEW" in newish["disposition_reason"]
+    rows = disp.tag_rows(
+        [{"test": "some_brand_new_statistic", "feature": "a_new_feature",
+          "lag": 0, "mark": None, "p_raw": 0.1}],
+        prior_keys=set(), cyclic_features=set())
+    assert rows[0]["disposition"] == disp.DECLARED
+    assert "GENUINELY NEW" in rows[0]["disposition_reason"]
 
 
 def test_component_rows_are_attached_to_parents_and_never_stand_alone():
@@ -703,7 +730,10 @@ def test_assert_declared_row_count_passes_at_the_ruled_integer():
 
 
 def test_assert_declared_row_count_raises_on_a_genuinely_new_row():
-    rows = _tagged(prior=())          # the b_value row is now DECLARED-and-new
+    rows = _tagged(prior=PRIOR) + disp.tag_rows(
+        [{"test": "some_brand_new_statistic", "feature": "a_new_feature",
+          "lag": 0, "mark": None, "p_raw": 0.1}],
+        prior_keys=set(), cyclic_features=set())
     with pytest.raises(S.DeclaredRowCountMismatch) as exc:
         S.assert_declared_row_count(rows, 4)
     msg = str(exc.value)

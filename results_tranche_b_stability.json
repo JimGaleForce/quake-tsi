@@ -1,0 +1,2612 @@
+{
+ "n_survivors": 34,
+ "n_reseed_runs": 2,
+ "n_resample_runs": 1,
+ "lines": [
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "moon_anomalistic_phase",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 49
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 47,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 49,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 42,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "moon_synodic_phase",
+    "lag": null,
+    "mark": "mag",
+    "reference_rank": 37
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 36,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 37,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 54,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "moon_synodic_phase",
+    "lag": null,
+    "mark": "depth",
+    "reference_rank": 6
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 4,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 6,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 3,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "moon_synodic_phase",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 39
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 38,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 39,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 21,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "moon_distance",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 44
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 49,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 44,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 323,
+      "in_top_k": false,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 0.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": -0.044,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "UNSTABLE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "UNSTABLE | R4 rho 0.999 | F10-24 selection freq 0.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "moon_declination",
+    "lag": null,
+    "mark": "mag",
+    "reference_rank": 20
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 18,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 20,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 62,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "moon_declination",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 41
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 41,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 41,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 43,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "moon_draconic_phase",
+    "lag": null,
+    "mark": "mag",
+    "reference_rank": 23
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 22,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 23,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 69,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "moon_draconic_phase",
+    "lag": null,
+    "mark": "dist_nearest_prior_km",
+    "reference_rank": 45
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 44,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 45,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 133,
+      "in_top_k": false,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 0.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": -0.044,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "UNSTABLE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "UNSTABLE | R4 rho 0.999 | F10-24 selection freq 0.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "moon_draconic_phase",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 15
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 16,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 15,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 113,
+      "in_top_k": false,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 0.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": -0.044,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "UNSTABLE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "UNSTABLE | R4 rho 0.999 | F10-24 selection freq 0.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "moon_draconic_phase",
+    "lag": null,
+    "mark": "cluster_member",
+    "reference_rank": 32
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 32,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 32,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 135,
+      "in_top_k": false,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 0.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": -0.044,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "UNSTABLE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "UNSTABLE | R4 rho 0.999 | F10-24 selection freq 0.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "sun_moon_elongation",
+    "lag": null,
+    "mark": "depth",
+    "reference_rank": 7
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 8,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 7,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 4,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "perigean_spring_beat",
+    "lag": null,
+    "mark": "dist_nearest_prior_km",
+    "reference_rank": 40
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 40,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 40,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 38,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "perigean_spring_beat",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 24
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 24,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 24,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 19,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "perigean_spring_beat",
+    "lag": null,
+    "mark": "cluster_member",
+    "reference_rank": 38
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 39,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 38,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 31,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "half_draconic_phase",
+    "lag": null,
+    "mark": "dist_nearest_prior_km",
+    "reference_rank": 2
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 2,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 2,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 48,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "spring_neap_phase",
+    "lag": null,
+    "mark": "dist_nearest_prior_km",
+    "reference_rank": 47
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 46,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 47,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 65,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "spring_neap_phase",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 21
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 23,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 21,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 11,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "eclipse_year_beat",
+    "lag": null,
+    "mark": "dist_nearest_prior_km",
+    "reference_rank": 33
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 31,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 33,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 6,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "eclipse_year_beat",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 28
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 27,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 28,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 7,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "circular-linear",
+    "feature": "eclipse_year_beat",
+    "lag": null,
+    "mark": "cluster_member",
+    "reference_rank": 26
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 30,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 26,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 8,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "declination_product",
+    "lag": null,
+    "mark": "depth",
+    "reference_rank": 31
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 29,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 31,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 50,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "tidal_potential_proxy",
+    "lag": null,
+    "mark": "lon_sector",
+    "reference_rank": 48
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 48,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 48,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 167,
+      "in_top_k": false,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 0.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": -0.044,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "UNSTABLE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "UNSTABLE | R4 rho 0.999 | F10-24 selection freq 0.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "b_value_90d",
+    "lag": null,
+    "mark": "mag",
+    "reference_rank": 36
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 35,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 36,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 56,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "b_value_90d",
+    "lag": null,
+    "mark": "dist_nearest_prior_km",
+    "reference_rank": 43
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 43,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 43,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 95,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "b_value_90d",
+    "lag": null,
+    "mark": "cluster_member",
+    "reference_rank": 42
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 42,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 42,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 78,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "deep_fraction_30d",
+    "lag": null,
+    "mark": "depth",
+    "reference_rank": 10
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 10,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 10,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 33,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "deep_fraction_30d",
+    "lag": null,
+    "mark": "dist_nearest_prior_km",
+    "reference_rank": 11
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 12,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 11,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 30,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "deep_fraction_30d",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 27
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 25,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 27,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 41,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "deep_fraction_30d",
+    "lag": null,
+    "mark": "cluster_member",
+    "reference_rank": 16
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 15,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 16,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 28,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "mean_depth_30d",
+    "lag": null,
+    "mark": "depth",
+    "reference_rank": 12
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 11,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 12,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 26,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "mean_depth_30d",
+    "lag": null,
+    "mark": "dist_nearest_prior_km",
+    "reference_rank": 14
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 13,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 14,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 24,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "mean_depth_30d",
+    "lag": null,
+    "mark": "dt_prior_days",
+    "reference_rank": 29
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 26,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 29,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 45,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  },
+  {
+   "candidate": {
+    "test": "spearman",
+    "feature": "mean_depth_30d",
+    "lag": null,
+    "mark": "cluster_member",
+    "reference_rank": 13
+   },
+   "top_k": 100,
+   "i_R4_reseeding": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "R4_reseed[0]",
+      "candidate_rank": 14,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9982838283828381
+     },
+     {
+      "run": 1,
+      "label": "R4_reseed[1]",
+      "candidate_rank": 13,
+      "in_top_k": true,
+      "n_common_top_k": 100,
+      "top_k_spearman_rho": 0.9999999999999999
+     }
+    ],
+    "n_runs": 2,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.9991419141914191
+   },
+   "ii_F10_24_data_resampling": {
+    "runs": [
+     {
+      "run": 0,
+      "label": "F10-24_resample[0]",
+      "candidate_rank": 34,
+      "in_top_k": true,
+      "n_common_top_k": 99,
+      "top_k_spearman_rho": 0.6030797773654917
+     }
+    ],
+    "n_runs": 1,
+    "selection_frequency": 1.0,
+    "mean_top_k_rho": 0.6030797773654917
+   },
+   "iii_lower_bound": "(iii) THIS IS A LOWER BOUND. The moving-block resample perturbs the dependence structure itself, so injected structure-noise pushes the measured stability DOWN: the true stability is at least this. 'The ranking moves with the data' is what this supports; 'the ranking is noise' is not, and the difference is exactly this bound (\u00a7P7-14(b), the measurer's own bounding, ratified).",
+   "null_baseline": {
+    "f10_24_rho_pair": [
+     0.487,
+     0.044
+    ],
+    "f10_24_rho_mean": 0.2655,
+    "r4_rho_pair": [
+     0.926,
+     0.922
+    ],
+    "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+   },
+   "thresholds": {
+    "min_selection_frequency": 1.0,
+    "min_resample_rho": 0.7,
+    "top_k": 100,
+    "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+   },
+   "vs_null_baseline": {
+    "selection_frequency_vs_0.044": 0.956,
+    "resample_rho_vs_0.487": 0.11607977736549169,
+    "reading": "NOT markedly above the Tranche A null baseline: indistinguishable from the noise Tranche A characterised"
+   },
+   "tag": "BORDERLINE",
+   "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives.",
+   "r4_not_sufficient": "The R4 reseeding pair alone is NOT sufficient (\u00a7P7-14(b)): it measures whether the RNG moves the ranking, and the RNG was never the threat. A stability line without a DATA-resampling arm is not a stability line.",
+   "headline": "BORDERLINE | R4 rho 0.999 | F10-24 selection freq 1.00, rho 0.603 (LOWER BOUND) | null baseline 0.487/0.044"
+  }
+ ],
+ "null_baseline": {
+  "f10_24_rho_pair": [
+   0.487,
+   0.044
+  ],
+  "f10_24_rho_mean": 0.2655,
+  "r4_rho_pair": [
+   0.926,
+   0.922
+  ],
+  "source": "HYPOTHESIS_LEDGER.md \u00a7P7-14(b) / results_tranche_a.json (session_20260813T001742, commit 497b196)"
+ },
+ "thresholds": {
+  "min_selection_frequency": 1.0,
+  "min_resample_rho": 0.7,
+  "top_k": 100,
+  "declared": "frozen in engine/stability.py before Tranche B's declaration; \u00a7P7-14(b) asks for 'markedly above' the 0.487/0.044 baseline and these are that phrase made into numbers, in advance"
+ },
+ "incomplete": true,
+ "incomplete_reason": "the second moving-block resample aborted on glm:obs_mc_drift_365d (singular design: the max-curvature Mc control is piecewise-constant and a block resample can flatten it). \u00a7P7-14(b) declares resample x2; only 1 completed.",
+ "label_not_kill": "LABEL, DO NOT KILL (\u00a7P7-14(b)). A candidate below the declared stability threshold is TAGGED UNSTABLE and may not be written up as a K-entry without the tag. It is NOT deleted: the metric is biased low by construction and a hard kill on a biased-low statistic would discard true positives."
+}

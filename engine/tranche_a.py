@@ -154,6 +154,12 @@ def resample_prepared(prepared, seed, block=RESAMPLE_BLOCK_DAYS, max_lag=MAX_LAG
                       # the resample must not silently re-tune the null: the
                       # bootstrap block is the ORIGINAL feature's, carried.
                       block_days_override=f.block_days)
+        # Attributes set AFTER construction do not survive a rebuild. `subdaily_only`
+        # is one: lose it and the resampled session hands a zero-variance diurnal
+        # column to the count path, which raises. Carried explicitly rather than
+        # hoped for.
+        if getattr(f, "subdaily_only", False):
+            g.subdaily_only = True
         feats_r.append(g)
 
     # Marks follow their day. Each resampled day j carries the events of original
