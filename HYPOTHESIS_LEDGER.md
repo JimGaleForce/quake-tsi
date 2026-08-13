@@ -15833,3 +15833,72 @@ after issue for being anti-conservative at the end I was not watching, and a sca
 after I retired it for a curve that was worse in both directions. The measurement is 322 points with
 zero censored and it is not close. Reading A, the floor magnitude, and every tranche price stand
 unchanged. Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+## §P7-13. THE CENSORING RATIONALE WAS INVERTED — correction RATIFIED. Saturation OVER-states VIF; the instruction stands on repaired ground; the pooled fallback moves to 4.575.
+
+*2026-08-12. §P7-11(c) un-censoring executed at B = 500k with bitwise reproduction (committed). All
+three mark rows remain at the floor; bounds tighten to 13.87 / 22.70 / 31.12 and they stay UNMEASURABLE
+BY DECLARATION. **Rationale-repair, not number-repair: no committed measurement changed.***
+
+### (a) RATIFIED, and I verified the algebra independently rather than accepting the correction.
+
+§P7-10(a) asserted that `chi2_ppf` saturation *understates* VIF and is therefore anti-conservative.
+**That is backwards.** At the floor `p_boot = 1/(B+1)` the true p is **at most** the floor, so the true
+`1 − p` is **larger**, so the true quantile is **larger**, so the denominator we can express is capped
+**below** the true one — and `VIF = stat_obs / ppf` is therefore pushed **up**. **A floor-saturated
+VIF is an UPPER bound, over-stated.**
+
+Checked independently this session on chi2(2) at a fixed observed statistic: the estimate runs
+**1.97 → 1.39 → 1.14** as B goes 2k → 50k → 500k. The measurement runs **25.87 → 17.23 → 13.87** on
+`b_value x mag` over the same three B. **Same monotone direction, algebra and data agreeing against
+me.** The consequence is the opposite of what the ledger recorded: excluding saturated rows removes
+over-stated values and mildly **lowers** the median.
+
+**The operative instruction survives its own rationale, and the measurer states the repaired ground
+correctly: a saturated value is a BOUND, not a measurement, and a floor may be built from neither.**
+That reason is sound and is independent of the sign — which is precisely why the instruction was right
+by accident and is now right on purpose.
+
+**Third sign-or-convention error from this seat** (§P6-1(6): bounding a two-estimator difference by one
+estimator's SE; §P7-1: assuming the published 5.6% convention; now the saturation direction). The
+common habit is specific and addressable: **I asserted a direction of bias without deriving it.**
+
+> **Added to S-18 (CANDIDATE), fourth clause.** Any statement of the form *"X biases Y in direction D"*
+> must carry its derivation or its measurement at the point of assertion. A stated direction without
+> one is a guess wearing the grammar of a result. **The template is what the measurer did here:
+> sweeping B and letting the monotone trend name the direction**, rather than arguing it.
+
+### (b) The pooled fallback moves to 4.575 — for a reason that is about censoring, not about conservatism.
+
+**First, the scope of the question is small and should be said plainly.** Under §P7-12(a)(1) the floor
+uses **the feature's own measured VIF** wherever it exists, and it exists for all 43 scored mark rows.
+**So this choice touches only the pooled FALLBACK** — the value applied to a feature with no
+measurement of its own. It changes no per-feature floor.
+
+**The reason to prefer 4.575 is that the censoring is INFORMATIVE.** The three censored rows are
+censored *precisely because they are extreme*: their bounds, 13.87 / 22.70 / 31.12, are **3x to 7x the
+median of 4.345**. Dropping them is not dropping missing data at random — it is dropping the upper tail
+because it is the upper tail, which **biases a pooled median downward**. For a fallback applied to
+features of unknown VIF, that is the anti-conservative direction, and the residual over-statement
+carried in by re-admitting upper bounds is small: the median moves 5.3%, the floor 2.6%.
+
+> **RULED. The pooled mark-axis fallback is `VIF_mark = 4.575` (bounds-readmitted), giving
+> `rho_min = 0.0469`.** The excluded median 4.345 is retained in the record as the
+> measurements-only figure and is reported beside it. **The three censored features remain UNMEASURABLE
+> BY DECLARATION regardless** — §P7-11(c) is untouched, their own VIF is still a bound, and a bound
+> still cannot produce a floor for the feature it belongs to. Re-admitting them at their bounds is
+> legitimate for a *population* summary and illegitimate for a *per-feature* floor; those are different
+> uses of the same number and the ruling distinguishes them.
+
+**And the verdict is unchanged either way, which is why this could be decided on principle.** At the
+readmitted floor the mark arm's headline moves from **max obs/floor 0.77 to 0.75** — still not one mark
+statistic reaching its own floor. §P7-11(c)'s detection-only disposition, its own §P6-3 stratum with a
+small declared `q_s`, and the reallocation justification all stand unchanged. **A ruling that cannot
+change any conclusion is the right place to pay full price for a principle.**
+
+*Popper seat, 2026-08-12. My rationale was inverted, the correction is ratified on algebra I re-derived
+rather than accepted, the instruction it produced survives on better ground than it was issued with,
+and the fallback moves 2.6% in the direction informative censoring demands. Appended to my own section;
+no existing line modified; nothing committed.*
