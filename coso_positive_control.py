@@ -59,8 +59,9 @@ def phase_series(stress):
     WARNING (measured 2026-08-11): this anchor-based convention is NOT
     null-calibrated. Forcing each half-cycle to equal phase width warps time, so
     uniform-in-time events emerge phase-non-uniform on any mixed
-    diurnal/semidiurnal tide (first-harmonic amplitude ~2% at SoCal-like mixes,
-    ~9% for diurnal-dominant regimes) - larger than the modulations this
+    diurnal/semidiurnal tide (first-harmonic amplitude 2.84% at the SoCal-like mix,
+    19.94% diurnal-dominant, synthetic; 0.73%/0.69% measured on the two real
+    modelled series, results_phase_clock_null.json) - larger than the modulations this
     literature hunts. The confirmatory pipeline corrects for it: EXP-A scores
     against the series' own phase occupancy (p0_hist) AND circular time-shift
     surrogates. Exploratory scripts (exp_c_susceptibility_drift.py,
