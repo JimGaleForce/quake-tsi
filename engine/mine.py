@@ -252,6 +252,97 @@ class Feature:
         return 2 if self.kind == "phase" else 1
 
 
+def ephemeris_feature_specs(e):
+    """The family-1/2 feature DEFINITIONS, as kwargs, built from an ephemeris table.
+
+    Split out of `ephemeris_features` for exactly one reason: F9-10's sub-daily mark
+    arm must evaluate these same features AT EVENT TIMES (`eph.ephemeris_table_at`),
+    and a second copy of the definitions would be a silent divergence waiting to
+    happen -- the day-binned `moon_synodic_phase` and its sub-daily namesake would
+    stop being the same feature and nobody would find out from a test. One
+    definition, two sampling grids.
+    """
+    syn, ano, dra, ann = (e["synodic_rad"], e["anomalistic_rad"],
+                          e["draconic_rad"], e["annual_rad"])
+    return [
+        # ---- family 1: the cycles themselves -------------------------------
+        dict(name="moon_synodic_phase", family=1, kind="phase", values=syn,
+             describe="lunar phase angle (0 = new moon)",
+             period_hint=eph.SYNODIC_MONTH, causality_exempt=True),
+        dict(name="moon_anomalistic_phase", family=1, kind="phase", values=ano,
+             describe="lunar anomalistic phase (0 = perigee)",
+             period_hint=eph.ANOMALISTIC_MONTH, causality_exempt=True),
+        dict(name="moon_draconic_phase", family=1, kind="phase", values=dra,
+             describe="lunar draconic phase (0 = ascending node)",
+             period_hint=eph.DRACONIC_MONTH, causality_exempt=True),
+        dict(name="annual_phase", family=1, kind="phase", values=ann,
+             describe="solar ecliptic longitude (0 = March equinox)",
+             period_hint=eph.TROPICAL_YEAR, causality_exempt=True),
+        dict(name="moon_distance", family=1, kind="linear",
+             values=e["moon_dist_km"], describe="lunar geocentric distance (km)",
+             causality_exempt=True, period_hint=eph.ANOMALISTIC_MONTH),
+        dict(name="moon_declination", family=1, kind="linear",
+             values=e["moon_dec_deg"], describe="lunar declination (deg)",
+             causality_exempt=True, period_hint=eph.DRACONIC_MONTH),
+        dict(name="moon_abs_declination", family=1, kind="linear",
+             values=np.abs(e["moon_dec_deg"]),
+             describe="|lunar declination| (deg; the 13.66 d declination-tide "
+                      "envelope)",
+             causality_exempt=True, period_hint=eph.DRACONIC_MONTH / 2),
+        dict(name="sun_declination", family=1, kind="linear",
+             values=e["sun_dec_deg"], describe="solar declination (deg)",
+             causality_exempt=True, period_hint=eph.TROPICAL_YEAR),
+        dict(name="sun_moon_elongation", family=1, kind="linear",
+             values=e["elongation_deg"], describe="sun-moon elongation (deg)",
+             causality_exempt=True, period_hint=eph.SYNODIC_MONTH),
+
+        # ---- family 2: beats and interactions (the moire rule) --------------
+        dict(name="spring_neap_phase", family=2, kind="phase",
+             values=np.mod(2 * syn, 2 * np.pi),
+             describe="spring-neap beat = 2 x synodic (14.765 d)",
+             period_hint=eph.SYNODIC_MONTH / 2, causality_exempt=True),
+        dict(name="half_draconic_phase", family=2, kind="phase",
+             values=np.mod(2 * dra, 2 * np.pi),
+             describe="2 x draconic (13.606 d; the declination-tide beat)",
+             period_hint=eph.DRACONIC_MONTH / 2, causality_exempt=True),
+        dict(name="perigean_spring_beat", family=2, kind="phase",
+             values=np.mod(syn - ano, 2 * np.pi),
+             describe="synodic - anomalistic beat (411.8 d perigean-spring cycle)",
+             period_hint=1.0 / abs(1 / eph.SYNODIC_MONTH
+                                   - 1 / eph.ANOMALISTIC_MONTH),
+             causality_exempt=True),
+        dict(name="eclipse_year_beat", family=2, kind="phase",
+             values=np.mod(syn - dra, 2 * np.pi),
+             describe="synodic - draconic beat (the 173.3 d eclipse half-year)",
+             period_hint=1.0 / abs(1 / eph.SYNODIC_MONTH
+                                   - 1 / eph.DRACONIC_MONTH),
+             causality_exempt=True),
+        dict(name="annual_synodic_beat", family=2, kind="phase",
+             values=np.mod(ann - syn, 2 * np.pi),
+             describe="annual - synodic beat", causality_exempt=True,
+             period_hint=1.0 / abs(1 / eph.TROPICAL_YEAR
+                                   - 1 / eph.SYNODIC_MONTH)),
+        # interaction terms: products, entered as linear covariates
+        dict(name="perigee_syzygy", family=2, kind="linear",
+             values=np.cos(2 * syn) * (400000.0 / e["moon_dist_km"]) ** 3,
+             describe="perigean-spring tidal proxy: cos(2*synodic) x (r0/r)^3",
+             causality_exempt=True,
+             period_hint=1.0 / abs(1 / eph.SYNODIC_MONTH
+                                   - 1 / eph.ANOMALISTIC_MONTH)),
+        dict(name="declination_product", family=2, kind="linear",
+             values=e["moon_dec_deg"] * e["sun_dec_deg"],
+             describe="lunar x solar declination product (the declination beat)",
+             causality_exempt=True, period_hint=eph.TROPICAL_YEAR),
+        dict(name="tidal_potential_proxy", family=2, kind="linear",
+             values=((400000.0 / e["moon_dist_km"]) ** 3
+                     * (0.5 - 1.5 * np.sin(np.radians(e["moon_dec_deg"])) ** 2)),
+             describe="zonal lunar tidal-potential proxy (r^-3 x P2(sin dec))",
+             causality_exempt=True,
+             period_hint=1.0 / abs(1 / eph.DRACONIC_MONTH
+                                   - 1 / eph.ANOMALISTIC_MONTH)),
+    ]
+
+
 def ephemeris_features(t0, n_days, lags=(0,), lag_features=None):
     """Families 1 and 2: deterministic functions of t. No downloads, ever.
 
@@ -268,78 +359,8 @@ def ephemeris_features(t0, n_days, lags=(0,), lag_features=None):
                        invariance is a theorem, and scanning them is waste, not rigour;
       * an iterable of feature names -> exactly those.
     """
-    e = eph.ephemeris_table(t0, n_days)
-    syn, ano, dra, ann = (e["synodic_rad"], e["anomalistic_rad"],
-                          e["draconic_rad"], e["annual_rad"])
-    f = []
-    add = f.append
-
-    # ---- family 1: the cycles themselves -------------------------------
-    add(Feature("moon_synodic_phase", 1, "phase", syn,
-                "lunar phase angle (0 = new moon)", period_hint=eph.SYNODIC_MONTH,
-                causality_exempt=True))
-    add(Feature("moon_anomalistic_phase", 1, "phase", ano,
-                "lunar anomalistic phase (0 = perigee)",
-                period_hint=eph.ANOMALISTIC_MONTH, causality_exempt=True))
-    add(Feature("moon_draconic_phase", 1, "phase", dra,
-                "lunar draconic phase (0 = ascending node)",
-                period_hint=eph.DRACONIC_MONTH, causality_exempt=True))
-    add(Feature("annual_phase", 1, "phase", ann,
-                "solar ecliptic longitude (0 = March equinox)",
-                period_hint=eph.TROPICAL_YEAR, causality_exempt=True))
-    add(Feature("moon_distance", 1, "linear", e["moon_dist_km"],
-                "lunar geocentric distance (km)", causality_exempt=True,
-                period_hint=eph.ANOMALISTIC_MONTH))
-    add(Feature("moon_declination", 1, "linear", e["moon_dec_deg"],
-                "lunar declination (deg)", causality_exempt=True,
-                period_hint=eph.DRACONIC_MONTH))
-    add(Feature("moon_abs_declination", 1, "linear", np.abs(e["moon_dec_deg"]),
-                "|lunar declination| (deg; the 13.66 d declination-tide envelope)",
-                causality_exempt=True, period_hint=eph.DRACONIC_MONTH / 2))
-    add(Feature("sun_declination", 1, "linear", e["sun_dec_deg"],
-                "solar declination (deg)", causality_exempt=True,
-                period_hint=eph.TROPICAL_YEAR))
-    add(Feature("sun_moon_elongation", 1, "linear", e["elongation_deg"],
-                "sun-moon elongation (deg)", causality_exempt=True,
-                period_hint=eph.SYNODIC_MONTH))
-
-    # ---- family 2: beats and interactions (the moire rule) --------------
-    add(Feature("spring_neap_phase", 2, "phase", np.mod(2 * syn, 2 * np.pi),
-                "spring-neap beat = 2 x synodic (14.765 d)",
-                period_hint=eph.SYNODIC_MONTH / 2, causality_exempt=True))
-    add(Feature("half_draconic_phase", 2, "phase", np.mod(2 * dra, 2 * np.pi),
-                "2 x draconic (13.606 d; the declination-tide beat)",
-                period_hint=eph.DRACONIC_MONTH / 2, causality_exempt=True))
-    add(Feature("perigean_spring_beat", 2, "phase", np.mod(syn - ano, 2 * np.pi),
-                "synodic - anomalistic beat (411.8 d perigean-spring cycle)",
-                period_hint=1.0 / abs(1 / eph.SYNODIC_MONTH - 1 / eph.ANOMALISTIC_MONTH),
-                causality_exempt=True))
-    add(Feature("eclipse_year_beat", 2, "phase", np.mod(syn - dra, 2 * np.pi),
-                "synodic - draconic beat (the 173.3 d eclipse half-year)",
-                period_hint=1.0 / abs(1 / eph.SYNODIC_MONTH - 1 / eph.DRACONIC_MONTH),
-                causality_exempt=True))
-    add(Feature("annual_synodic_beat", 2, "phase",
-                np.mod(ann - syn, 2 * np.pi),
-                "annual - synodic beat", causality_exempt=True,
-                period_hint=1.0 / abs(1 / eph.TROPICAL_YEAR - 1 / eph.SYNODIC_MONTH)))
-    # interaction terms: products, entered as linear covariates
-    add(Feature("perigee_syzygy", 2, "linear",
-                np.cos(2 * syn) * (400000.0 / e["moon_dist_km"]) ** 3,
-                "perigean-spring tidal proxy: cos(2*synodic) x (r0/r)^3",
-                causality_exempt=True,
-                period_hint=1.0 / abs(1 / eph.SYNODIC_MONTH
-                                      - 1 / eph.ANOMALISTIC_MONTH)))
-    add(Feature("declination_product", 2, "linear",
-                e["moon_dec_deg"] * e["sun_dec_deg"],
-                "lunar x solar declination product (the declination beat)",
-                causality_exempt=True, period_hint=eph.TROPICAL_YEAR))
-    add(Feature("tidal_potential_proxy", 2, "linear",
-                (400000.0 / e["moon_dist_km"]) ** 3
-                * (0.5 - 1.5 * np.sin(np.radians(e["moon_dec_deg"])) ** 2),
-                "zonal lunar tidal-potential proxy (r^-3 x P2(sin dec))",
-                causality_exempt=True,
-                period_hint=1.0 / abs(1 / eph.DRACONIC_MONTH
-                                      - 1 / eph.ANOMALISTIC_MONTH)))
+    f = [Feature(**spec) for spec in
+         ephemeris_feature_specs(eph.ephemeris_table(t0, n_days))]
 
     lags = tuple(int(l) for l in lags)
     if lags != (0,):
@@ -857,9 +878,16 @@ def load_event_marks(ctx, data_dir, mag_floor):
         "mark reconstruction does not align with the cached design (day index)"
     assert np.allclose(ev_mag, ctx.ev_mag), \
         "mark reconstruction does not align with the cached design (magnitude)"
+    # lat/lon are ADDITIVE (F9-10, §P7-3(3)): the mark axis needs a spatial mark
+    # (nearest-prior distance, cluster membership, longitude sector) and the
+    # sub-daily arm needs longitude to build a LOCAL solar hour. They come from the
+    # same loader and the same `keep` mask as everything else here, so no new data
+    # path is opened; every existing key is byte-identical.
     return {"day": ev_day.astype(np.int64), "day_float": days_f[keep],
             "mag": ev_mag.astype(np.float64),
-            "depth": cat["depth"].to_numpy(dtype="float64")[keep]}
+            "depth": cat["depth"].to_numpy(dtype="float64")[keep],
+            "lat": lat[keep].astype(np.float64),
+            "lon": lon[keep].astype(np.float64)}
 
 
 # ============================================================== GLM tests ===

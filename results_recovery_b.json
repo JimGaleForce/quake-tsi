@@ -1,0 +1,1551 @@
+{
+ "id": "TRANCHE-B-S17-RECOVERY",
+ "banner": "SIMULATION ONLY. This harness runs on synthetic catalogues generated in this process. It reads no real catalogue, writes no exploration-ledger line, spends no holdout hash and makes no declaration. Its product is a RECOVERY TABLE -- an instrument calibration -- and it may not be entered for or against any ledger entry (\u00a7P7-14(d): B's BUILD is authorized, B's RUN is separately gated).",
+ "opened_utc": "2026-08-13T09:34:48.418176+00:00",
+ "closed_utc": "2026-08-13T09:36:21.891458+00:00",
+ "quick": false,
+ "declared": {
+  "alpha_tranche_b": 0.0001,
+  "detect_alpha": 0.01,
+  "n_reps": 10,
+  "n_surrogates": 1000,
+  "sim_n_days": 7716,
+  "sim_rate": 6.04,
+  "recovery_bar": 0.8,
+  "bands": [
+   [
+    "fortnightly",
+    14.765
+   ],
+   [
+    "monthly",
+    29.530588
+   ],
+   [
+    "annual",
+    365.2422
+   ]
+  ],
+  "narrow_arc_duty": 0.1,
+  "plant_factor": 2.0,
+  "vif_count_path": 24.081827389301417,
+  "vif_mark_fallback": 4.575
+ },
+ "F9-01": {
+  "statistic": "F9-01 second circular moment",
+  "rows": [
+   {
+    "band": "fortnightly",
+    "period_days": 14.765,
+    "planted_amplitude": 0.3042561949024198,
+    "plant_report": {
+     "what": "F9-01 fortnightly band",
+     "planted_amplitude": 0.3042561949024198,
+     "N": 46604.64,
+     "alpha": 0.0001,
+     "vif": 24.081827389301417,
+     "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+     "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+     "operative_floor_A_min": 0.1521280974512099,
+     "required_plant_factor": 2.0,
+     "required_min_plant": 0.3042561949024198,
+     "margin_over_required": 0.0,
+     "amplitude_over_floor": 2.0,
+     "compliant": true,
+     "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes."
+    },
+    "n_reps": 10,
+    "detect_alpha": 0.01,
+    "positive_two_lobed_recovery_rate": 1.0,
+    "negative_sinusoid_false_positive_rate": 0.0,
+    "nominal_size": 0.01,
+    "positive_rows": [
+     {
+      "rep": 0,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.8421578421578422,
+      "R1": 0.010087518452750879,
+      "R2": 0.13272177384794168,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 1,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.1928071928071928,
+      "R1": 0.03357658624627066,
+      "R2": 0.13616877830655935,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 2,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.29270729270729273,
+      "R1": 0.028017609252264347,
+      "R2": 0.1860610665155887,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 3,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.6683316683316683,
+      "R1": 0.01699910812206137,
+      "R2": 0.15999461411127658,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 4,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.7152847152847153,
+      "R1": 0.015246966536537083,
+      "R2": 0.15353883462944276,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 5,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.7372627372627373,
+      "R1": 0.012530138190802441,
+      "R2": 0.1660814255182352,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 6,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.5974025974025974,
+      "R1": 0.017848647529291356,
+      "R2": 0.16983523032741465,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 7,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.9240759240759241,
+      "R1": 0.007759652625467038,
+      "R2": 0.14435432564950387,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 8,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.1878121878121878,
+      "R1": 0.032517528458278155,
+      "R2": 0.14765853422687875,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 9,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.6083916083916084,
+      "R1": 0.01671362923132081,
+      "R2": 0.16061750751495554,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     }
+    ],
+    "negative_rows": [
+     {
+      "rep": 0,
+      "p_second_moment": 0.2047952047952048,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.1658727178686003,
+      "R2": 0.0300188376348105
+     },
+     {
+      "rep": 1,
+      "p_second_moment": 0.7242757242757243,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.1574707564371411,
+      "R2": 0.013349168346069393
+     },
+     {
+      "rep": 2,
+      "p_second_moment": 0.07092907092907093,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.1366109394129439,
+      "R2": 0.042817971650787115
+     },
+     {
+      "rep": 3,
+      "p_second_moment": 0.6883116883116883,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.1599336392156211,
+      "R2": 0.016211194461393748
+     },
+     {
+      "rep": 4,
+      "p_second_moment": 0.3696303696303696,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.15943505731849095,
+      "R2": 0.026299146179051998
+     },
+     {
+      "rep": 5,
+      "p_second_moment": 0.7352647352647352,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.14359075301414462,
+      "R2": 0.013911299057393113
+     },
+     {
+      "rep": 6,
+      "p_second_moment": 0.7832167832167832,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.1299521249400059,
+      "R2": 0.01165244134151196
+     },
+     {
+      "rep": 7,
+      "p_second_moment": 0.8391608391608392,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.1790034598821378,
+      "R2": 0.009615455309973256
+     },
+     {
+      "rep": 8,
+      "p_second_moment": 0.6573426573426573,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.16468347138801528,
+      "R2": 0.015436529665735943
+     },
+     {
+      "rep": 9,
+      "p_second_moment": 0.052947052947052944,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.18081045893400324,
+      "R2": 0.0457147109010261
+     }
+    ],
+    "positive_pass": true,
+    "negative_pass": true,
+    "rayleigh_on_two_lobed_median_p": 0.6383616383616384,
+    "why_the_negative_control_is_the_one_that_matters": "\u00a7P7-3(1): without the SINUSOID negative control a 'second-moment detection' is unfalsifiably confounded with the first moment the programme has already bounded. The positive control alone cannot distinguish a new estimator from a re-labelled old one."
+   },
+   {
+    "band": "monthly",
+    "period_days": 29.530588,
+    "planted_amplitude": 0.3042561949024198,
+    "plant_report": {
+     "what": "F9-01 monthly band",
+     "planted_amplitude": 0.3042561949024198,
+     "N": 46604.64,
+     "alpha": 0.0001,
+     "vif": 24.081827389301417,
+     "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+     "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+     "operative_floor_A_min": 0.1521280974512099,
+     "required_plant_factor": 2.0,
+     "required_min_plant": 0.3042561949024198,
+     "margin_over_required": 0.0,
+     "amplitude_over_floor": 2.0,
+     "compliant": true,
+     "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes."
+    },
+    "n_reps": 10,
+    "detect_alpha": 0.01,
+    "positive_two_lobed_recovery_rate": 1.0,
+    "negative_sinusoid_false_positive_rate": 0.0,
+    "nominal_size": 0.01,
+    "positive_rows": [
+     {
+      "rep": 0,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.17782217782217782,
+      "R1": 0.035293503245802535,
+      "R2": 0.14049627596265285,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 1,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.8381618381618382,
+      "R1": 0.00805616647633527,
+      "R2": 0.1389193647272009,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 2,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.2917082917082917,
+      "R1": 0.025982604865541967,
+      "R2": 0.17757171540264988,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 3,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.6433566433566433,
+      "R1": 0.018831195547980753,
+      "R2": 0.15007405631293302,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 4,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.2547452547452547,
+      "R1": 0.031044111659327057,
+      "R2": 0.15285925194056801,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 5,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.6223776223776224,
+      "R1": 0.017530342382430075,
+      "R2": 0.15217168056861324,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 6,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.46153846153846156,
+      "R1": 0.022883308473916734,
+      "R2": 0.1576420549167446,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 7,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.6633366633366633,
+      "R1": 0.015637295539887,
+      "R2": 0.13808168418446107,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 8,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.5764235764235764,
+      "R1": 0.01886936409804222,
+      "R2": 0.15661852851480848,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 9,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.2677322677322677,
+      "R1": 0.031264691657314984,
+      "R2": 0.13293238679303235,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     }
+    ],
+    "negative_rows": [
+     {
+      "rep": 0,
+      "p_second_moment": 0.8621378621378621,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.15062353834054837,
+      "R2": 0.009221322638002207
+     },
+     {
+      "rep": 1,
+      "p_second_moment": 0.35064935064935066,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.16095414470472255,
+      "R2": 0.027223346893461852
+     },
+     {
+      "rep": 2,
+      "p_second_moment": 0.6613386613386614,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.17246703352326828,
+      "R2": 0.01761807774282311
+     },
+     {
+      "rep": 3,
+      "p_second_moment": 0.43356643356643354,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.13412431581520606,
+      "R2": 0.023685616157041765
+     },
+     {
+      "rep": 4,
+      "p_second_moment": 0.35564435564435565,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.15852556266607096,
+      "R2": 0.026870384213240908
+     },
+     {
+      "rep": 5,
+      "p_second_moment": 0.5194805194805194,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.12763582456607517,
+      "R2": 0.020684158194455477
+     },
+     {
+      "rep": 6,
+      "p_second_moment": 0.12287712287712288,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.1467963680342241,
+      "R2": 0.038376303111181634
+     },
+     {
+      "rep": 7,
+      "p_second_moment": 0.9070929070929071,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.15247800350411927,
+      "R2": 0.00976485948641158
+     },
+     {
+      "rep": 8,
+      "p_second_moment": 0.6533466533466533,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.17258467066785318,
+      "R2": 0.0180954630036142
+     },
+     {
+      "rep": 9,
+      "p_second_moment": 0.27472527472527475,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.15420405975245471,
+      "R2": 0.03221813959850186
+     }
+    ],
+    "positive_pass": true,
+    "negative_pass": true,
+    "rayleigh_on_two_lobed_median_p": 0.518981018981019,
+    "why_the_negative_control_is_the_one_that_matters": "\u00a7P7-3(1): without the SINUSOID negative control a 'second-moment detection' is unfalsifiably confounded with the first moment the programme has already bounded. The positive control alone cannot distinguish a new estimator from a re-labelled old one."
+   },
+   {
+    "band": "annual",
+    "period_days": 365.2422,
+    "planted_amplitude": 0.3042561949024198,
+    "plant_report": {
+     "what": "F9-01 annual band",
+     "planted_amplitude": 0.3042561949024198,
+     "N": 46604.64,
+     "alpha": 0.0001,
+     "vif": 24.081827389301417,
+     "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+     "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+     "operative_floor_A_min": 0.1521280974512099,
+     "required_plant_factor": 2.0,
+     "required_min_plant": 0.3042561949024198,
+     "margin_over_required": 0.0,
+     "amplitude_over_floor": 2.0,
+     "compliant": true,
+     "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes."
+    },
+    "n_reps": 10,
+    "detect_alpha": 0.01,
+    "positive_two_lobed_recovery_rate": 0.9,
+    "negative_sinusoid_false_positive_rate": 0.0,
+    "nominal_size": 0.01,
+    "positive_rows": [
+     {
+      "rep": 0,
+      "p_second_moment": 0.02097902097902098,
+      "p_rayleigh_form": 0.6583416583416584,
+      "R1": 0.016060443488985453,
+      "R2": 0.1165473136091491,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 1,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.16283716283716285,
+      "R1": 0.0450357062254363,
+      "R2": 0.14988386018278335,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 2,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.6143856143856143,
+      "R1": 0.02570137997925346,
+      "R2": 0.15246907824785103,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 3,
+      "p_second_moment": 0.003996003996003996,
+      "p_rayleigh_form": 0.11988011988011989,
+      "R1": 0.05816072558763826,
+      "R2": 0.12216145426768152,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 4,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.8581418581418582,
+      "R1": 0.019888163293314304,
+      "R2": 0.143974973606916,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 5,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.00999000999000999,
+      "R1": 0.10196624757970704,
+      "R2": 0.16258435056061418,
+      "reading": "HARMONIC-OR-AMBIGUOUS (R2 not dominant over R1)"
+     },
+     {
+      "rep": 6,
+      "p_second_moment": 0.001998001998001998,
+      "p_rayleigh_form": 0.7412587412587412,
+      "R1": 0.016194733630693504,
+      "R2": 0.16856217069366564,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 7,
+      "p_second_moment": 0.002997002997002997,
+      "p_rayleigh_form": 0.7232767232767233,
+      "R1": 0.013407283626739595,
+      "R2": 0.1152335503395797,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 8,
+      "p_second_moment": 0.000999000999000999,
+      "p_rayleigh_form": 0.5304695304695305,
+      "R1": 0.035718535268512125,
+      "R2": 0.14495064960701937,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     },
+     {
+      "rep": 9,
+      "p_second_moment": 0.001998001998001998,
+      "p_rayleigh_form": 0.981018981018981,
+      "R1": 0.002471649875596904,
+      "R2": 0.15460958431533145,
+      "reading": "AXIAL (R2 >> R1): the structure \u00a7K87-0(c) says no first-moment statistic could have produced"
+     }
+    ],
+    "negative_rows": [
+     {
+      "rep": 0,
+      "p_second_moment": 0.2827172827172827,
+      "p_rayleigh_form": 0.007992007992007992,
+      "R1": 0.1872377405091453,
+      "R2": 0.047029992110183924
+     },
+     {
+      "rep": 1,
+      "p_second_moment": 0.7022977022977023,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.22223119784503595,
+      "R2": 0.020283688458256247
+     },
+     {
+      "rep": 2,
+      "p_second_moment": 0.057942057942057944,
+      "p_rayleigh_form": 0.003996003996003996,
+      "R1": 0.1579225539362092,
+      "R2": 0.044279747818764884
+     },
+     {
+      "rep": 3,
+      "p_second_moment": 0.6983016983016983,
+      "p_rayleigh_form": 0.001998001998001998,
+      "R1": 0.18383005863842375,
+      "R2": 0.022373239258804477
+     },
+     {
+      "rep": 4,
+      "p_second_moment": 0.952047952047952,
+      "p_rayleigh_form": 0.007992007992007992,
+      "R1": 0.14991376305622386,
+      "R2": 0.013376764268743912
+     },
+     {
+      "rep": 5,
+      "p_second_moment": 0.8041958041958042,
+      "p_rayleigh_form": 0.003996003996003996,
+      "R1": 0.14544054881234567,
+      "R2": 0.017817675704715128
+     },
+     {
+      "rep": 6,
+      "p_second_moment": 0.33466533466533466,
+      "p_rayleigh_form": 0.002997002997002997,
+      "R1": 0.14759377882053049,
+      "R2": 0.03480031753581712
+     },
+     {
+      "rep": 7,
+      "p_second_moment": 0.6033966033966034,
+      "p_rayleigh_form": 0.000999000999000999,
+      "R1": 0.20511130420479678,
+      "R2": 0.03192908606153225
+     },
+     {
+      "rep": 8,
+      "p_second_moment": 0.9150849150849151,
+      "p_rayleigh_form": 0.061938061938061936,
+      "R1": 0.09830486983946145,
+      "R2": 0.010892978699817512
+     },
+     {
+      "rep": 9,
+      "p_second_moment": 0.7012987012987013,
+      "p_rayleigh_form": 0.003996003996003996,
+      "R1": 0.14908075179582975,
+      "R2": 0.020347193818611206
+     }
+    ],
+    "positive_pass": true,
+    "negative_pass": true,
+    "rayleigh_on_two_lobed_median_p": 0.6363636363636364,
+    "why_the_negative_control_is_the_one_that_matters": "\u00a7P7-3(1): without the SINUSOID negative control a 'second-moment detection' is unfalsifiably confounded with the first moment the programme has already bounded. The positive control alone cannot distinguish a new estimator from a re-labelled old one."
+   }
+  ],
+  "bar": 0.8,
+  "pass": true
+ },
+ "F9-04": {
+  "statistic": "F9-04 Kuiper V / Watson U^2",
+  "rows": [
+   {
+    "band": "fortnightly",
+    "period_days": 14.765,
+    "operative_floor_A_min": 0.1521280974512099,
+    "planted_kuiper_equivalent_amplitude": 0.3042561949024198,
+    "plant_factor_over_floor": 2.0,
+    "n_reps": 10,
+    "detect_alpha": 0.01,
+    "A_single_arc": {
+     "duty_cycle": 0.1,
+     "arc_height": 0.9684775477010248,
+     "fundamental_presented_to_2df": 0.21169448034102326,
+     "fundamental_over_floor": 1.391554117140769,
+     "kuiper_edge_ratio_ceiling": 1.437241983883032,
+     "kuiper_recovery_rate": 1.0,
+     "watson_recovery_rate": 1.0,
+     "rayleigh_recovery_rate": 1.0,
+     "reading": "a single mean-preserving boxcar buys Kuiper at most a factor 1.437 in equivalent amplitude (derived), so BOTH statistics are expected to see a plant sized at 2x the floor in Kuiper-equivalent units. MINING_CATALOG F9-04's 'nearly invisible / obvious' overstates the single-arc case; arm B is the decisive one.",
+     "rows": [
+      {
+       "rep": 0,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 1,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 2,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 3,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 4,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 5,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 6,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 7,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 8,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 9,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      }
+     ]
+    },
+    "B_fundamental_suppressed": {
+     "n_arcs": 3,
+     "duty_each": 0.05,
+     "arc_height": 1.9369550954020496,
+     "harmonics_suppressed": [
+      1,
+      2
+     ],
+     "kuiper_recovery_rate": 1.0,
+     "watson_recovery_rate": 1.0,
+     "rayleigh_recovery_rate": 0.0,
+     "second_moment_recovery_rate": 0.0,
+     "kuiper_sees_and_rayleigh_misses_rate": 1.0,
+     "reading": "3 equally spaced arcs put ZERO power in harmonics 1 and 2, so the 2-df Rayleigh-form statistic AND the F9-01 second moment are blind by algebra, not by luck. This is the money demonstration and it also shows the two new statistics are complementary.",
+     "rows": [
+      {
+       "rep": 0,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.5074925074925075,
+       "p_second_moment": 0.6833166833166833
+      },
+      {
+       "rep": 1,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.8971028971028971,
+       "p_second_moment": 0.8551448551448552
+      },
+      {
+       "rep": 2,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.015984015984015984,
+       "p_second_moment": 0.11988011988011989
+      },
+      {
+       "rep": 3,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.8751248751248751,
+       "p_second_moment": 0.5964035964035964
+      },
+      {
+       "rep": 4,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.060939060939060936,
+       "p_second_moment": 0.0979020979020979
+      },
+      {
+       "rep": 5,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.44555444555444557,
+       "p_second_moment": 0.43156843156843155
+      },
+      {
+       "rep": 6,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.8351648351648352,
+       "p_second_moment": 0.24575424575424576
+      },
+      {
+       "rep": 7,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.5264735264735265,
+       "p_second_moment": 0.4125874125874126
+      },
+      {
+       "rep": 8,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.46553446553446554,
+       "p_second_moment": 0.7632367632367633
+      },
+      {
+       "rep": 9,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.7732267732267732,
+       "p_second_moment": 0.8181818181818182
+      }
+     ]
+    },
+    "C_day_lattice_negative": {
+     "false_positive_rate": 0.0,
+     "nominal_size": 0.01,
+     "rows": [
+      {
+       "rep": 0,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 1,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 2,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 3,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 4,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 5,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 6,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 7,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 8,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 9,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      }
+     ]
+    },
+    "plant_reports": {
+     "single_arc": {
+      "what": "F9-04 fortnightly single narrow arc (Kuiper-equivalent)",
+      "planted_amplitude": 0.3042561949024198,
+      "N": 46604.64,
+      "alpha": 0.0001,
+      "vif": 24.081827389301417,
+      "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+      "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+      "operative_floor_A_min": 0.1521280974512099,
+      "required_plant_factor": 2.0,
+      "required_min_plant": 0.3042561949024198,
+      "margin_over_required": 0.0,
+      "amplitude_over_floor": 2.0,
+      "compliant": true,
+      "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes."
+     },
+     "k_fold": {
+      "what": "F9-04 fortnightly 3-fold arc (Kuiper-equivalent)",
+      "planted_amplitude": 0.3042561949024198,
+      "N": 46604.64,
+      "alpha": 0.0001,
+      "vif": 24.081827389301417,
+      "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+      "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+      "operative_floor_A_min": 0.1521280974512099,
+      "required_plant_factor": 2.0,
+      "required_min_plant": 0.3042561949024198,
+      "margin_over_required": 0.0,
+      "amplitude_over_floor": 2.0,
+      "compliant": true,
+      "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes."
+     }
+    },
+    "positive_pass": true,
+    "decisive_pass": true,
+    "negative_pass": true,
+    "band_note": "\u00a7P7-3(2): Kuiper/Watson on DAILY-BINNED phases inherit the day-binning sinc notches exactly as the 2-df form does. They buy SHAPE sensitivity, not BAND coverage. Any recovery claim from them is per band and must be demonstrated band by band; the diurnal and semidiurnal bands stay structurally notched."
+   },
+   {
+    "band": "monthly",
+    "period_days": 29.530588,
+    "operative_floor_A_min": 0.1521280974512099,
+    "planted_kuiper_equivalent_amplitude": 0.3042561949024198,
+    "plant_factor_over_floor": 2.0,
+    "n_reps": 10,
+    "detect_alpha": 0.01,
+    "A_single_arc": {
+     "duty_cycle": 0.1,
+     "arc_height": 0.9684775477010248,
+     "fundamental_presented_to_2df": 0.21169448034102326,
+     "fundamental_over_floor": 1.391554117140769,
+     "kuiper_edge_ratio_ceiling": 1.437241983883032,
+     "kuiper_recovery_rate": 1.0,
+     "watson_recovery_rate": 1.0,
+     "rayleigh_recovery_rate": 1.0,
+     "reading": "a single mean-preserving boxcar buys Kuiper at most a factor 1.437 in equivalent amplitude (derived), so BOTH statistics are expected to see a plant sized at 2x the floor in Kuiper-equivalent units. MINING_CATALOG F9-04's 'nearly invisible / obvious' overstates the single-arc case; arm B is the decisive one.",
+     "rows": [
+      {
+       "rep": 0,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 1,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 2,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 3,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 4,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 5,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 6,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 7,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 8,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 9,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      }
+     ]
+    },
+    "B_fundamental_suppressed": {
+     "n_arcs": 3,
+     "duty_each": 0.05,
+     "arc_height": 1.9369550954020496,
+     "harmonics_suppressed": [
+      1,
+      2
+     ],
+     "kuiper_recovery_rate": 1.0,
+     "watson_recovery_rate": 1.0,
+     "rayleigh_recovery_rate": 0.0,
+     "second_moment_recovery_rate": 0.0,
+     "kuiper_sees_and_rayleigh_misses_rate": 1.0,
+     "reading": "3 equally spaced arcs put ZERO power in harmonics 1 and 2, so the 2-df Rayleigh-form statistic AND the F9-01 second moment are blind by algebra, not by luck. This is the money demonstration and it also shows the two new statistics are complementary.",
+     "rows": [
+      {
+       "rep": 0,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.7882117882117882,
+       "p_second_moment": 0.7592407592407593
+      },
+      {
+       "rep": 1,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.5794205794205795,
+       "p_second_moment": 0.7792207792207793
+      },
+      {
+       "rep": 2,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.7452547452547452,
+       "p_second_moment": 0.3886113886113886
+      },
+      {
+       "rep": 3,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.29270729270729273,
+       "p_second_moment": 0.5644355644355644
+      },
+      {
+       "rep": 4,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.44755244755244755,
+       "p_second_moment": 0.16483516483516483
+      },
+      {
+       "rep": 5,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.4205794205794206,
+       "p_second_moment": 0.9100899100899101
+      },
+      {
+       "rep": 6,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.6123876123876124,
+       "p_second_moment": 0.3806193806193806
+      },
+      {
+       "rep": 7,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.34265734265734266,
+       "p_second_moment": 0.46353646353646355
+      },
+      {
+       "rep": 8,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.8651348651348651,
+       "p_second_moment": 0.46253746253746253
+      },
+      {
+       "rep": 9,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.6383616383616384,
+       "p_second_moment": 0.972027972027972
+      }
+     ]
+    },
+    "C_day_lattice_negative": {
+     "false_positive_rate": 0.0,
+     "nominal_size": 0.01,
+     "rows": [
+      {
+       "rep": 0,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 1,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 2,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 3,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 4,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 5,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 6,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 7,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 8,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 9,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      }
+     ]
+    },
+    "plant_reports": {
+     "single_arc": {
+      "what": "F9-04 monthly single narrow arc (Kuiper-equivalent)",
+      "planted_amplitude": 0.3042561949024198,
+      "N": 46604.64,
+      "alpha": 0.0001,
+      "vif": 24.081827389301417,
+      "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+      "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+      "operative_floor_A_min": 0.1521280974512099,
+      "required_plant_factor": 2.0,
+      "required_min_plant": 0.3042561949024198,
+      "margin_over_required": 0.0,
+      "amplitude_over_floor": 2.0,
+      "compliant": true,
+      "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes."
+     },
+     "k_fold": {
+      "what": "F9-04 monthly 3-fold arc (Kuiper-equivalent)",
+      "planted_amplitude": 0.3042561949024198,
+      "N": 46604.64,
+      "alpha": 0.0001,
+      "vif": 24.081827389301417,
+      "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+      "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+      "operative_floor_A_min": 0.1521280974512099,
+      "required_plant_factor": 2.0,
+      "required_min_plant": 0.3042561949024198,
+      "margin_over_required": 0.0,
+      "amplitude_over_floor": 2.0,
+      "compliant": true,
+      "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes."
+     }
+    },
+    "positive_pass": true,
+    "decisive_pass": true,
+    "negative_pass": true,
+    "band_note": "\u00a7P7-3(2): Kuiper/Watson on DAILY-BINNED phases inherit the day-binning sinc notches exactly as the 2-df form does. They buy SHAPE sensitivity, not BAND coverage. Any recovery claim from them is per band and must be demonstrated band by band; the diurnal and semidiurnal bands stay structurally notched."
+   },
+   {
+    "band": "annual",
+    "period_days": 365.2422,
+    "operative_floor_A_min": 0.1521280974512099,
+    "planted_kuiper_equivalent_amplitude": 0.3042561949024198,
+    "plant_factor_over_floor": 2.0,
+    "n_reps": 10,
+    "detect_alpha": 0.01,
+    "A_single_arc": {
+     "duty_cycle": 0.1,
+     "arc_height": 0.9684775477010248,
+     "fundamental_presented_to_2df": 0.21169448034102326,
+     "fundamental_over_floor": 1.391554117140769,
+     "kuiper_edge_ratio_ceiling": 1.437241983883032,
+     "kuiper_recovery_rate": 1.0,
+     "watson_recovery_rate": 1.0,
+     "rayleigh_recovery_rate": 0.7,
+     "reading": "a single mean-preserving boxcar buys Kuiper at most a factor 1.437 in equivalent amplitude (derived), so BOTH statistics are expected to see a plant sized at 2x the floor in Kuiper-equivalent units. MINING_CATALOG F9-04's 'nearly invisible / obvious' overstates the single-arc case; arm B is the decisive one.",
+     "rows": [
+      {
+       "rep": 0,
+       "p_kuiper": 0.002997002997002997,
+       "p_watson": 0.001998001998001998,
+       "p_rayleigh_form": 0.006993006993006993
+      },
+      {
+       "rep": 1,
+       "p_kuiper": 0.005994005994005994,
+       "p_watson": 0.00999000999000999,
+       "p_rayleigh_form": 0.029970029970029972
+      },
+      {
+       "rep": 2,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      },
+      {
+       "rep": 3,
+       "p_kuiper": 0.002997002997002997,
+       "p_watson": 0.006993006993006993,
+       "p_rayleigh_form": 0.01098901098901099
+      },
+      {
+       "rep": 4,
+       "p_kuiper": 0.001998001998001998,
+       "p_watson": 0.002997002997002997,
+       "p_rayleigh_form": 0.004995004995004995
+      },
+      {
+       "rep": 5,
+       "p_kuiper": 0.008991008991008992,
+       "p_watson": 0.004995004995004995,
+       "p_rayleigh_form": 0.001998001998001998
+      },
+      {
+       "rep": 6,
+       "p_kuiper": 0.002997002997002997,
+       "p_watson": 0.004995004995004995,
+       "p_rayleigh_form": 0.02197802197802198
+      },
+      {
+       "rep": 7,
+       "p_kuiper": 0.005994005994005994,
+       "p_watson": 0.005994005994005994,
+       "p_rayleigh_form": 0.007992007992007992
+      },
+      {
+       "rep": 8,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.001998001998001998,
+       "p_rayleigh_form": 0.006993006993006993
+      },
+      {
+       "rep": 9,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.000999000999000999
+      }
+     ]
+    },
+    "B_fundamental_suppressed": {
+     "n_arcs": 3,
+     "duty_each": 0.05,
+     "arc_height": 1.9369550954020496,
+     "harmonics_suppressed": [
+      1,
+      2
+     ],
+     "kuiper_recovery_rate": 0.9,
+     "watson_recovery_rate": 0.9,
+     "rayleigh_recovery_rate": 0.0,
+     "second_moment_recovery_rate": 0.0,
+     "kuiper_sees_and_rayleigh_misses_rate": 0.9,
+     "reading": "3 equally spaced arcs put ZERO power in harmonics 1 and 2, so the 2-df Rayleigh-form statistic AND the F9-01 second moment are blind by algebra, not by luck. This is the money demonstration and it also shows the two new statistics are complementary.",
+     "rows": [
+      {
+       "rep": 0,
+       "p_kuiper": 0.005994005994005994,
+       "p_watson": 0.002997002997002997,
+       "p_rayleigh_form": 0.9500499500499501,
+       "p_second_moment": 0.7792207792207793
+      },
+      {
+       "rep": 1,
+       "p_kuiper": 0.001998001998001998,
+       "p_watson": 0.001998001998001998,
+       "p_rayleigh_form": 0.21678321678321677,
+       "p_second_moment": 0.1888111888111888
+      },
+      {
+       "rep": 2,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.7602397602397603,
+       "p_second_moment": 0.8381618381618382
+      },
+      {
+       "rep": 3,
+       "p_kuiper": 0.03196803196803197,
+       "p_watson": 0.025974025974025976,
+       "p_rayleigh_form": 0.9200799200799201,
+       "p_second_moment": 0.5724275724275725
+      },
+      {
+       "rep": 4,
+       "p_kuiper": 0.004995004995004995,
+       "p_watson": 0.003996003996003996,
+       "p_rayleigh_form": 0.3206793206793207,
+       "p_second_moment": 0.21478521478521478
+      },
+      {
+       "rep": 5,
+       "p_kuiper": 0.004995004995004995,
+       "p_watson": 0.001998001998001998,
+       "p_rayleigh_form": 0.7202797202797203,
+       "p_second_moment": 0.3516483516483517
+      },
+      {
+       "rep": 6,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.002997002997002997,
+       "p_rayleigh_form": 0.32867132867132864,
+       "p_second_moment": 0.8521478521478522
+      },
+      {
+       "rep": 7,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.7582417582417582,
+       "p_second_moment": 0.1258741258741259
+      },
+      {
+       "rep": 8,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.000999000999000999,
+       "p_rayleigh_form": 0.5924075924075924,
+       "p_second_moment": 0.6073926073926074
+      },
+      {
+       "rep": 9,
+       "p_kuiper": 0.000999000999000999,
+       "p_watson": 0.003996003996003996,
+       "p_rayleigh_form": 0.17682317682317683,
+       "p_second_moment": 0.4755244755244755
+      }
+     ]
+    },
+    "C_day_lattice_negative": {
+     "false_positive_rate": 0.0,
+     "nominal_size": 0.01,
+     "rows": [
+      {
+       "rep": 0,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 1,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 2,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 3,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 4,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 5,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 6,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 7,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 8,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      },
+      {
+       "rep": 9,
+       "p_min_omnibus": 1.0,
+       "V_star": 0.0,
+       "U2_star": 0.0,
+       "n_distinct_phases": 1
+      }
+     ]
+    },
+    "plant_reports": {
+     "single_arc": {
+      "what": "F9-04 annual single narrow arc (Kuiper-equivalent)",
+      "planted_amplitude": 0.3042561949024198,
+      "N": 46604.64,
+      "alpha": 0.0001,
+      "vif": 24.081827389301417,
+      "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+      "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+      "operative_floor_A_min": 0.1521280974512099,
+      "required_plant_factor": 2.0,
+      "required_min_plant": 0.3042561949024198,
+      "margin_over_required": 0.0,
+      "amplitude_over_floor": 2.0,
+      "compliant": true,
+      "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes."
+     },
+     "k_fold": {
+      "what": "F9-04 annual 3-fold arc (Kuiper-equivalent)",
+      "planted_amplitude": 0.3042561949024198,
+      "N": 46604.64,
+      "alpha": 0.0001,
+      "vif": 24.081827389301417,
+      "vif_source": "results_f4_58_vif.json :: sessions[session_20260811T022953].overall_vif_df2_phase.median (HYPOTHESIS_LEDGER.md \u00a7P7-8(a))",
+      "vif_status": "PROVISIONAL (\u00a7P7-8(b)). Item (ii), the true-VIF=1 simulation control, has now RUN (f4_58_vif_control.py -> results_f4_58_vif_control.json): on 24 catalogs Poisson-simulated from the fitted ETAS lambda the same estimator returns VIF = 1.00 flat from 30 d to 800 d blocks (log-log slope -0.002 +/- 0.002, p = 0.47), reproducing 4.1% of the 24.08 measured on the Earth. That is Reading A and it supports the flat 24.08; PROMOTION FROM PROVISIONAL IS THE POPPER SEAT'S CALL, not this module's, so the label stands until it is made.",
+      "operative_floor_A_min": 0.1521280974512099,
+      "required_plant_factor": 2.0,
+      "required_min_plant": 0.3042561949024198,
+      "margin_over_required": 0.0,
+      "amplitude_over_floor": 2.0,
+      "compliant": true,
+      "rule": "HYPOTHESIS_LEDGER.md \u00a7P7-8(d): plants must sit at >= 2x the operative floor at the relevant N, so that a failure to recover is an INSTRUMENT verdict and not a POWER verdict wearing an instrument's clothes."
+     }
+    },
+    "positive_pass": true,
+    "decisive_pass": true,
+    "negative_pass": true,
+    "band_note": "\u00a7P7-3(2): Kuiper/Watson on DAILY-BINNED phases inherit the day-binning sinc notches exactly as the 2-df form does. They buy SHAPE sensitivity, not BAND coverage. Any recovery claim from them is per band and must be demonstrated band by band; the diurnal and semidiurnal bands stay structurally notched."
+   }
+  ],
+  "bar": 0.8,
+  "pass": true
+ },
+ "F9-10": {
+  "statistic": "F9-10 mark path -- G-M1 arm (i) re-run (\u00a7P7-3(3))",
+  "n_reps": 5,
+  "mark_path_recovery_rate_in_[0.8,1.2]": 1.0,
+  "mark_path_median_ratio": 0.993148575635954,
+  "count_path_max_abs_ratio": 0.0,
+  "count_path_bar": 0.1,
+  "count_path_structurally_blind": true,
+  "bar": 0.8,
+  "pass": true,
+  "rows": [
+   {
+    "rep": 0,
+    "n_events": 18000,
+    "planted_mag_amplitude": 0.2,
+    "recovered_mag_amplitude": 0.1982385346858789,
+    "recovery_ratio_mark_path": 0.9911926734293944,
+    "recovered_phase_rad": 0.030035905528924763,
+    "phase_error_deg": 1.7209306206610435,
+    "in_gm1_range": true,
+    "mark_statistic": 0.41028483639875946,
+    "mark_p_raw": 0.000999000999000999,
+    "rho_min": 0.07544250436644714,
+    "mark_statistic_over_floor": 5.4383777400320845,
+    "count_path_recovery_ratio": 0.0,
+    "count_path_design_sd_of_cos_phase": 0.0,
+    "count_path_note": "STRUCTURAL ZERO (\u00a7P5-1's first exact zero): a daily bin has exactly one value of the diurnal phase, so the design column is constant (sd = 0) and the count path cannot form the test. A_hat/A_ref = 0 identically, not by measurement."
+   },
+   {
+    "rep": 1,
+    "n_events": 18000,
+    "planted_mag_amplitude": 0.2,
+    "recovered_mag_amplitude": 0.2043512416823023,
+    "recovery_ratio_mark_path": 1.0217562084115113,
+    "recovered_phase_rad": 0.023325353441896797,
+    "phase_error_deg": 1.3364443078716348,
+    "in_gm1_range": true,
+    "mark_statistic": 0.4196017760493824,
+    "mark_p_raw": 0.000999000999000999,
+    "rho_min": 0.07544250436644714,
+    "mark_statistic_over_floor": 5.561874961245311,
+    "count_path_recovery_ratio": 0.0,
+    "count_path_design_sd_of_cos_phase": 0.0,
+    "count_path_note": "STRUCTURAL ZERO (\u00a7P5-1's first exact zero): a daily bin has exactly one value of the diurnal phase, so the design column is constant (sd = 0) and the count path cannot form the test. A_hat/A_ref = 0 identically, not by measurement."
+   },
+   {
+    "rep": 2,
+    "n_events": 18000,
+    "planted_mag_amplitude": 0.2,
+    "recovered_mag_amplitude": 0.19862971512719083,
+    "recovery_ratio_mark_path": 0.993148575635954,
+    "recovered_phase_rad": -0.03548442969106848,
+    "phase_error_deg": -2.0331080597269313,
+    "in_gm1_range": true,
+    "mark_statistic": 0.4101212464056512,
+    "mark_p_raw": 0.000999000999000999,
+    "rho_min": 0.07544250436644714,
+    "mark_statistic_over_floor": 5.43620933384671,
+    "count_path_recovery_ratio": 0.0,
+    "count_path_design_sd_of_cos_phase": 0.0,
+    "count_path_note": "STRUCTURAL ZERO (\u00a7P5-1's first exact zero): a daily bin has exactly one value of the diurnal phase, so the design column is constant (sd = 0) and the count path cannot form the test. A_hat/A_ref = 0 identically, not by measurement."
+   },
+   {
+    "rep": 3,
+    "n_events": 18000,
+    "planted_mag_amplitude": 0.2,
+    "recovered_mag_amplitude": 0.19844972155034646,
+    "recovery_ratio_mark_path": 0.9922486077517323,
+    "recovered_phase_rad": -0.02164697994409548,
+    "phase_error_deg": -1.2402805900010097,
+    "in_gm1_range": true,
+    "mark_statistic": 0.41413542085085214,
+    "mark_p_raw": 0.000999000999000999,
+    "rho_min": 0.07544250436644714,
+    "mark_statistic_over_floor": 5.489417727164394,
+    "count_path_recovery_ratio": 0.0,
+    "count_path_design_sd_of_cos_phase": 0.0,
+    "count_path_note": "STRUCTURAL ZERO (\u00a7P5-1's first exact zero): a daily bin has exactly one value of the diurnal phase, so the design column is constant (sd = 0) and the count path cannot form the test. A_hat/A_ref = 0 identically, not by measurement."
+   },
+   {
+    "rep": 4,
+    "n_events": 18000,
+    "planted_mag_amplitude": 0.2,
+    "recovered_mag_amplitude": 0.20025756112795393,
+    "recovery_ratio_mark_path": 1.0012878056397696,
+    "recovered_phase_rad": 0.011784994160235407,
+    "phase_error_deg": 0.6752304269678107,
+    "in_gm1_range": true,
+    "mark_statistic": 0.4153451682374245,
+    "mark_p_raw": 0.000999000999000999,
+    "rho_min": 0.07544250436644714,
+    "mark_statistic_over_floor": 5.505453082786952,
+    "count_path_recovery_ratio": 0.0,
+    "count_path_design_sd_of_cos_phase": 0.0,
+    "count_path_note": "STRUCTURAL ZERO (\u00a7P5-1's first exact zero): a daily bin has exactly one value of the diurnal phase, so the design column is constant (sd = 0) and the count path cannot form the test. A_hat/A_ref = 0 identically, not by measurement."
+   }
+  ],
+  "inversion_note": "arm (i) INVERTS on the mark path. On the count path it demanded A_hat/A_ref < 0.1 and could only destroy (v1 is designed blind there). On the mark path there is no notch, so the demand is RECOVERY to [0.8, 1.2] -- and the count-path column in this same table is the notch, measured on the identical catalogues.",
+  "what_it_licenses": "the mark path's sub-daily SENSITIVITY, measured. It does NOT license any sub-daily mark result on real data to be read as Earth: \u00a7P7-3(3) gates that arm on the F7-01/02/03 observer controls, and this harness's own plant is an OBSERVER artifact by construction -- which is precisely why the gate exists."
+ },
+ "all_pass": true,
+ "what_none_of_this_licenses": "B's RUN. \u00a7P7-14(d) authorized B's BUILD and gated its run separately; \u00a7P7-15(b) confirms the run is gated on per-statistic G-M1 clearance, which is what this table is EVIDENCE FOR and not a substitute for. Adjudication is the Popper seat's."
+}

@@ -1,0 +1,79 @@
+{
+ "note": "TRANCHE B (HYPOTHESIS_LEDGER.md \u00a7P7-3, \u00a7P7-10(c), \u00a7P7-14(d), \u00a7P7-15(b)), declared BEFORE the run and frozen in the config hash by its own sha256 (\u00a7P6-3(3)+(5)). BH denominator m = 369 = 301 new scope + 68 re-occupied already-declared slots (the F9-05 \u00a7P5-5(3) tranche-3 ladder, 2026-08-11). q_s is FLAT at the declared q in every stratum: no budget is reallocated, so there is no prior to justify under \u00a7P6-3(2). The mark axis sits in its OWN stratum (\u00a7P7-11(c)) rather than in the v1 `mark` stratum, because 7 event-time marks are not the 2 day-binned marks that allocation was measured on. COUNT DISCREPANCY, CARRIED NOT RESOLVED: \u00a7P7-10(c) declares Tranche B at ~1,000 and itemises it as '17 second-moment + 34 omnibus + ~161 mark + 68 already-declared ladder + 32 linear ladder + 17 two-stage + 31 bilinear + declared overhead'. THOSE SEVEN ITEMS SUM TO 360. The residual 'declared overhead' would therefore have to be ~640 -- 178% of the named scope -- which is not an overhead, it is a majority. MINING_CATALOG's own Tranche B section gives the same seven numbers and the same ~1,000 headline, so the gap originates in the catalog and was carried into the ruling verbatim. THIS BUILD DOES NOT RESOLVE IT: the declared integer is reserved to the Popper seat (\u00a7P7-10(c): 'the exact integer frozen in the config hash before the run'), and the choice moves every BH threshold in the tranche. Reported, flagged, and left open.",
+ "q": 0.1,
+ "catch_all": "tb_second_moment",
+ "strata": [
+  {
+   "name": "tb_second_moment",
+   "feature_family": null,
+   "test_kind": "moment2",
+   "region": null,
+   "m_s": 17,
+   "q_s": 0.1,
+   "note": ""
+  },
+  {
+   "name": "tb_omnibus",
+   "feature_family": null,
+   "test_kind": "omnibus",
+   "region": null,
+   "m_s": 34,
+   "q_s": 0.1,
+   "note": ""
+  },
+  {
+   "name": "tb_mark_axis",
+   "feature_family": null,
+   "test_kind": "markx",
+   "region": null,
+   "m_s": 161,
+   "q_s": 0.1,
+   "note": ""
+  },
+  {
+   "name": "tb_ladder",
+   "feature_family": null,
+   "test_kind": "ladder",
+   "region": null,
+   "m_s": 68,
+   "q_s": 0.1,
+   "note": ""
+  },
+  {
+   "name": "tb_linear_ladder",
+   "feature_family": null,
+   "test_kind": "ladder_linear",
+   "region": null,
+   "m_s": 32,
+   "q_s": 0.1,
+   "note": ""
+  },
+  {
+   "name": "tb_two_stage",
+   "feature_family": null,
+   "test_kind": "two_stage",
+   "region": null,
+   "m_s": 17,
+   "q_s": 0.1,
+   "note": ""
+  },
+  {
+   "name": "tb_bilinear",
+   "feature_family": null,
+   "test_kind": "bilinear",
+   "region": null,
+   "m_s": 31,
+   "q_s": 0.1,
+   "note": ""
+  },
+  {
+   "name": "tb_controls",
+   "feature_family": null,
+   "test_kind": "glm",
+   "region": null,
+   "m_s": 9,
+   "q_s": 0.1,
+   "note": ""
+  }
+ ]
+}

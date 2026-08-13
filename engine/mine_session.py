@@ -92,6 +92,7 @@ from . import (baseline as bl, datasets, design, mine as M, splits, __version__)
 from scipy import stats
 
 from . import gpd_tail, floors, regions as regions_mod, strata as strata_mod
+from . import circstat, marks_ext, observer as observer_mod
 
 QUICK = {
     "n_surrogates": 200, "n_periods": 800, "n_peaks": 5,
@@ -468,6 +469,123 @@ def marks_task(f, window, fe_day, marks, n_surr, rng, ladder=None, seed=0,
     return rows
 
 
+# =========================================================== TRANCHE B kinds ===
+# Three NEW TEST KINDS, each with the same task/key/checkpoint/strata discipline as
+# the three that already exist: one body per kind, called by both drivers, addressed
+# by a canonical `M.test_key`, checkpointed by the parent, and routed to a declared
+# §P6-3 stratum by `strata._test_kind`. They are inserted ONLY when
+# `cfg["tranche_b"]["enabled"]` is set, so a default session's config, hash, task
+# list, declared streams and resumable sessions are byte-identical to phase 2a.
+#
+# NOTHING HERE RUNS ON REAL DATA IN THIS BUILD. §P7-14(d)/§P7-15(b): B's BUILD is
+# authorized; B's RUN is gated on its per-statistic G-M1 clearance, which is what
+# `engine/recovery_b.py` produces on SIMULATED catalogues only.
+TRANCHE_B_RULE_ID = "TRANCHE-B-v1"
+
+
+def feature_phase(f, window, lag=0):
+    """The phase vector a circular statistic is computed on, for ONE feature.
+
+    Declared construction, one branch each, no alternatives (S-9):
+      * `kind='phase'`  -> the feature's own angle. This is the definition.
+      * `kind='linear'` with a `period_hint` -> the DAY INDEX folded on the declared
+        period, `2 pi t / P`. Not the feature's values: F9-01 and F9-04 are
+        statistics of a PHASE DISTRIBUTION, and a linear cyclic feature's phase is
+        the position in its own declared cycle, which is what "17 cyclic features"
+        in F9-01's price means.
+      * anything else -> refused. A circular statistic on a feature with no declared
+        cycle would be measuring the record, not a cycle.
+    """
+    if f.kind == "phase":
+        v = f.values[window.start - int(lag):window.stop - int(lag)]
+        return np.mod(np.asarray(v, dtype=np.float64), 2 * np.pi)
+    if f.period_hint:
+        t = np.arange(window.start, window.stop, dtype=np.float64) - float(lag)
+        return np.mod(2 * np.pi * t / float(f.period_hint), 2 * np.pi)
+    raise ValueError(
+        "%s: a circular statistic needs a declared cycle; this feature is "
+        "kind=%r with no period_hint. Refusing to invent one." % (f.name, f.kind))
+
+
+def moment2_task(f, window, counts, offset, n_surr, rng, seed=0):
+    """F9-01: the second circular moment, as the 2-df score on the doubled angle."""
+    th = feature_phase(f, window)
+    r = circstat.second_moment_test(th, counts, offset, n_surr, rng,
+                                    block_days=f.block_days, periodic=f.periodic)
+    r.update({"feature": f.name, "family": f.family, "kind": f.kind, "lag": 0,
+              "mark": None,
+              "period_days": (float(f.period_hint) if f.period_hint else None),
+              "tranche": "B", "catalog_entry": "F9-01"})
+    r.update(_window_clause(f))
+    return [r]
+
+
+def omnibus_task(f, window, counts, offset, n_surr, rng, seed=0):
+    """F9-04: Kuiper V and Watson U^2, two rows, under the engine's two nulls."""
+    th = feature_phase(f, window)
+    rows = circstat.omnibus_test(th, counts, offset, n_surr, rng,
+                                 block_days=f.block_days, periodic=f.periodic)
+    wc = _window_clause(f)
+    for r in rows:
+        r.update({"feature": f.name, "family": f.family, "kind": f.kind, "lag": 0,
+                  "mark": None,
+                  "period_days": (float(f.period_hint) if f.period_hint else None),
+                  "tranche": "B", "catalog_entry": "F9-04"})
+        r.update(wc)
+    return rows
+
+
+def marksx_task(f, window, fe_day, marks, ext_marks, n_surr, rng, seed=0,
+                subdaily_values=None, subdaily=False):
+    """F9-10: the mark axis over the 7 declared marks, optionally at EVENT TIMES.
+
+    `subdaily_values` is the feature RE-DERIVED at each event's own `day_float`
+    (`marks_ext.event_time_feature_values`). When it is present the row is genuinely
+    sub-daily and says so; when it is absent the feature is read at its day value and
+    the row says THAT, because a day-binned feature evaluated at an event has not
+    escaped the sinc and a row that implied otherwise would be the single most
+    misleading thing this tranche could emit.
+    """
+    if subdaily and subdaily_values is not None:
+        vals = np.asarray(subdaily_values, dtype=np.float64)
+        if f.kind == "phase":
+            vals = np.mod(vals, 2 * np.pi)
+    else:
+        vals = f.values[window][fe_day]
+        subdaily = False
+    rows = []
+    for mk in marks_ext.MARK_NAMES:
+        if mk not in ext_marks:
+            continue
+        r = M.mark_test(vals, ext_marks[mk], f.kind, n_surr, rng)
+        n_ev = int(np.asarray(ext_marks[mk]).size)
+        # §P7-10(c): F9-10 declares its floor from VIF_mark BEFORE it runs.
+        fl = floors.mark_floor_report(n_ev, None, feature="%s x %s" % (f.name, mk))
+        r.update({
+            "feature": f.name, "family": f.family, "kind": f.kind, "mark": mk,
+            "mark_axis": "F9-10", "n_events": n_ev, "lag": None,
+            "subdaily": bool(subdaily),
+            "subdaily_note": marks_ext.SUBDAILY_NOTE,
+            "mark_definition": marks_ext.MARK_DEFINITIONS.get(mk),
+            "rho_min": fl["rho_min"], "mark_floor": fl,
+            "statistic_over_floor": (float(abs(r["statistic"])) / fl["rho_min"]
+                                     if fl["rho_min"] > 0 else None),
+            "tranche": "B", "catalog_entry": "F9-10",
+        })
+        r.update(_window_clause(f))
+        rows.append(r)
+    return rows
+
+
+def _window_clause(f):
+    """S-15(c) on every Tranche B row that has a declared period (§P7-14(c))."""
+    if not f.period_hint:
+        return {"s15c": None}
+    rep = floors.window_report(float(f.period_hint), name=f.name)
+    return {"s15c": rep, "s15c_verdict": rep["verdict"],
+            "s15c_scored": rep["scored"]}
+
+
 def max_statistic_matrix(feats, window, counts, offset, tests, min_shift=30):
     """The joint null for S-8's max-statistic: one column per test, ONE SHARED index.
 
@@ -729,6 +847,25 @@ def dispatch_task(key, W):
                           task_rng(seed, name, "marks", None,
                                    null_type="circular_shift"),
                           ladder, seed=seed, gpd=gpd)
+    if kind == "moment2":
+        f = W["feats"][name]
+        return moment2_task(f, W["window"], W["counts"], W["offset"], n_surr,
+                            task_rng(seed, name, "moment2", None,
+                                     null_type="circular_shift"), seed=seed)
+    if kind == "omnibus":
+        f = W["feats"][name]
+        return omnibus_task(f, W["window"], W["counts"], W["offset"], n_surr,
+                            task_rng(seed, name, "omnibus", None,
+                                     null_type="circular_shift"), seed=seed)
+    if kind == "markx":
+        f = W["feats"][name]
+        tb = W.get("tranche_b") or {}
+        return marksx_task(f, W["window"], W["fe_day"], W["marks"],
+                           W["ext_marks"], n_surr,
+                           task_rng(seed, name, "markx", None,
+                                    null_type="circular_shift"), seed=seed,
+                           subdaily_values=(W.get("subdaily_values") or {}).get(name),
+                           subdaily=bool(tb.get("subdaily")))
     if kind == "regsum":
         f = W["feats"][name]
         return regsum_task(f, W["window"], W["reg_counts"], W["reg_offset"], n_surr,
@@ -1127,6 +1264,26 @@ def build_config(args, preset):
             "n_declared_tests": int(M.F9_20_N_DECLARED_TESTS),
             "family": M.F9_20_FAMILY,
         }
+    # TRANCHE B (§P7-3, §P7-14(d), §P7-15(b)). Three NEW STATISTICS enter the
+    # declared family, so the block is hash-affecting and is inserted ONLY when on:
+    # a default run's config, hash and resumable sessions stay byte-identical to
+    # phase 2a. `subdaily` is separate from `mark_axis` because §P7-3(3) gates ONLY
+    # the sub-daily arm -- the fortnightly-and-longer mark arm may proceed inside B
+    # without waiting, and collapsing the two flags would either over-gate the arm
+    # that is free or under-gate the arm that is not.
+    if getattr(args, "tranche_b", False):
+        cfg["tranche_b"] = {
+            "enabled": True,
+            "rule_id": TRANCHE_B_RULE_ID,
+            "second_moment": bool(getattr(args, "tb_second_moment", True)),
+            "omnibus": bool(getattr(args, "tb_omnibus", True)),
+            "mark_axis": bool(getattr(args, "tb_mark_axis", True)),
+            "subdaily": bool(getattr(args, "tb_subdaily", False)),
+            "marks": list(marks_ext.MARK_NAMES),
+            "alpha": floors.ALPHA_TRANCHE_B,
+            "vif_mark_fallback": floors.VIF_MARK_FALLBACK,
+            "n_declared_tests": (int(getattr(args, "tb_declared", 0) or 0) or None),
+        }
     path = getattr(args, "strata", None)
     if path:
         # §P6-3(3)+(5): the partition FILE CONTENT is hash-affecting (its sha256 is
@@ -1355,19 +1512,61 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     # battery that quietly grew a mark test per control would be running 759 tests
     # under a declaration that says 713.
     sci_feats = [f for f in feats if not getattr(f, "control", False)]
+    # A SUB-DAILY-ONLY control (observer.obs_utc_hour_phase) is constant across a
+    # daily bin BY CONSTRUCTION, so `Feature.design` would raise on its zero-variance
+    # column. It must still be DECLARED -- §P7-3(3)'s gate reads the declared feature
+    # set, and it is the one control that is live exactly where the sub-daily mark arm
+    # is -- so it is carried in `feats` and excluded from the count path here.
+    glm_feats = [f for f in feats if not getattr(f, "subdaily_only", False)]
     regsum_keys = [f"regsum:{f.name}" for f in sci_feats] if regpart else []
     region_keys = ([f"region:{r}:{f.name}"
                     for r in range(regpart["R"]) for f in sci_feats]
                    if (regpart and reg_cfg.get("battery")) else [])
-    task_keys = ([f"glm:{f.name}" for f in feats]
+    # ---- TRANCHE B's three new kinds (§P7-3, §P7-14(d)) ---------------------
+    # Cyclic science features only: F9-01 and F9-04 are statistics of a PHASE
+    # DISTRIBUTION, so a feature with no declared cycle has nothing for them to be
+    # computed on, and a CONTROL is excluded from the science axes by name exactly
+    # as F9-20 excludes it from the mark and regional axes.
+    tb_cfg = cfg.get("tranche_b") or {}
+    tb_on = bool(tb_cfg.get("enabled"))
+    cyc_feats = ([f for f in sci_feats if f.kind == "phase" or f.period_hint]
+                 if tb_on else [])
+    moment2_keys = ([f"moment2:{f.name}" for f in cyc_feats]
+                    if tb_cfg.get("second_moment") else [])
+    omnibus_keys = ([f"omnibus:{f.name}" for f in cyc_feats]
+                    if tb_cfg.get("omnibus") else [])
+    markx_keys = ([f"markx:{f.name}" for f in sci_feats]
+                  if tb_cfg.get("mark_axis") else [])
+    ext_marks, subdaily_values = None, {}
+    if markx_keys:
+        ext_marks, ext_marks_audit = marks_ext.build_marks(marks)
+        ckpt.state["f9_10_marks"] = ext_marks_audit
+        ckpt.state["f9_10_redundancy_audit"] = marks_ext.redundancy_audit(ext_marks)
+        if tb_cfg.get("subdaily"):
+            # §P7-3(3): the sub-daily arm is GATED on the observer controls, and the
+            # gate is checked HERE -- before a single sub-daily surrogate is drawn --
+            # because a sub-daily result computed without them is indistinguishable
+            # from one computed with them except in what it is allowed to mean.
+            ckpt.state["subdaily_gate"] = observer_mod.assert_subdaily_gate(
+                [f.name for f in feats])
+            subdaily_values, sub_flags = marks_ext.event_time_feature_values(
+                t0, marks["day_float"])
+            ckpt.state["subdaily_features"] = {
+                k: bool(v) for k, v in sub_flags.items()}
+        elif verbose:
+            print("tranche B: mark axis FORTNIGHTLY-AND-LONGER only "
+                  "(sub-daily arm not requested; §P7-3(3) gate not exercised)")
+
+    task_keys = ([f"glm:{f.name}" for f in glm_feats]
                  + [f"marks:{f.name}" for f in sci_feats]
-                 + period_keys + regsum_keys + region_keys)
+                 + period_keys + regsum_keys + region_keys
+                 + moment2_keys + omnibus_keys + markx_keys)
 
     # Every random stream in the session is addressed by a canonical test key.
     # Two tests sharing a digest would share a stream, which is a silent
     # correlation between "independent" nulls -- so it is checked, not assumed.
     all_keys = []
-    for f in feats:
+    for f in glm_feats:
         for lag in f.lags:
             all_keys.append(M.test_key(cfg["seed"], f.name, "glm", lag=lag,
                                        null_type="block_bootstrap"))
@@ -1400,6 +1599,17 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                         all_keys.append(M.test_key(
                             cfg["seed"], f.name, "region", lag=lag,
                             null_type="circular_shift", region=r))
+    for f in cyc_feats:
+        if moment2_keys:
+            all_keys.append(M.test_key(cfg["seed"], f.name, "moment2",
+                                       null_type="block_bootstrap"))
+        if omnibus_keys:
+            all_keys.append(M.test_key(cfg["seed"], f.name, "omnibus",
+                                       null_type="block_bootstrap"))
+    if markx_keys:
+        for f in sci_feats:
+            all_keys.append(M.test_key(cfg["seed"], f.name, "markx",
+                                       null_type="block_bootstrap"))
     digests = assert_task_keys_unique(all_keys)
     n_declared_streams = len(all_keys)
     if len(digests) != n_declared_streams:            # belt and braces
@@ -1453,11 +1663,13 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         "period_chunk": M.PERIOD_SURROGATE_CHUNK,
         "partition": regpart, "regions_cfg": reg_cfg,
         "reg_counts": reg_counts, "reg_offset": reg_offset,
+        "tranche_b": tb_cfg, "ext_marks": ext_marks,
+        "subdaily_values": subdaily_values,
     }
 
     if n_jobs == 1:
         # -------------------------------------------- (a) GLM sweep --------
-        for f in feats:
+        for f in glm_feats:
             key = f"glm:{f.name}"
             if ckpt.done(key):
                 if verbose:
@@ -1515,7 +1727,12 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
         # These run through `dispatch_task` on per-task derived streams in BOTH
         # drivers, so --jobs 1 and --jobs N are bit-identical here (the design-B
         # choice already made for the period scan).
-        for key in regsum_keys + region_keys:
+        # ------------------ (e) TRANCHE B: moment2 / omnibus / markx -------
+        # Through `dispatch_task` on per-task derived streams in BOTH drivers, the
+        # design-B choice already made for the period scan and the regional axes:
+        # these kinds have no v1 shared-stream baseline to reproduce, so buying
+        # scheduling-independent determinism costs nothing here.
+        for key in regsum_keys + region_keys + moment2_keys + omnibus_keys + markx_keys:
             if ckpt.done(key):
                 if verbose:
                     print(f"  [skip, checkpointed] {key}")
@@ -1564,7 +1781,7 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
     # list -- can depend on the order in which a pool happened to return results.
     tests = []
     for i, f in enumerate(feats):
-        for t in ckpt.state["results"][f"glm:{f.name}"]:
+        for t in ckpt.state["results"].get(f"glm:{f.name}", []):
             t["order_key"] = [0, i, int(t["lag"]), 0, f.name]
             tests.append(t)
         for j, t in enumerate(ckpt.state["results"].get(f"marks:{f.name}", [])):
@@ -1586,6 +1803,19 @@ def run(cfg, verbose=True, resume=True, session_dir=None, jobs=1,
                 for t in ckpt.state["results"].get(f"region:{r}:{f.name}", []):
                     t["order_key"] = [3, i, int(t["lag"]), 1 + r, f.name]
                     tests.append(t)
+    # TRANCHE B rows sort on leading ordinals 4/5/6, AFTER every pre-existing
+    # family, so switching the tranche on cannot perturb the order -- and therefore
+    # the BH tie-breaks -- of any row that existed before it.
+    for i, f in enumerate(feats):
+        for t in ckpt.state["results"].get(f"moment2:{f.name}", []):
+            t["order_key"] = [4, i, -1, 0, f.name]
+            tests.append(t)
+        for j, t in enumerate(ckpt.state["results"].get(f"omnibus:{f.name}", [])):
+            t["order_key"] = [5, i, -1, j, f.name]
+            tests.append(t)
+        for j, t in enumerate(ckpt.state["results"].get(f"markx:{f.name}", [])):
+            t["order_key"] = [6, i, -1, j, f.name]
+            tests.append(t)
     tests.sort(key=lambda t: t["order_key"])
 
     n_tests = len(tests)
@@ -2192,6 +2422,14 @@ def _row_effect(t):
                 f"(R = {t['R']}); NO AMPLITUDE -- detection statistic, not estimator")
     if t["test"] == "lomb_scargle_peak":
         return f"LS power {t['power']:.4f}"
+    if t["test"] == "second_circular_moment_score":
+        # F9-01's Pit: R2 is never quoted without R1 beside it, because the reading
+        # is AMBIGUOUS between an axial and a harmonic response and the two numbers
+        # together are what disambiguates it.
+        return (f"R2 {t['R2']:.4f} (R1 {t['R1']:.4f}); chi2 {t['chi2_score']:.2f} "
+                f"on 2 df at the doubled angle")
+    if t["test"] in ("kuiper_V", "watson_U2"):
+        return f"V* {t['V_star']:.4f} / U2* {t['U2_star']:.4f}"
     return f"{t['test']} {t['effect']:+.4f}"
 
 
@@ -2205,7 +2443,14 @@ def _row_where(t):
         return f"lag {t['lag']} d"
     if t["test"] == "lomb_scargle_peak":
         return f"P = {t['period_days']:.4g} d"
-    return f"mark {t['mark']}"
+    if t["test"] in ("second_circular_moment_score", "kuiper_V", "watson_U2"):
+        p = t.get("period_days")
+        return ("phase distribution of `%s`%s" % (t["feature"],
+                "" if not p else " (P = %.4g d)" % p))
+    if t.get("mark_axis") == "F9-10":
+        return ("mark %s, %s" % (t["mark"],
+                "SUB-DAILY (event times)" if t.get("subdaily") else "day-binned"))
+    return f"mark {t.get('mark')}"
 
 
 def _amp_note(t):
@@ -2215,6 +2460,16 @@ def _amp_note(t):
         return f"+/-{t['pct_rate_modulation']:.1f}% folded rate"
     if t["test"] in ("glm_poisson_offset_etas", "glm_poisson_offset_etas_region"):
         return f"+/-{t['pct_rate_modulation']:.2f}% rate"
+    if t["test"] == "second_circular_moment_score":
+        return f"+/-{t['pct_rate_modulation']:.2f}% rate at the SECOND harmonic"
+    if t["test"] in ("kuiper_V", "watson_U2"):
+        # F9-04 is an omnibus: it has no amplitude parameter at all, and inventing
+        # one for a report column is exactly the §P7-1(d) error the regsum row
+        # already refuses to make.
+        return "OMNIBUS -- no amplitude parameter (detection statistic)"
+    if t.get("mark_axis") == "F9-10":
+        return (f"rank correlation; floor rho_min = {t['rho_min']:.4f} "
+                f"(§P7-10(c), VIF_mark = {t['mark_floor']['vif_mark']:.3f})")
     return "rank correlation (no rate amplitude)"
 
 

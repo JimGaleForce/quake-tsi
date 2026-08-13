@@ -153,6 +153,33 @@ def moon_position(jd):
             "D_deg": d, "M_deg": m, "Mprime_deg": mp, "F_deg": f}
 
 
+def julian_day_at(t0: _dt.datetime, day_offset) -> np.ndarray:
+    """Julian Days at CONTINUOUS day offsets from midnight of `t0`.
+
+    F9-10's whole property (§P7-3, MINING_CATALOG F9-10) is that a mark test is
+    computed AT EVENT TIMES and therefore escapes the day-binning sinc. That
+    escape is only real if the feature is evaluated at the event's own sub-daily
+    time -- evaluating a day-binned feature at an event is still day-binned. This
+    is the one function that makes the difference, and `day_offset` is exactly the
+    `day_float` that `mine.load_event_marks` already returns.
+
+    day_offset = 0.0 is midnight UTC of `t0`; `day_grid`'s day t is
+    day_offset = t + hour/24, so the two are the same clock.
+    """
+    base = julian_day(t0.replace(hour=0, minute=0, second=0, microsecond=0))
+    return base + np.asarray(day_offset, dtype=np.float64)
+
+
+def ephemeris_table_at(t0: _dt.datetime, day_offset):
+    """`ephemeris_table` evaluated at arbitrary continuous times, same definitions.
+
+    Identical body to `ephemeris_table` below except for where the Julian Days come
+    from -- both call `_table_from_jd`, so a sub-daily feature can never drift from
+    its daily namesake through a copy-paste divergence.
+    """
+    return _table_from_jd(julian_day_at(t0, day_offset))
+
+
 def ephemeris_table(t0: _dt.datetime, n_days: int, hour: float = 12.0):
     """All family-1 quantities for day indices 0..n_days-1, as a dict of arrays.
 
@@ -164,7 +191,11 @@ def ephemeris_table(t0: _dt.datetime, n_days: int, hour: float = 12.0):
       draconic     = argument of latitude F           (0 = ascending node)
       annual       = solar longitude                  (0 = March equinox)
     """
-    jd = day_grid(t0, n_days, hour=hour)
+    return _table_from_jd(day_grid(t0, n_days, hour=hour))
+
+
+def _table_from_jd(jd):
+    jd = np.asarray(jd, dtype=np.float64)
     s = sun_position(jd)
     m = moon_position(jd)
     elong = np.arccos(np.clip(

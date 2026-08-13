@@ -126,6 +126,16 @@ def _test_kind(row):
         return "regsum"
     if t == "glm_poisson_offset_etas_region":
         return "region"
+    # TRANCHE B's three new kinds (§P7-3). `markx` is checked BEFORE `mark`: F9-10's
+    # extended mark axis gets its OWN declared §P6-3 stratum (§P7-11(c) reallocated
+    # it by measurement), and routing it to the v1 `mark` stratum would silently
+    # merge two arms that were priced apart.
+    if row.get("mark_axis") == "F9-10":
+        return "markx"
+    if t == "second_circular_moment_score":
+        return "moment2"
+    if t in ("kuiper_V", "watson_U2"):
+        return "omnibus"
     if t in ("spearman", "circular-linear") or row.get("mark") is not None:
         return "mark"
     return str(t)

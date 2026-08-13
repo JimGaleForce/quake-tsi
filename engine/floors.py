@@ -61,6 +61,7 @@ import json
 import math
 import os
 
+import numpy as np
 from scipy import stats
 
 # ------------------------------------------------------------------ constants --
@@ -95,6 +96,46 @@ ALPHA_20260811 = FDR_Q / M_DECLARED_20260811
 PLANT_FACTOR = 2.0
 
 RESULTS_JSON = "results_f4_58_vif.json"
+
+
+# ---------------------------------------------------------- §P7-14(c): S-15(c) --
+# UNMEASURABLE-BY-WINDOW. A periodic feature with fewer than 3 full cycles in the
+# analysis window is UNMEASURABLE-BY-WINDOW *regardless of N*, declared before the
+# run, reported in the headline fraction, and scored neither way.
+#
+# THIS IS AN IDENTIFIABILITY LIMIT AND IS ORTHOGONAL TO THE POWER FLOOR ABOVE.
+# `a_min` prices multiplicity and dispersion and is silent on identifiability: a
+# feature with ~1 cycle in the window is not distinguishable from a trend or an
+# offset, so the fitted "period" is reporting record length, not periodicity. No
+# amount of N fixes it, which is precisely why it cannot live inside a formula whose
+# only lever is N. A feature can PASS the amplitude floor and FAIL this, and that is
+# exactly what happened to `nc_jupiter_saturn_synodic` (1.06 cycles) and `nc_metonic`
+# (1.11 cycles) in the Tranche A control battery -- two p < 0.05 rows in a battery
+# designed to produce nothing.
+#
+# THE THRESHOLD IS NOT NEW AND IS NOT MINE. §P7-14(c) adopts the rule this programme
+# already implemented and justified in `mine.py:harmonic_ladder`, which refuses any
+# rung longer than record/3: *"with fewer than three observed cycles an epoch fold is
+# not measuring a period, and a ladder that 'wins' at 5827 d on 7716 days is
+# reporting the record length."* It is stricter than the catalog's `< 2 cycles` and
+# it retroactively explains a known corpse -- `mine.py`'s own docstring records an
+# earlier build handing F10.7 (11 y solar cycle, 1.92 cycles in window) a p at the
+# resolution floor with z = 32.
+MIN_CYCLES_IN_WINDOW = 3.0
+WINDOW_CLAUSE = "S-15(c)"
+WINDOW_CLAUSE_SOURCE = (
+    "HYPOTHESIS_LEDGER.md §P7-14(c), threshold inherited from "
+    "mine.py:harmonic_ladder's hi_cap = record/3")
+UNMEASURABLE_BY_WINDOW = "UNMEASURABLE-BY-WINDOW"
+MEASURABLE_BY_WINDOW = "MEASURABLE-BY-WINDOW"
+
+# The v2 exploration window, stated so a caller that omits `record_days` gets the
+# declared record rather than a guess. 7,716 days -> the cut falls at 2,572 d.
+EXPLORATION_RECORD_DAYS = 7716.0
+
+
+class UnmeasurableByWindow(AssertionError):
+    """A period the analysis window cannot identify, at any N (S-15(c))."""
 
 
 class PlantBelowFloor(AssertionError):
@@ -142,6 +183,219 @@ def measured_vif(path: str | None = None, default: float = MEASURED_VIF_DF2_PHAS
     except (OSError, json.JSONDecodeError, KeyError, TypeError):
         pass
     return float(default)
+
+
+def cycles_in_window(period_days, record_days=EXPLORATION_RECORD_DAYS):
+    """How many full cycles of `period_days` the analysis window contains."""
+    p = float(period_days)
+    if not (p > 0) or not np.isfinite(p):
+        return float("nan")
+    return float(record_days) / p
+
+
+def max_identifiable_period(record_days=EXPLORATION_RECORD_DAYS,
+                            min_cycles=MIN_CYCLES_IN_WINDOW):
+    """The longest period the window can identify. 2,572 d over the v2 window."""
+    return float(record_days) / float(min_cycles)
+
+
+def window_report(period_days, record_days=EXPLORATION_RECORD_DAYS,
+                  min_cycles=MIN_CYCLES_IN_WINDOW, name=None):
+    """The S-15(c) line for one periodic feature. Verdict, not a p-value.
+
+    Every field a report needs to print this without re-deriving anything, including
+    the sentence that must accompany the verdict: a feature scored neither way is
+    not a null and may not be counted as one.
+    """
+    cyc = cycles_in_window(period_days, record_days)
+    bad = bool(np.isfinite(cyc) and cyc < float(min_cycles))
+    return {
+        "feature": name,
+        "period_days": float(period_days),
+        "record_days": float(record_days),
+        "cycles_in_window": cyc,
+        "min_cycles_required": float(min_cycles),
+        "max_identifiable_period_days": max_identifiable_period(record_days,
+                                                               min_cycles),
+        "verdict": UNMEASURABLE_BY_WINDOW if bad else MEASURABLE_BY_WINDOW,
+        "clause": WINDOW_CLAUSE,
+        "clause_source": WINDOW_CLAUSE_SOURCE,
+        "scored": not bad,
+        "note": (("%.3g cycles in a %.0f d window is an IDENTIFIABILITY failure, "
+                  "not a power failure: the fitted period is reporting record "
+                  "length. Scored neither way -- this is NOT a null and may not be "
+                  "counted as one, and no amount of N repairs it."
+                  % (cyc, float(record_days))) if bad else
+                 ("%.3g cycles in a %.0f d window: identifiable. The power floor "
+                  "a_min() still applies and is a separate question."
+                  % (cyc, float(record_days)))),
+    }
+
+
+def unmeasurable_by_window(period_days, record_days=EXPLORATION_RECORD_DAYS,
+                           min_cycles=MIN_CYCLES_IN_WINDOW):
+    """True when S-15(c) bites. The one-line form for a filter expression."""
+    return window_report(period_days, record_days,
+                         min_cycles)["verdict"] == UNMEASURABLE_BY_WINDOW
+
+
+def assert_measurable_by_window(period_days, record_days=EXPLORATION_RECORD_DAYS,
+                                min_cycles=MIN_CYCLES_IN_WINDOW, name=None):
+    """Raise unless the window can identify this period. Returns the report.
+
+    Wired here rather than in each caller so that FUTURE FEATURES INHERIT THE CLAUSE
+    (§P7-14(c) asks for exactly that): anything that plants, scores or declares a
+    periodic feature goes through this module for its floor already, and now gets
+    the identifiability check on the same call path.
+    """
+    rep = window_report(period_days, record_days, min_cycles, name=name)
+    if rep["verdict"] == UNMEASURABLE_BY_WINDOW:
+        raise UnmeasurableByWindow(
+            f"{name or 'feature'}: period {rep['period_days']:.4g} d gives "
+            f"{rep['cycles_in_window']:.3g} cycles in a {rep['record_days']:.0f} d "
+            f"window, below the S-15(c) minimum of {min_cycles:g} "
+            f"(max identifiable period {rep['max_identifiable_period_days']:.0f} d). "
+            f"This is an IDENTIFIABILITY limit and no N repairs it "
+            f"(HYPOTHESIS_LEDGER.md §P7-14(c)). Score it neither way; do not plant "
+            f"here and do not report a bound here.")
+    return rep
+
+
+def window_sweep(items, record_days=EXPLORATION_RECORD_DAYS,
+                 min_cycles=MIN_CYCLES_IN_WINDOW):
+    """S-15(c) over an iterable of (name, period_days). Returns the full table."""
+    rows = [window_report(p, record_days, min_cycles, name=n) for n, p in items
+            if p is not None and float(p) > 0]
+    unm = [r for r in rows if r["verdict"] == UNMEASURABLE_BY_WINDOW]
+    return {
+        "clause": WINDOW_CLAUSE, "clause_source": WINDOW_CLAUSE_SOURCE,
+        "record_days": float(record_days),
+        "min_cycles_required": float(min_cycles),
+        "cut_period_days": max_identifiable_period(record_days, min_cycles),
+        "n_examined": len(rows), "n_unmeasurable_by_window": len(unm),
+        "unmeasurable": sorted(unm, key=lambda r: -r["period_days"]),
+        "rows": sorted(rows, key=lambda r: -r["period_days"]),
+    }
+
+
+# ---------------------------------- §P7-10(c)/§P7-13: the MARK-AXIS floor -----
+# The count-path floor above is in RATE-MODULATION units and does not apply to a
+# rank or circular-linear correlation. §P7-8(d) names that category error explicitly
+# ("the mark axis needs its own floor, in its own units") and §P7-10(c) supplies it:
+#
+#     rho_min = sqrt(VIF_mark) * (z_alpha + z_0.80) / sqrt(n - 1)
+#             = sqrt(VIF_mark) * 4.732 / sqrt(n - 1)      at alpha = 1.0e-4
+#
+# At n = 46,585 that is 0.0219 at VIF_mark = 1, 0.0439 at 4, 0.0658 at 9, 0.1074 at
+# 24. §P7-10(c) is binding on F9-10: *"F9-10 declares its floor from the measured
+# VIF_mark before it runs, or it does not run."*
+#
+# THE FALLBACK IS 4.575 AND THE REASON IS CENSORING, NOT CONSERVATISM (§P7-13(b)).
+# Three of the 43 scored mark rows are censored at the Monte Carlo floor, and they
+# are censored PRECISELY BECAUSE THEY ARE EXTREME -- their bounds 13.87 / 22.70 /
+# 31.12 are 3x to 7x the median 4.345. Dropping them is not dropping data at random,
+# it is dropping the upper tail because it is the upper tail, which biases a pooled
+# median downward -- the anti-conservative direction for a fallback applied to a
+# feature of unknown VIF. So the pooled fallback re-admits them at their bounds:
+# 4.575, giving rho_min = 0.0469.
+#
+# AND THE DISTINCTION THAT MAKES THAT LEGITIMATE, carried into code because it is
+# the kind of thing that gets lost: re-admitting a bound is legitimate for a
+# POPULATION summary and illegitimate for a PER-FEATURE floor. The three censored
+# features remain UNMEASURABLE BY DECLARATION (§P7-11(c)) -- their own VIF is still a
+# bound, and a bound cannot produce a floor for the feature it belongs to.
+ALPHA_TRANCHE_B = 1.0e-4
+VIF_MARK_FALLBACK = 4.575
+VIF_MARK_FALLBACK_SOURCE = (
+    "HYPOTHESIS_LEDGER.md §P7-13(b) -- pooled mark-axis fallback, bounds-readmitted "
+    "(the measurements-only median is 4.345 and is retained beside it)")
+VIF_MARK_MEASUREMENTS_ONLY_MEDIAN = 4.345
+MARK_Z_SUM = 4.732          # z_{alpha=1e-4, two-sided} + z_0.80 = 3.891 + 0.842
+
+
+class MarkVifIsABound(AssertionError):
+    """A per-feature mark floor was asked for from a CENSORED (bound) VIF."""
+
+
+def rho_min(n_events, vif_mark=None, alpha=ALPHA_TRANCHE_B):
+    """§P7-10(c): the smallest mark-axis correlation declarable at 80% power."""
+    n = float(n_events)
+    if n <= 1:
+        return float("inf")
+    v = VIF_MARK_FALLBACK if vif_mark is None else float(vif_mark)
+    z = MARK_Z_SUM if abs(float(alpha) - ALPHA_TRANCHE_B) < 1e-15 else (
+        z_alpha(alpha) + Z_POWER_80)
+    return float(math.sqrt(v) * z / math.sqrt(n - 1.0))
+
+
+def mark_floor_report(n_events, vif_mark=None, vif_is_bound=False, feature=None,
+                      alpha=ALPHA_TRANCHE_B):
+    """Everything §P7-10(c) requires printed next to a mark-axis result.
+
+    `vif_is_bound=True` marks a VIF that saturated at the Monte Carlo floor. Per
+    §P7-13(a) such a value is an UPPER BOUND, over-stated, and per §P7-11(c) it may
+    not produce a per-feature floor -- so the report says UNMEASURABLE BY DECLARATION
+    and `assert_mark_floor_declarable` refuses.
+    """
+    used_fallback = vif_mark is None
+    v = VIF_MARK_FALLBACK if used_fallback else float(vif_mark)
+    fl = rho_min(n_events, v, alpha)
+    return {
+        "feature": feature,
+        "n_events": float(n_events),
+        "alpha": float(alpha),
+        "vif_mark": v,
+        "vif_mark_is_bound": bool(vif_is_bound),
+        "vif_mark_source": (VIF_MARK_FALLBACK_SOURCE if used_fallback
+                            else "measured per-feature (F4-58M)"),
+        "vif_mark_pooled_fallback": VIF_MARK_FALLBACK,
+        "vif_mark_measurements_only_median": VIF_MARK_MEASUREMENTS_ONLY_MEDIAN,
+        "rho_min": fl,
+        "declarable": not bool(vif_is_bound),
+        "verdict": ("UNMEASURABLE BY DECLARATION (§P7-11(c): this feature's own "
+                    "VIF_mark is a censored BOUND, and a bound cannot produce a "
+                    "floor for the feature it belongs to)" if vif_is_bound
+                    else "floor declared"),
+        "formula": "rho_min = sqrt(VIF_mark) * 4.732 / sqrt(n - 1)  (§P7-10(c))",
+        "population_vs_per_feature": (
+            "§P7-13(b): re-admitting censored rows at their bounds is legitimate for "
+            "a POPULATION summary (the pooled fallback) and illegitimate for a "
+            "PER-FEATURE floor. Two different uses of the same number."),
+    }
+
+
+def assert_mark_floor_declarable(n_events, vif_mark=None, vif_is_bound=False,
+                                 feature=None, alpha=ALPHA_TRANCHE_B):
+    """§P7-10(c): *declare the floor from the measured VIF_mark, or do not run.*"""
+    rep = mark_floor_report(n_events, vif_mark, vif_is_bound, feature, alpha)
+    if not rep["declarable"]:
+        raise MarkVifIsABound(
+            f"{feature or 'mark test'}: VIF_mark is a censored BOUND "
+            f"({rep['vif_mark']:.4g}), so no per-feature mark floor may be derived "
+            f"from it (§P7-11(c), §P7-13(a)). The feature stays UNMEASURABLE BY "
+            f"DECLARATION. Use the pooled fallback only for a POPULATION summary, "
+            f"never as this feature's own floor.")
+    return rep
+
+
+def assert_mark_plant_above_floor(rho, n_events, vif_mark=None,
+                                  factor=PLANT_FACTOR, feature=None,
+                                  alpha=ALPHA_TRANCHE_B):
+    """The mark-axis analogue of `assert_plant_above_floor`, in correlation units."""
+    rep = mark_floor_report(n_events, vif_mark, False, feature, alpha)
+    need = float(factor) * rep["rho_min"]
+    rep.update({"planted_rho": float(rho), "required_plant_factor": float(factor),
+                "required_min_plant": need,
+                "rho_over_floor": float(rho) / max(rep["rho_min"], 1e-300),
+                "compliant": bool(abs(float(rho)) >= need)})
+    if not rep["compliant"]:
+        raise PlantBelowFloor(
+            f"{feature or 'mark plant'}: planted rho {float(rho):.4f} is below "
+            f"{factor:g}x the §P7-10(c) mark floor at n = {float(n_events):.0f} "
+            f"(rho_min = {rep['rho_min']:.4f}, required >= {need:.4f}; "
+            f"VIF_mark = {rep['vif_mark']:.4g}, alpha = {float(alpha):.3e}). "
+            f"Raise the plant; do not lower the floor.")
+    return rep
 
 
 # ------------------------------------------------------- the planting contract --
