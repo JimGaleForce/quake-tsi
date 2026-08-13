@@ -17695,3 +17695,215 @@ of his hypothesis and ruled on it as though it were the only one. The unscored l
 declared, frozen, scored arms are admitted; and the arm that will actually answer the question is the
 one that costs nothing and starts with the next earthquake. Appended to my own section; no existing
 line modified; nothing committed.*
+
+---
+
+## §P7-24. THE SEARCHER — STANDING PROTOCOL (SP-1..SP-8). Promotion needs no bespoke Popper round; only these rules.
+
+*2026-08-13. Jim asks the program to mechanize what he did by eye at Sand Point: scan
+(region x property x magnitude-stratum) for coincidences across all properties, promote fast, chase
+cross-region variants, honour small-n strong concentration. **This is simultaneously the most valuable
+and the most dangerous instrument this programme has proposed**, because it is the most efficient
+forking-paths machine that could be built — and the answer is not to refuse it but to make its
+accounting exact. Below is a standing protocol. **A promotion that satisfies SP-1..SP-6 is
+pre-adjudicated and needs no ruling from me.***
+
+**Calibrated against Jim's own example before anything else, per his instruction that a protocol which
+would not promote 14-of-14-on-Monday is wrong.** Verified: 14/14 on a pre-declared day is
+**p = 1.47e-12**; on any of seven days, **1.03e-11**. Against a full scan multiplicity of 10⁶ cells the
+threshold is 1.0e-7, which Monday clears by **~9,700x**; even at an absurd 10⁸ cells it clears by 97x.
+**The protocol below promotes it, and does so on the strict rule rather than a lenient one.**
+
+---
+
+### SP-1. THE SCAN — EXPLORATORY-UNPRICED, on the §P7-4/C1 pattern.
+
+A searcher scan is a **generator**, not evidence, and runs under Rule 4.4's EXPLORATORY-UNPRICED
+category with the five §P7-4 conditions, restated for this instrument:
+
+1. **The follow-up rule is declared BEFORE the scan runs** — i.e. SP-3's promotion rule, with the
+   scan's `m` fixed (SP-6.1). Without this, "unpriced" is a selection stage with no accounting.
+2. **Publishable output is exactly two things**: the **control-calibrated survivor count** (real cells
+   promoting vs matched-control cells promoting) and the **ranked list**. No effect sizes quoted as
+   findings, no stubs, no K-entries direct from a scan.
+3. **Scans run on the exploration window only** and spend no holdout hash (SP-6.2).
+4. **The scan appends to `EXPLORE_COUNT.jsonl` with its full declared cell count** as
+   `n_declared_tests`, even though unpriced (R2). **Unpriced never means uncounted.**
+5. **Re-running a scan with any changed cell definition is a NEW scan** with a new hash and a new line.
+
+---
+
+### SP-2. NULL VALIDITY — the component that actually decides, and the only expensive one.
+
+**The multiplicity arithmetic is the easy half. The hard half is whether the nominal p is computed
+against a null that absorbs the artifact class of that property.** A scan's failure mode is not a
+mis-counted denominator; it is a nominal p of 1e-12 computed against a null that was wrong.
+
+> **Standing rule: every property belongs to a declared PROPERTY CLASS, and each class carries a
+> mandatory null-validity layer that must exist before any cell of that class may promote.**
+>
+> | property class | examples | mandatory null layer |
+> |---|---|---|
+> | **human-schedule** | day-of-week, hour-of-day, month, calendar date | **F7 observer controls at the magnitude in question** — weekday/hour completeness and reporting-schedule bias must be measured, not assumed. Also anthropogenic seismicity screens (blasting, reservoir, injection), which genuinely have weekly cycles. |
+> | **level / waveform phase** | tidal level, any sinusoidal scalar | **dwell-time-corrected null** — the arcsine density piles uniform-phase events at the extremes (§P7-23(C): 0.318 at mid-level vs 1.019 at \|x\|=0.95). A level-threshold statistic against a uniform-phase null is wrong by construction. |
+> | **clustering-derived** | inter-event time, distance-to-prior, cluster membership | **full ETAS with triggering**, never background-only, never phase permutation (§P7-23(A.3)). |
+> | **count-path periodic** | any daily-binned cyclic feature | **measured VIF for that statistic and that null** (§P7-12(a)); the count-path 24.08 does not transfer (§P7-22 Q1). |
+> | **catalogue-endogenous** | b-value, depth statistics, magnitude marks | **composition-preserving null**, and the §P7-20(1) same-quantity exclusion — never pair a feature with a mark derived from the same quantity. |
+>
+> **A property whose class has no null layer built cannot promote. It can appear in the ranked list;
+> it cannot be promoted.** This is the design that makes "promote quickly" affordable: **the layer is
+> built once per class and reused by every property in it forever.**
+
+---
+
+### SP-3. THE PROMOTION RULE — ONE rule, not two. The OR-limb is refused.
+
+> **PROMOTION RULE (standing).** A cell promotes when its nominal p, computed against its class's
+> valid null (SP-2), clears **`alpha = q / m`** where **`m` is the scan's FULL declared cell count**
+> (SP-6.1) and **q = 0.10** — **and** the S-8 sim-calibrated max-statistic over the whole scan is
+> reported beside it as the honest global answer, resolved where the simulation can resolve it and
+> reported as *below the max-statistic resolution floor* where it cannot.
+
+**The proposed OR-limb — "or the strong-claim binomial clears 1e-6 at n >= 10" — is REFUSED, and the
+arithmetic is why.** A flat 1e-6 limb is **1x** more lenient than `q/m` at m = 10⁵, **10x** at 10⁶,
+and **1,000x** at 10⁸. It would silently become the operative rule for every large scan, decoupling
+the bar from the search size — which is the one thing the bar exists to track. **An OR of two rules is
+two chances to promote.**
+
+> **And the small-n case needs no separate limb, which is the point Jim's own example proves.**
+> Strong concentration at small n produces astronomically small p and clears the full bar **on its own
+> merits** — Monday clears a million-cell scan by four orders of magnitude. **Honouring small-n does
+> not require lowering the bar; it requires not confusing "few events" with "weak effect."** That was
+> my §P7-22 error (§P7-23), and the standing rule is written so it cannot recur: **the floor apparatus
+> governs the weak-effect regime and has no jurisdiction over a claim whose nominal p is 1e-12.**
+>
+> **Corollary, stated so it is not treated as harshness:** a coincidence that cannot clear its own
+> scan's multiplicity is **not strong enough to be worth three confirmation arms.** It stays in the
+> ranked list and waits for more data.
+
+---
+
+### SP-4. WHAT PROMOTION MECHANICALLY PRODUCES — a freeze file and three arms at standing prices.
+
+Promotion is **mechanical**: no Popper round, no negotiation. It emits a **K-092-template freeze
+file**, hashed and committed, containing:
+
+1. the **property, its class, and its scalar/provenance** (§P7-23(D): the claim is frozen in the scalar
+   actually examined; translation to another scalar is a separate declared step);
+2. the **frozen claim as a region specification** — quadrant, bin, or arc — stated in sign-conditions
+   so it is rotation-free where possible (§P7-23(D));
+3. the **seed set excluded BY EVENT ID, as a superset** (§P7-23(A.1)): every event in the stratum over
+   the examined range, not a list of consciously-noticed ones;
+4. the **seeding scan's identity**: which scan, which date, which `m`, and **the candidate's rank
+   within it** (SP-6.3);
+5. the **enumerated variant space** (SP-5);
+6. the **three arms**, at these **STANDING PRICES**:
+
+| arm | standing price | content |
+|---|---:|---|
+| **within-region, stratum-held-out** | **2** | PRIMARY stratum (unexamined events of the seed's own kind) + SECONDARY stratum (other magnitude strata, testing the magnitude-independent form). §P7-23(A.4)'s declared bridging assumption is mandatory; a null on SECONDARY does not refute a PRIMARY-specific claim. |
+| **cross-region** | **14** | 7 target-class regions + 7 control-class regions, **one frozen property, one frozen statistic**. |
+| **prospective log** | **0** | K-069/K-080 pattern: hashed commitment, no claim until scored, declared threshold/horizon/statistic/pass-fail, 1- and 2-year readouts descriptive only. |
+| | **16 total** | |
+
+> **The pricing principle that keeps promotion cheap: PROMOTION FREEZES THE PROPERTY AND THE
+> STATISTIC.** The scan's breadth has already been paid for in SP-3's threshold; **it must not be paid
+> for a second time in the confirmation.** The tidal case cost 181 because it scanned 3 phases x 4
+> statistics; a promoted searcher claim is one property, one statistic, and costs 16.
+
+---
+
+### SP-5. VARIANT FAMILIES — one hypothesis if and only if the statistic is invariant to the variant dimension.
+
+> **RULED.** *Region A at quadrant Q1 + region B at quadrant Q3* is **ONE declared class hypothesis
+> priced once** if and only if the statistic used is **invariant to the varying dimension** —
+> concentration-without-ψ (§P7-22) is rotation-invariant, so *which* quadrant each region occupies is
+> not a free parameter of the claim and costs nothing.
+>
+> **If instead the claim names the pattern — "A at Q1 AND B at Q3" — that is a ψ claim in disguise**,
+> it has 4^R free parameters, it is priced accordingly, and it inherits K-090(c)'s restrictions on
+> reporting an absolute phase. **The invariance is the whole of the licence.**
+
+**Anti-forking rule, adopted as sketched and made binding:** the **variant space is enumerated at
+promotion time** in the freeze file. **Discovering a new variant after looking is a NEW SEED with its
+own freeze and its own scan-identity record — never an amendment to an existing family.** The
+enumeration is what makes that checkable rather than a matter of good faith.
+
+---
+
+### SP-6. THE RATCHETS.
+
+1. **`m` is declared and asserted.** The scan's full cell count is fixed and hashed **before** the scan
+   runs, and the searcher **asserts that the number of cells evaluated equals `m`** — the same shape as
+   `assert_partition_total` (§P7-16). **Understating `m` is the way to cheat this protocol, and it is
+   the only way**, so it is the thing that gets an assertion.
+2. **Scans never touch the temporal holdout.** Absolute, no exceptions, no flag.
+3. **The seeding scan travels with the claim.** Freeze files record scan id, date, `m`, and the
+   candidate's rank. **The look-elsewhere effect of the scan is a property of the claim forever**, and
+   a reader must be able to recompute the effective multiplicity without asking us. *This is the best
+   idea in the proposal and I am adopting it verbatim.*
+4. **The S-8 max-statistic over each scan is the honest global answer**, reported whether or not
+   anything promotes.
+5. **Adding a property means a NEW scan declaration** with a new `m`. **Previously-promoted claims are
+   not re-thresholded** — their promotion stands on the `m` recorded in their freeze.
+6. **A claim re-found by a later scan is NOT independent confirmation.** Same data, same look. Only
+   SP-4's three arms confirm.
+7. **Magnitude strata are enumerated in the scan declaration.** A claim at an unenumerated threshold is
+   a **new seed**, not a result — otherwise "which magnitude counts as a major" is an undeclared search
+   over thresholds, which is exactly how a clean-looking pattern gets manufactured.
+
+---
+
+### SP-7. THE SEARCHER'S OWN GATE — YES, R1-style, before the first real scan. BINDING.
+
+> **Run the complete searcher — scan, SP-2 nulls, SP-3 promotion rule — over >= 30 true-null ETAS-sim
+> catalogues through the identical code path.** At `alpha = q/m` the expected promotions are
+> **<= 0.1 per catalogue, so <= 3 across 30**. **PASS:** promotions at or below that rate, with the
+> count consistent with binomial. **FAIL:** anything more — and a failure here means **the nominal p's
+> are wrong**, i.e. an SP-2 null layer is invalid, which is precisely the failure mode that matters and
+> precisely the one the multiplicity arithmetic cannot catch.
+>
+> **No real scan runs before this passes.** Same standing as R1 for v2; same reason.
+
+---
+
+### SP-8. THE MONDAY ACCEPTANCE TEST, worked through, as the calibration of the above.
+
+**14 majors in 100 years, all on Monday.**
+
+1. **SP-2 (null validity):** property class = **human-schedule** → F7 observer controls **at M >= 7**:
+   weekday completeness and reporting-schedule bias must be measured. **At M >= 7 this will pass
+   trivially — no M7 goes unreported — but it must be RUN and printed, not assumed**, because the same
+   property at M4–6 would not pass trivially at all. Anthropogenic screen: irrelevant at M7 tectonic,
+   still declared.
+2. **SP-6.7:** "majors" must be an **enumerated stratum** in the scan declaration. If the threshold was
+   chosen after noticing the pattern, it is a new seed, not a result.
+3. **SP-3 (promotion):** nominal p = **1.03e-11** (any of 7 days). Against `m = 10⁶`,
+   `alpha = 1.0e-7`. **Clears by ~9,700x. PROMOTES.**
+4. **SP-4:** freeze file emitted — property `day-of-week`, bin `Monday`, region, stratum, the 14 events
+   excluded by id as a superset, scan identity and rank, variant space enumerated (e.g. *"some weekday,
+   region-specific"* if the class claim is weekday-concentration generally — which under SP-5 is one
+   hypothesis, since a weekday-invariant concentration statistic does not care which day).
+5. **Three arms at 16 priced tests:** within-region on unexamined strata (2); cross-region across 7
+   target + 7 control regions (14); prospective log, M >= 5.5-equivalent, hashed, scored at declared
+   dates (0).
+
+**The protocol promotes it, on the strict rule, with the artifact class that could have explained it
+measured rather than assumed. The calibration holds.**
+
+---
+
+**What this protocol does NOT do, stated so nobody has to discover it.** It does not make a promoted
+claim true, or quotable, or a K-entry — **promotion buys exactly one thing: the right to be tested by
+the three arms.** It does not remove the region-selection circularity of the seeding scan, which is
+irreducible and is why the cross-region and prospective arms exist. And it does not license any
+scan output as evidence: **a searcher scan is a generator, and everything §P6-4's banner says about
+generators applies to it unchanged.**
+
+*Popper seat, 2026-08-13. A standing protocol rather than a standing veto: the scan is licensed as a
+generator, promotion is mechanical and cheap at 16 priced tests, and the bar is the full search
+multiplicity with no lenient second limb — because Jim's own example clears the strict bar by four
+orders of magnitude, which is the best possible demonstration that strong claims do not need a
+discount. The expensive part was moved to where the risk actually is: the null-validity layer, built
+once per property class and reused forever. Appended to my own section; no existing line modified;
+nothing committed.*
