@@ -193,7 +193,7 @@ The mechanism is not mysterious and it is not ours. ETAS clustering deposits coh
 |---|---|---|---|
 | Vidale, Agnew, Johnston and Oppenheimer (1998) | Southern California, San Andreas and Calaveras, n = 13,042 | rate ratio | +2 percent, not statistically significant (informal bound) |
 | Ader and Avouac (2013) | Nepal | Schuster spectrum | below 18 percent at tidal periods |
-| Sirorattanakul and Avouac (2026) | California, M greater than or equal to local Mc, declustered background, 2006 to 2021 | analytic Schuster threshold at nominal significance, approximately 50 percent power | **below 8.16 percent (M2)** |
+| Sirorattanakul and Avouac (2026) | California, per-grid-point on the 5,000 nearest events, M greater than or equal to local Mc, declustered background, 2006 to 2021 (dated correction 2026-08-13: an earlier row said "California-wide"; their threshold is per-grid-point, their Methods p. 10) | analytic Schuster threshold at nominal significance, approximately 50 percent power | **below 8.16 percent (M2)** |
 | This work | Southern California, M greater than or equal to 1.5, focal-mechanism-resolved, 1981 to 2018 | simulated, 80 percent power, through the selection step, clustering-corrected | **below 6.6 percent** (pooled, conservative) |
 
 All four entries are zero-to-peak fractional amplitudes of the background rate, which is the convention that makes them comparable; the Sirorattanakul and Avouac convention was confirmed from their Eq. 4 and text, not assumed.
