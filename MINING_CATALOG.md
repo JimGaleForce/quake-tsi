@@ -2647,7 +2647,7 @@ while count tests cannot.
 Pit: marks are correlated with each other and with the rate; and the circular-linear correlation
 statistic is weak against non-monotone dependence.
 S15: mark tests use the full event set (46,585): MEASURABLE, and they escape the day-binning sinc
-entirely because they are computed at event times. **That last property is underexploited and is worth
+entirely because they are computed at event times (DATED CORRECTION 2026-08-13, K-092 flag: this holds ONLY if the feature itself is re-derived at event time day_float, as marks_ext.py states in code; a daily-sampled feature looked up per event does NOT escape the sinc). **That last property is underexploited and is worth
 a tranche on its own.**
 Price: 7 marks x 23+ features = 161+ tests.
 
@@ -3128,7 +3128,7 @@ plainly that a response confined to 10% of a cycle is nearly invisible to the st
 **These are gaps in what was measured, not gaps in what was proposed**, which makes their expected
 information far higher per test than any new covariate: the events are already there, the features are
 already there, and only the observable is missing. And the mark tests are computed at event times, which
-means they **escape the day-binning sinc entirely** - the most underexploited property of the existing
+means they **escape the day-binning sinc entirely** (DATED CORRECTION 2026-08-13, K-092 flag: this holds ONLY if the feature itself is re-derived at event time day_float, as marks_ext.py states in code; a daily-sampled feature looked up per event does NOT escape the sinc) - the most underexploited property of the existing
 instrument.
 
 **What a pass and a fail mean.** Pass: any survivor is a genuinely new class of finding, because no
