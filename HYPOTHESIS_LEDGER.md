@@ -16390,3 +16390,135 @@ the only real test of whether those precedents were worth setting: eighteen phan
 the rule that removed a hundred and forty-eight, and a duplicate suppressed on the rule that
 de-duplicated `log_moment` — after rejecting the respectable-sounding label that would have let it
 survive. Appended to my own section; no existing line modified; nothing committed.*
+
+---
+
+## §P7-19. THE RECOVERY CURVE — my §P7-15 flag is RETIRED, both its branches wrong. No carve-out for the cap. **TRANCHE B RUNS.**
+
+*2026-08-13, `results_recovery_curve.json` committed. 120 planted catalogues (3 arms x 4 amplitudes x
+10). Every planted test pins `p_raw` at its resolution floor **even at 1.0x the formula floor**;
+recovery statistically flat in amplitude (trend p 0.299 / 0.835; arm (ii) saturated 40/40). **80/80
+recovered-amplitude ratios in [0.8, 1.2], median 1.0034.** All 7 misses across 120 catalogues are
+§P6-2 gate closures (5 one-decade cap, 2 AD); **zero power misses.** Pooled 113/120.*
+
+### (a) The §P7-15 flag is RETIRED. Both branches of my dichotomy were wrong, and the reason is one I proposed a standard for.
+
+§P7-15 said *"one of two things is true"*: either the plants were mislabelled, or the global floor is
+~2x larger than the formula gives. **Neither.** Branch one is refuted directly — 80/80 amplitude ratios
+in [0.8, 1.2] with median 1.0034, **plants delivered exactly as labelled**. Branch two is refuted in
+the *opposite* direction from the one I feared: everything saturates at 1.0x, so the true floor is
+**at or below** the formula floor — the formula is **conservative, not anti-conservative.**
+
+**The actual explanation is that 80% was never a power measurement.** It is
+`1 − P(GPD gates fire and max-stat attribution fails)`; **amplitude never enters it**, which is why the
+same arm returns 80% at 1x and 100% at 1.5x and 3x. **I read a gate-closure rate as a detection rate
+and built a two-branch dichotomy on top of it.** That is S-18 clause 1 — *assuming the convention of a
+number I did not derive* — for the fourth time from this seat (§P6-1(6), §P7-1, §P7-13, here). **A
+proposed standard that keeps catching its own proposer is a standard with evidence behind it**, and
+S-18 should be moved from CANDIDATE to adopted at the next standards pass on that ground alone.
+
+> **RULED. The §P7-15 flag is retired and replaced by:** *the formula floor is an **upper bound** on the
+> true floor at all three aggregations; the transition was never observed because the swept range is
+> entirely saturated.* **The open question inverts**: it is no longer "is the global floor ~30%?" but
+> **"how far below ~15% does it actually sit?"** — and it blocks nothing, because an upper bound on a
+> floor is the safe direction.
+>
+> **Floors UNCHANGED, and the measurer's reasoning is exactly right and is ratified verbatim:** the
+> measured envelope is a **one-sided bound from a saturated range**, and substituting it would move
+> floors **down on an inequality**. That is S-17 applied precisely — an estimator may not be quoted
+> outside the range in which it demonstrated recovery, and the sub-1x range was never probed.
+>
+> **The module's fitted verdict (choice c, arm (i) 1.42x) is recorded as mechanically correct and
+> scientifically unsupported, and is not used.** A monotone fit on non-monotone data with an arm whose
+> CI never closed is a number, not a measurement. **The measurer refusing to launder its own module's
+> output is the behaviour this programme should be hardest to get and is getting routinely.**
+
+### (b) The sub-1x sweep — ASSIGNED, priced 0, NOT blocking, sequenced after B.
+
+It is the measurement that would actually locate the floor, and locating it downward **expands** what
+the catalogue can measure: at ~15% essentially every Tranche B amplitude claim is UNMEASURABLE
+(§P7-10(c)), and that verdict is currently resting on an upper bound.
+
+> **F4-61, ASSIGNED.** Amplitudes **0.25 / 0.5 / 0.75 / 1.0x**, all three arms, >= 10 per cell (more
+> near the transition), **`N_max` raised so `p` can resolve off the floor** — the point is to observe
+> the transition, and a saturated design cannot. **Pre-declare every analysis parameter before running**
+> (§P7-11(d)'s S-9 gloss: the evaluation pipeline's free parameters are construction choices).
+> **Report the raw recovery-versus-amplitude points and fit only if monotonicity is observed** — the
+> §P7-19(a) laundering hazard, pre-empted rather than caught. **Declared consequence bands, not a
+> binary** (§P7-12's S-18 clause).
+>
+> **Floors move only if the transition is observed inside the swept range.** If the sweep is still
+> saturated at 0.25x, the answer is another upper bound and the floors stay again.
+>
+> **Not blocking:** floors unchanged means B runs conservatively, and B's **detection** results do not
+> depend on the floor at all. Sequenced after B, on CPU contention.
+
+### (c) The structural finding — NO carve-out for the one-decade cap. Escalate, do not extrapolate.
+
+On a saturated global periodic test the §P6-2 gates close the BH channel 100% of the time (arm (i):
+40/40 UNRESOLVED, all 36 detections via max-statistic alone).
+
+**This is the pipeline behaving correctly, not failing.** §P5-5(1) has been this programme's standard
+since round 1: **the max-statistic is the confirmatory instrument and BH is descriptive/secondary.**
+A saturated row detected by the max-statistic and marked UNRESOLVED by BH is the primary instrument
+working while the secondary one honestly declines to put a number on a p it cannot resolve. Nothing was
+lost: 36/36.
+
+> **NO CARVE-OUT.** Relaxing the one-decade cap so a channel produces numbers is the same move I
+> refused in §P7-9 — tuning an estimator to make its bar — and the cap exists because GPD extrapolation
+> beyond a decade is meaningless regardless of how strong the signal is. **A gate that closes at high
+> signal is not evidence the gate is wrong.**
+>
+> **The principled fix is more surrogates, not more extrapolation, and the machinery already exists.**
+> A row pinned at the resolution floor has **zero exceedances** — precisely the case §P6-1's ladder
+> escalates. **RULED: a DECLARED row that pins at the resolution floor AND is detected by the
+> max-statistic gets a targeted brute-force escalation at raised `N_max`**, exactly as §P6-2(6)
+> escalates GPD-extrapolated survivors. Few rows, cheap, and it resolves the p honestly.
+>
+> **Reporting requirement, and it closes a real presentational hazard:** such a row is reported
+> **`DETECTED-BY-MAX-STAT`**, never as a non-survivor — a reader scanning the BH column must not see a
+> strong signal as an absence. And the report carries the count: *"N of M declared rows were UNRESOLVED
+> at the resolution floor; K of those were detected by the max-statistic."* **This is §P6-1(5)'s
+> resolvability count extended to the other end**: §P6-1(5) counts rows whose floor sits above the BH
+> threshold (cannot reject for lack of signal-resolution); this counts rows pinned at the floor (cannot
+> quote a p for excess of signal). One instrument limit, two ends, both printed.
+
+### (d) THE RUN GATE — **TRANCHE B RUNS.**
+
+Checked against every condition I have issued, rather than against the summary:
+
+| condition | source | status |
+|---|---|---|
+| Tranche A clears in full | §P7-15(a) | **DONE** — control battery quiet, R1 passed, G-M1 recovery demonstrated |
+| arm (i) anomaly explained | §P7-15, §P7-19(a) | **DONE** — it was a gate-closure rate, not a power rate |
+| precondition builds (F7, F8-15) | §P7-2(b) | **DONE** |
+| per-statistic S-17 recovery | §P7-3 | **DONE** `3677a8d` — incl. F9-01 sinusoid negative, F9-04 day-lattice negative, mark-path arm (i) |
+| F4-58M mark VIF | §P7-10(c) | **DONE** (§P7-11(c), §P7-13) |
+| declaration frozen | §P7-16, §P7-18 | **DONE** — m = 171, `db08d01` |
+| disposition taxonomy asserted | §P7-17 | **DONE** `de6b001` |
+| duplicates suppressed | §P7-18(2) | **DONE** |
+| S-15(c) catalog sweep | §P7-14(c) | **DONE** — 6/36 |
+| sub-daily mark arm | §P7-3 | **OFF** in config, so its observer-control gating does not bite |
+
+> **RULED: TRANCHE B IS AUTHORIZED TO RUN.**
+
+**And the reporting frame is pre-registered NOW, before the result exists, so it is not negotiated
+after.** This is the cheapest anti-post-hoc device available and it costs one paragraph:
+
+- **If zero survivors:** the product is a **bound on non-sinusoidal and second-moment phase structure
+  at the declared floors**, scoped per §P7-10(c)'s five-part S-15 headline, at ~15% and **not** at the
+  ~5.6% this programme is used to quoting — and it is a **better** null than the one we have, because
+  it stops being about sinusoids. Generator-not-evidence throughout.
+- **If survivors:** each is a **candidate, not a finding**, and carries: the F10-24 resampling-stability
+  line against Tranche A's measured null baseline of 0.487/0.044 (§P7-14(b), label-not-kill); the
+  selection-debiased effect or the `SELECTION-BIASED UPPER BOUND` label (R3); brute-force confirmation
+  if `GPD_EXTRAPOLATED` (§P6-2(6)); escalation if pinned at the floor (§P7-19(c)); and it becomes a
+  K-entry only by walking the ordinary path. **No holdout hash is spent by this run.**
+- **Either way:** the S-8 max-statistic is the headline confirmatory number, reported per stratum and
+  globally, and **across B ∪ B-2 once B-2 lands** (§P7-16(2)).
+
+*Popper seat, 2026-08-13. A flag of mine retired with both its branches wrong, for a reason my own
+proposed standard names and has now caught me on four times; a cap defended against a carve-out by
+routing the pressure to the ladder instead; and Tranche B authorized against a checklist rather than a
+summary, with both possible outcomes' reporting frames written down before either exists. Appended to
+my own section; no existing line modified; nothing committed.*
