@@ -16778,3 +16778,122 @@ bounds draft as section 2.6a and in the claims table row X1, with both readings 
 S-18 clause 1 (a derivation carried without the convention that selects its branch) and the deeper
 failure §P7-19 named: evidence that fits two hypotheses was scored for one of them, and the datum that
 discriminated (their own definition of t_catalog, printed in their Methods) was in hand and unused.
+
+---
+
+## §P7-21. F4-58M CONFIRMS THE PREDICTION — but the 17 floor-deaths are UNMEASURABLE, not nulls. Hash gate NOT lifted, not even scoped. One retraction checked against my own arithmetic.
+
+*2026-08-13, `532044e` and `9860c5b`. `VIF_mark`: `dt_prior_days` 13.316, `dist_nearest_prior_km`
+10.176, `cluster_member` 7.920, `lon_sector` 7.095, `depth` 4.809, `mag` 2.301.*
+
+### (1) The prediction, and the one place I must correct the reading.
+
+**§P7-20(3) recorded: "`dt_prior` and `cluster_member` return `VIF_mark` above the 4.575 pooled
+fallback, and some of the 23 clustering-mark survivors do not survive their own floors." Confirmed on
+both limbs.** The three clustering marks are the three highest, all above the fallback, and 17 of 23
+exogenous survivors fall below their own floors. **After four wrong predictions from this seat
+(§P7-1, §P7-11(b), §P7-12, §P7-15) it would be cheap to enjoy this one, so I will note the
+asymmetry that makes it worth less than it looks: predicting that an autocorrelated mark has a high
+variance inflation factor is predicting that water is wet.** The value is in the disposition, not the
+augury.
+
+> **CORRECTION to the proposed disposition. The 17 do NOT "revert to nulls."** Their observed
+> statistics sit at 0.42–0.91 of their own floors — **below the amplitude at which this instrument has
+> 80% power.** S-15(iv) is explicit: sub-floor cells are **scored neither as hits nor as misses.**
+> Calling them nulls scores them as misses, which S-15 forbids, and would assert a bound at amplitudes
+> where the detector's sensitivity is undemonstrated — **K-035's corpse exactly.**
+>
+> **RULED: the 17 are UNMEASURABLE-AT-OWN-FLOOR, struck from the survivor list and struck from the
+> bound.** They are neither evidence for nor evidence against. The F9-10 mark-axis bound covers
+> amplitudes **at or above** the per-mark measured floors; the sub-floor region is **UNMEASURED,
+> declared as such, with its fraction printed in the headline.**
+
+**The 6 remaining beat rows are unchanged**, as read: `eclipse_year_beat` and `perigean_spring_beat`
+against the three clustering marks, at 1.57–1.84 of their floors, still gated on §P7-20(2)'s
+phase-randomized discriminator and its phase-consistency split. **Saying so explicitly since it was
+asked: nothing about the floor measurement moves them, in either direction.**
+
+**And the pattern across the three groups is itself evidence.** The catalogue-derived rows — my 3 VOID
+and the 8 quarantined — **clear their floors comfortably** while the exogenous ones do not. **That is
+what constructive circularity looks like from the outside**, and it is independent confirmation of
+§P7-20(1)'s reading, arriving from a measurement that was not designed to test it.
+
+### (2) The hash — gate NOT lifted, and NOT scoped. Three rulings.
+
+**(a) The repair set is BINDING**: pin threads, re-run twice, require agreement; tie-tolerant / mid-rank
+p for tied nulls; the dual invariant as an executable check. **And the measurer recording
+`ADMISSIBLE: false` rather than emitting a canonical hash that would have made the problem disappear is
+the single most important line in this report.** A canonical hash excluding the differing fields would
+have been indistinguishable from a fix and would have retired a live §P6-5 failure by renaming it.
+
+**(b) NO scoped lift — and the proposed scope contains its own refutation.** The two nulls offered for
+lifting are F9-01 and **F9-04 — and `kuiper_V` IS F9-04.** The defect is *in* the statistic the lift
+would license. Its `p_raw` was bit-identical only because `p_boot` happened to dominate
+`max(p_shift, p_boot)`; the measurer's own word for this is **configuration luck**, and a null resting
+on which of two p-values happened to be larger is not a null that survives its own sensitivity
+analysis. **A `p_shift` that moves 0.147 on 2e-8 of jitter, against an F9-04 null whose minimum p is
+0.112, is a live path to a different answer.**
+
+> **RULED: both nulls wait for the pinned re-run.** The cost of waiting is one re-run; the cost of not
+> waiting is quoting a bound whose p-computation has a demonstrated 0.147 sensitivity to 2e-8 of input
+> jitter. **If the pinned re-run reproduces the two nulls' fields bit-identically, the gate lifts for
+> them immediately** — this is a re-run, not a research programme.
+
+**(c) YES, `kuiper_V`'s plateau-crossing p is a defect and it must be fixed before B-2 — and the fix
+already exists in this codebase, on the count path, unported.** A p that moves 0.147 on 2e-8 of jitter
+is not a p-value; it is a lookup into a discrete lattice at a point where the lattice carries mass.
+**The root cause is one this programme diagnosed in 2026-08-11 and wrote into `mine.py`'s docstring:
+a circular shift of an evenly sampled series is a pure phase rotation, so for periodic features the
+shift null is degenerate.** Heavy ties in the shift null are that same degeneracy surfacing in the
+p-computation rather than in the power.
+
+> **RULED. `mine.py` already encodes the remedy for the GLM path —
+> `p = p_boot if feature.periodic else max(p_shift, p_boot)` — and it was never carried to the new
+> statistics.** Port it: **for periodic features the new statistics use the bootstrap p only**, plus a
+> tie-tolerant / mid-rank p wherever a shift null is retained for aperiodic features. **Binding before
+> B-2**, and it means **F9-04's Tranche B result must be recomputed under the corrected rule**, which
+> merges cleanly into the (b) re-run rather than adding a step.
+
+### (3) The S&A retraction — noted, and checked against my own arithmetic rather than accepted.
+
+**This one was the coordinator's seat and Merton's, not mine, and I do not adopt other seats'
+retractions by reflex.** But my §P7 rounds cite the methods read generically, so the obligation is to
+check whether it propagates. **It does, in exactly one place, and not into any conclusion.**
+
+§P7-1(a)'s reconciliation table carried three candidate conventions for the published ~5.6%, one of
+them *"S&A form sqrt(-4(ln P + 1)) = 2.825"*. **I computed that row at a flat P = 0.05.** Under the
+corrected physical definition (t_catalog = the 2006–2021 record, ~16 yr), `P_95 = 0.05 x T/t_catalog`
+gives 0.00313 at the annual period and the constant is **4.367, not 2.825** — materially different,
+and it would **not** have matched the 5.6%.
+
+> **The conclusion is unaffected, for a reason that is checkable rather than convenient.** §P7-1(a)
+> concluded that the published number *"sits on the 95%-detection row"* — the plain
+> `z_0.025 x sqrt(2) = 2.772` row, which **contains no `t_catalog` term at all.** The S&A row was
+> corroborating decoration beside it, and the decoration is now withdrawn. **The
+> multiplicity-versus-dispersion decomposition, and everything §P7-8 onward built on it, stand
+> unchanged** — and in any case §P7-8 replaced that decomposition's scale with a measurement.
+>
+> **One row of one comparison table in §P7-1(a) is hereby marked incorrect.** It changes no ruling.
+
+**And the process observation is worth more than the correction.** The wrong branch was chosen because
+**both branches fit the four threshold ratios identically**, so the fit could not decide and the
+*physical definition* had to; and the annual-period P = 0.0605 datum that **disconfirmed** the chosen
+branch was written up as a "corroborating oddity." **A disconfirming datum rationalized into
+corroboration is the oldest failure in the subject**, and it took **seven blind correspondence passes**
+to surface. That the seventh pass existed at all is why it was caught.
+
+> **Added to S-18 (CANDIDATE), fifth clause:** *a back-solved parameter must be resolved by its own
+> physical definition, never by goodness of fit alone. Where two branches fit equally, the fit is
+> evidence for neither, and any datum that fits only one branch under a rationalization is a
+> disconfirmation of that branch, not a corroboration of it.*
+>
+> **S-18 has now been earned four times from this seat and once from two others. It should stop being
+> a candidate.** A standard whose instances arrive from independent seats, in independent rounds, on
+> independent quantities, is describing a real failure mode of this programme rather than a habit of
+> one persona.
+
+*Popper seat, 2026-08-13. A prediction confirmed and immediately discounted for being easy; seventeen
+survivors moved to UNMEASURABLE rather than to null, because scoring them as misses would have been
+the more flattering error; a gate held against a scoped lift whose scope contained the defect; and a
+retraction from another seat checked into my own arithmetic, where it cost one table row and no
+conclusion. Appended to my own section; no existing line modified; nothing committed.*
