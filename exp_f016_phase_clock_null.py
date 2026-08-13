@@ -510,10 +510,15 @@ def run(cfg, verbose=True):
             "SYNTHETIC-ONLY and says nothing about any specific study region.")
     else:
         res["gaps"].append(
-            "The real series here are modelled body-tide / tidal-stress series for "
-            "real sites and epochs, NOT instrumental strainmeter records, and neither "
-            "carries ocean loading. A borrowed instrumental record from a published "
-            "study's own site remains an open gap.")
+            "The real series here are modelled tidal-stress series for real sites and "
+            "epochs, NOT instrumental strainmeter records. The Xue-Lu Zenodo series was "
+            "computed with SPOTL including TPXO ocean loading (their paper section 2.3 "
+            "and the deposit inventory), so ocean loading IS carried there; an earlier "
+            "version of this text said neither series carries ocean loading, which was "
+            "wrong for that series (dated correction 2026-08-13; the 2026-08-11 frozen "
+            "results file retains the wrong sentence in its gaps field and is corrected "
+            "by CORRECTIONS.md rather than edited). A borrowed instrumental record from "
+            "a published study's own site remains an open gap.")
 
     # --------------------------------------------------------- robustness ----
     mix_name = "SoCal_like_M2_S2_K1_O1"
