@@ -1,0 +1,1065 @@
+{
+  "arm": "D-1b waveform-matched time-uniform null for the K-092 seed readout",
+  "generated_utc": "2026-08-22T07:44:43.371847+00:00",
+  "priced_tests": 0,
+  "not_a_rule_change": "engine/audit_arcsine.py's declared 1/3 bands and 1/4 quadrant are exact FOR A PURE SINUSOID. exp_k092_d1.py reports them verbatim and unchanged. This module supplies the second, waveform-matched null that audit_arcsine's own real_waveform_control points at (its committed 48.9% in the lowest quarter) and that K092_SCALAR_PROVENANCE.md section 4 already measured for the quadrant (0.4000 duty cycle over 60 days at Sand Point). Both nulls are reported.",
+  "construction": {
+    "half_span_days": 10.0,
+    "step_minutes": 1.0,
+    "rate_half_minutes": 10.0,
+    "method": "every sample of a long continuous grid at each seed site and epoch, pushed through the IDENTICAL local_cycle_readout used on the events (imported from exp_k092_d1.py, not re-written)",
+    "path_equivalence_check": {
+      "checked": 23,
+      "max_abs_diff": 0.0,
+      "tolerance": 1e-09
+    },
+    "scope": "site coordinates and epochs from the already-licensed seed superset; deterministic astronomical waveform on a uniform time grid; no catalogue, no unseen event"
+  },
+  "app_null": {
+    "counts": {
+      "trough": 2162424,
+      "mid_slope": 1392314,
+      "crest": 950107,
+      "quadrant": 1723891,
+      "n": 4504845
+    },
+    "band_probabilities": {
+      "TROUGH": 0.48002184314887636,
+      "MID_SLOPE": 0.30907034537259326,
+      "CREST": 0.21090781147853033
+    },
+    "quadrant_duty_cycle": 0.38267487560615293,
+    "sinusoid_says": {
+      "band": 0.3333333333333333,
+      "quadrant": 0.25
+    },
+    "provenance_corroboration": "K092_SCALAR_PROVENANCE.md section 4 measured the app's quadrant duty cycle at 0.4000 (60 days, Sand Point) independently of this run.",
+    "per_site": [
+      {
+        "id": "ushis397",
+        "lat": 52.0,
+        "trough_fraction": 0.5241917907737014,
+        "quadrant_fraction": 0.38794042862332
+      },
+      {
+        "id": "ushis466",
+        "lat": 57.0,
+        "trough_fraction": 0.46270019668446194,
+        "quadrant_fraction": 0.4405029502669289
+      },
+      {
+        "id": "iscgem16958083",
+        "lat": 52.76,
+        "trough_fraction": 0.46216157045902356,
+        "quadrant_fraction": 0.3531343501423046
+      },
+      {
+        "id": "iscgem610326376",
+        "lat": 56.198,
+        "trough_fraction": 0.4801104370254659,
+        "quadrant_fraction": 0.3712355142223998
+      },
+      {
+        "id": "iscgem16958217",
+        "lat": 57.592,
+        "trough_fraction": 0.468789670305756,
+        "quadrant_fraction": 0.363969388125204
+      },
+      {
+        "id": "iscgem16958220",
+        "lat": 56.827,
+        "trough_fraction": 0.4982461377714755,
+        "quadrant_fraction": 0.33827151279946266
+      },
+      {
+        "id": "iscgem913517",
+        "lat": 54.995,
+        "trough_fraction": 0.511413101178469,
+        "quadrant_fraction": 0.3406235623031461
+      },
+      {
+        "id": "iscgem913524",
+        "lat": 52.91,
+        "trough_fraction": 0.5006329800701703,
+        "quadrant_fraction": 0.3562411834918798
+      },
+      {
+        "id": "iscgem913577",
+        "lat": 54.488,
+        "trough_fraction": 0.5066222820313053,
+        "quadrant_fraction": 0.3761597846873008
+      },
+      {
+        "id": "iscgem913730",
+        "lat": 56.449,
+        "trough_fraction": 0.5264255665146533,
+        "quadrant_fraction": 0.3725739739102768
+      },
+      {
+        "id": "iscgem913732",
+        "lat": 55.631,
+        "trough_fraction": 0.5280249918268008,
+        "quadrant_fraction": 0.3735333648152857
+      },
+      {
+        "id": "iscgem913744",
+        "lat": 56.165,
+        "trough_fraction": 0.4798201399717156,
+        "quadrant_fraction": 0.4106683105486456
+      },
+      {
+        "id": "iscgemsup913185",
+        "lat": 54.765,
+        "trough_fraction": 0.5174639898499888,
+        "quadrant_fraction": 0.396410179864169
+      },
+      {
+        "id": "iscgem911853",
+        "lat": 53.914,
+        "trough_fraction": 0.4424938823279072,
+        "quadrant_fraction": 0.3978792070078377
+      },
+      {
+        "id": "iscgem911944",
+        "lat": 54.828,
+        "trough_fraction": 0.5481010422186893,
+        "quadrant_fraction": 0.3803921568627451
+      },
+      {
+        "id": "iscgem911354",
+        "lat": 55.84,
+        "trough_fraction": 0.459111980298421,
+        "quadrant_fraction": 0.39374185136897
+      },
+      {
+        "id": "iscgem911059",
+        "lat": 53.104,
+        "trough_fraction": 0.46231119462311193,
+        "quadrant_fraction": 0.4341620293416203
+      },
+      {
+        "id": "iscgem909167",
+        "lat": 54.898,
+        "trough_fraction": 0.442647945254051,
+        "quadrant_fraction": 0.3991773924759777
+      },
+      {
+        "id": "iscgem909412",
+        "lat": 55.386,
+        "trough_fraction": 0.4906269720479602,
+        "quadrant_fraction": 0.4228813244738112
+      },
+      {
+        "id": "iscgem909430",
+        "lat": 55.378,
+        "trough_fraction": 0.5167963353450157,
+        "quadrant_fraction": 0.38980586053951866
+      },
+      {
+        "id": "iscgem907916",
+        "lat": 54.562,
+        "trough_fraction": 0.4593610698365527,
+        "quadrant_fraction": 0.3639673105497771
+      },
+      {
+        "id": "iscgem908349",
+        "lat": 53.37,
+        "trough_fraction": 0.4655504303926198,
+        "quadrant_fraction": 0.3716267751425562
+      },
+      {
+        "id": "iscgem906425",
+        "lat": 54.929,
+        "trough_fraction": 0.452310405643739,
+        "quadrant_fraction": 0.36596119929453264
+      },
+      {
+        "id": "iscgem906441",
+        "lat": 54.972,
+        "trough_fraction": 0.4419478361390073,
+        "quadrant_fraction": 0.36500252871902317
+      },
+      {
+        "id": "iscgem905668",
+        "lat": 53.667,
+        "trough_fraction": 0.524436704038315,
+        "quadrant_fraction": 0.3589129567141976
+      },
+      {
+        "id": "iscgem905874",
+        "lat": 53.78,
+        "trough_fraction": 0.476506747686003,
+        "quadrant_fraction": 0.37624531901363667
+      },
+      {
+        "id": "iscgem905082",
+        "lat": 55.625,
+        "trough_fraction": 0.47854426941879413,
+        "quadrant_fraction": 0.3729856961796125
+      },
+      {
+        "id": "iscgem903053",
+        "lat": 54.521,
+        "trough_fraction": 0.4820483681948933,
+        "quadrant_fraction": 0.38467275116303845
+      },
+      {
+        "id": "official19381110201849000_35",
+        "lat": 55.178,
+        "trough_fraction": 0.49248339779610306,
+        "quadrant_fraction": 0.3873604320221849
+      },
+      {
+        "id": "iscgem902779",
+        "lat": 55.018,
+        "trough_fraction": 0.49475816482462065,
+        "quadrant_fraction": 0.3864387504886457
+      },
+      {
+        "id": "iscgem902782",
+        "lat": 55.601,
+        "trough_fraction": 0.49482371678853254,
+        "quadrant_fraction": 0.39223919496126836
+      },
+      {
+        "id": "iscgem902802",
+        "lat": 55.407,
+        "trough_fraction": 0.5296340710054871,
+        "quadrant_fraction": 0.35655365383916565
+      },
+      {
+        "id": "iscgem902860",
+        "lat": 57.084,
+        "trough_fraction": 0.4990087589662257,
+        "quadrant_fraction": 0.42468370399740474
+      },
+      {
+        "id": "iscgem901950",
+        "lat": 56.023,
+        "trough_fraction": 0.49881710646041855,
+        "quadrant_fraction": 0.38045495905368515
+      },
+      {
+        "id": "ushis1265",
+        "lat": 54.0,
+        "trough_fraction": 0.4864599970959779,
+        "quadrant_fraction": 0.4017714534630463
+      },
+      {
+        "id": "iscgem901197",
+        "lat": 54.959,
+        "trough_fraction": 0.4845811684670878,
+        "quadrant_fraction": 0.4174111314618921
+      },
+      {
+        "id": "iscgem901242",
+        "lat": 55.93,
+        "trough_fraction": 0.44019562674983165,
+        "quadrant_fraction": 0.431512917744622
+      },
+      {
+        "id": "iscgem901543",
+        "lat": 52.158,
+        "trough_fraction": 0.4893181256400297,
+        "quadrant_fraction": 0.40079098838235816
+      },
+      {
+        "id": "iscgem900732",
+        "lat": 55.947,
+        "trough_fraction": 0.44504811618905576,
+        "quadrant_fraction": 0.42051063527573596
+      },
+      {
+        "id": "ushis1378",
+        "lat": 56.5,
+        "trough_fraction": 0.4401573129251701,
+        "quadrant_fraction": 0.42343395691609975
+      },
+      {
+        "id": "iscgem901065",
+        "lat": 54.225,
+        "trough_fraction": 0.45450374135253424,
+        "quadrant_fraction": 0.3792178455456727
+      },
+      {
+        "id": "iscgem900470",
+        "lat": 53.532,
+        "trough_fraction": 0.4718641367323291,
+        "quadrant_fraction": 0.4064672653534183
+      },
+      {
+        "id": "iscgem899478",
+        "lat": 54.487,
+        "trough_fraction": 0.5275667817554062,
+        "quadrant_fraction": 0.3888424495729602
+      },
+      {
+        "id": "iscgem899612",
+        "lat": 55.74,
+        "trough_fraction": 0.4945638700995148,
+        "quadrant_fraction": 0.36572582073166415
+      },
+      {
+        "id": "iscgem898845",
+        "lat": 54.953,
+        "trough_fraction": 0.47276751696360536,
+        "quadrant_fraction": 0.37657389600493485
+      },
+      {
+        "id": "official19460401122901_30",
+        "lat": 53.492,
+        "trough_fraction": 0.46388352920540254,
+        "quadrant_fraction": 0.36000701631292753
+      },
+      {
+        "id": "iscgem898322",
+        "lat": 53.44,
+        "trough_fraction": 0.46221035154840107,
+        "quadrant_fraction": 0.35880314733270774
+      },
+      {
+        "id": "iscgem898323",
+        "lat": 53.54,
+        "trough_fraction": 0.46257128419836857,
+        "quadrant_fraction": 0.3591279867176785
+      },
+      {
+        "id": "iscgem898325",
+        "lat": 53.647,
+        "trough_fraction": 0.4600392026332335,
+        "quadrant_fraction": 0.3513443544509782
+      },
+      {
+        "id": "iscgem898327",
+        "lat": 53.34,
+        "trough_fraction": 0.4597803173194275,
+        "quadrant_fraction": 0.3498650098006583
+      },
+      {
+        "id": "iscgem898330",
+        "lat": 53.528,
+        "trough_fraction": 0.46300173260179034,
+        "quadrant_fraction": 0.3515376840889402
+      },
+      {
+        "id": "iscgem898332",
+        "lat": 53.456,
+        "trough_fraction": 0.4621057702998184,
+        "quadrant_fraction": 0.3465515324463551
+      },
+      {
+        "id": "iscgem898341",
+        "lat": 53.195,
+        "trough_fraction": 0.45048893282027747,
+        "quadrant_fraction": 0.36378719949165106
+      },
+      {
+        "id": "iscgem898642",
+        "lat": 53.714,
+        "trough_fraction": 0.44209591474245113,
+        "quadrant_fraction": 0.37896980461811725
+      },
+      {
+        "id": "iscgem898663",
+        "lat": 53.188,
+        "trough_fraction": 0.45113081237561065,
+        "quadrant_fraction": 0.3563958747964538
+      },
+      {
+        "id": "iscgem897837",
+        "lat": 53.647,
+        "trough_fraction": 0.4921837107786442,
+        "quadrant_fraction": 0.3598850874902063
+      },
+      {
+        "id": "iscgem897327",
+        "lat": 54.593,
+        "trough_fraction": 0.503249464473732,
+        "quadrant_fraction": 0.3622699052390807
+      },
+      {
+        "id": "iscgem897332",
+        "lat": 55.134,
+        "trough_fraction": 0.5151074956420686,
+        "quadrant_fraction": 0.3531013945380593
+      },
+      {
+        "id": "iscgem897356",
+        "lat": 55.967,
+        "trough_fraction": 0.48472004559053994,
+        "quadrant_fraction": 0.3739492805242912
+      },
+      {
+        "id": "iscgem897412",
+        "lat": 56.073,
+        "trough_fraction": 0.493191473909728,
+        "quadrant_fraction": 0.3566941428519554
+      },
+      {
+        "id": "iscgem894107",
+        "lat": 55.802,
+        "trough_fraction": 0.4714145347356163,
+        "quadrant_fraction": 0.37472251537537754
+      },
+      {
+        "id": "iscgem894901",
+        "lat": 53.991,
+        "trough_fraction": 0.5123253757736517,
+        "quadrant_fraction": 0.3617683465959328
+      },
+      {
+        "id": "iscgemsup893333",
+        "lat": 55.203,
+        "trough_fraction": 0.4487100178305011,
+        "quadrant_fraction": 0.3909610276190823
+      },
+      {
+        "id": "iscgem893820",
+        "lat": 56.304,
+        "trough_fraction": 0.48014847701881436,
+        "quadrant_fraction": 0.32843262127442774
+      },
+      {
+        "id": "iscgem891517",
+        "lat": 56.186,
+        "trough_fraction": 0.4419078086374873,
+        "quadrant_fraction": 0.4079176966700596
+      },
+      {
+        "id": "iscgem891756",
+        "lat": 56.282,
+        "trough_fraction": 0.49279416451258806,
+        "quadrant_fraction": 0.3868843171275805
+      },
+      {
+        "id": "iscgem890763",
+        "lat": 56.028,
+        "trough_fraction": 0.4887591035429054,
+        "quadrant_fraction": 0.41346796608380537
+      },
+      {
+        "id": "iscgem889792",
+        "lat": 56.086,
+        "trough_fraction": 0.491646609089622,
+        "quadrant_fraction": 0.3908395865779414
+      },
+      {
+        "id": "iscgem890096",
+        "lat": 55.174,
+        "trough_fraction": 0.47663321007219583,
+        "quadrant_fraction": 0.3659447085754534
+      },
+      {
+        "id": "iscgem888186",
+        "lat": 53.649,
+        "trough_fraction": 0.5131043995934369,
+        "quadrant_fraction": 0.35773921881806303
+      },
+      {
+        "id": "iscgem888643",
+        "lat": 53.66,
+        "trough_fraction": 0.44060283687943264,
+        "quadrant_fraction": 0.4136524822695035
+      },
+      {
+        "id": "iscgem886149",
+        "lat": 53.664,
+        "trough_fraction": 0.4671707122960605,
+        "quadrant_fraction": 0.4087110660926817
+      },
+      {
+        "id": "iscgem886191",
+        "lat": 53.823,
+        "trough_fraction": 0.4678173445354519,
+        "quadrant_fraction": 0.38591064084086196
+      },
+      {
+        "id": "iscgem886230",
+        "lat": 53.778,
+        "trough_fraction": 0.43506309371898483,
+        "quadrant_fraction": 0.40039699418687086
+      },
+      {
+        "id": "iscgem886362",
+        "lat": 55.869,
+        "trough_fraction": 0.5044809694858677,
+        "quadrant_fraction": 0.39621203875040817
+      },
+      {
+        "id": "iscgem887562",
+        "lat": 53.756,
+        "trough_fraction": 0.49067808810826374,
+        "quadrant_fraction": 0.3381082637489202
+      },
+      {
+        "id": "iscgem880215",
+        "lat": 56.239,
+        "trough_fraction": 0.4470638057594579,
+        "quadrant_fraction": 0.44547571993224166
+      },
+      {
+        "id": "iscgem875956",
+        "lat": 53.693,
+        "trough_fraction": 0.4863743006677495,
+        "quadrant_fraction": 0.4095289658906335
+      },
+      {
+        "id": "iscgem876047",
+        "lat": 55.882,
+        "trough_fraction": 0.4678156748911466,
+        "quadrant_fraction": 0.44575471698113206
+      },
+      {
+        "id": "iscgem871639",
+        "lat": 56.575,
+        "trough_fraction": 0.532551042650585,
+        "quadrant_fraction": 0.37164862311995933
+      },
+      {
+        "id": "iscgem17293281",
+        "lat": 54.578,
+        "trough_fraction": 0.5169959325973271,
+        "quadrant_fraction": 0.4062318419523533
+      },
+      {
+        "id": "iscgem870409",
+        "lat": 55.722,
+        "trough_fraction": 0.5104218362282879,
+        "quadrant_fraction": 0.39049982275788725
+      },
+      {
+        "id": "iscgem869892",
+        "lat": 57.042,
+        "trough_fraction": 0.4622359680877236,
+        "quadrant_fraction": 0.38913295610304716
+      },
+      {
+        "id": "iscgem869910",
+        "lat": 56.336,
+        "trough_fraction": 0.46227675432428633,
+        "quadrant_fraction": 0.38440444381943467
+      },
+      {
+        "id": "iscgem869937",
+        "lat": 56.259,
+        "trough_fraction": 0.45799840683612136,
+        "quadrant_fraction": 0.38416974436961404
+      },
+      {
+        "id": "iscgem870039",
+        "lat": 56.148,
+        "trough_fraction": 0.45646213131762264,
+        "quadrant_fraction": 0.37738995108937307
+      },
+      {
+        "id": "iscgem870136",
+        "lat": 56.455,
+        "trough_fraction": 0.45753106409940514,
+        "quadrant_fraction": 0.3763596043507339
+      },
+      {
+        "id": "iscgem870186",
+        "lat": 56.598,
+        "trough_fraction": 0.460489079166969,
+        "quadrant_fraction": 0.3768231623249401
+      },
+      {
+        "id": "iscgem868350",
+        "lat": 56.392,
+        "trough_fraction": 0.4320992028343667,
+        "quadrant_fraction": 0.40751107174490697
+      },
+      {
+        "id": "iscgem868363",
+        "lat": 56.259,
+        "trough_fraction": 0.4364713393870602,
+        "quadrant_fraction": 0.40688847900113506
+      },
+      {
+        "id": "iscgem868364",
+        "lat": 56.338,
+        "trough_fraction": 0.4365422814982974,
+        "quadrant_fraction": 0.407633371169126
+      },
+      {
+        "id": "iscgem868377",
+        "lat": 56.208,
+        "trough_fraction": 0.4409066761112095,
+        "quadrant_fraction": 0.40513547016114754
+      },
+      {
+        "id": "iscgem868379",
+        "lat": 56.174,
+        "trough_fraction": 0.44065875686205064,
+        "quadrant_fraction": 0.40495838498317693
+      },
+      {
+        "id": "iscgem868644",
+        "lat": 56.491,
+        "trough_fraction": 0.4518168040513067,
+        "quadrant_fraction": 0.3620300890843899
+      },
+      {
+        "id": "iscgem868783",
+        "lat": 56.455,
+        "trough_fraction": 0.4448107226951639,
+        "quadrant_fraction": 0.3817424379641369
+      },
+      {
+        "id": "iscgem868825",
+        "lat": 56.363,
+        "trough_fraction": 0.44963911356135067,
+        "quadrant_fraction": 0.3905552936056001
+      },
+      {
+        "id": "iscgem868842",
+        "lat": 56.336,
+        "trough_fraction": 0.45065696524441934,
+        "quadrant_fraction": 0.39082367900536874
+      },
+      {
+        "id": "iscgem867687",
+        "lat": 56.471,
+        "trough_fraction": 0.44730095685141724,
+        "quadrant_fraction": 0.360570500090269
+      },
+      {
+        "id": "iscgem859637",
+        "lat": 52.998,
+        "trough_fraction": 0.5241550168111838,
+        "quadrant_fraction": 0.3717218191470536
+      },
+      {
+        "id": "iscgem859712",
+        "lat": 53.195,
+        "trough_fraction": 0.5259115044247787,
+        "quadrant_fraction": 0.3701592920353982
+      },
+      {
+        "id": "iscgem856357",
+        "lat": 56.536,
+        "trough_fraction": 0.5054294534229163,
+        "quadrant_fraction": 0.34457962593063374
+      },
+      {
+        "id": "iscgem851097",
+        "lat": 55.829,
+        "trough_fraction": 0.4862338607019458,
+        "quadrant_fraction": 0.4164393526095654
+      },
+      {
+        "id": "iscgem848441",
+        "lat": 56.834,
+        "trough_fraction": 0.46287507940659917,
+        "quadrant_fraction": 0.3860094914240873
+      },
+      {
+        "id": "iscgem847580",
+        "lat": 53.931,
+        "trough_fraction": 0.4688970960967485,
+        "quadrant_fraction": 0.3350351220218698
+      },
+      {
+        "id": "iscgem832864",
+        "lat": 54.378,
+        "trough_fraction": 0.5018505079825835,
+        "quadrant_fraction": 0.35174165457184325
+      },
+      {
+        "id": "iscgem775639",
+        "lat": 56.132,
+        "trough_fraction": 0.46371424525630134,
+        "quadrant_fraction": 0.4026125743415463
+      },
+      {
+        "id": "usp00001yv",
+        "lat": 54.011,
+        "trough_fraction": 0.5081260599208592,
+        "quadrant_fraction": 0.33984595816845675
+      },
+      {
+        "id": "usp000056v",
+        "lat": 53.799,
+        "trough_fraction": 0.42667308261770803,
+        "quadrant_fraction": 0.4220832099496595
+      },
+      {
+        "id": "usp00005w2",
+        "lat": 55.12,
+        "trough_fraction": 0.48788182459265855,
+        "quadrant_fraction": 0.3878558438184315
+      },
+      {
+        "id": "usp00007e2",
+        "lat": 56.516,
+        "trough_fraction": 0.4532055470848762,
+        "quadrant_fraction": 0.4285558701807885
+      },
+      {
+        "id": "usp00007e3",
+        "lat": 56.67,
+        "trough_fraction": 0.4533870616423437,
+        "quadrant_fraction": 0.42964495752559356
+      },
+      {
+        "id": "usp00007ee",
+        "lat": 56.632,
+        "trough_fraction": 0.45335075873085023,
+        "quadrant_fraction": 0.429318231322152
+      },
+      {
+        "id": "usp0000c9r",
+        "lat": 53.387,
+        "trough_fraction": 0.46599773081832363,
+        "quadrant_fraction": 0.40987094029215715
+      },
+      {
+        "id": "usp0000u1x",
+        "lat": 56.423,
+        "trough_fraction": 0.43750220996428696,
+        "quadrant_fraction": 0.4168876630953644
+      },
+      {
+        "id": "usp0000ymc",
+        "lat": 54.768,
+        "trough_fraction": 0.45580908368835293,
+        "quadrant_fraction": 0.45079067080655644
+      },
+      {
+        "id": "usp0000yu0",
+        "lat": 55.453,
+        "trough_fraction": 0.48194029850746267,
+        "quadrant_fraction": 0.43526119402985075
+      },
+      {
+        "id": "usp00010rm",
+        "lat": 56.647,
+        "trough_fraction": 0.5233010395304434,
+        "quadrant_fraction": 0.360264479174033
+      },
+      {
+        "id": "usp0001ja0",
+        "lat": 53.222,
+        "trough_fraction": 0.4805584692733389,
+        "quadrant_fraction": 0.4244945202011068
+      },
+      {
+        "id": "usp0001t1b",
+        "lat": 54.931,
+        "trough_fraction": 0.4881473119796811,
+        "quadrant_fraction": 0.40013404825737264
+      },
+      {
+        "id": "usp0002an3",
+        "lat": 55.428,
+        "trough_fraction": 0.49502785810000705,
+        "quadrant_fraction": 0.36180266591438043
+      },
+      {
+        "id": "usp0002kmh",
+        "lat": 54.765,
+        "trough_fraction": 0.4615971238697026,
+        "quadrant_fraction": 0.3820677633729164
+      },
+      {
+        "id": "usp0002msj",
+        "lat": 54.756,
+        "trough_fraction": 0.45103428323448574,
+        "quadrant_fraction": 0.36351800954722985
+      },
+      {
+        "id": "usp0002v6r",
+        "lat": 56.331,
+        "trough_fraction": 0.48090118129730497,
+        "quadrant_fraction": 0.3288179953313999
+      },
+      {
+        "id": "usp0002y12",
+        "lat": 56.201,
+        "trough_fraction": 0.4553501599715606,
+        "quadrant_fraction": 0.39882687522218274
+      },
+      {
+        "id": "usp00035yn",
+        "lat": 54.211,
+        "trough_fraction": 0.5256079000460128,
+        "quadrant_fraction": 0.3391852192687502
+      },
+      {
+        "id": "usp0003g7y",
+        "lat": 53.619,
+        "trough_fraction": 0.5110787702383118,
+        "quadrant_fraction": 0.3440785883209023
+      },
+      {
+        "id": "usp0003s6f",
+        "lat": 56.152,
+        "trough_fraction": 0.44877145864334195,
+        "quadrant_fraction": 0.3682720574892026
+      },
+      {
+        "id": "usp0003vck",
+        "lat": 54.305,
+        "trough_fraction": 0.4808520112809856,
+        "quadrant_fraction": 0.3342363069615556
+      },
+      {
+        "id": "ak989bcpkhdo",
+        "lat": 55.3217,
+        "trough_fraction": 0.45871819372190964,
+        "quadrant_fraction": 0.36836889974165693
+      },
+      {
+        "id": "ak9906upz2ax",
+        "lat": 55.6505,
+        "trough_fraction": 0.5133269618774556,
+        "quadrant_fraction": 0.3669250645994832
+      },
+      {
+        "id": "usp0004s9h",
+        "lat": 54.567,
+        "trough_fraction": 0.49859375556267577,
+        "quadrant_fraction": 0.368792053828901
+      },
+      {
+        "id": "usp0005302",
+        "lat": 53.597,
+        "trough_fraction": 0.4504442178852316,
+        "quadrant_fraction": 0.3994319836877367
+      },
+      {
+        "id": "usp0005sqc",
+        "lat": 55.177,
+        "trough_fraction": 0.519710976516842,
+        "quadrant_fraction": 0.3598625721673219
+      },
+      {
+        "id": "usp0005tg0",
+        "lat": 55.021,
+        "trough_fraction": 0.5407932811066413,
+        "quadrant_fraction": 0.3658338626579152
+      },
+      {
+        "id": "usp00063vy",
+        "lat": 54.287,
+        "trough_fraction": 0.5182404193525536,
+        "quadrant_fraction": 0.3712190975419707
+      },
+      {
+        "id": "usp0006u6k",
+        "lat": 54.776,
+        "trough_fraction": 0.4587647527333285,
+        "quadrant_fraction": 0.41510390268626457
+      },
+      {
+        "id": "usp00070bg",
+        "lat": 53.578,
+        "trough_fraction": 0.5075504241613573,
+        "quadrant_fraction": 0.394135661234116
+      },
+      {
+        "id": "ak9995u9o1gr",
+        "lat": 56.1745,
+        "trough_fraction": 0.4887007650892604,
+        "quadrant_fraction": 0.3759209407764239
+      },
+      {
+        "id": "usp0009fs9",
+        "lat": 54.657,
+        "trough_fraction": 0.4389694392964861,
+        "quadrant_fraction": 0.38885860678076967
+      },
+      {
+        "id": "ak999fmohlzt",
+        "lat": 57.3424,
+        "trough_fraction": 0.4796449230545349,
+        "quadrant_fraction": 0.34489031178375235
+      },
+      {
+        "id": "ak999fnydiyi",
+        "lat": 57.2026,
+        "trough_fraction": 0.4799548894062864,
+        "quadrant_fraction": 0.3444775902211874
+      },
+      {
+        "id": "ak0008v7ic1n",
+        "lat": 57.3546,
+        "trough_fraction": 0.5253985122210414,
+        "quadrant_fraction": 0.3833156216790648
+      },
+      {
+        "id": "ak001gswxc7",
+        "lat": 56.7744,
+        "trough_fraction": 0.46866565608015676,
+        "quadrant_fraction": 0.4345398750323511
+      },
+      {
+        "id": "usp000b4xj",
+        "lat": 53.815,
+        "trough_fraction": 0.4820219966159052,
+        "quadrant_fraction": 0.3167301184433164
+      },
+      {
+        "id": "usp000br01",
+        "lat": 53.645,
+        "trough_fraction": 0.4818351598012615,
+        "quadrant_fraction": 0.360794954015293
+      },
+      {
+        "id": "usp000e4j8",
+        "lat": 53.843,
+        "trough_fraction": 0.48411492384351695,
+        "quadrant_fraction": 0.36714139308053856
+      },
+      {
+        "id": "usp000fpqs",
+        "lat": 54.511,
+        "trough_fraction": 0.45266732701287676,
+        "quadrant_fraction": 0.3825173340880147
+      },
+      {
+        "id": "ak0086prvtd2",
+        "lat": 55.9055,
+        "trough_fraction": 0.5152180845409772,
+        "quadrant_fraction": 0.35750983240619355
+      },
+      {
+        "id": "usp000j51f",
+        "lat": 54.787,
+        "trough_fraction": 0.47830115257754885,
+        "quadrant_fraction": 0.4205240336508172
+      },
+      {
+        "id": "ak0156uj8rk3",
+        "lat": 56.594,
+        "trough_fraction": 0.5131546333345136,
+        "quadrant_fraction": 0.35136857759994333
+      },
+      {
+        "id": "ak01649w95tp",
+        "lat": 57.008,
+        "trough_fraction": 0.46862959951928174,
+        "quadrant_fraction": 0.4234562228270475
+      },
+      {
+        "id": "us2000izcv",
+        "lat": 54.4266,
+        "trough_fraction": 0.5403371143856673,
+        "quadrant_fraction": 0.35884660235344007
+      },
+      {
+        "id": "us7000asvb",
+        "lat": 55.0715,
+        "trough_fraction": 0.5031960485218275,
+        "quadrant_fraction": 0.4196992808890826
+      },
+      {
+        "id": "us7000asx4",
+        "lat": 54.969,
+        "trough_fraction": 0.5034865983874482,
+        "quadrant_fraction": 0.4191544998910438
+      },
+      {
+        "id": "us6000b56k",
+        "lat": 54.7905,
+        "trough_fraction": 0.5352037928106426,
+        "quadrant_fraction": 0.3774412680441551
+      },
+      {
+        "id": "us6000c9hg",
+        "lat": 54.602,
+        "trough_fraction": 0.4288794705926091,
+        "quadrant_fraction": 0.36872629935311174
+      },
+      {
+        "id": "ak0219neiszm",
+        "lat": 55.3635,
+        "trough_fraction": 0.513621503814021,
+        "quadrant_fraction": 0.3850708318198329
+      },
+      {
+        "id": "us6000f652",
+        "lat": 55.1767,
+        "trough_fraction": 0.5097068496057144,
+        "quadrant_fraction": 0.37381095512571166
+      },
+      {
+        "id": "ak021d1u1nos",
+        "lat": 56.2954,
+        "trough_fraction": 0.447493556934916,
+        "quadrant_fraction": 0.3905767904461142
+      },
+      {
+        "id": "us7000kg30",
+        "lat": 54.3926,
+        "trough_fraction": 0.5092300438835092,
+        "quadrant_fraction": 0.3887861313603888
+      },
+      {
+        "id": "us7000qd1y",
+        "lat": 54.5652,
+        "trough_fraction": 0.5151735153187165,
+        "quadrant_fraction": 0.35813852185276607
+      },
+      {
+        "id": "us7000qe51",
+        "lat": 54.6051,
+        "trough_fraction": 0.49917092961721643,
+        "quadrant_fraction": 0.37978479449638386
+      }
+    ],
+    "bridge_meta": {
+      "node_version": "v25.2.1",
+      "n_sites": 162,
+      "n_per_site": 28801,
+      "step_minutes": 1,
+      "half_span_days": 10,
+      "selftest_displacement_cm": -13.206888677138735
+    }
+  },
+  "sitetide_null": {
+    "counts": {
+      "trough": 2163921,
+      "mid_slope": 1393599,
+      "crest": 949700,
+      "quadrant": 1721542,
+      "n": 4507220
+    },
+    "band_probabilities": {
+      "TROUGH": 0.4801010378903182,
+      "MID_SLOPE": 0.309192584342455,
+      "CREST": 0.2107063777672268
+    },
+    "quadrant_duty_cycle": 0.38195206801531767
+  },
+  "seed_vs_both_nulls": {
+    "n_events": 162,
+    "TROUGH": {
+      "observed": 85,
+      "fraction": 0.5246913580246914,
+      "z_vs_sinusoid_null": 5.166666666666666,
+      "z_vs_waveform_null": 1.1380089902425325
+    },
+    "MID_SLOPE": {
+      "observed": 56,
+      "fraction": 0.345679012345679,
+      "z_vs_sinusoid_null": 0.33333333333333326,
+      "z_vs_waveform_null": 1.0083140931114176
+    },
+    "CREST": {
+      "observed": 21,
+      "fraction": 0.12962962962962962,
+      "z_vs_sinusoid_null": -5.499999999999999,
+      "z_vs_waveform_null": -2.5358366988298457
+    },
+    "QUADRANT": {
+      "observed": 64,
+      "fraction": 0.3950617283950617,
+      "z_vs_sinusoid_null": 4.263926589289236,
+      "z_vs_waveform_null": 0.32437437051376816,
+      "binom_p_vs_sinusoid": 3.3850539492512664e-05,
+      "binom_p_vs_waveform": 0.4015300417828578
+    }
+  },
+  "consequence_for_D13": "K092_FREEZE.md's D-13 prediction is written against 'the uniform expectation (0.25)'. The measured time-uniform duty cycle of the frozen quadrant IN THE FROZEN SCALAR is reported above. If it differs materially from 0.25, the D-13 test as hashed compares the prospective fraction to the wrong number and would fire on the waveform alone. Popper adjudicates whether the fix is an amendment to the null constant or a restatement of the prediction; the run does not decide it."
+}
