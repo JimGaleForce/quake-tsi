@@ -263,3 +263,57 @@ def test_degree3_perturbs_but_does_not_dominate():
     rel = np.max(np.abs(on - off)) / np.max(np.abs(off))
     assert 1e-4 < rel < 0.10, rel
     assert np.corrcoef(off, on)[0, 1] > 0.999
+
+
+# --------------- the free-surface degeneracy (Kepler K-111 / K-108, verified) --
+def test_free_surface_coulomb_is_a_scalar_multiple_of_the_fault_normal_bearing():
+    """AT THE FREE SURFACE, FRICTION AND DIP ARE ALGEBRAICALLY INERT. Assert it.
+
+    With sigma_DD = sigma_rN = sigma_rE = 0 the fault normal's only surviving part is
+    its horizontal component sin(dip) * m, where m is the unit vector at azimuth
+    strike + 90. Hence for rake 90:
+
+        sigma_n = sin^2(d) * N(s+90)
+        tau     = -sin(d) cos(d) * N(s+90)
+        CFS     = sin(d) (mu sin(d) - cos(d)) * N(s+90)
+
+    Both tractions are the SAME time function scaled by a geometry constant, so
+    gridding friction or dip at depth 0 produces cells that are identical up to a
+    positive scale and cannot be distinct tests.
+
+    This was found AFTER exp_k092_d1c_directional.py had already gridded 5 strikes x
+    3 dips x 3 frictions and read the result as 45 cells. It is 5. The assertion
+    exists so that a future result which DOES vary with mu is immediately recognised
+    as evidence that the vertical stress components have become non-zero (depth, or
+    an ocean load) rather than as a finding about friction.
+    """
+    jd = E.julian_day_at(T0, np.linspace(0.0, 20.0, 14401))
+    st = TT.stress_tensor(jd, 55.35, -160.5, 0.0)
+    for strike in (230.0, 250.0, 270.0):
+        n_perp = TT.normal_along_bearing(st["s_NN"], st["s_EE"], st["s_NE"],
+                                         strike + 90.0)
+        ref = None
+        for dip in (10.0, 20.0, 30.0):
+            for mu in (0.2, 0.4, 0.6):
+                c = TT.coulomb(st, strike, dip, 90.0, mu)["coulomb_pa"]
+                d = np.radians(dip)
+                want = np.sin(d) * (mu * np.sin(d) - np.cos(d)) * n_perp
+                assert np.allclose(c, want, rtol=1e-12, atol=1e-9 * np.abs(c).max())
+                # every cell at this strike is the same series up to positive scale
+                if ref is None:
+                    ref = c
+                else:
+                    assert abs(abs(np.corrcoef(ref, c)[0, 1]) - 1.0) < 1e-9
+
+
+def test_stressing_rate_is_orthogonal_to_the_level_by_identity():
+    """d/dt of a stationary field is uncorrelated with the field at lag zero.
+
+    This is why the rate axis is the exact orthogonal complement of the level axis
+    that D-1 bounded, and it is a theorem rather than a measurement.
+    """
+    t = np.linspace(0.0, 30.0, 43201)
+    jd = E.julian_day_at(T0, t)
+    s = ST.site_scalar(jd, 55.35, -160.5, 0.0)
+    ds = np.gradient(s, t * 24.0)
+    assert abs(float(np.corrcoef(s, ds)[0, 1])) < 1e-3

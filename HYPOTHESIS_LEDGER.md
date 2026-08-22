@@ -18705,3 +18705,505 @@ Both are **REGISTRABLE**. Both are **admitted at price 0 for their first move an
 *Popper seat, 2026-08-22. The seed that started this entry was a real observation of a real waveform, read correctly, meaning something other than what it looked like — which is the honourable way for a hypothesis to end and is exactly what D-1 was built to find out. Two of the three defects tonight are mine: I wrote §P7-23(C) with only the sinusoid constants in it, and I ratified a prospective test at §P7-23(B) without ever computing its power, then called it the arm I would run first. The waveform-matched null was not an escape from my rule; it was the completion my rule was missing, and the run got it right without being asked. D-13 is repaired under a standing rule that predates the seed, the wrong sentences stay on the page, and the arm that can actually answer is frozen tonight at a price of zero. Kepler's two seeds are admitted and one of them may run before morning — new floor, and it is a low one: riff on what a 24%-relative ceiling on unconditional tidal quadrant excess implies for anything that still wants the tide to matter.*
 
 **AUDIT (§P7-25).** Appended to the Popper section only; zero existing ledger lines modified; no holdout hash spent; no event outside the sha256-pinned 162-event seed superset touched, downloaded or evaluated; no catalogue query run. Insert count deliberately NOT asserted from memory (this seat's cumulative totals go stale) — the supervisor runs `git diff --numstat -- replication/HYPOTHESIS_LEDGER.md` and confirms `X 0` before committing. The one cumulative total asserted was recomputed from its components tonight and not carried: Tranche D = 181 + 2 + 0 = 183, unchanged. Arithmetic recomputed fresh from `results_k092_d1.json` / `results_k092_d1_null.json`: waveform-null z's +1.1380 / +1.0083 / −2.5358 / +0.3244; CREST exact P(X ≤ 21) = 0.00532, two-sided 0.01065, ×3 = 0.0319; multinomial χ² = 6.4501 (df 2, p = 0.03975); G = 7.2208 (p = 0.02704); quadrant Clopper-Pearson [0.3193, 0.4748]; per-site quadrant min 0.3167 / max 0.4508 / sd 0.0275 / mean 0.38268 vs pooled 0.38267, 0 of 162 sites below 0.25; 36/162 = 22.2% aftershock-dependent at 30 d / 150 km; 33 M ≥ 6.0 in box 1990–2025 = 0.917/yr; all D-13 critical values and powers by exact binomial. Three corrections to this seat's own brief, made rather than glossed: (a) "would fire at roughly 12 events on no physics whatsoever" STRUCK, true figure 4.4% at N = 12 / 8.1% at N = 9; (b) §P7-23(B)'s "5–10 M ≥ 5.5/yr" is an arc-wide rate applied to a sub-segment box, CORRECTED to N ≈ 9; (c) the material defect in D-13 is not the constant but the POWER, which no amendment can repair and which the brief did not raise.
+
+
+# META-THEORIES (Wegener)
+
+## W-007 — THE SINGLE CURVE. Tidal sensitivity is not a property of settings; it is one product, `(amplitude we can compute) × (1/Aσ we cannot) ÷ √N (we chose)`. The tide is not a trigger — it is an ammeter.
+
+*Wegener round 2, 2026-08-22. Written against Merton §M-011 and Popper §P7-25, both of which pinned their numbers tonight. Ledger write only; no test run; nothing computed on any catalogue. The only arithmetic performed for this entry was on `results_k092_d1_null.json`'s deterministic-ephemeris per-site array, which contains no earthquake and spends nothing.*
+
+### W-007.0 THE LAW, STATED SO IT CAN BE ATTACKED
+
+Relative rate modulation at a patch, under a periodic Coulomb forcing of amplitude `Δτ`:
+
+**ε = Δτ / Aσ**, with `Aσ = a·(σ_n − P_p)`, and detection governed by **ε_min = 4.29/√N** at Schuster p < 0.01 (equivalently **N ≥ 18.4/ε²**).
+
+Three deliberate choices, each of which costs me something:
+
+1. **Linear, not exponential-in-the-large, and not quadratic.** Beeler & Lockner (2003), *JGR* 108(B8):2391 — 10⁵–10⁶ events at body-tide amplitude, and **a 10× amplitude increase cuts the required count ~100×** — pins `N ∝ Δτ⁻²`, hence **ε ∝ Δτ¹, exactly.** This kills, before it is proposed, the "sensitivity goes as the square of forcing" option in the brief. Doubling the ocean-load term **doubles** the effect and **quarters** the events you need. The quadratic lives in the detection cost, never in the physics.
+2. **No frequency term in the core.** W-001-P1's rate-state low-pass is where I would most like to reach, and I am refusing it here, because taken literally it is catastrophic: with ordinary-crust `t_a = Aσ/τ̇ ≈ 30 kPa / 3 kPa·yr⁻¹ ≈ 10 yr`, the attenuation at M2 is `T/2πt_a ≈ 2×10⁻⁵`, which forbids **every** tidal observation in the table, Cochran's 3× included. The frequency term is soft across **four orders of magnitude — wider than the entire dynamic range of the observations it would explain.** A term that wide is not a term, it is a fitting knob, and I will not let it absorb residuals. It returns only as a sign test (P3).
+3. **N is promoted to first class, on equal footing with the physics.** This is the whole content of the unification. The field's scatter of positives and nulls is not a scatter of mechanisms.
+
+### W-007.1 DOES IT FIT MERTON'S NUMBERS? YES — WITH ONE REAL CHECK AND FOUR TAUTOLOGIES, AND I WILL SAY WHICH IS WHICH
+
+**The one real check (n = 3, zero free parameters, and it passes).** Three independent ordinary-crust results, run backwards through `ε_min = 4.29/√N`, must triangulate one `Aσ`:
+
+| source | N | implied bound | implied Aσ at Δτ ≈ 1 kPa |
+|---|---:|---|---:|
+| Beeler & Lockner (2003) "10⁵–10⁶ needed" | 10⁵–10⁶ | ε ≈ 0.43–1.36% | 74–233 kPa |
+| Vidale et al. (1998), SAF/Calaveras, null | 13,042 | ε < 3.76% | > 27 kPa |
+| Sirorattanakul & Avouac (2026), CA M≥2.5 | — | ε ≤ 8.16% | > 12 kPa |
+
+They agree, and they land inside the lab band. **And the first row is not a fit at all** — Beeler & Lockner's required-N and the field's independently-stated "modulation of order one percent" (§P7-25(5)) are the *same number reached two ways*, one from lab friction and one from catalogue statistics, and nobody has ever written down that they must agree. **They do.** That is the law's only genuine consistency check and it is worth more than the four rows below.
+
+**The four tautologies, labelled as such.** Each of these is one equation in one unknown: I invert the observation for `Aσ` and then report that `Aσ` came out plausible. This explains nothing and I am recording it so nobody mistakes it for evidence.
+
+| setting | Δτ | ε observed | Aσ the law must invent | plausible? |
+|---|---:|---|---:|---|
+| shallow ocean-loaded thrust (Cochran et al. 2004, ~3× rate variation) | ~10 kPa | ~50% | `2Δτ/Aσ = ln3` → **18 kPa** | yes, shallow |
+| tremor / LFE (sub-kPa sensitivity, order-unity response) | 0.1–1 kPa | ~100% | **0.1–1 kPa** → σ_n−P_p ≈ 0.02–0.2 MPa | yes, near-lithostatic P_p |
+| Axial Seamount (Scholz et al. 2019) | ~5–15 kPa | strong above 5 kPa | ≥ 10 kPa | **no — see W-007.2** |
+| induced (Oklahoma, 10–100 kPa) | ~100 kPa | 10–1000× | 30 kPa | yes |
+
+**But the tautologies are not worthless, because they force a DECOMPOSITION, and the decomposition is a claim the field does not make.** The ~50× sensitivity gap between shallow ocean-loaded thrusts and ordinary crust splits as **~10× amplitude (Tsuruoka et al. 1995; Cochran et al. 2004: ocean load an order of magnitude above continental solid-earth) × ~2–5× criticality (18 kPa vs 33–100 kPa).** Not 50× criticality. Not 50× amplitude.
+
+The field's consensus framing — which Merton §M-011.7(1) correctly forbids us from claiming as ours — is *"tidal triggering probes proximity to failure."* **On the one contrast where both terms are independently pinned, that framing has the ratio backwards: amplitude is the dominant half and criticality is the minor half.** That is W-007's first excess over the disjoint accounts, and it is the seed of P1.
+
+### W-007.2 WHERE IT BREAKS, NAMED AS ASKED
+
+**It breaks on Axial Seamount's ~5 kPa threshold, read against Cochran's shallow thrusts. That is the one.**
+
+Axial has the **larger** forcing (3 m ocean tide) and, by every physical expectation a magmatic mid-ocean ridge carries — high heat flow, high pore pressure, high `τ̇` — the **smaller** `Aσ`. The law therefore requires Axial to be **more** tidally sensitive than a coastal megathrust **at every amplitude**, including at 1–5 kPa. Instead Axial reports nothing below ~5 kPa while Cochran's thrusts respond across their whole tidal range at smaller amplitudes. **A high-forcing, high-criticality setting showing LESS than a lower-forcing, lower-criticality setting is exactly the ordering a single monotone product forbids.** A smooth exponential has no threshold anywhere; a threshold in the *more* favourable setting is worse than a threshold.
+
+The law has two escapes and both are checkable, which is why I call this a live break and not a fatal one:
+
+- **(i) Statistic mismatch.** Scholz's 5 kPa is a **b-value** threshold (b falls ~0.03/kPa above it), not a rate threshold. `ε` is a rate quantity; `b` is a second constitutive relation the law does not contain. **W-007 must therefore claim that Axial's rate response extends smoothly below 5 kPa, in Scholz's own data.** Checkable, in a published dataset, by someone else.
+- **(ii) Amplitude mis-assignment.** Scholz et al. showed the magma chamber **inverts** the sign of tidal Coulomb on nearby faults. If the local `Δτ` is not the ocean tide, the law's amplitude term is mis-entered at that site and the row is uninformative.
+
+**Both escapes are real, and I flag that having two escapes is itself a weakness.** If neither survives inspection, W-007 is falsified on its central ordering claim.
+
+**One further row where it fits only by adding a second law:** the b-value rows (Ide et al. 2016; Axial's 0.03/kPa) are absorbed *only* by importing `b ∝ −differential stress` as an independent postulate. That is not a corollary of the amplitude law. **Recorded as a seam, not a unification.**
+
+### W-007.3 THE EINSTEIN CRITERION — FIVE PREDICTIONS THE DISJOINT ACCOUNTS DO NOT MAKE
+
+Every one is an **ordering or a ratio**, because the brief is right that those survive the amplitude uncertainties that kill absolute claims.
+
+**W-007-P1 — THE 10-TO-1 SPLIT. Amplitude dominates criticality, and a boring fault beside a big tide must be nearly as sensitive as a megathrust.**
+
+Find an **ordinary-criticality, non-geothermal, non-megathrust** fault population under a **large ocean load**: Cook Inlet, upper Gulf of California, Bristol Channel hinterland, Bay of Fundy. Compute the ocean-loaded Coulomb amplitude. Measure `ε` at matched N.
+
+*Prediction:* `ε(ocean-loaded ordinary) / ε(body-tide ordinary)` **equals the amplitude ratio, to within a factor of 2, with no criticality term** — so an ordinary fault under a 10× ocean load must land within a factor of ~5 of a shallow megathrust.
+*Falsifier:* at demonstrated power, a large-ocean-load ordinary-crust population is indistinguishable from a body-tide-only one. That would mean the amplitude axis is inert and the field's criticality-only story is right and W-007 is wrong.
+*Why no disjoint account makes it:* the criticality framing (Brinkman et al. 2015) says the megathrust is special because of its **state**. W-007 says it is mostly special because of the **water on top of it**, and therefore that the sensitivity map should look substantially like a **tidal-range map**, not a heat-flow map.
+
+**W-007-P2 — EVERY REPORTED TIDAL THRESHOLD MUST MOVE AS N^(−1/2), AND BY EXACTLY THAT.**
+
+A linear law has no threshold. So every threshold in this literature is a detection threshold at **Δτ\* = 4.29·Aσ/√N**.
+
+*Prediction:* **quadruple the catalogue and the apparent threshold must halve — factor 2.00, not 1.5, not 1.1.** Doubling gives exactly √2 = 1.414.
+*Falsifier:* re-analyse any tidal-threshold claim (Axial first) at 4× the event count and find the threshold unmoved, or moved by less than 1.4×. **A stationary threshold kills the smooth-exponential core, not a peripheral assumption.**
+*Why no disjoint account makes it:* a threshold is what "threshold" means in the papers that report one. **No account other than this one requires it to move at all**, and none predicts the exponent.
+
+**W-007-P3 — SENSITIVITY AND PHASE LEAD MUST BE ANTI-CORRELATED ACROSS SETTINGS; AND EVERY TIDALLY SENSITIVE PATCH MUST HAVE AN OMORI DURATION OF HOURS, NOT YEARS.**
+
+The frequency term returns here as a sign test only. Where the response is strong (`t_a` short, period below the corner) it is **in phase with stress**, no lag, no hysteresis. Where weak (period above the corner) it must **lead**, toward maximum stress rate, up to 90°. Crossover at `t_a ≈ T/2π ≈ 2 h` for M2.
+
+*This retrodicts Merton's hardest adverse citation exactly.* **Scholz et al. (2019) found no phase shift and no hysteresis at Axial. Under W-007 that is not an absence of a mechanism — it is a measurement placing Axial below the corner, which is precisely what a strongly responding site must do.** The strongest published result against the rope is, on this law, a confirmation of the law's frequency structure. Adjacent: Delorey et al. (2017) find semidiurnal/fortnightly interaction on the SAF — a lag — in a **weak** setting, which is the other limb.
+*Cheaper corollary, and this one is on our disk:* **`t_a` is measurable from a patch's own Omori decay with no tides involved.** W-007 requires the known tidally sensitive patches (Coso-north, shallow megathrust, tremor zones) to show `t_a` of **hours to days**, not years.
+*Falsifier:* the tidally sensitive patches show Omori durations indistinguishable from ordinary crust; **or** a setting with strong sensitivity that also shows a large phase lead. This is W-001-P1's flagship reduced to a one-sided sign test our own catalogue can run, and it is far cheaper than the collapse test.
+
+**W-007-P4 — THE CONVEXITY ORDERING. The excess at Coulomb maximum must ALWAYS exceed the deficit at Coulomb minimum. This is the best prediction in the entry because it is amplitude-free.**
+
+For `R = R₀·exp(τ/Aσ)` under any periodic `τ` and **any** `Aσ > 0` and **any** amplitude, `exp` is convex, so the top band's departure from its dwell time exceeds the bottom band's, always. **The claim is about the SHAPE of the response, and shape is invariant to every amplitude uncertainty in this field.** Zero free parameters, zero calibration.
+
+*Prediction:* `|excess at Coulomb max| ≥ |deficit at Coulomb min|`, in every setting, forever.
+*Falsifier:* observe the reverse at demonstrated power. That falsifies the exponential core outright.
+*Our own data already whispers the wrong answer, and I want it on the record before anyone else notices.* `results_k092_d1c_directional.json`, primary geometry: **CFS_TROUGH 0.2531 vs null 0.3678 (−31% relative, z = −3.08); CFS_CREST 0.2716 vs 0.2544 (+7% relative, z = +0.50).** The deficit is **four times the excess** — the forbidden ordering. And it fits the *other* limb no better: the phase-lead limb predicts deficits at **both** extremes, and the crest shows none.
+**The resolved-Coulomb arm therefore fits neither limb of W-007.** Restraint, in full: N = 162, a set selected by having been looked at, one declared geometry, max-statistic p = 0.026 over 8 statistics, and — decisively — **no ocean loading, which is the dominant and DIRECTIONAL term at exactly this coastal site** (the run's own scope flag 3 says so). At that power this cannot break anything. **But P4 is now pre-registered, it is free, and D-12 scores all three bands.** If the deficit-without-excess shape survives to held-out data, W-007 dies and something with a genuine threshold replaces it.
+
+**W-007-P5 — THE LAW PREDICTS THE OUTCOME OF AN ALREADY-HASHED PROSPECTIVE TEST, IN ADVANCE, WITH A REASON. D-13b RETURNS NULL, AND ITS NULL MEANS NOTHING ABOUT THE PHYSICS.**
+
+Our floors (§P7-25(5)): 7.1% relative at N = 2,501; 22.5% at N ≈ 250; 28.0% at N = 162. W-007's predicted `ε` for a shallow ocean-loaded Aleutian thrust — and the Shumagin-Semidi segment **is** Cochran's setting — is **20–55%.** That is *above* the M≥4 floor by 3–8×. So the law says D-12's M≥4 stratum **should** see it, loudly.
+
+**It won't, and the law says exactly why: the frozen scalar is `solidTideDisplacementCm`, body tide only, no ocean load, no Coulomb resolution.** Under `ε ∝ Δτ¹`, that instrument is running ~10× under-amplitude. So:
+
+*Prediction (a):* **D-13b's true quadrant rate is ≈ 0.39–0.40, not 0.55.** Its declustered PRIMARY at N ≈ 15 (from `results_k092_boxrate.json`: 5.134 independent M≥5.0/yr) has k_crit = 11 and power 0.217 at 0.60 / 0.515 at 0.70. **Even W-007's own best case for the *right* instrument (0.45–0.56) leaves D-13b under-powered — so the physics reaches Popper's conclusion from a second, independent direction.** D-13b is not under-powered because Alaska is quiet; it is under-powered because it is holding the wrong instrument in a quiet place.
+*Prediction (b), and this is the decisive one, and it costs zero new data:* **add ocean loading (K-090(c) / D-10 / K-093) to the scalar and re-read the SAME 162 events.** Converting `ε` to a quadrant excess gives relative excess ≈ 0.9·ε on the 0.383 base, so the present **+1.24 pp must move to +7 to +17 pp** — with no new earthquakes, no holdout spent, no clock touched. (Sinusoid approximation; the real waveform needs the identical `exp_k092_d1_null.py` dwell-time machinery, and Laplace should recompute the 0.9 constant against it rather than take mine.)
+*Falsifier:* ocean loading is added, the amplitude rises by the predicted order of magnitude, and the quadrant excess **does not move outside its present CI of [−6.3, +9.2] pp.** That is decisive for W-007 in this program.
+*What it costs the program if it fires:* **the K-092 family's nulls are amplitude nulls, not physics nulls.** The entire gap between our 24%-relative ceiling and Cochran's ~50% effect is the term we did not compute. **This is the single highest-value item on the board and it is already ruled to be K-090(c)'s job.**
+
+### W-007.4 WHERE THIS ENTRY IS UNFALSIFIABLE, AND WHAT I DO ABOUT IT
+
+**The N-escape on the precursory row, which is the row I am most tempted by and therefore must nail down first.** Rising criticality → falling `Aσ` → rising `ε` before a large earthquake is a **required** corollary of W-007, not an optional one. And the replication record runs against it: Wang & Shearer (2015) at 74,610 events across gridded Japan, low-p cell count at chance and not clustered on Tohoku; Bradley & Hubbard's 79 global M7.5+ thrusts at the chance rate (unrefereed — Merton §M-011.3, and I do not launder it).
+
+The escape is "the sensitized volume was too small to detect." **I am closing it by taking a horn.** Wang & Shearer's 0.2°–1.0° grid resolves anything the size of a Tohoku rupture. So either the sensitized volume is **rupture-scale**, in which case they had the power and **W-007's precursory corollary is FALSIFIED and recorded as falsified tonight**; or it is **nucleation-scale**, in which case precursory tidal sensitivity **can never be a forecasting instrument at any catalogue size**.
+
+> **W-007 takes the second horn and FORBIDS the first. This entry forbids the program from ever claiming a rupture-scale precursory tidal signal, and forbids Kepler from pricing one.** Falsifier: anyone demonstrates a rupture-scale precursory tidal signal at demonstrated power — which would refute W-007 while vindicating Tanaka. That is a forbidding, which is what §3 of my charter demands and what an escape is not.
+
+**Three further honest limits.** (1) `Aσ` is independently measured in none of the settings I fitted; four of five rows are one-equation-one-unknown. The law becomes science only through P2, P3, P4 and P5, all of which are `Aσ`-free or `Aσ`-monotone. (2) The frequency term is excluded on purpose and its exclusion is a confession, not a simplification. (3) **W-007 is not a new entity. It is W-001 with the low-pass amputated and detectability promoted to a first-class term.** It does not beat W-003 (the null unifier) on any data we hold; it beats W-003 only if P5(b) fires. Popper should score it against W-003, not against nothing.
+
+**What the living entity IS.** Not the crust. Not the fault. **The living entity is the effective normal stress, and the tide is a fixed, calibrated, free probe of it.** Every "tidal triggering" result in the field is an attempt to measure `Aσ` with a forcing whose amplitude we happen to know to three figures, and the entire scatter of positives and nulls is `(amplitude we can compute) × (1/Aσ we cannot) ÷ √N (we chose)`. **The tide is not a trigger. It is an ammeter, and the field has spent thirty years arguing about the reading while holding the leads in the wrong place.**
+
+---
+
+## W-008 — THE DWELL-TIME ARTIFACT IS A **TIME** VARIABLE, NOT A **SETTING** VARIABLE. The cheap discriminator is real, but not in the form proposed, and its proposed form is refuted by numbers already on our disk.
+
+**The brief asks whether an artifact of the waveform is identical across tectonic settings at the same latitude, making a cross-setting comparison a cheap discriminator. Judgment: right in kind, wrong in the operational form, and the wrong form would manufacture effects of exactly the size being hunted.**
+
+**The refutation, computed tonight from `results_k092_d1_null.json`'s per-site array — deterministic ephemeris only, no catalogue, nothing spent:**
+
+| quantity | value |
+|---|---|
+| sites | 162, **all within 52.0–57.6 N** |
+| per-site quadrant duty cycle `q` | 0.3167 – 0.4508, sd 0.0275 |
+| **r(latitude, q)** | **0.194 → latitude explains 3.8% of the artifact's variance** |
+| spread **within** the single 1° band 54–55 N (n = 37) | **0.3342 – 0.4508, range 0.1166** |
+| a pair 0.016° apart in latitude | `usp000056v` q = 0.4221 vs `usp000b4xj` q = 0.3167 → **Δq = 0.1054** |
+
+**That last row is the whole answer. Two events sixteen thousandths of a degree apart in latitude differ in their own artifact by 10.5 percentage points — eight and a half times the entire +1.24 pp excess D-1 measured, and larger than the full width of its 95% CI.** Matching on latitude controls under 4% of the artifact and leaves a residual an order of magnitude larger than the signal. **So yes: on the matched-latitude version, you are fooling yourself, and the numbers that say so were produced by your own null run six hours ago.**
+
+**Why, and this is the part that generalises beyond us.** `q` is computed on a **±10-day window centred on each event's own epoch**. The spring-neap beat, lunar declination and the perigee cycle therefore enter it directly. **The artifact's dominant axis is EPOCH, not position.** Two events at the same site in different months carry different artifacts. This is not a defect of the measurement — it is what a multi-constituent tide is — and it is the physical reason Popper's repair (c), the per-event `q_i` Poisson-binomial, is the only correct null and why any per-setting or per-latitude constant would reproduce the original error in a new coordinate. **This is the general hazard the brief identifies, stated in its strongest form: a level-threshold statistic's null is not a constant, not a function of place, but a function of place AND time, and it moves by more than the effect within a single degree of latitude and a single month.**
+
+**But the right-in-kind part is stronger than what was proposed.** Because `q_i` is a deterministic, zero-free-parameter, zero-catalogue function of (lat, lon, t) — §P7-25(3), and that property is what made the D-13 amendment legitimate at all — **you do not need a control setting. You compute the artifact exactly at every event and subtract it.** The discriminator is then not a comparison but a regression, and it comes in two parts.
+
+**W-008-P1 — THE ORTHOGONALITY TEST. Free, on-disk, spends nothing, and it is §P7-25 disposition 5's missing assertion in statistical form.**
+
+Define the per-event residual `r_i = 1{event in quadrant} − q_i`. Under W-007, `r` is a property of `Δτ` and `Aσ`; `q` is a property of the ephemeris. **They must be uncorrelated.** Regress `r` on `q` across the 162 seed events: **the slope must be 0.**
+*What a nonzero slope means:* the residual is still carrying waveform — a mis-specified span, a normalisation error, or the rate/sign path divergence that §P7-25 disposition 5 flags as **UNVERIFIED and which is the one number D-13 will live on**. Every excess quoted from this machinery, including the +1.24 pp bound, would then be contaminated by an unknown fraction.
+*Why this is worth running before anything else:* disposition 5 asks for code-path equivalence at a sample of sites. **This asks the same question of the output rather than the code, on data already licensed, and it would catch a class of errors code-equivalence cannot** — an equivalence assertion passes happily when both paths are wrong in the same way.
+
+**W-008-P2 — THE SETTING TEST, DONE ON THE RESIDUAL. This is the discriminator the brief was reaching for, and it converges on K-095's design from a different direction.**
+
+Regress **`r_i`, never the raw fraction**, on an exogenous amplitude/criticality proxy across settings. Under W-007 the residual is **monotone increasing in `(ocean-load Coulomb amplitude / Aσ)` and has ZERO dependence on latitude, on longitude, and on `q`.** Under "there is no effect", it has zero dependence on everything. **The two hypotheses differ in exactly one coefficient — which is why the residual version works and the raw-fraction version cannot.**
+
+Note what this means for the program's next move: **W-007 says K-095's interaction form is *forced*, not chosen, and Popper's per-event `q_i` null is *forced*, not a repair.** Two rulings reached on procedural grounds tonight are re-derived here on physical grounds. That convergence is the reason I think this line is worth the program's time.
+
+**The one place I am not confident, stated rather than buried.** `r` and `q` are **not** guaranteed orthogonal a priori. `q` departs furthest from 0.25 where the tide is most mixed-diurnal; mixed-diurnal regimes are **coastal**; coastal is exactly where the ocean load — W-007's amplitude term — is largest. **The artifact and the physics are correlated at precisely the sites where the physics is predicted to be largest.** So a nonzero slope in P1 is **ambiguous** between "residual artifact" and "the response depends on waveform shape as well as amplitude", and P1 is therefore a control only under W-007's specific claim that response depends on Coulomb amplitude and not on constituent mix. **A cross-setting comparison of raw quadrant fractions would find "coastal subduction > continental interior" as a pure waveform result, with no physics in it at all** — which is the artifact's most dangerous form, because it points the same direction the true hypothesis points.
+
+*Falsifier for W-008 as a claim:* demonstrate that the quadrant duty cycle is in fact well predicted by latitude (r² > 0.5) across a wide latitude range, making a matched-latitude control adequate. Our own 162 sites say r² = 0.038 within a 5.6° band; a wider band would raise it, and **the honest scope of W-008 is "within a tectonic segment, latitude is useless as a control"**, which is the only regime a cross-setting comparison would ever be run in.
+
+---
+
+### W-RETRO-2 — WHAT THE TWO ENTRIES SAY ABOUT TONIGHT, IN FOUR LINES
+
+1. **Why the seed's 0.3951 was null.** Not because the tide does nothing — because the frozen scalar is body-tide-only and W-007 says that instrument runs 10× under-amplitude. The observation was explained by the waveform; **the hypothesis was never tested, because the ammeter was unplugged.**
+2. **Why the resolved-Coulomb arm changed shape.** Under W-007 it should have changed **magnitude and kept its shape**. It changed shape instead (deficit-without-excess), which fits neither limb — flagged as W-007-P4's watch item, at N = 162 and worth nothing yet.
+3. **Why Alaska will not settle this.** 5.13 independent M≥5.0/yr against a 22.5–28.0% floor and a 20–55% predicted effect **that the frozen instrument cannot deliver.** Popper reached this statistically; W-007 reaches it physically; they agree.
+4. **The one thing to do next, and it needs no earthquakes.** **Ocean loading on the existing 162 (K-090(c)/D-10/K-093), then W-008-P1's orthogonality regression on the residual.** If the excess does not move outside [−6.3, +9.2] pp when the amplitude rises tenfold, W-007 is dead and the program has learned something real for free. If it moves to +7 to +17 pp, everything in tranche D was an amplitude problem.
+
+*End Wegener round 2. Two entries, ten falsifiers, one named break (Axial's threshold against Cochran's thrusts), one closed escape (the precursory horn, taken and forbidden), and one refuted instinct (matched-latitude control). Nothing committed; nothing computed on any catalogue; the only arithmetic ran on a deterministic ephemeris array.*
+
+
+---
+
+## SUPERVISOR VERIFICATION NOTE on W-007/W-008 (2026-08-22)
+
+Appended by the supervisor at commit time. Wegener's arithmetic was RE-RUN rather than accepted, per the program's standing rule that a reviewer's factual claim is never applied without its derivation or execution. Three findings.
+
+**(1) W-008's within-band statistics are EXACT and are confirmed.** Recomputed from `results_k092_d1_null.json`'s per-site array: n = 162, latitude range 52.000 to 57.592 N, per-site quadrant duty 0.3167 to 0.4508 with sd 0.0275; r(latitude, q) = 0.1937 so r-squared = 0.0375; within the single 54-55 N band, n = 37 and the q range is 0.1166. Every figure matches.
+
+**(2) ONE ILLUSTRATION IS OVERSTATED AND IS CORRECTED HERE.** W-008 describes `usp000056v` / `usp000b4xj` (0.016 deg apart, dq = 0.1054) as "the nearest-in-latitude pair". That pair is real and its numbers are exact, but it is the MAXIMUM-dq pair among those within 0.02 deg, not the nearest pair. The actual nearest pair is 0.0000 deg apart and differs by dq = 0.0064. Across all 627 pairs within 0.1 deg of latitude the median dq is 0.0251, the 90th percentile 0.0623, and the maximum 0.1170. **The substance survives the correction** - a median artifact difference of 0.0251 between latitude-matched events is still twice the +1.24 pp excess D-1 measured - but the worst case was presented as the typical case and that is recorded rather than left standing.
+
+**(3) THE LATITUDE DISCRIMINATOR AND W-008 ARE BOTH RIGHT, AND W-008 STATES ITS OWN FALSIFIER'S ANSWER WITHOUT KNOWING IT.** W-008 offers as its falsifier: "demonstrate that the quadrant duty cycle is in fact well predicted by latitude (r-squared > 0.5) across a wide latitude range". `results_dwell_latitude.json`, committed at 3444413 a few minutes before W-008 was written, does exactly that: across 0 to 75 degrees, longitude-averaged over six meridians on a fixed 60-day span, r(latitude, q) = 0.9875, **r-squared = 0.9751**, with q running monotonically from 0.1750 to 0.4865 and crossing 0.25 only near latitude 29.4.
+
+The two results are not in conflict and the resolution is exact: **latitude explains 97.5 percent of the variation in the LONG-RUN MEAN duty cycle ACROSS latitudes, and 3.8 percent of the PER-EVENT variation WITHIN a 5.6-degree segment.** The residual within a segment is dominated by EPOCH - spring-neap, lunar declination, perigee - exactly as W-008 diagnoses, because each event's q_i is computed on a plus/minus 10-day window centred on its own time. So:
+
+- **VALID:** using the latitude profile to compare SETTINGS at different latitudes, and as a hazard map for anyone pooling or comparing regions across latitude. The 0.175-to-0.487 span is real and is larger than most claimed tidal effects.
+- **INVALID:** using latitude-matching as a per-event control within a segment. There the correct control is the per-event q_i itself, which is precisely Popper's ruled repair (c).
+
+W-008 is therefore accepted as a SCOPING of the latitude result rather than as a refutation of it, and the entry's own framing ("refuted instinct") is too strong by exactly that distinction. Both stand.
+
+**(4) W-007-P4's observation about D-1c is confirmed as stated.** `results_k092_d1c_directional.json` primary geometry: CFS_TROUGH 0.2531 against a null of 0.3678 (z -3.08) and CFS_CREST 0.2716 against 0.2544 (z +0.50) - a deficit roughly four times the excess, which is the ordering a convex response forbids. Wegener's own restraint on it is adopted verbatim: at N = 162 on a selected set with no ocean loading, this cannot break anything, and P4 is recorded as pre-registered for D-12 rather than read as evidence now.
+
+**Nothing in W-007 or W-008 was computed on a catalogue; both ran on deterministic-ephemeris arrays already on disk. No priced test, no holdout hash, no EXPLORE_COUNT line.**
+
+
+# PROPOSED (Kepler) — round following §P7-25. K-097 through K-113.
+
+## PRELUDE: three measured facts that reframe the whole round
+
+All three are deterministic properties of the tidal field at Aleutian sites, computed through `engine/tidal_tensor.py` and `engine/sitetide.py` at Sand Point (55.35N, 160.5W), Kodiak (57.5N, 153.0W) and 51.5N/176.0W, 30 days, 1-minute step. They involve no earthquake, spend no test, and any third party can reproduce them in ninety seconds.
+
+**FACT 1 — the "resolved Coulomb" axis of D-1c is algebraically a bearing statistic, and its dip and friction grid is exactly vacuous.** Under the module's declared free-surface plane stress (`s_DD = s_rN = s_rE = 0`), for a plane of strike `s`, dip `d`, rake 90:
+
+- normal traction = `sin²d · N(s+90)`
+- shear along rake = `−sin d cos d · N(s+90)`
+- so `CFS = sin d (μ sin d − cos d) · N(s+90)`
+
+where `N(α)` is the tidal normal stress along azimuth α. Both components are the *same* time function scaled by a geometry constant. Measured: `corr(CFS(250,20,0.4), N(340)) = −1.0000` exactly. `μ sin d − cos d < 0` for every cell of the declared grid, so all 45 cells are positive multiples of one series. **The 45-cell grid contains 5 distinct statistics, indexed by strike alone. The Cochran-style friction gridding buys literally nothing at the free surface, and the arm did not test friction physics; it tested a bearing.**
+
+**FACT 2 — orientation is nearly empty at this site, and the emptiness is structural.** `corr(W, isotropic part of horizontal stress) = +1.0000` (identity: both are the h2·W term). Consequence, measured by sweeping bearing 0 to 170 degrees at all three sites: **`corr(vertical body-tide scalar, N(α))` is +0.92 to +0.96 at EVERY bearing**, and `sd(N(α))` varies only slightly around the circle. Resolved thrust Coulomb: `corr(W, CFS) = −0.941`. **The "largest un-mined degree of freedom" is, at Aleutian latitude for a thrust receiver, ~89% variance-shared with the axis D-1 already bounded.**
+
+**FACT 3 — the orthogonal directions exist, and they are not the ones anyone named.**
+
+| candidate axis | r with the bounded scalar | status |
+|---|---:|---|
+| isotropic horizontal stress | +1.000 | identical |
+| N(α), any bearing | +0.92 to +0.96 | bounded |
+| thrust Coulomb (rake 90) | −0.941 | bounded |
+| vertical strike-slip Coulomb | +0.62 to +0.76 | mostly bounded |
+| horizontal shear τ(α) | 0.000 to ±0.24 | **free** |
+| Coulomb on a shallow plane at rake 0 | **+0.233** | **free** |
+| dσ/dt (stressing rate) | **+0.003** | **free, by identity** |
+
+The rate row is exact and it is a theorem, not luck: the derivative of a stationary process is uncorrelated with the process at lag zero. **The level/rate split is the in-phase/quadrature split, and orthogonality there is guaranteed rather than lucky.**
+
+---
+
+## K-097 — THE QUADRATURE COMPLEMENT. The ceiling bounds the in-phase response and is mathematically silent on the quadrature response, which is exactly where the rope lives.
+
+**Proposition.** Decompose the crust's seismicity response to tidal forcing into an in-phase component (rate tracks stress) and a quadrature component (rate tracks stress *rate*). These are orthogonal by construction. D-1 measured a level-quadrant statistic, which projects onto the in-phase component and bounded it at ≤24.1% relative. **The quadrature component is unbounded by that result, at any effect size, and no amount of tightening the level bound will ever constrain it.** The rope's hysteresis, the pull-then-ease lag, the mid-slope concentration and Popper's own §P7-23(C) "maximum unloading stress rate" note are all the same thing: they are the quadrature component under four names.
+
+**Falsifier.** A quadrature statistic (signed rate at event time, normalised per site by the local rate distribution) shows no excess in a stratum with N large enough that its own floor is below the ocean-loaded effect prior. Equivalently: if the constituent-lag spectrum of K-106 comes back flat at zero for every constituent, there is no quadrature response and this entry dies whole.
+
+**Cheapest test.** Free, today, seed set only, under the existing K-096 licence and its four conditions: recompute D-1's own 162 events with the statistic `sign-and-magnitude of dσ/dt at origin time`, normalised against the same D-1b waveform-matched time-uniform null construction. This is not a new arm, it is the *orthogonal half* of the arm that already ran, and it should have been reported beside it.
+
+**Effect needed / floor.** At N=162 the floor is 28% relative. A seed-set quadrature statistic is therefore a bound-generator, not a detector, and should be run for exactly the reason D-1 was: so the program can say "in-phase ≤24%, quadrature ≤X%" and have bounded the plane rather than a line.
+
+**Merton.** Vidale et al. (1998) tested tidal stress rate and found null, on continental strike-slip with no ocean load, using rate as a *scalar covariate*. This entry is not that: it is the claim that rate is the orthogonal complement of the bounded axis, which is a statement about the *geometry of the bound*. **REDISCOVERY of the covariate; NOVEL as a bound-completeness argument.**
+
+---
+
+## K-098 — THE CEILING TRANSFER MAP. A bound on one scalar transfers to any other observable in proportion to their squared projection, and that projection is free to compute.
+
+**Proposition.** The quotable sentence "any unconditional quadrant excess larger than ~24% relative would have shown itself and did not" is scoped to one scalar. Its reach on any other tidal observable X is governed by `r(frozen scalar, X)`. **Concretely: the ceiling already covers resolved thrust Coulomb (r = −0.94) and normal stress along every bearing (r = 0.92 to 0.96), which means D-1c had almost no room to find anything D-1 had not already bounded; and it does not cover stressing rate, horizontal shear, or a shallow-plane strike-slip rake.**
+
+**Falsifier.** If the measured projections are unstable across the 162 sites and epochs, the transfer coefficient is not a single number and the map is useless as stated. Test: report `r` per site, and its distribution.
+
+**Merton.** No prior art expected; this is measurement hygiene, not a claim. It should be a standing rule (proposed as an SP-9 addition), not a hypothesis.
+
+---
+
+## K-099 — WHAT THE CEILING ACTUALLY KILLS: the sensitive-fraction hyperbola, and the exact 14.9%.
+
+**Proposition.** In a mixture model where a fraction `f` of events are tide-gated and `1−f` are insensitive, the marginal quadrant excess is `f · e`. The base is q = 0.3827, so the maximum physically attainable `e` (full gating, quadrant probability 1.0) is `(1 − 0.3827)/0.3827 = 1.613`. The ceiling `f · e ≤ 0.241` therefore constrains **only** models with `f ≥ 0.241/1.613 = 0.149`.
+
+> **Any model in which fewer than 15% of Alaska-Aleutian majors are tide-gated is entirely unconstrained by the D-1 ceiling, even if those events are 100% gated.**
+
+**DEAD in this region:** deterministic tidal gating of megathrust majors; any operational forecast whose skill comes from an unconditional body-tide level/quadrant term at M≥6; any claim that the Sand Point reading was evidence; and, by K-098's transfer, unconditional resolved-thrust-Coulomb and bearing-normal-stress gating at ~26% relative. **D-1c cannot rescue what D-1 killed, because they are ~89% the same measurement.**
+
+**ALIVE only in conditional or subpopulation form (`f < 0.15`):** Seed A / K-095 entire — a 10%-sensitive subpopulation with a 100% internal effect gives a 10% marginal, comfortably inside the ceiling. Magnitude-restricted forms. Anything narrow-band in phase and centred on a *quadrant boundary*: a von Mises concentration straddling a boundary contributes ~zero quadrant excess at any concentration strength. **The ceiling is a bound on one coarse basis function, and it is weakest exactly where a sharp effect would be hardest to see.**
+
+**NEVER IN SCOPE AT ALL:** the entire published tidal-triggering literature. Literature-scale modulation is order 1%; the ceiling is 24x too loose to have tested it. **This must be said in the same breath as the ceiling, every time, or the program will be read as having refuted a field it did not touch.** Also out of scope: everything orthogonal per K-097/K-098, every ocean-loading claim, and all response-shape claims.
+
+**Merton.** M-011 already forbids claiming novelty for "population averages dilute a sensitive subpopulation." **The hyperbola is not that claim; it is a quantitative bound on the dilution parameter derived from our own measurement. Claim the number, never the idea.**
+
+---
+
+## K-100 — AMPLIFY THE FORCING, NOT THE SAMPLE. Ocean loading is the entire difference between a feasible and an infeasible experiment in this region.
+
+**Proposition.** Triggering signal scales linearly with stress amplitude; noise scales as `sqrt(N)`; therefore required N scales as amplitude^−2. Ocean tidal loading at Aleutian coastal sites is 5 to 10x the body tide. **Required N drops by 25 to 100x. Alaska's M≥4 box stratum at N = 2,501 with the ocean load included is statistically equivalent to 62,000 to 250,000 events under body tide alone, which is precisely Beeler and Lockner's 10^5 to 10^6 requirement.**
+
+> **Alaska is not underpowered. Alaska computed with the wrong forcing is underpowered. The single highest-return item in the program is a load-tide implementation, and it outranks every additional statistic on the existing scalar.**
+
+**And a second, independent reason, which is mine:** per FACT 2, the *body* tide's horizontal stress is dominated by its isotropic part and its orientation content is a small residual, so a body-tide orientation study has a fraction of the amplitude of the corresponding scalar study. Ocean loading has no such degeneracy: it is driven by coastline and bathymetry geometry, is strongly anisotropic, and has no h2·W term forcing it into the isotropic direction. **Ocean loading is not merely 10x bigger; it is the only thing that makes the orientation axis non-degenerate at all. Seed B item 1 is nearly empty under the body tide and becomes a real degree of freedom only under the load tide.**
+
+**Falsifier.** Compute the load-tide stress tensor at the 162 seed sites and measure (i) its amplitude ratio to the body tide and (ii) its deviatoric-to-isotropic ratio. If the ratio is under 2x, or if the load tide turns out isotropic too, the amplification argument collapses and the program should say so and stop building.
+
+**Cheapest test.** FES2014 or TPXO9 ocean-tide heights plus load Green's functions (SPOTL; Farrell 1972). A *build*, priced 0, same category as the P3 repair at §P7-25 disposition 22. Deliverable: `engine/loadtide.py` with the same provenance-self-test discipline as `sitetide.py`.
+
+**Merton.** Tsuruoka, Ohtake & Sato (1995) own the ocean-loading correction; Cochran et al. (2004) own including it in resolved Coulomb; Beeler & Lockner (2003) own the amplitude/N scaling. **Zero novelty in the physics. The novel content is the arithmetic joining them to this region's measured event rate, plus the isotropy-degeneracy argument, which Merton should sweep.**
+
+---
+
+## K-101 — GLOBAL SLAB2 POOLING: get N to 10^5 without needing a focal mechanism per event.
+
+**Proposition.** The binding constraint on global pooling is usually "you need a fault plane per event." That cap is an artefact of insisting the plane come from the event. **Take the plane from the slab model instead.** Slab2 (Hayes et al. 2018, USGS) gives interface geometry on a global 5-km grid. Every shallow ComCat event within a declared distance of the modelled interface inherits a declared plane with rake 90, with zero free parameters and zero catalogue input into the geometry.
+
+**Numbers.** Global ComCat M≥4.5, 1990 to 2026, within ±20 km of a Slab2 interface: realistically 3·10^4 to 5·10^4 after completeness. Floor at N = 4·10^4 is `7.1% · sqrt(2501/40000) = 1.8%` relative. Every one of those events is at a coastal or offshore subduction site, i.e. maximally ocean-loaded, so the expected effect under K-100 is 5 to 20%. **z of order 3 to 11. This is the first design in the program that is decisively inside its own floor.**
+
+**Falsifier.** Slab2 interface assignment is wrong often enough to destroy the orientation signal. Free positive control: for the subset that *does* have a GCMT mechanism, compare the Slab2-assigned plane to the GCMT nodal plane and report the angular misfit distribution. If median misfit exceeds ~25 degrees, re-scope to the well-fit subset (declared in advance by misfit, not by outcome).
+
+**Merton.** Tanaka, Ohtake & Sato (2002) own global Schuster machinery. Cochran et al. (2004) own global shallow-thrust resolved Coulomb with ocean loading. **The delta to claim: Slab2-assigned geometry to lift the mechanism requirement, an order of magnitude more events, and pre-registration. REDISCOVERY of the method at NOVEL scale.**
+
+---
+
+## K-102 — THE TWO-STAGE HIGH-N CALIBRATION: estimate on 10^6 LFEs, predict on 10^1 megathrust events with ZERO free parameters.
+
+**Proposition.** The power wall binds *estimation*, not *prediction*. Split them. Stage 1: on a tremor/LFE catalogue where N is 10^5 to 10^6 and tidal sensitivity is documented (Rubinstein et al. 2008; Thomas et al. 2012; Houston 2015), estimate the full response: preferred bearing, lag τ, quadrature fraction, the K-107 admittance. Stage 2: those estimates become a **parameter-free** prediction for the megathrust events, scored as a single pre-registered number. **A 0-dof prediction on N = 15 is a real test; a 6-parameter fit on N = 15 is not. The wall is a wall against fitting, not against testing.**
+
+**Falsifier.** The design dies if transport fails, and that is a *good* death: LFEs live on the deep interface in the slow-slip regime, megathrust majors nucleate in the seismogenic zone. If stage-1 parameters predict nothing at stage 2, the program has demonstrated that deep-interface tidal sensitivity does not transfer up-dip, which is publishable and bears directly on the "tremor as a stressmeter" literature.
+
+**Cheapest test.** Cascadia first (public, enormous LFE catalogues; Thomas et al. 2012 as a published positive control to reproduce before anything new is claimed).
+
+**Merton.** Tidal sensitivity of tremor and LFEs is heavily occupied. **Nothing about stage 1 is novel. The novel element is the transport.** Merton should sweep "tremor-calibrated prediction of regular-earthquake tidal phase."
+
+---
+
+## K-103 — TEST THE ROPE ON THE MEDIUM, NOT ON THE EARTHQUAKES. dv/v as an N-unlimited assay of the hysteresis mechanism.
+
+**Proposition.** The rope's proposed substrate is poroelastic (Delorey, van der Elst & Johnson 2017). A poroelastic lag is a property of the *rock*, not of the earthquake, and the rock can be interrogated continuously. Ambient-noise seismic velocity change (dv/v) responds to tidal deformation with documented orientation dependence. **Measure the dv/v response to tidal loading, bearing-resolved, and ask directly whether it shows the hysteresis and the lag the rope requires. N is the number of hourly samples in a decade of continuous data: ~10^5 per station, per bearing, with no catalogue, no completeness problem, no aftershock dependence, and no selection.**
+
+**The inversion.** Everyone tests triggering hypotheses on earthquakes because earthquakes are the thing they care about. That is a category error when the hypothesis is about a *material property*. **If the medium shows no hysteresis in its response to tidal loading, the rope has no substrate and dies without a single earthquake being counted.**
+
+**Falsifier.** dv/v tidal response is single-valued in stress (no loop area) at every station and bearing. That kills the rope's mechanism at N where a null means something — the one place in this program where a null is currently worth having.
+
+**Cheapest test.** AK/AT/AV broadband via IRIS/EarthScope; ambient-noise cross-correlation with stretching or MWCS; regress against the K-100 load-tide plus body-tide tensor; statistic is the *area of the dv/v-vs-stress loop* against a phase-randomised spectrum-preserving surrogate null. Honest cost: thermoelastic, atmospheric-pressure and hydrological loading all contaminate dv/v at tidal and seasonal periods and must be regressed out.
+
+**Merton.** dv/v response to tidal strain is published; hysteresis in dv/v is a whole rock-physics literature (Johnson, Guyer, TenCate) that M-011 flagged as unswept. **The novel step is using it as a falsifier for a seismicity hypothesis.** Merton's named rock-mechanics cyclic-loading sweep should run against this entry first.
+
+---
+
+## K-104 — THE OBSERVER IS TIDALLY MODULATED. Any low-magnitude tidal result at a coastal site is contaminated by a tidally modulated detection threshold.
+
+**Proposition, and this is the one that could manufacture everything.** Ocean tidal loading tilts coastal stations, changes microseism levels, and modulates ambient noise at semidiurnal and fortnightly periods. Detection threshold rises with noise. Therefore the *catalogue's completeness magnitude Mc(t) is itself tidally periodic at coastal stations.* **A tidally modulated Mc manufactures a tidally modulated apparent event rate at magnitudes near Mc, with the correct period, the correct phase relationship to the ocean tide, and no earthquake physics whatsoever.** Every strategy that buys N by lowering magnitude walks into this, and so does every study in the literature reporting tidal modulation of small events near a coast.
+
+**Three separating signatures, all pre-registerable:** (1) **magnitude decay** — an Mc artifact vanishes as magnitude rises above Mc, a physical effect does not; (2) **orientation blindness** — an Mc artifact is common-mode across all fault orientations, a resolved physical effect is not; (3) **direct measurement** — compute station-noise RMS in the detection band, measure its own tidal admittance, predict the induced Mc modulation forward, and check whether the observed event modulation exceeds it.
+
+**Cheapest test.** Continuous waveform RMS from a handful of AK/AT stations, one year, hourly; a Schuster test on the noise time series against tidal phase. A few hours of work, and **it gates every low-magnitude design in this document.**
+
+**Merton.** Not found in M-011 and not in the named-pitfalls list. **Merton should sweep hard**: if unpublished it is a genuinely valuable methodological result; if published it is a mandatory citation that changes how the field's low-magnitude results should be read.
+
+---
+
+## K-105 (KILLED BY ME, reported because the kill is information) — "just drop to M≥2.5 in the Alaska box."
+
+**What it would have bought.** Nominal b=1 scaling gives ~9·10^4 events over 36 years, floor 0.37% relative.
+
+**Why I killed it.** The box is overwhelmingly oceanic. The measured numbers show where the wall is: N = 2,501 at M≥4 over 36.6 yr = 68/yr against 7.674/yr at M≥5, a ratio of 8.9, i.e. the catalogue is roughly complete to M4 and the implied b is ~0.95 (consistent with the measured 1.017). **The events below M4 largely do not exist in the catalogue, because there are no stations on the water.** Realistic in-box Mc is ~3.7 to 4.0; dropping to Mc buys 2 to 3x N, not two orders of magnitude, and it costs the K-104 completeness fight.
+
+**What survives:** (i) a near-shore sub-box (Kodiak / Alaska Peninsula) plausibly reaches Mc ≈ 2.5 over a small area, giving a high-N small-footprint stratum where K-104's controls can be run; (ii) **stated as a rule: in this program, N is bought with AREA, not with MAGNITUDE, because the limiting instrument is station coverage and not the Gutenberg-Richter slope.**
+
+---
+
+## K-106 — THE CONSTITUENT PHASE-LAG SPECTRUM. The discriminating test, and it is a shape test in the frequency domain.
+
+**Proposition.** Every candidate mechanism makes a *different, parameterised, falsifiable prediction* for how the apparent phase lag varies with tidal constituent frequency.
+
+| mechanism | predicted Δφ(ω) | free params |
+|---|---|---:|
+| instantaneous state / threshold | 0 at every ω | 0 |
+| **poroelastic diffusion (the rope's substrate)** | `arctan(ωτ)`: 0 at low ω, rising, saturating at 90 degrees | **1 (τ)** |
+| pure time delay | `ωτ`: linear, unbounded, wraps | 1 |
+| **rate-and-state nucleation (Beeler & Lockner 2003)** | 90 degrees at low ω, falling to 0 at high ω, crossover at `t_a = aσ/τ̇` | **1 (t_a)** |
+| stress-model error (e.g. missing ocean load) | arbitrary, non-monotone, site-dependent | many |
+
+> **The discriminator is one line: poroelastic lag INCREASES with frequency; rate-and-state lag DECREASES with frequency; instantaneous state is flat at zero. One measurement, three-way separation, one free parameter each, and the constituents supply the frequency axis for free.**
+
+**Frequency axis, all in `sitetide.CONSTITUENT_PERIODS_DAYS`:** M2, S2, N2, K1, O1, Mf, Mm, Ssa — spanning **three decades in ω**, from 1.4·10^−4 to 4·10^−7 rad/s.
+
+**Predicted lag timescale, and whether it separates.** Fault-zone hydraulic diffusivity D ~ 10^−2 to 1 m²/s; damage-zone half-width L ~ 10 to 100 m; `τ = L²/D` = 10^2 to 10^6 s, i.e. **minutes to days**, centred near hours. `ωτ = 1` at the M2 period requires `τ ≈ 7,100 s ≈ 2 h`, dead centre of the plausible range. **So yes, it separates: if τ were much smaller than all tidal periods every mechanism would look instantaneous and the test would be vacuous; if much larger, everything would look rate-following. It is neither.**
+
+**Falsifier.** Δφ(ω) flat at zero across three decades kills the rope and rate-and-state together and leaves instantaneous state standing. Or: Δφ(ω) non-monotone and site-dependent indicts the stress model (most likely the missing ocean load) and sends the program back to K-100.
+
+**Cheapest test.** Requires N large enough to estimate a phase per constituent, so it runs on K-101's global pool or K-102's stage-1, **not** on 162 events.
+
+**Merton.** Delorey et al. (2017) is the closest prior art and the physical motivation. Beeler & Lockner (2003) own the crossover; their paper *is* row 4. **What may be unpublished: using the constituent-frequency dependence of the apparent phase lag as an explicit three-way mechanism discriminator with one free parameter per mechanism.**
+
+---
+
+## K-107 — THE SEISMIC ADMITTANCE, AND ITS LOSS TANGENT. Collapse the Seed B lattice into one complex tensor-valued response function, and the multiplicity problem dissolves with it.
+
+**Proposition.** Stop treating tidal triggering as a *triggering-statistics* problem and treat it as a **linear-response / admittance-estimation** problem:
+
+  δR(t)/R₀ = Re{ Σ_k **A**(ω_k) : **σ**_k · e^{iω_k t} }
+
+- **Re A** is the instantaneous-state response. It is what D-1 bounded.
+- **Im A is the rope.** Hysteresis, lag, pull-then-ease, quadrature, mid-slope concentration and §P7-23(C)'s "unloading rate" note are all the *same single quantity*. **The hysteresis loop area of a linear system with relaxation time τ is exactly `ωτ/(1+ω²τ²)`, maximised at ωτ = 1.** The rope has one number, not a family of bespoke features.
+- **The tensor structure of A is the orientation content** — 3 real numbers per frequency in 2D, not a grid of 45 cells.
+- **`Im A / Re A` is a loss tangent.** Dimensionless, comparable across regions and magnitudes, and it is the single number that says whether the crust responds to tidal loading like a spring or like a dashpot.
+
+**Why this answers §P7-25 disposition 19.** Popper ruled the axes collinear because they are all functions of the same W2 and ephemeris. The deeper reason: **they are collinear because they are all views of ONE linear response function.** Estimate the function and the views are recovered as contractions of it, with degrees of freedom that are *counted* rather than *simulated*. A 10^3-cell lattice becomes ~3 complex numbers per frequency band. **The multiplicity is not corrected; it is dissolved, because it was never real.**
+
+**Falsifier.** The admittance is not consistent across constituents — **A**(ω) at M2, K1 and Mf cannot be reconciled by any single-relaxation or rate-state form. That means the response is not linear in stress at these amplitudes and the framework is wrong, which is a real and informative failure.
+
+**Merton.** Linear-response and admittance formalisms are standard in geodesy, tidal gravimetry and Earth-tide analysis. Applying them to *seismicity rate as the output channel* is where the novelty may sit. **Merton must sweep "seismicity admittance", "tidal admittance seismicity", "linear response earthquake rate tidal", and the Earth-tide gravimetry vocabulary applied to catalogues. Do not let anyone write "loss tangent" in a draft until that sweep returns.**
+
+---
+
+## K-108 — D-1c AND D-1 ARE THE SAME OBSERVATION. Measured r = −0.95. The program came within one round of double-counting one marginal result as two.
+
+**This kills my own brief's framing and I am reporting it as the highest-value item in the round.**
+
+The brief says D-1c's mid-concentration "is the opposite direction from the scalar axis." **That is wrong, and it is measurably wrong.**
+
+- `CFS(strike 250, dip 20, rake 90, μ 0.4) = −1.0000 × N(340)` exactly.
+- `corr(vertical body-tide scalar, CFS) = −0.941`, i.e. a few degrees of M2 phase from perfect anti-correlation.
+
+Therefore D-1c's **CFS_TROUGH deficit** (0.2531 vs 0.3678, z = −3.08) sits at CFS low, i.e. at scalar *high*, i.e. **at the scalar's CREST** — which is precisely D-1's recorded crest deficit (21 vs 34.17, z = −2.54), the one Popper ruled NOT CLAIMABLE and NOT QUOTABLE at §P7-25(2).
+
+> **RULING REQUESTED FROM POPPER: D-1c's max-statistic p = 0.0265 is NOT independent evidence. It is the §P7-25(2) crest deficit re-expressed in a coordinate ~89% variance-shared with the one it was already recorded in, and it inherits every one of the five reasons that deficit was ruled unclaimable. It must not be reported as a second marginal signal, and the phrase "the opposite direction from the scalar axis" must not survive into any document.**
+
+**The remaining honest content of D-1c:** 6 of its 8 statistics are functions of CFS, hence of N(340), hence heavily shared with the bounded axis. **Only `BEARING_R2` (z +1.43) and `ROT_RATE` (z −1.81) sampled anything close to orthogonal, and neither reached 2 sigma.** D-1c spent an 8-statistic budget of which ~6 were re-tests of a bounded direction, which inflated the max-statistic null's tail and therefore made the calibration *conservative* on the two axes that mattered. **The arm was not wrong; it was aimed at the wrong 89% of the space.**
+
+**Proposed standing rule (SP-9, drafted for Popper).** *Before any multi-statistic arm is run, the pairwise correlation matrix of its statistics against each other and against every previously-bounded axis is computed on the deterministic field, and its effective rank is declared alongside `n_declared_tests`. An arm whose effective rank is materially below its nominal statistic count must say so in its own result file.*
+
+---
+
+## K-109 — MAXIMUM SENSITIVITY AT MAXIMUM STRESSING RATE IS A NAMED MECHANISM WITH A NAMED PARAMETER, AND IT PREDICTS A CROSSOVER THE AMPLITUDE STORY DOES NOT.
+
+**Proposition.** Rate-and-state nucleation under oscillating stress has two limits (Beeler & Lockner 2003): for T ≫ t_a the rate tracks stress **RATE** with a 90-degree lag; for T ≪ t_a it tracks stress **AMPLITUDE**. **Mid-band concentration on a stress axis is the rate-following limb** — the long-period limit of the standard nucleation model, not a curiosity.
+
+**What it predicts that the amplitude story does not:**
+1. **A crossover frequency.** Constituents with period ≫ t_a and ≪ t_a respond **90 degrees apart from each other**. The amplitude story predicts all constituents in phase.
+2. **The crossover moves with the local background stressing rate.** `t_a = aσ/τ̇`. **This is a direct, quantitative coupling between Seed A's conditioner and Seed B's rate axis: K-095's geodetic slip-deficit rate IS τ̇, and it predicts a specific, signed shift in the crossover frequency. Neither seed makes that prediction alone.**
+3. **Amplitude-independence in the rate limb.** In the rate-following regime the contribution scales with `A·ω`, not `A`. **Fortnightly Mf has 30x the period of M2, so an Mf response comparable to M2's is a signature the amplitude story cannot produce.** The literature's long-standing puzzle that fortnightly correlations sometimes appear stronger than semidiurnal ones is exactly this signature.
+
+**Falsifier.** Constituent phases all equal, or the crossover frequency shows no dependence on independently-measured τ̇ across regions.
+
+**Merton.** Beeler & Lockner own the crossover; Vidale et al. own the null on rate as a scalar covariate. **Prediction 2 is the part I claim is open. If unpublished it is the single most attractive result in this document.**
+
+---
+
+## K-110 — THE BEARING SPECTRUM. Any statistic linear in the tidal stress tensor is a 2-dof sinusoid in twice the bearing.
+
+**Proposition.** `N(α) = (e_EE+e_NN)/2 + cos2α·(e_NN−e_EE)/2 + sin2α·e_NE` — this is in the module docstring. **Therefore any statistic built from N(α) is, as a function of α, a constant plus a single sinusoid in 2α. It has exactly 3 degrees of freedom, no matter how many bearings you evaluate.**
+
+1. **D-1c's 5-strike grid is not 5 tests; the underlying object has 3 dof and the grid sampled 40 degrees of a 180-degree cycle, i.e. 22% of one period.** A peak at strike 250 with z falling off on both sides inside a 40-degree window is *consistent with* a genuine extremum but cannot locate it.
+2. **The correct design is a full 0-to-180 sweep and a 3-parameter fit, which costs FEWER degrees of freedom than the 5-cell grid it replaces.** The multiplicity of a bearing scan is 2 (amplitude and phase), plus 1 for the mean.
+3. **A strong smoothness falsifier comes free.** If the effect is tensor-driven the bearing curve MUST be a clean 2α sinusoid. If it is ragged, or has period other than 180 degrees, or has two peaks, **it is not a tensor effect.**
+
+**Merton.** The 2α algebra is Mohr-circle-standard. **The methodological point — that a bearing grid's honest multiplicity is 2, not the cell count — is a statistical observation I have not seen made in the tidal-triggering literature, where gridded-strike scans with per-cell p-values are common.**
+
+---
+
+## K-111 — THE FREE-SURFACE ARTIFACT. Friction and dip are exactly zero degrees of freedom at the free surface and become real only at depth or under an ocean load.
+
+**Proposition.** Per FACT 1, when `s_DD = s_rN = s_rE = 0` the resolved shear and normal tractions on any plane are the same time function scaled by geometry. Friction, dip and the rake-90 assumption cannot change the *waveform*. **Every friction-gridding argument imported from Cochran et al. (2004) is inoperative in the current implementation, and any future result that varies with μ is a diagnostic that the vertical stress components have become non-zero.**
+
+Two things create the friction degree of freedom: **(1) depth** — at hypocentral depth (20 to 45 km in this box) the body-tide tensor has a genuine `σ_rr`, and `tidal_tensor.py` already accepts `depth_km` but the free-surface plane-stress construction discards it at the stress step; **(2) ocean loading**, which imposes a genuine vertical normal stress at the seafloor.
+
+**Falsifier and self-check, both free.** (i) Assert in code that at `depth_km = 0` the CFS series is proportional to `N(strike+90)` to machine precision across the whole grid. (ii) At depth, measure the effective rank of the 45-cell correlation matrix. **If depth raises it materially, the orientation axis has become real and Seed B item 1 is worth its multiplicity. If it stays near 5, the axis is degenerate at every depth and Seed B item 1 should be closed.**
+
+---
+
+## K-112 — INVERT THE RECEIVER. If the body tide is isotropy-degenerate, the orientation signal lives on the arc's STRIKE-SLIP structures, not on the megathrust.
+
+**Proposition.** Measured rake sweep at Sand Point, strike 250, dip 20, μ 0.4: rake 0 gives r = +0.233; rake 30, −0.748; rake 60, −0.919; rake 90 (thrust), −0.941. **There is a rake near 10 to 15 degrees at which resolved tidal Coulomb is EXACTLY orthogonal to the axis D-1 bounded.** The field concentrates on shallow thrusts because that is where ocean loading is largest (correctly). **But shallow thrusts are precisely the receivers on which the body tide is most degenerate with the already-bounded scalar.** The Aleutian arc has strong oblique convergence and documented forearc-sliver strike-slip partitioning; those structures are the ceiling-free receivers.
+
+**Two predictions no amplitude story makes:** (1) tidal sensitivity on oblique/strike-slip receivers in the same arc should be statistically INDEPENDENT of that on the megathrust, because the loading axes are near-orthogonal — **correlated results across receiver type would indicate a common-mode artifact (K-104's modulated Mc is exactly such a common mode), which makes this a built-in artifact control as well as a hypothesis**; (2) a pre-registered null on the megathrust does not transfer to the strike-slip population and vice versa.
+
+**Merton.** Fault-type dependence is occupied (Tanaka et al. 2002, 2006; Cochran et al. 2004 restrict to shallow thrusts). **The novelty claim is narrow: that receiver rake is the axis along which a body-tide result is or is not redundant with a scalar result, measurable at r = 0.94 vs 0.23. Nothing about "fault type matters" may be claimed.**
+
+---
+
+## K-113 — REDEFINE THE PROGRAM'S SUCCESS CRITERION from "predict earthquakes" to "publish the tightest bound anyone has on the tidal admittance of the crust."
+
+**Proposition, about the program rather than the Earth.** The program's *validated* outputs are: generic ETAS with universal shape and local mu; a 7-day M≥5 hazard rule; a stress ledger; and now a scoped, quotable 24%-relative ceiling. Its *corpses* are: static tidal-phase maps, periodicities, Fibonacci ratios, fault-type pools, sequence-shape transfer, TSI ratio, and the K-092 seed's priority. **The pattern is unmistakable and it is not a failure: this program is very good at producing rigorous negatives and calibrated bounds, and has produced no positive prediction skill.**
+
+**The proposal.** Adopt as an explicit, co-equal success criterion: **the program succeeds if it publishes the tightest, most rigorously pre-registered bound in the literature on the tidal admittance of the crust, complete with its detection curve.** Not as a consolation prize. As the thing it is uniquely built to do, because it has the asset the field mostly lacks: frozen protocols, hash-affecting recipes, mandatory null layers, positive and negative controls, and an adjudicator who computes power *before* the arm runs and says so in writing when he did not.
+
+**Why this is a hypothesis and not a mood.** **If, after K-100 and K-101 are built, the resulting bound is not tighter than the best published bound (currently ≤8.16% modulation amplitude, California, M≥2.5, Sirorattanakul & Avouac 2026), then this program has no comparative advantage in bounds either, and should say so and redirect.** A checkable, dated, single-number test of the program's own strategy.
+
+---
+
+## IDEAS KEPLER KILLED BEFORE PROPOSING THEM (reported, because the kills are information)
+
+1. **"Run the rope's pull-then-ease as a bespoke two-time feature family with gridded lags."** Killed by K-107: under linear response every member is a contraction of `Im A`, and gridding lags manufactures a multiplicity for a quantity with one degree of freedom.
+2. **"D-1c's mid-concentration is an independent second signal pointing the opposite way."** Killed by measurement, r = −0.941. Reported as K-108.
+3. **"Grid friction more finely to find the best μ, following Cochran."** Killed by FACT 1: μ is algebraically inert at the free surface.
+4. **"Buy N by dropping to M≥2.5 in the Alaska box."** Killed as K-105 with numbers.
+5. **"Fit a per-patch preferred azimuth."** Killed by §P7-25 conditions (ii)/(iii) and by K-110: a fitted per-patch azimuth is a psi claim priced at 4^R, and it is unnecessary.
+6. **"Revive the seismic-gap variable as the K-095 conditioner because the analytics port makes it cheap."** Killed by M-011: CONTRADICTED, specifically in the Aleutians by Kagan & Jackson (1999). **Cheapness is not a reason.**
+7. **"Look for the 1857 SAF unexplained-silent list in the tidal frame."** Killed on scope.
+
+## THE SINGLE MOST IMPORTANT SENTENCE IN THIS ROUND
+
+**The ceiling bounded one direction; the measurement above shows that direction covers essentially all of the body tide's isotropic content and ~89% of resolved thrust Coulomb, and that the two directions it does not cover (stressing rate, exactly orthogonal by identity; shear and shallow-strike-slip rake, r ≈ 0.0 to 0.23) are precisely where the rope lives. The rope is not merely untested by D-1; it is the exact orthogonal complement of what D-1 tested. That is not a rescue, it is linear algebra, and it was true before the seed was read.**
+
+## CHARTER AMENDMENT PROPOSED (Kepler, rule 6)
+
+> **6. AUDIT THE PROJECTION BEFORE PROPOSING THE AXIS.** Before proposing any new observable, measure its correlation with every observable the program has already bounded or tested, on the deterministic field, and report it in the entry. A hypothesis whose statistic is 0.9-collinear with a bounded axis is not a new hypothesis; it is the old bound in new coordinates. Corollary: **the interesting axis is almost never the one with the most physical content; it is the one with the least shared variance with what has already been ruled on. Orthogonality is the scarce resource, not novelty.**
+
+*Kepler audit: no file written, nothing in `engine/` modified. Four read-only ephemeris sniffs at three declared coordinates over 20 to 30 synthetic days; no catalogue opened, no event scored, no phase or quadrant computed on any event, no holdout spent. Everything above is PROPOSED. Popper adjudicates.*
+
+---
+
+## SUPERVISOR VERIFICATION NOTE on K-097..K-113 (2026-08-22)
+
+Kepler's three PRELUDE facts are load-bearing for the whole round and for a correction to an already-committed result, so they were RE-DERIVED ANALYTICALLY AND RE-RUN NUMERICALLY by the supervisor rather than accepted.
+
+**FACT 1 — CONFIRMED EXACTLY, and it is a defect in the supervisor's own D-1c design.** Derivation: with `sigma_DD = sigma_rN = sigma_rE = 0`, the fault normal `n = (-sin d sin s, sin d cos s, -cos d)` has horizontal part `sin d * m` where `m = (-sin s, cos s)` is the unit vector at azimuth `s + 90`. Since the stress tensor has a zero Down row and column, only that horizontal part contributes, giving `sigma_n = sin^2(d) N(s+90)` and, for rake 90, `tau = -sin d cos d N(s+90)`, hence `CFS = sin d (mu sin d - cos d) N(s+90)`. Measured at Sand Point over 30 days at 1-minute sampling: **corr(CFS(250,20,mu=0.4), N(340)) = -1.000000**, and the maximum relative deviation from the closed form is **5.658e-16**, i.e. machine precision. Within each strike, all 9 dip-by-friction cells have `|corr| = 1.000000` with each other. **The 45-cell grid is 5 distinct statistics. Kepler is right and the supervisor's D-1c grid was exactly vacuous in friction and dip.**
+
+**FACT 2 — CONFIRMED.** `corr(areal-strain scalar, isotropic horizontal stress) = 1.000000` exactly (an identity, both being the same W term). `|corr(scalar, N(alpha))|` measured over bearings 0 to 170 in steps of 10 is **0.9490 to 0.9515** — Kepler said 0.92 to 0.96 and the measured band sits inside it. `sd(N(alpha))` varies by well under 1 percent around the circle on the supervisor's measure.
+
+**FACT 3 — CONFIRMED IN SUBSTANCE, with two numerical differences recorded.** `corr(scalar, d scalar/dt) = -0.000022`, i.e. orthogonal by identity as claimed. `corr(scalar, CFS thrust rake 90) = -0.9506` against Kepler's -0.941 (different site and span; same conclusion). `corr(scalar, horizontal shear tau) = +0.0098`, well inside Kepler's "0.000 to +-0.24" and effectively orthogonal. `corr(scalar, CFS rake 0) = +0.3738` against Kepler's +0.233 — same sign and order, and the **zero crossing measured here lies between rake 0 (+0.374) and rake 15 (-0.326), i.e. near rake 7 to 8 rather than Kepler's stated 10 to 15.** The existence and approximate location of an orthogonal rake is confirmed; its exact value is site- and span-dependent and must not be quoted as a constant.
+
+**CONSEQUENCE FOR AN ALREADY-COMMITTED CLAIM, CORRECTED HERE RATHER THAN LEFT STANDING.** The D-1c commit (1f445c7) and its result file describe the CFS mid-concentration as being "the opposite direction from the scalar axis" and as the artifact-INCONSISTENT limb. **That framing is WRONG and is retracted.** Because `corr(scalar, CFS) = -0.95`, low CFS is high scalar, so D-1c's CFS_TROUGH deficit (z -3.08) and D-1's CREST deficit (z -2.54) are THE SAME OBSERVATION in anti-correlated coordinates. D-1c is therefore **not** a second, independent marginal signal, and it inherits every one of the five reasons §P7-25(2) ruled the crest deficit NOT CLAIMABLE and NOT QUOTABLE. K-108's requested ruling is endorsed by the supervisor and referred to Popper for §P7-26.
+
+**WHAT WAS NOT WRONG, stated so the correction is not over-read.** The grid-wide max-statistic calibration is unaffected in direction: calibrating over 45 cells that are really 5 makes the null maximum if anything too generous, so the correction is CONSERVATIVE and no false positive was manufactured. The two statistics that did sample near-orthogonal directions, `BEARING_R2` (z +1.43) and `ROT_RATE` (z -1.81), stand as reported and neither reached 2 sigma.
+
+**ACTION TAKEN.** Two assertions added to `engine/tests/test_tidal_tensor.py` and passing: `test_free_surface_coulomb_is_a_scalar_multiple_of_the_fault_normal_bearing`, which asserts the closed form across the whole declared grid at three strikes so that any future mu-dependence is immediately recognised as evidence that the vertical stress components have become non-zero rather than as a finding about friction; and `test_stressing_rate_is_orthogonal_to_the_level_by_identity`. 25 tests pass, exit code checked directly.
+
+**Nothing in this round was computed on a catalogue. No priced test, no holdout hash, no EXPLORE_COUNT line.**
