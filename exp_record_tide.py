@@ -88,11 +88,13 @@ UNIX_EPOCH_JD = 2440587.5
 MIN_EVENTS = 30
 
 
-def peak_series(lat, lon, t_lo, t_hi):
+def peak_series(lat, lon, t_lo, t_hi, with_grid=False):
     """Local maxima of the declared scalar over [t_lo, t_hi] in Unix days."""
     t = np.arange(t_lo, t_hi, STEP_MIN / 1440.0)
     s = ST.site_scalar(t + UNIX_EPOCH_JD, lat, lon, 0.0)
     i = np.nonzero((s[1:-1] > s[:-2]) & (s[1:-1] >= s[2:]))[0] + 1
+    if with_grid:
+        return t[i], s[i], t, s
     return t[i], s[i]
 
 
@@ -110,9 +112,51 @@ def record_flags(t_pk, a_pk, window_days):
 
 
 def containing_cycle(t_pk, times):
-    """Index of the peak whose cycle contains each time (nearest preceding peak)."""
+    """Index of the peak whose cycle contains each time (nearest preceding peak).
+
+    RETAINED FOR THE v1 COMPARISON ONLY. See `above_record_at` for why it is the wrong
+    assignment for this test.
+    """
     j = np.searchsorted(t_pk, times, side="right") - 1
     return np.clip(j, 0, t_pk.size - 1)
+
+
+def above_record_at(t_grid, s_grid, t_pk, a_pk, window_days, times):
+    """Is the stress AT EACH GIVEN INSTANT above every peak in the trailing window?
+
+    THE v1 BUG THIS REPLACES, confirmed by measurement before the fix. v1 attached the
+    record flag to the PEAK of the containing cycle. But the stress first exceeds the
+    old record on the RISING LIMB *toward* that peak -- which lies in the interval whose
+    preceding peak is the previous, NON-record one. So v1 labelled the first-exceedance
+    moment 0, not 1.
+
+    Measured on the program's own scalar, 3 years at 34N/117W: 33.3 % of all
+    above-old-record dwell time falls before the record peak and was misassigned. For a
+    STRICT first-exceedance mechanism -- which is precisely the Kaiser-effect story this
+    arm exists to test -- the loss approaches 100 %, because the first moment the stress
+    passes the old record is ALWAYS on the rising limb.
+
+    It failed silently: the null was built by the identical path, so the test stayed
+    well-formed and simply could not see what it was looking for.
+
+    This version asks the question at the event's own instant instead, which is both the
+    physically correct condition ("is this fault feeling something it has not felt
+    before, right now") and free of any assignment ambiguity.
+    """
+    n = t_pk.size
+    trailing = np.full(n, np.nan)
+    for k in range(n):
+        j0 = np.searchsorted(t_pk, t_pk[k] - window_days, side="left")
+        if k - j0 < 10:
+            continue
+        trailing[k] = a_pk[j0:k + 1].max()
+    k_at = np.clip(np.searchsorted(t_pk, times, side="right") - 1, 0, n - 1)
+    tr = trailing[k_at]
+    s_at = np.interp(times, t_grid, s_grid)
+    out = np.full(times.shape, np.nan)
+    ok = np.isfinite(tr)
+    out[ok] = (s_at[ok] > tr[ok]).astype(float)
+    return out
 
 
 def main():
@@ -153,7 +197,8 @@ def main():
         # peak series must start 5 years before the earliest event so W5yr is eligible
         t_lo = t.min() - 5.2 * 365.25
         t_hi = t.max() + 1.0
-        t_pk, a_pk = peak_series(clat, clon, t_lo, t_hi)
+        t_pk, a_pk, t_grid, s_grid = peak_series(clat, clon, t_lo, t_hi,
+                                                 with_grid=True)
 
         if agreement is None:      # measure the site approximation once, not assume it
             t2, a2 = peak_series(clat + 3.0, clon + 3.0, t_lo, min(t_lo + 2000.0, t_hi))
@@ -163,15 +208,12 @@ def main():
             agreement = {"sites_apart_deg": 3.0, "n_compared": int(ok.sum()),
                          "flag_agreement": float(np.mean(f1[ok] == f2[ok]))}
 
-        j_ev = containing_cycle(t_pk, t)
         t_draw = rng.uniform(t.min(), t.max(), N_NULL_DRAWS)
-        j_nl = containing_cycle(t_pk, t_draw)
 
         per = {}
         for wname, wdays in WINDOWS:
-            fl = record_flags(t_pk, a_pk, wdays)
-            ev = fl[j_ev]
-            nl = fl[j_nl]
+            ev = above_record_at(t_grid, s_grid, t_pk, a_pk, wdays, t)
+            nl = above_record_at(t_grid, s_grid, t_pk, a_pk, wdays, t_draw)
             ev = ev[np.isfinite(ev)]
             nl = nl[np.isfinite(nl)]
             if ev.size < MIN_EVENTS or nl.size < 1000:

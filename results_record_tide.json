@@ -1,6 +1,6 @@
 {
   "arm": "RECORD-TIDE TRIGGERING (Kepler K-141/K-163)",
-  "generated_utc": "2026-08-22T22:42:09.860803+00:00",
+  "generated_utc": "2026-08-22T23:02:13.476032+00:00",
   "PRICED": true,
   "n_declared_tests": 33,
   "declustered": true,
@@ -35,35 +35,35 @@
       "per_window": {
         "W30d": {
           "n_events": 525,
-          "observed_fraction": 0.030476190476190476,
-          "base_rate": 0.02705,
-          "excess_ratio": 1.1266613854414225,
-          "n_events_in_record_cycle": 16,
-          "expected_in_record_cycle": 14.20125,
-          "null_sd": 0.007087243028733239,
-          "z": 0.48343064606363106,
-          "exact_binomial_p": 0.3495704499515132
+          "observed_fraction": 0.0019047619047619048,
+          "base_rate": 0.0013,
+          "excess_ratio": 1.4652014652014653,
+          "n_events_in_record_cycle": 1,
+          "expected_in_record_cycle": 0.6825,
+          "null_sd": 0.001572531879595944,
+          "z": 0.38457847030566783,
+          "exact_binomial_p": 0.49487229972927677
         },
         "W1yr": {
           "n_events": 525,
-          "observed_fraction": 0.0019047619047619048,
-          "base_rate": 0.0016,
-          "excess_ratio": 1.1904761904761905,
-          "n_events_in_record_cycle": 1,
-          "expected_in_record_cycle": 0.8400000000000001,
-          "null_sd": 0.0017254502867292997,
-          "z": 0.1766274618897309,
-          "exact_binomial_p": 0.5685797982013912
+          "observed_fraction": 0.0,
+          "base_rate": 5e-05,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.026250000000000002,
+          "null_sd": 0.0003189770996393713,
+          "z": -0.15675106475207445,
+          "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 525,
           "observed_fraction": 0.0,
-          "base_rate": 0.00045,
-          "excess_ratio": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.23625,
-          "null_sd": 0.0009096801001062335,
-          "z": -0.4946793932806142,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
           "exact_binomial_p": 1.0
         }
       }
@@ -77,36 +77,36 @@
       "per_window": {
         "W30d": {
           "n_events": 61,
-          "observed_fraction": 0.03278688524590164,
-          "base_rate": 0.024,
-          "excess_ratio": 1.366120218579235,
-          "n_events_in_record_cycle": 2,
-          "expected_in_record_cycle": 1.464,
-          "null_sd": 0.019609717763238027,
-          "z": 0.44808830764378726,
-          "exact_binomial_p": 0.4319600423940956
+          "observed_fraction": 0.0,
+          "base_rate": 0.0013,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.0793,
+          "null_sd": 0.004645790063692195,
+          "z": -0.27982323397687886,
+          "exact_binomial_p": 1.0
         },
         "W1yr": {
           "n_events": 61,
-          "observed_fraction": 0.03278688524590164,
-          "base_rate": 0.0021,
-          "excess_ratio": 15.612802498048401,
-          "n_events_in_record_cycle": 2,
-          "expected_in_record_cycle": 0.1281,
-          "null_sd": 0.005714127178440991,
-          "z": 5.370353911911717,
-          "exact_binomial_p": 0.007433191955197384
+          "observed_fraction": 0.0,
+          "base_rate": 5e-05,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.00305,
+          "null_sd": 0.0008663307891344365,
+          "z": -0.05771467507227317,
+          "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 61,
-          "observed_fraction": 0.01639344262295082,
-          "base_rate": 0.00055,
-          "excess_ratio": 29.806259314456035,
-          "n_events_in_record_cycle": 1,
-          "expected_in_record_cycle": 0.03355,
-          "null_sd": 0.0030000957714555175,
-          "z": 5.280978951970011,
-          "exact_binomial_p": 0.033002365381136815
+          "observed_fraction": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
+          "exact_binomial_p": 1.0
         }
       }
     },
@@ -119,35 +119,35 @@
       "per_window": {
         "W30d": {
           "n_events": 967,
-          "observed_fraction": 0.01964839710444674,
-          "base_rate": 0.0209,
-          "excess_ratio": 0.9401146939926671,
-          "n_events_in_record_cycle": 19,
-          "expected_in_record_cycle": 20.2103,
-          "null_sd": 0.004597434939822202,
-          "z": -0.2722393926039247,
-          "exact_binomial_p": 0.6380666014489271
+          "observed_fraction": 0.0031023784901758012,
+          "base_rate": 0.001,
+          "excess_ratio": 3.102378490175801,
+          "n_events_in_record_cycle": 3,
+          "expected_in_record_cycle": 0.967,
+          "null_sd": 0.0010128769415949886,
+          "z": 2.0756504604252934,
+          "exact_binomial_p": 0.0742407328080095
         },
         "W1yr": {
           "n_events": 967,
-          "observed_fraction": 0.005170630816959669,
-          "base_rate": 0.00205,
-          "excess_ratio": 2.5222589351022773,
-          "n_events_in_record_cycle": 5,
-          "expected_in_record_cycle": 1.98235,
-          "null_sd": 0.0014506695163797754,
-          "z": 2.1511659145822355,
-          "exact_binomial_p": 0.05089114435657219
+          "observed_fraction": 0.0,
+          "base_rate": 0.0001,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.09670000000000001,
+          "null_sd": 0.00031153494927926276,
+          "z": -0.32099127315041337,
+          "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 967,
           "observed_fraction": 0.0,
-          "base_rate": 0.0002,
-          "excess_ratio": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.19340000000000002,
-          "null_sd": 0.00045930856924098764,
-          "z": -0.4354371187337135,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
           "exact_binomial_p": 1.0
         }
       }
@@ -161,36 +161,36 @@
       "per_window": {
         "W30d": {
           "n_events": 194,
-          "observed_fraction": 0.02577319587628866,
-          "base_rate": 0.02405,
-          "excess_ratio": 1.0716505561866387,
-          "n_events_in_record_cycle": 5,
-          "expected_in_record_cycle": 4.665699999999999,
-          "null_sd": 0.010746606996452147,
-          "z": 0.16034790114289568,
-          "exact_binomial_p": 0.5005382430744436
+          "observed_fraction": 0.0,
+          "base_rate": 0.00105,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.2037,
+          "null_sd": 0.0022519167412494673,
+          "z": -0.46626945870894476,
+          "exact_binomial_p": 1.0
         },
         "W1yr": {
           "n_events": 194,
-          "observed_fraction": 0.005154639175257732,
-          "base_rate": 0.0022,
-          "excess_ratio": 2.3430178069353325,
-          "n_events_in_record_cycle": 1,
-          "expected_in_record_cycle": 0.4268,
-          "null_sd": 0.0034041506669889856,
-          "z": 0.8679519399390002,
-          "exact_binomial_p": 0.3477126998499568
+          "observed_fraction": 0.0,
+          "base_rate": 5e-05,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.0097,
+          "null_sd": 0.0005179830093941519,
+          "z": -0.09652826269047217,
+          "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 194,
-          "observed_fraction": 0.005154639175257732,
-          "base_rate": 0.0006,
-          "excess_ratio": 8.591065292096221,
-          "n_events_in_record_cycle": 1,
-          "expected_in_record_cycle": 0.11639999999999999,
-          "null_sd": 0.0017534790266513416,
-          "z": 2.5974871133507818,
-          "exact_binomial_p": 0.10991199041809759
+          "observed_fraction": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
+          "exact_binomial_p": 1.0
         }
       }
     },
@@ -203,35 +203,35 @@
       "per_window": {
         "W30d": {
           "n_events": 428,
-          "observed_fraction": 0.02102803738317757,
-          "base_rate": 0.0233,
-          "excess_ratio": 0.9024908748144879,
-          "n_events_in_record_cycle": 9,
-          "expected_in_record_cycle": 9.9724,
-          "null_sd": 0.0073417659384872646,
-          "z": -0.30945723901551664,
-          "exact_binomial_p": 0.666700633194072
+          "observed_fraction": 0.0,
+          "base_rate": 0.0008,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.34240000000000004,
+          "null_sd": 0.0013403769263455355,
+          "z": -0.5968470392736142,
+          "exact_binomial_p": 1.0
         },
         "W1yr": {
           "n_events": 428,
           "observed_fraction": 0.0,
-          "base_rate": 0.0023,
+          "base_rate": 5e-05,
           "excess_ratio": 0.0,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.9843999999999999,
-          "null_sd": 0.002220644165971453,
-          "z": -1.0357355019973817,
+          "expected_in_record_cycle": 0.021400000000000002,
+          "null_sd": 0.0003623925281418808,
+          "z": -0.13797193958818166,
           "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 428,
           "observed_fraction": 0.0,
-          "base_rate": 0.00065,
-          "excess_ratio": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.2782,
-          "null_sd": 0.001220077120384209,
-          "z": -0.5327532080884455,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
           "exact_binomial_p": 1.0
         }
       }
@@ -245,25 +245,25 @@
       "per_window": {
         "W30d": {
           "n_events": 2543,
-          "observed_fraction": 0.018088871411718443,
-          "base_rate": 0.02295,
-          "excess_ratio": 0.7881861181576664,
-          "n_events_in_record_cycle": 46,
-          "expected_in_record_cycle": 58.361850000000004,
-          "null_sd": 0.0029916581950935584,
-          "z": -1.6248943800645432,
-          "exact_binomial_p": 0.959835011488047
+          "observed_fraction": 0.0007864726700747149,
+          "base_rate": 0.00095,
+          "excess_ratio": 0.8278659684996998,
+          "n_events_in_record_cycle": 2,
+          "expected_in_record_cycle": 2.41585,
+          "null_sd": 0.0006002280284737295,
+          "z": -0.27244200898299487,
+          "exact_binomial_p": 0.6951390763748864
         },
         "W1yr": {
           "n_events": 2543,
-          "observed_fraction": 0.0015729453401494297,
-          "base_rate": 0.00145,
-          "excess_ratio": 1.0847898897582275,
-          "n_events_in_record_cycle": 4,
-          "expected_in_record_cycle": 3.68735,
-          "null_sd": 0.00075068239633834,
-          "z": 0.16377810476058793,
-          "exact_binomial_p": 0.5033076347858584
+          "observed_fraction": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
+          "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 2543,
@@ -287,35 +287,35 @@
       "per_window": {
         "W30d": {
           "n_events": 200,
-          "observed_fraction": 0.035,
-          "base_rate": 0.02145,
-          "excess_ratio": 1.6317016317016317,
-          "n_events_in_record_cycle": 7,
-          "expected_in_record_cycle": 4.29,
-          "null_sd": 0.010150623775542395,
-          "z": 1.3348933326293007,
-          "exact_binomial_p": 0.14080948219418424
+          "observed_fraction": 0.0,
+          "base_rate": 0.00065,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.13,
+          "null_sd": 0.0017831463546732324,
+          "z": -0.3645242008859753,
+          "exact_binomial_p": 1.0
         },
         "W1yr": {
           "n_events": 200,
           "observed_fraction": 0.0,
-          "base_rate": 0.002,
-          "excess_ratio": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.4,
-          "null_sd": 0.003290761283041417,
-          "z": -0.6077621036526667,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
           "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 200,
           "observed_fraction": 0.0,
-          "base_rate": 0.0006,
-          "excess_ratio": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.12,
-          "null_sd": 0.001732090074795604,
-          "z": -0.34640230824647106,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
           "exact_binomial_p": 1.0
         }
       }
@@ -329,35 +329,35 @@
       "per_window": {
         "W30d": {
           "n_events": 1021,
-          "observed_fraction": 0.022526934378060724,
-          "base_rate": 0.02335,
-          "excess_ratio": 0.9647509369619154,
-          "n_events_in_record_cycle": 23,
-          "expected_in_record_cycle": 23.84035,
-          "null_sd": 0.004779458831089422,
-          "z": -0.17220895733747066,
-          "exact_binomial_p": 0.597522513199517
+          "observed_fraction": 0.0,
+          "base_rate": 0.00145,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 1.4804499999999998,
+          "null_sd": 0.0011847916537841316,
+          "z": -1.223843867711942,
+          "exact_binomial_p": 1.0
         },
         "W1yr": {
           "n_events": 1021,
-          "observed_fraction": 0.0009794319294809011,
-          "base_rate": 0.00205,
-          "excess_ratio": 0.4777716729175127,
-          "n_events_in_record_cycle": 1,
-          "expected_in_record_cycle": 2.0930500000000003,
-          "null_sd": 0.0014001488884140265,
-          "z": -0.7646101635175031,
-          "exact_binomial_p": 0.8769541603282449
+          "observed_fraction": 0.0,
+          "base_rate": 5e-05,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.051050000000000005,
+          "null_sd": 0.000208570505603689,
+          "z": -0.23972708823464467,
+          "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 1021,
           "observed_fraction": 0.0,
-          "base_rate": 0.00045,
-          "excess_ratio": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.45944999999999997,
-          "null_sd": 0.0006652350577938649,
-          "z": -0.6764526233664622,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
           "exact_binomial_p": 1.0
         }
       }
@@ -371,35 +371,35 @@
       "per_window": {
         "W30d": {
           "n_events": 307,
-          "observed_fraction": 0.02280130293159609,
-          "base_rate": 0.0172,
-          "excess_ratio": 1.3256571471858192,
-          "n_events_in_record_cycle": 7,
-          "expected_in_record_cycle": 5.2804,
-          "null_sd": 0.007426419245810285,
-          "z": 0.754240064585115,
-          "exact_binomial_p": 0.27889339525817947
+          "observed_fraction": 0.0,
+          "base_rate": 0.00055,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.16885,
+          "null_sd": 0.0013401773180687902,
+          "z": -0.4103934550933573,
+          "exact_binomial_p": 1.0
         },
         "W1yr": {
           "n_events": 307,
           "observed_fraction": 0.0,
-          "base_rate": 0.0021,
-          "excess_ratio": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.6446999999999999,
-          "null_sd": 0.0026058852649074008,
-          "z": -0.8058681739675989,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
           "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 307,
           "observed_fraction": 0.0,
-          "base_rate": 0.00015,
-          "excess_ratio": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.046049999999999994,
-          "null_sd": 0.0006657753785978516,
-          "z": -0.22530121242378431,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
           "exact_binomial_p": 1.0
         }
       }
@@ -413,35 +413,35 @@
       "per_window": {
         "W30d": {
           "n_events": 699,
-          "observed_fraction": 0.02861230329041488,
-          "base_rate": 0.0164,
-          "excess_ratio": 1.7446526396594437,
-          "n_events_in_record_cycle": 20,
-          "expected_in_record_cycle": 11.463600000000001,
-          "null_sd": 0.004813073730297429,
-          "z": 2.5373189721862426,
-          "exact_binomial_p": 0.013181107249446255
+          "observed_fraction": 0.001430615164520744,
+          "base_rate": 0.0007,
+          "excess_ratio": 2.0437359493153484,
+          "n_events_in_record_cycle": 1,
+          "expected_in_record_cycle": 0.4893,
+          "null_sd": 0.0010031201473873783,
+          "z": 0.7283426281723357,
+          "exact_binomial_p": 0.3870496460334381
         },
         "W1yr": {
           "n_events": 699,
-          "observed_fraction": 0.004291845493562232,
-          "base_rate": 0.002,
-          "excess_ratio": 2.1459227467811157,
-          "n_events_in_record_cycle": 3,
-          "expected_in_record_cycle": 1.3980000000000001,
-          "null_sd": 0.0016771685784896845,
-          "z": 1.3664967988048482,
-          "exact_binomial_p": 0.165873456470794
+          "observed_fraction": 0.0,
+          "base_rate": 5e-05,
+          "excess_ratio": 0.0,
+          "n_events_in_record_cycle": 0,
+          "expected_in_record_cycle": 0.03495,
+          "null_sd": 0.0002705110974270041,
+          "z": -0.1848353005683703,
+          "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 699,
           "observed_fraction": 0.0,
-          "base_rate": 0.00035,
+          "base_rate": 5e-05,
           "excess_ratio": 0.0,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.24465,
-          "null_sd": 0.000694727882804634,
-          "z": -0.503794375701521,
+          "expected_in_record_cycle": 0.03495,
+          "null_sd": 0.00027099573446427467,
+          "z": -0.18450474912029102,
           "exact_binomial_p": 1.0
         }
       }
@@ -456,34 +456,34 @@
         "W30d": {
           "n_events": 153,
           "observed_fraction": 0.006535947712418301,
-          "base_rate": 0.0242,
-          "excess_ratio": 0.2700804839842273,
+          "base_rate": 0.00095,
+          "excess_ratio": 6.879944960440317,
           "n_events_in_record_cycle": 1,
-          "expected_in_record_cycle": 3.7026,
-          "null_sd": 0.012558935362161495,
-          "z": -1.4064928099559524,
-          "exact_binomial_p": 0.9764384147041152
+          "expected_in_record_cycle": 0.14535,
+          "null_sd": 0.002543710353221619,
+          "z": 2.1959841871711836,
+          "exact_binomial_p": 0.13534014881099238
         },
         "W1yr": {
           "n_events": 153,
           "observed_fraction": 0.0,
-          "base_rate": 0.00215,
+          "base_rate": 0.0001,
           "excess_ratio": 0.0,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.32895,
-          "null_sd": 0.003792224051026378,
-          "z": -0.5669496240387208,
+          "expected_in_record_cycle": 0.015300000000000001,
+          "null_sd": 0.0008103529978694622,
+          "z": -0.12340301111110194,
           "exact_binomial_p": 1.0
         },
         "W5yr": {
           "n_events": 153,
           "observed_fraction": 0.0,
-          "base_rate": 0.00075,
-          "excess_ratio": 0.0,
+          "base_rate": 0.0,
+          "excess_ratio": NaN,
           "n_events_in_record_cycle": 0,
-          "expected_in_record_cycle": 0.11475,
-          "null_sd": 0.0021484900993795015,
-          "z": -0.34908236263997916,
+          "expected_in_record_cycle": 0.0,
+          "null_sd": 0.0,
+          "z": NaN,
           "exact_binomial_p": 1.0
         }
       }
@@ -491,67 +491,67 @@
   },
   "max_statistic": {
     "method": "EXACT binomial per test; family corrected by simulating the MINIMUM exact p across all tests under the null. A z-based max-statistic is anti-conservative at these counts and the first version of this script reported p = 0.033 where the exact calibration gives 0.118.",
-    "smallest_exact_p": 0.007433191955197384,
+    "smallest_exact_p": 0.0742407328080095,
     "n_tests": 33,
-    "family_corrected_p": 0.11747941260293698,
+    "family_corrected_p": 0.40865795671021643,
     "where": {
-      "region": "California",
-      "window": "W1yr",
-      "exact_p": 0.007433191955197384
+      "region": "Chile",
+      "window": "W30d",
+      "exact_p": 0.0742407328080095
     },
     "exact_p_by_test": {
       "Alaska-Aleutians": {
-        "W30d": 0.3495704499515132,
-        "W1yr": 0.5685797982013912,
+        "W30d": 0.49487229972927677,
+        "W1yr": 1.0,
         "W5yr": 1.0
       },
       "California": {
-        "W30d": 0.4319600423940956,
-        "W1yr": 0.007433191955197384,
-        "W5yr": 0.033002365381136815
+        "W30d": 1.0,
+        "W1yr": 1.0,
+        "W5yr": 1.0
       },
       "Chile": {
-        "W30d": 0.6380666014489271,
-        "W1yr": 0.05089114435657219,
+        "W30d": 0.0742407328080095,
+        "W1yr": 1.0,
         "W5yr": 1.0
       },
       "Greece-Aegean": {
-        "W30d": 0.5005382430744436,
-        "W1yr": 0.3477126998499568,
-        "W5yr": 0.10991199041809759
+        "W30d": 1.0,
+        "W1yr": 1.0,
+        "W5yr": 1.0
       },
       "Himalaya": {
-        "W30d": 0.666700633194072,
+        "W30d": 1.0,
         "W1yr": 1.0,
         "W5yr": 1.0
       },
       "Indonesia": {
-        "W30d": 0.959835011488047,
-        "W1yr": 0.5033076347858584,
+        "W30d": 0.6951390763748864,
+        "W1yr": 1.0,
         "W5yr": 1.0
       },
       "Iran": {
-        "W30d": 0.14080948219418424,
+        "W30d": 1.0,
         "W1yr": 1.0,
         "W5yr": 1.0
       },
       "Japan": {
-        "W30d": 0.597522513199517,
-        "W1yr": 0.8769541603282449,
+        "W30d": 1.0,
+        "W1yr": 1.0,
         "W5yr": 1.0
       },
       "Mexico": {
-        "W30d": 0.27889339525817947,
+        "W30d": 1.0,
         "W1yr": 1.0,
         "W5yr": 1.0
       },
       "Philippines": {
-        "W30d": 0.013181107249446255,
-        "W1yr": 0.165873456470794,
+        "W30d": 0.3870496460334381,
+        "W1yr": 1.0,
         "W5yr": 1.0
       },
       "Turkey": {
-        "W30d": 0.9764384147041152,
+        "W30d": 0.13534014881099238,
         "W1yr": 1.0,
         "W5yr": 1.0
       }

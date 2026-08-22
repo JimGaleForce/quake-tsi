@@ -1,0 +1,230 @@
+{
+  "arm": "calibrated pooled-z max-statistic (Fable audit finding 5)",
+  "generated_utc": "2026-08-22T23:05:54.512325+00:00",
+  "priced_tests": 0,
+  "why_priced_zero": "the pooled z was already computed and reported in both committed artifacts; what was missing was its null. Same quantity, finally calibrated. No statistic is added.",
+  "the_gap": "the declared verdict was P(max |z| over 208 region-statistic CELLS), which is blind to a weak effect present in every region in the SAME statistic: z = 1.0 in each of 13 regions pools to 3.6 but has a cell max of only ~2.5 against a null 95th of ~3.5.",
+  "declustered_PRIMARY": {
+    "declustered": true,
+    "n_regions": 11,
+    "regions": [
+      "Alaska-Aleutians",
+      "California",
+      "Chile",
+      "Greece-Aegean",
+      "Himalaya",
+      "Indonesia",
+      "Iran",
+      "Japan",
+      "Mexico",
+      "Philippines",
+      "Turkey"
+    ],
+    "n_events": 7098,
+    "weights": "sqrt(n) per region",
+    "per_statistic": {
+      "A1_bearing_m1": {
+        "pooled_z_observed": -0.2626217825833023,
+        "pooled_z_null_sd": 0.9843496834191175,
+        "exact_p_this_statistic": 0.7950409918016397
+      },
+      "A1_bearing_m2": {
+        "pooled_z_observed": -0.13232968958701488,
+        "pooled_z_null_sd": 0.986479193943626,
+        "exact_p_this_statistic": 0.8904219156168767
+      },
+      "A1_bearing_m3": {
+        "pooled_z_observed": -0.11479284802815083,
+        "pooled_z_null_sd": 1.0009421233855749,
+        "exact_p_this_statistic": 0.9082183563287343
+      },
+      "A1_bearing_m4": {
+        "pooled_z_observed": -0.46304371993010945,
+        "pooled_z_null_sd": 1.0000848423829467,
+        "exact_p_this_statistic": 0.6392721455708859
+      },
+      "A2_moon_az_m1": {
+        "pooled_z_observed": -0.34463751554902233,
+        "pooled_z_null_sd": 1.0074085751065098,
+        "exact_p_this_statistic": 0.735252949410118
+      },
+      "A2_moon_az_m2": {
+        "pooled_z_observed": 0.042114634642955714,
+        "pooled_z_null_sd": 0.9863739264588985,
+        "exact_p_this_statistic": 0.9608078384323135
+      },
+      "A2_moon_az_m3": {
+        "pooled_z_observed": 0.15766501248153553,
+        "pooled_z_null_sd": 1.0082561885889758,
+        "exact_p_this_statistic": 0.871625674865027
+      },
+      "A2_moon_az_m4": {
+        "pooled_z_observed": -1.538259085553256,
+        "pooled_z_null_sd": 1.003842398402847,
+        "exact_p_this_statistic": 0.1245750849830034
+      },
+      "A3_sun_az_m1": {
+        "pooled_z_observed": -0.30557982063022626,
+        "pooled_z_null_sd": 0.9976154726398399,
+        "exact_p_this_statistic": 0.7538492301539692
+      },
+      "A3_sun_az_m2": {
+        "pooled_z_observed": -0.46312854639449164,
+        "pooled_z_null_sd": 0.9774813118286457,
+        "exact_p_this_statistic": 0.6494701059788043
+      },
+      "A3_sun_az_m3": {
+        "pooled_z_observed": -1.3380799815389524,
+        "pooled_z_null_sd": 1.0096869506306754,
+        "exact_p_this_statistic": 0.1801639672065587
+      },
+      "A3_sun_az_m4": {
+        "pooled_z_observed": -0.8311940680192393,
+        "pooled_z_null_sd": 0.9789231410701846,
+        "exact_p_this_statistic": 0.39492101579684064
+      },
+      "P1_elev_even": {
+        "pooled_z_observed": 0.6162969861178267,
+        "pooled_z_null_sd": 0.9990904786751197,
+        "exact_p_this_statistic": 0.5496900619876025
+      },
+      "P2_elev_odd": {
+        "pooled_z_observed": -0.32130812258009595,
+        "pooled_z_null_sd": 0.9986751904616279,
+        "exact_p_this_statistic": 0.7464507098580284
+      },
+      "Q_quadrant": {
+        "pooled_z_observed": -0.8724981590346669,
+        "pooled_z_null_sd": 0.9910557970817936,
+        "exact_p_this_statistic": 0.374125174965007
+      },
+      "L_level": {
+        "pooled_z_observed": -0.8426876367035449,
+        "pooled_z_null_sd": 0.9955118469571845,
+        "exact_p_this_statistic": 0.39892021595680865
+      }
+    },
+    "max_statistic_over_STATISTICS": {
+      "observed_max_abs_pooled_z": 1.538259085553256,
+      "null_max_p95": 2.9183086571433154,
+      "p": 0.794241151769646,
+      "where": "A2_moon_az_m4",
+      "n_corrected_over": 16
+    }
+  },
+  "full_SECONDARY": {
+    "declustered": false,
+    "n_regions": 13,
+    "regions": [
+      "Alaska-Aleutians",
+      "California",
+      "Caribbean",
+      "Chile",
+      "Greece-Aegean",
+      "Himalaya",
+      "Iceland",
+      "Indonesia",
+      "Iran",
+      "Japan",
+      "Mexico",
+      "Philippines",
+      "Turkey"
+    ],
+    "n_events": 12605,
+    "weights": "sqrt(n) per region",
+    "per_statistic": {
+      "A1_bearing_m1": {
+        "pooled_z_observed": 2.1145734019267746,
+        "pooled_z_null_sd": 0.98642585901477,
+        "exact_p_this_statistic": 0.030393921215756847
+      },
+      "A1_bearing_m2": {
+        "pooled_z_observed": 2.306902957899668,
+        "pooled_z_null_sd": 0.991299200218549,
+        "exact_p_this_statistic": 0.016796640671865627
+      },
+      "A1_bearing_m3": {
+        "pooled_z_observed": 2.350120109341973,
+        "pooled_z_null_sd": 0.9979456272410927,
+        "exact_p_this_statistic": 0.017996400719856028
+      },
+      "A1_bearing_m4": {
+        "pooled_z_observed": 0.8685618656587523,
+        "pooled_z_null_sd": 1.0023600748471517,
+        "exact_p_this_statistic": 0.379124175164967
+      },
+      "A2_moon_az_m1": {
+        "pooled_z_observed": 1.4985348510761778,
+        "pooled_z_null_sd": 0.9871631762163653,
+        "exact_p_this_statistic": 0.1281743651269746
+      },
+      "A2_moon_az_m2": {
+        "pooled_z_observed": 1.6131805680045783,
+        "pooled_z_null_sd": 1.003781630529337,
+        "exact_p_this_statistic": 0.10637872425514897
+      },
+      "A2_moon_az_m3": {
+        "pooled_z_observed": 1.0877760553278493,
+        "pooled_z_null_sd": 0.9987085502902378,
+        "exact_p_this_statistic": 0.27294541091781643
+      },
+      "A2_moon_az_m4": {
+        "pooled_z_observed": 0.4072372324611272,
+        "pooled_z_null_sd": 1.001462960828132,
+        "exact_p_this_statistic": 0.6940611877624475
+      },
+      "A3_sun_az_m1": {
+        "pooled_z_observed": 1.311253776793636,
+        "pooled_z_null_sd": 1.0125796854634925,
+        "exact_p_this_statistic": 0.1895620875824835
+      },
+      "A3_sun_az_m2": {
+        "pooled_z_observed": 1.1495300726230904,
+        "pooled_z_null_sd": 1.0004921648854994,
+        "exact_p_this_statistic": 0.2503499300139972
+      },
+      "A3_sun_az_m3": {
+        "pooled_z_observed": -1.8058028567743405,
+        "pooled_z_null_sd": 0.9985225424760552,
+        "exact_p_this_statistic": 0.06898620275944811
+      },
+      "A3_sun_az_m4": {
+        "pooled_z_observed": -0.5181710205715859,
+        "pooled_z_null_sd": 0.9906414338277217,
+        "exact_p_this_statistic": 0.6014797040591882
+      },
+      "P1_elev_even": {
+        "pooled_z_observed": -0.7590541272506491,
+        "pooled_z_null_sd": 0.9930721564203328,
+        "exact_p_this_statistic": 0.4411117776444711
+      },
+      "P2_elev_odd": {
+        "pooled_z_observed": 1.2691296667204413,
+        "pooled_z_null_sd": 0.9825076637019411,
+        "exact_p_this_statistic": 0.1883623275344931
+      },
+      "Q_quadrant": {
+        "pooled_z_observed": 0.8392516112712118,
+        "pooled_z_null_sd": 0.9975758507689536,
+        "exact_p_this_statistic": 0.4023195360927814
+      },
+      "L_level": {
+        "pooled_z_observed": -0.18656244092228116,
+        "pooled_z_null_sd": 0.9995813819697617,
+        "exact_p_this_statistic": 0.8504299140171966
+      }
+    },
+    "max_statistic_over_STATISTICS": {
+      "observed_max_abs_pooled_z": 2.350120109341973,
+      "null_max_p95": 2.9020603691418305,
+      "p": 0.21975604879024196,
+      "where": "A1_bearing_m3",
+      "n_corrected_over": 16
+    }
+  },
+  "verdict": {
+    "declustered_primary_p": 0.794241151769646,
+    "full_secondary_p": 0.21975604879024196,
+    "reading": "The PRIMARY arm governs. If the full arm fires and the declustered one does not, that is aftershock dependence again -- the same thing that killed the cell-max survivor -- and not a finding."
+  }
+}
