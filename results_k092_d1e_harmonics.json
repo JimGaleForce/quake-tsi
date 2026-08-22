@@ -1,0 +1,259 @@
+{
+  "arm": "D-1e full angular harmonic spectrum on the K-092 seed set",
+  "generated_utc": "2026-08-22T19:44:57.122641+00:00",
+  "priced_tests": 0,
+  "scope": {
+    "input": "K092_seed_exclusion_superset.csv ONLY",
+    "sha256_verified": "35b5cf0fe9145ec830fba782550f7d8b76dc2708db105eb6003a0f92b68bfcb6",
+    "n_events": 162,
+    "licence": "K-096 first-move licence; already-seen set; D-7 STRUCK"
+  },
+  "why": "a signed directional test reports null exactly when a SYMMETRIC mechanism is total: ten from the left and ten from the right gives R1 = 0 and R2 = 1. This arm measures which harmonic carries the concentration instead of assuming one.",
+  "what_was_already_covered": "D-1c BEARING_R2 and D-1d BEARING_RESID_R2 were BOTH already order-2 statistics on the bearing relative to strike, so those nulls stand for the symmetric case. Never tested before now: order 1, order 3, order 4 (conjugate shear), the body azimuths at any order, and the elevation parity split.",
+  "declaration": {
+    "strike_deg": 250.0,
+    "angles": [
+      "A1_bearing_minus_strike",
+      "A2_moon_az_minus_strike",
+      "A3_sun_az_minus_strike"
+    ],
+    "orders": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "parity": [
+      "P1_elev_even_high",
+      "P2_elev_odd_above"
+    ],
+    "statistics": [
+      "A1_bearing_minus_strike_m1",
+      "A1_bearing_minus_strike_m2",
+      "A1_bearing_minus_strike_m3",
+      "A1_bearing_minus_strike_m4",
+      "A2_moon_az_minus_strike_m1",
+      "A2_moon_az_minus_strike_m2",
+      "A2_moon_az_minus_strike_m3",
+      "A2_moon_az_minus_strike_m4",
+      "A3_sun_az_minus_strike_m1",
+      "A3_sun_az_minus_strike_m2",
+      "A3_sun_az_minus_strike_m3",
+      "A3_sun_az_minus_strike_m4",
+      "P1_elev_even_high",
+      "P2_elev_odd_above"
+    ],
+    "n_declared_tests": 14,
+    "half_span_days": 10.0,
+    "step_minutes": 2.0,
+    "n_null_replicates": 2000,
+    "rng_seed": 20260822,
+    "power_floor": {
+      "m": 14,
+      "n_replicates": 2000,
+      "floor": 0.0069965017491254375,
+      "alpha": 0.05,
+      "min_attainable_p": 0.0004997501249375312
+    },
+    "null": "waveform-matched time-uniform (engine/dwell_null.py); a uniform-circle null would manufacture an effect"
+  },
+  "observed_spectra": {
+    "A1_bearing_minus_strike": {
+      "R": {
+        "1": 0.7450863293756335,
+        "2": 0.25641888004365027,
+        "3": 0.02126614100957805,
+        "4": 0.011089678459915129
+      },
+      "preferred_direction_deg": {
+        "1": 199.035017239319,
+        "2": 17.3889933239232,
+        "3": 35.711117995672545,
+        "4": 25.78051221240321
+      },
+      "dominant": {
+        "order": 1,
+        "R": 0.7450863293756335,
+        "meaning": "DIRECTIONAL: pull from one side differs from pull from the opposite side",
+        "also_high": [],
+        "expected_also_high": [
+          2,
+          3,
+          4
+        ],
+        "margin_over_next_independent": 0.4886674493319832,
+        "why_lowest_not_largest": "an order-k symmetry implies every multiple of k, so the argmax over orders picks a multiple at random among ties and names the wrong mechanism; the fundamental order is the smallest one carrying it",
+        "caution": "a dominant order is a DESCRIPTION until it is calibrated against a waveform-matched null and corrected for having examined every order; orders 3, 5 and 6 have no standard tidal mechanism and should be read as artifact first"
+      }
+    },
+    "A2_moon_az_minus_strike": {
+      "R": {
+        "1": 0.042017750534668295,
+        "2": 0.18708862532983453,
+        "3": 0.036645275962236774,
+        "4": 0.04869928840904827
+      },
+      "preferred_direction_deg": {
+        "1": 197.740777513427,
+        "2": 17.06578555910735,
+        "3": 66.52574056656088,
+        "4": 64.24183829441706
+      },
+      "dominant": {
+        "order": 2,
+        "R": 0.18708862532983453,
+        "meaning": "AXIAL: left/right equivalent, 180 deg fundamental domain -- where a symmetric mechanism lives, and where a first-moment test is blind",
+        "also_high": [],
+        "expected_also_high": [
+          4
+        ],
+        "margin_over_next_independent": 0.13838933692078625,
+        "why_lowest_not_largest": "an order-k symmetry implies every multiple of k, so the argmax over orders picks a multiple at random among ties and names the wrong mechanism; the fundamental order is the smallest one carrying it",
+        "caution": "a dominant order is a DESCRIPTION until it is calibrated against a waveform-matched null and corrected for having examined every order; orders 3, 5 and 6 have no standard tidal mechanism and should be read as artifact first"
+      }
+    },
+    "A3_sun_az_minus_strike": {
+      "R": {
+        "1": 0.06531120302159459,
+        "2": 0.11061103844893264,
+        "3": 0.03433186524389242,
+        "4": 0.027197999530877936
+      },
+      "preferred_direction_deg": {
+        "1": 14.261082188400179,
+        "2": 19.64413916276333,
+        "3": 86.51748065418494,
+        "4": 1.2179054818505377
+      },
+      "dominant": {
+        "order": 1,
+        "R": 0.06531120302159459,
+        "meaning": "DIRECTIONAL: pull from one side differs from pull from the opposite side",
+        "also_high": [
+          2
+        ],
+        "expected_also_high": [
+          2,
+          3,
+          4
+        ],
+        "margin_over_next_independent": 0.030979337777702162,
+        "why_lowest_not_largest": "an order-k symmetry implies every multiple of k, so the argmax over orders picks a multiple at random among ties and names the wrong mechanism; the fundamental order is the smallest one carrying it",
+        "caution": "a dominant order is a DESCRIPTION until it is calibrated against a waveform-matched null and corrected for having examined every order; orders 3, 5 and 6 have no standard tidal mechanism and should be read as artifact first"
+      }
+    }
+  },
+  "calibration": {
+    "per_statistic": {
+      "A1_bearing_minus_strike_m1": {
+        "observed": 0.7450863293756336,
+        "null_mean": 0.7106853239893481,
+        "null_sd": 0.022640269878059317,
+        "z": 1.5194609239010637
+      },
+      "A1_bearing_minus_strike_m2": {
+        "observed": 0.25641888004365027,
+        "null_mean": 0.18375017014461986,
+        "null_sd": 0.053543973575803906,
+        "z": 1.3571781294145269
+      },
+      "A1_bearing_minus_strike_m3": {
+        "observed": 0.021266141009578052,
+        "null_mean": 0.09229148766199302,
+        "null_sd": 0.0446707048054109,
+        "z": -1.589975957661894
+      },
+      "A1_bearing_minus_strike_m4": {
+        "observed": 0.01108967845991514,
+        "null_mean": 0.0745311385368963,
+        "null_sd": 0.03927574210268367,
+        "z": -1.6152835485862476
+      },
+      "A2_moon_az_minus_strike_m1": {
+        "observed": 0.042017750534668274,
+        "null_mean": 0.07121510919169984,
+        "null_sd": 0.03720305019678072,
+        "z": -0.7848108825108671
+      },
+      "A2_moon_az_minus_strike_m2": {
+        "observed": 0.18708862532983453,
+        "null_mean": 0.11812398577274492,
+        "null_sd": 0.0502775962671294,
+        "z": 1.3716773409507141
+      },
+      "A2_moon_az_minus_strike_m3": {
+        "observed": 0.03664527596223678,
+        "null_mean": 0.07025013752361514,
+        "null_sd": 0.03640364584245126,
+        "z": -0.9231180224863862
+      },
+      "A2_moon_az_minus_strike_m4": {
+        "observed": 0.04869928840904828,
+        "null_mean": 0.07168946598045861,
+        "null_sd": 0.03693497553544145,
+        "z": -0.6224500554860202
+      },
+      "A3_sun_az_minus_strike_m1": {
+        "observed": 0.06531120302159459,
+        "null_mean": 0.07081824940059545,
+        "null_sd": 0.03776609553779625,
+        "z": -0.14581984980389134
+      },
+      "A3_sun_az_minus_strike_m2": {
+        "observed": 0.11061103844893264,
+        "null_mean": 0.1171827201115303,
+        "null_sd": 0.04845561911946841,
+        "z": -0.13562269520063377
+      },
+      "A3_sun_az_minus_strike_m3": {
+        "observed": 0.03433186524389241,
+        "null_mean": 0.06854930373103536,
+        "null_sd": 0.03566178396479167,
+        "z": -0.9594987878600044
+      },
+      "A3_sun_az_minus_strike_m4": {
+        "observed": 0.027197999530877922,
+        "null_mean": 0.07082743497273604,
+        "null_sd": 0.03712156791806403,
+        "z": -1.17531230195229
+      },
+      "P1_elev_even_high": {
+        "observed": 0.2716049382716049,
+        "null_mean": 0.3585555555555555,
+        "null_sd": 0.03811230503403186,
+        "z": -2.281431606047161
+      },
+      "P2_elev_odd_above": {
+        "observed": 0.5185185185185185,
+        "null_mean": 0.49301851851851847,
+        "null_sd": 0.03968204571310128,
+        "z": 0.642607999203555
+      }
+    },
+    "max_abs_z_observed": 2.281431606047161,
+    "max_abs_z_null_p95": 3.0904904671045608,
+    "max_statistic_p": 0.22488755622188905,
+    "percentile_of_observed": 0.7755,
+    "n_replicates": 2000,
+    "p_convention": "Phipson-Smyth exact: (#{null >= observed} + 1)/(N + 1). Ties count against significance; p is never exactly zero.",
+    "dependence": "handled implicitly -- the null replicates carry the same correlation among statistics that the observation does, so it is reproduced rather than modelled"
+  },
+  "not_evidence": "selected set. A null extends the bound into the symmetric and higher-order directions; a hit is a reason to build the lattice, not a finding.",
+  "the_demonstration": {
+    "statistic": "A1_bearing_minus_strike_m1",
+    "observed_R": 0.7450863293756336,
+    "n": 162,
+    "uniform_circle_null": {
+      "E_R": 0.06962856318419446,
+      "sd": 0.03639646542011298,
+      "z": 18.558334123790374
+    },
+    "waveform_matched_null": {
+      "E_R": 0.7106853239893481,
+      "sd": 0.022640269878059317,
+      "z": 1.5194609239010637
+    },
+    "headline": "The bearing of tidal extension relative to fault strike has an order-1 resultant of 0.7451 on 162 events. Against a uniform-circle null that is z = +19, which would be the largest 'discovery' this program has ever produced. Against the waveform-matched null it is z = +1.52 -- nothing. The tidal bearing at a fixed site is ALREADY strongly concentrated (null E[R] = 0.7107), and a uniform-circle null does not know that. This is section P7-25(5) K-096(ii) in one number: reading an azimuth concentration against a uniform circle would be D-1's exact error in a new coordinate.",
+    "computed_utc": "2026-08-22T19:45:31.013581+00:00"
+  }
+}
