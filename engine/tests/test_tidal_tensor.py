@@ -207,3 +207,59 @@ def test_scope_flags_travel():
     assert "PLANE STRESS" in s["scope_flags"].upper()
     c = TT.coulomb(TT.stress_tensor(JD[:3], LAT, LON, DEPTH), 250.0, 20.0, 90.0)
     assert "scope_flags" in c and "DECLARED ASSUMPTION" in c["scope_flags"].upper()
+
+
+# ------------------------------------------- degree 3 (§P7-25 disposition 22) --
+def test_degree3_is_off_by_default_and_changes_nothing():
+    """The repair must be strictly additive: default-off reproduces the old numbers."""
+    a = ST.site_tide(JD[:64], LAT, LON, DEPTH)
+    b = ST.site_tide(JD[:64], LAT, LON, DEPTH, degree3=False)
+    assert np.array_equal(a["areal_strain"], b["areal_strain"])
+    assert np.array_equal(a["radial_disp_m"], b["radial_disp_m"])
+    assert a["degree3"] is False and a["potential_moon_degree3"] is None
+
+
+def test_degree3_amplitude_scaling():
+    """W3/W2 = (r/d) * P3(cos z)/P2(cos z).
+
+    The COEFFICIENT ratio is r/d ~ 6371/384400 ~ 1/60; the realised amplitude ratio
+    also carries |P3|/|P2|, which averages well below one, so the measured figure is
+    ~1/127 and not ~1/60. This test's first version asserted the naive 1/60 band and
+    failed at 1/127 -- the bound was wrong, not the code, and it is recorded here so
+    nobody re-tightens it. The coefficient scaling itself is asserted exactly below.
+    """
+    rec = ST.site_tide(JD, LAT, LON, DEPTH, degree3=True)
+    w2 = np.abs(np.asarray(rec["potential_moon"], dtype=float))
+    w3 = np.abs(np.asarray(rec["potential_moon_degree3"], dtype=float))
+    hi = w2 > np.percentile(w2, 50)
+    ratio = np.mean(w3[hi]) / np.mean(w2[hi])
+    assert 1.0 / 300.0 < ratio < 1.0 / 25.0, ratio
+
+
+def test_degree3_coefficient_scaling_is_exactly_r_over_d():
+    """W3/W2 divided by P3/P2 must equal r_site/d_moon, to floating point."""
+    jd = float(E.julian_day_at(T0, 0.77))
+    rec = ST.site_tide(jd, LAT, LON, DEPTH, degree3=True)
+    phi, lam, r_s = ST.geocentric_site(LAT, LON, DEPTH)
+    m = E.moon_position(jd)
+    d = float(np.asarray(m["dist_km"])) * 1000.0
+    cz = ST._cos_zenith(phi, lam, jd, m["ra_deg"], m["dec_deg"])
+    got = (float(rec["potential_moon_degree3"]) / float(rec["potential_moon"]))
+    want = (r_s / d) * float(ST._p3(cz)) / float(ST._p2(cz))
+    assert abs(got - want) < 1e-12 * abs(want)
+
+
+def test_degree3_uses_its_own_love_numbers():
+    """2 h3 - 12 l3, not the degree-2 factor. Mixing them is the likely error here."""
+    assert abs(ST.AREAL_FACTOR_3 - (2.0 * ST.H3 - 12.0 * ST.L3)) < 1e-15
+    assert abs(ST.AREAL_FACTOR_3 - 0.4016) < 1e-4
+    assert ST.AREAL_FACTOR_3 != ST.AREAL_FACTOR
+
+
+def test_degree3_perturbs_but_does_not_dominate():
+    """Enabling it must move the scalar by a few percent, not reorder it."""
+    off = ST.site_scalar(JD, LAT, LON, DEPTH)
+    on = ST.site_scalar(JD, LAT, LON, DEPTH, degree3=True)
+    rel = np.max(np.abs(on - off)) / np.max(np.abs(off))
+    assert 1e-4 < rel < 0.10, rel
+    assert np.corrcoef(off, on)[0, 1] > 0.999

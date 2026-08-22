@@ -253,27 +253,44 @@ def battery_gather(mats, idx):
     return out
 
 
-def run_geometry(events, stresses, grids, strike, dip, rake, friction, rng):
-    """One geometry: observation, null ensemble, per-statistic z, and max-|z|."""
+def run_geometry(events, stresses, grids, strike, dip, rake, friction, rng,
+                 shared_idx=None):
+    """One geometry: observation, null ensemble, per-statistic z, and max-|z|.
+
+    `shared_idx` is the grid-wide calibration's mechanism: when every geometry is
+    scored on the SAME null replicates, the per-replicate max-|z| vectors are aligned
+    and can be maximised element-wise across geometries, which is what calibrating the
+    maximum ACROSS the grid requires. Passing it also makes the draws geometry-
+    independent, which is correct: the declared null is uniform in TIME, and the
+    sampling pool must not depend on the geometry being tested.
+    """
     rate_k = int(round(RATE_HALF_MINUTES / STEP_MINUTES))
     lag_k = int(round(LAG_HOURS * 60.0 / STEP_MINUTES))
     n_half = (grids[0].size - 1) // 2
 
-    feats, pools = [], []
+    feats = []
     for t, st in zip(grids, stresses):
         f = site_features(t, st, strike, dip, rake, friction, rate_k, lag_k)
-        pool = np.nonzero(f["ok"])[0]
-        if pool.size == 0 or not f["ok"][n_half]:
+        if not f["ok"][n_half]:
             return None
         feats.append(f)
-        pools.append(pool)
 
     mats = stack_features(feats)
     n_sites = len(feats)
     obs = battery_gather(mats, np.full(n_sites, n_half, dtype=np.int64))
-    idx = np.empty((n_sites, N_NULL_REPLICATES), dtype=np.int64)
-    for s, p in enumerate(pools):
-        idx[s] = p[rng.integers(0, p.size, N_NULL_REPLICATES)]
+    if shared_idx is None:
+        idx = np.empty((n_sites, N_NULL_REPLICATES), dtype=np.int64)
+        for s, f in enumerate(feats):
+            p = np.nonzero(f["ok"])[0]
+            idx[s] = p[rng.integers(0, p.size, N_NULL_REPLICATES)]
+    else:
+        idx = shared_idx
+        # the shared pool is geometry-independent, so assert this geometry is valid
+        # everywhere it samples rather than trusting that it is
+        bad = sum(int((~f["ok"][idx[s]]).sum()) for s, f in enumerate(feats))
+        if bad:
+            raise SystemExit("shared null pool hit %d invalid samples at geometry "
+                             "%s/%s/%s" % (bad, strike, dip, friction))
     nb = battery_gather(mats, idx)
     null = {k: np.asarray(nb[k], dtype=np.float64) for k in STAT_NAMES}
 
@@ -297,7 +314,37 @@ def run_geometry(events, stresses, grids, strike, dip, rake, friction, rng):
         "max_abs_z_null_p95": float(np.quantile(null_max, 0.95)),
         "max_statistic_p": p_max,
         "max_statistic_percentile": float(np.mean(null_max < obs_max)),
+        "_null_max_per_replicate": null_max,
     }
+
+
+def shared_null_pool(grids, stresses, rng):
+    """Null draws that do NOT depend on the geometry being tested.
+
+    The declared null is uniform in TIME, so the sampling pool is the set of samples
+    with enough margin for the rate and lag windows -- a geometry-independent quantity.
+    Every geometry then scores the SAME replicates, which is what makes the
+    element-wise maximum across the grid a legitimate max-statistic.
+    """
+    rate_k = int(round(RATE_HALF_MINUTES / STEP_MINUTES))
+    lag_k = int(round(LAG_HOURS * 60.0 / STEP_MINUTES))
+    n = grids[0].size
+    # The local-cycle band also needs a BRACKETING MAXIMUM on each side, which the
+    # rate/lag margin alone does not guarantee: samples between the grid edge and the
+    # first Coulomb maximum have no cycle. The longest cycle measured across the seed
+    # set is 25.41 h, so 1.5 days of extra margin guarantees one. This was not
+    # guessed -- the first version used the rate/lag margin alone and the assertion in
+    # run_geometry rejected 2,622 of 324,000 draws, which is exactly what that
+    # assertion exists to do.
+    cycle_margin = int(round(1.5 * 1440.0 / STEP_MINUTES))
+    m = max(rate_k, lag_k) + cycle_margin
+    pool = np.arange(m, n - m, dtype=np.int64)
+    idx = np.empty((len(grids), N_NULL_REPLICATES), dtype=np.int64)
+    for s in range(len(grids)):
+        idx[s] = pool[rng.integers(0, pool.size, N_NULL_REPLICATES)]
+    return idx, {"pool_size_per_site": int(pool.size),
+                 "basis": "samples with margin for the rate and lag windows; "
+                          "geometry-independent by construction"}
 
 
 def main():
@@ -318,11 +365,15 @@ def main():
         grids.append(t)
         stresses.append(site_stress(t, e["lat"], e["lon"]))
 
+    shared_idx, pool_info = shared_null_pool(grids, stresses, rng)
+    print("shared null pool: %d samples per site, %d replicates"
+          % (pool_info["pool_size_per_site"], N_NULL_REPLICATES), flush=True)
+
     print("primary geometry %s friction %.1f ..." % (FAULT_PRIMARY, FRICTION_PRIMARY),
           flush=True)
     primary = run_geometry(events, stresses, grids, FAULT_PRIMARY["strike_deg"],
                            FAULT_PRIMARY["dip_deg"], FAULT_PRIMARY["rake_deg"],
-                           FRICTION_PRIMARY, rng)
+                           FRICTION_PRIMARY, rng, shared_idx=shared_idx)
     if primary is None:
         raise SystemExit("primary geometry produced no valid pool")
 
@@ -334,7 +385,8 @@ def main():
         for d in GEOMETRY_GRID["dip_deg"]:
             for mu in GEOMETRY_GRID["friction"]:
                 r = run_geometry(events, stresses, grids, s, d,
-                                 FAULT_PRIMARY["rake_deg"], mu, rng)
+                                 FAULT_PRIMARY["rake_deg"], mu, rng,
+                                 shared_idx=shared_idx)
                 if r is not None:
                     grid.append(r)
                     print("  strike %5.1f dip %4.1f mu %.1f -> max|z| %5.2f  p %.4f"
@@ -343,6 +395,28 @@ def main():
 
     grid_max = max(g["max_abs_z_observed"] for g in grid) if grid else float("nan")
     best = max(grid, key=lambda g: g["max_abs_z_observed"]) if grid else None
+
+    # GRID-WIDE MAX-STATISTIC. Every geometry scored the same replicates, so the
+    # per-replicate max-|z| vectors are aligned and the element-wise maximum across
+    # geometries is the null distribution of "the largest z anywhere in the grid".
+    # This is the correction the whole 45-cell scan actually owes.
+    gw_null = np.max(np.stack([g["_null_max_per_replicate"] for g in grid]), axis=0)
+    gw_p = (int(np.sum(gw_null >= grid_max)) + 1) / (N_NULL_REPLICATES + 1)
+    grid_wide = {
+        "observed_max_abs_z_over_grid": grid_max,
+        "null_max_over_grid_p95": float(np.quantile(gw_null, 0.95)),
+        "grid_wide_max_statistic_p": gw_p,
+        "percentile_of_observed_in_null": float(np.mean(gw_null < grid_max)),
+        "n_cells": len(grid),
+        "method": ("all cells scored on the SAME null replicates, so the "
+                   "per-replicate max-|z| vectors align and their element-wise "
+                   "maximum is the null for the grid-wide maximum. Dependence among "
+                   "cells and among statistics is carried implicitly by the "
+                   "replicates and is never modelled."),
+    }
+    for g in grid:
+        g.pop("_null_max_per_replicate", None)
+    primary.pop("_null_max_per_replicate", None)
 
     out = {
         "arm": "D-1c directional / resolved-Coulomb / rope arm on the K-092 seed set",

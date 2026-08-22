@@ -140,6 +140,41 @@ AREAL_FACTOR = 2.0 * H2 - 6.0 * L2      # = 0.7074
 # any published tidal-gravity number (nominal 1.1562).
 GRAVIMETRIC_DELTA = 1.0 + H2 - 1.5 * K2
 
+# ---------------------------------------------------------------- DEGREE THREE --
+# HYPOTHESIS_LEDGER.md section P7-25(5), Seed B item 5, disposition 22: "sitetide omits
+# the lunar P3 the app includes (~1.7% of degree-2). The correct first action is not a
+# hypothesis but a REPAIR: implement P3 in sitetide so the two implementations agree in
+# their content."
+#
+# STRICTLY ADDITIVE AND DEFAULT OFF. `degree3=False` everywhere, so every committed
+# result, every frozen recipe and every test keeps its exact numbers. The D-13 q_i
+# recipe frozen at section P7-25(3) names the APP's scalar, which has always included
+# P3; nothing here touches it. Turning this on is a DIFFERENT SCALAR and would be a
+# separately declared arm.
+#
+# Degree-3 Love/Shida numbers, IERS Conventions (2010) TN36 Table 6.3, nominal elastic.
+H3 = 0.292
+L3 = 0.0152
+
+# The degree-n areal-strain factor is 2 h_n - n(n+1) l_n. At n = 3 that is
+# 2(0.292) - 12(0.0152) = 0.4016, against 0.7074 at n = 2.
+AREAL_FACTOR_3 = 2.0 * H3 - 12.0 * L3
+
+DEGREE3_NOTE = (
+    "Lunar degree-3 term, OFF BY DEFAULT (section P7-25 disposition 22). W3 = (GM/d) "
+    "(r/d)^3 P3(cos z), lunar only -- the solar degree-3 term is smaller by the "
+    "distance ratio and is omitted, as it is in the observing application. NOTE A REAL "
+    "DIFFERENCE FROM THE APP: the app applies h2 to BOTH degrees, whereas this uses the "
+    "correct h3 = 0.292 and l3 = 0.0152, so enabling degree3 here does NOT reproduce "
+    "the app's degree-3 term exactly -- it is the more nearly correct one. The app's "
+    "approximation overstates the degree-3 radial response by a factor h2/h3 = 2.08.")
+
+
+def _p3(x):
+    """Legendre P3(x) = (5 x^3 - 3 x)/2. Used only by the degree-3 option."""
+    u = np.asarray(x, dtype=np.float64)
+    return 0.5 * (5.0 * u ** 3 - 3.0 * u)
+
 # F-016's declared elastic convention, reused verbatim so numbers are comparable.
 YOUNGS_MODULUS_PA = 75.0e9
 POISSON_RATIO = 0.25
@@ -233,7 +268,8 @@ def doodson_constant(d_moon_m=3.844e8):
 
 
 # ---------------------------------------------------------------- the potential --
-def tidal_potential(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun")):
+def tidal_potential(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun"),
+                    degree3=False):
     """Degree-2 tidal potential W2 at the site, m^2/s^2, summed over bodies.
 
     Returns a dict with the total and the per-body contributions, because the
@@ -250,6 +286,9 @@ def tidal_potential(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun")):
         w = (GM_MOON / d) * (r_s / d) ** 2 * _p2(cz)
         out["moon"] = w
         total = total + w
+        if degree3:
+            # lunar degree 3 only; W3/W2 = (r/d) P3/P2, i.e. ~1/60 in amplitude
+            out["moon_degree3"] = (GM_MOON / d) * (r_s / d) ** 3 * _p3(cz)
     if "sun" in bodies:
         s = E.sun_position(jd)
         d = np.asarray(s["dist_au"], dtype=np.float64) * 1.495978707e11
@@ -262,7 +301,8 @@ def tidal_potential(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun")):
 
 
 # ------------------------------------------------------------ the site record --
-def site_tide(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun")):
+def site_tide(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun"),
+              degree3=False):
     """Every declared body-tide quantity at (lat, lon, depth) and arbitrary times.
 
     `jd` may be any shape; all outputs share it. Times are Julian Days -- use
@@ -270,10 +310,15 @@ def site_tide(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun")):
     own sub-daily `day_float`, which is what makes this an EVENT-TIME quantity and not
     a day-binned one (F9-10 / §P7-3(3)).
     """
-    w = tidal_potential(jd, lat_deg, lon_deg, depth_km, bodies)
+    w = tidal_potential(jd, lat_deg, lon_deg, depth_km, bodies, degree3=degree3)
     w2 = w["total"]
     ga = G_SURFACE * R_MEAN
     areal = AREAL_FACTOR * w2 / ga
+    w3 = w.get("moon_degree3")
+    if degree3 and w3 is not None:
+        # each degree carries its OWN Love numbers; mixing them is the single most
+        # likely error here and is why AREAL_FACTOR_3 is named rather than inlined
+        areal = areal + AREAL_FACTOR_3 * w3 / ga
     e_rr = -(POISSON_RATIO / (1.0 - POISSON_RATIO)) * areal
     vol = areal + e_rr
     sigma_m = YOUNGS_MODULUS_PA * areal / (3.0 * (1.0 - POISSON_RATIO))
@@ -283,7 +328,12 @@ def site_tide(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun")):
         "potential_moon": w.get("moon"),
         "potential_sun": w.get("sun"),
         "equilibrium_m": w2 / G_SURFACE,
-        "radial_disp_m": H2 * w2 / G_SURFACE,
+        "radial_disp_m": (H2 * w2 / G_SURFACE
+                          + (H3 * w3 / G_SURFACE
+                             if (degree3 and w3 is not None) else 0.0)),
+        "potential_moon_degree3": w3,
+        "degree3": bool(degree3),
+        "degree3_note": DEGREE3_NOTE,
         "areal_strain": areal,
         "radial_strain": e_rr,
         "volumetric_strain": vol,
@@ -303,16 +353,16 @@ def site_tide(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun")):
 
 
 def site_scalar(jd, lat_deg, lon_deg, depth_km=0.0, which=SCALAR_FOR_PHASE,
-                bodies=("moon", "sun")):
+                bodies=("moon", "sun"), degree3=False):
     """Just the declared scalar as a bare array -- the hot path for phase work."""
-    rec = site_tide(jd, lat_deg, lon_deg, depth_km, bodies)
+    rec = site_tide(jd, lat_deg, lon_deg, depth_km, bodies, degree3=degree3)
     if which not in rec:
         raise KeyError("unknown site-tide scalar %r" % (which,))
     return np.asarray(rec[which], dtype=np.float64)
 
 
 def site_scalar_at(t0: _dt.datetime, day_float, lat_deg, lon_deg, depth_km=0.0,
-                   which=SCALAR_FOR_PHASE, bodies=("moon", "sun")):
+                   which=SCALAR_FOR_PHASE, bodies=("moon", "sun"), degree3=False):
     """The declared scalar at the catalogue's own continuous `day_float` times.
 
     Routed through `ephemeris.julian_day_at` -- the one function §P7-3(3) names as
@@ -320,7 +370,8 @@ def site_scalar_at(t0: _dt.datetime, day_float, lat_deg, lon_deg, depth_km=0.0,
     evaluated at an event.
     """
     jd = E.julian_day_at(t0, day_float)
-    return site_scalar(jd, lat_deg, lon_deg, depth_km, which=which, bodies=bodies)
+    return site_scalar(jd, lat_deg, lon_deg, depth_km, which=which, bodies=bodies,
+                       degree3=degree3)
 
 
 # --------------------------------------------------- D-0's phase, in the code --
