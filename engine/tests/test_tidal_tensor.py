@@ -317,3 +317,84 @@ def test_stressing_rate_is_orthogonal_to_the_level_by_identity():
     s = ST.site_scalar(jd, 55.35, -160.5, 0.0)
     ds = np.gradient(s, t * 24.0)
     assert abs(float(np.corrcoef(s, ds)[0, 1])) < 1e-3
+
+
+# ------------------------------- body azimuth / elevation (Jim's original list) --
+def test_sin_elevation_is_exactly_the_potentials_own_cos_zenith():
+    """The identity that keeps these angles consistent with the tide beside them.
+
+    If these were computed from a second, better ephemeris they would not correspond
+    to the potential they are supposed to explain. Exact equality, not approximate.
+    """
+    jd = E.julian_day_at(T0, np.arange(0.0, 3.0, 1.0 / 1440.0))
+    phi, lon, _ = ST.geocentric_site(55.35, -160.5, 0.0)
+    for body, posfn in (("moon", E.moon_position), ("sun", E.sun_position)):
+        d = TT.body_direction(jd, 55.35, -160.5, 0.0, body)
+        pos = posfn(jd)
+        cz = ST._cos_zenith(phi, lon, jd, pos["ra_deg"], pos["dec_deg"])
+        assert np.max(np.abs(d["sin_elevation"] - cz)) == 0.0
+
+
+def test_the_sun_transits_south_in_the_north_and_north_in_the_south():
+    jd = E.julian_day_at(_dt.datetime(2020, 6, 21), np.arange(0.0, 2.0, 1.0 / 1440.0))
+    north = TT.body_direction(jd, 55.35, -160.5, 0.0, "sun")
+    i = int(np.argmax(north["elevation_deg"]))
+    assert abs(north["azimuth_deg"][i] - 180.0) < 1.0
+    south = TT.body_direction(jd, -40.0, -160.5, 0.0, "sun")
+    j = int(np.argmax(south["elevation_deg"]))
+    az = south["azimuth_deg"][j]
+    assert min(az, 360.0 - az) < 1.0
+
+
+def test_elevation_and_azimuth_stay_in_range():
+    jd = E.julian_day_at(T0, np.arange(0.0, 5.0, 1.0 / 720.0))
+    for body in ("moon", "sun"):
+        d = TT.body_direction(jd, 12.0, 77.0, 0.0, body)
+        assert np.all(d["elevation_deg"] >= -90.0) and np.all(d["elevation_deg"] <= 90.0)
+        assert np.all(d["azimuth_deg"] >= 0.0) and np.all(d["azimuth_deg"] < 360.0)
+
+
+def test_body_azimuth_is_a_true_direction_not_an_axis():
+    """It sweeps the full circle, so doubling it -- as a principal-axis bearing must
+    be doubled -- would be wrong. The convention string says so and this proves it."""
+    jd = E.julian_day_at(T0, np.arange(0.0, 3.0, 1.0 / 1440.0))
+    d = TT.body_direction(jd, 20.0, 0.0, 0.0, "moon")
+    assert d["azimuth_deg"].max() - d["azimuth_deg"].min() > 300.0
+    assert "do NOT double" in d["convention"]
+
+
+def test_p2_is_blind_to_the_sign_of_cos_zenith_and_p3_is_not():
+    """Why lunar elevation is orthogonal to everything the program has bounded.
+
+    The degree-2 potential goes as P2(cos z), which is EVEN, so it is identical for
+    the Moon overhead and the Moon underfoot. Elevation distinguishes them. The
+    degree-3 term is ODD and does too, which is what gives the elevation axis a
+    physical carrier rather than merely a free coordinate.
+    """
+    cz = np.linspace(-1.0, 1.0, 4001)
+    p2 = 0.5 * (3.0 * cz ** 2 - 1.0)
+    p3 = 0.5 * (5.0 * cz ** 3 - 3.0 * cz)
+    assert np.allclose(p2, p2[::-1])            # even
+    assert np.allclose(p3, -p3[::-1])           # odd
+
+
+def test_lunar_elevation_is_nearly_orthogonal_to_the_bounded_scalar():
+    """The measurement that answers whether this axis is worth having at all."""
+    from engine import residual as RS
+    t = np.arange(0.0, 30.0, 1.0 / 1440.0)
+    jd = E.julian_day_at(T0, t)
+    scal = ST.site_scalar(jd, 55.35, -160.5, 0.0)
+    d = TT.body_direction(jd, 55.35, -160.5, 0.0, "moon")
+    assert RS.new_information_fraction(d["sin_elevation"], [scal]) > 0.99
+    # and the solar one is NOT, so the test is not passing on a triviality
+    ds = TT.body_direction(jd, 55.35, -160.5, 0.0, "sun")
+    assert RS.new_information_fraction(ds["sin_elevation"], [scal]) < 0.75
+
+
+def test_body_direction_rates_are_physically_sane():
+    t = np.arange(0.0, 5.0, 1.0 / 1440.0)
+    jd = E.julian_day_at(T0, t)
+    r = TT.body_direction_rates(t, jd, 20.0, 0.0, 0.0, "moon")
+    med = float(np.median(r["azimuth_rate_deg_per_h"]))
+    assert 5.0 < med < 25.0, med          # ~360 deg per ~24.8 h lunar day
+    assert np.all(np.isfinite(r["elevation_rate_deg_per_h"]))

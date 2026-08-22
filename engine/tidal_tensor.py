@@ -388,3 +388,80 @@ def site_directional(jd, lat_deg, lon_deg, depth_km=0.0, bodies=("moon", "sun"),
         out["coulomb"] = coulomb(st, fault["strike_deg"], fault["dip_deg"],
                                  fault["rake_deg"], friction)
     return out
+
+
+# ------------------------------------------------- WHERE THE BODY ACTUALLY IS --
+# Jim's original question named "azimuth, elevation ... pull/push/angular/speed/
+# directional". The BEARING functions above answer the stress half of that: which way
+# the tide is pulling the ground. They do NOT answer the source half: where the Moon
+# and Sun actually are in the sky from the epicentre.
+#
+# §P7-25(5) REFRAMED K-096 item 4 (body azimuth/elevation) into item 2's tidal-traction
+# azimuth, on the grounds that it "is closer to the forcing than to the stress and
+# invites an unconstrained space". That reframing may well be right, but it was an
+# argument rather than a measurement, and `engine/residual.py` now makes it a
+# measurement: compute the axis and read its new-information fraction against the axis
+# D-1 already bounded. Kepler's proposed rule 6 says to audit the projection BEFORE
+# proposing the axis, and that is what these functions exist to make possible.
+#
+# NOTHING HERE IS A STATISTIC. It is the coordinate, so the question can be settled by
+# arithmetic instead of by preference.
+
+def body_direction(jd, lat_deg, lon_deg, depth_km=0.0, body="moon"):
+    """Azimuth and elevation of the Moon or Sun as seen from the site.
+
+    Geometric and GEOCENTRIC: no refraction, no parallax correction, no light-time --
+    the same approximations `sitetide` already declares, so these angles are consistent
+    with the potential computed beside them rather than being a second, better
+    ephemeris that would not correspond to it.
+
+        sin(elevation) = sin(phi) sin(dec) + cos(phi) cos(dec) cos(H)
+        azimuth        = atan2(-sin(H) cos(dec),
+                               sin(dec) cos(phi) - cos(dec) sin(phi) cos(H))
+
+    with H the local hour angle. Azimuth is degrees CLOCKWISE FROM NORTH in [0, 360)
+    and is a TRUE direction, not an axial one -- unlike a principal-axis bearing it is
+    2-pi periodic, so it must NOT be doubled before a circular statistic.
+    """
+    jd = np.asarray(jd, dtype=np.float64)
+    phi_gc, lon, _ = ST.geocentric_site(lat_deg, lon_deg, depth_km)
+    pos = E.moon_position(jd) if body == "moon" else E.sun_position(jd)
+    ha = ST.gmst_rad(jd) + lon - np.asarray(pos["ra_deg"], dtype=np.float64) * DEG
+    dec = np.asarray(pos["dec_deg"], dtype=np.float64) * DEG
+    sin_el = (np.sin(phi_gc) * np.sin(dec)
+              + np.cos(phi_gc) * np.cos(dec) * np.cos(ha))
+    sin_el = np.clip(sin_el, -1.0, 1.0)
+    az = np.arctan2(-np.sin(ha) * np.cos(dec),
+                    np.sin(dec) * np.cos(phi_gc)
+                    - np.cos(dec) * np.sin(phi_gc) * np.cos(ha))
+    dist = (np.asarray(pos["dist_km"], dtype=np.float64) * 1000.0 if body == "moon"
+            else np.asarray(pos["dist_au"], dtype=np.float64) * 1.495978707e11)
+    return {
+        "body": body,
+        "elevation_deg": np.degrees(np.arcsin(sin_el)),
+        "azimuth_deg": np.mod(np.degrees(az), 360.0),
+        "sin_elevation": sin_el,                 # == cos(zenith), the potential's own
+        "distance_m": dist,
+        "hour_angle_rad": np.mod(ha, 2.0 * np.pi),
+        "convention": ("azimuth degrees CLOCKWISE FROM NORTH in [0, 360), a TRUE "
+                       "direction and 2-pi periodic -- do NOT double it the way an "
+                       "axial principal-axis bearing must be doubled; elevation "
+                       "degrees above the horizon, geometric and geocentric, no "
+                       "refraction and no parallax"),
+    }
+
+
+def body_direction_rates(t_days, jd, lat_deg, lon_deg, depth_km=0.0, body="moon"):
+    """d(elevation)/dt and d(azimuth)/dt in degrees per hour.
+
+    Jim's "speed" and "travelling angle" applied to the SOURCE rather than to the
+    stress. The azimuth derivative is unwrapped on the full 2-pi circle (not the
+    doubled angle, because a body azimuth is a true direction and not an axis).
+    """
+    d = body_direction(jd, lat_deg, lon_deg, depth_km, body)
+    t_h = np.asarray(t_days, dtype=np.float64) * 24.0
+    az_unwrapped = np.degrees(np.unwrap(np.radians(d["azimuth_deg"])))
+    return {
+        "elevation_rate_deg_per_h": np.gradient(d["elevation_deg"], t_h),
+        "azimuth_rate_deg_per_h": np.gradient(az_unwrapped, t_h),
+    }
