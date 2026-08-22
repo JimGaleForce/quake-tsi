@@ -398,3 +398,45 @@ def test_body_direction_rates_are_physically_sane():
     med = float(np.median(r["azimuth_rate_deg_per_h"]))
     assert 5.0 < med < 25.0, med          # ~360 deg per ~24.8 h lunar day
     assert np.all(np.isfinite(r["elevation_rate_deg_per_h"]))
+
+
+def test_free_surface_coulomb_annihilates_at_mu_equals_cot_dip():
+    """K-313: CFS = sin(d)(mu sin d - cos d) N(s+90) is IDENTICALLY ZERO at mu = cot(d).
+
+    At the default friction 0.4 the annihilating dip is 68.2 degrees. A receiver there
+    is scored with a Coulomb series that is exactly zero, so any statistic built on it
+    is meaningless -- and it fails SILENTLY, because a zero series produces a
+    well-formed null rather than an error.
+
+    MEASURED CONSEQUENCE FOR WORK ALREADY COMMITTED: the fault-relative world scan used
+    Slab2 INTERFACE dips, median 16.9 degrees, and only 96 of 7,004 events (1.37 %) fell
+    within |geometry factor| < 0.05. So the defect is real and immaterial there. It is
+    NOT immaterial for the vertical strike-slip populations K-127 needs, which is
+    exactly where a future arm would put its receivers, and this test exists so that
+    trap is caught before that arm is written rather than after.
+    """
+    import math
+    st = TT.stress_tensor(JD[:64], LAT, LON, DEPTH)
+    for mu in (0.2, 0.4, 0.6, 0.8):
+        d_ann = math.degrees(math.atan(1.0 / mu))
+        c = TT.coulomb(st, 250.0, d_ann, 90.0, mu)["coulomb_pa"]
+        scale = np.abs(TT.normal_along_bearing(st["s_NN"], st["s_EE"], st["s_NE"],
+                                               340.0)).max()
+        assert np.abs(c).max() < 1e-12 * scale, (mu, d_ann, np.abs(c).max())
+    # and away from the annihilating dip the series is emphatically non-zero
+    c = TT.coulomb(st, 250.0, 20.0, 90.0, 0.4)["coulomb_pa"]
+    assert np.abs(c).max() > 0.0
+
+
+def test_coulomb_geometry_factor_matches_the_closed_form():
+    """The factor itself, so a future reader can see where the zero comes from."""
+    import math
+    for dip in (5.0, 20.0, 45.0, 68.2, 80.0):
+        for mu in (0.2, 0.4, 0.6):
+            r = math.radians(dip)
+            want = math.sin(r) * (mu * math.sin(r) - math.cos(r))
+            st = TT.stress_tensor(JD[:16], LAT, LON, DEPTH)
+            n_perp = TT.normal_along_bearing(st["s_NN"], st["s_EE"], st["s_NE"], 340.0)
+            got = TT.coulomb(st, 250.0, dip, 90.0, mu)["coulomb_pa"]
+            assert np.allclose(got, want * n_perp, rtol=1e-10,
+                               atol=1e-9 * np.abs(n_perp).max())
