@@ -1,0 +1,498 @@
+{
+  "arm": "declustering robustness of the world scan (Kepler C-5 gate)",
+  "generated_utc": "2026-08-22T21:46:23.199594+00:00",
+  "priced_tests": 0,
+  "why_priced_zero": "re-scoring an already-priced battery under alternative dependence corrections; no statistic is added",
+  "mandate": "Merton M-007.4 A3: report the result under >= 3 declustering choices including 'none', and pre-register which is primary. Luen & Stark (2012) GJI 189:691-700: declustered catalogues fail the stationary-Poisson hypothesis, so a z computed on one is optimistic by an unmeasured amount.",
+  "pre_registered_primary": "R1_window_30d_150km",
+  "rules": {},
+  "by_rule": {
+    "R0_none": {
+      "n_regions": 13,
+      "n_events": 12605,
+      "kept": {
+        "Alaska-Aleutians": {
+          "n": 847,
+          "n_full": 847,
+          "fraction_kept": 1.0
+        },
+        "California": {
+          "n": 83,
+          "n_full": 83,
+          "fraction_kept": 1.0
+        },
+        "Caribbean": {
+          "n": 38,
+          "n_full": 38,
+          "fraction_kept": 1.0
+        },
+        "Chile": {
+          "n": 1880,
+          "n_full": 1880,
+          "fraction_kept": 1.0
+        },
+        "Greece-Aegean": {
+          "n": 267,
+          "n_full": 267,
+          "fraction_kept": 1.0
+        },
+        "Himalaya": {
+          "n": 661,
+          "n_full": 661,
+          "fraction_kept": 1.0
+        },
+        "Iceland": {
+          "n": 65,
+          "n_full": 65,
+          "fraction_kept": 1.0
+        },
+        "Indonesia": {
+          "n": 4311,
+          "n_full": 4311,
+          "fraction_kept": 1.0
+        },
+        "Iran": {
+          "n": 273,
+          "n_full": 273,
+          "fraction_kept": 1.0
+        },
+        "Japan": {
+          "n": 2340,
+          "n_full": 2340,
+          "fraction_kept": 1.0
+        },
+        "Mexico": {
+          "n": 410,
+          "n_full": 410,
+          "fraction_kept": 1.0
+        },
+        "Philippines": {
+          "n": 1217,
+          "n_full": 1217,
+          "fraction_kept": 1.0
+        },
+        "Turkey": {
+          "n": 213,
+          "n_full": 213,
+          "fraction_kept": 1.0
+        }
+      },
+      "index_of_dispersion": {
+        "per_region": {
+          "Alaska-Aleutians": 4.519815327142328,
+          "California": 1.9194479065688042,
+          "Caribbean": 8.203349282296651,
+          "Chile": 59.16193632899332,
+          "Greece-Aegean": 1.620309518761925,
+          "Himalaya": 5.473841082033101,
+          "Iceland": 9.798613998614,
+          "Indonesia": 10.754445056693388,
+          "Iran": 2.3490828771727643,
+          "Japan": 150.73348584501008,
+          "Mexico": 1.7596419110258517,
+          "Philippines": 7.070958814563205,
+          "Turkey": 2.329514399831827
+        },
+        "median": 5.473841082033101,
+        "max": 150.73348584501008
+      },
+      "max_statistic": {
+        "observed_max_abs_z": 4.764988577429345,
+        "p": 0.007798440311937612,
+        "where": {
+          "region": "Chile",
+          "statistic": "A2_moon_az_m1",
+          "z": 4.764988577429345
+        }
+      },
+      "n_heterogeneous_of_16": 3,
+      "pooled_z": {
+        "A1_bearing_m1": 2.1145734019267746,
+        "A1_bearing_m2": 2.306902957899668,
+        "A1_bearing_m3": 2.350120109341973,
+        "A1_bearing_m4": 0.8685618656587523,
+        "A2_moon_az_m1": 1.4985348510761778,
+        "A2_moon_az_m2": 1.6131805680045783,
+        "A2_moon_az_m3": 1.0877760553278493,
+        "A2_moon_az_m4": 0.4072372324611272,
+        "A3_sun_az_m1": 1.311253776793636,
+        "A3_sun_az_m2": 1.1495300726230904,
+        "A3_sun_az_m3": -1.8058028567743405,
+        "A3_sun_az_m4": -0.5181710205715859,
+        "P1_elev_even": -0.7590541272506491,
+        "P2_elev_odd": 1.2691296667204413,
+        "Q_quadrant": 0.8392516112712118,
+        "L_level": -0.18656244092228116
+      },
+      "largest_pooled_abs_z": 2.350120109341973
+    },
+    "R1_window_30d_150km": {
+      "n_regions": 11,
+      "n_events": 7098,
+      "kept": {
+        "Alaska-Aleutians": {
+          "n": 525,
+          "n_full": 847,
+          "fraction_kept": 0.6198347107438017
+        },
+        "California": {
+          "n": 61,
+          "n_full": 83,
+          "fraction_kept": 0.7349397590361446
+        },
+        "Caribbean": {
+          "n": 19,
+          "n_full": 38,
+          "fraction_kept": 0.5
+        },
+        "Chile": {
+          "n": 967,
+          "n_full": 1880,
+          "fraction_kept": 0.5143617021276595
+        },
+        "Greece-Aegean": {
+          "n": 194,
+          "n_full": 267,
+          "fraction_kept": 0.7265917602996255
+        },
+        "Himalaya": {
+          "n": 428,
+          "n_full": 661,
+          "fraction_kept": 0.6475037821482602
+        },
+        "Iceland": {
+          "n": 22,
+          "n_full": 65,
+          "fraction_kept": 0.3384615384615385
+        },
+        "Indonesia": {
+          "n": 2543,
+          "n_full": 4311,
+          "fraction_kept": 0.5898863372767339
+        },
+        "Iran": {
+          "n": 200,
+          "n_full": 273,
+          "fraction_kept": 0.7326007326007326
+        },
+        "Japan": {
+          "n": 1021,
+          "n_full": 2340,
+          "fraction_kept": 0.43632478632478633
+        },
+        "Mexico": {
+          "n": 307,
+          "n_full": 410,
+          "fraction_kept": 0.748780487804878
+        },
+        "Philippines": {
+          "n": 699,
+          "n_full": 1217,
+          "fraction_kept": 0.5743631881676253
+        },
+        "Turkey": {
+          "n": 153,
+          "n_full": 213,
+          "fraction_kept": 0.7183098591549296
+        }
+      },
+      "index_of_dispersion": {
+        "per_region": {
+          "Alaska-Aleutians": 1.0942999289267945,
+          "California": 1.066327491991709,
+          "Caribbean": 1.0374800637958528,
+          "Chile": 1.6969315778913086,
+          "Greece-Aegean": 0.9312324273664482,
+          "Himalaya": 1.1233784349281628,
+          "Iceland": 1.361998361998362,
+          "Indonesia": 1.281074806999899,
+          "Iran": 0.9271910112359549,
+          "Japan": 1.4943764586799877,
+          "Mexico": 0.8871036611401873,
+          "Philippines": 0.9582941110774289,
+          "Turkey": 1.0626280362891425
+        },
+        "median": 1.066327491991709,
+        "max": 1.6969315778913086
+      },
+      "max_statistic": {
+        "observed_max_abs_z": 2.1398711206867644,
+        "p": 0.9876024795040992,
+        "where": {
+          "region": "Mexico",
+          "statistic": "Q_quadrant",
+          "z": -2.1398711206867644
+        }
+      },
+      "n_heterogeneous_of_16": 0,
+      "pooled_z": {
+        "A1_bearing_m1": -0.2626217825833023,
+        "A1_bearing_m2": -0.13232968958701488,
+        "A1_bearing_m3": -0.11479284802815083,
+        "A1_bearing_m4": -0.46304371993010945,
+        "A2_moon_az_m1": -0.34463751554902233,
+        "A2_moon_az_m2": 0.042114634642955714,
+        "A2_moon_az_m3": 0.15766501248153553,
+        "A2_moon_az_m4": -1.538259085553256,
+        "A3_sun_az_m1": -0.30557982063022626,
+        "A3_sun_az_m2": -0.46312854639449164,
+        "A3_sun_az_m3": -1.3380799815389524,
+        "A3_sun_az_m4": -0.8311940680192393,
+        "P1_elev_even": 0.6162969861178267,
+        "P2_elev_odd": -0.32130812258009595,
+        "Q_quadrant": -0.8724981590346669,
+        "L_level": -0.8426876367035449
+      },
+      "largest_pooled_abs_z": 1.538259085553256
+    },
+    "R2_window_60d_250km": {
+      "n_regions": 11,
+      "n_events": 5249,
+      "kept": {
+        "Alaska-Aleutians": {
+          "n": 404,
+          "n_full": 847,
+          "fraction_kept": 0.4769775678866588
+        },
+        "California": {
+          "n": 59,
+          "n_full": 83,
+          "fraction_kept": 0.7108433734939759
+        },
+        "Caribbean": {
+          "n": 17,
+          "n_full": 38,
+          "fraction_kept": 0.4473684210526316
+        },
+        "Chile": {
+          "n": 720,
+          "n_full": 1880,
+          "fraction_kept": 0.3829787234042553
+        },
+        "Greece-Aegean": {
+          "n": 168,
+          "n_full": 267,
+          "fraction_kept": 0.6292134831460674
+        },
+        "Himalaya": {
+          "n": 381,
+          "n_full": 661,
+          "fraction_kept": 0.5763993948562783
+        },
+        "Iceland": {
+          "n": 18,
+          "n_full": 65,
+          "fraction_kept": 0.27692307692307694
+        },
+        "Indonesia": {
+          "n": 1731,
+          "n_full": 4311,
+          "fraction_kept": 0.40153096729297144
+        },
+        "Iran": {
+          "n": 172,
+          "n_full": 273,
+          "fraction_kept": 0.63003663003663
+        },
+        "Japan": {
+          "n": 707,
+          "n_full": 2340,
+          "fraction_kept": 0.3021367521367521
+        },
+        "Mexico": {
+          "n": 253,
+          "n_full": 410,
+          "fraction_kept": 0.6170731707317073
+        },
+        "Philippines": {
+          "n": 510,
+          "n_full": 1217,
+          "fraction_kept": 0.419063270336894
+        },
+        "Turkey": {
+          "n": 144,
+          "n_full": 213,
+          "fraction_kept": 0.676056338028169
+        }
+      },
+      "index_of_dispersion": {
+        "per_region": {
+          "Alaska-Aleutians": 1.0118036057337079,
+          "California": 1.0159750633157998,
+          "Caribbean": 0.9393939393939394,
+          "Chile": 1.1889510779436154,
+          "Greece-Aegean": 0.869318181818182,
+          "Himalaya": 1.0679280761546597,
+          "Iceland": 1.257918552036199,
+          "Indonesia": 1.0375612867478885,
+          "Iran": 0.8497517637836427,
+          "Japan": 1.1466902930335519,
+          "Mexico": 0.8813933176414859,
+          "Philippines": 0.9026897004154821,
+          "Turkey": 1.0798092868988394
+        },
+        "median": 1.0159750633157998,
+        "max": 1.257918552036199
+      },
+      "max_statistic": {
+        "observed_max_abs_z": 2.2319711008075127,
+        "p": 0.966006798640272,
+        "where": {
+          "region": "Iran",
+          "statistic": "A3_sun_az_m4",
+          "z": -2.2319711008075127
+        }
+      },
+      "n_heterogeneous_of_16": 0,
+      "pooled_z": {
+        "A1_bearing_m1": -0.10469972976667515,
+        "A1_bearing_m2": 0.013464663329349801,
+        "A1_bearing_m3": 0.3229966851386161,
+        "A1_bearing_m4": 0.10093061259289644,
+        "A2_moon_az_m1": -0.7669190225897949,
+        "A2_moon_az_m2": -0.026167253337596494,
+        "A2_moon_az_m3": -1.075378349594598,
+        "A2_moon_az_m4": -1.0163740018385659,
+        "A3_sun_az_m1": 0.17540585086151278,
+        "A3_sun_az_m2": -0.30908440558839,
+        "A3_sun_az_m3": -0.15839107081294043,
+        "A3_sun_az_m4": -0.057994320525474485,
+        "P1_elev_even": 0.8138360733542583,
+        "P2_elev_odd": 0.24466142661977572,
+        "Q_quadrant": 0.11589066878598753,
+        "L_level": -0.8023244780772442
+      },
+      "largest_pooled_abs_z": 1.075378349594598
+    },
+    "R3_gardner_knopoff": {
+      "n_regions": 11,
+      "n_events": 5874,
+      "kept": {
+        "Alaska-Aleutians": {
+          "n": 408,
+          "n_full": 847,
+          "fraction_kept": 0.4817001180637544
+        },
+        "California": {
+          "n": 59,
+          "n_full": 83,
+          "fraction_kept": 0.7108433734939759
+        },
+        "Caribbean": {
+          "n": 21,
+          "n_full": 38,
+          "fraction_kept": 0.5526315789473685
+        },
+        "Chile": {
+          "n": 812,
+          "n_full": 1880,
+          "fraction_kept": 0.4319148936170213
+        },
+        "Greece-Aegean": {
+          "n": 175,
+          "n_full": 267,
+          "fraction_kept": 0.6554307116104869
+        },
+        "Himalaya": {
+          "n": 346,
+          "n_full": 661,
+          "fraction_kept": 0.5234493192133132
+        },
+        "Iceland": {
+          "n": 16,
+          "n_full": 65,
+          "fraction_kept": 0.24615384615384617
+        },
+        "Indonesia": {
+          "n": 2097,
+          "n_full": 4311,
+          "fraction_kept": 0.48643006263048016
+        },
+        "Iran": {
+          "n": 181,
+          "n_full": 273,
+          "fraction_kept": 0.663003663003663
+        },
+        "Japan": {
+          "n": 824,
+          "n_full": 2340,
+          "fraction_kept": 0.35213675213675216
+        },
+        "Mexico": {
+          "n": 267,
+          "n_full": 410,
+          "fraction_kept": 0.651219512195122
+        },
+        "Philippines": {
+          "n": 568,
+          "n_full": 1217,
+          "fraction_kept": 0.46672144617912903
+        },
+        "Turkey": {
+          "n": 137,
+          "n_full": 213,
+          "fraction_kept": 0.6431924882629108
+        }
+      },
+      "index_of_dispersion": {
+        "per_region": {
+          "Alaska-Aleutians": 1.0164618086040385,
+          "California": 1.1180596142606665,
+          "Caribbean": 1.1154401154401155,
+          "Chile": 4.189103742371884,
+          "Greece-Aegean": 0.9603896103896103,
+          "Himalaya": 1.1515615563799502,
+          "Iceland": 1.308219178082192,
+          "Indonesia": 1.4983008121001324,
+          "Iran": 0.95803588056366,
+          "Japan": 3.5632872559281044,
+          "Mexico": 0.9811752163727925,
+          "Philippines": 1.2106393004869365,
+          "Turkey": 1.1079638304826236
+        },
+        "median": 1.1180596142606665,
+        "max": 4.189103742371884
+      },
+      "max_statistic": {
+        "observed_max_abs_z": 2.099442075575183,
+        "p": 0.9912017596480703,
+        "where": {
+          "region": "Greece-Aegean",
+          "statistic": "A3_sun_az_m1",
+          "z": 2.099442075575183
+        }
+      },
+      "n_heterogeneous_of_16": 0,
+      "pooled_z": {
+        "A1_bearing_m1": -1.0693810997540152,
+        "A1_bearing_m2": -1.1128966993288412,
+        "A1_bearing_m3": -0.8345594916351348,
+        "A1_bearing_m4": -1.0852536852948411,
+        "A2_moon_az_m1": 0.24384840462032215,
+        "A2_moon_az_m2": -0.910857322887159,
+        "A2_moon_az_m3": 0.5823776436705537,
+        "A2_moon_az_m4": -1.2938300247116303,
+        "A3_sun_az_m1": 0.20395434751805716,
+        "A3_sun_az_m2": -0.6997390328708412,
+        "A3_sun_az_m3": -0.44565430332269623,
+        "A3_sun_az_m4": -1.004773165235428,
+        "P1_elev_even": 0.12085330634842056,
+        "P2_elev_odd": 0.6388230306874288,
+        "Q_quadrant": -0.2982931219748015,
+        "L_level": -0.5804056645603507
+      },
+      "largest_pooled_abs_z": 1.2938300247116303
+    }
+  },
+  "verdict": {
+    "max_statistic_p_by_rule": {
+      "R0_none": 0.007798440311937612,
+      "R1_window_30d_150km": 0.9876024795040992,
+      "R2_window_60d_250km": 0.966006798640272,
+      "R3_gardner_knopoff": 0.9912017596480703
+    },
+    "any_rule_clears_0.05": true,
+    "primary_rule_p": 0.9876024795040992,
+    "reading": "the bound is only as good as the rule it was computed under. Reported across four so the sensitivity is visible rather than hidden, with residual clustering measured per rule so a rule that leaves the catalogue clustered cannot be mistaken for one that fixed it."
+  }
+}
