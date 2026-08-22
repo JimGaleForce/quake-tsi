@@ -19207,3 +19207,158 @@ Kepler's three PRELUDE facts are load-bearing for the whole round and for a corr
 **ACTION TAKEN.** Two assertions added to `engine/tests/test_tidal_tensor.py` and passing: `test_free_surface_coulomb_is_a_scalar_multiple_of_the_fault_normal_bearing`, which asserts the closed form across the whole declared grid at three strikes so that any future mu-dependence is immediately recognised as evidence that the vertical stress components have become non-zero rather than as a finding about friction; and `test_stressing_rate_is_orthogonal_to_the_level_by_identity`. 25 tests pass, exit code checked directly.
 
 **Nothing in this round was computed on a catalogue. No priced test, no holdout hash, no EXPLORE_COUNT line.**
+
+---
+
+## §P7-27 SUPERVISOR ROUND: THE FABLE AUDIT, ITEMS 1, 2 AND 5 (2026-08-22)
+
+An independent code audit was run against the committed replication tree with a single brief: find defects that would PREVENT A REAL PATTERN FROM BEING RECOGNISED. Not correctness bugs in the abstract; blind spots. It returned seven findings. Three are discharged here, and all three were verified by re-derivation before any code was changed.
+
+### FINDING 1 — CONFIRMED. Record-tide test assigned events to the wrong cycle.
+
+`exp_record_tide.py` assigned each event to the cycle of its nearest PRECEDING peak. But the stress first exceeds the trailing record on the rising limb TOWARD the record peak, and that limb belongs to the record cycle. Measured independently before the fix: **33.3% of all above-old-record dwell time was misassigned**, and for a strict first-exceedance mechanism the fraction of signal lost approaches 100%.
+
+Fixed by `above_record_at()`, which evaluates the condition at the event's own instant against the trailing record over the preceding window rather than at cycle granularity.
+
+**The fix is correct and it also costs almost all of the exposure, which is the honest headline.** The instant-wise condition holds roughly 0.09% of the time against roughly 2.3% for the cycle flag, so only 8 events land in the record state at all. Family-corrected p moves from 0.1175 to 0.4087. **This arm is now UNDERPOWERED rather than more strongly null, and it is recorded as such.** It cannot presently say much in either direction. A redesign that declares the whole first-exceedance-through-peak interval as one episode would restore exposure without restoring the misassignment, and is the way to make this line mean anything.
+
+### FINDING 5 — GAP CONFIRMED, RESULT NULL. The cell-max verdict is blind to a homogeneous worldwide effect.
+
+Every world-scan verdict was `P(max |z| over 208 region-statistic CELLS)`. That is the correct correction for an effect concentrated in one cell and the WRONG one for a weak effect present in every region in the SAME statistic. A true effect of z = 1.0 in each of 13 regions pools to Stouffer z = 3.6 but has a cell max near 2.5, against a null 95th of 3.5. **It would have been invisible to the declared test.** The scan computed the pooled z, printed it, and never calibrated it.
+
+`exp_world_pooled_calibration.py` supplies the missing null by re-pooling inside each null replicate and correcting over the 16 statistics rather than the 208 cells.
+
+| arm | max abs pooled z | at | p |
+|---|---|---|---|
+| declustered PRIMARY | 1.538 | A2_moon_az_m4 | **0.7942** |
+| full SECONDARY | 2.350 | A1_bearing_m3 | **0.2198** |
+
+So the +2.35 pooled bearing that motivated the finding is p = 0.22 once its own multiplicity is paid, and it sits in the arm already known to be contaminated by aftershock dependence. **The power gap was real; the signal was not.** Priced 0: same declared quantity, missing null now supplied.
+
+### FINDING 2 — CONFIRMED, AND THE LARGEST HOLE IN THE PROGRAM. Amplitude was never tested.
+
+Read the declared statistics rather than argue about them. The two world scans declare 16 between them: twelve ANGLES (principal bearing, lunar azimuth, solar azimuth, at orders 1 to 4) and four SIGN OR THRESHOLD FLAGS (`areal < 0`, `rate < 0`, their conjunction, `|sin elev| > 0.5`). **Every one is invariant to the MAGNITUDE of the tidal field. Multiply the tide by ten and not one of the 16 numbers moves.**
+
+So the single most physically obvious hypothesis in the subject — a bigger tidal stress triggers more earthquakes — had never been tested by this program at all. The K-092/D-1 line tested tidal PHASE. Amplitude is a different question, and it is the one a mechanism would actually predict: if the tide loads a near-critical fault, what matters is how much stress it adds, and that varies by a factor of roughly three between neap and spring.
+
+`exp_world_amplitude.py`, **72 priced tests**, 11 regions, 7098 declustered events, six statistics: E1 mean |areal strain|, E2 mean horizontal shear magnitude, E3 mean |d areal/dt|, E4 mean SIGNED d areal/dt, E5 top-decile amplitude occupancy, E6 top-decile rate occupancy.
+
+**THE NULL WINDOW HAD TO CHANGE.** The harmonics scan's +/-10 day dwell window spans 1.35 fortnightly cycles, so it samples the spring-neap envelope unevenly. That is irrelevant to an angle statistic and fatal to an amplitude one. This arm uses a half-window of exactly one fortnightly period, 14.765294 d, giving two full cycles per event. Neutrality is measured rather than assumed and reported per region; worst relative deviation 0.546 at California, which has 61 declustered events and is quantile noise in the reference sweep.
+
+| correction | observed | null 95th | p |
+|---|---|---|---|
+| CELL max over 66 region-statistic cells | 1.779 at Himalaya / E1_areal_amp | 3.362 | **0.9908** |
+| POOLED max over 6 statistics | 1.738 at E5_amp_top_decile | 2.620 | **0.3663** |
+
+No region reaches |z| = 1.8 in any of the six. **NULL.**
+
+### AND THE NULL IS WORTH SOMETHING, which is the part that took the extra work.
+
+`exp_world_amplitude_sensitivity.py`, priced 0. Within each event's OWN two-fortnight null neighbourhood, resample with probability proportional to `(1 + eps * z_driver)`. Because the comparison is entirely within the neighbourhood, the injection cannot borrow power from seasonality, catalogue growth, or long-timescale structure. It is the smallest honest version of the hypothesis. Chile alone, n = 967 declustered, two-sided 5%:
+
+| eps | E1 | E2 | E3 | E4 | E5 | E6 |
+|---|---|---|---|---|---|---|
+| 0.10 (own driver) | 0.85 | 0.90 | 0.87 | 0.85 | 0.55 | 0.50 |
+| 0.20 (own driver) | 1.00 | 1.00 | 1.00 | 1.00 | 0.97 | 0.95 |
+
+**A ten percent preference for high-amplitude moments would have been caught from Chile by itself with 85% probability.** This is a bound at measured power, not an absence of instrument — the distinction K-118 taught this program to insist on.
+
+The OFF-diagonal entries are the other half of the point. E1 scores 0.05 against a signed-rate injection and E4 scores 0.04 against an amplitude injection: **the six are near-orthogonal probes rather than six views of one quantity**, so the correction over six buys real coverage. The one genuine overlap is areal amplitude with shear, which is shared degree-2 physics and not redundancy of construction.
+
+**E4 IS JIM'S ROPE** — signed loading rate, pull versus slack — and it is among the most sensitive probes in the set (0.85 at eps = 0.10, 1.00 at 0.20) and flatly null, pooled z = -0.887. The rope hypothesis is not untested any more, and at this magnitude and this timescale it is bounded.
+
+### TWO DEFECTS IN THE SUPERVISOR'S OWN NEW CODE, found and fixed before the result was read.
+
+`dwell_thresholds()` drew latitude and longitude INDEPENDENTLY, pairing a Turkish latitude with an unrelated longitude and scoring the tide at sites that do not exist; sites are now sampled jointly by index. And the sensitivity docstring called E2 the weak probe at 0.17, which was an OFF-diagonal entry (E2 under an areal injection); against its own driver E2 is 0.90, and the genuinely weakest probes are the two decile-occupancy statistics. Both are recorded because the pattern — a plausible number read out of the wrong cell of a table — is exactly the failure mode this program keeps finding in itself.
+
+**Holdout untouched. Full suite 732 passed, PYTEST_EXIT=0, read directly and not through a pipe. Commits 0ca2938 and 632bdcd.**
+
+**STILL OPEN from the same audit:** finding 6 (record-tide site approximation measured once at 3 degrees and aligned by index rather than by time), finding 4 (`RATE_HIGH` vacuous as declared in D-1d), findings 3 and 7.
+
+---
+
+## KEPLER ROUND K-400 .. K-430 (2026-08-22) — "patterns that lead to significant predictions"
+
+Generated on Jim's instruction, with the brief that Kepler GENERATES and never adjudicates, and with the round's exhausted ground stated up front so nothing re-slices it: **unconditional solid-tide modulation of ordinary catalogue seismicity is spent.** E[s] is indistinguishable from zero; the declustered per-region z's are UNDER-dispersed (variance 0.719, tau^2 = 0) so there is no regional scatter for a factor census to explain; the pooled homogeneous-worldwide test is null at p = 0.794; and as of §P7-27 the amplitude/envelope/rate arm is null at measured power too. Every entry below is aimed past that.
+
+**SUPERVISOR CAVEAT, RECORDED BEFORE THE ENTRIES.** All numbers, effect sizes, literature attributions and prior-art claims in this round are KEPLER'S, not the supervisor's, and none has been re-derived. Several are checkable and some will be wrong — this program's standing experience is that roughly one Kepler figure per round does not survive verification (K-118's own bound moved 4.3x; the Chile figure of an earlier round was cherry-picked). **Nothing here may be priced, quoted, or built until its load-bearing numbers are re-derived and its Merton sweep is run.** They are recorded as PROPOSED.
+
+### The entries
+
+- **K-400 — THE UNDER-DISPERSION IS AN UNOPENED ENVELOPE.** Variance 0.719 (p_under = 6e-5) has two live explanations and the program wins under either: MECHANICAL, the null sd's are ~18% inflated, in which case every bound already quoted tightens by 18% for free; or PHYSICAL, a global epoch term (nodal state, perigee cycle) enters every region's observed statistic and its null alike, which is a shared clock — and shared clocks are what a global conditioning variable looks like. Statistic: (1) audit the cross-region covariance of the null ensemble itself; (2) if clean, regress observed per-region z on frozen global covariates, permutation-of-region-labels null. Operates on z's, one level above any waveform. Data on disk. Cost 0-2.
+
+- **K-401 — AFTERSHOCKS ARE THE TARGET, NOT THE NUISANCE.** The program's reflex that the declustered arm is primary quietly ASSUMES the clustered signal is false. But aftershock zones are the one population we know sits near failure — they just failed. The full-catalogue over-dispersion was ATTRIBUTED to dependence and never TESTED against a triggering-complete null. Statistic: per-sequence dwell-matched phase concentration within each sequence's own window, pooled with sqrt(n) weights; null = ETAS-simulated sequences with fitted K/c/p through the identical path, so all clustering is reproduced and only the excess is claimable. ~5,500 extra events in the world set alone. Payoff: aftershock forecasts are the one earthquake forecast product already issued publicly. Cost ~4.
+
+- **K-402 — REPEATING SEQUENCES AS ALARM CLOCKS.** Near its due date a repeater is by construction within a hair of failure, so the mixture fraction f is ~1 and gating is undiluted — every main-effect test so far averaged over populations that are mostly far from failure. Statistic: phase at rupture with the dwell null computed WITHIN each event's own due window, which kills the waveform artifact and the aftershock objection at once (repeaters are declustered by identity). Data: Parkfield HRSN and Japan repeater catalogues, small downloads. Payoff: dated, per-fault, publicly scoreable predictions. MERTON FLAG: possible prior art. Cost ~6.
+
+- **K-403 — THE TOTAL-STRESS LEDGER.** The physical variable at the fault is ONE number: body tide + ocean load + atmospheric pressure + hydrologic load + secular. The program and the field test components one at a time. If failure is a level-crossing in the TOTAL, each component's phase is scrambled relative to the total's crossings and every single-component test is diluted toward zero — a mechanism that predicts exactly the pattern of nulls this program keeps finding. Candidate for Jim's one-in-fifty factor: the factor is not a component, it is the sum. Needs the K-100 loadtide build plus ERA5 and GRACE. Cost build + ~6.
+
+- **K-404 — THE TIDAL-WORK CLOCK.** Every phase statistic is a projection onto one basis function; time-rescaling is the omnibus. Define tau(t) as the integral of a declared weight over stress exposure and ask whether declustered inter-event intervals are closer to exponential under tau than under t. If any monotone rate-stress dependence exists in ANY functional form, the right clock simplifies the process, and the degree of simplification measures the modulation without ever choosing a phase bin. Exogenous clock, zero catalogue input, so distinct from natural time. Data on disk. Cost ~4.
+
+- **K-405 — MAGNITUDE IS THE RESPONDER.** All 16 world-battery statistics are OCCURRENCE statistics. Threshold physics naturally predicts a MARK effect: a nudge that does not create ruptures may still decide whether a rupture already happening grows. E[s] = 0 on rates says nothing about b(phase). Statistic: Delta-b between top and bottom terciles of dwell-matched exposure, pooled; null = magnitudes re-assigned to event times within region and Mc-epoch. Payoff: given activity, the probability it becomes LARGE — tail leverage on M>=7 odds, and it revives every null region, whose rates were flat but whose tails were never examined. Cost ~4.
+
+- **K-406 — FORESHOCKS AS THE TIDE-SENSITIVE CLASS.** A DIFFERENTIAL prediction between two internally-defined populations, immune to most common-mode artifacts because both share catalogue, region and waveform. Statistic: difference in concentration between Zaliapin-classified foreshocks and matched aftershocks; null = ETAS sims classified by the identical algorithm, so the class-selection artifact is carried by the null. Payoff: during any ongoing burst, update P(larger event coming) in real time. Cost ~6.
+
+- **K-407 — DYNAMIC TRIGGERABILITY AS A STATE METER.** Every great earthquake strain-gauges the planet for free. Treat each surface-wave passage as a probe and each region's triggered-rate response as a time-varying susceptibility chi(region, t); then test whether chi LEADS regional M>=6 rate. Two stages, the second being the claim. ~40 M>=8 probes x 13 regions since 1990. MERTON FLAG: Parsons/Velasco/Gomberg are prior art for stage 1; chi as a leading covariate is the delta. Cost ~8.
+
+- **K-408 — STORM SURGES AS STEP-FUNCTION LOADING EXPERIMENTS.** A major surge is 1-3 m of water over the shelf for 1-3 days: 10-30 kPa, aperiodic, with a KNOWN ONSET TIME. A step design needs no dwell null at all — it is an event study, the cleanest causal shape available. Controls matched on site, season and tide-range decile so the tide co-occurring with storms is not the effect. Sign declared in advance as part of the freeze. Data: UHSLC/GESLA gauges, small. Payoff: weather-driven hazard advisories at named coasts. Cost ~5.
+
+- **K-409 — THE FORTNIGHTLY ENVELOPE, GLOBALLY COHERENT.** Semidiurnal phase is longitude-dependent, so worldwide pooling in local phase — what the 208 and 221 scans did — can NEVER see a globally synchronous term. Mf and Mm are near-global-phase: the planet springs and neaps together. Unsearched by construction of every prior scan. Statistic: pooled Mf-phase concentration of the global declustered series, plus cross-region coherence at the Mf band against independent per-region ETAS sims. Distinct from the dead per-region periodicity corpse. Cost ~4.
+
+- **K-410 — HEAVY VERSUS LIGHT YEARS.** Rescues hydrologic loading from its detection confound by differencing ACROSS YEARS at the same calendar phase: detection seasonality is common-mode across years and cancels, the load anomaly does not. The seasonal cycle itself is never used as the contrast, which is the delta versus K-037. Cost ~4.
+
+- **K-411 — OUTER-RISE EVENTS.** Every favourable factor stacks: full open-ocean tide with no coastline ambiguity, thin bending-stressed lithosphere, demonstrably near failure after a megathrust, and a known receiver geometry (trench-parallel normal faults) that needs no per-event focal mechanism. Needs loadtide plus GCMT. Payoff: post-megathrust outer-rise timing, and these events cause tsunamis. Cost ~5.
+
+- **K-412 — MATCHED-PAIR HYSTERESIS.** The rope's artifact-immune form. For every level and rate magnitude, pair rising-through and falling-through episodes matched on (x, |r|, epoch-within-fortnight) so each pair has IDENTICAL DWELL BY CONSTRUCTION, then ask which member events prefer. The dwell artifact is differenced out rather than modelled, so the statistic survives even a mis-specified dwell null — which matters because §P7-25 disposition 5 left the rate-path equivalence UNVERIFIED. Cost ~3.
+
+- **K-413 — DEPTH IS THE GREEN'S FUNCTION.** Ocean-load stress decays with depth at a rate fixed by elasticity and load wavelength, no free parameters. Any load-driven effect must follow that curve; any detection artifact is depth-independent. HONEST LABEL: a qualifier, not a discovery — its best solo case is a bounded null. It is the credibility multiplier that lets another entry's positive be claimed. Cost 2, contingent.
+
+- **K-414 — TEMPLATE-CATALOGUE POWER JUMP.** Not a new hypothesis: the SAME hypothesis finally given an instrument that can see it. Every declustered floor so far is 2-28%; the literature effect is ~1%. QTM/ML catalogues drop the floor to ~0.4-1%. **The program has never once been inside the regime where the field's own claimed effect size is detectable.** Gated on K-423 running FIRST. Either outcome is a result: a measured effect, or the tightest tidal bound published. Cost ~6.
+
+- **K-415 — GRONINGEN AS THE A-SIGMA RULER.** W-007's law has one unknown, A-sigma, measured nowhere. Groningen and Oklahoma give decade-long documented stress histories at 10-100x tidal amplitude with complete induced catalogues. Measure A-sigma there and W-007 then PREDICTS rather than fits the tidal-band response everywhere. Gives the program the thing it has never had: a predicted effect size to design tests against instead of literature folklore. Cost ~3.
+
+- **K-416 — SWARM ONSETS.** Fluid-driven, near-lithostatic pore pressure, so tiny A-sigma and maximal predicted susceptibility; and the ONSET is the moment a patch first crossed threshold, automatically declustered because nothing precedes it. Null = onsets of ETAS sims classified identically. Cost ~4.
+
+- **K-417 — THE SILENT-SEGMENT TRIAGE.** Silence has exactly two physical readings — relaxed (aseismic release) or locked-critical — and they make OPPOSITE predictions for triggerability, tidal sensitivity of microseismicity, and creep. Pre-declared decision rule, both-high = critical-silent, both-low = relaxed-silent. Consumes an orphan asset (the unexplained-silent list). Even the two-bit answer is a forecast the field does not currently produce. Cost ~5.
+
+- **K-418 — AFTERSHOCK PRODUCTIVITY AS THE MARK.** Per-mainshock productivity scatters by 10x at fixed magnitude, unexplained. If ambient stress state sets how far a stress step propagates, productivity is a state readout: ONE number per mainshock, no phase statistics, no dwell null needed. Payoff: better aftershock-abundance forecasts in the first hour, from covariates known BEFORE the mainshock. Cost ~3.
+
+- **K-419 — SIGN-FLIP HEMISPHERE TEST.** Hydrologic load peaks in opposite calendar months in the two hemispheres. A seasonal phase that tracks LOCAL load phase including the flip, with amplitude crossing zero near the equator, cannot be manufactured by a calendar-locked artifact. Note winter station noise ALSO flips with hemisphere, which is why the equatorial zero-crossing is the discriminator and not the flip alone. Cost ~3.
+
+- **K-420 — ETAS BRANCHING RATIO n(t) AS DISTANCE TO CRITICALITY.** Claims that n rises before large events are contested because sliding-window estimator noise is never calibrated. The program's harness can do the one thing the literature does not: run the identical estimator on stationary-parameter synthetics and band the excursions. MERTON FLAG: nowcasting and natural-time are adjacent and partly discredited; the surrogate-banded estimator is the delta. Cost ~5.
+
+- **K-421 — CORRELATION LENGTH AS THE PRECURSOR COORDINATE.** Critical slowing down with this program's null discipline. Crucially, ETAS ITSELF produces rising apparent correlation length after big events, so the null must carry triggering and only the excess is claimable. Priced jointly with K-420 as a family of 2 since the claims are correlated. Cost ~3.
+
+- **K-422 — GLOBAL PHASE-COHERENCE OF THE RESIDUAL FIELD.** After ETAS absorbs local clustering, are the 11 regional residual series mutually independent? Statistic: leading eigenvalue of the cross-region residual correlation matrix; null = independent per-region ETAS sims preserving each region's autocovariance. One statistic, no fishing over pairs. Existence alone would reshape the program: it would say the unit of analysis is the planet. Cost ~3.
+
+- **K-423 — THE Mc(x,t) FIELD AS A SHARED INSTRUMENT LAYER.** Infrastructure, not hypothesis, and labelled as such: K-104 gates every low-magnitude design and K-414/416/417 all need it. Build the per-station-noise to Mc(x,t) layer once, SP-2 style, with its tidal, seasonal and storm modulation MEASURED rather than assumed. Cost: build 0, validation 1.
+
+- **K-424 — SLOW-SLIP-CONDITIONED REGULAR SEISMICITY.** The best conditioning variable on Earth: measured, exogenous, dated windows when the adjacent locked zone is loaded at 10-100x the secular rate. Tremor's tidal sensitivity is reported to rise in SSE windows; the interaction has never been run for REGULAR earthquakes, which is Merton M-011 element 3's named gap verbatim. SSEs are detected near-real-time geodetically, so a positive broadcasts on a natural schedule. Cost ~6.
+
+- **K-425 — NONLINEAR HARMONICS.** A LINEAR response can only reproduce the forcing spectrum; a threshold response MUST generate overtones at frequencies where the forcing has no power — so their detection is immune to every dwell-time artifact by construction, since the null waveform contains nothing there. HONEST LABEL: underpowered against a 1% fundamental, fires only on a subpopulation with large modulation, so run it on K-401's aftershocks and K-416's swarms rather than alone. Payoff if it fires: overtone phase pins the threshold's location on the stress axis, i.e. it MEASURES the failure threshold. Cost ~3.
+
+- **K-426 — THE FORECAST VALUE LADDER.** The question behind the question. Every arm terminates in "modulation exists or is bounded"; nobody has written the exchange rate — how much probability gain per Molchan area does a modulation of eps at period T buy an operational forecaster? It is closed-form for periodic modulation of a Poisson process. Freeze the curve and score every future positive against it automatically. **This is what makes "we win for the planet" checkable arithmetic instead of a hope**, and it will make honest triage automatic: some entries above buy negligible skill even if true, and the ladder says which BEFORE they are funded. Cost 0.
+
+- **K-427 — SPACE WEATHER, DISPOSED OF PROPERLY.** The physical coupling is 3-6 orders under tidal, so the honest use of the 34 fetched files is as the searcher's MATCHED PLACEBO ARM: a property class with real temporal structure and near-zero physical prior, whose survivor rate calibrates the pipeline. Best case honestly stated: a methods result, not a forecast. Cost 0.
+
+- **K-428 — LOD / POLAR MOTION DECADAL TERM.** A cheap pre-registered kill-or-confirm of a contested published claim, with the lag FROZEN at the published value and no lag search. Powered only against the large effect claimed, which is exactly right for a kill-or-confirm. Cost 1.
+
+- **K-429 — THE NEGATIVE-SPACE CATALOGUE.** Model the complement: draw phantom events by thinning the fitted ETAS intensity where no real event occurred, then two-sample test real against phantom over a declared covariate block. Any covariate on which they differ is structure the rate model LACKS. Captures SUPPRESSION (stress shadows, quiescence), which occurrence statistics under-weight, and it is the only frame here with power against interactions nobody declared. Cost ~4.
+
+- **K-430 — CHARTER LEVEL: THE PREDICTION IS A DISTRIBUTION OVER CLOCKS.** Every arm asks "does X modulate hazard?" The deliverable that would actually let someone forecast is the PORTFOLIO: hazard = base ETAS x product over k of (1 + eps_k * schedule_k(t)), every eps_k a measured coefficient with a CI (many ~0, all honest) and every schedule_k deterministic or observable in advance. Ship the multiplier stack as a versioned artifact and score it prospectively as ONE product by CSEP log-likelihood gain. **This is how weather forecasting actually won: not one silver-bullet factor, but assimilation of many weak, honestly-weighted terms.** Adds zero new looks if weights come from the components' frozen posteriors. Cost 0.
+
+### Kepler's ranking, top of list
+
+K-401 aftershocks-as-target; K-403 total-stress ledger; K-402 repeaters at due date; K-414 template-catalogue power jump; K-405 magnitude-as-responder; then K-404, K-407, K-424, K-400, K-408.
+
+### Kepler's three to build next
+
+1. **K-401.** Every ingredient on disk today, N is 10x anything the declustered arms have, the class-correct null exists, and it directly audits the dispersion gate's own unproven attribution.
+2. **K-403**, built on top of the loadtide build already ranked first, adding pressure and hydrology. The sum is the physically correct variable and a threshold in the sum is invisible to every component test ever run anywhere.
+3. **K-402.** The purified form of Jim's standing posture: if the tide decides anything anywhere, it must be maximally visible at the one place and time the fault itself tells us it is about to fail.
+
+### CHARTER AMENDMENT PROPOSED (Kepler)
+
+> **8. EVERY ENTRY MUST STATE ITS RUNG ON THE FORECAST VALUE LADDER (K-426):** the probability gain its best-case positive buys an operational forecast. **An entry whose best case buys no skill must say so in its own text.** This makes "significant prediction, not incremental null" a checkable property of every future round rather than an aspiration.
+
+*Kepler round: no file written, nothing in `engine/` modified, no catalogue opened, no event scored, no holdout spent. Everything above is PROPOSED and unverified. Popper adjudicates; Merton sweeps K-402, K-407 and K-420 before any of them is priced.*
