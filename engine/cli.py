@@ -318,6 +318,101 @@ def cmd_mine(args):
     return 0
 
 
+# ----------------------------------------------------------------- search ---
+# B5 / SEARCHER.md §S8.2: `search` mode alongside `explore` / `holdout` / `mine`,
+# with the same GENERATOR_NOT_EVIDENCE banner `mine.py:84` already prints AND a
+# second banner naming §S0's sentence. ADDITIVE ONLY: nothing above this block was
+# modified, and no existing subcommand's behaviour changes by its existence.
+#
+# THE REFUSAL THIS SUBCOMMAND EXISTS TO CARRY. §P7-24 SP-7 is BINDING: *"No real scan
+# runs before this passes."* `--run` therefore reads the SP-7 gate artifact and
+# REFUSES when it is absent or FAILED. There is no flag that bypasses it, on the same
+# principle as `splits.assert_holdout_unused`: deleting the artifact is the human's
+# act, not the engine's.
+def cmd_search(args):
+    from . import (freeze_gen as FG, lattice_s1 as LAT, properties as PR,
+                   searcher as SE, searcher_gate as SG, spaceweather as SW)
+
+    _banner(f"EQ-23 engine v{__version__} -- SEARCH (the SEARCHER, §S0..§S11)")
+    SE.print_banners()
+
+    l3 = None
+    print(f"lattice rule id      = {LAT.LATTICE_RULE_ID}")
+    print(f"lattice digest       = {LAT.declaration_digest(l3)}")
+    print(f"  L1 named regions   = {LAT.N_L1}")
+    print(f"  L2 tectonic classes= {LAT.N_L2} {LAT.BIRD_CLASSES}")
+    print(f"  L3 grid cells      = {len(LAT.l3_grid_cells())} declared at "
+          f"{LAT.L3_CELL_DEG:g} deg (measurability filter N >= {LAT.L3_MIN_EVENTS} "
+          f"applied on the EXPLORATION WINDOW ONLY)")
+    print(f"  seeded exclusions  = {LAT.SEEDED_REGIONS}")
+    print()
+
+    av = SW.availability(args.data_dir_sw)
+    print("space-weather / EOP series (families D and E):")
+    for k, v in sorted(av["sources"].items()):
+        print(f"  {k:<10s} {v['status']}"
+              + (f"  n={v['n']}" if "n" in v else "")
+              + (f"  err={v.get('error')}" if v["status"] != "LOADED" else ""))
+    if av["series_absent"]:
+        print(f"  ABSENT series      = {av['series_absent']} "
+              f"(no column is emitted for an absent source; nothing is substituted)")
+    print()
+
+    decl = SE.declare_scan(
+        [LAT.region(n) for n in SG.GATE_REGIONS], SG.GATE_PROPERTIES,
+        SG.GATE_MAG_STRATA, SG.GATE_FAMILIES, l3_cells=l3,
+        scan_id=args.scan_id) if args.declare_only or not args.run else None
+    if decl is not None:
+        print(f"DECLARATION (dry run -- nothing scanned)")
+        print(f"  scan id            = {decl['scan_id']}")
+        print(f"  m (FULL cell count)= {decl['m']}  -- ASSERTED at scan time (SP-6.1)")
+        print(f"  alpha = q/m        = {decl['alpha']:.6e}  (q = {decl['q']}) "
+              f"-- ONE rule, the OR-limb is REFUSED (SP-3)")
+        print(f"  K cap              = {decl['k_cap']}   ranking = {decl['ranking_function']}")
+        print(f"  n_events floor     = {decl['n_events_floor']}")
+        print(f"  magnitude strata   = {decl['mag_strata']} (SP-6.7)")
+        print(f"  config hash        = {decl['config_hash']}")
+        print()
+
+    gate_path = args.gate_artifact or SG.GATE_ARTIFACT
+    gate = None
+    if os.path.exists(gate_path):
+        with open(gate_path, "r", encoding="utf-8") as fh:
+            gate = json.load(fh)
+    print("SP-7 GATE (BINDING -- no real scan runs before it passes):")
+    if gate is None:
+        print(f"  NOT RUN. Artifact absent at {gate_path}.")
+        print(f"  Run it with:  python -u -m engine.searcher_gate")
+    else:
+        print(f"  verdict            = {gate['verdict']}")
+        print(f"  promotions         = {gate['n_promotions_total']} over "
+              f"{gate['n_catalogs']} catalogues (allowed <= {gate['max_total_allowed']})")
+        print(f"  binomial tail p    = {gate['binomial_upper_tail_p']:.4f}")
+        print(f"  vacuity control    = {gate['vacuity_control']['verdict']}")
+        print(f"  artifact           = {gate_path}")
+    print()
+
+    if args.run:
+        if gate is None or not gate.get("passed"):
+            print("REFUSED: a real scan requires a PASSING SP-7 gate artifact.")
+            print("  §P7-24 SP-7: \"No real scan runs before this passes. Same "
+                  "standing as R1 for v2; same reason.\"")
+            print("  A failure there means the nominal p's are wrong -- an SP-2 null "
+                  "layer is invalid -- which is precisely the failure mode the "
+                  "multiplicity arithmetic cannot catch.")
+            print("  No flag bypasses this refusal.")
+            return 2
+        print("REFUSED: `--run` is not wired to a catalogue in this build.")
+        print("  The scan runner (engine/searcher.py:run_scan) takes prepared cell "
+              "specs; building them from a real catalogue is the operator step that "
+              "must be declared and hashed first, and this CLI will not improvise it.")
+        return 2
+
+    print("*** " + SE.THE_SENTENCE)
+    print("*** " + FG.PROMOTION_BUYS)
+    return 0
+
+
 def main(argv=None):
     p = argparse.ArgumentParser("engine.cli", description=f"EQ-23 engine v{__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -459,6 +554,23 @@ def main(argv=None):
                          "fraction (default 0.20 -- §P6-4 Finding B's own reference "
                          "amplitude). Hash-affecting")
     mi.set_defaults(fn=cmd_mine)
+
+    # B5: the SEARCHER's operator entry point. Purely additive.
+    se = sub.add_parser("search", help="the SEARCHER concentration scan "
+                                       "(GENERATOR, NOT EVIDENCE; SP-7-gated)")
+    se.add_argument("--data-dir-sw", default=None,
+                    help="space-weather / EOP directory (default data/spaceweather)")
+    se.add_argument("--scan-id", default=None)
+    se.add_argument("--gate-artifact", default=None,
+                    help="path to the SP-7 gate artifact (default "
+                         "engine/out/searcher_sp7_gate.json)")
+    se.add_argument("--declare-only", action="store_true",
+                    help="print the frozen declaration and stop (the default "
+                         "behaviour without --run)")
+    se.add_argument("--run", action="store_true",
+                    help="attempt a real scan. REFUSED without a PASSING SP-7 gate "
+                         "artifact (§P7-24 SP-7 is binding); no flag bypasses it")
+    se.set_defaults(fn=cmd_search)
 
     args = p.parse_args(argv)
     # §P7-8(c)(4): an unsupported --mag-target RAISES here, before any design is
