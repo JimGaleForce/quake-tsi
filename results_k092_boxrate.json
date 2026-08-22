@@ -1,0 +1,125 @@
+{
+  "arm": "K-092 box event-rate count (\u00a7P7-25 disposition 12)",
+  "generated_utc": "2026-08-22T08:33:07.587697+00:00",
+  "priced_tests": 0,
+  "licence": "RATE COUNT ONLY. No phase, level, quadrant or scalar was computed on any event; enforced by assert_no_tidal_imports(). All events counted are pre-freeze and outside every D-13/D-13b scoring set.",
+  "box": {
+    "lat": [
+      51.0,
+      58.0
+    ],
+    "lon": [
+      -166.0,
+      -152.0
+    ],
+    "source": "K092_FREEZE.md"
+  },
+  "window": {
+    "start": "1990-01-01T00:00:00+00:00",
+    "end": "2026-08-13T20:27:26+00:00",
+    "span_years": 36.61636415329338
+  },
+  "catalogue": {
+    "path": "data\\comcat_world\\Alaska-Aleutians.csv",
+    "rows_read": 3714,
+    "rows_in_box_all_time": 964
+  },
+  "counts": {
+    "5.0": 281,
+    "5.5": 95,
+    "6.0": 27,
+    "6.5": 12,
+    "7.0": 6
+  },
+  "rates_per_year": {
+    "5.0": 7.674164447993836,
+    "5.5": 2.594468407684749,
+    "6.0": 0.7373752316577707,
+    "6.5": 0.32772232518123146,
+    "7.0": 0.16386116259061573
+  },
+  "counts_by_decade": {
+    "5.0": {
+      "1990": 41,
+      "2000": 68,
+      "2010": 63,
+      "2020": 109
+    },
+    "5.5": {
+      "1990": 14,
+      "2000": 26,
+      "2010": 18,
+      "2020": 37
+    },
+    "6.0": {
+      "1990": 6,
+      "2000": 7,
+      "2010": 4,
+      "2020": 10
+    },
+    "6.5": {
+      "1990": 1,
+      "2000": 3,
+      "2010": 1,
+      "2020": 7
+    },
+    "7.0": {
+      "1990": 1,
+      "2020": 5
+    }
+  },
+  "implied_b_two_point": {
+    "M5.0_vs_M6.0": 1.0173425557460924,
+    "M5.5_vs_M6.0": 1.092719682259721,
+    "note": "two-point slope, a DIAGNOSTIC on \u00a7P7-25's b = 1 assumption, not a b-value estimate and not quotable as one"
+  },
+  "declustered": {
+    "rule": "dependent if within 30 days AND 150 km of an equal-or-larger prior event; frozen in section P7-25 before any D-13b event",
+    "n_full_M5.0": 281,
+    "n_independent_M5.0": 188,
+    "dependent_fraction": 0.33096085409252674,
+    "independent_rate_per_yr": 5.134316427839292,
+    "note": "D-13b's PRIMARY stratum is the DECLUSTERED one, so its expected N is this rate and not the full-catalogue rate."
+  },
+  "power": {
+    "p0_used": 0.3827,
+    "p0_source": "pooled waveform-matched duty cycle from results_k092_d1_null.json; the real test uses the per-event Poisson-binomial, for which this is a close and slightly conservative proxy",
+    "alpha": 0.01,
+    "one_sided": true,
+    "table": {
+      "D-13 M>=5.5 full": {
+        "N": 8,
+        "k_crit": 7,
+        "power_at_0.50": 0.03515625,
+        "power_at_0.60": 0.10637567999999997,
+        "power_at_0.70": 0.2552983299999999
+      },
+      "D-13b M>=5.0 full (SECONDARY)": {
+        "N": 23,
+        "k_crit": 15,
+        "power_at_0.50": 0.10501980781555176,
+        "power_at_0.60": 0.3883564814646632,
+        "power_at_0.70": 0.7708550377956617
+      },
+      "D-13b M>=5.0 declustered (PRIMARY)": {
+        "N": 15,
+        "k_crit": 11,
+        "power_at_0.50": 0.05923461914062499,
+        "power_at_0.60": 0.21727770565017596,
+        "power_at_0.70": 0.5154910592268429
+      }
+    },
+    "verdict": "MEASURED, not assumed. D-13 at its measured rate cannot detect even a very large effect. D-13b's declustered PRIMARY is better but still underpowered against a true rate of 0.60, and is adequate only against ~0.70. Read alongside Merton section M-011's Beeler and Lockner (2003) requirement of 10^5 to 10^6 events at body-tide amplitudes: NO prospective arm at this region's event rate can detect a literature-scale (order 1 percent) tidal effect on any horizon. That is a fact about Alaska's seismicity, not about this pipeline, and it should govern how much further prospective machinery is worth building."
+  },
+  "expected_N_over_3yr": {
+    "D-13 (M>=5.5)": 7.783405223054247,
+    "D-13b (M>=5.0)": 23.02249334398151
+  },
+  "p7_25_comparison": {
+    "assumed_rate_M5.5_per_yr": 2.9,
+    "assumed_N_3yr": 9,
+    "measured_rate_M5.5_per_yr": 2.594468407684749,
+    "measured_N_3yr": 7.783405223054247
+  },
+  "completeness_caveat": "Counts are as-catalogued and NOT completeness-corrected. The decade breakdown is reported so that a completeness trend is visible rather than averaged away: a rate rising with decade is a network artifact before it is anything else, and the 1990 start was chosen for that reason. This bears on the expected N and therefore on D-13/D-13b power, and on nothing else."
+}
