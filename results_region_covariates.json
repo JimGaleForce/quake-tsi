@@ -1,0 +1,261 @@
+{
+  "arm": "regional covariate regression: WHY does a region rise above the fold",
+  "generated_utc": "2026-08-22T22:40:26.316137+00:00",
+  "PRICED": true,
+  "n_declared_tests": 232,
+  "declaration": {
+    "covariates": {
+      "C1_abs_latitude": "artifact-covariate, two-sided, included to be RULED OUT",
+      "C2_bodytide_amplitude": "+",
+      "C3_bearing_dwell_R2": "- (detectability, not physics)",
+      "C4_mean_depth_km": "-",
+      "C5_mean_interface_dip": "two-sided",
+      "C6_subduction_fraction": "+",
+      "C7_rate_per_year": "two-sided",
+      "C8_mean_magnitude": "two-sided"
+    },
+    "statistic": "Spearman rank correlation, region-level",
+    "null": "permute REGION LABELS; preserves both marginals exactly and destroys only the pairing, so it tests the ordering claim alone",
+    "n_permutations": 20000,
+    "rng_seed": 20260822,
+    "why_not_cochran_Q": "Q tests whether between-region VARIANCE exceeds noise and is weak at 11 regions; this tests whether the ORDERING is organised by a physical covariate, which uses far more of the information"
+  },
+  "region_covariates": {
+    "Alaska-Aleutians": {
+      "C1_abs_latitude": 53.801463619047624,
+      "C2_bodytide_amplitude": 1.843754230948424e-08,
+      "C3_bearing_dwell_R2": 0.2028078522645075,
+      "C4_mean_depth_km": 43.45546666666667,
+      "C5_mean_interface_dip": 21.980038986841837,
+      "C6_subduction_fraction": 0.7142857142857143,
+      "C7_rate_per_year": 23.819113449750954,
+      "C8_mean_magnitude": 5.447238095238095,
+      "_n": 525
+    },
+    "California": {
+      "C1_abs_latitude": 36.3439978147541,
+      "C2_bodytide_amplitude": 2.151808774433045e-08,
+      "C3_bearing_dwell_R2": 0.3864736760238637,
+      "C4_mean_depth_km": 9.115852459016393,
+      "C5_mean_interface_dip": 10.329253613948822,
+      "C6_subduction_fraction": 0.13114754098360656,
+      "C7_rate_per_year": 2.836028100563118,
+      "C8_mean_magnitude": 5.427213114754099,
+      "_n": 61
+    },
+    "Chile": {
+      "C1_abs_latitude": 27.516609100310237,
+      "C2_bodytide_amplitude": 2.1903675708847712e-08,
+      "C3_bearing_dwell_R2": 0.49840626849387776,
+      "C4_mean_depth_km": 74.83335056876939,
+      "C5_mean_interface_dip": 19.84889503761574,
+      "C6_subduction_fraction": 0.6701137538779731,
+      "C7_rate_per_year": 43.79891687199291,
+      "C8_mean_magnitude": 5.452337125129266,
+      "_n": 967
+    },
+    "Greece-Aegean": {
+      "C1_abs_latitude": 36.99264587628866,
+      "C2_bodytide_amplitude": 2.13032041724566e-08,
+      "C3_bearing_dwell_R2": 0.3633305877551904,
+      "C4_mean_depth_km": 30.465103092783504,
+      "C5_mean_interface_dip": 8.247899600634208,
+      "C6_subduction_fraction": 0.33505154639175255,
+      "C7_rate_per_year": 8.913803282990617,
+      "C8_mean_magnitude": 5.4402061855670105,
+      "_n": 194
+    },
+    "Himalaya": {
+      "C1_abs_latitude": 33.11591098130841,
+      "C2_bodytide_amplitude": 2.1617717637992533e-08,
+      "C3_bearing_dwell_R2": 0.41150101584948734,
+      "C4_mean_depth_km": 62.36154205607476,
+      "C5_mean_interface_dip": 17.630877302404034,
+      "C6_subduction_fraction": 0.13317757009345793,
+      "C7_rate_per_year": 19.383223740254312,
+      "C8_mean_magnitude": 5.405373831775701,
+      "_n": 428
+    },
+    "Indonesia": {
+      "C1_abs_latitude": 4.385908572552104,
+      "C2_bodytide_amplitude": 2.169222855612184e-08,
+      "C3_bearing_dwell_R2": 0.5648133957974443,
+      "C4_mean_depth_km": 89.0768541093197,
+      "C5_mean_interface_dip": 22.18741956159149,
+      "C6_subduction_fraction": 0.47109712937475423,
+      "C7_rate_per_year": 114.96731676473742,
+      "C8_mean_magnitude": 5.4300825796303585,
+      "_n": 2543
+    },
+    "Iran": {
+      "C1_abs_latitude": 29.9773965,
+      "C2_bodytide_amplitude": 2.1805020414473324e-08,
+      "C3_bearing_dwell_R2": 0.44964523402218476,
+      "C4_mean_depth_km": 23.5937,
+      "C5_mean_interface_dip": 11.012400226593018,
+      "C6_subduction_fraction": 0.125,
+      "C7_rate_per_year": 9.110643391104993,
+      "C8_mean_magnitude": 5.341000000000001,
+      "_n": 200
+    },
+    "Japan": {
+      "C1_abs_latitude": 37.39711136141038,
+      "C2_bodytide_amplitude": 2.1328401808683706e-08,
+      "C3_bearing_dwell_R2": 0.3693347704096796,
+      "C4_mean_depth_km": 78.32465230166504,
+      "C5_mean_interface_dip": 17.97040764321672,
+      "C6_subduction_fraction": 0.5984329089128305,
+      "C7_rate_per_year": 46.17205078398803,
+      "C8_mean_magnitude": 5.490460333006856,
+      "_n": 1021
+    },
+    "Mexico": {
+      "C1_abs_latitude": 16.46808631921824,
+      "C2_bodytide_amplitude": 2.193800762017082e-08,
+      "C3_bearing_dwell_R2": 0.5675615577992155,
+      "C4_mean_depth_km": 50.70436482084691,
+      "C5_mean_interface_dip": 19.52816090864294,
+      "C6_subduction_fraction": 0.7198697068403909,
+      "C7_rate_per_year": 13.955431724123626,
+      "C8_mean_magnitude": 5.516872964169381,
+      "_n": 307
+    },
+    "Philippines": {
+      "C1_abs_latitude": 10.765490987124464,
+      "C2_bodytide_amplitude": 2.1805522016377266e-08,
+      "C3_bearing_dwell_R2": 0.5673329869668172,
+      "C4_mean_depth_km": 77.07464949928469,
+      "C5_mean_interface_dip": 38.273813113626446,
+      "C6_subduction_fraction": 0.3791130185979971,
+      "C7_rate_per_year": 31.633621429834754,
+      "C8_mean_magnitude": 5.424320457796854,
+      "_n": 699
+    },
+    "Turkey": {
+      "C1_abs_latitude": 37.89618300653595,
+      "C2_bodytide_amplitude": 2.1148500626855463e-08,
+      "C3_bearing_dwell_R2": 0.3467395709032655,
+      "C4_mean_depth_km": 26.548039215686277,
+      "C5_mean_interface_dip": 14.874015564503877,
+      "C6_subduction_fraction": 0.1503267973856209,
+      "C7_rate_per_year": 6.947069172285932,
+      "C8_mean_magnitude": 5.445751633986928,
+      "_n": 153
+    }
+  },
+  "max_statistic": {
+    "observed_max_abs_rho": 0.9523809523809523,
+    "null_max_p95": 0.9523809523809523,
+    "p": 0.10994450277486126,
+    "where": {
+      "covariate": "C7_rate_per_year",
+      "response": "faultrel:B2_moonaz_m4",
+      "rho": 0.9523809523809523,
+      "n_regions": 8
+    }
+  },
+  "top_15_pairs": [
+    {
+      "covariate": "C7_rate_per_year",
+      "response": "faultrel:B2_moonaz_m4",
+      "rho": 0.9523809523809523,
+      "n_regions": 8
+    },
+    {
+      "covariate": "C4_mean_depth_km",
+      "response": "faultrel:B2_moonaz_m4",
+      "rho": 0.9047619047619048,
+      "n_regions": 8
+    },
+    {
+      "covariate": "C4_mean_depth_km",
+      "response": "geographic:A1_bearing_m3",
+      "rho": 0.8181818181818182,
+      "n_regions": 11
+    },
+    {
+      "covariate": "C7_rate_per_year",
+      "response": "geographic:A1_bearing_m3",
+      "rho": 0.7818181818181819,
+      "n_regions": 11
+    },
+    {
+      "covariate": "C8_mean_magnitude",
+      "response": "geographic:A3_sun_az_m3",
+      "rho": -0.7818181818181819,
+      "n_regions": 11
+    },
+    {
+      "covariate": "C6_subduction_fraction",
+      "response": "geographic:A3_sun_az_m3",
+      "rho": -0.7727272727272727,
+      "n_regions": 11
+    },
+    {
+      "covariate": "C7_rate_per_year",
+      "response": "faultrel:C3_cfs_quadrant",
+      "rho": 0.7619047619047619,
+      "n_regions": 8
+    },
+    {
+      "covariate": "C4_mean_depth_km",
+      "response": "geographic:A1_bearing_m4",
+      "rho": 0.6818181818181818,
+      "n_regions": 11
+    },
+    {
+      "covariate": "C2_bodytide_amplitude",
+      "response": "faultrel:B1_axial_f4",
+      "rho": 0.6666666666666666,
+      "n_regions": 8
+    },
+    {
+      "covariate": "C1_abs_latitude",
+      "response": "geographic:A1_bearing_m4",
+      "rho": -0.6454545454545455,
+      "n_regions": 11
+    },
+    {
+      "covariate": "C2_bodytide_amplitude",
+      "response": "faultrel:B1_axial_f2",
+      "rho": 0.6428571428571429,
+      "n_regions": 8
+    },
+    {
+      "covariate": "C7_rate_per_year",
+      "response": "geographic:A1_bearing_m4",
+      "rho": 0.6272727272727273,
+      "n_regions": 11
+    },
+    {
+      "covariate": "C3_bearing_dwell_R2",
+      "response": "faultrel:B1_axial_f3",
+      "rho": 0.6190476190476191,
+      "n_regions": 8
+    },
+    {
+      "covariate": "C8_mean_magnitude",
+      "response": "faultrel:P1_elev_even",
+      "rho": 0.6190476190476191,
+      "n_regions": 8
+    },
+    {
+      "covariate": "C4_mean_depth_km",
+      "response": "faultrel:C3_cfs_quadrant",
+      "rho": 0.5952380952380952,
+      "n_regions": 8
+    }
+  ],
+  "interpretation": {
+    "artifact_covariates": [
+      "C1_abs_latitude",
+      "C3_bearing_dwell_R2"
+    ],
+    "mechanism_covariates": [
+      "C2_bodytide_amplitude",
+      "C4_mean_depth_km",
+      "C6_subduction_fraction"
+    ],
+    "note": "a hit on an artifact covariate says the regional scatter is instrumental; a hit on a mechanism covariate is the thing worth chasing; a hit on nothing bounds the 'some regions use this' hypothesis against everything we can currently measure"
+  }
+}

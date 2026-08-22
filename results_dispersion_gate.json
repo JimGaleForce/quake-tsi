@@ -1,0 +1,71 @@
+{
+  "arm": "dispersion gate: is there regional scatter to explain?",
+  "generated_utc": "2026-08-22T22:44:49.771338+00:00",
+  "priced_tests": 0,
+  "why_priced_zero": "a re-read of committed artifacts; no new statistic",
+  "by_arm": {
+    "geographic_declustered": {
+      "declustered": true,
+      "n_region_statistics": 176,
+      "mean_z": -0.1894496556924505,
+      "variance_of_z": 0.6409988470271829,
+      "expected_variance_if_no_structure": 1.0,
+      "p_over_dispersed": 0.9999375761949917,
+      "p_under_dispersed": 6.24238050083662e-05,
+      "cochran_Q_p_median": 0.8416685445928018,
+      "cochran_Q_p_expected_median": 0.5,
+      "verdict": "UNDER-dispersed: regions agree more than chance"
+    },
+    "faultrel_declustered": {
+      "declustered": true,
+      "n_region_statistics": 104,
+      "mean_z": 0.030352273749619536,
+      "variance_of_z": 0.8281430784916732,
+      "expected_variance_if_no_structure": 1.0,
+      "p_over_dispersed": 0.8970358011918965,
+      "p_under_dispersed": 0.10296419880810354,
+      "cochran_Q_p_median": 0.7992959518249879,
+      "cochran_Q_p_expected_median": 0.5,
+      "verdict": "consistent with variance 1: no excess scatter"
+    },
+    "geographic_full": {
+      "declustered": false,
+      "n_region_statistics": 208,
+      "mean_z": 0.17834967246310687,
+      "variance_of_z": 1.3966083386733157,
+      "expected_variance_if_no_structure": 1.0,
+      "p_over_dispersed": 0.00014146288669252439,
+      "p_under_dispersed": 0.9998585371133075,
+      "cochran_Q_p_median": 0.2133681192452382,
+      "cochran_Q_p_expected_median": 0.5,
+      "verdict": "OVER-dispersed: there IS regional structure"
+    },
+    "faultrel_full": {
+      "declustered": false,
+      "n_region_statistics": 117,
+      "mean_z": 0.1844007957988834,
+      "variance_of_z": 1.8687940353233639,
+      "expected_variance_if_no_structure": 1.0,
+      "p_over_dispersed": 4.255398731598144e-08,
+      "p_under_dispersed": 0.9999999574460127,
+      "cochran_Q_p_median": 0.06667585498516115,
+      "cochran_Q_p_expected_median": 0.5,
+      "verdict": "OVER-dispersed: there IS regional structure"
+    }
+  },
+  "pooled_declustered_primary": {
+    "n_region_statistics": 280,
+    "mean_z": -0.10780893904253878,
+    "variance_of_z": 0.7191104581848019,
+    "p_over_dispersed": 0.9998752844334517,
+    "p_under_dispersed": 0.00012471556654826228,
+    "tau2_between_region_variance_component": 0.0,
+    "implied_susceptibility_sd_in_z_units": 0.0
+  },
+  "verdict": {
+    "declustered": "NO EXCESS SCATTER. The declustered per-region z's have variance BELOW 1 and their Cochran Q p-values sit well above 0.50, so regions agree with each other at least as well as chance. tau^2 = 0. There is no regional structure for a factor to explain.",
+    "full": "OVER-dispersed, variance 1.4 to 1.9 with Q p-value medians of 0.21 and 0.067. That IS real heterogeneity -- and the declustering robustness arm already identified its cause as aftershock dependence, since it vanishes entirely when clusters are removed.",
+    "consequence": "The 'some regions use this triggering and others do not' hypothesis has no support in this data at this magnitude. The only regional structure present is dependence. A fifty-factor regression on the declustered scatter would be fitting noise, and this gate is what says so before the year is spent.",
+    "caveat_recorded": "UNDER-dispersion at variance 0.72 also means the null standard deviations may be roughly 18 percent conservative. That makes every null in this program SAFE rather than optimistic, but it also means the quoted bounds are slightly looser than they need to be, and it is worth chasing separately."
+  }
+}
