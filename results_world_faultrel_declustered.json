@@ -1,0 +1,1169 @@
+{
+  "arm": "WORLD SCAN, FAULT-RELATIVE (Slab2 geometry per event)",
+  "generated_utc": "2026-08-22T21:33:56.747799+00:00",
+  "PRICED": true,
+  "declustered": true,
+  "n_declared_tests": 104,
+  "declaration": {
+    "regions_scored": [
+      "Alaska-Aleutians",
+      "Chile",
+      "Greece-Aegean",
+      "Himalaya",
+      "Indonesia",
+      "Japan",
+      "Mexico",
+      "Philippines"
+    ],
+    "regions_lost": {
+      "California": "8 of 83 events survive the Slab2 + misfit + decluster cuts",
+      "Caribbean": "7 of 38 events survive the Slab2 + misfit + decluster cuts",
+      "Iceland": "0 of 65 events survive the Slab2 + misfit + decluster cuts",
+      "Iran": "26 of 273 events survive the Slab2 + misfit + decluster cuts",
+      "Turkey": "23 of 213 events survive the Slab2 + misfit + decluster cuts"
+    },
+    "mag_min": 5.0,
+    "misfit_max_km": 20.0,
+    "rake_deg": 90.0,
+    "friction": 0.4,
+    "geometry_source": "Hayes, G.P. et al. (2018), Slab2 - A Comprehensive Subduction Zone Geometry Model, USGS data release, doi:10.5066/F7PV6JNV. Exogenous to the earthquake catalogue: zero free parameters, zero catalogue input into the geometry.",
+    "geometry_scope": "Slab2 gives the SUBDUCTION INTERFACE. An event on a splay, outer-rise or intraslab plane inherits a geometry that is not its own, which is why depth_misfit_km is returned and why any analysis must declare a misfit cut. Non-subduction regions are NOT modelled and are returned as unassigned rather than approximated.",
+    "statistics": [
+      "B1_axial_f1",
+      "B1_axial_f2",
+      "B1_axial_f3",
+      "B1_axial_f4",
+      "B2_moonaz_m1",
+      "B2_moonaz_m2",
+      "B2_moonaz_m3",
+      "B2_moonaz_m4",
+      "C1_cfs_below",
+      "C2_cfs_rising",
+      "C3_cfs_quadrant",
+      "P1_elev_even",
+      "P2_elev_odd"
+    ],
+    "orders": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "B1_note": "axial: both the tidal extension axis and the fault trace are undirected lines, so the relation is pi-periodic and is doubled into the full circle. f = 1, 2, 3, 4 here correspond to ORIGINAL symmetry orders 2, 4, 6, 8. f = 1 is the case where pull from either side separates the fault, which a signed test cannot see.",
+    "B2_note": "directional: the interface has a DIP DIRECTION, so updip and downdip differ and order 1 is physically meaningful here in a way it is not for B1.",
+    "explore_cutoff_utc": "2017-02-14T02:24:00+00:00",
+    "holdout": "NOT READ",
+    "n_replicates": 5000,
+    "rng_seed": 20260822,
+    "power_floor": {
+      "m": 104,
+      "n_replicates": 5000,
+      "floor": 0.020795840831833633,
+      "alpha": 0.05,
+      "min_attainable_p": 0.0001999600079984003
+    }
+  },
+  "per_region": {
+    "Alaska-Aleutians": {
+      "n": 382,
+      "n_before_cuts": 847,
+      "per_statistic": {
+        "B1_axial_f1": {
+          "observed": 0.2095448468033591,
+          "null_mean": 0.17322679641110725,
+          "null_sd": 0.03482621234991268,
+          "z": 1.0428366434842267
+        },
+        "B1_axial_f2": {
+          "observed": 0.006207970859154902,
+          "null_mean": 0.05059830920933973,
+          "null_sd": 0.025826334038253674,
+          "z": -1.7188013708966343
+        },
+        "B1_axial_f3": {
+          "observed": 0.03842826989604418,
+          "null_mean": 0.04550192546236584,
+          "null_sd": 0.02408673217836287,
+          "z": -0.2936743562364982
+        },
+        "B1_axial_f4": {
+          "observed": 0.011838456855892028,
+          "null_mean": 0.04537637270621333,
+          "null_sd": 0.023412167893623093,
+          "z": -1.4324993739454694
+        },
+        "B2_moonaz_m1": {
+          "observed": 0.00799614570157785,
+          "null_mean": 0.04481950523246345,
+          "null_sd": 0.023524187784683383,
+          "z": -1.5653403155904628
+        },
+        "B2_moonaz_m2": {
+          "observed": 0.16057675460950577,
+          "null_mean": 0.10578680149055271,
+          "null_sd": 0.034667699200734245,
+          "z": 1.5804323442898869
+        },
+        "B2_moonaz_m3": {
+          "observed": 0.04671597171171513,
+          "null_mean": 0.045824267268295533,
+          "null_sd": 0.023373365252677632,
+          "z": 0.03815045175480013
+        },
+        "B2_moonaz_m4": {
+          "observed": 0.024625785885864965,
+          "null_mean": 0.04586228325348745,
+          "null_sd": 0.023897852233148793,
+          "z": -0.8886362322621305
+        },
+        "C1_cfs_below": {
+          "observed": 0.2408376932144165,
+          "null_mean": 0.24298481690883636,
+          "null_sd": 0.02162948910138525,
+          "z": -0.09926834999918442
+        },
+        "C2_cfs_rising": {
+          "observed": 0.5314136147499084,
+          "null_mean": 0.5167356010317803,
+          "null_sd": 0.025519245105751185,
+          "z": 0.5751742912967368
+        },
+        "C3_cfs_quadrant": {
+          "observed": 0.12041884660720825,
+          "null_mean": 0.11995916216373444,
+          "null_sd": 0.01654142678284863,
+          "z": 0.027789890769909266
+        },
+        "P1_elev_even": {
+          "observed": 0.35078534483909607,
+          "null_mean": 0.3465738227725029,
+          "null_sd": 0.02401392578887859,
+          "z": 0.1753783243780822
+        },
+        "P2_elev_odd": {
+          "observed": 0.5052356123924255,
+          "null_mean": 0.5031999986290931,
+          "null_sd": 0.025272937404966708,
+          "z": 0.08054519863339449
+        }
+      }
+    },
+    "Chile": {
+      "n": 684,
+      "n_before_cuts": 1880,
+      "per_statistic": {
+        "B1_axial_f1": {
+          "observed": 0.3818125533276145,
+          "null_mean": 0.3952860556115123,
+          "null_sd": 0.022555192335032427,
+          "z": -0.5973570113596839
+        },
+        "B1_axial_f2": {
+          "observed": 0.09162057825399168,
+          "null_mean": 0.08350150095059992,
+          "null_sd": 0.025268379501927733,
+          "z": 0.321313731368185
+        },
+        "B1_axial_f3": {
+          "observed": 0.022287732980361553,
+          "null_mean": 0.0357423481606863,
+          "null_sd": 0.018892050985342624,
+          "z": -0.7121839333783024
+        },
+        "B1_axial_f4": {
+          "observed": 0.04093102002252386,
+          "null_mean": 0.03531143347112367,
+          "null_sd": 0.018014700978766438,
+          "z": 0.31194448123362606
+        },
+        "B2_moonaz_m1": {
+          "observed": 0.00643957025499756,
+          "null_mean": 0.03343203380657006,
+          "null_sd": 0.01779866348183496,
+          "z": -1.5165444067820368
+        },
+        "B2_moonaz_m2": {
+          "observed": 0.2738255277465478,
+          "null_mean": 0.2888882801053116,
+          "null_sd": 0.02479228665138699,
+          "z": -0.6075580107057665
+        },
+        "B2_moonaz_m3": {
+          "observed": 0.04698026794505473,
+          "null_mean": 0.03389044122040558,
+          "null_sd": 0.01760045892436852,
+          "z": 0.7437207621061387
+        },
+        "B2_moonaz_m4": {
+          "observed": 0.06784158656090111,
+          "null_mean": 0.06384335088807859,
+          "null_sd": 0.024452212231665563,
+          "z": 0.1635122268260381
+        },
+        "C1_cfs_below": {
+          "observed": 0.5862573385238647,
+          "null_mean": 0.5701336250901222,
+          "null_sd": 0.018745829636800902,
+          "z": 0.8601226910805396
+        },
+        "C2_cfs_rising": {
+          "observed": 0.48830410838127136,
+          "null_mean": 0.49552748494744303,
+          "null_sd": 0.01899922620656857,
+          "z": -0.38019319774582944
+        },
+        "C3_cfs_quadrant": {
+          "observed": 0.30994153022766113,
+          "null_mean": 0.28611549646258355,
+          "null_sd": 0.017175718182952496,
+          "z": 1.3871928679364194
+        },
+        "P1_elev_even": {
+          "observed": 0.5921052694320679,
+          "null_mean": 0.5808418131113052,
+          "null_sd": 0.018936595626775094,
+          "z": 0.5947983757353335
+        },
+        "P2_elev_odd": {
+          "observed": 0.5175438523292542,
+          "null_mean": 0.4977435667574406,
+          "null_sd": 0.019026685390367063,
+          "z": 1.0406586941222127
+        }
+      }
+    },
+    "Greece-Aegean": {
+      "n": 67,
+      "n_before_cuts": 267,
+      "per_statistic": {
+        "B1_axial_f1": {
+          "observed": 0.07603744709249365,
+          "null_mean": 0.17096251727629497,
+          "null_sd": 0.07153639595306982,
+          "z": -1.3269478972085094
+        },
+        "B1_axial_f2": {
+          "observed": 0.039758330108871746,
+          "null_mean": 0.10718453994430763,
+          "null_sd": 0.05615156073930321,
+          "z": -1.2007895942283398
+        },
+        "B1_axial_f3": {
+          "observed": 0.1093813565166281,
+          "null_mean": 0.10792870689044337,
+          "null_sd": 0.05644994431791395,
+          "z": 0.025733411143928134
+        },
+        "B1_axial_f4": {
+          "observed": 0.10283065707918816,
+          "null_mean": 0.11042981346929871,
+          "null_sd": 0.057417986793612576,
+          "z": -0.13234801173760263
+        },
+        "B2_moonaz_m1": {
+          "observed": 0.09311184329700067,
+          "null_mean": 0.10755897137518591,
+          "null_sd": 0.055818118754982424,
+          "z": -0.2588250625500642
+        },
+        "B2_moonaz_m2": {
+          "observed": 0.0730780052360817,
+          "null_mean": 0.13863413818478554,
+          "null_sd": 0.06923165533753532,
+          "z": -0.9469098005686609
+        },
+        "B2_moonaz_m3": {
+          "observed": 0.20352085202150857,
+          "null_mean": 0.10860445595089134,
+          "null_sd": 0.056554793499317114,
+          "z": 1.6783085959241162
+        },
+        "B2_moonaz_m4": {
+          "observed": 0.0033051849998988656,
+          "null_mean": 0.10803411512897415,
+          "null_sd": 0.05488267674204323,
+          "z": -1.9082329132982505
+        },
+        "C1_cfs_below": {
+          "observed": 0.35820895433425903,
+          "null_mean": 0.43294925413131713,
+          "null_sd": 0.06101919969081532,
+          "z": -1.224865291183229
+        },
+        "C2_cfs_rising": {
+          "observed": 0.38805970549583435,
+          "null_mean": 0.47809552361369134,
+          "null_sd": 0.0605864383647022,
+          "z": -1.4860721400370693
+        },
+        "C3_cfs_quadrant": {
+          "observed": 0.2238806039094925,
+          "null_mean": 0.22442985213920474,
+          "null_sd": 0.05009969886027529,
+          "z": -0.010963104413942049
+        },
+        "P1_elev_even": {
+          "observed": 0.5074626803398132,
+          "null_mean": 0.5262000020086766,
+          "null_sd": 0.060758343021239974,
+          "z": -0.30839092603814283
+        },
+        "P2_elev_odd": {
+          "observed": 0.5970149040222168,
+          "null_mean": 0.5070268674373627,
+          "null_sd": 0.061182578016457385,
+          "z": 1.4708114548662594
+        }
+      }
+    },
+    "Himalaya": {
+      "n": 61,
+      "n_before_cuts": 661,
+      "per_statistic": {
+        "B1_axial_f1": {
+          "observed": 0.39265006183662754,
+          "null_mean": 0.34622919203612157,
+          "null_sd": 0.07609411055920978,
+          "z": 0.6100455010166038
+        },
+        "B1_axial_f2": {
+          "observed": 0.14294135582014725,
+          "null_mean": 0.13211756156192045,
+          "null_sd": 0.06660355545024776,
+          "z": 0.1625107576473462
+        },
+        "B1_axial_f3": {
+          "observed": 0.14221956280407247,
+          "null_mean": 0.11418801741583263,
+          "null_sd": 0.05851900279724986,
+          "z": 0.4790161152499543
+        },
+        "B1_axial_f4": {
+          "observed": 0.10772275695178518,
+          "null_mean": 0.11504918180238827,
+          "null_sd": 0.0594310926874299,
+          "z": -0.12327595740390411
+        },
+        "B2_moonaz_m1": {
+          "observed": 0.04233440293612183,
+          "null_mean": 0.1116829416902633,
+          "null_sd": 0.06017017482728091,
+          "z": -1.1525400907211445
+        },
+        "B2_moonaz_m2": {
+          "observed": 0.3127649087828201,
+          "null_mean": 0.25271757245181914,
+          "null_sd": 0.07981308685818181,
+          "z": 0.7523495042573382
+        },
+        "B2_moonaz_m3": {
+          "observed": 0.3175613451213893,
+          "null_mean": 0.11357287480126901,
+          "null_sd": 0.05889326841423662,
+          "z": 3.4636975636218708
+        },
+        "B2_moonaz_m4": {
+          "observed": 0.0946799036813035,
+          "null_mean": 0.12109453726279572,
+          "null_sd": 0.06288743603298368,
+          "z": -0.42003037884448136
+        },
+        "C1_cfs_below": {
+          "observed": 0.5081967115402222,
+          "null_mean": 0.483727864664793,
+          "null_sd": 0.0639852482621727,
+          "z": 0.38241387726075055
+        },
+        "C2_cfs_rising": {
+          "observed": 0.5573770403862,
+          "null_mean": 0.5076032735407352,
+          "null_sd": 0.06438423773105836,
+          "z": 0.7730737925853294
+        },
+        "C3_cfs_quadrant": {
+          "observed": 0.2295081913471222,
+          "null_mean": 0.23845573507100343,
+          "null_sd": 0.05444821839930085,
+          "z": -0.16433124878877814
+        },
+        "P1_elev_even": {
+          "observed": 0.5737704634666443,
+          "null_mean": 0.5823606486618519,
+          "null_sd": 0.06335850570073225,
+          "z": -0.13558061542332622
+        },
+        "P2_elev_odd": {
+          "observed": 0.5245901346206665,
+          "null_mean": 0.5029967163801193,
+          "null_sd": 0.063510119348891,
+          "z": 0.33999964827532997
+        }
+      }
+    },
+    "Indonesia": {
+      "n": 1294,
+      "n_before_cuts": 4311,
+      "per_statistic": {
+        "B1_axial_f1": {
+          "observed": 0.20996887300893208,
+          "null_mean": 0.20659973018613972,
+          "null_sd": 0.013558255727078779,
+          "z": 0.24849382476710807
+        },
+        "B1_axial_f2": {
+          "observed": 0.03417137477605415,
+          "null_mean": 0.04036574706492015,
+          "null_sd": 0.01658887165530888,
+          "z": -0.3734052814185008
+        },
+        "B1_axial_f3": {
+          "observed": 0.03845195522246908,
+          "null_mean": 0.03668116324486179,
+          "null_sd": 0.016764972511059344,
+          "z": 0.10562450826800639
+        },
+        "B1_axial_f4": {
+          "observed": 0.029086701587205686,
+          "null_mean": 0.0432555330325865,
+          "null_sd": 0.01712224853429577,
+          "z": -0.8275099743471614
+        },
+        "B2_moonaz_m1": {
+          "observed": 0.013653773970470977,
+          "null_mean": 0.0242795154159131,
+          "null_sd": 0.01285021534470762,
+          "z": -0.8268920917203423
+        },
+        "B2_moonaz_m2": {
+          "observed": 0.16332415293745184,
+          "null_mean": 0.14828728102342767,
+          "null_sd": 0.016493748053909747,
+          "z": 0.9116710080011053
+        },
+        "B2_moonaz_m3": {
+          "observed": 0.036200447549767735,
+          "null_mean": 0.024463328858969163,
+          "null_sd": 0.012570225928674008,
+          "z": 0.9337237657777471
+        },
+        "B2_moonaz_m4": {
+          "observed": 0.031222533014129486,
+          "null_mean": 0.028145111391773708,
+          "null_sd": 0.014519193220775885,
+          "z": 0.2119554148471705
+        },
+        "C1_cfs_below": {
+          "observed": 0.6514683365821838,
+          "null_mean": 0.6529534784078598,
+          "null_sd": 0.013119775093279403,
+          "z": -0.11319872597790968
+        },
+        "C2_cfs_rising": {
+          "observed": 0.4899536371231079,
+          "null_mean": 0.5002880986630917,
+          "null_sd": 0.013936221858512818,
+          "z": -0.7415540341495802
+        },
+        "C3_cfs_quadrant": {
+          "observed": 0.32998454570770264,
+          "null_mean": 0.3266234931528568,
+          "null_sd": 0.013098375869603333,
+          "z": 0.256600710523632
+        },
+        "P1_elev_even": {
+          "observed": 0.6391035318374634,
+          "null_mean": 0.6469452865958214,
+          "null_sd": 0.013242085206632231,
+          "z": -0.5921842848761099
+        },
+        "P2_elev_odd": {
+          "observed": 0.5139103531837463,
+          "null_mean": 0.4987225653409958,
+          "null_sd": 0.013956266065994045,
+          "z": 1.0882414946041503
+        }
+      }
+    },
+    "Japan": {
+      "n": 654,
+      "n_before_cuts": 2340,
+      "per_statistic": {
+        "B1_axial_f1": {
+          "observed": 0.2771667683380422,
+          "null_mean": 0.2928503468884931,
+          "null_sd": 0.024824972136611625,
+          "z": -0.6317662096112041
+        },
+        "B1_axial_f2": {
+          "observed": 0.039400329985072736,
+          "null_mean": 0.05995667412041782,
+          "null_sd": 0.02506408218233344,
+          "z": -0.8201514815425534
+        },
+        "B1_axial_f3": {
+          "observed": 0.03838952024024082,
+          "null_mean": 0.035771898671545316,
+          "null_sd": 0.01889215438994923,
+          "z": 0.13855601191191277
+        },
+        "B1_axial_f4": {
+          "observed": 0.04072075156342624,
+          "null_mean": 0.03434019751398367,
+          "null_sd": 0.018054559381973614,
+          "z": 0.35340403022037575
+        },
+        "B2_moonaz_m1": {
+          "observed": 0.028857485060351226,
+          "null_mean": 0.0350676620740261,
+          "null_sd": 0.018510928224682602,
+          "z": -0.33548706679085805
+        },
+        "B2_moonaz_m2": {
+          "observed": 0.17583942767391442,
+          "null_mean": 0.1946874554463054,
+          "null_sd": 0.02591116864220625,
+          "z": -0.7274094052898005
+        },
+        "B2_moonaz_m3": {
+          "observed": 0.02253985545655386,
+          "null_mean": 0.03462096239348832,
+          "null_sd": 0.01779280674573956,
+          "z": -0.6789882624801311
+        },
+        "B2_moonaz_m4": {
+          "observed": 0.04782874379810785,
+          "null_mean": 0.044440823015840576,
+          "null_sd": 0.02154774699230535,
+          "z": 0.15722853918217497
+        },
+        "C1_cfs_below": {
+          "observed": 0.4709480106830597,
+          "null_mean": 0.44278746193647384,
+          "null_sd": 0.019023721502729248,
+          "z": 1.4802860072644455
+        },
+        "C2_cfs_rising": {
+          "observed": 0.5183486342430115,
+          "null_mean": 0.5208477067351341,
+          "null_sd": 0.019368739039197128,
+          "z": -0.1290260809991407
+        },
+        "C3_cfs_quadrant": {
+          "observed": 0.2293577939271927,
+          "null_mean": 0.2172620797544718,
+          "null_sd": 0.016196309411852673,
+          "z": 0.7468191589294471
+        },
+        "P1_elev_even": {
+          "observed": 0.5321100950241089,
+          "null_mean": 0.505402446514368,
+          "null_sd": 0.019387043422988474,
+          "z": 1.3776029653944986
+        },
+        "P2_elev_odd": {
+          "observed": 0.5091742873191833,
+          "null_mean": 0.499826299315691,
+          "null_sd": 0.019591155494949584,
+          "z": 0.47715347907386935
+        }
+      }
+    },
+    "Mexico": {
+      "n": 224,
+      "n_before_cuts": 410,
+      "per_statistic": {
+        "B1_axial_f1": {
+          "observed": 0.5346198127412182,
+          "null_mean": 0.5560942368081823,
+          "null_sd": 0.0333258997709711,
+          "z": -0.6443764223785379
+        },
+        "B1_axial_f2": {
+          "observed": 0.16116418963252893,
+          "null_mean": 0.1789057287396571,
+          "null_sd": 0.04312260491882708,
+          "z": -0.4114208578198001
+        },
+        "B1_axial_f3": {
+          "observed": 0.08623329982881202,
+          "null_mean": 0.05994408790182209,
+          "null_sd": 0.031687698612299024,
+          "z": 0.8296346241057163
+        },
+        "B1_axial_f4": {
+          "observed": 0.1646532983294792,
+          "null_mean": 0.0769554222004151,
+          "null_sd": 0.03735713785703235,
+          "z": 2.3475534037079684
+        },
+        "B2_moonaz_m1": {
+          "observed": 0.07463014456402361,
+          "null_mean": 0.058491136651654174,
+          "null_sd": 0.03214931025758351,
+          "z": 0.5020016847348228
+        },
+        "B2_moonaz_m2": {
+          "observed": 0.4175430389709703,
+          "null_mean": 0.4311428495316033,
+          "null_sd": 0.04054471130805247,
+          "z": -0.335427485407499
+        },
+        "B2_moonaz_m3": {
+          "observed": 0.03817067573487481,
+          "null_mean": 0.058857070170595695,
+          "null_sd": 0.03052746197741098,
+          "z": -0.6776323053330779
+        },
+        "B2_moonaz_m4": {
+          "observed": 0.08614375916561694,
+          "null_mean": 0.14383205835966428,
+          "null_sd": 0.04378865414557502,
+          "z": -1.3174257195085985
+        },
+        "C1_cfs_below": {
+          "observed": 0.5892857313156128,
+          "null_mean": 0.5665723210394382,
+          "null_sd": 0.03366955550730779,
+          "z": 0.6745978654587451
+        },
+        "C2_cfs_rising": {
+          "observed": 0.5044642686843872,
+          "null_mean": 0.49985714219212535,
+          "null_sd": 0.03357163201660755,
+          "z": 0.13723272344885587
+        },
+        "C3_cfs_quadrant": {
+          "observed": 0.2723214328289032,
+          "null_mean": 0.2827669646501541,
+          "null_sd": 0.029990751263852443,
+          "z": -0.3482917693309272
+        },
+        "P1_elev_even": {
+          "observed": 0.6696428656578064,
+          "null_mean": 0.6277017856597901,
+          "null_sd": 0.03286216798995496,
+          "z": 1.2762724605034133
+        },
+        "P2_elev_odd": {
+          "observed": 0.5,
+          "null_mean": 0.4978624995291233,
+          "null_sd": 0.03343018740245163,
+          "z": 0.06393923088567341
+        }
+      }
+    },
+    "Philippines": {
+      "n": 303,
+      "n_before_cuts": 1217,
+      "per_statistic": {
+        "B1_axial_f1": {
+          "observed": 0.5352766407717188,
+          "null_mean": 0.5186895409876708,
+          "null_sd": 0.028139218673407965,
+          "z": 0.5894655419030174
+        },
+        "B1_axial_f2": {
+          "observed": 0.061322592652327854,
+          "null_mean": 0.10057925009669308,
+          "null_sd": 0.036041708231245306,
+          "z": -1.0892008001533293
+        },
+        "B1_axial_f3": {
+          "observed": 0.08508881398999547,
+          "null_mean": 0.054473580924304814,
+          "null_sd": 0.028194311011059812,
+          "z": 1.0858656220994791
+        },
+        "B1_axial_f4": {
+          "observed": 0.07137485043346808,
+          "null_mean": 0.06794361864787635,
+          "null_sd": 0.03253425155682064,
+          "z": 0.10546521347199694
+        },
+        "B2_moonaz_m1": {
+          "observed": 0.026222674791561446,
+          "null_mean": 0.051207746094594185,
+          "null_sd": 0.028227542335430147,
+          "z": -0.885130947856995
+        },
+        "B2_moonaz_m2": {
+          "observed": 0.40574525877605716,
+          "null_mean": 0.40046155826808805,
+          "null_sd": 0.03340625128305541,
+          "z": 0.15816502316286996
+        },
+        "B2_moonaz_m3": {
+          "observed": 0.023678536235125888,
+          "null_mean": 0.05202575861107715,
+          "null_sd": 0.02699328426763217,
+          "z": -1.0501583317870886
+        },
+        "B2_moonaz_m4": {
+          "observed": 0.07685053110150031,
+          "null_mean": 0.07506646981532672,
+          "null_sd": 0.0338078267977732,
+          "z": 0.052770658606518236
+        },
+        "C1_cfs_below": {
+          "observed": 0.735973596572876,
+          "null_mean": 0.7025782184243202,
+          "null_sd": 0.02593224506061564,
+          "z": 1.2877935585791096
+        },
+        "C2_cfs_rising": {
+          "observed": 0.5049505233764648,
+          "null_mean": 0.4991227741062641,
+          "null_sd": 0.028810916160154732,
+          "z": 0.20227573596776055
+        },
+        "C3_cfs_quadrant": {
+          "observed": 0.36303630471229553,
+          "null_mean": 0.35027920718193056,
+          "null_sd": 0.027080238531721257,
+          "z": 0.4710851241366119
+        },
+        "P1_elev_even": {
+          "observed": 0.6600660085678101,
+          "null_mean": 0.6368976906061172,
+          "null_sd": 0.027618302376766754,
+          "z": 0.8388755270194533
+        },
+        "P2_elev_odd": {
+          "observed": 0.4752475321292877,
+          "null_mean": 0.4999636983752251,
+          "null_sd": 0.02852570206162188,
+          "z": -0.8664525133349893
+        }
+      }
+    }
+  },
+  "combined_across_regions": {
+    "B1_axial_f1": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": 1.0428366434842267,
+        "Chile": -0.5973570113596839,
+        "Greece-Aegean": -1.3269478972085094,
+        "Himalaya": 0.6100455010166038,
+        "Indonesia": 0.24849382476710807,
+        "Japan": -0.6317662096112041,
+        "Mexico": -0.6443764223785379,
+        "Philippines": 0.5894655419030174
+      },
+      "z_pooled": -0.1310619196903236,
+      "z_weighted_mean": -0.0887007536733724,
+      "cochran_Q": 4.737915632975187,
+      "Q_df": 7,
+      "Q_p": 0.6919108368824458,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "B1_axial_f2": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": -1.7188013708966343,
+        "Chile": 0.321313731368185,
+        "Greece-Aegean": -1.2007895942283398,
+        "Himalaya": 0.1625107576473462,
+        "Indonesia": -0.3734052814185008,
+        "Japan": -0.8201514815425534,
+        "Mexico": -0.4114208578198001,
+        "Philippines": -1.0892008001533293
+      },
+      "z_pooled": -1.5398686181775412,
+      "z_weighted_mean": -0.6412431121304533,
+      "cochran_Q": 3.4039896938535863,
+      "Q_df": 7,
+      "Q_p": 0.8452877126712129,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "B1_axial_f3": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": -0.2936743562364982,
+        "Chile": -0.7121839333783024,
+        "Greece-Aegean": 0.025733411143928134,
+        "Himalaya": 0.4790161152499543,
+        "Indonesia": 0.10562450826800639,
+        "Japan": 0.13855601191191277,
+        "Mexico": 0.8296346241057163,
+        "Philippines": 1.0858656220994791
+      },
+      "z_pooled": 0.30124865478906415,
+      "z_weighted_mean": 0.2073215003955246,
+      "cochran_Q": 2.3774636573376746,
+      "Q_df": 7,
+      "Q_p": 0.9360381591930119,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "B1_axial_f4": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": -1.4324993739454694,
+        "Chile": 0.31194448123362606,
+        "Greece-Aegean": -0.13234801173760263,
+        "Himalaya": -0.12327595740390411,
+        "Indonesia": -0.8275099743471614,
+        "Japan": 0.35340403022037575,
+        "Mexico": 2.3475534037079684,
+        "Philippines": 0.10546521347199694
+      },
+      "z_pooled": -0.09318613700839785,
+      "z_weighted_mean": 0.07534172639997871,
+      "cochran_Q": 8.468462828449196,
+      "Q_df": 7,
+      "Q_p": 0.29310113447730635,
+      "I2": 0.1734037048041352,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "B2_moonaz_m1": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": -1.5653403155904628,
+        "Chile": -1.5165444067820368,
+        "Greece-Aegean": -0.2588250625500642,
+        "Himalaya": -1.1525400907211445,
+        "Indonesia": -0.8268920917203423,
+        "Japan": -0.33548706679085805,
+        "Mexico": 0.5020016847348228,
+        "Philippines": -0.885130947856995
+      },
+      "z_pooled": -2.1065097111935627,
+      "z_weighted_mean": -0.7548447871596351,
+      "cochran_Q": 3.418975683126079,
+      "Q_df": 7,
+      "Q_p": 0.8437315053733883,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "B2_moonaz_m2": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": 1.5804323442898869,
+        "Chile": -0.6075580107057665,
+        "Greece-Aegean": -0.9469098005686609,
+        "Himalaya": 0.7523495042573382,
+        "Indonesia": 0.9116710080011053,
+        "Japan": -0.7274094052898005,
+        "Mexico": -0.335427485407499,
+        "Philippines": 0.15816502316286996
+      },
+      "z_pooled": 0.4135592923251141,
+      "z_weighted_mean": 0.09816414721743418,
+      "cochran_Q": 5.750267722080933,
+      "Q_df": 7,
+      "Q_p": 0.5691931126106438,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "B2_moonaz_m3": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": 0.03815045175480013,
+        "Chile": 0.7437207621061387,
+        "Greece-Aegean": 1.6783085959241162,
+        "Himalaya": 3.4636975636218708,
+        "Indonesia": 0.9337237657777471,
+        "Japan": -0.6789882624801311,
+        "Mexico": -0.6776323053330779,
+        "Philippines": -1.0501583317870886
+      },
+      "z_pooled": 0.8054600253731382,
+      "z_weighted_mean": 0.5563527799480469,
+      "cochran_Q": 15.787152452719159,
+      "Q_df": 7,
+      "Q_p": 0.02713372102764584,
+      "I2": 0.5566014820618059,
+      "heterogeneous": true,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "B2_moonaz_m4": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": -0.8886362322621305,
+        "Chile": 0.1635122268260381,
+        "Greece-Aegean": -1.9082329132982505,
+        "Himalaya": -0.42003037884448136,
+        "Indonesia": 0.2119554148471705,
+        "Japan": 0.15722853918217497,
+        "Mexico": -1.3174257195085985,
+        "Philippines": 0.052770658606518236
+      },
+      "z_pooled": -0.6462595716209236,
+      "z_weighted_mean": -0.4936073005564449,
+      "cochran_Q": 4.493044815105558,
+      "Q_df": 7,
+      "Q_p": 0.7215546330970511,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "C1_cfs_below": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": -0.09926834999918442,
+        "Chile": 0.8601226910805396,
+        "Greece-Aegean": -1.224865291183229,
+        "Himalaya": 0.38241387726075055,
+        "Indonesia": -0.11319872597790968,
+        "Japan": 1.4802860072644455,
+        "Mexico": 0.6745978654587451,
+        "Philippines": 1.2877935585791096
+      },
+      "z_pooled": 1.3176434375505728,
+      "z_weighted_mean": 0.40598520406040844,
+      "cochran_Q": 5.395163861227672,
+      "Q_df": 7,
+      "Q_p": 0.6118573378708698,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "C2_cfs_rising": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": 0.5751742912967368,
+        "Chile": -0.38019319774582944,
+        "Greece-Aegean": -1.4860721400370693,
+        "Himalaya": 0.7730737925853294,
+        "Indonesia": -0.7415540341495802,
+        "Japan": -0.1290260809991407,
+        "Mexico": 0.13723272344885587,
+        "Philippines": 0.20227573596776055
+      },
+      "z_pooled": -0.48252876243842463,
+      "z_weighted_mean": -0.13113611370411712,
+      "cochran_Q": 3.7701507935061724,
+      "Q_df": 7,
+      "Q_p": 0.8058382470986709,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "C3_cfs_quadrant": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": 0.027789890769909266,
+        "Chile": 1.3871928679364194,
+        "Greece-Aegean": -0.010963104413942049,
+        "Himalaya": -0.16433124878877814,
+        "Indonesia": 0.256600710523632,
+        "Japan": 0.7468191589294471,
+        "Mexico": -0.3482917693309272,
+        "Philippines": 0.4710851241366119
+      },
+      "z_pooled": 1.1022591187598134,
+      "z_weighted_mean": 0.2957377037202965,
+      "cochran_Q": 2.219326096207305,
+      "Q_df": 7,
+      "Q_p": 0.9467106927437651,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "P1_elev_even": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": 0.1753783243780822,
+        "Chile": 0.5947983757353335,
+        "Greece-Aegean": -0.30839092603814283,
+        "Himalaya": -0.13558061542332622,
+        "Indonesia": -0.5921842848761099,
+        "Japan": 1.3776029653944986,
+        "Mexico": 1.2762724605034133,
+        "Philippines": 0.8388755270194533
+      },
+      "z_pooled": 1.0406096301786318,
+      "z_weighted_mean": 0.4033464783366502,
+      "cochran_Q": 3.7775783790772106,
+      "Q_df": 7,
+      "Q_p": 0.8050100230799061,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    },
+    "P2_elev_odd": {
+      "n_regions": 8,
+      "regions": [
+        "Alaska-Aleutians",
+        "Chile",
+        "Greece-Aegean",
+        "Himalaya",
+        "Indonesia",
+        "Japan",
+        "Mexico",
+        "Philippines"
+      ],
+      "z_by_region": {
+        "Alaska-Aleutians": 0.08054519863339449,
+        "Chile": 1.0406586941222127,
+        "Greece-Aegean": 1.4708114548662594,
+        "Himalaya": 0.33999964827532997,
+        "Indonesia": 1.0882414946041503,
+        "Japan": 0.47715347907386935,
+        "Mexico": 0.06393923088567341,
+        "Philippines": -0.8664525133349893
+      },
+      "z_pooled": 1.3324446567196009,
+      "z_weighted_mean": 0.4618620858907375,
+      "cochran_Q": 3.8285846284827922,
+      "Q_df": 7,
+      "Q_p": 0.7992959518249879,
+      "I2": 0.0,
+      "heterogeneous": false,
+      "interpretation": "z_pooled is only a summary if Q is small. A LARGE Q with a small z_pooled is the signature of regions that disagree -- which is exactly what 'some regions use this triggering and others do not' predicts, and is a FINDING rather than a failure. Quoting z_pooled alone in that case reports nothing while the data says something.",
+      "weights": "sqrt(n) per region for the POOLED z; UNIT weights for Q, because each z is already standardised against its own null"
+    }
+  },
+  "max_statistic": {
+    "observed_max_abs_z": 3.4636975636218708,
+    "null_max_p95": 3.751747667182979,
+    "p": 0.09738052389522095,
+    "where": {
+      "region": "Himalaya",
+      "statistic": "B2_moonaz_m3",
+      "z": 3.4636975636218708
+    }
+  },
+  "not_a_promotion": "a survivor is a candidate for Popper, not a finding"
+}
