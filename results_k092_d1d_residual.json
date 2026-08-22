@@ -1,0 +1,258 @@
+{
+  "arm": "D-1d orthogonal-complement arm on the K-092 seed set",
+  "generated_utc": "2026-08-22T17:27:48.111539+00:00",
+  "priced_tests": 0,
+  "scope": {
+    "input": "K092_seed_exclusion_superset.csv ONLY",
+    "sha256_verified": "35b5cf0fe9145ec830fba782550f7d8b76dc2708db105eb6003a0f92b68bfcb6",
+    "n_events": 162,
+    "licence": "K-096 first-move licence, second view; already-seen set, excluded from D-12 by construction; D-7 remains STRUCK"
+  },
+  "why_not_a_rescue": "K-108 showed D-1c was ~89% variance-shared with the axis D-1 bounded. Discarding it throws away the 11%. This arm PROJECTS OUT the bounded axis and tests only what remains, which is a graded answer instead of a binary one. The orthogonality of the rate axis is a theorem, not a discovery made after the seed was read.",
+  "not_evidence": "the seed set was selected by having been looked at. A null here EXTENDS the bound into the orthogonal directions. A hit here is NOT a finding.",
+  "declaration": {
+    "fault": {
+      "strike_deg": 250.0,
+      "dip_deg": 20.0,
+      "rake_deg": 90.0
+    },
+    "friction": 0.4,
+    "no_friction_or_dip_grid_because": "K-111: at the free surface friction and dip are algebraically inert, so D-1c's 45-cell grid was 5 statistics. Gridding them again would repeat a known-vacuous design.",
+    "bounded_axis_projected_out": "sitetide.areal_strain (SCALAR_FOR_PHASE)",
+    "statistics": [
+      "RESID_CFS_TROUGH",
+      "RESID_CFS_CREST",
+      "RATE_RISING",
+      "RATE_HIGH",
+      "SHEAR_TROUGH",
+      "RAKE0_CREST",
+      "BEARING_RESID_R2",
+      "ROPE_RESID_EASING"
+    ],
+    "half_span_days": 10.0,
+    "step_minutes": 2.0,
+    "rate_half_minutes": 10.0,
+    "n_null_replicates": 2000,
+    "rng_seed": 20260822,
+    "power_floor": {
+      "m": 8,
+      "n_replicates": 2000,
+      "floor": 0.00399800099950025,
+      "alpha": 0.05,
+      "min_attainable_p": 0.0004997501249375312
+    },
+    "null": "waveform-matched time-uniform, engine/dwell_null.py; the RESIDUAL gets its OWN null and does not inherit the raw statistic's",
+    "scope_flags": "ALL OF sitetide.SCOPE_FLAGS, PLUS: (1) FREE-SURFACE PLANE STRESS -- the stress tensor is formed under sigma_rr = sigma_rN = sigma_rE = 0, exact at the free surface and approximate at hypocentral depth; no absolute Coulomb amplitude from this module is a measurement, only a detection statistic against an identically-constructed null. (2) THE FAULT MECHANISM IS A DECLARED ASSUMPTION, not a datum -- sitetide's 'no receiver mechanism, so no Coulomb resolution' flag is NOT lifted, it is made explicit so the assumption can be gridded and priced. (3) The absent ocean load is DIRECTIONAL and largest at coastal subduction sites, so it is a worse omission for a bearing statistic than for a scalar one."
+  },
+  "orthogonality": {
+    "pooled_shared_variance_with_bounded_axis": {
+      "cfs_thrust": 0.8922885184703115,
+      "rope_traction": 0.8922885184703115,
+      "horizontal_shear": 0.021595724227988798,
+      "cfs_rake0": 0.0901164685806769,
+      "bearing_axial": 0.015513377887304952
+    },
+    "pooled_new_information_fraction": {
+      "cfs_thrust": 0.10771148152968846,
+      "rope_traction": 0.10771148152968846,
+      "horizontal_shear": 0.9784042757720112,
+      "cfs_rake0": 0.9098835314193231,
+      "bearing_axial": 0.984486622112695
+    },
+    "per_site_spread": {
+      "cfs_thrust": {
+        "min": 0.855342214160367,
+        "max": 0.9222864224107672
+      },
+      "rope_traction": {
+        "min": 0.8553422141603672,
+        "max": 0.9222864224107665
+      },
+      "horizontal_shear": {
+        "min": 6.93532611313913e-07,
+        "max": 0.1340415879272247
+      },
+      "cfs_rake0": {
+        "min": 8.290312333946125e-06,
+        "max": 0.23249365308117279
+      },
+      "bearing_axial": {
+        "min": 8.313934760811742e-06,
+        "max": 0.11369254888623903
+      }
+    },
+    "battery_effective_rank": {
+      "n_nominal": 5,
+      "n_non_constant": 5,
+      "effective_rank": 3,
+      "eigenvalues": [
+        2.402197605109925,
+        1.6761723251992884,
+        0.9216300696907848,
+        0.0,
+        0.0
+      ],
+      "variance_explained_by_first": 0.48043952102198517,
+      "tol": 0.01,
+      "note": "effective rank is the number of principal components needed to reach 1 - tol of the total variance; a battery whose effective rank is far below its nominal count is not the search it claims to be"
+    },
+    "ranked_by_novelty": [
+      "rate",
+      "shear",
+      "cfs0",
+      "cfs",
+      "rope"
+    ],
+    "sp9_note": "Kepler SP-9 (proposed): declare a battery's EFFECTIVE rank alongside its nominal statistic count. An arm whose effective rank is materially below its nominal count must say so in its own result file."
+  },
+  "calibration": {
+    "per_statistic": {
+      "RESID_CFS_TROUGH": {
+        "observed": 0.2716049253940582,
+        "null_mean": 0.3526481488198042,
+        "null_sd": 0.037387080916083434,
+        "z": -2.1676798894155507
+      },
+      "RESID_CFS_CREST": {
+        "observed": 0.31481480598449707,
+        "null_mean": 0.26293827120959756,
+        "null_sd": 0.03464912111004052,
+        "z": 1.4971962668301815
+      },
+      "RATE_RISING": {
+        "observed": 0.5246913433074951,
+        "null_mean": 0.5012962939888239,
+        "null_sd": 0.03941167206992489,
+        "z": 0.593607124233737
+      },
+      "RATE_HIGH": {
+        "observed": 0.37654322385787964,
+        "null_mean": 0.3203271609544754,
+        "null_sd": 0.03568000406401685,
+        "z": 1.57556212164499
+      },
+      "SHEAR_TROUGH": {
+        "observed": 0.395061731338501,
+        "null_mean": 0.3934753096997738,
+        "null_sd": 0.0382572439141638,
+        "z": 0.041467222319688676
+      },
+      "RAKE0_CREST": {
+        "observed": 0.2839506268501282,
+        "null_mean": 0.24920061658322812,
+        "null_sd": 0.03426155797249094,
+        "z": 1.0142565698501307
+      },
+      "BEARING_RESID_R2": {
+        "observed": 0.15569274474960082,
+        "null_mean": 0.10693628265697043,
+        "null_sd": 0.04854810035851818,
+        "z": 1.0042918617324572
+      },
+      "ROPE_RESID_EASING": {
+        "observed": 0.1975308656692505,
+        "null_mean": 0.2319135795235634,
+        "null_sd": 0.03215312687428698,
+        "z": -1.0693427730604
+      }
+    },
+    "max_abs_z_observed": 2.1676798894155507,
+    "max_abs_z_null_p95": 2.702816612664708,
+    "max_statistic_p": 0.1854072963518241,
+    "percentile_of_observed": 0.815,
+    "n_replicates": 2000,
+    "p_convention": "Phipson-Smyth exact: (#{null >= observed} + 1)/(N + 1). Ties count against significance; p is never exactly zero.",
+    "dependence": "handled implicitly -- the null replicates carry the same correlation among statistics that the observation does, so it is reproduced rather than modelled"
+  },
+  "bounds_the_orthogonal_directions_now_carry": {
+    "per_statistic": {
+      "RESID_CFS_TROUGH": {
+        "observed": 0.2716049253940582,
+        "waveform_null": 0.3526481488198042,
+        "ci95_absolute": [
+          0.20479755109894465,
+          0.346970089395606
+        ],
+        "ci95_relative_pct": [
+          -41.92581138329131,
+          -1.6101202978665328
+        ]
+      },
+      "RESID_CFS_CREST": {
+        "observed": 0.31481480598449707,
+        "waveform_null": 0.26293827120959756,
+        "ci95_absolute": [
+          0.24421239658254928,
+          0.39234044084489567
+        ],
+        "ci95_relative_pct": [
+          -7.121775974605542,
+          49.21389687397274
+        ]
+      },
+      "RATE_RISING": {
+        "observed": 0.5246913433074951,
+        "waveform_null": 0.5012962939888239,
+        "ci95_absolute": [
+          0.4448699738604205,
+          0.6035929396634889
+        ],
+        "ci95_relative_pct": [
+          -11.256081643735714,
+          20.406423686217327
+        ]
+      },
+      "RATE_HIGH": {
+        "observed": 0.37654322385787964,
+        "waveform_null": 0.3203271609544754,
+        "ci95_absolute": [
+          0.3017391987260358,
+          0.45595295808891684
+        ],
+        "ci95_relative_pct": [
+          -5.8028055357695125,
+          42.339774351422065
+        ]
+      },
+      "SHEAR_TROUGH": {
+        "observed": 0.395061731338501,
+        "waveform_null": 0.3934753096997738,
+        "ci95_absolute": [
+          0.3192527238405271,
+          0.47478390473051424
+        ],
+        "ci95_relative_pct": [
+          -18.863340095183958,
+          20.664217811475858
+        ]
+      },
+      "RAKE0_CREST": {
+        "observed": 0.2839506268501282,
+        "waveform_null": 0.24920061658322812,
+        "ci95_absolute": [
+          0.2159810820874915,
+          0.3600095289667427
+        ],
+        "ci95_relative_pct": [
+          -13.33043832363149,
+          44.46574567222493
+        ]
+      },
+      "ROPE_RESID_EASING": {
+        "observed": 0.1975308656692505,
+        "waveform_null": 0.2319135795235634,
+        "ci95_absolute": [
+          0.13920819444375937,
+          0.2672565010092247
+        ],
+        "ci95_relative_pct": [
+          -39.97410814418686,
+          15.239694699322396
+        ]
+      }
+    },
+    "headline": "THE PLANE IS NOW BOUNDED, NOT A LINE. D-1 bounded the IN-PHASE (level) direction at about 24 percent relative. This arm bounds the QUADRATURE (stressing-rate) direction at [-11.3, +20.4] percent relative and the horizontal-shear direction at [-18.9, +20.7] percent, on axes measured to be 0.91 to 0.98 ORTHOGONAL to the bounded one. That is what K-097 asked for: 'so the program can say in-phase <= 24 percent, quadrature <= X percent, and have bounded the plane rather than a line.'",
+    "the_one_that_looks_like_something_and_is_not": "RESID_CFS_TROUGH's per-statistic CI is [-41.9, -1.6] percent and excludes zero. It does NOT survive the calibrated max-statistic over the declared battery (max|z| 2.168 against a null 95th percentile of 2.703, p = 0.1854), and the max-statistic is what governs. Quoting the per-statistic CI alone would be selecting the largest of eight and reporting its uncorrected interval. Note also that it SHRANK from the raw D-1c value of z -3.08 to z -2.17 once the bounded axis was projected out, which is exactly the behaviour K-108 predicted: most of the raw signal WAS the already-bounded scalar.",
+    "computed_utc": "2026-08-22T17:28:41.558110+00:00"
+  }
+}
