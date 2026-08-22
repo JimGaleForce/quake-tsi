@@ -30,7 +30,7 @@ import os
 import numpy as np
 import pytest
 
-from engine import searcher as S, searcher_gate as SG
+from engine import gate_calibration as GC, searcher as S, searcher_gate as SG
 
 pytestmark = pytest.mark.filterwarnings("ignore::RuntimeWarning")
 
@@ -196,11 +196,12 @@ def test_the_verdict_is_a_pure_function_of_the_declared_criteria():
     import inspect
     src = inspect.getsource(SG.run_gate)
     i = src.index("passed = bool(")
-    expr = src[i:src.index(")\n\n", i)]
-    assert "not vacuous" in expr
-    assert "n_promotions <= int(MAX_TOTAL)" in expr
-    assert "p_binom >= BINOMIAL_ALPHA" in expr
-    assert "seed" not in expr and "catalog" not in expr
+    expr = src[i:i + 120]
+    assert 'v2["passed"]' in expr, expr
+    assert "seed" not in expr and "MAX_TOTAL" not in expr
+    # the band itself must contain no written-down threshold
+    gc_src = inspect.getsource(GC.calibration_band)
+    assert "= 3" not in gc_src and "MAX" not in gc_src
 
 
 def test_the_cap_diagnostic_is_labelled_a_diagnostic_and_not_a_criterion(
@@ -250,3 +251,25 @@ def test_the_cli_refuses_a_real_scan_without_a_passing_artifact(tmp_path, capsys
     rc2 = cli.main(["search", "--run", "--gate-artifact", failing])
     assert rc2 == 2
     assert "REFUSED" in capsys.readouterr().out
+
+
+def test_v1_cap_is_retained_for_audit_but_is_not_the_verdict():
+    """The cap survives as a reported number and cannot decide anything."""
+    a_eff = GC.effective_alpha(0.10 / 30.0, 400)
+    band = GC.calibration_band(900, a_eff, SG.FALSE_FAIL_RATE)
+    assert band["k_fail_high"] > SG.MAX_TOTAL + 1
+    v1_ff = GC.binom_sf(SG.MAX_TOTAL + 1, 900, a_eff)
+    assert v1_ff > 0.10, "the v1 cap rejects a good instrument this often"
+    assert band["achieved_false_fail_total"] <= SG.FALSE_FAIL_RATE + 1e-12
+
+
+def test_n_catalogues_is_derived_from_the_declared_sensitivity():
+    """v1's 30 was undefended. v2 computes N from the detection curve."""
+    a_eff = GC.effective_alpha(0.10 / 30.0, SG.N_NULL)
+    got = GC.required_catalogues(m=30, alpha_eff=a_eff,
+                                 r_min=SG.DETECT_INFLATION_R,
+                                 power=SG.DETECT_POWER,
+                                 false_fail_rate=SG.FALSE_FAIL_RATE)
+    assert got is not None
+    assert got["detectable_inflation"] <= SG.DETECT_INFLATION_R + 1e-9
+    assert got["n_catalogues"] > 30, "30 catalogues cannot reach the declared 3x"

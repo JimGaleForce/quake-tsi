@@ -1,0 +1,1217 @@
+{
+  "gate_rule_id": "SP7-searcher-gate-v2",
+  "protocol": "HYPOTHESIS_LEDGER.md \u00a7P7-24 SP-7, AMENDED to v2 (BINDING)",
+  "verdict": "PASS",
+  "passed": true,
+  "sp7_v2": {
+    "rule_id": "SP7-gate-v2-derived-band",
+    "rule": "SP-7 v2: PASS if (a) the run is not vacuous -- every cell promotion-eligible and the planted-signal control fires -- AND (b) the promotion count lies strictly inside a two-sided exact-binomial calibration band derived from n_trials, alpha_effective and a DECLARED false-fail rate. FAIL-HIGH means the nominal p's are too small, i.e. an SP-2 null layer is invalid. FAIL-LOW means the instrument is over-conservative and could not detect anything either. The band is COMPUTED, never written down, and the artifact reports the achieved false-fail rate and the smallest miscalibration the gate can detect at declared power.",
+    "superseded": "SP-7 v1 (HYPOTHESIS_LEDGER.md \u00a7P7-24): 'at alpha = q/m the expected promotions are <= 0.1 per catalogue, so <= 3 across 30. PASS: promotions at or below that rate, with the count consistent with binomial.' The cap of 3 is E[X] = N*q, the MEAN, not a bound.",
+    "verdict": "PASS",
+    "passed": true,
+    "n_promotions": 3,
+    "band": {
+      "n_trials": 1980,
+      "alpha_effective": 0.0024937655860349127,
+      "expected_count": 4.937655860349127,
+      "false_fail_rate_declared": 0.01,
+      "k_fail_high": 12,
+      "k_fail_low": -1,
+      "accepted_open_interval": [
+        -1,
+        12
+      ],
+      "achieved_false_fail_high": 0.0049005053401994505,
+      "achieved_false_fail_low": 0.0,
+      "achieved_false_fail_total": 0.0049005053401994505,
+      "note": "the band is COMPUTED from (n_trials, alpha_effective, false_fail_rate); no threshold is written down anywhere"
+    },
+    "p_two_sided": 0.5470773984253352,
+    "power": {
+      "declared": 0.8,
+      "detectable_inflation_R": 2.9897907689920245,
+      "meaning": "smallest factor by which the true per-test false-positive rate must be inflated for this gate to fire with probability >= the declared power. A PASS is only meaningful to the extent this number is small."
+    },
+    "vacuity_reason": null,
+    "interpretation": "count is ordinary for a correctly calibrated searcher, and the gate had the stated power to notice if it were not"
+  },
+  "sp7_v1_reported_for_continuity": {
+    "verdict": "PASS",
+    "passed": true,
+    "max_total_allowed": 3,
+    "measured_false_fail_rate_of_the_v1_cap": 0.7264613007873676,
+    "why_superseded": "the v1 cap is E[X] = N*q, the MEAN of a correctly calibrated searcher, so it rejects a good instrument at the rate reported above. It is retained here for audit and is NOT the verdict."
+  },
+  "declared_before_any_v2_run": {
+    "false_fail_rate": 0.01,
+    "detect_inflation_R": 3.0,
+    "detect_power": 0.8,
+    "n_catalogues_is_DERIVED_not_chosen": "gate_calibration.required_catalogues(m, alpha_eff, R, power) inverts the detection curve; v1's 30 was undefended"
+  },
+  "ts_start": "2026-08-22T17:09:02.244350+00:00",
+  "ts_end": "2026-08-22T17:14:56.184209+00:00",
+  "seed": 20260822,
+  "declaration": {
+    "searcher_rule_id": "S3-searcher-v1",
+    "scan_id": "SP7-GATE",
+    "lattice_rule_id": "S1-lattice-v1",
+    "lattice_digest": "e42b54ece03e",
+    "property_rule_id": "S2-properties-v1",
+    "regions": [
+      "japan",
+      "chile",
+      "california",
+      "iceland",
+      "himalaya"
+    ],
+    "properties": [
+      "tide_phase",
+      "tide_level",
+      "lunar_synodic_phase",
+      "solar_annual_phase",
+      "day_of_week",
+      "utc_hour_phase"
+    ],
+    "mag_strata": [
+      6.0
+    ],
+    "mag_strata_rule": "SEARCHER.md \u00a7S3.2 / \u00a7P7-24 SP-6.7: the magnitude strata are ENUMERATED in the scan declaration {M>=4.5, 5.0, 5.5, 6.0}. A claim at an unenumerated threshold is a NEW SEED, not a result -- otherwise 'which magnitude counts as a major' is an undeclared search over thresholds. Per \u00a7P7-5(4) the headline effect is the MINIMUM over the declared Mc set: a worst-case reading, demote-only, priced 0.",
+    "families": [
+      "solid_tide",
+      "ephemeris",
+      "human_clock",
+      "season"
+    ],
+    "m": 30,
+    "q": 0.1,
+    "alpha": 0.0033333333333333335,
+    "k_cap": 30,
+    "n_events_floor": 8,
+    "declared_forms": [
+      "quadrant",
+      "single-cell",
+      "arc"
+    ],
+    "ranking_function": "-log10(p_real), descending, within magnitude stratum",
+    "human_schedule_mc_floor": 6.0,
+    "window": [
+      0.0,
+      3650.0
+    ],
+    "or_limb": "\u00a7P7-24 SP-3: the promotion rule is ONE rule. alpha = q/m with q = 0.10 and m the scan's FULL declared cell count. The proposed OR-limb ('or the strong-claim binomial clears 1e-6 at n >= 10') is REFUSED: a flat 1e-6 limb is 10x more lenient than q/m at m = 1e6 and 1,000x at 1e8, so it would silently become the operative rule for every large scan and decouple the bar from the search size. An OR of two rules is two chances to promote. Honouring small-n does not require lowering the bar; it requires not confusing 'few events' with 'weak effect.'",
+    "the_sentence": "SEARCHER.md \u00a7S0: the SEARCHER never produces evidence. It produces a RANKING and a CONTROL-CALIBRATED SURVIVOR COUNT, and its only licensed output is a mechanically generated FREEZE FILE. Every claim this program ever makes from a SEARCHER hit is made by the frozen test that the freeze file specifies, run afterwards, on data the scan did not touch.",
+    "control_mandatory": "SEARCHER.md \u00a7S3.3(1): only the DIFFERENCE between the real and control survivor counts is interpretable. A raw survivor count with no control arm may not be quoted, in any forum, ever.",
+    "gate_rule_id": "SP7-searcher-gate-v2",
+    "n_null": 400,
+    "n_ref": 1200,
+    "n_catalogs": 30,
+    "etas": {
+      "mu": 0.011,
+      "K": 0.45,
+      "c": 0.05,
+      "p": 1.15
+    },
+    "config_hash": "7dddaad2818ab5bf18b7386dfd10f6b81281c10eac3f5f16e9249394665bf192"
+  },
+  "m": 30,
+  "alpha_declared": 0.0033333333333333335,
+  "alpha_effective": 0.0024937655860349127,
+  "discreteness_note": "with B = 400 null replicates the attainable p-values are multiples of 1/(B+1) = 0.00249377, so the EFFECTIVE per-cell promotion rate is floor(alpha (B+1))/(B+1) = 0.00249377, not the declared alpha = 0.00333333. The expectation below is priced against the rate the instrument can ATTAIN.",
+  "n_catalogs": 66,
+  "n_cells_per_catalog": 30,
+  "n_trials": 1980,
+  "n_promotions_total": 3,
+  "n_cells_clearing_alpha_before_control": 3,
+  "n_cells_clearing_alpha_note": "cells whose p_real cleared the effective alpha BEFORE the F7-b condition (the control must NOT fire) was applied. Reported because in a clustered ETAS draw the real map and the warped control map tend to fire TOGETHER -- a burst concentrates events in time and therefore in almost any property -- so a promotion count of zero is partly the threshold and partly the control blocking a co-firing cell. Expected under a correct null: n_trials * alpha_effective.",
+  "n_cells_clearing_alpha_expected": 4.937655860349127,
+  "binomial_upper_tail_p_bare": 0.8703183304344682,
+  "cap_is_the_mean_note": "A DIAGNOSTIC, NOT A CRITERION -- reported so the operator can see what a FAIL here does and does not mean, and NOT used to decide the verdict. The expected promotions across N catalogues at alpha = q/m is N * m * (q/m) = N * q, i.e. 3.0 across 30 REGARDLESS OF m. SP-7's cap of 3 is therefore exactly the MEAN of a correctly calibrated searcher, not an upper bound on it: a perfectly calibrated instrument exceeds 3 about 35%% of the time (Poisson(3), P(X > 3) = 0.353). The second clause of SP-7 -- 'with the count consistent with binomial' -- is the one that distinguishes a miscalibrated null from an ordinary fluctuation, and this artifact reports both numbers so the distinction can be made by whoever is entitled to make it. THIS BUILD DOES NOT RELAX THE CAP: changing a criterion after seeing a result is the exact defect the protocol exists to prevent.",
+  "poisson_p_exceeding_cap_if_calibrated": 0.894848992169698,
+  "n_control_promotions_total": 3,
+  "promotions_per_catalog": 0.045454545454545456,
+  "expected_per_catalog_declared": 0.1,
+  "expected_per_catalog_effective": 0.07481296758104738,
+  "max_total_allowed": 3,
+  "binomial_upper_tail_p": 0.8703183304344682,
+  "binomial_alpha": 0.01,
+  "n_eligible_min": 30,
+  "vacuous": false,
+  "vacuity_control": {
+    "planted": "von Mises kappa=3.0 on lunar_synodic_phase, rate modulation by rejection thinning through the identical map",
+    "region": "japan",
+    "n_events": 60,
+    "p_real": 0.0024937655860349127,
+    "p_resolution_floor": 0.0024937655860349127,
+    "alpha": 0.0033333333333333335,
+    "promoted": true,
+    "failures": [],
+    "verdict": "FIRES"
+  },
+  "per_catalog": [
+    {
+      "catalog": 0,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.00997506234413965,
+      "max_statistic_global_p": 0.08977556109725686,
+      "n_events": {
+        "japan": 43,
+        "chile": 65,
+        "california": 68,
+        "iceland": 74,
+        "himalaya": 44
+      }
+    },
+    {
+      "catalog": 1,
+      "n_survivors_real": 0,
+      "n_survivors_control": 1,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.02743142144638404,
+      "max_statistic_global_p": 0.24438902743142144,
+      "n_events": {
+        "japan": 75,
+        "chile": 50,
+        "california": 58,
+        "iceland": 57,
+        "himalaya": 76
+      }
+    },
+    {
+      "catalog": 2,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.029925187032418952,
+      "max_statistic_global_p": 0.26683291770573564,
+      "n_events": {
+        "japan": 51,
+        "chile": 55,
+        "california": 56,
+        "iceland": 63,
+        "himalaya": 56
+      }
+    },
+    {
+      "catalog": 3,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.00997506234413965,
+      "max_statistic_global_p": 0.08977556109725686,
+      "n_events": {
+        "japan": 47,
+        "chile": 60,
+        "california": 99,
+        "iceland": 77,
+        "himalaya": 93
+      }
+    },
+    {
+      "catalog": 4,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.004987531172069825,
+      "max_statistic_global_p": 0.034912718204488775,
+      "n_events": {
+        "japan": 68,
+        "chile": 53,
+        "california": 62,
+        "iceland": 57,
+        "himalaya": 38
+      }
+    },
+    {
+      "catalog": 5,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.059850374064837904,
+      "max_statistic_global_p": 0.46384039900249374,
+      "n_events": {
+        "japan": 63,
+        "chile": 54,
+        "california": 60,
+        "iceland": 40,
+        "himalaya": 51
+      }
+    },
+    {
+      "catalog": 6,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.034912718204488775,
+      "max_statistic_global_p": 0.30174563591022446,
+      "n_events": {
+        "japan": 54,
+        "chile": 61,
+        "california": 66,
+        "iceland": 54,
+        "himalaya": 67
+      }
+    },
+    {
+      "catalog": 7,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.022443890274314215,
+      "max_statistic_global_p": 0.20199501246882792,
+      "n_events": {
+        "japan": 59,
+        "chile": 53,
+        "california": 79,
+        "iceland": 70,
+        "himalaya": 51
+      }
+    },
+    {
+      "catalog": 8,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.014962593516209476,
+      "max_statistic_global_p": 0.12967581047381546,
+      "n_events": {
+        "japan": 61,
+        "chile": 47,
+        "california": 58,
+        "iceland": 55,
+        "himalaya": 50
+      }
+    },
+    {
+      "catalog": 9,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.00997506234413965,
+      "max_statistic_global_p": 0.08977556109725686,
+      "n_events": {
+        "japan": 62,
+        "chile": 52,
+        "california": 70,
+        "iceland": 73,
+        "himalaya": 66
+      }
+    },
+    {
+      "catalog": 10,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.09975062344139651,
+      "max_statistic_global_p": 0.6433915211970075,
+      "n_events": {
+        "japan": 72,
+        "chile": 60,
+        "california": 54,
+        "iceland": 65,
+        "himalaya": 64
+      }
+    },
+    {
+      "catalog": 11,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.032418952618453865,
+      "max_statistic_global_p": 0.28428927680798005,
+      "n_events": {
+        "japan": 77,
+        "chile": 57,
+        "california": 72,
+        "iceland": 47,
+        "himalaya": 70
+      }
+    },
+    {
+      "catalog": 12,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.04738154613466334,
+      "max_statistic_global_p": 0.3865336658354115,
+      "n_events": {
+        "japan": 65,
+        "chile": 77,
+        "california": 44,
+        "iceland": 45,
+        "himalaya": 62
+      }
+    },
+    {
+      "catalog": 13,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.05486284289276808,
+      "max_statistic_global_p": 0.4389027431421446,
+      "n_events": {
+        "japan": 55,
+        "chile": 67,
+        "california": 51,
+        "iceland": 57,
+        "himalaya": 70
+      }
+    },
+    {
+      "catalog": 14,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.007481296758104738,
+      "max_statistic_global_p": 0.057356608478802994,
+      "n_events": {
+        "japan": 54,
+        "chile": 55,
+        "california": 42,
+        "iceland": 63,
+        "himalaya": 53
+      }
+    },
+    {
+      "catalog": 15,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.08478802992518704,
+      "max_statistic_global_p": 0.5835411471321695,
+      "n_events": {
+        "japan": 55,
+        "chile": 56,
+        "california": 57,
+        "iceland": 48,
+        "himalaya": 48
+      }
+    },
+    {
+      "catalog": 16,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.02743142144638404,
+      "max_statistic_global_p": 0.24438902743142144,
+      "n_events": {
+        "japan": 39,
+        "chile": 49,
+        "california": 67,
+        "iceland": 56,
+        "himalaya": 65
+      }
+    },
+    {
+      "catalog": 17,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.0399002493765586,
+      "max_statistic_global_p": 0.33665835411471323,
+      "n_events": {
+        "japan": 72,
+        "chile": 75,
+        "california": 59,
+        "iceland": 46,
+        "himalaya": 64
+      }
+    },
+    {
+      "catalog": 18,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.07481296758104738,
+      "max_statistic_global_p": 0.5386533665835411,
+      "n_events": {
+        "japan": 71,
+        "chile": 54,
+        "california": 56,
+        "iceland": 55,
+        "himalaya": 74
+      }
+    },
+    {
+      "catalog": 19,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.05236907730673317,
+      "max_statistic_global_p": 0.41895261845386533,
+      "n_events": {
+        "japan": 79,
+        "chile": 62,
+        "california": 72,
+        "iceland": 76,
+        "himalaya": 58
+      }
+    },
+    {
+      "catalog": 20,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.029925187032418952,
+      "max_statistic_global_p": 0.26683291770573564,
+      "n_events": {
+        "japan": 69,
+        "chile": 56,
+        "california": 45,
+        "iceland": 38,
+        "himalaya": 53
+      }
+    },
+    {
+      "catalog": 21,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.004987531172069825,
+      "max_statistic_global_p": 0.034912718204488775,
+      "n_events": {
+        "japan": 79,
+        "chile": 75,
+        "california": 74,
+        "iceland": 81,
+        "himalaya": 60
+      }
+    },
+    {
+      "catalog": 22,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.034912718204488775,
+      "max_statistic_global_p": 0.30174563591022446,
+      "n_events": {
+        "japan": 53,
+        "chile": 68,
+        "california": 74,
+        "iceland": 56,
+        "himalaya": 67
+      }
+    },
+    {
+      "catalog": 23,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.00997506234413965,
+      "max_statistic_global_p": 0.08977556109725686,
+      "n_events": {
+        "japan": 37,
+        "chile": 63,
+        "california": 60,
+        "iceland": 56,
+        "himalaya": 59
+      }
+    },
+    {
+      "catalog": 24,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.02743142144638404,
+      "max_statistic_global_p": 0.24438902743142144,
+      "n_events": {
+        "japan": 53,
+        "chile": 84,
+        "california": 57,
+        "iceland": 56,
+        "himalaya": 58
+      }
+    },
+    {
+      "catalog": 25,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.017456359102244388,
+      "max_statistic_global_p": 0.1546134663341646,
+      "n_events": {
+        "japan": 47,
+        "chile": 55,
+        "california": 65,
+        "iceland": 45,
+        "himalaya": 87
+      }
+    },
+    {
+      "catalog": 26,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.004987531172069825,
+      "max_statistic_global_p": 0.034912718204488775,
+      "n_events": {
+        "japan": 67,
+        "chile": 63,
+        "california": 68,
+        "iceland": 41,
+        "himalaya": 77
+      }
+    },
+    {
+      "catalog": 27,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.017456359102244388,
+      "max_statistic_global_p": 0.1546134663341646,
+      "n_events": {
+        "japan": 52,
+        "chile": 48,
+        "california": 52,
+        "iceland": 70,
+        "himalaya": 74
+      }
+    },
+    {
+      "catalog": 28,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.0199501246882793,
+      "max_statistic_global_p": 0.17955112219451372,
+      "n_events": {
+        "japan": 78,
+        "chile": 45,
+        "california": 65,
+        "iceland": 42,
+        "himalaya": 55
+      }
+    },
+    {
+      "catalog": 29,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.014962593516209476,
+      "max_statistic_global_p": 0.12967581047381546,
+      "n_events": {
+        "japan": 60,
+        "chile": 56,
+        "california": 64,
+        "iceland": 51,
+        "himalaya": 83
+      }
+    },
+    {
+      "catalog": 30,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.004987531172069825,
+      "max_statistic_global_p": 0.034912718204488775,
+      "n_events": {
+        "japan": 52,
+        "chile": 76,
+        "california": 49,
+        "iceland": 64,
+        "himalaya": 91
+      }
+    },
+    {
+      "catalog": 31,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.08478802992518704,
+      "max_statistic_global_p": 0.5835411471321695,
+      "n_events": {
+        "japan": 56,
+        "chile": 71,
+        "california": 62,
+        "iceland": 84,
+        "himalaya": 64
+      }
+    },
+    {
+      "catalog": 32,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.0199501246882793,
+      "max_statistic_global_p": 0.17955112219451372,
+      "n_events": {
+        "japan": 52,
+        "chile": 58,
+        "california": 60,
+        "iceland": 69,
+        "himalaya": 58
+      }
+    },
+    {
+      "catalog": 33,
+      "n_survivors_real": 0,
+      "n_survivors_control": 1,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.05236907730673317,
+      "max_statistic_global_p": 0.41895261845386533,
+      "n_events": {
+        "japan": 73,
+        "chile": 52,
+        "california": 83,
+        "iceland": 51,
+        "himalaya": 50
+      }
+    },
+    {
+      "catalog": 34,
+      "n_survivors_real": 1,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.0024937655860349127,
+      "max_statistic_global_p": 0.0024937655860349127,
+      "n_events": {
+        "japan": 55,
+        "chile": 61,
+        "california": 47,
+        "iceland": 62,
+        "himalaya": 70
+      }
+    },
+    {
+      "catalog": 35,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.04738154613466334,
+      "max_statistic_global_p": 0.3865336658354115,
+      "n_events": {
+        "japan": 60,
+        "chile": 49,
+        "california": 59,
+        "iceland": 71,
+        "himalaya": 64
+      }
+    },
+    {
+      "catalog": 36,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.08229426433915212,
+      "max_statistic_global_p": 0.5660847880299252,
+      "n_events": {
+        "japan": 64,
+        "chile": 68,
+        "california": 66,
+        "iceland": 54,
+        "himalaya": 58
+      }
+    },
+    {
+      "catalog": 37,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.034912718204488775,
+      "max_statistic_global_p": 0.30174563591022446,
+      "n_events": {
+        "japan": 37,
+        "chile": 70,
+        "california": 60,
+        "iceland": 43,
+        "himalaya": 53
+      }
+    },
+    {
+      "catalog": 38,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.012468827930174564,
+      "max_statistic_global_p": 0.11471321695760599,
+      "n_events": {
+        "japan": 69,
+        "chile": 45,
+        "california": 46,
+        "iceland": 63,
+        "himalaya": 66
+      }
+    },
+    {
+      "catalog": 39,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.007481296758104738,
+      "max_statistic_global_p": 0.057356608478802994,
+      "n_events": {
+        "japan": 64,
+        "chile": 60,
+        "california": 57,
+        "iceland": 53,
+        "himalaya": 86
+      }
+    },
+    {
+      "catalog": 40,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.022443890274314215,
+      "max_statistic_global_p": 0.20199501246882792,
+      "n_events": {
+        "japan": 49,
+        "chile": 76,
+        "california": 58,
+        "iceland": 65,
+        "himalaya": 71
+      }
+    },
+    {
+      "catalog": 41,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.029925187032418952,
+      "max_statistic_global_p": 0.26683291770573564,
+      "n_events": {
+        "japan": 69,
+        "chile": 76,
+        "california": 69,
+        "iceland": 56,
+        "himalaya": 68
+      }
+    },
+    {
+      "catalog": 42,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.007481296758104738,
+      "max_statistic_global_p": 0.057356608478802994,
+      "n_events": {
+        "japan": 49,
+        "chile": 49,
+        "california": 64,
+        "iceland": 39,
+        "himalaya": 61
+      }
+    },
+    {
+      "catalog": 43,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.05236907730673317,
+      "max_statistic_global_p": 0.41895261845386533,
+      "n_events": {
+        "japan": 61,
+        "chile": 53,
+        "california": 57,
+        "iceland": 67,
+        "himalaya": 62
+      }
+    },
+    {
+      "catalog": 44,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.03740648379052369,
+      "max_statistic_global_p": 0.3167082294264339,
+      "n_events": {
+        "japan": 56,
+        "chile": 65,
+        "california": 63,
+        "iceland": 68,
+        "himalaya": 72
+      }
+    },
+    {
+      "catalog": 45,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.02493765586034913,
+      "max_statistic_global_p": 0.22693266832917705,
+      "n_events": {
+        "japan": 63,
+        "chile": 76,
+        "california": 73,
+        "iceland": 56,
+        "himalaya": 56
+      }
+    },
+    {
+      "catalog": 46,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.00997506234413965,
+      "max_statistic_global_p": 0.08977556109725686,
+      "n_events": {
+        "japan": 77,
+        "chile": 62,
+        "california": 72,
+        "iceland": 72,
+        "himalaya": 69
+      }
+    },
+    {
+      "catalog": 47,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.004987531172069825,
+      "max_statistic_global_p": 0.034912718204488775,
+      "n_events": {
+        "japan": 44,
+        "chile": 61,
+        "california": 59,
+        "iceland": 70,
+        "himalaya": 64
+      }
+    },
+    {
+      "catalog": 48,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.08478802992518704,
+      "max_statistic_global_p": 0.5835411471321695,
+      "n_events": {
+        "japan": 84,
+        "chile": 68,
+        "california": 44,
+        "iceland": 47,
+        "himalaya": 57
+      }
+    },
+    {
+      "catalog": 49,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.004987531172069825,
+      "max_statistic_global_p": 0.034912718204488775,
+      "n_events": {
+        "japan": 65,
+        "chile": 79,
+        "california": 62,
+        "iceland": 48,
+        "himalaya": 77
+      }
+    },
+    {
+      "catalog": 50,
+      "n_survivors_real": 1,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.0024937655860349127,
+      "max_statistic_global_p": 0.0024937655860349127,
+      "n_events": {
+        "japan": 47,
+        "chile": 53,
+        "california": 66,
+        "iceland": 46,
+        "himalaya": 78
+      }
+    },
+    {
+      "catalog": 51,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.13216957605985039,
+      "max_statistic_global_p": 0.7506234413965087,
+      "n_events": {
+        "japan": 62,
+        "chile": 67,
+        "california": 65,
+        "iceland": 80,
+        "himalaya": 54
+      }
+    },
+    {
+      "catalog": 52,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.007481296758104738,
+      "max_statistic_global_p": 0.057356608478802994,
+      "n_events": {
+        "japan": 52,
+        "chile": 71,
+        "california": 44,
+        "iceland": 65,
+        "himalaya": 82
+      }
+    },
+    {
+      "catalog": 53,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.059850374064837904,
+      "max_statistic_global_p": 0.46384039900249374,
+      "n_events": {
+        "japan": 71,
+        "chile": 50,
+        "california": 67,
+        "iceland": 40,
+        "himalaya": 43
+      }
+    },
+    {
+      "catalog": 54,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.034912718204488775,
+      "max_statistic_global_p": 0.30174563591022446,
+      "n_events": {
+        "japan": 59,
+        "chile": 48,
+        "california": 42,
+        "iceland": 58,
+        "himalaya": 63
+      }
+    },
+    {
+      "catalog": 55,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.00997506234413965,
+      "max_statistic_global_p": 0.08977556109725686,
+      "n_events": {
+        "japan": 78,
+        "chile": 59,
+        "california": 39,
+        "iceland": 53,
+        "himalaya": 62
+      }
+    },
+    {
+      "catalog": 56,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.11221945137157108,
+      "max_statistic_global_p": 0.6932668329177057,
+      "n_events": {
+        "japan": 55,
+        "chile": 93,
+        "california": 62,
+        "iceland": 69,
+        "himalaya": 61
+      }
+    },
+    {
+      "catalog": 57,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.007481296758104738,
+      "max_statistic_global_p": 0.057356608478802994,
+      "n_events": {
+        "japan": 73,
+        "chile": 80,
+        "california": 59,
+        "iceland": 50,
+        "himalaya": 57
+      }
+    },
+    {
+      "catalog": 58,
+      "n_survivors_real": 1,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.0024937655860349127,
+      "max_statistic_global_p": 0.0024937655860349127,
+      "n_events": {
+        "japan": 53,
+        "chile": 53,
+        "california": 68,
+        "iceland": 90,
+        "himalaya": 50
+      }
+    },
+    {
+      "catalog": 59,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.08728179551122195,
+      "max_statistic_global_p": 0.5985037406483791,
+      "n_events": {
+        "japan": 82,
+        "chile": 72,
+        "california": 42,
+        "iceland": 54,
+        "himalaya": 66
+      }
+    },
+    {
+      "catalog": 60,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.08478802992518704,
+      "max_statistic_global_p": 0.5835411471321695,
+      "n_events": {
+        "japan": 59,
+        "chile": 75,
+        "california": 62,
+        "iceland": 75,
+        "himalaya": 65
+      }
+    },
+    {
+      "catalog": 61,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.03740648379052369,
+      "max_statistic_global_p": 0.3167082294264339,
+      "n_events": {
+        "japan": 67,
+        "chile": 69,
+        "california": 102,
+        "iceland": 60,
+        "himalaya": 54
+      }
+    },
+    {
+      "catalog": 62,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.029925187032418952,
+      "max_statistic_global_p": 0.26683291770573564,
+      "n_events": {
+        "japan": 67,
+        "chile": 103,
+        "california": 48,
+        "iceland": 71,
+        "himalaya": 72
+      }
+    },
+    {
+      "catalog": 63,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.11970074812967581,
+      "max_statistic_global_p": 0.7107231920199502,
+      "n_events": {
+        "japan": 68,
+        "chile": 49,
+        "california": 63,
+        "iceland": 53,
+        "himalaya": 50
+      }
+    },
+    {
+      "catalog": 64,
+      "n_survivors_real": 0,
+      "n_survivors_control": 1,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.0399002493765586,
+      "max_statistic_global_p": 0.33665835411471323,
+      "n_events": {
+        "japan": 51,
+        "chile": 54,
+        "california": 69,
+        "iceland": 69,
+        "himalaya": 48
+      }
+    },
+    {
+      "catalog": 65,
+      "n_survivors_real": 0,
+      "n_survivors_control": 0,
+      "n_cells": 30,
+      "n_eligible": 30,
+      "min_p_real": 0.03740648379052369,
+      "max_statistic_global_p": 0.3167082294264339,
+      "n_events": {
+        "japan": 69,
+        "chile": 92,
+        "california": 65,
+        "iceland": 92,
+        "himalaya": 74
+      }
+    }
+  ],
+  "criteria": {
+    "1_not_vacuous": "every one of the 30 declared cells must be promotion-eligible apart from its p-values, AND the planted-signal control must FIRE",
+    "2_count": "total promotions across 66 catalogues <= 3",
+    "3_binomial": "upper-tail binomial p >= 0.01 at n = 1980, p = 0.00249377"
+  },
+  "what_a_pass_licenses": "EXACTLY ONE THING: the right for a real scan to be run at all. A PASS is not evidence, is not a finding, and says nothing about the Earth. A FAIL means the nominal p's are wrong -- an SP-2 null layer is invalid -- which is precisely the failure mode the multiplicity arithmetic cannot catch.",
+  "banner": "THE SEARCHER IS A GENERATOR, NOT EVIDENCE. Nothing it prints is a finding, a claim, or a K-entry. Every row below is EXPLORATORY-UNPRICED under Rule 4.4 / \u00a7P7-4 / \u00a7P7-24 SP-1.",
+  "the_sentence": "SEARCHER.md \u00a7S0: the SEARCHER never produces evidence. It produces a RANKING and a CONTROL-CALIBRATED SURVIVOR COUNT, and its only licensed output is a mechanically generated FREEZE FILE. Every claim this program ever makes from a SEARCHER hit is made by the frozen test that the freeze file specifies, run afterwards, on data the scan did not touch.",
+  "artifact_hash": "7e1c0229fcad3501"
+}

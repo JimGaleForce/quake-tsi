@@ -52,14 +52,31 @@ import os
 import numpy as np
 
 from . import lattice_s1 as LAT, properties as P, searcher as S, splits
+from . import gate_calibration as GC
 
-GATE_RULE_ID = "SP7-searcher-gate-v1"
+GATE_RULE_ID = "SP7-searcher-gate-v2"
+
+# ------------------------------------------------------------------- SP-7 v2 --
+# The verdict is no longer a hardcoded cap. It is a two-sided exact-binomial band
+# DERIVED from (n_trials, alpha_effective, declared false-fail rate) by
+# engine/gate_calibration.py, plus the gate's own detection curve. See that module's
+# docstring for why v1's cap of 3 had to go: it is E[X] = N*q, the MEAN, so it rejects
+# a correctly calibrated searcher 18.9 % of the time at the effective alpha.
+#
+# THE TWO NUMBERS THAT ARE NOW DECLARED INSTEAD OF THE CAP, both chosen before any v2
+# run and neither tunable by a result:
+FALSE_FAIL_RATE = 0.01          # total probability of rejecting a good instrument
+DETECT_INFLATION_R = 3.0        # smallest broken-null inflation the gate must catch
+DETECT_POWER = 0.80             # ... at this power
+# N_CATALOGS_V2 is then COMPUTED, not chosen: gate_calibration.required_catalogues
+# inverts the detection curve. At m = 30, B = 400, q = 0.10 it returns 66, against
+# v1's undefended "30" which could only catch a 4.55x inflation.
 GATE_ARTIFACT = os.path.join("engine", "out", "searcher_sp7_gate.json")
 
 # Declared gate constants, frozen here before the gate runs.
 N_CATALOGS = 30                 # SP-7: ">= 30 true-null ETAS-sim catalogues"
 EXPECTED_PER_CATALOG = 0.10     # SP-7: "<= 0.1 per catalogue"
-MAX_TOTAL = 3                   # SP-7: "so <= 3 across 30"
+MAX_TOTAL = 3                   # SP-7 v1, RETAINED FOR THE RECORD ONLY, not a verdict
 BINOMIAL_ALPHA = 0.01           # "with the count consistent with binomial"
 
 SPAN_DAYS = 3650.0              # 10 years
@@ -328,15 +345,47 @@ def run_gate(n_catalogs=N_CATALOGS, seed=20260813, out_path=GATE_ARTIFACT,
     rate = n_promotions / float(n_catalogs)
     vacuous = (n_eligible_min is None) or (n_eligible_min < m) or (not vac["promoted"])
 
-    passed = bool((not vacuous)
-                  and n_promotions <= int(MAX_TOTAL)
-                  and p_binom >= BINOMIAL_ALPHA)
+    # ---- SP-7 v2 VERDICT: derived band, two-sided, power-aware. Authoritative. ----
+    v2 = GC.verdict(n_promotions, n_trials, a_eff,
+                    false_fail_rate=FALSE_FAIL_RATE, power=DETECT_POWER,
+                    vacuous=vacuous,
+                    vacuity_reason=(None if not vacuous else
+                                    "n_eligible_min < m or the planted-signal "
+                                    "control did not fire"))
+    passed = bool(v2["passed"])
+
+    # v1's verdict, computed and reported ALONGSIDE for continuity and audit. It is
+    # NOT the verdict: its cap is E[X] and its false-fail rate is measured below.
+    v1_passed = bool((not vacuous)
+                     and n_promotions <= int(MAX_TOTAL)
+                     and p_binom >= BINOMIAL_ALPHA)
+    v1_false_fail = GC.binom_sf(int(MAX_TOTAL) + 1, n_trials, a_eff)
 
     art = {
         "gate_rule_id": GATE_RULE_ID,
-        "protocol": "HYPOTHESIS_LEDGER.md §P7-24 SP-7 (BINDING)",
-        "verdict": "PASS" if passed else ("VACUOUS-FAIL" if vacuous else "FAIL"),
+        "protocol": "HYPOTHESIS_LEDGER.md §P7-24 SP-7, AMENDED to v2 (BINDING)",
+        "verdict": v2["verdict"],
         "passed": passed,
+        "sp7_v2": v2,
+        "sp7_v1_reported_for_continuity": {
+            "verdict": "PASS" if v1_passed else ("VACUOUS-FAIL" if vacuous
+                                                 else "FAIL"),
+            "passed": v1_passed,
+            "max_total_allowed": int(MAX_TOTAL),
+            "measured_false_fail_rate_of_the_v1_cap": float(v1_false_fail),
+            "why_superseded": (
+                "the v1 cap is E[X] = N*q, the MEAN of a correctly calibrated "
+                "searcher, so it rejects a good instrument at the rate reported "
+                "above. It is retained here for audit and is NOT the verdict."),
+        },
+        "declared_before_any_v2_run": {
+            "false_fail_rate": FALSE_FAIL_RATE,
+            "detect_inflation_R": DETECT_INFLATION_R,
+            "detect_power": DETECT_POWER,
+            "n_catalogues_is_DERIVED_not_chosen": (
+                "gate_calibration.required_catalogues(m, alpha_eff, R, power) "
+                "inverts the detection curve; v1's 30 was undefended"),
+        },
         "ts_start": t_start.isoformat(),
         "ts_end": _dt.datetime.now(_dt.timezone.utc).isoformat(),
         "seed": int(seed),
