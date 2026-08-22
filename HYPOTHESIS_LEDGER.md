@@ -18034,3 +18034,674 @@ the small-n principle Popper ratified at §P7-23 and the honest warning that mos
 outside null. Appended to my own new section; no existing ledger line modified; nothing committed.
 No phase, concentration, or day-of-week statistic was run on any real catalogue in the writing of
 this entry.*
+
+---
+
+## PRIOR ART (Merton)
+
+*Round 5 — 2026-08-22. Assigned by the supervisor as the ADVERSARIAL PRIOR-ART PASS on the two
+Kepler seeds staged in `D:\CODE\git\quake\KEPLER_SEEDS_20260822.md`, BEFORE either is priced or
+registered. Sources read this session: `KEPLER_SEEDS_20260822.md` in full; `K092_SCALAR_PROVENANCE.md`
+§5 and §6 in full; `engine/sitetide.py` (declarations, Love/Shida constants, `site_tide` outputs);
+prior Merton rounds 1-4 for non-duplication. Roughly 20 WebSearch sweeps and 6 WebFetch pulls.
+No commits. Ledger write only, this section only. Nothing here is evidence and nothing here is a
+result; this section adjudicates PROVENANCE, not truth.*
+
+## M-011 — PRIOR-ART DOSSIER: **Seed A (stress-state-conditioned tidal sensitivity)** and **Seed B (un-mined tidal degrees of freedom)**
+
+### M-011.0 THE HEADLINE, STATED FIRST
+
+**Seed A's core proposition is thirty years old and is the standard interpretive frame of the entire
+tidal-triggering literature. Seed B item 1 (resolved tidal Coulomb on thrusts) was published in
+*Science* in 2004, with the friction coefficient gridded exactly as Jim proposes. Seed B item 2 (the
+rope) is the one thing in either seed that a real search did not find — and the nearest published
+result runs AGAINST its simplest form.**
+
+Three sentences the program must internalise before pricing:
+
+1. **"Tidal triggering is a property of proximity to failure, not of the tide" is not a hypothesis
+   in this field; it is the field's consensus explanatory story.** It has been asserted, modelled and
+   tested since at least Tanaka, Ohtake & Sato (2002) and Beeler & Lockner (2003), and it is the
+   stated motivation of Brinkman et al. (2015), Ide, Yabe & Tanaka (2016) and Delorey et al. (2017).
+   Seed A may claim a **conditioner** and a **design**; it may not claim the **idea**.
+2. **The specific claim that tidal correlation strengthens before a large earthquake is the most
+   contested claim in the sub-field, and the replication record currently runs against it.** Tanaka
+   (2010, 2012) and Beaucé et al. (2023) are the affirmative camp; Wang & Shearer (2015), Hirose
+   et al. (2022) and an unrefereed but methodologically serious 79-event global test are the negative
+   camp. **Popper's bar on Seed A should go UP, not down.**
+3. **The rope — bearing-resolved, path-dependent, two-time tidal loading — is where the genuinely
+   un-owned ground is.** But Scholz, Tan & Albino (2019) explicitly looked for hysteresis in tidal
+   triggering and reported finding none, and Vidale et al. (1998) tested signed tidal stress RATE on
+   known fault planes and found nothing. Those are not refutations of Jim's formulation (neither
+   resolved a BEARING), but they are the two results a referee will reach for, and they must be cited
+   in the pre-registration rather than discovered by a reviewer.
+
+---
+
+### M-011.1 CLASSIFICATION TABLE
+
+| # | Element | Verdict | Strongest single citation | One-line basis |
+|---|---------|---------|---------------------------|----------------|
+| 1 | Tidal sensitivity conditioned on proximity to failure; population average as diluted mixture | **REDISCOVERY (strong)** | Brinkman, LeBlanc, Ben-Zion, Uhl & Dahmen (2015), *Nat. Commun.* 6:6157, "Probing failure susceptibilities of earthquake faults using small-quake tidal correlations", doi:10.1038/ncomms7157 | The paper's entire premise is that small-quake tidal correlation indexes a fault's *failure susceptibility*, i.e. tidal response as a stress-state probe. Same idea, published, titled. |
+| 2 | Tidal correlation STRENGTHENS in years/months before a large earthquake | **CONTESTED, currently losing** | Wang & Shearer (2015), *JGR Solid Earth* 120:6317-6328, doi:10.1002/2015JB011937 — vs — Tanaka (2012), *GRL* 39, doi:10.1029/2012GL051179 | Tanaka reports precursory tidalicity near the Tohoku-Oki hypocentre; Wang & Shearer gridded Japan (74,610 M>=3, 2000-2013) and found the count of low-p cells no greater than chance and uncorrelated with Tohoku-Oki. |
+| 3 | GEODETIC (GNSS/InSAR) coupling or slip deficit as the conditioning variable for tidal sensitivity | **NOVEL (weak-form: I could not find it)** | Nearest prior art: Yamashita et al. (2025), *Earth Planets Space* 77, doi:10.1186/s40623-025-02145-5 (tidal correlation of tremor rises during geodetically-detected long-term SSEs) | Geodetically-defined *state* has been used as a conditioner for tremor tidal sensitivity; a regression of a tidal statistic on a GNSS-inverted coupling/slip-deficit FIELD for regular earthquakes was not found. |
+| 4 | Seismic-gap hypothesis (Seed A's inferred trailing-deficit branch) | **CONTRADICTED** | Kagan & Jackson (1991), *JGR* 96:21419-21431; and Rong, Jackson & Kagan (2003), *JGR* 108(B10):2471, doi:10.1029/2002JB002334 | McCann et al. (1979) and Nishenko (1991) gap forecasts were rejected against subsequent data; the "new" gap hypothesis failed at 95% in both number and ratio tests. Kagan & Jackson (1999), *PAGEOPH* 155:573-595, ran the test **in the Aleutians specifically**. |
+| 5 | Established best practice for conditioning a tidal-phase statistic on a CONTINUOUS stress covariate | **NOVEL (methods gap), but the multiplicity half is REDISCOVERY** | Sirorattanakul & Avouac (2026), *Sci. Adv.* 12(13):eadz5711, doi:10.1126/sciadv.adz5711 (already dossiered at §M-010) | The field's standard is Schuster's test on subsets/bins (Schuster 1897), not a circular-linear interaction model. No canonical estimator found. But amplitude bounds and period-multiplicity scaling are established and ours must connect to them. |
+| 6 | Resolved tidal COULOMB stress (shear + mu*normal) on a specified plane, applied to subduction megathrusts | **REDISCOVERY (strong, canonical)** | Cochran, Vidale & Tanaka (2004), *Science* 306:1164-1166, doi:10.1126/science.1103961 | Shallow thrust events, tidal Coulomb resolved on the thrust plane, ocean loading included, **mu gridded 0.2-0.6 with mu=0.4 best**; rate varied by ~3x with tidal stress; 39/53 in the encouraging half. |
+| 7 | Tidal triggering specific to Alaska-Aleutian / Alaska Peninsula | **REDISCOVERY (weak; prior art is conference-grade and I could not verify it)** | Tan, Y. J. (2014), AGU Fall Meeting abstract, "Tidal Triggering of Earthquakes in the Alaska-Aleutian Subduction Zone" — **abstract page 302-redirects to a 404; content known to me only via Rozell, *Alaska Science Forum*, 22 Jan 2015** | Three zones reported tidally sensitive (SE of Kodiak; S of Tanaga; S of Buldir), interpreted as "possibly critically stressed". **No peer-reviewed Alaska-Aleutian tidal paper was found.** |
+| 8 | DIRECTIONAL/AZIMUTHAL tidal triggering: bearing of tidal traction vs fault strike | **REDISCOVERY** | Thomas, Bürgmann, Shelly, Beeler & Rudolph (2012), *JGR* 117:B05301, doi:10.1029/2011JB009036 | Parkfield LFE families: peak-correlation axes cluster on the SAF's average strike (N42W), some families diverging up to ~30 degrees. Also Tanaka, Ohtake & Sato (2006), *EPS* 58 (P-axis direction) and Zhang et al. (2007), *Chinese J. Geophys.* (azimuth range of horizontal tidal force at triggered events ~35% of available range). |
+| 9 | DIRECTIONAL-HISTORY / "rope": two-time, path-dependent, hysteretic tidal loading along a fixed bearing | **NOVEL — with one adverse near-hit that must be cited** | Adverse: Scholz, Tan & Albino (2019), *Nat. Commun.* 10:2526, doi:10.1038/s41467-019-10605-2 — verbatim: *"There is no detectable phase shift between the seismicity and the tides…, nor is there any hysteresis observed—data for rising and falling stresses fit the triggering curves equally well"* | Nobody found doing bearing-resolved pull-then-ease. But un-oriented hysteresis was looked for and reported absent at Axial Seamount, and signed stress RATE was tested and found null by Vidale et al. (1998). See §M-011.4 for how hard I looked. |
+| 10 | Ocean tidal loading dominating body tide at coastal subduction sites; treatment of studies that omit it | **REDISCOVERY (a named, thirty-year-old pitfall)** | Tsuruoka, Ohtake & Sato (1995), *Geophys. J. Int.* 122:183-194, "Statistical test of the tidal triggering of earthquakes: contribution of the ocean tide loading effect" | The title is the finding. Corroborated by Cochran et al. (2004) (oceanic tidal stresses up to an order of magnitude above continental solid-earth values) and Scholz et al. (2019) (3 m ocean tide dominating at Axial). |
+| 11 | Max-statistic / whole-lattice null calibration in tidal-triggering work | **REDISCOVERY of the concern; NOVEL in the max-statistic form** | Wang & Shearer (2015), doi:10.1002/2015JB011937 | They ran the *distribution-of-p-values-over-many-cells* calibration (3 spatial x 3 temporal griddings) and asked whether the low-p count exceeds chance. That is the whole-lattice idea. A **max-statistic** null over a heterogeneous feature lattice was not found in this literature. |
+
+---
+
+### M-011.2 SEARCH TRAILS RUN (so the nulls are auditable)
+
+Run 2026-08-22 via WebSearch/WebFetch. Queries as typed, so the next seat can attack them.
+
+**Sweep A — stress-state conditioning (element 1).** `tidal triggering earthquakes increases before
+large earthquake stress accumulation critical state`; `Tanaka Ohtake Sato tidal triggering before
+large earthquakes precursory correlation`; `tidal triggering b-value stress state proximity to
+failure conditioning variable heterogeneous population mixture dilution`; `Beeler Lockner 2003 why
+earthquakes correlate weakly with the solid earth tide rate and state`. **Saturated on hits** —
+this is a crowded literature, not a gap.
+
+**Sweep B — the precursory claim and its non-replications (element 2).** `Bhattacharya tidal
+triggering not precursory failure to replicate…` (**NULL** — no such author found; my prior guess
+was wrong and is recorded as wrong); `Brinkman van der Elst tidal triggering test large earthquakes
+no precursory increase`; `"no evidence" tidal correlation increase before large earthquakes negative
+result reanalysis Tanaka Tohoku` (**HIT**: Wang & Shearer 2015); `Bradley Hubbard tidal earthquake
+hypothesis test 79 thrust earthquakes…`; `Kelian Dascher-Cousineau OR "Bradley" 2025 tidal
+triggering global test preprint Seismica` (**NULL** for a refereed version — see §M-011.3 caveat).
+
+**Sweep C — geodetic conditioners (element 3).** `tidal sensitivity correlated with interseismic
+coupling geodetic slip deficit GPS locking megathrust`; `tidal modulation seismicity conditioned on
+interseismic coupling model Chile Japan comparison locked patch tidal Schuster p-value map`; `tidal
+triggering conditioned on GNSS strain rate geodetic loading rate covariate seismicity modulation
+study`; `tidal sensitivity spatial variation locked versus creeping fault segments coupling map`.
+**Result: adjacent hits only** (Tokai locked zone; tremor vs SSE; LFE creeping-vs-locked SAF).
+**No hit** on a GNSS-coupling-conditioned tidal statistic for ordinary earthquakes. **This null is
+moderate strength, not strong**: it is a search null across four vocabularies, not a proof.
+
+**Sweep D — seismic gap (element 4).** `seismic gap hypothesis test Kagan Jackson 1991 1995 Rong
+Nishenko failure`. **Saturated.**
+
+**Sweep E — resolved Coulomb, friction free parameter (element 6).** `tidal Coulomb failure stress
+subduction megathrust friction coefficient resolved fault plane triggering`; `Cochran Vidale Tanaka
+2004 Science Earth tides can trigger shallow thrust fault earthquakes ocean tidal loading Coulomb`;
+`Tsuruoka Ohtake Sato 1995 statistical test tidal triggering ocean tide loading effect GJI`.
+**Saturated.**
+
+**Sweep F — Alaska (element 7).** `tidal triggering earthquakes Alaska Aleutian subduction zone earth
+tide correlation`; `Yen Joe Tan tidal triggering Alaska Aleutian publication…`; `"Tan"
+"Alaska-Aleutian" tidal triggering 2014 AGU abstract Schuster p-value Kodiak Tanaga Buldir`; `Sand
+Point Alaska Shumagin Semidi 2020 2021 Chignik earthquake tidal analysis solid earth tide`.
+WebFetch of `tanyenjoe.com/publications` -> **403**; WebFetch of the AGU confex abstract -> **302 to
+`studio.m-anage.com`, which returns 404**. **The Alaska prior art is therefore ATTESTED ONLY VIA A
+SCIENCE-JOURNALISM SUMMARY. I could not read the abstract itself. Recorded as unverified.**
+
+**Sweep G — directional/azimuthal (element 8).** `azimuth of tidal stress principal axis relative to
+fault strike earthquake triggering directional`; `tidal traction vector orientation horizontal
+component earthquake nucleation "direction of tidal" loading history preceding hours`. **HIT** —
+this axis is occupied.
+
+**Sweep H — the rope (element 9), the hardest sweep, six distinct vocabularies.**
+(i) `"tidal stress path" OR "loading path" earthquake triggering hysteresis memory previous tidal
+cycle preconditioning`; (ii) `stress path dependence hysteresis non-monotonic loading rate-and-state
+friction failure history dependent triggering` (returned **materials-science and economics**
+results — a strong sign the phrase has no seismological home); (iii) `"tidal phase" earthquake
+triggering loading versus unloading half cycle history hours before event two-time feature`;
+(iv) `earthquake triggering depends on whether tidal stress is increasing or decreasing asymmetry
+"rising" "falling" phase quadrant test`; (v) `rotation of principal stress axes triggering
+earthquakes stress rotation rate observable` and `"angular velocity" OR "rotation rate" of tidal
+stress principal axis time series geophysics observable seismicity`; (vi) `earthquake triggering
+"time integral" OR "cumulative" tidal stress preceding days feature machine learning tidal features
+catalog`. **See §M-011.4 for the verdict and its strength.**
+
+**Sweep I — ocean loading (element 10)** and **Sweep J — multiplicity (element 11).** `ocean tidal
+loading dominates solid earth tide coastal subduction zone tidal triggering studies omit`; `tidal
+triggering multiple hypothesis testing many stress components maximum statistic null distribution
+earthquake`; `circular-linear regression tidal phase earthquake covariate Schuster test conditioning
+continuous variable`. **Element 10 saturated; element 11 partial.**
+
+---
+
+### M-011.3 THE FOUR VERDICTS THAT MOST CHANGE WHAT THE PROGRAM SHOULD DO
+
+**(A) Element 2 — the precursory claim — raises Popper's bar rather than lowering it.**
+
+The affirmative camp is real and citable: **Tanaka (2010)**, *GRL* 37:L02301, doi:10.1029/2009GL041581,
+reporting precursory tidal correlation before the 2004 Mw9.0, 2005 Mw8.6 and 2007 Mw8.5 Sumatra
+megathrust events; **Tanaka (2012)**, *GRL*, doi:10.1029/2012GL051179, the same for Tohoku-Oki near
+(but not across) the rupture; **Beaucé, Poli, Waldhauser, Holtzman & Scholz (2023)**, *GRL* 50,
+doi:10.1029/2023GL104375, reporting enhanced tidal sensitivity beginning ~1.5 years before the 2019
+Mw7.1 Ridgecrest event on a 191,569-event ML/template-matched catalogue.
+
+The negative camp is at least as strong and is more powered:
+- **Wang & Shearer (2015)** is the direct methodological analogue of a K-092-style lattice scan: they
+  binned Japan at 0.2/0.5/1.0 degrees and 100/200/400 days, ran Schuster on semidiurnal and semimonthly
+  phase, and found the number of p<0.05 cells consistent with chance and **not** clustered on
+  Tohoku-Oki in time. **This is the single most important citation in this dossier for the
+  program's own design**, because it is our own null calibration, already run, in a region with a
+  better catalogue than Alaska's, and it came out null.
+- **Vidale, Agnew, Johnston & Oppenheimer (1998)**, *JGR* 103:24567-24572: 13,042 events on the San
+  Andreas/Calaveras with known fault planes; tidal stress **and tidal stress rate** at event times
+  distributed indistinguishably from random times.
+- **Hirose, Maeda & Kamigaichi (2022)**, *EPS* 74:10 (already at §M-010): tidal-correlation forecast
+  scored on a Molchan diagram — no skill.
+- **Bradley & Hubbard**, *Earthquake Insights*, "The great tidal earthquake hypothesis test", parts
+  I-IV (2024), report replicating Tanaka et al. (2002b), Tanaka (2010) and Tanaka (2012), then
+  extending to **79 global M7.5+ thrust earthquakes** and finding precursory p-value drops at the
+  chance rate: *"there is no statistical support for the proposed precursory tidal seismicity signal
+  before large thrust events."* **CAVEAT, STATED PLAINLY: this is a Substack post, not a
+  peer-reviewed paper. I read the part-IV post's content via WebFetch; I did NOT locate a refereed
+  version and I could not verify their catalogue, their p-value definition, or their multiplicity
+  handling. It must be cited as unrefereed, and its number (79) must not be laundered into a
+  peer-reviewed-sounding sentence.**
+
+**Consequence for Popper.** Seed A is not entering an empty field; it is entering a field where the
+closest published version of its claim has a documented non-replication record, including one
+non-replication (Wang & Shearer) whose design is nearly identical to ours. Two things follow.
+First, **the replication burden goes UP**: a positive Seed A result in Alaska, alone, would be a
+fifth entry in a series whose modal outcome is "did not reproduce elsewhere", so the
+independent-region arm Kepler already named is not optional garnish, it is the claim. Second,
+**there is a cheap, powerful, pre-registerable falsifier available for free**: reproduce Wang &
+Shearer's *bin-count* calibration on our own lattice before scoring anything. If our low-p cell
+count is at chance, Seed A's conditional form is the only thing left standing, and we will have
+said so before looking.
+
+**(B) Element 6 — Seed B item 1 is not an un-mined degree of freedom; it is the canonical method,
+and its free-parameter problem is already solved the way Jim proposed.**
+
+`K092_SCALAR_PROVENANCE.md` §5(1) is correct that *we* have not attempted resolved Coulomb. It would
+be a serious misreading to carry that into a claim that the field has not. **Cochran, Vidale & Tanaka
+(2004)**, *Science* 306:1164-1166, resolved tidal Coulomb stress on shallow thrust planes, **included
+ocean loading**, and **gridded the friction coefficient across 0.2-0.6, reporting mu=0.4 as the
+best-correlating value** — precisely the "gridded and priced, never chosen" discipline Seed B
+proposes. Their reported effect (rate varying by ~3x with tidal stress on shallow thrusts) is also
+the most useful *effect-size prior* available to Kepler's detection curve for the resolved-Coulomb
+axis: it is far larger than anything a scalar body tide would predict, which is the honest reason
+the orientation axis is worth its cost. Related shoulders: **Tsuruoka, Ohtake & Sato (1995)** for
+the ocean-loading term; **Tanaka, Ohtake & Sato (2002)**, *JGR* 107(B10):2211,
+doi:10.1029/2001JB001577, for the global Schuster machinery; **Ide, Yabe & Tanaka (2016)**, *Nature
+Geoscience* 9:834-837, doi:10.1038/ngeo2796, for tidal shear stress vs b-value.
+
+**Consequence.** The program may claim a *first application to the Alaska-Aleutian segment under
+pre-registration*. It may not describe resolved tidal Coulomb as un-mined, novel, or overlooked, and
+the phrase "the standard tidal Coulomb calculation" in the seed document is the honest one and should
+survive into the K-entry verbatim.
+
+**(C) Element 4 — the seismic-gap branch of Seed A's conditioner is CONTRADICTED, and worse, it was
+contradicted in the Aleutians.**
+
+**Kagan & Jackson (1991)**, *JGR* 96:21419, and **(1995)** rejected the McCann et al. (1979) and
+Nishenko (1991) gap forecasts against subsequent data; **Rong, Jackson & Kagan (2003)**, *JGR*
+108(B10):2471, extended the rejection over 20 and 10 further years; **Nishenko & Sykes (1993)**,
+*JGR* 98:9909, is the published rebuttal, so this is formally a live dispute with a strongly
+asymmetric record. Most pointedly, **Kagan & Jackson (1999)**, *PAGEOPH* 155:573-595, "How Can One
+Test the Seismic Gap Hypothesis? The Case of Repeated Ruptures in the Aleutians", ran the test **in
+our own region**. **Petrillo, Lippiello, Zhuang & Bayona (2022)**, *JGR* 127, doi:10.1029/2021JB023542,
+is the modern synthetic-catalogue re-examination and should be read before the variable is adopted.
+
+**Consequence.** Seed A's INFERRED branch ("interseismic rate x elapsed time since last rupture") is
+a variable the field has tested and rejected as a *forecasting* covariate. That does not forbid its
+use as a *conditioning* covariate for a different quantity — a variable can be useless for
+predicting occurrence and still stratify tidal sensitivity — but the K-entry must say so explicitly
+and must not present the gap variable as neutral machinery just because the transferable-analytics
+port makes it cheap. **The MEASURED geodetic branch is not merely "more defensible" as the seed
+says; on this evidence it is the only branch that does not begin at a deficit.**
+
+**(D) Element 9 — the rope survives the search, and that is the finding.** See next section.
+
+---
+
+### M-011.4 ELEMENT 9 IN FULL: HOW HARD I LOOKED, AND WHAT I DID AND DID NOT FIND
+
+**Verdict: NOVEL, at moderate-to-good confidence, for the specific formulation — a bearing-resolved,
+signed, two-time tidal loading feature (pull along azimuth theta, then ease along theta) treated as a
+trigger distinct from the instantaneous state, with a per-patch preferred azimuth.** I could not find
+it under any of six vocabularies. This is the most valuable line in the dossier and it is also the
+one most likely to be overturned by a better-connected searcher, so here is exactly what the search
+covered and where it is thin.
+
+**What the search DID find, and what each one costs the seed:**
+
+1. **Hysteresis was looked for, and reported absent.** Scholz, Tan & Albino (2019), *Nat. Commun.*
+   10:2526: *"There is no detectable phase shift between the seismicity and the tides…, nor is there
+   any hysteresis observed—data for rising and falling stresses fit the triggering curves equally
+   well."* Verified by WebFetch of the PMC full text (PMC6555822). **Setting: Axial Seamount, Juan de
+   Fuca ridge, normal faults, ocean-tide-dominated (3 m), mu' = 0.4, very high event counts.**
+   **How much this bites: partially.** Their hysteresis test is on an UNORIENTED scalar Coulomb
+   stress — rising vs falling of one number — which is the sub-case of Jim's item 2 that drops the
+   bearing. So it directly wounds "the same instantaneous scalar state reached by two paths is two
+   states" and leaves "the same instantaneous state reached along two BEARINGS is two states"
+   untouched. It is also a mid-ocean-ridge magmatic system, not a megathrust. **It must be cited in
+   the pre-registration as the strongest adverse prior result, and the seed must state why the
+   bearing-resolved version is not the version they falsified.**
+2. **Signed stress RATE was tested and came out null.** Vidale et al. (1998) tested both tidal stress
+   and tidal stress *rate* on 13,042 events with known fault planes. That is Seed B item 3 (rate
+   magnitude), already run, negative, in California. **Seed B item 3 is therefore REDISCOVERY, and
+   REDISCOVERY of a null.** It is not thereby worthless — their setting is a continental strike-slip
+   fault with no ocean load, and the `audit_arcsine` P7-23(C) note's prediction is about maximum
+   unloading rate specifically — but it changes item 3 from "distinct, physically motivated axis" to
+   "axis someone already ran and found nothing on, in a different setting."
+3. **A genuine two-time effect DOES exist in the literature, under a different name: poroelasticity.**
+   Delorey, van der Elst & Johnson (2017), *EPSL* 460:165-170, doi:10.1016/j.epsl.2016.12.014, report
+   tidal triggering on the San Andreas exposing *both* stress-threshold and critical-state behaviour
+   through the interaction of semidiurnal and fortnightly periods — a lag between forcing and
+   response that is exactly a path/history effect, mechanistically pore-pressure diffusion.
+   **This is the physical mechanism most likely to generate a rope-like signature, and the program
+   should cite it as the mechanism rather than presenting path dependence as unmotivated.**
+   Corroborating: Houston (2015), *Nature Geoscience* 8:409-415, doi:10.1038/ngeo2419, "Low friction
+   and fault weakening revealed by rising sensitivity of tremor to tidal stress" — tidal sensitivity
+   rising *through* a slow-slip episode, i.e. an explicitly time-evolving response to repeated
+   loading cycles. And the 2026 *Sci. Adv.* paper doi:10.1126/sciadv.ady6350 ("Tidal and hydrological
+   seismicity modulations reveal pore fluid diffusion during earthquake nucleation") is the same idea
+   at the state of the art; I read its title and abstract-level framing only.
+4. **Principal-axis rotation is an established observable — in a different sub-field.** Hardebeck
+   (2018), *JGR* 123, doi:10.1002/2017JB014617 (review) and the EPS 2017 paper on the spatial
+   distribution of stress rotations treat rotation of principal axes as a diagnostic of differential
+   stress, but of the TECTONIC stress field after mainshocks, not of the TIDAL tensor at hourly
+   cadence. Separately, GJI 235:2716 (2023), "Anisotropic seismic velocity variations in response to
+   different orientations of tidal deformations", **does** use the time-varying azimuth of the tidal
+   principal axis as the independent variable — but the dependent variable is seismic velocity, not
+   seismicity. **So: the tidal principal-axis bearing has been used as an observable; its ROTATION
+   RATE as a predictor of earthquake occurrence has not been found.**
+
+**Where the search is thin, stated so it can be attacked:** I searched in English only; I did not
+search the Chinese-language literature systematically, and Zhang et al. (2007) shows that the
+azimuthal framing has a Chinese-language tradition the English indexes cover poorly. I also did not
+search the rock-mechanics laboratory literature on cyclic-loading fatigue and load-path effects in
+triaxial experiments, which is a plausible home for "pull-then-ease" under names like *cyclic stress
+path*, *load reversal*, or *ratcheting*. **If Kepler wants element 9's novelty claim hardened, those
+two sweeps are the next ones to run, and until they are run the verdict should read "NOVEL, pending a
+Chinese-language and a rock-mechanics-lab sweep" rather than "NOVEL".**
+
+---
+
+### M-011.5 HARVEST THE SHOULDERS — TAKEABLES, PARAMETER VALUES, AND NAMED PITFALLS
+
+**Methods to adopt rather than reinvent:**
+- **Wang & Shearer's (2015) whole-lattice p-value calibration.** Bin at several spatial and temporal
+  scales, count cells below threshold, compare to the chance expectation, and ask separately whether
+  the low-p cells cluster in time on the target event. This is close to what SEARCHER §S9 is
+  designing and it is already published; cite it as the antecedent and state our delta (max-statistic
+  vs count-statistic; pre-registration; exogenous conditioner).
+- **Cochran et al.'s (2004) friction gridding**: mu in [0.2, 0.6], report the whole curve, note mu=0.4
+  as the literature's best-correlating value. Adopting their grid makes our mu choice
+  literature-derived rather than fitted, which is the same discipline §P7-22 Q5 applied to direction.
+- **Tsuruoka et al.'s (1995) ocean-loading correction** as the named standard for what a coastal
+  study owes.
+- **Sirorattanakul & Avouac's (2026) analytic amplitude bound** and its period-multiplicity scaling
+  (§M-010) as the way to convert any Alaska null into a publishable bound.
+- **Circular-linear regression** (Mardia & Jupp, *Directional Statistics*, 2000) as the textbook home
+  for element 5's interaction form: re-express the circular covariate through its sine and cosine
+  components and regress. Not seismological prior art, but it means the estimator does not need
+  inventing.
+
+**Effect-size priors for the detection curve:**
+- ~3x rate variation with tidal stress on shallow thrusts, ocean-loading-included (Cochran 2004).
+- b-value decreasing ~0.03 per kPa above ~5 kPa tidal stress amplitude (Axial Seamount, arXiv:1810.04333).
+- <=8.16% modulation amplitude, California, M>=2.5 (Sirorattanakul & Avouac 2026).
+- ~10^5-10^6 events needed for a robust correlation at solid-earth-tide amplitudes; a 10x amplitude
+  increase cuts the required count ~100x (Beeler & Lockner 2003, *JGR* 108(B8):2391). **This is the
+  program's most important power fact and it argues, hard, that the ocean-loading term is not a
+  caveat but the difference between a feasible and an infeasible experiment.**
+
+**Named pitfalls our controls may not cover:**
+- **Ocean loading absent from both our implementations at the site where it is largest.** Already
+  self-flagged at `K092_SCALAR_PROVENANCE.md` §5(4); the literature makes it worse than a caveat.
+  Per Beeler & Lockner's scaling, omitting a term an order of magnitude larger than the one we
+  compute is not a bias, it is a power collapse.
+- **Phase inversion by a local mechanism.** Scholz et al. (2019) showed a magma chamber can invert
+  the sign of tidal Coulomb stress on nearby faults. A pre-registered DIRECTION prediction can be
+  right in physics and wrong in sign for a site-specific reason.
+- **The unrefereed-source hazard**, self-imposed: the strongest negative result for element 2 is a
+  Substack series. Cite it, never launder it.
+
+---
+
+### M-011.6 FEEDING THE TRIO
+
+**For Popper.** (i) Element 2 is CONTESTED with the negative camp better powered: **raise the bar on
+Seed A**, require the independent-region arm at registration rather than as a follow-up, and require
+the Wang & Shearer bin-count calibration as a pre-scoring gate. (ii) Element 4 is CONTRADICTED:
+if the K-entry uses the trailing-deficit conditioner, the entry must carry the Kagan-Jackson
+rejection in its own text, including the Aleutian-specific 1999 test. (iii) Element 6 is a strong
+REDISCOVERY of a *positive* published result with an established parameter grid, which
+**lowers** the methodological burden on Seed B item 1 — we are running a published calculation in a
+new place, not inventing one — while forbidding any novelty language about it. (iv) Element 3's null
+is a *search* null of moderate strength; Popper should not let it become a priority claim without the
+two extra sweeps named in §M-011.4.
+
+**For Wegener.** Two candidate observation rows are his to write, not mine, and I have not written
+them: (i) tidal sensitivity as a time-varying property that *rises through* a slow-slip episode
+(Houston 2015; Yabe & Ide 2015; Yamashita et al. 2025) — an already-replicated observation of exactly
+the state-conditioned sensitivity Seed A posits, in the slow-earthquake regime rather than the
+regular one; (ii) tidal-triggering phase INVERSION by a local poroelastic or magmatic mechanism
+(Scholz et al. 2019; Delorey et al. 2017), which is a unification-grade fact: the same forcing
+produces opposite-signed responses depending on a fluid property of the patch.
+
+**For Kepler.** Three floors. (1) Seed B item 1 has a published effect size (~3x, shallow thrusts,
+ocean loading included) — the detection curve now has a real number to aim at instead of a guess.
+(2) Seed B item 3 (rate magnitude) is a rediscovery of a NULL (Vidale et al. 1998) and should be
+re-priced downward accordingly, or re-scoped to *unloading-rate magnitude in the ocean-loaded
+setting*, which is what P7-23(C) actually predicts and which Vidale did not test. (3) Element 9
+survives, which means the rope is the highest-value item in either seed on a novelty-per-cost basis
+— and it also means it carries the whole burden of Seed B's originality, so its multiplicity budget
+should be protected against being spent on items 1, 3 and 4, all of which are occupied ground.
+
+---
+
+### M-011.7 WHAT THE PROGRAM MAY **NOT** CLAIM AS NOVEL
+
+Stated flatly, so no draft ever has to be caught by a reviewer:
+
+1. **That tidal triggering depends on proximity to failure / criticality of the patch.** Field
+   consensus since ~2002; titled in Brinkman et al. (2015).
+2. **That population-averaged tidal correlations dilute a sensitive subpopulation.** Same literature;
+   it is the standard explanation for why global studies are weak.
+3. **That tidal correlation may strengthen before a large earthquake.** Tanaka (2010, 2012); and if
+   we find it, we are the fifth or sixth to report it and the second to report it under
+   pre-registration at best.
+4. **Resolved tidal Coulomb stress on a fault plane** — Cochran, Vidale & Tanaka (2004), *Science*.
+5. **Gridding the friction coefficient rather than choosing it** — same paper, mu in [0.2, 0.6].
+6. **That the bearing of tidal traction relative to fault strike matters** — Tanaka et al. (2006);
+   Zhang et al. (2007); Thomas et al. (2012).
+7. **Tidal stress RATE as a covariate** — Vidale et al. (1998), tested, null.
+8. **That ocean loading dominates at coastal subduction sites** — Tsuruoka et al. (1995), in the title.
+9. **That b-value indexes stress state and co-varies with tidal sensitivity** — Ide et al. (2016).
+10. **Converting a tidal null into a modulation-amplitude bound** — already forbidden at §M-010.1.
+11. **Whole-lattice p-value calibration in tidal work** — Wang & Shearer (2015).
+12. **That the seismic-gap / trailing-deficit variable is a promising forecasting covariate** — it is
+    a rejected one (Kagan & Jackson 1991, 1995, 1999; Rong et al. 2003).
+
+### M-011.8 WHAT REMAINS GENUINELY OPEN
+
+1. **The rope.** Bearing-resolved, signed, two-time tidal loading features — pull-then-ease along a
+   fixed per-patch azimuth, and the hysteresis form — as triggers distinct from instantaneous state.
+   Not found. **Caveat: pending a Chinese-language sweep and a rock-mechanics cyclic-loading sweep.**
+2. **The rotation RATE of the tidal principal axis as a predictor of earthquake occurrence.** The
+   bearing has been used as an observable (for seismic velocity); its angular velocity has not been
+   found used for seismicity.
+3. **A GNSS-coupling / slip-deficit field as the conditioning variable for a tidal statistic on
+   ordinary earthquakes.** The closest prior art conditions on geodetically-detected SSEs, and on
+   tremor rather than earthquakes.
+4. **A pre-registered, interaction-form (not subset-form) test of tidal sensitivity against a
+   continuous, exogenous stress covariate, with the null permuting phase while preserving the
+   covariate.** No canonical estimator or precedent found in this literature.
+5. **A max-statistic whole-lattice null for a heterogeneous tidal feature lattice**, as opposed to a
+   count-of-low-p calibration or an analytic period-multiplicity scaling.
+6. **Any peer-reviewed Alaska-Aleutian-specific tidal-triggering result.** The only prior art I found
+   is a 2014 AGU abstract I could not retrieve and a science-journalism summary of it. **Priority here
+   appears open — but "I could not fetch the abstract" is not the same as "the abstract says nothing",
+   and the K-entry must say so.**
+
+*End Merton round 5. Counts: 2 seeds, 11 elements. REDISCOVERY 6 (elements 1, 6, 8, 10, 11, and Seed
+B item 3 as a rediscovered null); CONTESTED 1 (element 2); CONTRADICTED 1 (element 4); NOVEL 3
+(elements 3, 5, 9), of which element 9 is qualified pending two named sweeps. Unverifiable and
+recorded as such: the Tan (2014) AGU abstract (302 to a 404); `tanyenjoe.com/publications` (403); the
+Beaucé (2023) full text (403, read via abstract and two institutional press summaries); the Bradley &
+Hubbard 79-event test (unrefereed Substack, read in full but not independently checkable). Ledger
+write only; no other file touched; nothing committed; no statistic computed on any catalogue in the
+writing of this section.*
+
+
+# VERDICTS (Popper)
+
+## §P7-25. D-1 RETURNS AND K-092's MOTIVATING OBSERVATION IS EXPLAINED BY ITS OWN WAVEFORM. §P7-22 Ratification 1 FIRES. D-13 was hashed against a constant §P7-24 SP-2 had already declared invalid, and is repaired — but the repair exposes that D-13 was never powered. Two K-entries admitted at 0.
+
+*2026-08-22. D-1 ran at `1ca3bf2` on the 162-event seed superset only, in the frozen scalar, through the app's own `astro.ts` (provenance self-test exact to fifteen figures: −13.206888677138735 cm, −0.5757627956078135 cm/h). Verified before ruling, my own arithmetic recomputed from the two result files rather than read off the run: the waveform-matched band probabilities, all four z's, the exact binomial and multinomial tails, the D-13 critical values under both nulls, the seed's aftershock dependence, and the Tranche D total. Two of my brief's own figures did not survive that recomputation and are corrected below. Nothing here is committed by me; the supervisor commits.*
+
+---
+
+### (1) THE D-1 VERDICT. §P7-22 Ratification 1 FIRES. The observation is explained; K-092's priority collapses.
+
+**Stated plainly, because Ratification 1 requires it stated as the result and not as a preliminary.**
+
+The seed observation was: Alaska-Aleutian majors rupture below-neutral and falling. On all 162 seen majors the frozen quadrant holds **64/162 = 0.3951**. Against the uniform-phase constant the freeze was written against (0.25) that is **binomial p = 3.385e-05**, and it looks like the claim. Against the **time-uniform occupancy of that same quadrant in that same scalar at those same 162 sites and epochs — 0.38267**, measured over 4,504,845 samples through the identical code path with observation/null path equivalence asserted at max abs diff 0.0 — it is **z = +0.324, exact binomial p = 0.4015**.
+
+**The entire apparent effect is the waveform's own dwell time.** The frozen quadrant is not a quarter of the time. It is 38.3% of the time, at every one of the 162 sites, and at no site is it below 0.3167.
+
+The band readout says the same thing twice. Against the declared sinusoid null: TROUGH 0.5247 (z +5.17), MID_SLOPE 0.3457 (z +0.33), CREST 0.1296 (z −5.50) → **TROUGH-CONCENTRATED (artifact-CONSISTENT)**, which is §P7-23(C)'s artifact limb, not its physics limb. Against the waveform-matched null: **+1.14 / +1.01 / −2.54**. The sinusoid null's 1/3-per-band is the wrong number for this waveform; the right numbers are **0.4800 / 0.3091 / 0.2109** (sitetide independently 0.4801 / 0.3092 / 0.2107).
+
+> **RULED. §P7-22 Ratification 1 FIRES. The motivating observation is EXPLAINED by the dwell-time structure of the scalar it was read in. K-092's priority COLLAPSES.** The entry is not refuted — it was never scored on held-out data and this arm could not refute it — but the reason it was interesting is gone, and it must never again be introduced by the Sand Point reading. **The seed is now a bound, not a lead.**
+
+**And D-1 produced a number, which is better than a null.** On the 162 seen majors the quadrant excess over the waveform null is **+1.24 percentage points, 95% Clopper-Pearson CI [−6.3, +9.2] pp**, i.e. **[−16.6%, +24.1%] relative**. Scope, exactly: *Alaska-Aleutian box 51–58 N / 166–152 W, M ≥ 6.0, 1900–2026, the frozen `solidTideDisplacementCm` scalar, body tide only, no ocean loading, no Coulomb resolution, and — decisively — a set selected by having been looked at.* Selection-on-having-been-noticed biases this **upward**, so the upper limit is if anything generous, which makes it a legitimately conservative bound and not a null dressed up. **Any unconditional quadrant excess larger than ~24% relative should have shown itself here and did not.** That sentence is quotable. Nothing stronger is.
+
+#### Was building the waveform-matched null a legitimate completion of §P7-23(C), or an after-the-fact null substitution?
+
+**LEGITIMATE, and not marginally so. It was mandatory, and it was mandatory in writing before the seed was scored.** Four independent facts, each checkable:
+
+1. **`engine/audit_arcsine.py::real_waveform_control` shipped at `8e7ef6a`**, before `exp_k092_d1.py` (`1ca3bf2`) and before any seed event was scored. Its own docstring states the reason in advance: *"A pure-cosine demonstration invites 'but the real tide is multi-constituent'. It is: the beat between M2/S2/K1/O1 broadens the level histogram and moves the number off the exact 1/3 — and the direction and size of that move is a MEASUREMENT this module makes rather than a hand-wave."* It measured **48.9% in the lowest quarter**, and that number is in the `8e7ef6a` commit message.
+2. **`K092_SCALAR_PROVENANCE.md` §4 independently measured the app's own quadrant duty cycle at 0.4000** over 60 days at Sand Point, on a time-uniform grid, at `ebf7485`/`bc2ab44` — again before the seed was scored. The proposition *"the frozen quadrant is not 25% of the time"* was therefore **already on this program's record, in two places, from two implementations, before D-1 ran**.
+3. **§P7-24 SP-2 makes it a STANDING RULE**, committed 2026-08-13: property class *level / waveform phase* carries the mandatory null layer **"dwell-time-corrected null — a level-threshold statistic against a uniform-phase null is wrong by construction."** D-1b is that layer being built. **A run that had reported only the 1/3 and the 1/4 would have been the violation.**
+4. **Both nulls were reported, and the declared rule was reported verbatim and unchanged**, sourced by import (`AA.classify_level_set(np.zeros(0))["rule"]`), with the artifact-consistent verdict printed against the null that flatters the claim least. **The declared rule was not edited to fit; it was executed and then contextualised.** That is the difference between a completion and a substitution, and it is on the record.
+
+> **RULED. D-1b is a legitimate and required completion of §P7-23(C)/§P7-24 SP-2, NOT an after-the-fact null substitution, and carries NO penalty.** §P7-23(C) as I wrote it named the sinusoid constants and did not name the waveform-matched ones. **That was my omission, not the run's.** §P7-23(C) is amended: **the declared bands and the declared quadrant are scored against BOTH the closed-form sinusoid null AND the waveform-matched time-uniform null at the events' own sites and epochs, and where they disagree the waveform-matched null governs.** The sinusoid constants stay in the record as the pedagogical object they were always for.
+
+**Two scope flags on D-1b, recorded rather than glossed, because they bound what its constants mean.**
+
+- **(i) The ±10-day span was not pre-declared.** `audit_arcsine`'s committed control used 365 days with a *global* min/max; D-1b uses ±10 days per site with the *local-cycle* min/max, which is the observation arm's normalisation and is therefore the right one — but the resulting constant is span-dependent (Sand Point reads 0.4000 over 60 days globally, 0.3879 over ±10 days locally). **The verdict is robust to the span — 0.3951 is null against anything in the 0.37–0.40 family — but the exact z is not**, and no z from D-1b may be quoted to two decimals as though the span were frozen. It is frozen from (3) below, forward.
+- **(ii) The path-equivalence assertion covers `normalised_level_u` only, at 23 probes, at the first site.** It does **not** assert equivalence of the rate/sign path that defines the quadrant. That is the one number D-13 will live on. **UNVERIFIED, and it is cheap: extend `check_equivalence` to assert the quadrant indicator and the rate estimator across a sample of sites.** Required before D-13's first scoring readout, not before now.
+
+---
+
+### (2) THE CREST DEFICIT. Recorded, not claimable, not quotable. It does not survive its own dependence correction, let alone multiplicity.
+
+z = −2.54 is the only residual against the waveform null. Recomputed exactly rather than from the z:
+
+| statistic | value |
+|---|---|
+| CREST observed / expected | 21 / 34.17 |
+| exact one-sided P(X ≤ 21) | **0.00532** |
+| exact two-sided | **0.0107** |
+| Bonferroni ×3 bands | **0.0319** |
+| multinomial χ², df = 2 (the honest joint test — the 3 bands sum to 1) | **6.450, p = 0.0398** |
+| G-test, df = 2 | **7.221, p = 0.0270** |
+
+**Then the correction that ends it.** The seed set is not 162 independent draws. **36 of the 162 (22.2%) fall within 30 days and 150 km of an equal-or-larger prior event in the same file** — aftershocks, which §P7-23(A.3) already rules inherit their mainshock's phase neighbourhood. Treating those 36 as fully redundant gives n_eff ≈ 126, which scales z by √(126/162) = 0.882:
+
+**z = −2.24, two-sided p = 0.0253, ×3 bands = 0.076.**
+
+> **RULED: the CREST deficit is NOT CLAIMABLE and NOT QUOTABLE. It is RECORDED with its number.** Five reasons, any one sufficient: **(a)** it is nominal-0.03 on a joint test, which is below every bar this program has ever used for anything; **(b)** it does not survive a first-order dependence correction the program's own §P7-23(A.3) already mandates; **(c)** the direction was not pre-registered — §P7-23(C) declared a two-sided *trough-vs-mid-slope* rule and said nothing about crest, so a crest reading is a third look; **(d)** the set is selected by having been looked at, which is the one thing no statistic on it can undo; **(e)** **it is a deficit in the band OPPOSITE the claim.** A shortfall at crest is not the claim's evidence and cannot be converted into it — converting it would be the ψ-in-disguise move §P7-24 SP-5 forbids, arrived at by noticing rather than by declaring.
+
+**What it may be used for:** exactly one thing. **It is a lead for Kepler and it is free.** If a real mechanism suppresses nucleation near maximum compression, D-12 and D-13 will see it on data nobody has looked at, and D-12 already scores all three bands. **The honest statement of it: "on the 162 seen majors the crest band is under-occupied relative to the waveform, nominal joint p ≈ 0.03, on a selected set with 22% aftershock dependence, direction not pre-registered — this is a hypothesis, not a finding."** That sentence, and no shorter version of it, is what may be said.
+
+---
+
+### (3) THE LIVE D-13 DEFECT. **REPAIR = (c), the per-event null.** And the repair reveals a second, worse defect the amendment cannot fix.
+
+**The defect is real and it is mine.** `K092_FREEZE.md` hashes D-13 against *"the uniform expectation (0.25)"*. The time-uniform occupancy of the **frozen** quadrant in the **frozen** scalar is **0.38267 pooled**, per-site **0.3167 to 0.4508** (sd 0.0275), **never below 0.3167 at any of the 162 sites**. The hashed test compares a prospective fraction to a number the waveform alone beats at every site by at least 27% relative.
+
+**Correcting my own brief before ruling on it, because this is exactly the arithmetic I was told to verify fresh.** The characterisation *"would fire at roughly 12 events on no physics whatsoever"* is **too strong and I am striking it.** Recomputed:
+
+| N (post-freeze M ≥ 5.5 in box) | k_crit at p₀ = 0.25, α = 0.01 | nominal size | **P(fire \| waveform alone, p = 0.3827)** |
+|---:|---:|---:|---:|
+| 9 | 6 (0.667) | 0.0100 | **0.0813** |
+| 12 | 8 (0.667) | 0.0028 | **0.0441** |
+| 20 | 11 (0.550) | 0.0039 | **0.0966** |
+| 30 | 14 (0.467) | 0.0082 | **0.2225** |
+| 60 | 24 (0.400) | 0.0075 | **0.4392** |
+
+So at the realistic N the false-fire probability is **4–8%, not near-certainty** — a **4x to 27x inflation of a nominal 1% test**, growing with N. That is a disqualifying defect in a pre-registered prospective test and the repair is mandatory. It is not the automatic fire my brief described, and the ledger will say the smaller, true thing.
+
+**Realistic N, computed rather than assumed.** The seed file gives **33 M ≥ 6.0 in the box 1990–2025 = 0.917/yr**; Gutenberg-Richter at b = 1 puts M ≥ 5.5 at ~2.9/yr, so **N ≈ 9 over the 3-year horizon**. §P7-23(B) assumed 5–10/yr *arc-wide*; the freeze box is a sub-segment of the arc and that estimate does not transfer to it. **This is S-18 clause 1 again, sixth instance from this seat: a rate carried into a power calculation without the geometry that defines it.**
+
+#### The ruling on the repair.
+
+> **RULED: the repair is (c), A PER-EVENT NULL. Option (a) — a single amended constant — is REFUSED; (b) restatement is REFUSED; (d) voiding and re-freezing is REFUSED.**
+>
+> **Exactly what replaces 0.25.** Each prospective event *i*, at its own epicentral (lat, lon) and origin time *t*, is scored against **its own** quadrant duty cycle **q_i**, computed by `exp_k092_d1_null.py`'s existing machinery on a grid **frozen now as: ±10.0 days centred on t, 1.0-minute step, ±10-minute central-difference rate, local-cycle min/max between refined maxima, the app's `astro.ts` scalar via the same bridge, sign-condition quadrant (level < 0 AND rate < 0)**. The test statistic is unchanged — the count *k* of prospective events in the frozen quadrant out of N. The null is the **Poisson-binomial** with parameters {q_i}, and the success rule is unchanged: **p < 0.01, one-sided, at the 2029-08-13 readout**. The `sitetide.py` figure is reported alongside as robustness, never as the scorer.
+>
+> **Why (a) is refused:** a pooled constant computed on the *seed's* sites and epochs is not the null for events at *other* sites and *other* epochs, and 0.38267 is itself span- and epoch-dependent (§(1)(i)). Freezing one number now would repeat the original error in a smaller font.
+> **Why (b) is refused:** restating the prediction after reading the seed is the one move that would be indefensible. The prediction stays exactly as hashed.
+> **Why (d) is refused:** voiding forfeits the only genuinely un-gameable arm in the entry, and re-freezing would restart a clock on the pretext of an error that is a *computable property of a deterministic ephemeris*, not a property of any earthquake.
+
+#### What makes the amendment honest, given the clock started 2026-08-13 and the seed has been read.
+
+Six things, and I want them all on the record because the amendment is worthless without them.
+
+1. **The correction was pre-authorised.** §P7-24 SP-2, committed **2026-08-13** — the same day as the freeze, and eight days before the seed was scored — states that a level/waveform-phase statistic against a uniform-phase null is **wrong by construction**. This is not an amendment to D-13; **it is the application to D-13 of a standing rule D-13 was already subject to.**
+2. **The correct value was measurable at freeze time and was in fact measured**, at 0.4000, in `K092_SCALAR_PROVENANCE.md` §4, on a 60-day time-uniform grid, before the seed was scored. **The freeze's own attachment contradicted the freeze's own constant and nobody read the two together.** Recorded as S-18 clause 1, and as the same non-gating pipeline defect as the freeze's retracted priority-fact sentence.
+3. **q_i is a deterministic astronomical function of (lat, lon, t) with zero free parameters and zero catalogue input.** It cannot be tuned, it does not depend on where the event fell, and any third party can recompute it from the frozen recipe. **This is the property that makes a post-hoc null change legitimate at all**, and it is present here and absent in almost every case where such a change would be attempted.
+4. **The correction runs AGAINST the claim.** 0.25 → 0.3827 makes the prediction strictly harder to satisfy. **An amendment that raises your own bar carries its own good faith**, and I would refuse this same amendment in the other direction absent an argument far stronger than any of these.
+5. **It is dated, and the wrong sentence stays.** Per the append-only discipline and the precedent of the freeze's own DATED CORRECTION: `K092_FREEZE.md` receives a **second dated correction** appended below the first; the *"uniform expectation (0.25)"* sentence is **left in place and retracted by amendment**, never edited away. The amendment names this section, its date, and the two pre-freeze measurements in (1)–(2).
+6. **No further amendment.** The null recipe is frozen by this ruling and is **hash-affecting**. Any change to span, step, rate half-width, normalisation, scalar or quadrant definition **voids D-13 outright**, with no discretion. This is the ratchet that stops (3) from becoming a reusable escape hatch.
+
+#### THE SECOND DEFECT, which the repair EXPOSES and CANNOT FIX: D-13 was never powered.
+
+This is the more important finding of the three and it did not appear in my brief.
+
+| N | k_crit at p₀ = 0.3827, α = 0.01 | size | power @ true 0.60 | power @ true 0.70 |
+|---:|---:|---:|---:|---:|
+| 9 | 8 (0.889) | 0.0027 | **0.071** | **0.196** |
+| 12 | 10 (0.833) | 0.0019 | **0.083** | **0.253** |
+| 15 | 11 (0.733) | 0.0063 | 0.217 | 0.515 |
+| 20 | 14 (0.700) | 0.0040 | 0.250 | 0.608 |
+| 30 | 19 (0.633) | 0.0047 | 0.431 | 0.841 |
+
+**At the realistic N ≈ 9–12, the corrected D-13 has power 0.07–0.08 against a true quadrant rate of 0.60 — an effect nearly 60% larger than the null.** §P7-23(B) called D-13 *"the arm that will actually answer the question"* and *"the one I would run first if I could only run one."* **On the arithmetic that was available to me then and which I did not do, that was wrong.** D-13 as hashed was a test that could fire on the waveform and could not detect the physics. **Seventh instance from this seat, and the most consequential: I ratified a prospective test without computing its power.**
+
+> **RULED. D-13 stands, amended per (c), and is RE-LABELLED: DESCRIPTIVE-PRIMARY, NOT DECISIVE.** It scores at 2029-08-13 exactly as hashed-and-amended and its result is reported whatever it is, including a fail, which under this power is close to uninformative and must be reported as such. **A D-13 null may NOT be quoted as a bound** — §P7-22(a)'s third bullet, verbatim, third instance. **The decisive within-region arm is D-12**, which has the events.
+>
+> **AND: D-13b is FROZEN NOW, priced 0, and it is the arm that can actually answer.** Legitimate because it is wholly prospective — no data for it exists — which is precisely §P7-23(B)'s own argument for why a hashed commitment needs no licence.
+>
+> **D-13b, declared and hashed at this commit:** same box, same frozen scalar, same frozen sign-condition quadrant, same per-event Poisson-binomial null {q_i} under the recipe frozen in (3). **Threshold M ≥ 5.0** (declared as testing the **magnitude-independent form**, per §P7-23(A.4) — a null here does NOT refute a majors-specific claim, and that sentence travels with D-13b's headline). **Horizon 3 years from this commit; descriptive readouts at 1 and 2 years, non-scoring. α = 0.01 one-sided.** **Declustered PRIMARY and full-catalogue SECONDARY, both declared, both scored, neither substituting** — an M7 with six M ≥ 5.0 aftershocks delivers seven correlated successes, and D-13's hashed binomial has no declustering clause at all, which is its third defect. Declustering rule frozen as the 30-day / 150-km window used in §(2), declared before any event.
+
+#### One permitted action at price 0, so the power number is measured and not assumed.
+
+> **PERMITTED, at price 0, logged: count the M ≥ 5.5 and M ≥ 5.0 ComCat events in the frozen box, 1990–2026-08-13, and report the rates.** This is a **rate count, not a phase statistic**; those events are all pre-freeze and outside every D-13 scoring set; and D-12's SECONDARY stratum needs the catalogue regardless. **No phase, no level, no quadrant, no scalar may be computed on any of them** — doing so spends D-12's priced test. The count replaces my GR extrapolation with a measurement and fixes D-13/D-13b's expected N before either clock matters.
+
+---
+
+### (4) THE CONVENTION-LABEL DEFECT. **Labelling, as posed. But underneath it sits a substantive one the freeze must resolve, and D-1 found it.**
+
+**On the label: the run's `convention_note` is correct and I ratify it.** With θ = 0 at the maximum the scalar is A·cos θ and the below-neutral-falling quarter is θ ∈ (π/2, π); (π, 3π/2) is that **same physical quarter-cycle** under the x = A·sin θ convention `audit_arcsine` uses, which is the convention §P7-23(D) derived the quadrant in. **Same quarter, same exact 1/4 sinusoid null, two mutually inconsistent angular labels attached to it.** Under §P7-23(D)'s own reasoning — *"it names a quadrant by two sign conditions, both of which are physical statements about the scalar rather than choices about where zero sits"* — the sign conditions are the claim and the angle interval is commentary. **A labelling defect.**
+
+**But D-1 measured something the label question conceals, and it is substantive.** On real data the two forms are **different statistics**: sign-condition quadrant **64/162 (0.3951)**, angle-interval quadrant **49/162 (0.3025)**, **47 events classified differently** — 29% of the set. `sitetide` reproduces the split (62 vs 47, 49 disagreements). **They coincide only for a pure sinusoid**; the real multi-constituent waveform is asymmetric and its "quarter cycle by interpolated phase" is not its "quarter cycle by sign conditions." **`K092_FREEZE.md` therefore names two operationally different tests and does not say which binds** — and D-13 is scored on one of them, for real, on a running clock.
+
+> **RULED: the SIGN-CONDITION form BINDS. The angle-interval form is commentary and may not score anything.** The choice rests entirely on grounds that predate D-1: **(a)** the freeze's own claim sentence states the sign conditions first and glosses them with the angle; **(b)** §P7-23(D) ruled the sign-condition form rotation-free and made that the whole of the licence; **(c)** it is the form the app displays and the form Jim read; **(d)** `exp_k092_d1.py` scored it as PRIMARY on that reasoning, declared in its own `convention_note`, and reported the other alongside. **No post-hoc ground is used and none is needed.**
+>
+> **Exactness note, flagged rather than assumed: I cannot certify this choice is outcome-neutral.** D-1b built the waveform-matched null for the **sign-condition** quadrant only; **the angle-interval form has no matched null and its 0.3025 is therefore uninterpretable — it is not evidence of anything, in either direction.** **UNVERIFIED.** If anyone ever wants to quote the angle form, its own duty cycle must be measured first. Nobody should want to.
+>
+> **What the freeze owes:** the **same second dated correction** carries this. The angle-interval phrase *"θ ∈ (π, 3π/2) with θ = 0 at maximum"* is **left in place** and annotated: internally inconsistent as written; the two labels name the same physical quarter; **the sign conditions bind and are the frozen definition**; the angle form is not a scoring statistic and differs from the sign form on 29% of real events by waveform asymmetry. **One correction, both defects, one date.** Un-editing is impossible and no line is removed.
+
+---
+
+### (5) PRICING THE TWO NEW K-ENTRY CANDIDATES.
+
+Both are **REGISTRABLE**. Both are **admitted at price 0 for their first move and NOT ADMITTED beyond it** until the gates below clear. **Merton runs first on both** — resolved tidal Coulomb on subduction megathrusts, stress-state-conditioned tidal sensitivity, and directional/azimuthal tidal triggering are all live literatures with named results and named rebuttals, and this program does not get to price novelty it does not own. **No K-entry here may be priced before its Merton dossier exists.**
+
+**And one number governs both, so it is stated once, up front.** With the event-path VIF measured at 0.96–1.11 (`audit_event_vif`, §P7-22 Q1), Alaska's own detection floor at 80% power against the corrected p₀ = 0.3827 is:
+
+| stratum | N | detectable absolute Δ | relative |
+|---|---:|---:|---:|
+| M ≥ 4 Alaska box | 2,501 | 2.7 pp | **7.1%** |
+| a 10%-sensitive subpopulation of it | ~250 | 8.6 pp | **22.5%** |
+| the 162 seen majors (D-1's own bound) | 162 | 10.7 pp | 28.0% |
+
+**Literature-scale tidal triggering is a modulation of order one percent.** Alaska on the event path can see **seven percent**; a conditioned subpopulation of it, **twenty-two**. **Neither seed can be priced until it declares the minimum effect it is designed to detect and that number is inside its own stratum's floor.** This is §P7-23's correction applied in the other direction: I priced a strong claim with a weak claim's instrument then; **the error available now is pricing a weak claim with a strong claim's optimism.**
+
+#### SEED A — stress-state-conditioned tidal sensitivity. **REGISTER as K-095. Interaction form REQUIRED. Priced 0 pending gates.**
+
+> **RULED on the form: the INTERACTION is REQUIRED and the SUBSET is REFUSED.** Kepler's own reasoning is correct and I adopt it verbatim as binding: *"A subset analysis ('high-stress events only') invites the threshold to be chosen after looking, which is the failure mode this program exists to prevent."* A free threshold makes the hypothesis **unfalsifiable** — every null becomes "the threshold was wrong" — which is the specific kill-reason this seat rejects claims for. **If a threshold form is ever wanted it is gridded, every grid point enters the S-8 max-statistic, and it is priced accordingly.** No exceptions, no "primary threshold plus robustness."
+
+**Pre-registration required BEFORE any run, all seven, all hash-affecting:**
+
+1. **ONE stress proxy, named, with its data source, version and access date.** Not a family. **The MEASURED geodetic branch is PRIMARY** — published Alaska-Aleutian interseismic coupling / slip-deficit, exogenous to the catalogue, which is the property that separates survivors from tautologies in this program's own tranche-B anatomy. A catalogue-derived proxy (gap variable, b-value, Coulomb-from-priors, rate anomaly) may run only as **SECONDARY and only with a composition-preserving null plus the §P7-20(1) same-quantity exclusion** — the event times must not appear on both sides.
+2. **The interaction functional form, written down:** logistic on the quadrant indicator (or circular-linear on phase) with the stress proxy entering as a **continuous, monotone** term, the **interaction coefficient as the single declared test statistic**, and the sign of the predicted interaction **declared in advance**. One statistic, one coefficient, one sign.
+3. **The null: permute PHASE, preserve the stress number.** Stated as a code signature the way §P7-22(a) enforced common-mode: the null must be **ETAS-simulated event times through the identical scalar path** with the stress field held fixed, never a phase permutation (§P7-23(A.3)). **The waveform-matched dwell-time correction of §(1) is mandatory** — §P7-24 SP-2, level/waveform-phase class.
+4. **Positive control:** the interaction estimator must recover a **planted** interaction of the declared minimum size on synthetic catalogues through the identical code path. **Negative control:** the estimator must NOT fire when the stress field is spatially shuffled between cells of matched event count, and must NOT fire on the D-1b time-uniform construction where the mechanism predicts nothing. **Neither control may be skipped and both are priced 0.**
+5. **The minimum detectable interaction, computed and declared before the run**, against the floors above. If the answer is that Alaska cannot see the effect it hypothesises, **say so and do not run it** — that is a NEEDS-DATA outcome, not a failure.
+6. **Region declared before the run**, and Alaska is exploration-only in both directions (§P7-22 Ratification 5). Confirmation lives elsewhere.
+7. **The leakage risk this seed carries, named:** the inferred-proxy branch shares its event times with the outcome, so a catalogue-derived stress number is a **candidate tautology**, and any positive on the SECONDARY branch alone is uninterpretable until the MEASURED branch reproduces it.
+
+**Price: 0 today.** Gates: Merton dossier; the item-5 power declaration; item-4's two controls green. **On clearing all three, the standing §P7-24 SP-4 price of 16 applies** (2 within-region + 14 cross-region + 0 prospective) — no bespoke round, because the property is one property and the statistic is one statistic. **If the free threshold reappears in any form, the entry is REJECTED as unfalsifiable and stays rejected.** Kepler asked me to say that plainly if it were true; it is true, and it is now written down where it can be checked against.
+
+#### SEED B — the un-mined orientation / rate / azimuth degrees of freedom, incl. the directional-history "rope". **REGISTER as K-096. Priced 0. The first move is LICENSED.**
+
+> **RULED on the live question: YES. The first move — resolved tidal Coulomb plus the directional axes, on the SEED SET ONLY, price 0, exactly as D-1 ran — is LICENSED and requires no further declaration.** Five reasons: it touches **no event outside the already-licensed 162** (§P7-23(A) superset, sha256-pinned); it is a **deterministic calculation on a deterministic ephemeris**, spending no holdout hash and no explore budget; it produces **a fact about the seed, not a test**, which is exactly §P7-23(C)'s licence for D-1; **the seed set is unscoreable twice over** so nothing there can become evidence in either direction; and it is the **cheapest thing that can bound the largest un-mined degree of freedom**, which is the same argument that made D-1 the mandatory first arm.
+>
+> **Four conditions, binding, and they are what the licence costs.**
+> **(i) It carries D-1's own banner, unweakened: NOT EVIDENCE, IN EITHER DIRECTION.** A positive on the seed set is not a finding — §P7-23(A.1)'s *"a viewer scrolled past is a viewer seen"* applies to every one of the 162 and does not weaken because the statistic is new. **Ratification 1's asymmetry holds verbatim: a null EXPLAINS and a positive does not FIND.**
+> **(ii) Every axis gets its waveform-matched time-uniform null, built by the same machinery, before its number is looked at.** §P7-24 SP-2, class *level/waveform phase*, no exceptions — **and a directional axis needs its own dwell-time null just as badly as a level did.** A bearing distribution from a rotating principal axis is **not** uniform on the circle, and reading an azimuth concentration against a uniform-circle null would be **D-1's exact error in a new coordinate**. The null pool is the one D-1b already built.
+> **(iii) The friction coefficient is GRIDDED and every grid point is declared before the run**, never chosen. Same for every lag in the pull-then-ease family, every bearing, every derivative order.
+> **(iv) The full declared axis count is written down BEFORE the run and asserted at run time** — §P7-24 SP-6.1's `m`, the `assert_partition_total` shape. **Understating it is the only way to cheat this and so it is the thing that gets an assertion.** The count is appended to `EXPLORE_COUNT.jsonl` as `n_declared_tests`: **unpriced never means uncounted.**
+
+**On the two hazards Kepler named, both of which I confirm.**
+
+- **Multiplicity:** scalar × orientation × friction × derivative order × bearing × lag × body multiplies past 10³ quickly. **Nothing from this lattice promotes except under §P7-24 SP-3** — `alpha = q/m` at q = 0.10 against the **full** declared count, with the S-8 sim-calibrated max-statistic reported beside it. **The OR-limb stays refused.**
+- **Collinearity, and this is the sharper hazard:** every axis is a function of the **same W2 and the same ephemeris**, so a nominal count of *m* badly **overstates** the search breadth. That cuts both ways and must be handled explicitly rather than argued about after: **the max-statistic null must be simulated over the actual lattice through the identical code path** — which absorbs the true correlation structure automatically — and a Bonferroni-style `q/m` used *alone* would be **anti-conservative in the multiplicity and conservative in the correlation**, in unknown proportion. **RULED: the sim-calibrated max-statistic is PRIMARY for this lattice; `q/m` is reported beside it as the conservative bracket, and where they disagree the simulation governs.** This is a scoping of SP-3 for a collinear lattice, not an exception to it.
+
+**Item-by-item disposition of Kepler's six:**
+
+| item | disposition |
+|---|---|
+| **1. Tensor orientation vs fault geometry (resolved tidal Coulomb)** | **TESTABLE-NOW on the seed set at 0.** The megathrust geometry is published and exogenous. Friction gridded. §P7-23(D)'s own flagged un-attempted translation — *"Coulomb-on-a-thrust still would [differ by a phase offset]"* — and the single most defensible axis here. |
+| **2. Directional history — the ROPE** | **TESTABLE-NOW on the seed set at 0, and it is the genuinely novel class.** A two-time feature *is* something no instantaneous phase statistic can see, which is a real distinction and **not** a rescue of K-092 — it was true before D-1 returned. **Preferred bearing must come from independent fault geometry, not fitted**, or it is a ψ claim in disguise and priced at 4^R under §P7-5. Hysteresis and rotation rate are separate declared axes, not free readings of one. |
+| **3. Rate magnitude as a continuous covariate** | **TESTABLE-NOW at 0. Cheapest of the six and I should have declared it at §P7-23(C).** That ruling said sensitivity peaks at maximum unloading stress *rate* and then conditioned only on the *sign* of rate. **The mid-slope band was a coarse proxy for a continuous covariate that was available all along.** My omission. |
+| **4. Body azimuth / elevation** | **REFRAMED.** As posed it is closer to the forcing than to the stress and invites an unconstrained space. Sharper cousin: **express it as the azimuth of the horizontal tidal traction** — which is item 2's observable, physically grounded and already in the lattice. Registered as a *view* of item 2, not a seventh axis. Credit K-096(4). |
+| **5. Degree-3 / lunar distance-speed family** | **NEEDS-DATA, but the data is free.** `sitetide` omits the lunar P3 the app includes (~1.7% of degree-2). **The correct first action is not a hypothesis but a repair: implement P3 in `sitetide` so the two implementations agree in their content**, then ask whether the distance/speed axes separate. Priced 0, build. |
+| **6. Ocean loading** | **NOT a degree of freedom — it is K-090(c) and it is already ruled.** Absent from both implementations, largest exactly at a coastal subduction site. **It bounds what any Alaska amplitude claim can mean and it is D-10/K-093's job**, which §P7-22(a) already made the gate on quoting a K-092 null. Nothing in Seed B changes that and nothing in Seed B may route around it. |
+
+**Price: 0 today, for the first move as specified.** The lattice beyond the seed set is **EXPLORATORY-UNPRICED under Rule 4.4** with §P7-24 SP-1's five conditions and SP-6's ratchets, and **cannot promote until its SP-2 null layer exists for the directional class** — which is a layer that does not exist yet and which the first move will be building. **A property whose class has no null layer cannot promote.** On promotion, standing SP-4 price of 16.
+
+---
+
+### PRICE. Tranche D **183, UNCHANGED**. Recomputed from the components, not carried.
+
+| item | priced | note |
+|---|---:|---|
+| D-8 + D-9 + D-10 (class-level) | 181 | §P7-22, unchanged |
+| **D-12** within-Alaska stratum-held-out | **2** | §P7-23(A), unchanged; **now the decisive within-region arm** |
+| **D-13** prospective log | **0** | amended per §(3); re-labelled DESCRIPTIVE-PRIMARY, NOT DECISIVE |
+| **D-13b** prospective log, M ≥ 5.0, magnitude-independent form | **0** | frozen at this commit; K-069/K-080 pattern |
+| D-1 / D-1b arcsine + waveform-matched null | 0 | control; §P7-23(C) amended, no penalty |
+| D-0 convention gate | 0 | §(4): sign-condition form binds; freeze owes a dated correction |
+| M ≥ 5.0/5.5 box rate count | 0 | rate only, no phase; §(3) |
+| **K-095** Seed A first gates | **0** | Merton + power declaration + two controls, all pending |
+| **K-096** Seed B first move on the seed set | **0** | licensed under four binding conditions |
+| **TOTAL** | **183** | **181 + 2 + 0 = 183. Recomputed from components; matches §P7-23. Nothing tonight adds a priced test.** |
+
+**Not opened tonight, deliberately:** the bounds paper's Gate 3 and tranche B's outstanding items. Out of scope, untouched, still open.
+
+---
+
+### DISPOSITIONS — actionable, one line each.
+
+| # | item | disposition | owner |
+|---|---|---|---|
+| 1 | K-092 motivating observation | **EXPLAINED. §P7-22 Ratification 1 FIRES. Priority COLLAPSES.** | ledger; never reintroduce via the Sand Point reading |
+| 2 | K-092 seed quadrant | **BOUND, quotable with scope:** +1.24 pp excess, 95% CI [−6.3, +9.2] pp = [−16.6%, +24.1%] relative, on a set selected by having been looked at | Faraday may quote **with the full scope sentence** |
+| 3 | D-1b waveform-matched null | **LEGITIMATE COMPLETION of §P7-23(C)/§P7-24 SP-2. NO PENALTY.** §P7-23(C) amended: waveform-matched null governs where the two disagree | ledger |
+| 4 | D-1b span (±10 d) not pre-declared | **SCOPE FLAG.** Verdict robust; exact z is not. Span frozen forward by disposition 9 | ledger |
+| 5 | `check_equivalence` covers `u` only, 23 probes, one site | **UNVERIFIED.** Extend to the quadrant indicator and rate estimator across sites | supervisor, before D-13's first readout |
+| 6 | CREST deficit z = −2.54 | **NOT CLAIMABLE, NOT QUOTABLE, RECORDED.** Joint χ²(2) p = 0.0398; dependence-corrected ×3 = 0.076; opposite band; direction not pre-registered | ledger; lead for Kepler only |
+| 7 | D-13's "0.25" | **DEFECTIVE. REPAIR = (c) PER-EVENT NULL.** Replaced by per-event q_i, Poisson-binomial, recipe frozen in §(3). (a)/(b)/(d) refused | supervisor |
+| 8 | `K092_FREEZE.md` | **SECOND DATED CORRECTION OWED**, carrying §(3) and §(4). Wrong sentences left in place, retracted by amendment | supervisor |
+| 9 | D-13 null recipe | **FROZEN AND HASH-AFFECTING.** ±10.0 d, 1.0 min, ±10 min rate, local-cycle min/max, app `astro.ts`, sign-condition quadrant. **Any change VOIDS D-13** | binding |
+| 10 | D-13 power | **NEVER POWERED. RE-LABELLED DESCRIPTIVE-PRIMARY, NOT DECISIVE.** Power 0.07–0.08 at N ≈ 9–12 vs true 0.60. **A D-13 null may NOT be quoted as a bound** | ledger; §P7-23(B) corrected |
+| 11 | D-13b | **FROZEN NOW, priced 0.** M ≥ 5.0, magnitude-independent form declared, per-event null, 3 yr, declustered PRIMARY + full SECONDARY, 30 d/150 km rule | supervisor, this commit |
+| 12 | Box event-rate count | **PERMITTED at 0, logged.** M ≥ 5.0/5.5, 1990–2026-08-13. **Rate only — any phase computed on those events spends D-12** | supervisor |
+| 13 | Quadrant convention label | **LABELLING defect. Sign-condition form BINDS; angle-interval form is commentary and scores nothing** | ledger + freeze correction |
+| 14 | Angle-interval quadrant 0.3025 | **UNVERIFIED and uninterpretable** — no matched null exists for it. Do not quote in either direction | ledger |
+| 15 | The brief's "would fire at roughly 12 events" | **STRUCK as overstated.** True figure: 4–8% false-fire at N ≈ 9–12; 4x–27x inflation of a nominal 1% test | this section |
+| 16 | §P7-23(B)'s "5–10 M ≥ 5.5/yr" | **CORRECTED.** Arc-wide rate applied to a sub-segment box. Box rate ≈ 2.9/yr at b = 1, N ≈ 9 over 3 yr. **S-18 clause 1, sixth instance from this seat** | this section |
+| 17 | **Seed A** | **REGISTRABLE as K-095, priced 0.** **INTERACTION form REQUIRED, SUBSET form REFUSED, free threshold = REJECTED as unfalsifiable.** Seven pre-registration items binding | Kepler registers; Merton first |
+| 18 | **Seed B** | **REGISTRABLE as K-096, priced 0. First move LICENSED** (resolved tidal Coulomb + directional axes, seed set only) under four binding conditions | Kepler registers; run may proceed |
+| 19 | Seed B lattice multiplicity | **Sim-calibrated max-statistic is PRIMARY; `q/m` reported beside it as the conservative bracket.** SP-3 scoped for a collinear lattice | binding |
+| 20 | Seed B item 3 (rate magnitude) | **TESTABLE-NOW at 0, and my omission at §P7-23(C)** — I named unloading stress rate and then conditioned only on its sign | ledger |
+| 21 | Seed B item 4 (body azimuth) | **REFRAMED** into item 2's tidal-traction azimuth. Credit K-096(4) | ledger |
+| 22 | Seed B item 5 (degree-3) | **NEEDS-DATA, free:** implement lunar P3 in `sitetide` so the two implementations agree in content | supervisor, build, 0 |
+| 23 | Seed B item 6 (ocean loading) | **NOT a new axis — it is K-090(c)/D-10/K-093 and already ruled.** No route around it | binding |
+| 24 | Detection floors | **DECLARED:** 7.1% relative at N = 2,501; 22.5% at N ≈ 250. **No K-095/K-096 arm is priced before it declares its minimum detectable effect against these** | binding |
+| 25 | Tranche D total | **183, recomputed from 181 + 2 + 0. Unchanged. Nothing tonight adds a priced test** | ledger |
+| 26 | Bounds paper Gate 3, tranche B outstanding | **NOT OPENED.** Out of scope tonight, untouched, still open | — |
+
+---
+
+*Popper seat, 2026-08-22. The seed that started this entry was a real observation of a real waveform, read correctly, meaning something other than what it looked like — which is the honourable way for a hypothesis to end and is exactly what D-1 was built to find out. Two of the three defects tonight are mine: I wrote §P7-23(C) with only the sinusoid constants in it, and I ratified a prospective test at §P7-23(B) without ever computing its power, then called it the arm I would run first. The waveform-matched null was not an escape from my rule; it was the completion my rule was missing, and the run got it right without being asked. D-13 is repaired under a standing rule that predates the seed, the wrong sentences stay on the page, and the arm that can actually answer is frozen tonight at a price of zero. Kepler's two seeds are admitted and one of them may run before morning — new floor, and it is a low one: riff on what a 24%-relative ceiling on unconditional tidal quadrant excess implies for anything that still wants the tide to matter.*
+
+**AUDIT (§P7-25).** Appended to the Popper section only; zero existing ledger lines modified; no holdout hash spent; no event outside the sha256-pinned 162-event seed superset touched, downloaded or evaluated; no catalogue query run. Insert count deliberately NOT asserted from memory (this seat's cumulative totals go stale) — the supervisor runs `git diff --numstat -- replication/HYPOTHESIS_LEDGER.md` and confirms `X 0` before committing. The one cumulative total asserted was recomputed from its components tonight and not carried: Tranche D = 181 + 2 + 0 = 183, unchanged. Arithmetic recomputed fresh from `results_k092_d1.json` / `results_k092_d1_null.json`: waveform-null z's +1.1380 / +1.0083 / −2.5358 / +0.3244; CREST exact P(X ≤ 21) = 0.00532, two-sided 0.01065, ×3 = 0.0319; multinomial χ² = 6.4501 (df 2, p = 0.03975); G = 7.2208 (p = 0.02704); quadrant Clopper-Pearson [0.3193, 0.4748]; per-site quadrant min 0.3167 / max 0.4508 / sd 0.0275 / mean 0.38268 vs pooled 0.38267, 0 of 162 sites below 0.25; 36/162 = 22.2% aftershock-dependent at 30 d / 150 km; 33 M ≥ 6.0 in box 1990–2025 = 0.917/yr; all D-13 critical values and powers by exact binomial. Three corrections to this seat's own brief, made rather than glossed: (a) "would fire at roughly 12 events on no physics whatsoever" STRUCK, true figure 4.4% at N = 12 / 8.1% at N = 9; (b) §P7-23(B)'s "5–10 M ≥ 5.5/yr" is an arc-wide rate applied to a sub-segment box, CORRECTED to N ≈ 9; (c) the material defect in D-13 is not the constant but the POWER, which no amendment can repair and which the brief did not raise.
