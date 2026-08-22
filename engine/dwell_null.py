@@ -223,3 +223,85 @@ def span_sensitivity(values_by_span, bins):
                           max(o[nm] for k, o in out.items() if k != "_range"))
                      for nm in names}
     return out
+
+
+# ------------------------------------------ SENSITIVITY: does the dial move at all? --
+# Kepler's proposed rule 7, adopted here as machinery. `assert_power_floor` above asks
+# whether a p CAN be small. Nothing asked whether the statistic RESPONDS to the effect
+# it is supposed to measure. A statistic that cannot move is not a null result, it is a
+# broken instrument, and quoting its null as evidence of absence is the same class of
+# error as reading a concentration against a uniform-circle null.
+#
+# MEASURED, NOT ASSUMED, and the min-over-nuisance clause is the whole point: a bound
+# must hold at the adversary's choice of unknown phase, not at the analyst's best one.
+
+def circular_sensitivity(pool_angles, n, order, eps=0.30, n_phase=8, n_rep=60,
+                         n_null=800, rng=None):
+    """Power-relevant sensitivity of |R_m| and of the 2-dof complex statistic.
+
+    Plants a density modulation `1 + eps*cos(m*(theta - theta0))` on the site's own
+    dwell pool, sweeps the unknown phase theta0, and reports BOTH estimators.
+
+    THE MEASURED FACT this exists to expose: `d|R_m|/d(eps)` is SIGNED and passes
+    through zero, because a perturbation off-axis from an already-long dwell resultant
+    ROTATES it instead of lengthening it, and |R| discards the rotation. The 2-dof
+    Mahalanobis statistic on the complex resultant keeps the rotation and has a
+    non-vanishing minimum.
+    """
+    rng = np.random.default_rng() if rng is None else rng
+    pool = np.asarray(pool_angles, dtype=np.float64)
+    zs = np.empty(int(n_null), dtype=complex)
+    for i in range(int(n_null)):
+        zs[i] = np.exp(1j * order * rng.choice(pool, size=int(n))).mean()
+    r_null = np.abs(zs)
+    mu = np.array([zs.real.mean(), zs.imag.mean()])
+    cov = np.cov(np.vstack([zs.real, zs.imag]))
+    inv = np.linalg.inv(cov)
+
+    def maha(z):
+        d = np.array([z.real, z.imag]) - mu
+        return float(np.sqrt(d @ inv @ d))
+
+    m_null = np.mean([maha(z) for z in zs[:200]])
+    dR, dM = [], []
+    for th0 in np.linspace(0.0, 2.0 * np.pi, int(n_phase), endpoint=False):
+        w = np.clip(1.0 + eps * np.cos(order * (pool - th0)), 0.0, None)
+        w = w / w.sum()
+        rr, mm = [], []
+        for _ in range(int(n_rep)):
+            s = rng.choice(pool, size=int(n), p=w)
+            z = np.exp(1j * order * s).mean()
+            rr.append(abs(z))
+            mm.append(maha(z))
+        dR.append((np.mean(rr) - r_null.mean()) / eps)
+        dM.append((np.mean(mm) - m_null) / eps)
+    return {
+        "order": int(order), "n": int(n), "eps": float(eps),
+        "dR_by_phase": [float(x) for x in dR],
+        "dM_by_phase": [float(x) for x in dM],
+        "dR_min_abs": float(np.min(np.abs(dR))),
+        "dR_max_abs": float(np.max(np.abs(dR))),
+        "dR_changes_sign": bool(np.min(dR) < 0 < np.max(dR)),
+        "dM_min": float(np.min(dM)),
+        "two_sigma_on_R": float(2.0 * r_null.std(ddof=1)),
+        "note": ("|R| sensitivity is signed and crosses zero, so it is blind at some "
+                 "unknown phases; the 2-dof statistic has a non-vanishing minimum. "
+                 "A bound must be quoted at the MINIMUM over phase, never the "
+                 "maximum, because the phase is a nuisance parameter the adversary "
+                 "chooses."),
+    }
+
+
+def assert_sensitivity_floor(sensitivity, min_dM=0.5):
+    """Refuse a statistic whose worst-case response is below a declared floor.
+
+    The companion to `assert_power_floor`: that one refuses a family that cannot reach
+    significance, this one refuses a statistic that cannot register the effect.
+    """
+    got = float(sensitivity["dM_min"])
+    if got < float(min_dM):
+        raise ValueError(
+            "sensitivity floor: worst-case 2-dof response %.4f per unit effect is "
+            "below the declared floor %.4f -- this statistic cannot see what it "
+            "claims to measure" % (got, min_dM))
+    return {"dM_min": got, "floor": float(min_dM), "passed": True}
