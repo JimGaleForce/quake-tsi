@@ -1,0 +1,536 @@
+{
+  "arm": "amplitude / envelope / rate (Fable audit finding 2)",
+  "generated_utc": "2026-08-22T23:13:47.368075+00:00",
+  "declustered": true,
+  "priced_tests": 72,
+  "the_gap": "all 16 statistics in the committed world scans are angles or sign flags, hence invariant to tidal stress MAGNITUDE. Scale the tidal field by 10 and not one of them moves. Amplitude was never tested.",
+  "null": {
+    "kind": "waveform-matched dwell-time",
+    "half_window_days": 14.765294,
+    "why_this_window": "exactly one fortnightly period each side, so each event's null samples two full spring-neap cycles and the null is amplitude-neutral; the +/-10 day window of the harmonics scan spans only 1.35 cycles, which is irrelevant to angle statistics and fatal to amplitude ones",
+    "worst_amplitude_neutrality_rel_dev": 0.546409404496879
+  },
+  "n_regions": 11,
+  "regions": [
+    "Alaska-Aleutians",
+    "California",
+    "Chile",
+    "Greece-Aegean",
+    "Himalaya",
+    "Indonesia",
+    "Iran",
+    "Japan",
+    "Mexico",
+    "Philippines",
+    "Turkey"
+  ],
+  "n_events": 7098,
+  "per_region": {
+    "Alaska-Aleutians": {
+      "n": 525,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.6636999983634654e-08,
+          "null_mean": 1.6738145161031115e-08,
+          "null_sd": 3.81448137694791e-10,
+          "z": -0.26516102033611394
+        },
+        "E2_shear_amp": {
+          "observed": 361.79922150985004,
+          "null_mean": 368.774059122805,
+          "null_sd": 6.724187480121593,
+          "z": -1.0372758989207767
+        },
+        "E3_rate_amp": {
+          "observed": 4.218668935248959e-09,
+          "null_mean": 4.126448348183366e-09,
+          "null_sd": 1.3658074157915854e-10,
+          "z": 0.6752093011015393
+        },
+        "E4_signed_rate": {
+          "observed": 3.083580462366225e-10,
+          "null_mean": -3.0419983272105412e-12,
+          "null_sd": 2.2561476239679924e-10,
+          "z": 1.3802290295887605
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.09714285714285714,
+          "null_mean": 0.08484419047619048,
+          "null_sd": 0.012003397290113836,
+          "z": 1.024598817269509
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.11047619047619048,
+          "null_mean": 0.09554361904761906,
+          "null_sd": 0.012605873683507646,
+          "z": 1.184572509885436
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.0396306463460681,
+      "threshold_areal_abs": 2.818295354996552e-08,
+      "threshold_rate_abs": 8.900196609608201e-09
+    },
+    "California": {
+      "n": 61,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.4993081361251244e-08,
+          "null_mean": 1.6353725529260914e-08,
+          "null_sd": 1.4237170938227269e-09,
+          "z": -0.9556984136197286
+        },
+        "E2_shear_amp": {
+          "observed": 357.52290298329405,
+          "null_mean": 335.341252595545,
+          "null_sd": 20.400562009166624,
+          "z": 1.0873058486223148
+        },
+        "E3_rate_amp": {
+          "observed": 5.8784006160637475e-09,
+          "null_mean": 6.610568189139711e-09,
+          "null_sd": 5.892238193501186e-10,
+          "z": -1.2425966993043558
+        },
+        "E4_signed_rate": {
+          "observed": 3.768233769712307e-10,
+          "null_mean": -1.1222806743527672e-10,
+          "null_sd": 1.0298717514621708e-09,
+          "z": 0.4748663546817084
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.09836065573770492,
+          "null_mean": 0.09744262295081967,
+          "null_sd": 0.038053773422399635,
+          "z": 0.0241246190409298
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.08196721311475409,
+          "null_mean": 0.11329508196721312,
+          "null_sd": 0.04089276313783751,
+          "z": -0.7660981173334257
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.546409404496879,
+      "threshold_areal_abs": 3.07688206713461e-08,
+      "threshold_rate_abs": 1.2935181602648344e-08
+    },
+    "Chile": {
+      "n": 967,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.6962276685693697e-08,
+          "null_mean": 1.7101979433719998e-08,
+          "null_sd": 4.021041051179082e-10,
+          "z": -0.3474293006417735
+        },
+        "E2_shear_amp": {
+          "observed": 324.504247425333,
+          "null_mean": 327.9796828985146,
+          "null_sd": 5.28066339824641,
+          "z": -0.6581437238237403
+        },
+        "E3_rate_amp": {
+          "observed": 7.704040446298528e-09,
+          "null_mean": 7.60607589858059e-09,
+          "null_sd": 1.5741443793493024e-10,
+          "z": 0.6223352127232086
+        },
+        "E4_signed_rate": {
+          "observed": -4.1890717368465847e-10,
+          "null_mean": -1.9951479510896958e-11,
+          "null_sd": 2.9285917787675794e-10,
+          "z": -1.362278269939184
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.10031023784901758,
+          "null_mean": 0.09613381592554292,
+          "null_sd": 0.00938872632246511,
+          "z": 0.4448337058756755
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.09824198552223372,
+          "null_mean": 0.09438779731127198,
+          "null_sd": 0.009273001429833096,
+          "z": 0.41563545957860526
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.0276569285543911,
+      "threshold_areal_abs": 3.4329938077689594e-08,
+      "threshold_rate_abs": 1.5205673743137685e-08
+    },
+    "Greece-Aegean": {
+      "n": 194,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.639279351477744e-08,
+          "null_mean": 1.6244538361593186e-08,
+          "null_sd": 7.796356539116091e-10,
+          "z": 0.19015953470114577
+        },
+        "E2_shear_amp": {
+          "observed": 340.9929468810595,
+          "null_mean": 337.20584594806104,
+          "null_sd": 11.454997446414836,
+          "z": 0.3306068771044311
+        },
+        "E3_rate_amp": {
+          "observed": 6.571376797654696e-09,
+          "null_mean": 6.487308918236138e-09,
+          "null_sd": 3.1840449261175873e-10,
+          "z": 0.26402855917320733
+        },
+        "E4_signed_rate": {
+          "observed": 4.726993860616651e-10,
+          "null_mean": -3.086625070838868e-11,
+          "null_sd": 5.759550366710352e-10,
+          "z": 0.8743141472997872
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.1134020618556701,
+          "null_mean": 0.10017113402061854,
+          "null_sd": 0.02123769693583589,
+          "z": 0.6229925907232468
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.11855670103092783,
+          "null_mean": 0.0968,
+          "null_sd": 0.020924624625911433,
+          "z": 1.0397654161014684
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.19603646258012158,
+      "threshold_areal_abs": 3.010172121940068e-08,
+      "threshold_rate_abs": 1.3276216266397333e-08
+    },
+    "Himalaya": {
+      "n": 428,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.7571462880320532e-08,
+          "null_mean": 1.657456035157045e-08,
+          "null_sd": 5.605287013982454e-10,
+          "z": 1.7785039842978532
+        },
+        "E2_shear_amp": {
+          "observed": 324.14986221360806,
+          "null_mean": 334.17573427636574,
+          "null_sd": 7.769055946864754,
+          "z": -1.2904878187682096
+        },
+        "E3_rate_amp": {
+          "observed": 7.0162531924475145e-09,
+          "null_mean": 6.963991624236502e-09,
+          "null_sd": 2.2591342927395424e-10,
+          "z": 0.231334491176429
+        },
+        "E4_signed_rate": {
+          "observed": -2.011245714622161e-11,
+          "null_mean": -1.2689012918000562e-11,
+          "null_sd": 4.1122107458967813e-10,
+          "z": -0.018052197922074544
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.10046728971962617,
+          "null_mean": 0.08539018691588786,
+          "null_sd": 0.013360958627505705,
+          "z": 1.1284446890434674
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.09813084112149532,
+          "null_mean": 0.09084485981308411,
+          "null_sd": 0.013670366491929774,
+          "z": 0.5329762967739343
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.06936504720015148,
+      "threshold_areal_abs": 3.3620563591692956e-08,
+      "threshold_rate_abs": 1.4289661627581119e-08
+    },
+    "Indonesia": {
+      "n": 2543,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.9821618185094392e-08,
+          "null_mean": 1.9889689572674448e-08,
+          "null_sd": 2.773145404045295e-10,
+          "z": -0.24546634835936618
+        },
+        "E2_shear_amp": {
+          "observed": 316.97811959770445,
+          "null_mean": 313.11533612697787,
+          "null_sd": 3.34444736493212,
+          "z": 1.1549840823418023
+        },
+        "E3_rate_amp": {
+          "observed": 9.275509343339432e-09,
+          "null_mean": 9.298712957057104e-09,
+          "null_sd": 1.162508743157768e-10,
+          "z": -0.19959947702967995
+        },
+        "E4_signed_rate": {
+          "observed": -2.0021743002317042e-10,
+          "null_mean": -3.595186149808003e-12,
+          "null_sd": 2.173446021420952e-10,
+          "z": -0.9046566693421493
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.10342115611482501,
+          "null_mean": 0.09628430987023201,
+          "null_sd": 0.005798873331927143,
+          "z": 1.2307298049259525
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.09555642941407787,
+          "null_mean": 0.10103830121903265,
+          "null_sd": 0.0060827229852825964,
+          "z": -0.9012200322484522
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.11262338424142664,
+      "threshold_areal_abs": 4.0635308355258593e-08,
+      "threshold_rate_abs": 1.7587591796542822e-08
+    },
+    "Iran": {
+      "n": 200,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.576968309543267e-08,
+          "null_mean": 1.666820231847327e-08,
+          "null_sd": 8.585712032454273e-10,
+          "z": -1.0465284878460481
+        },
+        "E2_shear_amp": {
+          "observed": 325.6084880138117,
+          "null_mean": 329.54542022268015,
+          "null_sd": 11.580342416901424,
+          "z": -0.33996682197605005
+        },
+        "E3_rate_amp": {
+          "observed": 7.649008900604891e-09,
+          "null_mean": 7.356253491918852e-09,
+          "null_sd": 3.415700189827075e-10,
+          "z": 0.8570875440354754
+        },
+        "E4_signed_rate": {
+          "observed": -5.481150970967099e-10,
+          "null_mean": -5.640042252274199e-11,
+          "null_sd": 6.303639744785334e-10,
+          "z": -0.7800488201768468
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.11,
+          "null_mean": 0.103371,
+          "null_sd": 0.021314835759270793,
+          "z": 0.3110040384485131
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.09,
+          "null_mean": 0.120854,
+          "null_sd": 0.02337455792077357,
+          "z": -1.319982183388344
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.16323582195050046,
+      "threshold_areal_abs": 3.27170003791349e-08,
+      "threshold_rate_abs": 1.3878962059378569e-08
+    },
+    "Japan": {
+      "n": 1021,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.619419411432245e-08,
+          "null_mean": 1.6155918157892976e-08,
+          "null_sd": 3.3940997777491753e-10,
+          "z": 0.11277204247323945
+        },
+        "E2_shear_amp": {
+          "observed": 333.76411991622484,
+          "null_mean": 339.02290294654665,
+          "null_sd": 4.9478523661847635,
+          "z": -1.0628415403543658
+        },
+        "E3_rate_amp": {
+          "observed": 6.370076104326855e-09,
+          "null_mean": 6.427030489742619e-09,
+          "null_sd": 1.4080492767632714e-10,
+          "z": -0.40449142196704163
+        },
+        "E4_signed_rate": {
+          "observed": -1.7305209495088722e-10,
+          "null_mean": 9.707043963669443e-12,
+          "null_sd": 2.510852353886293e-10,
+          "z": -0.727876884643107
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.09990205680705191,
+          "null_mean": 0.10332869735553377,
+          "null_sd": 0.009497419856052314,
+          "z": -0.3607969954385238
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.09598432908912831,
+          "null_mean": 0.09870617042115573,
+          "null_sd": 0.009334984528810842,
+          "z": -0.29157427348989406
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.043486943121340715,
+      "threshold_areal_abs": 2.9512644831781775e-08,
+      "threshold_rate_abs": 1.3045367533846183e-08
+    },
+    "Mexico": {
+      "n": 307,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.8732157008801697e-08,
+          "null_mean": 1.857806926804457e-08,
+          "null_sd": 7.725995051882748e-10,
+          "z": 0.19944064126675456
+        },
+        "E2_shear_amp": {
+          "observed": 314.1867895855752,
+          "null_mean": 318.0610492561679,
+          "null_sd": 9.623004597835921,
+          "z": -0.4026039508974139
+        },
+        "E3_rate_amp": {
+          "observed": 8.726537866345824e-09,
+          "null_mean": 8.711908574841033e-09,
+          "null_sd": 3.1615388702018746e-10,
+          "z": 0.04627269220908303
+        },
+        "E4_signed_rate": {
+          "observed": 1.9266938665559174e-11,
+          "null_mean": -3.8004331848273806e-11,
+          "null_sd": 5.83404822894417e-10,
+          "z": 0.09816729013259765
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.11726384364820847,
+          "null_mean": 0.10518697068403912,
+          "null_sd": 0.017630053894675257,
+          "z": 0.6850162249258285
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.09446254071661238,
+          "null_mean": 0.08932899022801305,
+          "null_sd": 0.016360895792033238,
+          "z": 0.31376952422733817
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.10135575967189614,
+      "threshold_areal_abs": 3.7451994249780144e-08,
+      "threshold_rate_abs": 1.707762139717903e-08
+    },
+    "Philippines": {
+      "n": 699,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.972743637312701e-08,
+          "null_mean": 1.9362283014274774e-08,
+          "null_sd": 5.193449858772167e-10,
+          "z": 0.7031036570719233
+        },
+        "E2_shear_amp": {
+          "observed": 310.9845069637991,
+          "null_mean": 315.06789027116344,
+          "null_sd": 6.321263904077937,
+          "z": -0.6459757683475421
+        },
+        "E3_rate_amp": {
+          "observed": 9.265047622023552e-09,
+          "null_mean": 9.081115251848411e-09,
+          "null_sd": 2.1629924232372867e-10,
+          "z": 0.8503606771763681
+        },
+        "E4_signed_rate": {
+          "observed": -1.6990478361108242e-10,
+          "null_mean": 2.1059801241842942e-11,
+          "null_sd": 3.992229596727771e-10,
+          "z": -0.4783406871424664
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.1072961373390558,
+          "null_mean": 0.10740629470672389,
+          "null_sd": 0.011548113371231385,
+          "z": -0.009538992571939383
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.12017167381974249,
+          "null_mean": 0.10400257510729616,
+          "null_sd": 0.01146230029427751,
+          "z": 1.410632970462191
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.16008209509078714,
+      "threshold_areal_abs": 3.8680125442730506e-08,
+      "threshold_rate_abs": 1.7185664629257175e-08
+    },
+    "Turkey": {
+      "n": 153,
+      "per_statistic": {
+        "E1_areal_amp": {
+          "observed": 1.7283852867655877e-08,
+          "null_mean": 1.6251046183620844e-08,
+          "null_sd": 8.764675471905219e-10,
+          "z": 1.1783741307315367
+        },
+        "E2_shear_amp": {
+          "observed": 317.2712780939887,
+          "null_mean": 339.5059718313055,
+          "null_sd": 13.044998863019533,
+          "z": -1.7044611479690155
+        },
+        "E3_rate_amp": {
+          "observed": 5.983710585023174e-09,
+          "null_mean": 6.382827599438101e-09,
+          "null_sd": 3.5741288770572483e-10,
+          "z": -1.1166833322013248
+        },
+        "E4_signed_rate": {
+          "observed": 6.371290735290793e-10,
+          "null_mean": 6.087025133893869e-11,
+          "null_sd": 6.2712681088703e-10,
+          "z": 0.918887236498564
+        },
+        "E5_amp_top_decile": {
+          "observed": 0.13725490196078433,
+          "null_mean": 0.11612287581699347,
+          "null_sd": 0.025640161887645462,
+          "z": 0.8241767831416531
+        },
+        "E6_rate_top_decile": {
+          "observed": 0.0915032679738562,
+          "null_mean": 0.09797254901960785,
+          "null_sd": 0.02384354362643027,
+          "z": -0.2713221300956511
+        }
+      },
+      "null_amplitude_neutrality_worst_rel_dev": 0.14187726365488404,
+      "threshold_areal_abs": 2.8877517767324428e-08,
+      "threshold_rate_abs": 1.2996087441808157e-08
+    }
+  },
+  "cell_max_over_regions_x_statistics": {
+    "observed_max_abs_z": 1.7785039842978532,
+    "null_max_p95": 3.3616345632799347,
+    "p": 0.9908018396320736,
+    "where": "Himalaya / E1_areal_amp",
+    "n_cells": 66
+  },
+  "pooled_max_over_statistics": {
+    "observed_max_abs_pooled_z": 1.7376737838441856,
+    "null_max_p95": 2.6197256184749893,
+    "p": 0.36632673465306936,
+    "where": "E5_amp_top_decile",
+    "n_statistics": 6,
+    "per_statistic": {
+      "E1_areal_amp": 0.3345173857899837,
+      "E2_shear_amp": -0.9919925356845324,
+      "E3_rate_amp": 0.3821176091285696,
+      "E4_signed_rate": -0.8865838911270106,
+      "E5_amp_top_decile": 1.7376737838441856,
+      "E6_rate_top_decile": 0.30383293958920415
+    }
+  }
+}

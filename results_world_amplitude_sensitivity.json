@@ -1,0 +1,125 @@
+{
+  "arm": "sensitivity of the amplitude arm",
+  "priced_tests": 0,
+  "generated_utc": "2026-08-22T23:15:12.461722+00:00",
+  "region": "Chile",
+  "n_events_declustered": 967,
+  "injection": "within each event's own null pool, resample with probability proportional to (1 + eps * z_driver); eps = 0.10 is a ten percent preference over the event's own two fortnights",
+  "threshold": "two-sided 5 percent",
+  "trials_per_cell": 400,
+  "power": {
+    "areal_abs": {
+      "eps=0.10": {
+        "E1_areal_amp": 0.8475,
+        "E2_shear_amp": 0.1475,
+        "E3_rate_amp": 0.075,
+        "E4_signed_rate": 0.045,
+        "E5_amp_top_decile": 0.545,
+        "E6_rate_top_decile": 0.0625
+      },
+      "eps=0.20": {
+        "E1_areal_amp": 1.0,
+        "E2_shear_amp": 0.4975,
+        "E3_rate_amp": 0.115,
+        "E4_signed_rate": 0.04,
+        "E5_amp_top_decile": 0.9725,
+        "E6_rate_top_decile": 0.075
+      },
+      "eps=0.30": {
+        "E1_areal_amp": 1.0,
+        "E2_shear_amp": 0.785,
+        "E3_rate_amp": 0.185,
+        "E4_signed_rate": 0.07,
+        "E5_amp_top_decile": 1.0,
+        "E6_rate_top_decile": 0.0975
+      }
+    },
+    "shear": {
+      "eps=0.10": {
+        "E1_areal_amp": 0.155,
+        "E2_shear_amp": 0.9025,
+        "E3_rate_amp": 0.06,
+        "E4_signed_rate": 0.0375,
+        "E5_amp_top_decile": 0.2775,
+        "E6_rate_top_decile": 0.04
+      },
+      "eps=0.20": {
+        "E1_areal_amp": 0.4575,
+        "E2_shear_amp": 1.0,
+        "E3_rate_amp": 0.085,
+        "E4_signed_rate": 0.045,
+        "E5_amp_top_decile": 0.845,
+        "E6_rate_top_decile": 0.045
+      },
+      "eps=0.30": {
+        "E1_areal_amp": 0.8475,
+        "E2_shear_amp": 1.0,
+        "E3_rate_amp": 0.11,
+        "E4_signed_rate": 0.065,
+        "E5_amp_top_decile": 0.9975,
+        "E6_rate_top_decile": 0.0775
+      }
+    },
+    "rate_abs": {
+      "eps=0.10": {
+        "E1_areal_amp": 0.0525,
+        "E2_shear_amp": 0.06,
+        "E3_rate_amp": 0.8725,
+        "E4_signed_rate": 0.0575,
+        "E5_amp_top_decile": 0.0625,
+        "E6_rate_top_decile": 0.5025
+      },
+      "eps=0.20": {
+        "E1_areal_amp": 0.1025,
+        "E2_shear_amp": 0.075,
+        "E3_rate_amp": 1.0,
+        "E4_signed_rate": 0.0975,
+        "E5_amp_top_decile": 0.0725,
+        "E6_rate_top_decile": 0.95
+      },
+      "eps=0.30": {
+        "E1_areal_amp": 0.2,
+        "E2_shear_amp": 0.0825,
+        "E3_rate_amp": 1.0,
+        "E4_signed_rate": 0.095,
+        "E5_amp_top_decile": 0.0625,
+        "E6_rate_top_decile": 1.0
+      }
+    },
+    "rate_signed": {
+      "eps=0.10": {
+        "E1_areal_amp": 0.04,
+        "E2_shear_amp": 0.0525,
+        "E3_rate_amp": 0.035,
+        "E4_signed_rate": 0.855,
+        "E5_amp_top_decile": 0.0275,
+        "E6_rate_top_decile": 0.05
+      },
+      "eps=0.20": {
+        "E1_areal_amp": 0.0625,
+        "E2_shear_amp": 0.0375,
+        "E3_rate_amp": 0.0575,
+        "E4_signed_rate": 1.0,
+        "E5_amp_top_decile": 0.045,
+        "E6_rate_top_decile": 0.0475
+      },
+      "eps=0.30": {
+        "E1_areal_amp": 0.05,
+        "E2_shear_amp": 0.0425,
+        "E3_rate_amp": 0.0475,
+        "E4_signed_rate": 1.0,
+        "E5_amp_top_decile": 0.055,
+        "E6_rate_top_decile": 0.0575
+      }
+    }
+  },
+  "own_driver_power_eps_0.10": {
+    "E1_areal_amp": 0.8475,
+    "E2_shear_amp": 0.9025,
+    "E3_rate_amp": 0.8725,
+    "E4_signed_rate": 0.855,
+    "E5_amp_top_decile": 0.545,
+    "E6_rate_top_decile": 0.5025
+  },
+  "verdict": "Every statistic responds to its own driver; the weakest at eps = 0.10 is 0.50. The amplitude arm's null is a bound at measured power, not a broken instrument."
+}
