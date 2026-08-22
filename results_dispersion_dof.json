@@ -1,0 +1,40 @@
+{
+  "arm": "dispersion gate d.o.f., measured not assumed",
+  "generated_utc": "2026-08-22T23:32:16.239798+00:00",
+  "priced_tests": 0,
+  "why_priced_zero": "a re-analysis of an already-computed quantity with the correct degrees of freedom; no new statistic, no new catalogue read",
+  "by_arm": {
+    "declustered_PRIMARY": {
+      "arm": "declustered_PRIMARY",
+      "n_cells": 176,
+      "sum_of_squares": 118.49164450914691,
+      "variance_of_z": 0.6409988470271829,
+      "naive_dof_assumed_by_the_gate": 176,
+      "trace_R_squared": 358.3357641157628,
+      "effective_dof": 86.44406476265928,
+      "participation_ratio_effective_rank": 86.44406476265932,
+      "z_of_sum_of_squares": -2.148181009876219,
+      "two_sided_p_honest": 0.031699378689285004,
+      "reading": "UNDER-dispersed beyond chance"
+    },
+    "full_SECONDARY": {
+      "arm": "full_SECONDARY",
+      "n_cells": 208,
+      "sum_of_squares": 295.7141160842574,
+      "variance_of_z": 1.3966083386733157,
+      "naive_dof_assumed_by_the_gate": 208,
+      "trace_R_squared": 423.63598016341564,
+      "effective_dof": 102.12541433168899,
+      "participation_ratio_effective_rank": 102.125414331689,
+      "z_of_sum_of_squares": 3.0134089527297045,
+      "two_sided_p_honest": 0.0025833054316969383,
+      "reading": "OVER-dispersed beyond chance"
+    }
+  },
+  "verdict": {
+    "gate_reported": "variance 0.719 with p_under = 6e-5, computed as if the 280 region-statistic z's were independent",
+    "measured_effective_dof": 86.44406476265928,
+    "honest_p": 0.031699378689285004,
+    "consequence": "UNDER-dispersed beyond chance"
+  }
+}

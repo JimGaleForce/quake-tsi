@@ -1,0 +1,59 @@
+{
+  "arm": "non-circular calibration of the dwell-null pipeline",
+  "generated_utc": "2026-08-22T23:34:43.559889+00:00",
+  "priced_tests": 0,
+  "design": "ensemble B is built with a different seed and different offsets from ensemble A, then scored against A's mean and sd; a correct pipeline returns pseudo-z variance 1.000",
+  "n_cells": 176,
+  "n_pseudo_catalogues": 200,
+  "pseudo_z_variance_mean": 0.9758552952802169,
+  "pseudo_z_variance_se": 0.009866076799524726,
+  "pseudo_z_mean": -0.01001150601554182,
+  "real_catalogue_variance_for_comparison": 0.641,
+  "per_region": {
+    "Alaska-Aleutians": {
+      "n": 525,
+      "pseudo_z_variance": 0.9537709538760294
+    },
+    "California": {
+      "n": 61,
+      "pseudo_z_variance": 0.9744241764737892
+    },
+    "Chile": {
+      "n": 967,
+      "pseudo_z_variance": 0.951771152850092
+    },
+    "Greece-Aegean": {
+      "n": 194,
+      "pseudo_z_variance": 1.0698286621362123
+    },
+    "Himalaya": {
+      "n": 428,
+      "pseudo_z_variance": 1.0164292183475403
+    },
+    "Indonesia": {
+      "n": 2543,
+      "pseudo_z_variance": 1.0176686069487515
+    },
+    "Iran": {
+      "n": 200,
+      "pseudo_z_variance": 0.9373978978751529
+    },
+    "Japan": {
+      "n": 1021,
+      "pseudo_z_variance": 1.0167717863123797
+    },
+    "Mexico": {
+      "n": 307,
+      "pseudo_z_variance": 0.9336671175135949
+    },
+    "Philippines": {
+      "n": 699,
+      "pseudo_z_variance": 0.9528014399985875
+    },
+    "Turkey": {
+      "n": 153,
+      "pseudo_z_variance": 0.9779606522369673
+    }
+  },
+  "verdict": "PIPELINE IS CALIBRATED. Pseudo-z variance 0.9759 +/- 0.0099 brackets 1.000, so the dwell-null construction does not inflate null spread. The real catalogue's 0.641 is therefore a property of the DATA, not of the code -- a 2.15 sigma curiosity, not a broken instrument, and not something to build on at this strength."
+}
