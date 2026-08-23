@@ -1,0 +1,312 @@
+{
+  "arm": "P-1.1 high-N replay on the Lu/Xue declustered catalogues",
+  "generated_utc": "2026-08-23T00:06:14.692824+00:00",
+  "priced_tests": 1,
+  "holdout_touched": false,
+  "catalogues": [
+    {
+      "name": "QTM_declustered",
+      "n_explore": 33293,
+      "n_holdout_reserved": 11776
+    },
+    {
+      "name": "SCSN_declustered",
+      "n_explore": 39827,
+      "n_holdout_reserved": 10487
+    }
+  ],
+  "n_events_total_explore": 73120,
+  "detection_floor_estimate_relative": 0.015864968013382365,
+  "prior_arms_used": 7139,
+  "prior_floor_estimate_relative": 0.05077367528252131,
+  "null": {
+    "kind": "waveform-matched dwell-time, per-event",
+    "why_per_event_is_legitimate_here": "these catalogues are ETAS-declustered by their authors, so one event per sequence and the dataset's 'unit of inference: sequence' rule is satisfied because sequence and event coincide",
+    "half_window_days": 14.765294,
+    "draws_per_event": 120,
+    "replicates": 3000
+  },
+  "n_cells": 300,
+  "cell_max_family": {
+    "observed_max_abs_z": 8.218579089823173,
+    "null_max_p95": 3.9500204700491666,
+    "p": 0.0003332222592469177,
+    "where": "SCSN_declustered|M_ge1.5_ALL / sun_hourangle.R1"
+  },
+  "pooled_max_family": {
+    "observed_max_abs_pooled_z": 10.797695850070623,
+    "null_max_p95": 3.6935682926096214,
+    "p": 0.0003332222592469177,
+    "where": "sun_hourangle.R1"
+  },
+  "magnitude_ladder_for_top_feature": {
+    "feature": "sun_hourangle.R1",
+    "z_by_cell": {
+      "SCSN_declustered|M_ge1.5_ALL": 8.218579089823173,
+      "QTM_declustered|M_ge0.1_ALL": 7.184186271371354,
+      "QTM_declustered|M_ge1.5_control": 2.6359093256233836,
+      "QTM_declustered|M_ge2.5_control": -1.7021925190485576,
+      "SCSN_declustered|M_ge2.5_control": 0.6206233070349787
+    },
+    "read": "a real effect persists as the magnitude floor rises and agrees across the two networks; a detection artifact dies"
+  },
+  "top_30_cells": [
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "sun_hourangle.R1",
+      "n": 39827,
+      "z": 8.218579089823173
+    },
+    {
+      "cell": "QTM_declustered|M_ge0.1_ALL",
+      "feature": "sun_hourangle.R1",
+      "n": 33293,
+      "z": 7.184186271371354
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "sun_sinel.mean",
+      "n": 39827,
+      "z": -6.851603034755345
+    },
+    {
+      "cell": "QTM_declustered|M_ge0.1_ALL",
+      "feature": "sun_sinel.mean",
+      "n": 33293,
+      "z": -5.951383435971654
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "sun_az.R1",
+      "n": 39827,
+      "z": 5.919115144328523
+    },
+    {
+      "cell": "QTM_declustered|M_ge0.1_ALL",
+      "feature": "sun_az.R1",
+      "n": 33293,
+      "z": 5.269228277590007
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "sun_hourangle.R3",
+      "n": 39827,
+      "z": 3.3779828682532997
+    },
+    {
+      "cell": "QTM_declustered|M_ge0.1_ALL",
+      "feature": "sun_az.R3",
+      "n": 33293,
+      "z": 3.292921081469347
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "sun_sinel.bot_decile",
+      "n": 39827,
+      "z": 3.2128045122992206
+    },
+    {
+      "cell": "QTM_declustered|M_ge1.5_control",
+      "feature": "sun_sinel.mean",
+      "n": 4256,
+      "z": 2.941748982160169
+    },
+    {
+      "cell": "QTM_declustered|M_ge0.1_ALL",
+      "feature": "sun_sinel.bot_decile",
+      "n": 33293,
+      "z": 2.891705165107011
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "shear.bot_decile",
+      "n": 39827,
+      "z": -2.6759519533685503
+    },
+    {
+      "cell": "QTM_declustered|M_ge1.5_control",
+      "feature": "sun_hourangle.R1",
+      "n": 4256,
+      "z": 2.6359093256233836
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "rate_abs.mean",
+      "n": 39827,
+      "z": 2.4895532461602357
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "sun_sinel.top_decile",
+      "n": 39827,
+      "z": -2.486198265903229
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "elong_cos_abs.mean",
+      "n": 39827,
+      "z": 2.2471721915067264
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "elongation.R1",
+      "n": 39827,
+      "z": -2.2439378694501237
+    },
+    {
+      "cell": "SCSN_declustered|M_ge2.5_control",
+      "feature": "moon_sinel.bot_decile",
+      "n": 5655,
+      "z": -2.187533755102667
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "sun_az.R2",
+      "n": 39827,
+      "z": 2.174127557110227
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "moon_az.R2",
+      "n": 39827,
+      "z": 2.159198481443705
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "shear.mean",
+      "n": 39827,
+      "z": 2.1296887985756414
+    },
+    {
+      "cell": "SCSN_declustered|M_ge2.5_control",
+      "feature": "moon_sinel.top_decile",
+      "n": 5655,
+      "z": 2.065166962337959
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "shear.top_decile",
+      "n": 39827,
+      "z": 2.0643048754245643
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "rate.bot_decile",
+      "n": 39827,
+      "z": 1.991430721046197
+    },
+    {
+      "cell": "QTM_declustered|M_ge2.5_control",
+      "feature": "sun_sinel_abs.top_decile",
+      "n": 703,
+      "z": -1.913089901098876
+    },
+    {
+      "cell": "QTM_declustered|M_ge2.5_control",
+      "feature": "sun_sinel.bot_decile",
+      "n": 703,
+      "z": -1.8920094565356442
+    },
+    {
+      "cell": "QTM_declustered|M_ge1.5_control",
+      "feature": "moon_dist.top_decile",
+      "n": 4256,
+      "z": -1.854247464952917
+    },
+    {
+      "cell": "QTM_declustered|M_ge0.1_ALL",
+      "feature": "moon_dist.mean",
+      "n": 33293,
+      "z": 1.849647864134825
+    },
+    {
+      "cell": "QTM_declustered|M_ge0.1_ALL",
+      "feature": "sun_sinel.top_decile",
+      "n": 33293,
+      "z": -1.8404252929771185
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "bearing.R2",
+      "n": 39827,
+      "z": 1.7836660934617299
+    }
+  ],
+  "top_15_pooled": [
+    {
+      "feature": "sun_hourangle.R1",
+      "pooled_z": 10.797695850070623,
+      "n_cells": 5
+    },
+    {
+      "feature": "sun_az.R1",
+      "pooled_z": 7.675993276684513,
+      "n_cells": 5
+    },
+    {
+      "feature": "sun_sinel.mean",
+      "pooled_z": -7.463086304990296,
+      "n_cells": 5
+    },
+    {
+      "feature": "sun_sinel.bot_decile",
+      "pooled_z": 3.287236712070154,
+      "n_cells": 5
+    },
+    {
+      "feature": "sun_hourangle.R3",
+      "pooled_z": 3.1989074653010583,
+      "n_cells": 5
+    },
+    {
+      "feature": "sun_az.R3",
+      "pooled_z": 2.6835647001959706,
+      "n_cells": 5
+    },
+    {
+      "feature": "sun_sinel.top_decile",
+      "pooled_z": -2.3259104078017723,
+      "n_cells": 5
+    },
+    {
+      "feature": "elong_cos.top_decile",
+      "pooled_z": 2.2074651758346486,
+      "n_cells": 5
+    },
+    {
+      "feature": "elongation.R1",
+      "pooled_z": -2.1570696746658062,
+      "n_cells": 5
+    },
+    {
+      "feature": "elong_cos_abs.mean",
+      "pooled_z": 1.9436970476464939,
+      "n_cells": 5
+    },
+    {
+      "feature": "sun_az.R2",
+      "pooled_z": 1.6112292291365433,
+      "n_cells": 5
+    },
+    {
+      "feature": "rate_abs.mean",
+      "pooled_z": 1.5193873795981592,
+      "n_cells": 5
+    },
+    {
+      "feature": "moon_az.R2",
+      "pooled_z": 1.4787319441916624,
+      "n_cells": 5
+    },
+    {
+      "feature": "moon_dist.top_decile",
+      "pooled_z": -1.371458109084471,
+      "n_cells": 5
+    },
+    {
+      "feature": "moon_hourangle.R4",
+      "pooled_z": 1.3537376343048695,
+      "n_cells": 5
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "arm": "diurnal discriminator: observer vs Earth",
+  "priced_tests": 0,
+  "generated_utc": "2026-08-23T00:08:35.026045+00:00",
+  "parent_result": "exp_highn.py max |z| = 8.219 at sun_hourangle.R1, family p = 0.0003",
+  "by_catalogue": {
+    "QTM_declustered": {
+      "n": 33293,
+      "bands": {
+        "M_0.1_to_1.5": {
+          "n": 29037,
+          "diurnal_R": 0.030449322018519753,
+          "mean_local_solar_hour": 23.878484600408786,
+          "night_fraction": 0.5225057685022557,
+          "day_of_week": {
+            "n_weekend": 8212,
+            "n_weekday": 20825,
+            "events_per_weekend_day": 4106.0,
+            "events_per_weekday": 4165.0,
+            "weekend_excess_ratio": 0.9858343337334934,
+            "z_binomial_vs_2_over_7": -1.0949042444941672,
+            "two_sided_p": 0.273558589345737,
+            "diurnal_R_weekend": 0.023639322504605622,
+            "diurnal_R_weekday": 0.03558566066654864
+          }
+        },
+        "M_1.5_to_2.5": {
+          "n": 3553,
+          "diurnal_R": 0.039373242433695776,
+          "mean_local_solar_hour": 13.607262572189416,
+          "night_fraction": 0.47959470869687587,
+          "day_of_week": {
+            "n_weekend": 1027,
+            "n_weekday": 2526,
+            "events_per_weekend_day": 513.5,
+            "events_per_weekday": 505.2,
+            "weekend_excess_ratio": 1.0164291369754552,
+            "z_binomial_vs_2_over_7": 0.4403322441336265,
+            "two_sided_p": 0.65969649053309,
+            "diurnal_R_weekend": 0.02433982738938942,
+            "diurnal_R_weekday": 0.048471516612487754
+          }
+        },
+        "M_2.5_to_9.9": {
+          "n": 703,
+          "diurnal_R": 0.003911909274571121,
+          "mean_local_solar_hour": 23.77268178691497,
+          "night_fraction": 0.49644381223328593,
+          "day_of_week": {
+            "n_weekend": 207,
+            "n_weekday": 496,
+            "events_per_weekend_day": 103.5,
+            "events_per_weekday": 99.2,
+            "weekend_excess_ratio": 1.0433467741935483,
+            "z_binomial_vs_2_over_7": 0.5128505115783504,
+            "two_sided_p": 0.6080558932782505,
+            "diurnal_R_weekend": 0.060339780104062594,
+            "diurnal_R_weekday": 0.020468243677902388
+          }
+        }
+      }
+    },
+    "SCSN_declustered": {
+      "n": 39827,
+      "bands": {
+        "M_1.5_to_2.5": {
+          "n": 34172,
+          "diurnal_R": 0.02946225556515996,
+          "mean_local_solar_hour": 0.5312425389235169,
+          "night_fraction": 0.5179971906824301,
+          "day_of_week": {
+            "n_weekend": 9944,
+            "n_weekday": 24228,
+            "events_per_weekend_day": 4972.0,
+            "events_per_weekday": 4845.6,
+            "weekend_excess_ratio": 1.0260855208849264,
+            "z_binomial_vs_2_over_7": 2.162279720048423,
+            "two_sided_p": 0.030596621930790137,
+            "diurnal_R_weekend": 0.030335298178704072,
+            "diurnal_R_weekday": 0.029812175917459213
+          }
+        },
+        "M_2.5_to_9.9": {
+          "n": 5655,
+          "diurnal_R": 0.015398929257755736,
+          "mean_local_solar_hour": 13.419897462774212,
+          "night_fraction": 0.4891246684350133,
+          "day_of_week": {
+            "n_weekend": 1580,
+            "n_weekday": 4075,
+            "events_per_weekend_day": 790.0,
+            "events_per_weekday": 815.0,
+            "weekend_excess_ratio": 0.9693251533742331,
+            "z_binomial_vs_2_over_7": -1.0512928338279453,
+            "two_sided_p": 0.29312411735979976,
+            "diurnal_R_weekend": 0.005784851168076247,
+            "diurnal_R_weekday": 0.019286298060859925
+          }
+        }
+      }
+    }
+  },
+  "D2_weekend_evidence": [],
+  "D1_phase": [
+    {
+      "cell": "QTM_declustered/M_0.1_to_1.5",
+      "mean_local_solar_hour": 23.878484600408786,
+      "night_fraction": 0.5225057685022557,
+      "consistent_with": "OBSERVER (local midnight)"
+    },
+    {
+      "cell": "SCSN_declustered/M_1.5_to_2.5",
+      "mean_local_solar_hour": 0.5312425389235169,
+      "night_fraction": 0.5179971906824301,
+      "consistent_with": "OBSERVER (local midnight)"
+    },
+    {
+      "cell": "SCSN_declustered/M_2.5_to_9.9",
+      "mean_local_solar_hour": 13.419897462774212,
+      "night_fraction": 0.4891246684350133,
+      "consistent_with": "not local midnight"
+    }
+  ],
+  "verdict_by_discriminator": {
+    "D1_phase": "OBSERVER -- excess centred on LOCAL MIDNIGHT in 2 of 3 high-count cells, in both networks independently. Thermoelastic strain-rate extremes fall at sunrise/sunset (hours 6 and 18), six hours away. This is the sharpest discriminator in the set.",
+    "D2_day_of_week": "INCONCLUSIVE -- no consistent weekend excess. Predicted in advance to be the decisive test; that call was WRONG, and the reason is that Southern California's noise floor is dominated by continuous urban and freeway traffic which runs seven days a week, so the day/night contrast is large while the weekday/weekend contrast is small. A sharper-sounding test was mistaken for a sharper one.",
+    "D3_magnitude": "OBSERVER -- night fraction returns to 0.4964 (QTM) and 0.4891 (SCSN) above M2.5, from 0.5225 and 0.5180 below it. The effect dies above completeness in both networks."
+  },
+  "verdict": "OBSERVER. Two of the three pre-declared discriminators fire for the observer explanation and the third is inconclusive; none supports the Earth explanation. The excess is roughly 2 percent of events falling at local night, centred on local midnight, present below M2.5 and absent above it, reproduced independently in two networks and two eras. That is the day/night detection asymmetry -- the best-known artifact in catalogue seismology. **The diurnal solar signal in exp_highn.py is a DETECTION ARTIFACT. Its family p = 0.0003 must not be quoted as a result, however large the z.** Recorded as a positive control instead: the pipeline found the most famous artifact in its own field and the controls declared before the run classified it correctly."
+}
