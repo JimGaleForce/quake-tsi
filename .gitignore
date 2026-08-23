@@ -28,3 +28,4 @@ DRAFT_WEIFAN_REPLY.txt
 
 # transient run logs
 *_run.log
+*_run*.log
