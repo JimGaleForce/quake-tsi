@@ -1,0 +1,62 @@
+{
+  "arm": "P-1.4 learned arm: matched case-control, nested model comparison",
+  "generated_utc": "2026-08-23T02:15:16.514557+00:00",
+  "priced_tests": 1,
+  "holdout_touched": false,
+  "catalogue": "QTM_decluster_m0.1 exploration split",
+  "n_cases": 33293,
+  "controls_per_case": 4,
+  "n_holdout_reserved": 11776,
+  "design": "each event contributes itself as a case and K phantom times from its OWN dwell null (same site, same +/- fortnight); a case and its controls share site, epoch and rate, so the model can only win by finding structure in WHEN at sub-fortnight scales",
+  "model_A_features": [
+    "solar_hour_sin",
+    "solar_hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "doy_sin",
+    "doy_cos"
+  ],
+  "model_B_features": [
+    "solar_hour_sin",
+    "solar_hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "doy_sin",
+    "doy_cos",
+    "areal",
+    "areal_abs",
+    "shear",
+    "rate",
+    "rate_abs",
+    "moon_sinel",
+    "moon_dist",
+    "elong_cos",
+    "moon_ha_sin",
+    "moon_ha_cos",
+    "moon_az_sin",
+    "moon_az_cos",
+    "bearing_sin2",
+    "bearing_cos2"
+  ],
+  "why_nested": "model A is handed the day/night detection artifact for free, so B can only win by finding what the artifact does not explain",
+  "model_A": {
+    "auc": 0.5038211715592551,
+    "log_loss": 0.5005768973787931
+  },
+  "model_B": {
+    "auc": 0.505372791963893,
+    "log_loss": 0.5004802492025451
+  },
+  "declared_statistic_delta_auc": 0.0015516204046378546,
+  "delta_log_loss": 9.664817624799316e-05,
+  "null": {
+    "kind": "within-stratum label permutation, BOTH models refitted",
+    "n_permutations": 40,
+    "null_delta_auc_mean": -0.0002829888281837417,
+    "null_delta_auc_sd": 0.003912534490684286,
+    "null_delta_auc_p95": 0.005840662805178011
+  },
+  "p_delta_auc": 0.34146341463414637,
+  "p_delta_log_loss": 0.21951219512195122,
+  "verdict": "NULL. dAUC = +0.00155 against a permutation null (p = 0.3415). A model given the full per-event tidal vector, free to represent any interaction, and searched without multiplicity cost, does not beat a model that knows only the time of day. That is a substantially stronger statement than any binned null this program has produced, because it forecloses the whole space at once rather than one declared statistic at a time."
+}
