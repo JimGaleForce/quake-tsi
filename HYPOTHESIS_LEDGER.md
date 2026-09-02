@@ -21357,3 +21357,566 @@ information gain per earthquake" is the standing number any neural arm must clea
 ## SUPERVISOR CLOSING (2026-09-02)
 
 Popper has not ruled on any of the above; the verdicts in the table are the workers' frozen success rules, read by the supervisor. Nothing is promoted. Two items for Popper's next round: (i) whether arm C's +0.04 bits/event, CI excluding 0 but under its frozen bar, earns PROVISIONAL status and what the replication spec is (spatial ETAS baseline; untouched window; attribution stage); (ii) whether the fluid-driven pooled `moon_sinel_abs.mean` reading (p 0.022, one of ~4 secondary families) deserves a pre-registered cross-test against Lu et al.'s regions, which is what EQ-18 commissioned in the first place.
+
+
+---
+
+# VERDICTS (Popper) - Round 7: the 2026-09-02 session adjudicated, arm C priced, K-431..K-448 ruled
+
+*Ruled 2026-09-02, after the overnight session. Every number below was read from the results JSON
+or from the file named beside it, not from prose; where I quote a ledger line I give the line.
+I ran no experiment, touched no data file, and did not spend the holdout. Nothing here promotes
+anything to BASELINE. Two entries move UP against the session's own reading, and I say so plainly:
+the standard cuts both ways.*
+
+---
+
+## §P7-26(0). THE ONE-LINE STATUS TABLE
+
+| item | STATUS | the reason, in one line |
+|---|---|---|
+| **CORRECTION (9,131-day epoch)** | **ACCEPTED, with one residual exposure** | The fix is at the invariant and the regression test checks each loader against an independently computed Fliegel-Van Flandern Julian date, which is a real external check and not a restatement - but `LOADERS` in `tests/test_epoch_consistency.py:148` is a hand-written dict of four, and `exp_world_faultrelative.load_region` (line 141) is a fifth loader feeding its own `jd = t_days + UNIX_EPOCH_JD` that the test does not pin. It is CORRECT today (`ts.timestamp()/86400.0`); it is unpinned tomorrow. |
+| **Arm A** (`exp_dyntrig_skill`, K-038) | **NULL-AT-MEASURED-SENSITIVITY, and the sensitivity is poor** | `results_dyntrig_skill.json headline.primary_bits_per_event` = +0.002266 against a 0.01 bar, shift p 0.323, and the shift null is itself centred at +0.001593 (`headline.null_bits_mean`) - i.e. a meaningless trigger catalogue buys most of the apparent skill. MDE beta = 1.5. Bounds beta < 1.5 **at D0 = 10 kPa** and nothing else. |
+| **Arm B** (`exp_bvalue_skill`, K-405/P-2.2) primary | **NULL-OF-A-BROKEN-RULE. The primary null is NOT quotable as a bound.** | QTM -0.001029, SCSN -0.003646 (`catalogues.*.primary.gain_bits_per_event`), both CIs straddling zero - but the arm's own §4 measures ZERO power at every injected delta on QTM under the frozen rule. Per PLAYBOOK rule 5 the frozen-rule null is uninterpretable. The defensible bound is the matched reference: smooth longitudinal delta-b < 0.2. |
+| **Arm B control (c) + the Lilliefors reproduction** | **PROVISIONAL (a NEGATIVE result), and the strongest publishable thing in the session** | Pre-registered control, two catalogues, same sign, far outside CI: QTM -0.8816, SCSN -0.4817 at M>=2.5, QTM -1.2221 at M>=3.0 (`control_c_M_ge_2.5` / `merton_M_ge_3.0`). A 250-neighbour local b is a substantially WORSE magnitude forecaster than one global b, exactly on the events anyone wants. Holdout untouched, so PROVISIONAL, not BASELINE. |
+| **Arm C** (`exp_neural_tpp`) | **PROVISIONAL-LEAD. Admitted. Not reportable, not a pass.** | +0.039927 over ETAS+diurnal on QTM (`verdict.primary_bits_per_event_over_etas_diurnal`), block CI [+0.02874, +0.05446], +0.066375 on SCSN, and it survives the alpha-unpinned refit at +0.040469 (`etas_alpha_sensitivity.neural_over_etas_diurnal`). The Poisson leakage control returns -0.000843. It failed its own frozen 0.05 gate; it is a lead, priced in §P7-26(2). |
+| **Arm D** (`exp_learned_ext`, P-2.4) | **NULL-AT-WEAK-SENSITIVITY; the placebo is the real output** | C vs A dAUC +0.001641, p 0.3781; D vs B -0.000461, p 0.5174 (`contrasts.*`). MDE eps = 0.10, which bounds only a >=10% within-fortnight modulation - a much weaker floor than P-1.4's 0.05. The P-2.4 placebo (0.052 survivors/feature, family-wise 0.529) is a **calibration I accept and will cite**: it prices what nominal alpha buys on a property class with real temporal structure and a near-zero prior. |
+| **Arm G** (`exp_productivity_assim`, K-436) | **RETIRED AS POSED** | Fails every member of the declared family; the incompleteness-robust `bpos` count sits at -0.001346 / -0.000065, and the two count-everything modes lose bits on the attributed events specifically. Merton shows the claim is owned outright (Omi 2013, Page 2016, USGS OAF). The null is a null of the success rule - `sensitivity.measured_scatter_reading` predicts +0.015458 at the measured scatter 0.6722 log10, below the 0.02 bar - but the arm as posed is dead regardless, because its baseline is weaker than shipped USGS software. |
+| **P-1.1 `exp_highn`** | **OBSERVER-CONFIRMED; RETIRED as a tidal arm** | max abs z 8.2184 at `sun_hourangle.R1`, byte-identical before and after the fix. It was and remains the day/night detection artifact. No tidal claim existed here; none is created. |
+| **P-1.3 `exp_fluid_driven`** | **DECLARED TEST NULL. Secondaries EXPLORATORY-ONLY.** | `declustered_PRIMARY.DECLARED_TEST_group_label_permutation.p_one_sided_fluid_greater` = 0.4621. See §P7-26(3) for the pooled reading. |
+| **P-1.4 `exp_learned` + sensitivity** | **NULL, and it is the program's strongest tidal bound on high-N SoCal** | dAUC -0.001475, p 0.8293, MDE eps = 0.05 against the whole per-event tidal covariate space at once. This is the one re-run that made a bound STRONGER. |
+| **`exp_nearcritical`** | **NULL** | cell max abs z 2.7345 against a null 95th of 3.969; family p 0.6211. |
+| **`exp_mass_screen`** | **NULL; the holdout candidate is RETIRED** | Family p 0.3234, zero candidates over the null 95th. `shallow_lt70km \| areal.bot_decile` (z -3.70, p 0.064) was an epoch artifact and is out of the top 15. **The holdout must not be spent on it.** The new pooled leader `M_ge5.5 \| elongation.R3` is un-pre-specified and is an exploration item, not a candidate. |
+| **`exp_diurnal_discriminator`** | **OBSERVER, unchanged** | The one re-run that confirms a POSITIVE, and it is the observer. Its conclusion never depended on lunar phase, and the rerun demonstrates that rather than assuming it. |
+
+### §P7-26(0a). Is anything else still exposed after the epoch fix?
+
+Three items, in descending order of how much they would cost if left.
+
+1. **The regression test enumerates loaders by hand.** `tests/test_epoch_consistency.py:148` lists
+   four. `exp_world_faultrelative.load_region` is a fifth and is not in the dict. It is correct
+   today. **Required:** replace the hand-written dict with an import-scan over every module that
+   calls `jd = t + UNIX_EPOCH_JD` (today: `engine_ext_forcing`, `exp_diurnal_discriminator`,
+   `exp_fluid_driven`, `exp_highn`, `exp_learned`, `exp_learned_sensitivity`, `exp_mass_screen`,
+   `exp_nearcritical`, `exp_null_calibration`, `exp_record_tide`, `exp_world_2dof_rescore`,
+   `exp_world_amplitude`, `exp_world_faultrelative`, `exp_world_harmonics`) and assert the
+   invariant for each. Cost: an hour. This is the difference between a fix and an invariant.
+2. **The mass-screen re-run is a NEW scan under my own §P7-24 SP-1.5** - "re-running a scan with any
+   changed cell definition is a NEW scan with a new hash and a new line." The epoch fix changed
+   every cell's value in 3,000 cells. `engine/EXPLORE_COUNT.jsonl` shows no 2026-09-02 line.
+   **Required before the mass screen is quoted again: a new EXPLORE_COUNT line with its full
+   declared cell count.** Unpriced never means uncounted. This is bookkeeping, not a finding, and
+   it costs nothing except doing it.
+3. **`engine/` covariate builders were not audited.** The correction covered the `exp_*` loaders.
+   `engine/covariates/`, `engine/ephemeris.py` and `engine/sitetide.py` have their own time
+   handling and were not in scope. No defect is alleged; the audit simply was not run, and the
+   ledger should not imply that it was.
+
+**Nothing else is exposed that I can find, and the fix restores no conclusion.** The corrected
+record is the session's most valuable output: the 2026-08-22 tidal headline was never established
+by the high-N arms, and the holdout candidate was an artifact. That is a correction the program
+made against itself, unprompted, and it is worth more than a positive would have been.
+
+---
+
+## §P7-26(1). ARM C IS ADMITTED AS A PROVISIONAL-LEAD. WHAT THAT DOES AND DOES NOT MEAN.
+
+**Admitted, for four reasons that are each measured rather than argued.** (i) The point estimate
+survives the harshest baseline anyone actually fitted: unpinning alpha moves it from +0.039927 to
++0.040469, i.e. the gain is not the pinned bound. (ii) The Poisson leakage control returns
+**-0.000843 bits/event** - on data whose true inter-event density is exponential and
+history-independent, the network LOSES. That is the decisive control and it passes. (iii) The
+worker redesigned the calibration control after it FAILED at +0.0124 and reported no real-data
+number until it was diagnosed. That is the behaviour the standard exists to reward. (iv) Both
+catalogues have CIs excluding zero, in the same direction.
+
+**Not admitted as anything more, for five reasons.** (a) It failed its own frozen gate, and a
+frozen gate that is failed is failed; there is no partial credit and this entry may not be
+described as a pass in any outgoing text. (b) Merton's finding is binding: EarthquakeNPP (Stockman,
+Lawson & Werner, TMLR 2026, verbatim - *"none of the five NPPs tested outperform ETAS"*) tested on
+the same QTM regions with chronological splits and a reference ETAS. **My bar goes up accordingly:
+a positive here must explain why five NPPs and a published benchmark got the opposite answer, and
+"our ETAS was worse than theirs" is the leading explanation until it is excluded.** (c) SCSN is not
+an independent replication of QTM - overlapping region, overlapping period, same network,
+correlated completeness history. It is a second reading, not a second experiment. (d) The quoted
+CIs are **contiguous-block** bootstraps (200 blocks, `bootstrap_note`, explicitly labelled
+"descriptive, not a gate"), not the sequence-block bootstrap that PLAYBOOK rule 1 and every
+success rule in this program require. Those are different widths and the gap must be closed before
+any number is quoted with a CI. (e) The QTM catalogue is not complete at its own floor
+(b_train = 0.6901, branching ratio 1.5089, both in `etas_fit`), so a share of the QTM number is a
+statement about a detector.
+
+**What arm C may be said to establish today, verbatim, and nothing beyond it:** *on the QTM
+M>=1.0 exploration split, walk-forward, time-only, with three calibration controls passing, a
+GRU-based temporal point process carries +0.040 bits/event that the specific temporal ETAS in
+`exp_h_etas.py` does not. Whether that is structure in the Earth or a deficiency of that ETAS is
+undetermined, and the ablations point at the deficiency.*
+
+---
+
+## §P7-26(2). THE FROZEN TEST SPEC FOR ARM C. Three stages, in order. Nothing skips.
+
+*I have amended the supervisor's proposed spec in three load-bearing places and I state each
+amendment and its reason before the spec, because a spec whose changes are silent is not frozen.*
+
+**AMENDMENT 1 - the spatial-ETAS leg is REMOVED, and I overrule the brief on it.** The brief's (a)
+asks that the neural TPP be scored against `engine.baseline.EtasV1`. I read `engine/baseline.py`:
+`EtasV1` is a **cell-day Poisson-count grid model** whose likelihood is
+`poisson_ll(lam, y) = sum_{c,t} y log lam - lam` over (n_cells, n_days). `exp_neural_tpp.py` scores
+a **continuous-time per-event inter-event-time log-density in units of 1/day**. These are not the
+same object and there is no conversion between them that leaves the comparison fair. More
+importantly: **a spatial baseline against a time-only model is not a harsher baseline, it is a
+different target.** Handicapping the neural model with a question it was never asked measures
+nothing. The correct harshening keeps both models time-only and repairs the TEMPORAL ETAS along the
+axes the ablations already point at. That is stage 1 below.
+
+**AMENDMENT 2 - the replication window changes, and the 2019+ contention is avoided rather than
+adjudicated around.** Arm C already reserved, unread, **24,532 QTM events and 10,604 SCSN events**
+(ledger C-3) - its own last-30% holdouts, in the same catalogues, at the same floors, needing no
+new loader and no baseline conversion. Those are the correct FIRST replication. The ComCat SoCal
+2019+ window is the SECOND, and it is deferred behind stage 2 for a reason given in stage 3.
+
+**AMENDMENT 3 - the CI is a sequence-block bootstrap throughout, and the power question is
+answered BEFORE the look, not assumed.** See stage 3.
+
+---
+
+### STAGE 1 - THE ETAS-REPAIR LADDER. Exploration split only. No holdout. Runs first, always.
+
+**Question.** Is the +0.040 structure in the catalogue, or is it a repairable defect in one
+temporal ETAS?
+
+**Statistic.** Incremental bits/event over baseline, per event, on the SAME test window and the
+SAME events as the 2026-09-02 run, using the identical per-event log-density accounting of §C-1
+(`log f(tau_i | history) = log lambda(t_i) - Integral lambda`).
+
+**The ladder, declared at size 5, scored ONE RUNG AT A TIME and reported as a table, not as a
+max-statistic.** Each rung is an ETAS repair; each is scored in bits over the rung below it, and
+the neural model is scored over the TOP rung.
+
+| rung | repair | why it is on the ladder |
+|---|---|---|
+| R0 | `exp_h_etas` form, alpha free (lower bound 0.05) | the 2026-09-02 fit sat on alpha = 0.5 (`etas_fit.alpha_at_lower_bound` = true); a bound-constrained baseline is not a baseline |
+| R1 | R0 + per-sequence productivity as a fitted lognormal-hierarchical K | arm C's own ablation: removing magnitudes from the inputs costs -0.0184 bits/event, the single largest ablation |
+| R2 | R1 + two-component Omori (short p, long p) | the gain decays with time since the last M>=4 (+0.0756 at 0-1 d to +0.0414 at 30-180 d), which is an Omori-shape statement |
+| R3 | R2 + magnitude-dependent c | the standard next term when a single-kernel ETAS is rigid |
+| R4 | R3 + a fitted Mc(t) short-term-incompleteness detection layer multiplying the intensity | **mandatory.** Merton section E names short-term aftershock incompleteness as one of the two loopholes through which EVERY claimed beyond-ETAS win in 2018-2026 passed. A baseline with this loophole open cannot support a positive. Hainzl 2016 (SRL 87(2A):337) supplies the algorithm; van der Elst 2023 a-positive supplies the rate-side estimator. |
+
+**Success rule for stage 1, frozen:** the neural model retains **>= 0.02 bits/event over R4**, with
+a **sequence-block** (150 km / 30 d nearest-larger, the program's standing layer) 95% bootstrap CI
+excluding zero, on the QTM exploration test window.
+
+**Failure rule for stage 1, frozen and binding:** if the gain over R4 falls below 0.02 bits/event
+or its sequence-block CI includes zero, **arm C is CLOSED and the finding is recorded as
+"the +0.040 was baseline misspecification, and here is which rung absorbed it."** That is a good
+outcome, not a disappointment: it converts a lead into a named, reusable ETAS repair, and per
+§P7-26(2d) the repair is what gets promoted, never the network.
+
+**Leakage risk named for stage 1.** The specific risk is **estimation leakage through the repairs**:
+every rung adds parameters fitted on the train window, and a rung fitted on train that helps on
+test is skill, but a rung fitted with any test-window information is not. Assertion required at
+run time, as arm C already does: `min(test t) > max(train t)`, all normalisation constants computed
+on train only, and each rung's parameters frozen before the test window is touched.
+
+**Positive control for stage 1.** Simulate from R4 itself with a KNOWN injected per-sequence
+productivity scatter of sd = 0.5 in log10, run the identical ladder, and confirm that rung R1
+recovers a positive gain over R0 of the size the injection implies. **If R1 cannot detect a
+scatter that is present by construction, the ladder is a broken instrument and no rung of it may be
+quoted** - this is arm B's §4 lesson applied in advance rather than discovered afterwards.
+
+**Negative control for stage 1.** The homogeneous-Poisson generator that arm C already passed
+(-0.000843), re-run through the full ladder. Every rung must return approximately zero over R0 on
+Poisson data. A rung that manufactures bits on Poisson data is deleted from the ladder.
+
+**The artifact class most likely to fake a stage-1 pass:** **short-term aftershock incompleteness.**
+It makes the observed process history-dependent in a way no stationary-Mc ETAS represents, and a
+history-conditioned network will learn it and be paid in bits for it. That is why R4 exists and why
+it is the top rung rather than an optional extra. The second most likely is
+**n-dependent estimator bias** in the hierarchical K of R1 - small sequences get shrunk, large ones
+do not, and the shrinkage tracks sequence size, which tracks productivity. Fixed-n construction or
+an explicit shrinkage-calibration curve, declared before the run.
+
+---
+
+### STAGE 2 - THE FIRST SCORED LOOK. Arm C's own untouched holdouts. Scored ONCE.
+
+**Runs only if stage 1 passes.** Nothing about stage 2 is designed or tuned after stage 1's numbers
+are seen except the choice to run it.
+
+**Data.** QTM `QTM_12dev.txt` last 30% of span (24,532 events at M>=1.0, never read) and SCSN
+`SCSN_original_catalog.txt` last 30% of span (10,604 events at M>=2.5, never read).
+
+**Baseline.** R4 exactly as frozen in stage 1, parameters refit on the full exploration span and
+frozen before the holdout is opened. **Model.** The stage-1 network, weights frozen, no retraining,
+no architecture search, no early stopping against the holdout.
+
+**Statistic.** Bits/event of the network over R4, walk-forward.
+
+**Success rule, frozen:** **>= 0.02 bits/event on QTM, with a sequence-block 95% CI excluding zero,
+AND the same sign on SCSN.** **Failure rule, frozen:** anything less, and arm C is CLOSED and
+recorded as "did not replicate out of sample; the exploration reading was optimistic," with the
+exploration number kept in the record as the honest overestimate it turned out to be.
+
+**Mechanics.** A config hash is appended to `engine/HOLDOUT_LOG.jsonl` **before** the scoring code
+is allowed to read the holdout, containing: the ladder definition, R4's frozen parameters, the
+network checkpoint hash, the statistic, both rules, and the sequence-blocking definition. One look.
+No second look under any circumstance, including a bug - a bug means the look is spent and the
+arm reports what it got.
+
+**Leakage risk named for stage 2.** **The network's own hyperparameters were chosen on the
+exploration split.** That is legitimate for stage 1 and is exactly why stage 2 exists: the temporal
+split breaks it because the holdout is later in time than everything the configuration ever saw.
+The residual risk is that QTM's holdout (2016-2017) is temporally adjacent to its train window and
+the network may be exploiting slowly-varying network state rather than physics - which is why
+stage 3 exists.
+
+---
+
+### STAGE 3 - INDEPENDENT CATALOGUE AND PERIOD. And the power ruling, which is the hard part.
+
+**Data.** `data/comcat_socal_m25.csv`, 2019-01-01 onward: **8,256 events at M>=2.5** (2,870 at
+M>=3.0), Ridgecrest-dominated (3,398 of the 8,256 fall in calendar 2019). *The brief's "about
+3,000" is wrong; I counted the file.*
+
+**On the double-spend question, ruled.** The 2019+ window is already NAMED as a pre-registration
+vehicle twice: §P3-6 item 2 (the sequence/delta-m exclusion battery, S-12(c)) and §P4-2(c)/K-046
+(the two-statistic conjunction for K-009R). `engine/HOLDOUT_LOG.jsonl` currently holds two lines,
+both world-catalogue engine runs; **the SoCal 2019+ window is reserved, not spent.** My ruling:
+**reservation is not exclusivity.** A window is spent per-statistic, not per-window, and arm C's
+statistic (bits/event of a temporal point process) is disjoint from K-009R's (lag-1 residual ACF
+and EOF1 variance fraction). Arm C may therefore score there **under its own config hash**, on two
+binding conditions: (1) it goes THIRD, behind stage 2, so a lead that dies cheaply never touches
+it; and (2) **every future report of any 2019+ result must state how many independent scored looks
+that window has taken, cumulatively.** The moment that count is not stated, the window is being
+laundered.
+
+**THE POWER RULING - and the answer is NO, not as specified.**
+
+I can compute this from the ledger, and it is not close.
+
+- Arm C's SCSN reading has n = 6,850 test events and a contiguous-block 95% CI of
+  [+0.049469, +0.084359], half-width 0.017445, so **SE ~= 0.0089** at that n and that blocking.
+  Scaling to n = 8,256 gives SE ~= 0.0081, and 0.02/0.0081 = 2.5 sigma. On contiguous blocks alone
+  it looks marginally feasible.
+- **But the success rule names a SEQUENCE-block CI, and this program has already MEASURED what
+  that does to a SoCal M>=2.5 window of exactly this size and exactly this shape.** Arm G scored
+  8,989 events in **709 sequences, one of which carried 1,544 of them** (Hector Mine). Its
+  sensitivity table (`results_productivity_assim.json sensitivity.per_sd`) shows that at an
+  injected effect of **+0.037487 bits/event** - nearly twice the 0.02 threshold - **12 of 12
+  replicates cleared the point-estimate leg and 0 of 12 had a sequence-block 95% CI excluding
+  zero.** The worker's own reading: *"The binding constraint is the CI, not the point estimate."*
+- The 2019+ window is the SAME configuration, worse: ~8,000 M>=2.5 SoCal events with **one
+  sequence carrying a larger share than Hector Mine did**. There is no reason to expect a
+  different answer and every reason to expect a worse one.
+
+**Ruling: 2019+ SoCal M>=2.5 does NOT have the power to certify 0.02 bits/event under a
+sequence-block CI, and a single scored look there at that threshold would most likely produce a
+false null - a bound that reads as evidence and is not.** That is the failure mode PLAYBOOK rule 5
+exists to prevent, and arm B walked straight into it this same night.
+
+**Therefore, the sensitivity run that MUST precede the single scored look, specified:** simulate
+from R4 fitted to the 2010-2018 portion of `comcat_socal_m25.csv`, with the simulated scoring
+window matched to the 2019+ window in duration, event count AND sequence structure - explicitly
+including one Ridgecrest-sized sequence - inject a known bits/event gain at
+{0.01, 0.02, 0.04, 0.08, 0.16}, run the identical pipeline including the sequence-block bootstrap,
+>= 20 replicates per level, and report the **MDE at 80% power under the full success rule (both
+legs)**. Then, before the holdout is opened, one of three things happens, declared in the config
+hash: (i) if MDE <= 0.02, the threshold stands; (ii) if MDE > 0.02, **the threshold moves to the
+measured MDE and the arm reports a bound at that level, honestly labelled**; (iii) if MDE > 0.08,
+the window is abandoned as an instrument and stage 3 moves to a catalogue with more independent
+sequences (the natural candidate being the SCSN/QTM holdouts pooled with 2019+, or a
+second region entirely). **What is forbidden is opening the window without knowing which of the
+three applies.**
+
+**Positive control for stage 3.** The 2019+ window contains Ridgecrest, an event whose aftershock
+sequence any working temporal model must forecast far better than Poisson. Before the primary is
+read: assert `R4 over Poisson >= 0.5 bits/event` on the window. If it does not, the baseline is
+broken on this catalogue and nothing else on the window may be read.
+
+**Negative control for stage 3.** The same R4-simulated catalogues at injected gain zero, through
+the identical pipeline: the network must return approximately zero, and the false-positive rate of
+the full success rule must be measured and reported (arm A's §A-5 precedent, which measured 0.033
+at a nominal 0.049 and is the model to copy).
+
+**The artifact class most likely to fake a stage-3 pass:** **magnitude-scale drift and completeness
+change between the 2010-2018 fitting era and the 2019+ scoring era.** ComCat's SoCal M>=2.5 record
+crosses network upgrades and a magnitude-type mix (`magType` is present in the CSV and is mixed);
+a network that has learned era-specific inter-event-time structure will be paid for the era change.
+**Required control:** the M>=3.0 subset (2,870 events), where completeness is not in question,
+scored beside the primary and reported whatever it says. Secondly, **border and window effects** -
+the 2019-01-01 boundary cuts a live catalogue, so the first 1,000 days of triggering history must be
+supplied as history-only burn-in and never scored.
+
+---
+
+### §P7-26(2d). WHAT A PASS WOULD AND WOULD NOT LICENSE
+
+**A full pass of stages 1, 2 and 3 would license exactly this sentence, and no other:** *on Southern
+California catalogues, temporal-only, at M>=1.0 (QTM) and M>=2.5 (SCSN, ComCat), 2008-2026, a
+history-conditioned neural point process carries N bits/event that a temporal ETAS repaired for
+free alpha, per-sequence productivity, two-component Omori, magnitude-dependent c and short-term
+incompleteness does not, replicated on two untouched windows and one independent catalogue.*
+
+**It would NOT license:** any statement about spatial forecasting (both models are spatially blind);
+any statement about magnitude forecasting (the mark is an input, never a target); any statement
+about large events specifically (QTM's test window holds 30 events at M>=4); any statement about
+regions outside SoCal; any statement about a different architecture; and above all **any statement
+that "a new predictor of earthquakes" has been found.** A win here is a statement about what ETAS
+is missing. Arm C's own §C-8 says this and the ledger will hold it to it.
+
+**And the promotion rule, frozen:** stage 1's ladder is scored rung by rung precisely so that if a
+NAMED REPAIR captures the gain, **the repair is promoted and the network is discarded.** A repair is
+interpretable, portable, cheap and checkable by a third party; a GRU is none of those. The network's
+only job in this program is to find out how many bits are there. If R1 alone recovers most of
++0.040, the finding is "ETAS needs per-sequence productivity, worth X bits/event" - which is a
+better result than a neural win, and it is the outcome I would bet on.
+
+---
+
+## §P7-26(3). THE EQ-18 CROSS-TEST. Ruled in three sentences, then the freeze list.
+
+**The three sentences.** (1) **No** - the pooled `moon_sinel_abs.mean` reading does not license
+anything and is not a secondary that earns a pre-registration on its own merits: it is one
+max-statistic family out of at least four looked at in one arm whose declared test is null
+(p 0.4621), its nominal p is 0.021993, and the feature is |sin(lunar elevation)| - a pure ephemeris
+geometry scalar built at `exp_mass_screen.py:177` - **not** the tidal shear stress resolved on
+per-event focal-mechanism planes that Lu et al. claim, so the ledger's phrase "this is the Lu et al.
+direction" (PLAYBOOK line 168, memo section 6) is not supported and must be withdrawn. (2) **Yes**
+- the EQ-18 cross-test should nonetheless be pre-registered and run, for a better reason than this
+reading: the program already holds a **QUALIFIED REPRODUCTION of Lu et al.'s own Coso Figure 4c
+positive control** (EQ18_FULL_NOTES section 12: n = 113 against their 112, Pm/P0 0.340 against
+their 0.46, one-sided p = 0.0407, with the sigma_n control in the same bin null at p = 0.12), which
+means this is the only arm in the entire tidal lane with a demonstrated working detector, and an
+arm with a working positive control is worth ten arms without one. (3) The one thing that makes me
+uneasy and that must be stated in the freeze: the fluid pool's reading is **stronger under the
+full-sequence-null secondary (z 4.5044, p 0.000666) than under the declustered primary (z 3.5009,
+p 0.021993)**, and a signal that grows when clustering is restored is, under my own §P7-24 SP-2,
+a **clustering-derived** signal until proven otherwise - so the cross-test's null must be a full
+ETAS with triggering, never a phase permutation.
+
+### What must be frozen before that run, in full
+
+Written and hash-committed to `download_log.md` before the Figure 4 bin list is opened.
+
+1. **Their data, not ours.** Lu et al.'s declustered catalogues as they supply them, their
+   magnitude floor, their focal-mechanism catalogue vintage, their declustering rule. Any
+   substitution is a deviation and is declared as one. **Their bin list from Figure 4, verbatim,
+   with the bin count `m` written down before any bin is scored** - the Coso lesson (section 12:
+   all three earlier "Coso nulls" tested a box almost entirely south of theirs) is that a bin
+   definition off by 0.2 degrees is a different experiment.
+2. **Their statistic.** Pm/P0 on **per-event focal-mechanism-plane SHEAR stress**, their phase
+   binning, their amplitude thresholds. Beside it, and reported jointly, **our dwell-null battery**
+   at the same events and sites. Where the two disagree, both numbers are reported and neither is
+   selected. Frozen before the run: the waveform-matched dwell-corrected null governs any
+   level/waveform-phase statistic (§P7-24 SP-2), and their uniform-phase threshold is reported as
+   the comparison, not as the arbiter.
+3. **Positive control, declared and already measured:** the Coso Figure 4c bin, shear component.
+   The arm is VOID if it does not reproduce at p < 0.05 one-sided. **Negative control, declared and
+   already measured:** sigma_n in the same bin, which must NOT fire (measured p 0.12). A pipeline
+   that fires on both is measuring a bin, not a mechanism.
+4. **Unit of resampling: sequences**, at the program's standing 150 km / 30 d nearest-larger layer,
+   on their declustered catalogue as well as ours. Event-level CIs are forbidden.
+5. **Multiplicity: `alpha = q/m` at q = 0.10 against the FULL declared bin count** (§P7-24 SP-3),
+   with the sim-calibrated max-statistic reported beside it. No OR-limb.
+6. **The null: ETAS-simulated event times through the identical scalar path**, stress field held
+   fixed - never a phase permutation of the covariate (§P7-23(A.3)), and given sentence (3) above
+   this is not optional here.
+7. **A declared prediction with a direction**, written before the bins are opened: which of their
+   Figure 4 bins we expect to reproduce and which we do not, on the effective-normal-stress
+   reasoning already in EQ18_FULL_NOTES section 8. A cross-test with no direction is a scan.
+8. **Sensitivity FIRST (PLAYBOOK rule 5).** The minimum Pm/P0 amplitude detectable at 80% power at
+   each bin's n, computed and reported **before** any bin's number is read. Coso Figure 4c is
+   n = 113; most of their bins will be smaller; a null at n = 40 is not a null.
+
+**The pooled `moon_sinel_abs` reading's disposition:** EXPLORATORY, logged, **not** carried into
+the cross-test as a hypothesis and **not** quoted. If it is real it will reappear in the shear
+component on their bins, where it can be tested properly. If it only ever appears in an ephemeris
+geometry scalar, it is a dwell/aliasing artifact and belongs in the corpse list.
+
+---
+
+## §P7-26(4). K-431..K-448, ONE VERDICT EACH
+
+*Kepler: this is the best round you have produced. Part I's derivation of a rate law from two
+existing facts, and K-444's insistence that the program needs a denominator, are both the kind of
+move that changes what the program is for. Eleven of eighteen are runnable. Read the rejections as
+rejections of the CLAIM's current form, never of the generation - three of them come back as
+sharper cousins that I have written for you.*
+
+| id | verdict | the reason, and the spec or the kill |
+|---|---|---|
+| **K-431** stress-rate trigger law / microseisms | **TESTABLE-NOW, with a demotion** | The discriminator is genuinely excellent: high microseism noise raises Mc (fewer catalogued events) while triggering predicts more, **opposite signs**, which is the cleanest artifact separation this program has ever been handed. **But the "predicted exponent" framing is withdrawn:** q in [0.52, 0.79] was solved FROM the two facts it would be tested against, so a fitted q landing in that band is a consistency check, not a risky prediction. Only the SIGN is risky, so the sign is the test. **Frozen:** incremental bits/event over frozen per-region ETAS from `log(microseism band power)`, walk-forward; circular shift of the microseism series preserving its storm autocorrelation; **primary run at M>=1.5, above completeness**, with the at-floor run as the artifact monitor, not the reverse. **Binding prior bound from our own record:** EQ18_FULL_NOTES section 15 (EXP-F) found **no annual periodicity and no detected annual hydrologic signal** in SoCal - microseism power is strongly seasonal, so a seasonally-dominated response is already bounded and the arm must look at storm-by-storm variance, not the annual harmonic. Merton sweep first (storm/typhoon/microseism modulation is a live literature). Cost 5 + 1 download. |
+| **K-432** crustal H(f) | **REFRAMED -> K-432R** (credit K-432) | As posed it is a plot with three upper bounds and one point, and "the corner frequency lies between 2e-5 and 0.05 Hz" cannot be falsified at that resolution. **The cousin that survives is the free half:** within K-034's already-certified cells, compare the triggered-rate response to the **20-60 s** versus **100-300 s** band amplitude of the SAME teleseismic wavetrains. One comparison, one existing null, data on disk, no download. A rate law demands short-period dominance; amplitude dominance kills K-431 for cost ~1. **That** is a hypothesis. Cost 2. |
+| **K-433** ML-Mw productivity | **NEEDS-DATA, with a rider that may kill it** | Needs the SCEDC multi-magnitude catalogue (ComCat carries only the preferred magnitude: 702 mw of 14,812 in the SoCal exploration split, 4.67%). **The rider:** Herrmann & Marzocchi 2021, reproduced on our own windows this session (arm B section 5, QTM first floor not rejected M 2.6, SCSN M 3.2), attribute the MFD pathology in exactly these catalogues to **improper merging of ML and Mw scales**. K-433's covariate IS that merge. So: admissible only above M 2.6 / M 3.2, with the shuffle matched on magnitude, depth, epoch **and network/magnitude-source**, and with the honest prior that the covariate is a scale artifact. Acquire the data, then re-price. |
+| **K-434** anisotropic kernel | **TESTABLE-NOW, and I ELEVATE it above Kepler's own ranking** | Merton section E names **isotropic aftershock zones** as one of exactly two loopholes through which every claimed beyond-ETAS win 2018-2026 passed, and Cattania et al. 2018 found "an ETAS model with anisotropic aftershock zones is just as informative" as Coulomb rate-state. So K-434 is simultaneously a hypothesis AND the repair that hardens every future baseline in this program, arm C's included. The null (rotate theta0 uniformly, exact under isotropy) is correct as written. The test is ASYMMETRY, not elongation, and Kepler is right that the usual dismissal misses that. Data on disk. Cost 3. |
+| **K-435** susceptibility chi from great earthquakes | **TESTABLE-NOW, gated on its own bit ceiling** | The delta over K-407 is real - K-034 certified the measurement, so stage 1 is now an instrument. But probes are rare and Kepler concedes the bits will be small. **Gate, binding:** compute the bit ceiling first (Kepler's own proposed charter rule 1, which I endorse below); if the oracle ceiling sits below the harness's measured noise floor, do not run and say so. Cost 6, so it waits behind everything cheaper. |
+| **K-436** productivity reservoir | **RETIRED AS POSED -> REFRAMED as K-436R** (credit K-436) | Ran tonight as arm G. Null under its frozen rule in all three counting modes; the incompleteness-robust `bpos` count sits at zero, which is Hainzl 2016 arriving exactly where Merton said it would. **K-436R, if the program wants this reservoir:** baseline = **Page et al. 2016's Bayesian regional-productivity prior, not a frozen ETAS** (beating a frozen ETAS here beats less than shipped USGS software, which proves nothing); count = Omi et al. 2013's jointly-fitted Mc(t) or van der Elst 2023 a-positive, not a naive first-hour count; ONE sequence-specific parameter (the a-value), b/p/c generic, per the USGS's own stability finding; learning windows 3/6/12/24 h so the numbers are comparable to Omi's. **And a power gate before anything runs:** arm G's sensitivity shows a sequence-block CI cannot certify even +0.037 at 709 sequences, so K-436R needs a catalogue with materially more independent sequences or it is unrunnable at any effect size the data carry. |
+| **K-437** magnitude memory | **TESTABLE-NOW, conditional on its own null existing** | Kepler states the condition correctly and I hold him to it: **without an ETAS simulation passed through a time-varying magnitude-dependent Mc(t) fitted to the real STAI decay, this entry is UNRUNNABLE**, because STAI manufactures precisely the observed correlation. SNIFF-4's Spearman 0.146 is the size STAI predicts. Note also that arm B has already delivered the adjacent negative from the other side: a local b **destroys** 0.48-0.88 bits/event at M>=2.5 on both catalogues, so the magnitude axis is not free skill and K-437 must clear a bar that a related covariate has already failed badly. Build the null first; the null IS the experiment. Cost 5. |
+| **K-438** forecast the end of the sequence | **TESTABLE-NOW, pending a Merton sweep** | Genuinely a different target and genuinely what an emergency manager asks. Kepler is right that it is not B-3 re-parameterised. **But** USGS OAF forecasts ongoing sequences for a living and the B-3 adjudication already closed a neighbouring claim with "Delta: none" (~L5232); a sweep must name the delta before this runs, or it repeats arm F's mistake in a new coordinate. Cheap otherwise. Cost 3. |
+| **K-439** aseismic slip latent state | **NEEDS-DATA** | Daily GNSS position time series for SoCal is the unblocking download. Kepler's binding rider is correct and I restate it as a condition of the entry: **the residual field consumed must be the sequence-excluded field**, or this cross-correlates geodesy against El Mayor's aftershocks and reproduces K-009's own confound. Cost 8, so it is last among the runnable even after the download. |
+| **K-440** Hawkes on the fault network | **TESTABLE-NOW, and I ELEVATE it** | The strongest genuinely-new entry in the round. Data on disk (CFM5.3 + QTM + SCSN). The null is properly designed: the same rank-r matrix fitted after permuting segment labels preserves capacity exactly and destroys geometry, which is the right null and is rare. Rank capped at r <= 5 and declared in advance, so parameter count cannot explain a win. Kepler's defence is correct - a non-symmetric excitation matrix is a structure no distance kernel can represent. **And like K-434 it doubles as an ETAS repair**, so it is a candidate destination for arm C's bits. Cost 7. |
+| **K-441** time-reversed catalogue | **TESTABLE-NOW - CONFIRMED as decisive, with the cost estimate OVERRULED and one binding rider** | I confirm the supervisor's flag: either outcome is a real result and it bounds the entire precursor literature from above in one number. **But "the cost is one likelihood evaluation" is wrong** and was repeated in the brief: you must REFIT the model class to the reversed catalogue (else you measure fit quality, not irreversibility) and refit N ETAS simulations both ways to get the reference distribution. Cost is O(2N+2) fits. **The binding rider, which decides whether this entry is worth anything:** short-term aftershock incompleteness is itself a time-irreversible feature of the OBSERVED catalogue that a plain ETAS simulation does not have, so **the ETAS sims MUST be passed through a fitted Mc(t) detection layer.** Without that, a positive result is the observer and the entry is artifact-guaranteed. With it, this is the best cost-to-decisiveness ratio in the round. |
+| **K-442** forecast the observer | **REFRAMED + NEEDS-DATA -> K-442R** (credit K-442) | Two problems, one fatal as posed. **(i) Leakage by construction:** `nst`, `gap`, `dmin`, `rms` in `comcat_socal_m25.csv` are per-event properties known only AFTER the event is detected and located. A forecast issued at time t cannot use the event's own `nst`. As written the entry would score a quantity it could not have had. **(ii) The claim "the highest-probability positive in this round" is contradicted by tonight's own measurement:** arm C's fitted diurnal observer factor is worth `etas_diurnal_over_etas` = **-0.001631 bits/event on the QTM test window** - the most obvious observer channel, fitted honestly, LOSES bits out of sample. The observer artifact is real in the rate and not stable enough to be worth bits forward. **K-442R, which survives:** a detection layer driven by **forecastable station state** - station uptime metadata and IRIS/EarthScope band-limited noise PSD (one download, already queued as P-3.7/K-423) - scored as incremental bits/event over frozen ETAS, with the register rule below. Cost 4 + 1 download. |
+| **K-443** ensemble spread | **TESTABLE-NOW** | Cheap, data on disk, and the null is honest in the way that matters: the win must be over the **spread-blind equal-weight average**, not over the best single member. Straight import from NWP, where it is decades of settled practice. A null here is also useful: it says the program's parameter-choice anxieties are irrelevant. Cost 3. |
+| **K-444** predictability budget | **REFRAMED -> K-444R, and the supervisor's "cheapest decisive" is PARTLY OVERRULED** | As a redefinition of the program's deliverable it is a manifesto and I do not adjudicate manifestos - though I will say for the record that Kepler is **right** that the program lacks a denominator, and right that a null becomes a contribution once it is a measured allocation of zero to a named channel. **K-444R, the estimable core:** the block-entropy-rate upper bound of the discretised catalogue, computed on the real catalogue AND on its own ETAS simulations, reporting the **EXCESS**, with S-4 subsampling-bias control (Miller-Madow or NSB) and the bias curve published beside the estimate. That is one number and it is well posed. **But it is not cheap and it is not quick:** entropy-rate estimation on a heavily clustered marked point process is bias-dominated at exactly the block sizes needed, and the bias control IS the experiment. Kepler's cost ~6 is right; the brief's "cheapest decisive" is not. Run it, but not as a quick win. |
+| **K-445** moment rate | **REFRAMED -> K-445R** (credit K-445) | The observation is correct - moment is Mc-insensitive and is what hazard cares about - but a **skill** comparison is not available at this n: moment rate is dominated by the largest events, and SoCal 2010-2018 holds a handful of M>=5. A CRPS or log-score comparison on a target with ~20 decisive draws is underpowered before it starts. **K-445R:** score the ETAS-implied moment-rate forecast as a **calibration** test - PIT histogram and reliability diagram against the realised moment - which IS well powered and has never been done, and report explicitly that no skill claim is available at this n. If ETAS is badly calibrated in moment while well calibrated in counts, that is a real and publishable finding about the loss the field optimises. |
+| **K-446** compensator time | **TESTABLE-NOW, with one correction to the entry's central claim** | Cheap, correct in spirit, and it does strengthen existing bounds. **But "the null is exact, parameter-free" is overstated:** the residual-time transform is exact only under the TRUE model. Under a FITTED ETAS that arm C has just measured to be missing ~0.04 bits/event of structure on the same catalogue, non-uniformity of the transformed times is model misspecification at least as readily as it is external forcing. So the entry is admitted as **a sharper instrument for confirming existing nulls**, not as a new-signal hunt, and any rejection it produces must be scored against ETAS-simulated catalogues passed through the identical transform before it means anything. Cost 2. |
+| **K-447** silent segments | **REFRAMED -> K-447R** (credit K-447) | The delta over K-417 is real: the discriminator is now one K-034 response ratio per segment from an already-passed pipeline rather than a three-way judgement call. **But the stated pass condition - "a two-class labelling with a stated confidence" - is not a falsifiable statistic.** K-447R: a **frozen response-ratio threshold** declared before any segment is scored, a matched-active-segment control set fixed in advance, the K-034 circular-shift null, and the declared family size written down. Then it is a test. Cost 4. |
+| **K-448** ship a scored forecast | **TESTABLE-NOW, and I ELEVATE it to the top of the runnable list** | This is the only entry in eighteen that produces evidence of the class the field actually accepts: prospective, zero degrees of freedom, pre-agreed catalogue and metric (CSEP; Schorlemmer et al. 2018; Merton section E's stated bar). It spends no holdout, costs little, and converts "we found little to no patterns" from a mood into a number that climbs or does not. **Binding constraint on v1: frozen ETAS against Poisson and NOTHING ELSE.** No component enters that has not passed a holdout. Adding K-436R/K-440/K-442R later is a NEW version with its own start date and its own scoreboard, never a retro-fit to the existing curve. The scoring code, the ETAS parameters and the metric are hash-committed before the first forecast is issued. |
+
+### On the supervisor's three flags
+
+- **K-441 - CONFIRMED as cheapest decisive**, with the cost estimate overruled (O(2N+2) fits, not
+  one evaluation) and the Mc(t) rider made binding. Without the rider it is artifact-guaranteed.
+- **K-444 - PARTLY OVERRULED.** Decisive yes; cheap no. The bias control at the required block
+  sizes is the entire difficulty and calling it cheap will produce a rushed estimate that nobody
+  can defend.
+- **K-431 - CONFIRMED as decisive**, with the "predicted effect size" framing withdrawn and the
+  EXP-F annual-periodicity bound entered as a prior constraint. It stays behind the Merton sweep
+  and behind its own pre-run gate, both of which Kepler wrote himself and both of which are right.
+- **Two the supervisor did not flag and should have: K-440 and K-434.** They are the two named ETAS
+  repairs in the round, they are where arm C's bits most plausibly live, and they harden the
+  baseline that every future arm in this program will be scored against. A repair that hardens the
+  baseline is worth more than a covariate that beats a soft one.
+
+### On Kepler's proposed charter amendment - my opinion; the decision is the supervisor's and Jim's
+
+1. **"Every entry must state its bit ceiling before it is run" - ENDORSE, with one modification
+   that I consider essential.** The ceiling must be computed on the catalogue's **own ETAS
+   simulation** as well as on the real catalogue, and what gates the entry is the **EXCESS**. Without
+   that modification the rule would have passed K-436 straight through on SNIFF-2's 1.87
+   bits/aftershock oracle - a number measured against a magnitude regression, which arm G then
+   showed was worth -0.02 against a real ETAS. An oracle ceiling that includes what the baseline
+   already captures is not a ceiling, it is an advertisement.
+2. **"Every round must contain at least one entry whose target is not event occurrence" -
+   ENDORSE, unmodified.** This round's Part II is the argument for it.
+3. **"The observer is a forecastable field" as a standing lens - ENDORSE, with a register rule.**
+   Observer bits are **catalogue bits**, and they must be reported in a column of their own, never
+   summed into a statement about forecasting earthquakes. And Kepler should absorb tonight's price
+   on his own strongest case: the fitted diurnal factor is worth **-0.0016 bits/event out of
+   sample** (`results_neural_tpp.json`). The lens is right; the channel is not automatically
+   bankable, and the charter text should say both.
+
+---
+
+## §P7-26(5). PRIORITY ORDER FOR THE NEXT PHASE, WITH KILL-REASONS
+
+*Jim's ask, verbatim: "start working on finding/identifying/PROVING some of those most impactful
+prediction/forecasting patterns." My answer, and I want it read as an answer and not a hedge:
+**the program already holds the most impactful proven forecasting patterns it is likely to find
+this year, and the highest-value act available is not another arm - it is making them prospective
+and public.** B-2 beats Poisson by +1.87 bits/event on unseen SoCal events; B-3 says P(another
+M>=5 within 7 days | an M>=5) = 18/30 = 0.60 against a base rate of 0.062 (ledger L2994). Those
+are real, they are accepted, and they are currently sitting in a ledger - and B-2's own scope line
+(L2989) records "post-2018 period untested", which is precisely the gap a prospective forecast
+closes. A weekly hash-committed forecast that scores
+them in public is the single most impactful thing this program can do next, and it costs almost
+nothing.*
+
+| rank | what | why it is here, and the kill-reason |
+|---|---|---|
+| **1** | **Phase 4, started immediately: the weekly hash-committed prospective SoCal forecast.** Frozen ETAS vs Poisson, v1 only, `etas_forecast.py` / `k069_emit.py`, cumulative bits/event published as events arrive. | It spends no holdout, competes with nothing, and is the only activity in the program that accrues CSEP-class prospective evidence - which Merton section E documents as the bar the field actually states. **Every week it is not running is a week of evidence not accrued, and that loss is unrecoverable.** Kill-reason if it fails: the curve does not climb, in public, which is the correct outcome for a program that means what it says about falsification. |
+| **2** | **Phase 2, stage 1 only: arm C's ETAS-repair ladder** (§P7-26(2)). | Runs in parallel with rank 1; spends no holdout; and it is a **gate on everything downstream** - if the +0.040 is baseline misspecification, then stages 2 and 3, K-440's and K-434's motivation, and half of Kepler's Part I are all built on sand. Kill-reason: gain over R4 below 0.02 or CI including zero closes arm C and converts it into a named ETAS repair, which is a better result. |
+| **3** | **The three cheap instrument entries: K-441 (with the Mc(t) rider), K-443, K-446.** | Together they cost less than one arm, spend no holdout, and each produces a number the program does not have: an upper bound on precursory information, a measurement of whether model uncertainty is data, and a sharper null for every tidal bound already published. Kill-reason for each is a real result, which is the definition of a good cheap entry. |
+| **4** | **Arm C stage 2** - the first scored look, on arm C's own untouched QTM/SCSN holdouts. | Only after rank 2 passes. Kill-reason: does not replicate, arm closes, exploration number recorded as the honest overestimate. |
+| **5** | **The EQ-18 cross-test**, when the Figure 4 bin list arrives, frozen per §P7-26(3). | Gated on external data, so it does not compete for compute until it arrives. It is the only tidal-lane arm with a reproduced positive control, and it discharges a real external commitment. Kill-reason: their bins fail to reproduce beyond Coso, which bounds their claim's generality - a genuine contribution to a collaboration. |
+| **6** | **K-440 and K-434 - the two named ETAS repairs.** | They close the two loopholes Merton section E says every claimed beyond-ETAS win passed through. Doing them raises the floor under every future arm, arm C's stage 3 included. Kill-reason for each: distance/isotropy is sufficient, a clean publishable negative about a very widely held intuition. |
+| **7** | **Arm C stage 3** on 2019+ ComCat, **and only after its sensitivity run has been read.** | Deferred deliberately so a lead that dies at rank 2 or 4 never spends a window that §P3-6 and §P4-2(c) have both reserved. Kill-reason: the sensitivity run says the window cannot see 0.02, in which case the threshold moves to the measured MDE or the window is abandoned - and knowing that is itself worth having. |
+| **8** | **K-431** (after the Merton sweep and its own pre-run gate), then **K-437** (after its Mc(t) null is built), then **K-442R**, **K-438**, **K-444R**, **K-447R**, **K-445R**, **K-432R**, **K-435**, **K-436R**, **K-439**. | Ordered by (bits available) x (probability the null is valid) / cost. Each has its gate written in the table above and none of them may start before its gate is cleared. |
+
+**What I would drop entirely if the program had to choose:** nothing in the list - but I would
+refuse to start K-435, K-436R or K-439 before their gates are cleared, because all three are
+expensive entries whose most likely outcome at present is an uninterpretable null, and this program
+has produced enough of those this year to know what they cost.
+
+---
+
+## §P7-26(6). WHERE THE SESSION OVERSTATED ITSELF
+
+*Seven items. Five are corrections; two are places where the session was harder on itself than the
+evidence warrants and I am reopening them.*
+
+**Corrections.**
+
+1. **Arm G's own disposition contradicts its own JSON, and the sentence must be withdrawn.** The
+   ledger's arm G section states: *"a better-fitted alpha absorbs essentially all of what little the
+   assimilation had, which is the S-5 question answered in the affirmative"* and, in the recommended
+   disposition, *"correcting that magnitude-only law recovers more than the assimilation did."*
+   `results_productivity_assim.json` key
+   `secondary.Tobs_1h_bpos.alpha_refit_baseline.bits_of_A2_over_A` = **-0.012952**. The alpha-refit
+   baseline A2 is **worse** than A by 0.013 bits/event. It is therefore **not a harsher baseline**;
+   it is a degraded one, and `bits_of_B_over_A2` = +0.011605 with `ci95_B_over_A2`
+   [-0.015254, +0.041812] straddling zero is not evidence of anything. **The S-5 question is not
+   answered in the affirmative; it is not answered.** Neither sentence may be quoted.
+2. **"This is the Lu et al. direction"** (PLAYBOOK line 168; memo section 6). `moon_sinel_abs` is
+   `np.abs(sm)` where `sm = moon["sin_elevation"]` (`exp_mass_screen.py:177`) - an ephemeris
+   geometry scalar. Lu et al.'s claim is tidal shear stress resolved on per-event focal-mechanism
+   planes (EQ18_FULL_NOTES section 12). Withdrawn.
+3. **"about 3,000 events in 2019-2026"** (brief). `data/comcat_socal_m25.csv` from 2019-01-01 holds
+   **8,256** events at M>=2.5. Counted from the file. The coordinator self-corrected mid-round;
+   recorded here because the ledger, not the message, is the record.
+4. **"the exp_h fit sat on its lower bound 0.5"** (brief). `results_exp_h.json`
+   `train_fit.frozen_params.alpha` = **0.536563** - near the bound, not on it. It was arm C's OWN
+   QTM refit that pinned: `results_neural_tpp.json catalogs.QTM.etas_fit.alpha_at_lower_bound` =
+   true, alpha = 0.5. Self-corrected by the coordinator; recorded.
+5. **"score against the engine's space-time EtasV1 ... through engine/score.py"** (brief).
+   `engine/baseline.py` `EtasV1` scores `poisson_ll` over an (n_cells, n_days) count grid;
+   `exp_neural_tpp.py` scores continuous-time per-event log-densities. Not comparable without a
+   stated conversion, and - my addition, beyond the coordinator's own correction - **even with one
+   it is the wrong harshening**, because a spatial baseline against a time-only model changes the
+   target rather than raising the bar. Removed from the spec in §P7-26(2), Amendment 1.
+6. **Kepler K-442's "the highest-probability positive in this round"** is contradicted by the same
+   night's measurement: `results_neural_tpp.json catalogs.QTM.bits_per_event.etas_diurnal_over_etas`
+   = **-0.001631**. And its named covariates (`nst`, `gap`, `dmin`, `rms`) are post-detection
+   per-event properties, so using them is leakage by construction. See K-442R.
+7. **Kepler K-441's "the cost is one likelihood evaluation"**, repeated in the brief - it is
+   O(2N+2) fits. And **K-431's "the only hypothesis in the program's history whose effect size is
+   PREDICTED rather than searched"** - q was solved from the two facts it is to be tested against.
+   And **K-446's "the null is exact, parameter-free"** - exact only under the true model.
+
+**Two reopenings, where the session was too hard on itself.**
+
+8. **"There is no new provable pattern tonight" (memo section 7) is too severe, and I am reopening
+   arm B's control (c).** A pre-registered control, on two catalogues, in the same direction, far
+   outside its CI on both, showing that a 250-neighbour local b **destroys** 0.48 to 0.88
+   bits/event on exactly the M>=2.5 events anyone wants to forecast - with the Herrmann & Marzocchi
+   Lilliefors reproduction underneath it establishing that the quantity being mapped below
+   M 2.6/M 3.2 is not a Gutenberg-Richter b at all - is a **finding**. It is a negative finding, and
+   negative findings are the ones this program is best at and the field most needs. It is
+   PROVISIONAL rather than BASELINE only because the holdout is untouched. **It should be written
+   up, and the session's own summary undersells it.**
+9. **Arm B's section 4 is the best methodological work in the session and should be read as a
+   contribution, not as an embarrassment.** Discovering that your own frozen success rule has zero
+   power at every injected effect size - and reporting it, in the primary artifact, before quoting
+   the null - is the behaviour PLAYBOOK rule 5 exists to produce. The worker was right to add a
+   second power definition after seeing the first return zero, right to declare it, and right to
+   refuse to quote the frozen-rule null as a bound. **Adopt it as precedent: a success rule whose
+   measured power is zero is a defect in the rule, and the finding is the defect.**
+
+---
+
+## §P7-26(7). TWO OLD LOOSE ENDS
+
+**DEFERRED, both, and the reason is not cost.** The **SP-7 v2 amendment ratification** and the
+**K-108 non-independence ruling** each turn on material I did not re-read this round, and this
+round already spent its attention on a nine-arm session, a correction to a shared invariant, and
+eighteen new entries. Ratifying an amendment I have not re-derived, or ruling on non-independence
+without re-reading the dependence structure, would be exactly the kind of cheap approval this role
+exists to refuse. They go to the top of Round 8's docket, ahead of new arms.
+
+---
+
+*Popper, Round 7, 2026-09-02. Nine arms adjudicated, one correction accepted with three named
+residual exposures, one lead admitted as PROVISIONAL and priced in three stages, one negative
+result promoted to PROVISIONAL against the session's own summary, eighteen Kepler entries ruled
+(eleven runnable, four reframed, two needing data, one retired-and-reframed), and one power ruling
+that says a proposed single scored look would most likely have produced a false null. Nothing
+promoted to BASELINE. No holdout spent. `engine/HOLDOUT_LOG.jsonl` untouched.*
+
+*Kepler: two floors moved tonight, and both are yours to riff on. The first is that the magnitude
+axis is not free skill and is measurably NEGATIVE at M>=2.5 - so the question "what DOES forecast
+the size of the next event, if the local b actively hurts" is now a sharper question than it was
+this morning. The second is that the observer channel, the one you called the highest-probability
+positive in the round, is worth negative bits out of sample on its most obvious covariate - so the
+version of K-442 that survives has to be about forecastable station state, not about the diurnal
+cycle. Both are constraints, and constraints are what you turn into entries.*
