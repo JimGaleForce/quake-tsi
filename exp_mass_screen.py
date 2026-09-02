@@ -112,7 +112,9 @@ def load_region_full(path):
             if ts >= cut:
                 n_holdout += 1
                 continue
-            t.append((ts - W.SPAN_START).total_seconds() / 86400.0)
+            # EPOCH INVARIANT: days since 1970-01-01Z (see raw_series below,
+            # which adds W.UNIX_EPOCH_JD). Identical to W.load_region.
+            t.append(ts.timestamp() / 86400.0)
             la.append(float(r["latitude"]))
             lo.append(float(r["longitude"]))
             mg.append(m)
@@ -123,6 +125,30 @@ def load_region_full(path):
     mg = np.asarray(mg); dp = np.asarray(dp)
     keep = W.decluster(t, la, lo, mg)
     return t[keep], la[keep], lo[keep], mg[keep], dp[keep], n_holdout
+
+
+EPOCH_1970 = _dt.datetime(1970, 1, 1, tzinfo=_dt.timezone.utc)
+
+
+def iso_from_days(t_days):
+    """ISO-8601 UTC string for a days-since-1970 value (the EPOCH INVARIANT base)."""
+    return (EPOCH_1970 + _dt.timedelta(days=float(t_days))).isoformat()
+
+
+def assert_epoch(t_days, expect_year, label):
+    """FAILURE-FIRST epoch guard, run in every arm that feeds `raw_series`.
+
+    Reconstructs the first event date from `t` and refuses to continue if it is not the
+    year the catalogue actually starts in. The 9,131-day defect corrected on 2026-09-02
+    would have shown up here as, e.g., QTM starting in 1982 instead of 2008.
+    """
+    iso = iso_from_days(np.min(t_days))
+    print("EPOCH CHECK %-22s first event %s (expect year %d)"
+          % (label, iso, expect_year), flush=True)
+    got = int(iso[:4])
+    if got != expect_year:
+        raise SystemExit("EPOCH INVARIANT VIOLATED: %s first event reconstructs to %s, "
+                         "expected year %d" % (label, iso, expect_year))
 
 
 def raw_series(t_days, lat, lon):
@@ -184,6 +210,9 @@ def main():
     for path in sorted(glob.glob(str(HERE / "data" / "comcat_world" / "*.csv"))):
         name = os.path.basename(path)[:-4]
         t, la, lo, mg, dp, _hold = load_region_full(path)
+        if t.size:
+            print("EPOCH CHECK %-18s first event %s"
+                  % (name, iso_from_days(np.min(t))), flush=True)
         n = t.size
         if n < MIN_SUBPOP:
             print("  %-18s n=%4d  SKIPPED (below %d)" % (name, n, MIN_SUBPOP), flush=True)

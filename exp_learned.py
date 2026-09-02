@@ -139,6 +139,7 @@ def fit_score(X_tr, y_tr, X_te, y_te, seed):
 def main():
     rng = np.random.default_rng(RNG_SEED)
     t, la, lo, dp, mg = HN.load_zenodo(ZEN / "QTM_decluster_m0.1.txt")
+    MS.assert_epoch(t, 2008, "QTM_declustered")
     t, la, lo, dp, mg, n_hold = HN.split(t, la, lo, dp, mg)
     n = t.size
     print("QTM declustered exploration: %d events (%d holdout reserved)"

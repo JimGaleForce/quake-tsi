@@ -143,6 +143,43 @@ block-bootstrap null preserving multi-year rate autocorrelation.
 
 ## OPEN LOOSE ENDS
 
+**Status refresh 2026-09-02 (supervisor; details in HYPOTHESIS_LEDGER.md "SESSION 2026-09-02").**
+
+- **The 2026-08-22 near-miss is GONE.** `shallow_lt70km | areal.bot_decile` (pooled z -3.70, p 0.064)
+  was an artifact of the 9,131-day epoch defect (CORRECTIONS.md 2026-09-02). After the fix it is
+  outside the top 15 pooled keys. **Do not spend the holdout on it.**
+- **Ran and null tonight:** P-2.2 (`exp_bvalue_skill.py`, bounds local delta-b < 0.2 only); P-2.4
+  placebo (`exp_learned_ext.py`, survivor rate 0.052/feature, family-wise P(any) 0.53); Phase 2
+  step 1 non-tidal blocks (same file, null); K-038 as forecast skill (`exp_dyntrig_skill.py`,
+  +0.002 bits/event, bounds beta < 1.5 only; positive control reproduces); K-436 productivity
+  assimilation (`exp_productivity_assim.py`, null; the naive first-hour count is incompleteness).
+- **Re-run after the epoch fix (tidal readings re-derived, observer readings unchanged):** P-1.1,
+  P-1.3, P-1.4 (+ sensitivity), `exp_nearcritical`, `exp_mass_screen`, `exp_diurnal_discriminator`.
+  P-1.4 stays null (dAUC -0.0015, p 0.83, MDE eps 0.05).
+- **Two EXPLORATORY leads, neither claimed:**
+  1. `exp_neural_tpp.py`: a GRU point process beats ETAS+diurnal by **+0.040 bits/event on QTM
+     M>=1.0, block CI [+0.029, +0.054]** (under its frozen 0.05 bar), +0.066 on SCSN M>=2.5;
+     leakage calibration passes (loses to ETAS on ETAS sims). Merton: EarthquakeNPP found no NPP
+     beating ETAS, so CONTESTED. Next step, if Popper admits it: spatial ETAS baseline, untouched
+     window, attribution stage (what does the GRU know that ETAS does not: productivity scatter?
+     Omori p variability? magnitude-dependent c?).
+  2. `exp_fluid_driven.py` (corrected times): pooled over the 7 fluid-driven regions,
+     `moon_sinel_abs.mean` z 3.50, p 0.022 against its own max-null; the 6 tectonic regions pool
+     at p 0.77. Declared 7/7 test null (p 0.46). This is the Lu et al. direction and Coso is in
+     the pool. Not claimed; one of several secondary families. The right next step is the
+     EQ-18 cross-test as commissioned (their regions, their catalogues, their method beside ours).
+- **New dataset:** `data/global_m55/` (INVENTORY §1f), 18,769 worldwide M>=5.5 triggers 1985-2022.
+- Unexplained at 2.15 sigma (declustered per-region under-dispersion): unchanged, logged, not built on.
+- Fable audit findings 3, 4, 6, 7 still open. Popper has not ratified the SP-7 v2 amendment;
+  K-108 non-independence ruling outstanding. Popper has not ruled on any 2026-09-02 arm.
+
+**Retired tonight (do not re-propose without moving a multiplier):** K-436 as posed with naive
+first-hour counts (incompleteness); K-038's marginal-effect form (its ledger-class interaction,
+the actual claim, is untested and remains open).
+
+<details><summary>Loose ends as of 2026-08-22 (superseded above)</summary>
+
+
 - **Near-miss on the books:** mass screen pooled `shallow_lt70km | areal.bot_decile`,
   z = −3.70 across 11 regions, p = 0.064. Deficit of shallow events in the most compressive
   decile; sign is what a mechanism predicts. **Not claimed.** It is a single pre-specified
@@ -153,3 +190,4 @@ block-bootstrap null preserving multi-year rate autocorrelation.
   is expected — so it is a property of the data. Logged, not built on.
 - Fable audit findings 3, 4, 6, 7 still open.
 - Popper has not ratified the SP-7 v2 amendment; K-108 non-independence ruling outstanding.
+</details>

@@ -1,6 +1,6 @@
 {
   "arm": "MASS SCREEN: wide candidate space, one declared family",
-  "generated_utc": "2026-08-22T23:31:37.264467+00:00",
+  "generated_utc": "2026-09-02T08:27:39.452254+00:00",
   "priced_tests": 1,
   "why_priced_one": "a max-statistic over a shared null ensemble is exact at any family width; the cost of width is POWER, not budget, and the power cost is reported as the null 95th percentile",
   "declustered": true,
@@ -70,307 +70,307 @@
     ]
   },
   "cell_max_family": {
-    "observed_max_abs_z": 3.994763073591593,
-    "null_max_p95": 4.773313818639011,
-    "null_max_p50": 3.8852807431867085,
-    "p": 0.4033991502124469,
-    "where": "Greece-Aegean / all / elongation.R2",
+    "observed_max_abs_z": 4.105562084310455,
+    "null_max_p95": 4.814937207851651,
+    "null_max_p50": 3.8833371881149557,
+    "p": 0.3234191452136966,
+    "where": "Japan / M_ge5.5 / elongation.R3",
     "n_candidates_over_p95": 0
   },
   "pooled_max_family": {
-    "observed_max_abs_pooled_z": 3.698598625827465,
-    "null_max_p95": 3.7839685300192496,
-    "p": 0.06423394151462135,
-    "where": "shallow_lt70km|areal.bot_decile",
+    "observed_max_abs_pooled_z": 4.161995688494712,
+    "null_max_p95": 3.7698300228014823,
+    "p": 0.015746063484128967,
+    "where": "M_ge5.5|elongation.R3",
     "n_keys": 300
   },
   "top_30_cells": [
     {
-      "region": "Greece-Aegean",
-      "subpop": "all",
-      "feature": "elongation.R2",
-      "n": 194,
-      "z": 3.994763073591593
-    },
-    {
-      "region": "Chile",
-      "subpop": "M_ge5.5",
-      "feature": "elong_cos_abs.bot_decile",
-      "n": 349,
-      "z": 3.4711404064307123
-    },
-    {
-      "region": "Turkey",
-      "subpop": "shallow_lt70km",
-      "feature": "moon_dist.bot_decile",
-      "n": 140,
-      "z": 3.321803163148034
-    },
-    {
-      "region": "Turkey",
-      "subpop": "all",
-      "feature": "moon_dist.bot_decile",
-      "n": 153,
-      "z": 3.2966371014499813
-    },
-    {
-      "region": "Turkey",
-      "subpop": "all",
-      "feature": "moon_dist.mean",
-      "n": 153,
-      "z": -3.258997245808114
-    },
-    {
-      "region": "Greece-Aegean",
-      "subpop": "shallow_lt70km",
-      "feature": "elongation.R2",
-      "n": 176,
-      "z": 3.2471050878652523
-    },
-    {
-      "region": "Iran",
-      "subpop": "M_ge5.5",
-      "feature": "elong_cos.bot_decile",
-      "n": 47,
-      "z": 3.053643698471576
-    },
-    {
-      "region": "Turkey",
-      "subpop": "M_lt5.5",
-      "feature": "moon_dist.mean",
-      "n": 97,
-      "z": -2.940151416892095
-    },
-    {
-      "region": "Turkey",
-      "subpop": "M_lt5.5",
-      "feature": "moon_dist.bot_decile",
-      "n": 97,
-      "z": 2.8674986289417292
-    },
-    {
-      "region": "Chile",
-      "subpop": "all",
-      "feature": "elong_cos_abs.bot_decile",
-      "n": 967,
-      "z": 2.7554244497704463
-    },
-    {
       "region": "Japan",
+      "subpop": "M_ge5.5",
+      "feature": "elongation.R3",
+      "n": 418,
+      "z": 4.105562084310455
+    },
+    {
+      "region": "Indonesia",
       "subpop": "deep_ge70km",
-      "feature": "moon_sinel.bot_decile",
-      "n": 221,
-      "z": -2.724201609665863
+      "feature": "elongation.R3",
+      "n": 856,
+      "z": 3.8974271394686397
     },
     {
       "region": "Japan",
+      "subpop": "M_ge5.5",
+      "feature": "elong_cos_abs.bot_decile",
+      "n": 418,
+      "z": 3.5653771564229646
+    },
+    {
+      "region": "Turkey",
+      "subpop": "M_ge5.5",
+      "feature": "shear.bot_decile",
+      "n": 56,
+      "z": 3.35738315981475
+    },
+    {
+      "region": "Chile",
+      "subpop": "M_lt5.5",
+      "feature": "rate_abs.bot_decile",
+      "n": 618,
+      "z": 3.330676025188615
+    },
+    {
+      "region": "Turkey",
+      "subpop": "all",
+      "feature": "shear.bot_decile",
+      "n": 153,
+      "z": 3.1962471168298867
+    },
+    {
+      "region": "Turkey",
       "subpop": "shallow_lt70km",
-      "feature": "moon_dist.top_decile",
-      "n": 800,
-      "z": 2.702925619097673
+      "feature": "moon_sinel_abs.top_decile",
+      "n": 140,
+      "z": 3.1644429227637345
+    },
+    {
+      "region": "Turkey",
+      "subpop": "all",
+      "feature": "moon_sinel_abs.top_decile",
+      "n": 153,
+      "z": 3.1638122121757557
+    },
+    {
+      "region": "Turkey",
+      "subpop": "shallow_lt70km",
+      "feature": "shear.bot_decile",
+      "n": 140,
+      "z": 3.146844899152718
+    },
+    {
+      "region": "Mexico",
+      "subpop": "deep_ge70km",
+      "feature": "moon_az.R3",
+      "n": 71,
+      "z": 3.128801110233601
+    },
+    {
+      "region": "Chile",
+      "subpop": "M_ge5.5",
+      "feature": "elongation.R3",
+      "n": 349,
+      "z": 2.888606315230553
+    },
+    {
+      "region": "Greece-Aegean",
+      "subpop": "M_lt5.5",
+      "feature": "moon_az.R3",
+      "n": 124,
+      "z": 2.8847255719169804
+    },
+    {
+      "region": "Turkey",
+      "subpop": "M_ge5.5",
+      "feature": "elongation.R4",
+      "n": 56,
+      "z": 2.852474100257484
+    },
+    {
+      "region": "Japan",
+      "subpop": "M_ge5.5",
+      "feature": "moon_hourangle.R4",
+      "n": 418,
+      "z": 2.8421005235849113
+    },
+    {
+      "region": "Chile",
+      "subpop": "all",
+      "feature": "rate_abs.bot_decile",
+      "n": 967,
+      "z": 2.744782252683118
     },
     {
       "region": "Japan",
       "subpop": "deep_ge70km",
       "feature": "sun_sinel.top_decile",
       "n": 221,
-      "z": -2.700302103953465
-    },
-    {
-      "region": "Himalaya",
-      "subpop": "shallow_lt70km",
-      "feature": "rate.top_decile",
-      "n": 313,
-      "z": -2.681814547793291
-    },
-    {
-      "region": "Turkey",
-      "subpop": "shallow_lt70km",
-      "feature": "moon_dist.mean",
-      "n": 140,
-      "z": -2.6791481319384847
-    },
-    {
-      "region": "Chile",
-      "subpop": "M_ge5.5",
-      "feature": "elong_cos_abs.mean",
-      "n": 349,
-      "z": -2.6738624035063294
-    },
-    {
-      "region": "Mexico",
-      "subpop": "deep_ge70km",
-      "feature": "moon_sinel_abs.bot_decile",
-      "n": 71,
-      "z": 2.6387194946653807
-    },
-    {
-      "region": "Mexico",
-      "subpop": "deep_ge70km",
-      "feature": "areal.bot_decile",
-      "n": 71,
-      "z": 2.629481489854869
-    },
-    {
-      "region": "Himalaya",
-      "subpop": "shallow_lt70km",
-      "feature": "rate.mean",
-      "n": 313,
-      "z": -2.622800233964265
+      "z": -2.703099032589247
     },
     {
       "region": "Japan",
+      "subpop": "shallow_lt70km",
+      "feature": "moon_hourangle.R4",
+      "n": 800,
+      "z": 2.69921458181937
+    },
+    {
+      "region": "Indonesia",
       "subpop": "deep_ge70km",
-      "feature": "moon_sinel.mean",
-      "n": 221,
-      "z": 2.5951621225681705
+      "feature": "elong_cos.bot_decile",
+      "n": 856,
+      "z": -2.6851154217238897
+    },
+    {
+      "region": "Indonesia",
+      "subpop": "shallow_lt70km",
+      "feature": "shear.mean",
+      "n": 1687,
+      "z": 2.639889981357247
+    },
+    {
+      "region": "Himalaya",
+      "subpop": "M_lt5.5",
+      "feature": "moon_sinel.top_decile",
+      "n": 300,
+      "z": 2.634829473033066
+    },
+    {
+      "region": "Alaska-Aleutians",
+      "subpop": "deep_ge70km",
+      "feature": "rate_abs.top_decile",
+      "n": 69,
+      "z": 2.581988941467968
+    },
+    {
+      "region": "Iran",
+      "subpop": "shallow_lt70km",
+      "feature": "rate_abs.bot_decile",
+      "n": 195,
+      "z": -2.5794752307693596
     },
     {
       "region": "Chile",
       "subpop": "deep_ge70km",
       "feature": "sun_sinel.mean",
       "n": 416,
-      "z": 2.5715746327143747
+      "z": 2.5718167301129213
     },
     {
-      "region": "Indonesia",
+      "region": "Chile",
+      "subpop": "deep_ge70km",
+      "feature": "elong_cos.bot_decile",
+      "n": 416,
+      "z": 2.5699959784381154
+    },
+    {
+      "region": "Turkey",
       "subpop": "shallow_lt70km",
-      "feature": "elongation.R1",
-      "n": 1687,
-      "z": 2.5556770965493123
+      "feature": "moon_dist.top_decile",
+      "n": 140,
+      "z": 2.5467792796039213
     },
     {
       "region": "Himalaya",
-      "subpop": "M_ge5.5",
-      "feature": "rate.top_decile",
-      "n": 128,
-      "z": -2.553991053532809
-    },
-    {
-      "region": "California",
-      "subpop": "all",
-      "feature": "areal_abs.bot_decile",
-      "n": 61,
-      "z": 2.51718242066379
-    },
-    {
-      "region": "California",
       "subpop": "shallow_lt70km",
-      "feature": "areal_abs.bot_decile",
-      "n": 61,
-      "z": 2.51718242066379
+      "feature": "moon_sinel_abs.top_decile",
+      "n": 313,
+      "z": 2.54063999672818
     },
     {
-      "region": "Greece-Aegean",
-      "subpop": "M_ge5.5",
-      "feature": "elongation.R2",
-      "n": 70,
-      "z": 2.5074652116037903
+      "region": "Himalaya",
+      "subpop": "M_lt5.5",
+      "feature": "areal.mean",
+      "n": 300,
+      "z": 2.5150271105145356
     },
     {
       "region": "Japan",
       "subpop": "M_ge5.5",
-      "feature": "moon_dist.top_decile",
+      "feature": "elong_cos_abs.mean",
       "n": 418,
-      "z": 2.503287158602467
+      "z": -2.49694341936595
     },
     {
       "region": "Greece-Aegean",
       "subpop": "M_ge5.5",
       "feature": "sun_sinel_abs.top_decile",
       "n": 70,
-      "z": 2.4871299641024676
+      "z": 2.489766458508335
     },
     {
-      "region": "Greece-Aegean",
-      "subpop": "M_ge5.5",
-      "feature": "shear.top_decile",
-      "n": 70,
-      "z": -2.4849506687380076
-    },
-    {
-      "region": "Greece-Aegean",
-      "subpop": "M_ge5.5",
-      "feature": "areal.bot_decile",
-      "n": 70,
-      "z": -2.4668529732994497
+      "region": "Himalaya",
+      "subpop": "M_lt5.5",
+      "feature": "moon_sinel_abs.top_decile",
+      "n": 300,
+      "z": 2.4670198170646502
     }
   ],
   "top_15_pooled": [
     {
-      "key": "shallow_lt70km|areal.bot_decile",
-      "n_regions": 11,
-      "pooled_z": -3.698598625827465
-    },
-    {
-      "key": "M_lt5.5|elong_cos.mean",
-      "n_regions": 11,
-      "pooled_z": 2.981770866970539
-    },
-    {
-      "key": "shallow_lt70km|moon_sinel_abs.bot_decile",
-      "n_regions": 11,
-      "pooled_z": -2.846100905751882
-    },
-    {
-      "key": "shallow_lt70km|shear.top_decile",
-      "n_regions": 11,
-      "pooled_z": -2.6598575372189024
-    },
-    {
-      "key": "M_lt5.5|elong_cos.bot_decile",
-      "n_regions": 11,
-      "pooled_z": -2.606292741210798
-    },
-    {
-      "key": "M_ge5.5|elong_cos_abs.bot_decile",
+      "key": "M_ge5.5|elongation.R3",
       "n_regions": 10,
-      "pooled_z": 2.516551754343484
+      "pooled_z": 4.161995688494712
     },
     {
-      "key": "all|areal.bot_decile",
+      "key": "all|elongation.R3",
       "n_regions": 11,
-      "pooled_z": -2.4313836930456083
+      "pooled_z": 2.981917252635019
+    },
+    {
+      "key": "deep_ge70km|rate_abs.bot_decile",
+      "n_regions": 7,
+      "pooled_z": 2.611258912271768
+    },
+    {
+      "key": "all|rate_abs.bot_decile",
+      "n_regions": 11,
+      "pooled_z": 2.4711374989671566
+    },
+    {
+      "key": "M_lt5.5|moon_sinel.top_decile",
+      "n_regions": 11,
+      "pooled_z": 2.4035389011521087
     },
     {
       "key": "M_ge5.5|areal.bot_decile",
       "n_regions": 10,
-      "pooled_z": -2.4062459943435366
+      "pooled_z": 2.391499580775785
     },
     {
-      "key": "deep_ge70km|moon_dist.bot_decile",
+      "key": "deep_ge70km|elongation.R3",
       "n_regions": 7,
-      "pooled_z": 2.3029491678909118
+      "pooled_z": 2.3641388371554335
     },
     {
-      "key": "deep_ge70km|elong_cos.bot_decile",
+      "key": "all|moon_sinel.top_decile",
+      "n_regions": 11,
+      "pooled_z": 2.266621583571667
+    },
+    {
+      "key": "M_lt5.5|shear.top_decile",
+      "n_regions": 11,
+      "pooled_z": -2.2313282157161467
+    },
+    {
+      "key": "M_lt5.5|areal.bot_decile",
+      "n_regions": 11,
+      "pooled_z": -2.2052412633307212
+    },
+    {
+      "key": "deep_ge70km|moon_sinel.top_decile",
       "n_regions": 7,
-      "pooled_z": -2.26911637537911
+      "pooled_z": 2.1742912515912978
     },
     {
-      "key": "M_lt5.5|moon_hourangle.R2",
-      "n_regions": 11,
-      "pooled_z": -2.203831086813214
+      "key": "M_ge5.5|moon_sinel_abs.bot_decile",
+      "n_regions": 10,
+      "pooled_z": 2.123780320629443
     },
     {
-      "key": "all|elong_cos.mean",
-      "n_regions": 11,
-      "pooled_z": 2.1952750562025467
-    },
-    {
-      "key": "shallow_lt70km|areal_abs.mean",
-      "n_regions": 11,
-      "pooled_z": -2.1843030062054773
-    },
-    {
-      "key": "shallow_lt70km|elong_cos_abs.mean",
-      "n_regions": 11,
-      "pooled_z": -2.1701506723979858
-    },
-    {
-      "key": "deep_ge70km|moon_sinel_abs.mean",
+      "key": "deep_ge70km|shear.mean",
       "n_regions": 7,
-      "pooled_z": -2.06085197546633
+      "pooled_z": -2.108416637074443
+    },
+    {
+      "key": "deep_ge70km|areal.mean",
+      "n_regions": 7,
+      "pooled_z": 2.093932767726901
+    },
+    {
+      "key": "all|moon_dist.top_decile",
+      "n_regions": 11,
+      "pooled_z": -2.0887285889114935
     }
   ],
   "candidates_for_holdout": []

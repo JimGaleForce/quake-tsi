@@ -1,0 +1,1121 @@
+{
+  "experiment": "ARM-C neural TPP vs ETAS",
+  "state_class": "first-run, exploration split",
+  "run_utc": "2026-09-02T08:33:40.988840+00:00",
+  "seed": 20260902,
+  "torch_version": "2.4.1+cu118",
+  "device": {
+    "cuda_available": true,
+    "devices": [
+      {
+        "index": 0,
+        "name": "NVIDIA GeForce RTX 3090 Ti",
+        "free_bytes": 24445452288,
+        "total_bytes": 25756696576,
+        "free_MiB": 23313
+      },
+      {
+        "index": 1,
+        "name": "NVIDIA GeForce RTX 3060",
+        "free_bytes": 11794382848,
+        "total_bytes": 12884377600,
+        "free_MiB": 11248
+      }
+    ],
+    "chosen": "cuda:0",
+    "reason": "free 23313 MiB >= budget 6144 MiB",
+    "budget_bytes": 6442450944
+  },
+  "gpu_used": true,
+  "frozen": {
+    "split": "exploration = first 70% of span; train 60% / val 10% / test 30% of the exploration span, by time",
+    "primary_statistic": "bits/event of the neural TPP over ETAS+diurnal on the QTM test window, time-only per-event log-densities",
+    "success_rule": "> 0.05 bits/event on QTM",
+    "calibration_control_rule": "<= ~0.01 bits/event on ETAS-simulated data",
+    "etas_form": "exp_h_etas.py: lambda = mu + sum K 10^{alpha (M-M0)} (t-ti+c)^{-p}",
+    "nn_config_gpu": {
+      "hidden": 128,
+      "layers": 1,
+      "n_mix": 32,
+      "dropout": 0.0,
+      "lr": 0.001,
+      "batch": 32,
+      "chunk_len": 512,
+      "warmup_mask": 128,
+      "grad_clip": 1.0,
+      "max_steps": 6000,
+      "eval_every": 100,
+      "patience": 12,
+      "max_train_minutes": 35.0
+    },
+    "nn_config_cpu_fallback": {
+      "hidden": 64,
+      "layers": 1,
+      "n_mix": 16,
+      "dropout": 0.0,
+      "lr": 0.001,
+      "batch": 16,
+      "chunk_len": 256,
+      "warmup_mask": 64,
+      "grad_clip": 1.0,
+      "max_steps": 1500,
+      "eval_every": 100,
+      "patience": 6,
+      "max_train_minutes": 25.0
+    }
+  },
+  "catalogs": {
+    "QTM": {
+      "file": "QTM_12dev.txt",
+      "detected_column_order": "raw",
+      "n_rows_raw": 898597,
+      "n_at_floor": 127789,
+      "M0": 1.0,
+      "t_first": "2008-01-01 05:19:47.961000+00:00",
+      "t_last": "2017-12-31 23:22:48+00:00",
+      "reference_longitude": -116.22926,
+      "name": "QTM",
+      "n_events": 127789,
+      "reference_longitude_deg": -116.22926,
+      "split": {
+        "rule": "exploration = first 70% of span; within it train 60% / val 10% / test 30% by TIME fraction of the exploration span",
+        "t_first": 13879.222082881945,
+        "t_explore_end": 16436.14854153125,
+        "t_train_end": 15413.377958071527,
+        "t_val_end": 15669.070603936458,
+        "n_train": 75446,
+        "n_val": 9412,
+        "n_test": 18399,
+        "n_exploration": 103257,
+        "n_holdout_never_read": 24532,
+        "etas_burn_in_days": 365.0,
+        "n_etas_fit_targets": 65253
+      },
+      "etas_fit": {
+        "alpha_lower_bound": 0.5,
+        "alpha_at_lower_bound": true,
+        "frozen_params": {
+          "mu": 5.43375885540671,
+          "K": 0.027231013478095364,
+          "alpha": 0.5,
+          "c": 0.005162113286011569,
+          "p": 1.1297509605529383,
+          "M0": 1.0
+        },
+        "truncation_W_days_fit": 365.0,
+        "train_rate_per_day": 55.81206183428621,
+        "b_value_train_aki": 0.690089807084277,
+        "branching_ratio_n": 1.5089082430788718,
+        "starts": [
+          {
+            "start": {
+              "mu": 27.906030917143106,
+              "K": 0.02,
+              "alpha": 1.0,
+              "c": 0.01,
+              "p": 1.1
+            },
+            "LL": 249206.5398169453,
+            "params": {
+              "mu": 5.43375765347753,
+              "K": 0.02723102309629641,
+              "alpha": 0.5,
+              "c": 0.005162126182785974,
+              "p": 1.1297512126224099
+            },
+            "nit": 31,
+            "success": true,
+            "seconds": 35.4
+          },
+          {
+            "start": {
+              "mu": 11.162412366857243,
+              "K": 0.005,
+              "alpha": 1.5,
+              "c": 0.05,
+              "p": 1.2
+            },
+            "LL": 249206.5398169475,
+            "params": {
+              "mu": 5.43375885540671,
+              "K": 0.027231013478095364,
+              "alpha": 0.5,
+              "c": 0.005162113286011569,
+              "p": 1.1297509605529383
+            },
+            "nit": 32,
+            "success": true,
+            "seconds": 42.8
+          },
+          {
+            "start": {
+              "mu": 44.64964946742897,
+              "K": 0.05,
+              "alpha": 0.8,
+              "c": 0.005,
+              "p": 1.05
+            },
+            "LL": 249206.5398169438,
+            "params": {
+              "mu": 5.4337594517396735,
+              "K": 0.027231027248445897,
+              "alpha": 0.5,
+              "c": 0.005162138135497832,
+              "p": 1.1297513496760694
+            },
+            "nit": 31,
+            "success": true,
+            "seconds": 35.7
+          },
+          {
+            "start": {
+              "mu": 19.534221642000173,
+              "K": 0.01,
+              "alpha": 1.2,
+              "c": 0.02,
+              "p": 1.15
+            },
+            "LL": 249206.5398169454,
+            "params": {
+              "mu": 5.433774109950042,
+              "K": 0.02723100303372956,
+              "alpha": 0.5,
+              "c": 0.005162112407226156,
+              "p": 1.129751097636123
+            },
+            "nit": 28,
+            "success": true,
+            "seconds": 37.1
+          }
+        ],
+        "best_LL": 249206.5398169475,
+        "seconds": 151.0
+      },
+      "diurnal": {
+        "n_bins": 24,
+        "fit": "exact MLE g_b = n_b / I_b on the train window, same truncation W as scoring",
+        "counts": [
+          2797.0,
+          2873.0,
+          2703.0,
+          2817.0,
+          2762.0,
+          2519.0,
+          2524.0,
+          2652.0,
+          2494.0,
+          2595.0,
+          2719.0,
+          2668.0,
+          2802.0,
+          2646.0,
+          2729.0,
+          2613.0,
+          2597.0,
+          2678.0,
+          2685.0,
+          2781.0,
+          2857.0,
+          3024.0,
+          2883.0,
+          2835.0
+        ],
+        "etas_integral_per_bin": [
+          2775.3270325814115,
+          2832.1422765671596,
+          2784.277797490768,
+          2802.14761850128,
+          2766.8391273103994,
+          2708.6665870006536,
+          2663.9410071434,
+          2692.1580405004556,
+          2673.8669610670436,
+          2682.473391465372,
+          2735.428911888141,
+          2756.231231950124,
+          2744.506916711667,
+          2745.1359518347567,
+          2756.7382273595736,
+          2946.6614522182485,
+          2847.4959852099855,
+          2866.9357932170255,
+          2812.485253569514,
+          2814.362092631689,
+          2851.4537715630977,
+          2911.1698368932152,
+          2823.917162781446,
+          2821.520816332711
+        ],
+        "g": [
+          1.0078091580430542,
+          1.0144264374607495,
+          0.9708083016845457,
+          1.005300356555328,
+          0.9982510268621568,
+          0.9299778762322038,
+          0.9474684286295583,
+          0.9850833272429317,
+          0.9327315219171319,
+          0.9673907701214559,
+          0.9939940271097006,
+          0.9679884507049514,
+          1.0209484198922034,
+          0.9638866877363587,
+          0.9899380263659849,
+          0.8867662751121043,
+          0.9120293807221951,
+          0.9340983520928391,
+          0.9546716721775824,
+          0.9881457710366998,
+          1.001945052903264,
+          1.0387576711179436,
+          1.020922298287376,
+          1.0047772759957194
+        ],
+        "g_normalised": [
+          1.031969430005997,
+          1.0387453458769438,
+          0.9940815498043839,
+          1.029400484863333,
+          1.0221821611486408,
+          0.9522722940095923,
+          0.9701821485132331,
+          1.0086987914430825,
+          0.9550919530147076,
+          0.9905820895434377,
+          1.0178231080749336,
+          0.9911940983609336,
+          1.0454236802010393,
+          0.9869940035722162,
+          1.0136698725717714,
+          0.9080247784738676,
+          0.9338935180944228,
+          0.9564915502956833,
+          0.9775580758692448,
+          1.0118346513934096,
+          1.0259647443070148,
+          1.0636598737200065,
+          1.045396932381346,
+          1.0288648644607612
+        ],
+        "amplitude_max_over_min": 1.171399612582949,
+        "train_LL_gain_bits_per_event": 0.0014909473617229203,
+        "seconds": 6.0
+      },
+      "test_scoring": {
+        "n_test_events": 18399,
+        "window_days": 766.8888935185187,
+        "truncation_W_days_score": 1000.0,
+        "definition": "log f(tau_i) = log lambda(t_i) - Integral_{t_{i-1}}^{t_i} lambda; intervals tile the window exactly, so bits/event is a plain mean",
+        "seconds": 1.6,
+        "truncation_cost_bits_per_event": 0.0012332124859101405,
+        "truncation_note": "untruncated minus truncated ETAS log f on a 2000-event subsample; positive means the truncated ETAS baseline is weakened by this many bits/event",
+        "n_tied_timestamps_dropped": 0,
+        "n_scored": 18399,
+        "tie_rule": "events with tau == 0 are dropped from scoring for EVERY model",
+        "mean_logf": {
+          "etas": 2.311205980829779,
+          "etas_diurnal": 2.3100756144129084,
+          "poisson": 1.6956869292279835,
+          "neural": 2.337750742821481
+        }
+      },
+      "neural": {
+        "config": {
+          "hidden": 128,
+          "layers": 1,
+          "n_mix": 32,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "batch": 32,
+          "chunk_len": 512,
+          "warmup_mask": 128,
+          "grad_clip": 1.0,
+          "max_steps": 6000,
+          "eval_every": 100,
+          "patience": 12,
+          "max_train_minutes": 35.0
+        },
+        "n_features": 4,
+        "inputs": [
+          "z(log tau)",
+          "z(M-M0)",
+          "sin(2pi h/24)",
+          "cos(2pi h/24)"
+        ],
+        "normalisation_train_only": {
+          "y_mean": -5.370856247923238,
+          "y_std": 2.0379189193624954,
+          "m_mean": 0.6243303819950693,
+          "m_std": 0.5719700289181746
+        },
+        "training": {
+          "history": [
+            {
+              "step": 100,
+              "train_logf": 3.8287930611243035,
+              "val_logf": 3.2031543377076015,
+              "minutes": 0.02
+            },
+            {
+              "step": 200,
+              "train_logf": 3.844212145238515,
+              "val_logf": 3.2190736658868007,
+              "minutes": 0.03
+            },
+            {
+              "step": 300,
+              "train_logf": 3.847914588485548,
+              "val_logf": 3.223641410856312,
+              "minutes": 0.04
+            },
+            {
+              "step": 400,
+              "train_logf": 3.8548588484597386,
+              "val_logf": 3.230565755685441,
+              "minutes": 0.05
+            },
+            {
+              "step": 500,
+              "train_logf": 3.85852274742645,
+              "val_logf": 3.233455589273054,
+              "minutes": 0.07
+            },
+            {
+              "step": 600,
+              "train_logf": 3.8615705691711977,
+              "val_logf": 3.2323466862990813,
+              "minutes": 0.08
+            },
+            {
+              "step": 700,
+              "train_logf": 3.8626024159899472,
+              "val_logf": 3.2331380837150094,
+              "minutes": 0.09
+            },
+            {
+              "step": 800,
+              "train_logf": 3.861859177265372,
+              "val_logf": 3.2300932790515677,
+              "minutes": 0.11
+            },
+            {
+              "step": 900,
+              "train_logf": 3.8658412143853194,
+              "val_logf": 3.232286423128106,
+              "minutes": 0.12
+            },
+            {
+              "step": 1000,
+              "train_logf": 3.866515589113329,
+              "val_logf": 3.233302401143644,
+              "minutes": 0.13
+            },
+            {
+              "step": 1100,
+              "train_logf": 3.863428800880243,
+              "val_logf": 3.231332738856483,
+              "minutes": 0.14
+            },
+            {
+              "step": 1200,
+              "train_logf": 3.866927625836901,
+              "val_logf": 3.2313806471853015,
+              "minutes": 0.15
+            },
+            {
+              "step": 1300,
+              "train_logf": 3.8719307610283917,
+              "val_logf": 3.2301496751020675,
+              "minutes": 0.17
+            },
+            {
+              "step": 1400,
+              "train_logf": 3.8741280465206933,
+              "val_logf": 3.229730871994851,
+              "minutes": 0.18
+            },
+            {
+              "step": 1500,
+              "train_logf": 3.8745489400361155,
+              "val_logf": 3.229389644041499,
+              "minutes": 0.19
+            },
+            {
+              "step": 1600,
+              "train_logf": 3.8762765086831847,
+              "val_logf": 3.2287319428708976,
+              "minutes": 0.2
+            },
+            {
+              "step": 1700,
+              "train_logf": 3.8794998137274552,
+              "val_logf": 3.2239593467938357,
+              "minutes": 0.22
+            }
+          ],
+          "best_val_logf": 3.233455589273054,
+          "best_step": 500,
+          "stop_reason": "early stopping (patience 12 evals)",
+          "minutes": 0.22
+        },
+        "seed": 20260902,
+        "n_parameters": 63840
+      },
+      "bits_per_event": {
+        "neural_over_etas_diurnal_PRIMARY": 0.03992677051101278,
+        "neural_over_etas": 0.0382959964870067,
+        "neural_over_poisson": 0.9263022798055955,
+        "etas_diurnal_over_etas": -0.0016307740240060842,
+        "etas_over_poisson": 0.8880062833185889,
+        "n_test_events": 18399,
+        "M>=2.5_subset": {
+          "n": 1080,
+          "neural_over_etas_diurnal": 0.014738308077906364,
+          "neural_over_etas": 0.013048210237616448,
+          "etas_diurnal_over_etas": -0.0016900978402899203
+        },
+        "primary_block_bootstrap_95CI": [
+          0.02873781821207483,
+          0.05446357399461669
+        ],
+        "bootstrap_note": "200 contiguous blocks of test events, 2000 resamples; descriptive, not a gate"
+      },
+      "attribution_run": false,
+      "runtime_minutes": 2.89
+    },
+    "SCSN": {
+      "file": "SCSN_original_catalog.txt",
+      "n_at_floor": 43462,
+      "box": {
+        "lat": [
+          31.5,
+          38.0
+        ],
+        "lon": [
+          -122.0,
+          -113.5
+        ]
+      },
+      "reference_longitude": -116.63904,
+      "name": "SCSN",
+      "n_events": 43462,
+      "M0": 2.5,
+      "reference_longitude_deg": -116.63904,
+      "split": {
+        "rule": "exploration = first 70% of span; within it train 60% / val 10% / test 30% by TIME fraction of the exploration span",
+        "t_first": 4019.627184837963,
+        "t_explore_end": 13733.547811180553,
+        "t_train_end": 9847.979560643518,
+        "t_val_end": 10819.371623277777,
+        "n_train": 23874,
+        "n_val": 2128,
+        "n_test": 6856,
+        "n_exploration": 32858,
+        "n_holdout_never_read": 10604,
+        "etas_burn_in_days": 365.0,
+        "n_etas_fit_targets": 23318
+      },
+      "etas_fit": {
+        "alpha_lower_bound": 0.5,
+        "alpha_at_lower_bound": false,
+        "frozen_params": {
+          "mu": 0.6387860016554441,
+          "K": 0.04193724303269104,
+          "alpha": 0.5612917198380384,
+          "c": 0.015801066362825814,
+          "p": 1.108164775494644,
+          "M0": 2.5
+        },
+        "truncation_W_days_fit": 365.0,
+        "train_rate_per_day": 4.268075422567234,
+        "b_value_train_aki": 1.0935897678686732,
+        "branching_ratio_n": 1.247533651212518,
+        "starts": [
+          {
+            "start": {
+              "mu": 2.134037711283617,
+              "K": 0.02,
+              "alpha": 1.0,
+              "c": 0.01,
+              "p": 1.1
+            },
+            "LL": 31379.96748689407,
+            "params": {
+              "mu": 0.6387857488418193,
+              "K": 0.04193724972412015,
+              "alpha": 0.5612916187545501,
+              "c": 0.015801061646955532,
+              "p": 1.1081647989495458
+            },
+            "nit": 30,
+            "success": true,
+            "seconds": 2.8
+          },
+          {
+            "start": {
+              "mu": 0.8536150845134469,
+              "K": 0.005,
+              "alpha": 1.5,
+              "c": 0.05,
+              "p": 1.2
+            },
+            "LL": 31379.967486894227,
+            "params": {
+              "mu": 0.6387860016554441,
+              "K": 0.04193724303269104,
+              "alpha": 0.5612917198380384,
+              "c": 0.015801066362825814,
+              "p": 1.108164775494644
+            },
+            "nit": 28,
+            "success": true,
+            "seconds": 2.9
+          },
+          {
+            "start": {
+              "mu": 3.4144603380537877,
+              "K": 0.05,
+              "alpha": 0.8,
+              "c": 0.005,
+              "p": 1.05
+            },
+            "LL": 31379.967486894147,
+            "params": {
+              "mu": 0.6387862502041407,
+              "K": 0.04193723839766311,
+              "alpha": 0.5612917200075026,
+              "c": 0.015801048545519003,
+              "p": 1.1081647548715172
+            },
+            "nit": 27,
+            "success": true,
+            "seconds": 2.5
+          },
+          {
+            "start": {
+              "mu": 1.4938263978985318,
+              "K": 0.01,
+              "alpha": 1.2,
+              "c": 0.02,
+              "p": 1.15
+            },
+            "LL": 31379.967486893605,
+            "params": {
+              "mu": 0.6387858542015578,
+              "K": 0.04193721717464916,
+              "alpha": 0.5612917367524772,
+              "c": 0.015801001246296895,
+              "p": 1.1081644947505305
+            },
+            "nit": 32,
+            "success": true,
+            "seconds": 3.1
+          }
+        ],
+        "best_LL": 31379.967486894227,
+        "seconds": 11.3
+      },
+      "diurnal": {
+        "n_bins": 24,
+        "fit": "exact MLE g_b = n_b / I_b on the train window, same truncation W as scoring",
+        "counts": [
+          917.0,
+          896.0,
+          885.0,
+          880.0,
+          943.0,
+          968.0,
+          1013.0,
+          1059.0,
+          1060.0,
+          968.0,
+          998.0,
+          999.0,
+          962.0,
+          1006.0,
+          966.0,
+          968.0,
+          1012.0,
+          985.0,
+          1033.0,
+          987.0,
+          957.0,
+          960.0,
+          975.0,
+          921.0
+        ],
+        "etas_integral_per_bin": [
+          981.2704939321522,
+          977.8242388796662,
+          974.942932297139,
+          968.1258340714169,
+          1031.293350618958,
+          1055.4679169989704,
+          1043.8905260215397,
+          1059.0120791928744,
+          1050.2135511186498,
+          1032.6874070506383,
+          1031.9877160100853,
+          1017.2530265455973,
+          1005.9553427677915,
+          1012.4909699042893,
+          1003.4885081212742,
+          1014.1402830849305,
+          1027.7902321209797,
+          1011.7019965197187,
+          1017.6732150356548,
+          1020.7670664770702,
+          1008.81222375723,
+          1002.6125944079204,
+          995.6919560157353,
+          984.6521681598679
+        ],
+        "g": [
+          0.9345027754023183,
+          0.9163200955486484,
+          0.9077454389199813,
+          0.9089727482007096,
+          0.9143858044212481,
+          0.9171287771136906,
+          0.9704082705499117,
+          0.9999885939045345,
+          1.0093185322841494,
+          0.937360127944829,
+          0.9670657746378125,
+          0.9820565522350115,
+          0.9563048766689259,
+          0.993589108350366,
+          0.9626418162062862,
+          0.9545030565746037,
+          0.9846367170775748,
+          0.973606855959982,
+          1.0150606154685993,
+          0.9669199099520236,
+          0.9486403688049496,
+          0.9574984449172168,
+          0.9792185164390258,
+          0.9353556817136534
+        ],
+        "g_normalised": [
+          0.9754204666795111,
+          0.9564416487078734,
+          0.9474915462678349,
+          0.9487725939253475,
+          0.9544226636349071,
+          0.9572857388168932,
+          1.012898102653515,
+          1.0437736158896052,
+          1.0535120704858656,
+          0.9784029298929391,
+          1.0094092538151043,
+          1.0250564104256916,
+          0.9981771843178434,
+          1.0370939255237113,
+          1.004791590056971,
+          0.9962964705912097,
+          1.0277495491312023,
+          1.01623673979353,
+          1.0595055737765084,
+          1.0092570023679932,
+          0.9901770819807155,
+          0.9994230135742205,
+          1.022094109752607,
+          0.9763107179383993
+        ],
+        "amplitude_max_over_min": 1.1182216642986382,
+        "train_LL_gain_bits_per_event": 0.002075444950611564,
+        "seconds": 0.7
+      },
+      "test_scoring": {
+        "n_test_events": 6856,
+        "window_days": 2913.059065972224,
+        "truncation_W_days_score": 1000.0,
+        "definition": "log f(tau_i) = log lambda(t_i) - Integral_{t_{i-1}}^{t_i} lambda; intervals tile the window exactly, so bits/event is a plain mean",
+        "seconds": 0.2,
+        "truncation_cost_bits_per_event": -0.04370941514621201,
+        "truncation_note": "untruncated minus truncated ETAS log f on a 2000-event subsample; positive means the truncated ETAS baseline is weakened by this many bits/event",
+        "n_tied_timestamps_dropped": 6,
+        "n_scored": 6850,
+        "tie_rule": "events with tau == 0 are dropped from scoring for EVERY model",
+        "mean_logf": {
+          "etas": 0.7355958765926747,
+          "etas_diurnal": 0.7450724438883685,
+          "poisson": -0.36389623652923775,
+          "neural": 0.7910797478987353
+        }
+      },
+      "neural": {
+        "config": {
+          "hidden": 128,
+          "layers": 1,
+          "n_mix": 32,
+          "dropout": 0.0,
+          "lr": 0.001,
+          "batch": 32,
+          "chunk_len": 512,
+          "warmup_mask": 128,
+          "grad_clip": 1.0,
+          "max_steps": 6000,
+          "eval_every": 100,
+          "patience": 12,
+          "max_train_minutes": 35.0
+        },
+        "n_features": 4,
+        "inputs": [
+          "z(log tau)",
+          "z(M-M0)",
+          "sin(2pi h/24)",
+          "cos(2pi h/24)"
+        ],
+        "normalisation_train_only": {
+          "y_mean": -3.124106398060408,
+          "y_std": 2.3677013117310373,
+          "m_mean": 0.3921274189494848,
+          "m_std": 0.4087269627760735
+        },
+        "training": {
+          "history": [
+            {
+              "step": 100,
+              "train_logf": 1.3547779349379356,
+              "val_logf": 0.024296101602844726,
+              "minutes": 0.01
+            },
+            {
+              "step": 200,
+              "train_logf": 1.3766789614888426,
+              "val_logf": 0.0680291739509518,
+              "minutes": 0.02
+            },
+            {
+              "step": 300,
+              "train_logf": 1.3824912503863989,
+              "val_logf": 0.07544040161752164,
+              "minutes": 0.03
+            },
+            {
+              "step": 400,
+              "train_logf": 1.391580953852821,
+              "val_logf": 0.07711722791418993,
+              "minutes": 0.04
+            },
+            {
+              "step": 500,
+              "train_logf": 1.397194029909841,
+              "val_logf": 0.08091154921435773,
+              "minutes": 0.04
+            },
+            {
+              "step": 600,
+              "train_logf": 1.4008905779120138,
+              "val_logf": 0.08542864052648831,
+              "minutes": 0.05
+            },
+            {
+              "step": 700,
+              "train_logf": 1.4065628327900268,
+              "val_logf": 0.07276799700650058,
+              "minutes": 0.06
+            },
+            {
+              "step": 800,
+              "train_logf": 1.4133757366581146,
+              "val_logf": 0.07695199756469942,
+              "minutes": 0.06
+            },
+            {
+              "step": 900,
+              "train_logf": 1.4224152978513178,
+              "val_logf": 0.06859128317214493,
+              "minutes": 0.07
+            },
+            {
+              "step": 1000,
+              "train_logf": 1.4389944200039175,
+              "val_logf": 0.05105164086908326,
+              "minutes": 0.08
+            },
+            {
+              "step": 1100,
+              "train_logf": 1.4537478301264182,
+              "val_logf": 0.03241299694978205,
+              "minutes": 0.09
+            },
+            {
+              "step": 1200,
+              "train_logf": 1.4762241147322437,
+              "val_logf": -0.01040888293401191,
+              "minutes": 0.1
+            },
+            {
+              "step": 1300,
+              "train_logf": 1.4987291001056313,
+              "val_logf": -0.04950005687157014,
+              "minutes": 0.11
+            },
+            {
+              "step": 1400,
+              "train_logf": 1.5234712267666608,
+              "val_logf": -0.06916615740165002,
+              "minutes": 0.11
+            },
+            {
+              "step": 1500,
+              "train_logf": 1.5578960663017463,
+              "val_logf": -0.12626745186297966,
+              "minutes": 0.12
+            },
+            {
+              "step": 1600,
+              "train_logf": 1.569975854983442,
+              "val_logf": -0.17503567983893523,
+              "minutes": 0.13
+            },
+            {
+              "step": 1700,
+              "train_logf": 1.5806455911627708,
+              "val_logf": -0.18635353076278716,
+              "minutes": 0.13
+            },
+            {
+              "step": 1800,
+              "train_logf": 1.6131767811567916,
+              "val_logf": -0.23320265386001507,
+              "minutes": 0.14
+            }
+          ],
+          "best_val_logf": 0.08542864052648831,
+          "best_step": 600,
+          "stop_reason": "early stopping (patience 12 evals)",
+          "minutes": 0.14
+        },
+        "seed": 20260902,
+        "n_parameters": 63840
+      },
+      "bits_per_event": {
+        "neural_over_etas_diurnal_PRIMARY": 0.06637450934042718,
+        "neural_over_etas": 0.08004630598257517,
+        "neural_over_poisson": 1.6662781250800855,
+        "etas_diurnal_over_etas": 0.013671796642148001,
+        "etas_over_poisson": 1.5862318190975102,
+        "n_test_events": 6850,
+        "M>=2.5_subset": {
+          "n": 6850,
+          "neural_over_etas_diurnal": 0.06637450934042718,
+          "neural_over_etas": 0.08004630598257517,
+          "etas_diurnal_over_etas": 0.013671796642148001
+        },
+        "primary_block_bootstrap_95CI": [
+          0.04946910814807737,
+          0.08435867846396855
+        ],
+        "bootstrap_note": "200 contiguous blocks of test events, 2000 resamples; descriptive, not a gate"
+      },
+      "attribution_run": true,
+      "attribution_exploratory": {
+        "NOTE": "EXPLORATORY. Not pre-registered, not multiplicity-corrected, claims nothing.",
+        "by_magnitude_band": {
+          "<1.5": {
+            "n": 0,
+            "over_etas_diurnal": null,
+            "over_etas": null
+          },
+          "1.5-2": {
+            "n": 0,
+            "over_etas_diurnal": null,
+            "over_etas": null
+          },
+          "2-2.5": {
+            "n": 0,
+            "over_etas_diurnal": null,
+            "over_etas": null
+          },
+          "2.5-3": {
+            "n": 4681,
+            "over_etas_diurnal": 0.05366762223479436,
+            "over_etas": 0.06729634040281426
+          },
+          ">=3": {
+            "n": 2169,
+            "over_etas_diurnal": 0.09379771751998793,
+            "over_etas": 0.10756248342787755
+          }
+        },
+        "by_days_since_last_M4": {
+          "0-1d": {
+            "n": 2111,
+            "over_etas_diurnal": 0.07559734933798375
+          },
+          "1-7d": {
+            "n": 1496,
+            "over_etas_diurnal": 0.08213491786888719
+          },
+          "7-30d": {
+            "n": 2024,
+            "over_etas_diurnal": 0.06017595344720368
+          },
+          "30-180d": {
+            "n": 1219,
+            "over_etas_diurnal": 0.04135309074688026
+          },
+          "180-1000000000.0d": {
+            "n": 0,
+            "over_etas_diurnal": null
+          }
+        },
+        "ablation_no_mag": {
+          "over_etas_diurnal": 0.04794844404746142,
+          "over_etas": 0.061620240689609404,
+          "over_full_model": -0.018426065292965768,
+          "best_val_logf": 0.061786140686363206,
+          "stop_reason": "early stopping (patience 12 evals)"
+        },
+        "ablation_no_tod": {
+          "over_etas_diurnal": 0.07276621150015872,
+          "over_etas": 0.0864380081423067,
+          "over_full_model": 0.006391702159731535,
+          "best_val_logf": 0.08805731962666027,
+          "stop_reason": "early stopping (patience 12 evals)"
+        }
+      },
+      "runtime_minutes": 0.65
+    }
+  },
+  "notes": [],
+  "torch_vs_numpy_etas_check": {
+    "LL_numpy": -8413.862462130766,
+    "LL_torch": -8413.862462130768,
+    "rel_LL": 2.1618958138819006e-16,
+    "max_rel_grad": 9.593747627005643e-16
+  },
+  "calibration_control": {
+    "rule": "on data generated by a KNOWN model the neural TPP must not beat ETAS by more than ~0.01 bits/event",
+    "fitted_branching_ratio_on_real_QTM": 1.5089082430788718,
+    "note": "the QTM M>=1.0 ETAS fit is SUPERCRITICAL (n>1), so a same-size stationary ETAS simulation from the fitted parameters is impossible; three generators are used instead",
+    "generators": {
+      "poisson": {
+        "sim": {
+          "generator": "homogeneous Poisson",
+          "rate_per_day": 34.98430691950879,
+          "n_total": 127789
+        },
+        "neural_over_etas_bits_per_event": -0.0008430187861368589,
+        "neural_over_etas_diurnal_bits_per_event": -0.0007759081455483171,
+        "etas_over_poisson_bits_per_event": 2.3293898797258606e-05,
+        "etas_fit": {
+          "mu": 34.70654461610293,
+          "K": 3.131876931246301e-06,
+          "alpha": 0.995680310411403,
+          "c": 10.000000000000002,
+          "p": 0.8,
+          "M0": 1.0
+        },
+        "n_test_scored": 26949,
+        "PASS": true
+      },
+      "etas_subcritical_n0.90": {
+        "sim": {
+          "mu_sim": 3.498430691950874,
+          "branching_ratio_used": 0.9000000000000001,
+          "generations": 20,
+          "n_background": 12862,
+          "n_simulated": 44431,
+          "time_truncated": false,
+          "n_total": 44431,
+          "params": {
+            "mu": 5.43375885540671,
+            "K": 0.01624214874741378,
+            "alpha": 0.5,
+            "c": 0.005162113286011569,
+            "p": 1.1297509605529383
+          },
+          "rescale": "K scaled so the branching ratio is 0.90 (the fitted value is >1)"
+        },
+        "neural_over_etas_bits_per_event": -0.013764439236549788,
+        "neural_over_etas_diurnal_bits_per_event": -0.011476723938301438,
+        "etas_over_poisson_bits_per_event": 0.36462521917709356,
+        "etas_fit": {
+          "mu": 4.1842243475261975,
+          "K": 0.01440775684899644,
+          "alpha": 0.5121222805274118,
+          "c": 0.005568963007626925,
+          "p": 1.1557131936544471,
+          "M0": 1.0
+        },
+        "n_test_scored": 8594,
+        "PASS": true
+      },
+      "etas_fitted_supercritical_timecut": {
+        "sim": {
+          "mu_sim": 5.43375885540671,
+          "branching_ratio_used": null,
+          "generations": 9,
+          "n_background": 19639,
+          "n_simulated": 512517,
+          "time_truncated_to_days": 1353.8565282421914,
+          "time_truncated": true,
+          "n_total": 127789,
+          "params": {
+            "mu": 5.43375885540671,
+            "K": 0.027231013478095364,
+            "alpha": 0.5,
+            "c": 0.005162113286011569,
+            "p": 1.1297509605529383
+          }
+        },
+        "neural_over_etas_bits_per_event": -0.011771892455872174,
+        "neural_over_etas_diurnal_bits_per_event": -0.010329264702568106,
+        "etas_over_poisson_bits_per_event": 0.3273641947544349,
+        "etas_fit": {
+          "mu": 20.006202004123654,
+          "K": 0.01675855193539193,
+          "alpha": 0.500510317927406,
+          "c": 0.005889664741678853,
+          "p": 1.23542288409528,
+          "M0": 1.0
+        },
+        "n_test_scored": 25025,
+        "PASS": true
+      }
+    },
+    "PASS": true,
+    "PASS_poisson_leakage_test": true,
+    "neural_over_etas_bits_per_event": {
+      "poisson": -0.0008430187861368589,
+      "etas_subcritical_n0.90": -0.013764439236549788,
+      "etas_fitted_supercritical_timecut": -0.011771892455872174
+    }
+  },
+  "etas_alpha_sensitivity": {
+    "why": "the exp_h alpha lower bound (0.5) is ACTIVE on QTM at M>=1.0; refitting with a lower bound of 0.05 gives ETAS a strictly better train fit",
+    "alpha_lower_bound": 0.05,
+    "etas_params": {
+      "mu": 4.059997447233365,
+      "K": 0.043720130234348974,
+      "alpha": 0.3004879366299448,
+      "c": 0.00528639188835485,
+      "p": 1.1851924031716785,
+      "M0": 1.0
+    },
+    "alpha_at_lower_bound": false,
+    "neural_over_etas_diurnal": 0.04046872967427173,
+    "neural_over_etas": 0.04036654977959703,
+    "etas_over_poisson": 0.8859357300259983,
+    "M>=2.5": {
+      "n": 1080,
+      "neural_over_etas_diurnal": 0.03954025721685106,
+      "neural_over_etas": 0.03868239272224538,
+      "etas_diurnal_over_etas": -0.0008578644946056849
+    }
+  },
+  "verdict": {
+    "primary_bits_per_event_over_etas_diurnal": 0.03992677051101278,
+    "over_raw_etas": 0.0382959964870067,
+    "success_rule": "> 0.05 bits/event over ETAS+diurnal on QTM",
+    "PASS": false,
+    "calibration_control_PASS": true,
+    "reportable": false
+  },
+  "runtime_minutes_total": 11.33
+}

@@ -1,0 +1,832 @@
+{
+  "experiment": "K-436 sequence-adaptive productivity (incremental bits over frozen ETAS)",
+  "state_class": "first-run, exploration split",
+  "run_utc": "2026-09-02T09:44:54.910502+00:00",
+  "frozen_constants": {
+    "catalog": "SCSN_original_catalog.txt",
+    "box": {
+      "lat": [
+        31.5,
+        38.0
+      ],
+      "lon": [
+        -122.0,
+        -113.5
+      ]
+    },
+    "M0": 2.5,
+    "explore_frac": 0.7,
+    "train_frac_of_explore": 0.6,
+    "burn_in_days": 365.0,
+    "trunc_W_days_for_fit": 1000.0,
+    "maxiter": 150,
+    "alpha_bounds": [
+      0.5,
+      2.5
+    ],
+    "p_bounds": [
+      0.8,
+      2.0
+    ],
+    "M_parent": 4.0,
+    "M_parent_high": 5.0,
+    "T_obs_hours_family": [
+      1.0,
+      3.0
+    ],
+    "count_modes": [
+      "plain",
+      "stai",
+      "bpos"
+    ],
+    "bpos_fraction": 0.5,
+    "headline_count_mode": "stai",
+    "attribution": {
+      "window_days": 30.0,
+      "radius": "max(3L, 10 km), L=10^(0.5M-1.8) km",
+      "rule": "nearest-in-time prior LARGER parent within window and radius"
+    },
+    "continuity_constant": 0.5,
+    "stai_Mc": "M_main - 4.5 - 0.75*log10(t days)  [Helmstetter et al. 2006]",
+    "sequence_layer": {
+      "days": 30.0,
+      "km": 150.0,
+      "rule": "nearest-larger-within (program standing rule)"
+    },
+    "n_boot": 2000,
+    "boot_seed": 20260902,
+    "success_rule": ">= 0.02 bits/event overall AND 95% sequence-block CI excludes 0, at the LEAST FAVOURABLE T_obs",
+    "sim": {
+      "sds_log10": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "reps": 12,
+      "years": 36.0,
+      "seed": 4360902,
+      "loc_sd_frac_of_radius": 0.3,
+      "target_branching_if_supercritical": 0.8
+    }
+  },
+  "artifacts_named_before_run": {
+    "a_STAI": "first hour incomplete at M2.5, magnitude-dependent; controlled by Mc(t) floor on counting AND a GR fraction inside the Omori integral; both readings reported",
+    "b_attribution": "crude nearest-larger-in-time within max(3L,10km); frozen and identical in prior fit, update and simulation",
+    "c_secondary_triggering": "baseline is FULL walk-forward ETAS, so secondary triggering is already credited to A",
+    "d_diurnal": "irrelevant at M>=2.5 (detection artifact lives near M1-1.5) and it cancels in the A-vs-B difference since both see the same events"
+  },
+  "catalog": {
+    "detected_column_order": "raw",
+    "n_in_box_full_span": null,
+    "span_start": "1981-01-01 01:49:28.660000026+00:00",
+    "span_end_FULL_CATALOG": "2018-12-31 23:11:07.060000181+00:00",
+    "span_days": 13878.89002777778,
+    "exploration_end": "2007-08-08 07:10:37.539999962+00:00",
+    "train_end": "1996-12-17 05:02:09.988000154+00:00",
+    "n_events_exploration_all_mags": 426389,
+    "n_events_exploration_M>=2.5": 32858,
+    "n_train": 23869,
+    "n_score": 8989,
+    "mc_maxcurv_exploration_M>=2.5_subset": 2.6,
+    "holdout_guard": "catalogue truncated to t < exploration_end before any statistic"
+  },
+  "train_fit": {
+    "fit_window": [
+      "1982-01-02 15:03:08.769999981+00:00",
+      "1996-12-17 05:02:09.988000154+00:00"
+    ],
+    "n_target_events": 23313,
+    "train_subsampled_to_recent_10yr": false,
+    "starts": [
+      {
+        "LL": 31337.281834322832,
+        "params": {
+          "mu": 0.5530224645570591,
+          "K": 0.04297706217664162,
+          "alpha": 0.5552384689068883,
+          "c": 0.019095046091842864,
+          "p": 1.1391045549650853
+        }
+      },
+      {
+        "LL": 31337.28183432278,
+        "params": {
+          "mu": 0.5530227216643406,
+          "K": 0.04297705746475426,
+          "alpha": 0.5552384758710192,
+          "c": 0.019095047179808304,
+          "p": 1.139104567725521
+        }
+      },
+      {
+        "LL": 31337.28183432283,
+        "params": {
+          "mu": 0.5530225895925506,
+          "K": 0.042977058310741785,
+          "alpha": 0.5552384769577914,
+          "c": 0.019095042020132534,
+          "p": 1.1391045414362595
+        }
+      },
+      {
+        "LL": 31337.2818343222,
+        "params": {
+          "mu": 0.5530226643500591,
+          "K": 0.042977060665585425,
+          "alpha": 0.5552384465900653,
+          "c": 0.019095060517323424,
+          "p": 1.139104552788843
+        }
+      }
+    ],
+    "frozen_params": {
+      "mu": 0.535244647312521,
+      "K": 0.04422334066408695,
+      "alpha": 0.5515796128909348,
+      "c": 0.023409780988467358,
+      "p": 1.171743165914336,
+      "M0": 2.5
+    },
+    "b_value_train_aki": 1.0935008672170696,
+    "branching_ratio_n": 0.9901474893941004
+  },
+  "sequences": {
+    "n_sequences_scoring": 709,
+    "three_largest": [
+      {
+        "n_events": 1544,
+        "largest_mag": 7.1,
+        "start": "1999-10-16 09:46:43.669999957+00:00"
+      },
+      {
+        "n_events": 199,
+        "largest_mag": 5.7,
+        "start": "2002-02-22 19:32:41.570000052+00:00"
+      },
+      {
+        "n_events": 171,
+        "largest_mag": 5.17,
+        "start": "2001-07-17 12:07:26.009999990+00:00"
+      }
+    ],
+    "named_big_three_location": {
+      "Landers_1992-06-28": "training",
+      "Northridge_1994-01-17": "training",
+      "HectorMine_1999-10-16": "scoring"
+    }
+  },
+  "primary": {
+    "Tobs_1h_plain": {
+      "T_obs_hours": 1.0,
+      "count_mode": "plain",
+      "n_parents_M>=4_total": 882,
+      "n_parents_live_for_scoring": 882,
+      "n_parents_updated_nontrivially": 882,
+      "prior_log_productivity": {
+        "mu": 0.26212228365236245,
+        "sd": 1.5477976502546589,
+        "n_train_parents": 599,
+        "alpha_refit_intercept": 0.4476466289231652,
+        "alpha_refit_slope_per_mag_natlog": -0.41889661433605063,
+        "alpha_refit_implied_alpha": 0.36965512479683343
+      },
+      "prior_residual_summary": {
+        "n": 599,
+        "mean_natlog": 0.26212228365236245,
+        "sd_natlog": 1.5477976502546589,
+        "sd_log10": 0.6721999786084176
+      },
+      "LL_A": 5160.971844149652,
+      "LL_B": 5021.796749799025,
+      "LL_diff_nats": -139.17509435062675,
+      "bits_per_event_all_scoring_events": -0.022336991704850713,
+      "ci95_bits_per_event": [
+        -0.05503859906366372,
+        0.007443535681506354
+      ],
+      "boot_se_bits": 0.015844649811381707,
+      "n_scoring_events": 8989,
+      "n_sequences": 709,
+      "n_aftershock_attributed_scoring_events": 2912,
+      "bits_per_attributed_event": -0.1524466538084012,
+      "ci95_bits_per_attributed_event": [
+        -0.22788746855256625,
+        -0.027955084682114988
+      ],
+      "mult_stats": {
+        "min": 0.10234931129803325,
+        "median": 0.7144929272549921,
+        "max": 31.939860122663056
+      },
+      "obs_count_stats_in_Tobs": {
+        "mean": 2.106575963718821,
+        "max": 26.0,
+        "frac_zero": 0.4478458049886621
+      }
+    },
+    "Tobs_1h_stai": {
+      "T_obs_hours": 1.0,
+      "count_mode": "stai",
+      "n_parents_M>=4_total": 882,
+      "n_parents_live_for_scoring": 882,
+      "n_parents_updated_nontrivially": 882,
+      "prior_log_productivity": {
+        "mu": 0.26212228365236245,
+        "sd": 1.5477976502546589,
+        "n_train_parents": 599,
+        "alpha_refit_intercept": 0.4476466289231652,
+        "alpha_refit_slope_per_mag_natlog": -0.41889661433605063,
+        "alpha_refit_implied_alpha": 0.36965512479683343
+      },
+      "prior_residual_summary": {
+        "n": 599,
+        "mean_natlog": 0.26212228365236245,
+        "sd_natlog": 1.5477976502546589,
+        "sd_log10": 0.6721999786084176
+      },
+      "LL_A": 5160.971844149652,
+      "LL_B": 4917.680647975607,
+      "LL_diff_nats": -243.29119617404467,
+      "bits_per_event_all_scoring_events": -0.03904716900792484,
+      "ci95_bits_per_event": [
+        -0.12331211890860029,
+        0.04424539666144338
+      ],
+      "boot_se_bits": 0.046581691475083814,
+      "n_scoring_events": 8989,
+      "n_sequences": 709,
+      "n_aftershock_attributed_scoring_events": 2912,
+      "bits_per_attributed_event": -0.2745467138192229,
+      "ci95_bits_per_attributed_event": [
+        -0.4586052447155936,
+        -0.20921255521660265
+      ],
+      "mult_stats": {
+        "min": 0.18609301254704308,
+        "median": 0.7554385116480782,
+        "max": 32.00588199041789
+      },
+      "obs_count_stats_in_Tobs": {
+        "mean": 2.04421768707483,
+        "max": 26.0,
+        "frac_zero": 0.4478458049886621
+      }
+    },
+    "Tobs_1h_bpos": {
+      "T_obs_hours": 1.0,
+      "count_mode": "bpos",
+      "n_parents_M>=4_total": 882,
+      "n_parents_live_for_scoring": 882,
+      "n_parents_updated_nontrivially": 882,
+      "prior_log_productivity": {
+        "mu": 0.26212228365236245,
+        "sd": 1.5477976502546589,
+        "n_train_parents": 599,
+        "alpha_refit_intercept": 0.4476466289231652,
+        "alpha_refit_slope_per_mag_natlog": -0.41889661433605063,
+        "alpha_refit_implied_alpha": 0.36965512479683343
+      },
+      "prior_residual_summary": {
+        "n": 599,
+        "mean_natlog": 0.26212228365236245,
+        "sd_natlog": 1.5477976502546589,
+        "sd_log10": 0.6721999786084176
+      },
+      "LL_A": 5160.971844149652,
+      "LL_B": 5152.584106972867,
+      "LL_diff_nats": -8.387737176784867,
+      "bits_per_event_all_scoring_events": -0.0013461949971330057,
+      "ci95_bits_per_event": [
+        -0.026770379078573922,
+        0.03190314703160337
+      ],
+      "boot_se_bits": 0.01530639111812963,
+      "n_scoring_events": 8989,
+      "n_sequences": 709,
+      "n_aftershock_attributed_scoring_events": 2912,
+      "bits_per_attributed_event": -0.003774201651039329,
+      "ci95_bits_per_attributed_event": [
+        -0.08040789104683019,
+        0.14509791148391107
+      ],
+      "mult_stats": {
+        "min": 0.09537743206371586,
+        "median": 0.5805708700247965,
+        "max": 27.714695690178328
+      },
+      "obs_count_stats_in_Tobs": {
+        "mean": 0.7811791383219955,
+        "max": 12.0,
+        "frac_zero": 0.6927437641723356
+      }
+    },
+    "Tobs_3h_plain": {
+      "T_obs_hours": 3.0,
+      "count_mode": "plain",
+      "n_parents_M>=4_total": 882,
+      "n_parents_live_for_scoring": 882,
+      "n_parents_updated_nontrivially": 882,
+      "prior_log_productivity": {
+        "mu": 0.26212228365236245,
+        "sd": 1.5477976502546589,
+        "n_train_parents": 599,
+        "alpha_refit_intercept": 0.4476466289231652,
+        "alpha_refit_slope_per_mag_natlog": -0.41889661433605063,
+        "alpha_refit_implied_alpha": 0.36965512479683343
+      },
+      "prior_residual_summary": {
+        "n": 599,
+        "mean_natlog": 0.26212228365236245,
+        "sd_natlog": 1.5477976502546589,
+        "sd_log10": 0.6721999786084176
+      },
+      "LL_A": 5160.971844149652,
+      "LL_B": 5085.349426674873,
+      "LL_diff_nats": -75.62241747477856,
+      "bits_per_event_all_scoring_events": -0.012137066044153834,
+      "ci95_bits_per_event": [
+        -0.049007650326167544,
+        0.020763706455120733
+      ],
+      "boot_se_bits": 0.01865403286081735,
+      "n_scoring_events": 8989,
+      "n_sequences": 709,
+      "n_aftershock_attributed_scoring_events": 2912,
+      "bits_per_attributed_event": -0.11367268073247527,
+      "ci95_bits_per_attributed_event": [
+        -0.20327839459507147,
+        -0.08209532164098188
+      ],
+      "mult_stats": {
+        "min": 0.06679061490817131,
+        "median": 0.7629387906987003,
+        "max": 56.111226053507444
+      },
+      "obs_count_stats_in_Tobs": {
+        "mean": 3.590702947845805,
+        "max": 53.0,
+        "frac_zero": 0.36054421768707484
+      }
+    },
+    "Tobs_3h_stai": {
+      "T_obs_hours": 3.0,
+      "count_mode": "stai",
+      "n_parents_M>=4_total": 882,
+      "n_parents_live_for_scoring": 882,
+      "n_parents_updated_nontrivially": 882,
+      "prior_log_productivity": {
+        "mu": 0.26212228365236245,
+        "sd": 1.5477976502546589,
+        "n_train_parents": 599,
+        "alpha_refit_intercept": 0.4476466289231652,
+        "alpha_refit_slope_per_mag_natlog": -0.41889661433605063,
+        "alpha_refit_implied_alpha": 0.36965512479683343
+      },
+      "prior_residual_summary": {
+        "n": 599,
+        "mean_natlog": 0.26212228365236245,
+        "sd_natlog": 1.5477976502546589,
+        "sd_log10": 0.6721999786084176
+      },
+      "LL_A": 5160.971844149652,
+      "LL_B": 5062.31003407167,
+      "LL_diff_nats": -98.6618100779815,
+      "bits_per_event_all_scoring_events": -0.015834787420695773,
+      "ci95_bits_per_event": [
+        -0.06828369531262621,
+        0.0346171797218283
+      ],
+      "boot_se_bits": 0.028349889815386612,
+      "n_scoring_events": 8989,
+      "n_sequences": 709,
+      "n_aftershock_attributed_scoring_events": 2912,
+      "bits_per_attributed_event": -0.15544885041982015,
+      "ci95_bits_per_attributed_event": [
+        -0.2729162478369605,
+        -0.11471464816812064
+      ],
+      "mult_stats": {
+        "min": 0.12694054902756668,
+        "median": 0.7676119513347008,
+        "max": 56.18094852474644
+      },
+      "obs_count_stats_in_Tobs": {
+        "mean": 3.5170068027210886,
+        "max": 53.0,
+        "frac_zero": 0.36054421768707484
+      }
+    },
+    "Tobs_3h_bpos": {
+      "T_obs_hours": 3.0,
+      "count_mode": "bpos",
+      "n_parents_M>=4_total": 882,
+      "n_parents_live_for_scoring": 882,
+      "n_parents_updated_nontrivially": 882,
+      "prior_log_productivity": {
+        "mu": 0.26212228365236245,
+        "sd": 1.5477976502546589,
+        "n_train_parents": 599,
+        "alpha_refit_intercept": 0.4476466289231652,
+        "alpha_refit_slope_per_mag_natlog": -0.41889661433605063,
+        "alpha_refit_implied_alpha": 0.36965512479683343
+      },
+      "prior_residual_summary": {
+        "n": 599,
+        "mean_natlog": 0.26212228365236245,
+        "sd_natlog": 1.5477976502546589,
+        "sd_log10": 0.6721999786084176
+      },
+      "LL_A": 5160.971844149652,
+      "LL_B": 5160.568418024704,
+      "LL_diff_nats": -0.4034261249471456,
+      "bits_per_event_all_scoring_events": -6.474812212991618e-05,
+      "ci95_bits_per_event": [
+        -0.02647582504885434,
+        0.022176482781863103
+      ],
+      "boot_se_bits": 0.012510662899205584,
+      "n_scoring_events": 8989,
+      "n_sequences": 709,
+      "n_aftershock_attributed_scoring_events": 2912,
+      "bits_per_attributed_event": -0.011855634958609414,
+      "ci95_bits_per_attributed_event": [
+        -0.0895122505111318,
+        0.038264013228339507
+      ],
+      "mult_stats": {
+        "min": 0.06627833670834468,
+        "median": 0.4792218705785668,
+        "max": 46.31420409181511
+      },
+      "obs_count_stats_in_Tobs": {
+        "mean": 1.4625850340136055,
+        "max": 25.0,
+        "frac_zero": 0.6009070294784581
+      }
+    }
+  },
+  "success_rule_verdict": {
+    "HEADLINE": "stai (Hainzl 2016; Merton prior-art note)",
+    "plain": {
+      "least_favourable_key": "Tobs_1h_plain",
+      "bits_per_event": -0.022336991704850713,
+      "ci95": [
+        -0.05503859906366372,
+        0.007443535681506354
+      ],
+      "PASS": false
+    },
+    "stai": {
+      "least_favourable_key": "Tobs_1h_stai",
+      "bits_per_event": -0.03904716900792484,
+      "ci95": [
+        -0.12331211890860029,
+        0.04424539666144338
+      ],
+      "PASS": false
+    },
+    "bpos": {
+      "least_favourable_key": "Tobs_1h_bpos",
+      "bits_per_event": -0.0013461949971330057,
+      "ci95": [
+        -0.026770379078573922,
+        0.03190314703160337
+      ],
+      "PASS": false
+    }
+  },
+  "secondary": {
+    "Tobs_1h_plain": {
+      "parents_M>=5": {
+        "n_parents": 91,
+        "bits_per_event": -0.010697688120874033,
+        "ci95": [
+          -0.030928908103770643,
+          0.016312953656461578
+        ]
+      },
+      "big_three_sequences_excluded": {
+        "n_events_kept": 7075,
+        "n_events_dropped": 1914,
+        "bits_per_kept_event": -0.04902791229830803,
+        "ci95": [
+          -0.07235865618124548,
+          -0.02484289246498812
+        ]
+      },
+      "alpha_refit_baseline": {
+        "refit_slope_natlog_per_mag": -0.41889661433605063,
+        "implied_alpha": 0.36965512479683343,
+        "bits_of_A2_over_A": -0.012951523764206586,
+        "bits_of_B_over_A2": -0.009385467940644137,
+        "ci95_B_over_A2": [
+          -0.047634090061288194,
+          0.022934823569025986
+        ],
+        "LL_A2": 5080.274784953608,
+        "LL_B": 5021.796749799025
+      }
+    },
+    "Tobs_1h_stai": {
+      "parents_M>=5": {
+        "n_parents": 91,
+        "bits_per_event": -0.03458542245739093,
+        "ci95": [
+          -0.12095724754364079,
+          0.05543965602182659
+        ]
+      },
+      "big_three_sequences_excluded": {
+        "n_events_kept": 7075,
+        "n_events_dropped": 1914,
+        "bits_per_kept_event": -0.11852467677564445,
+        "ci95": [
+          -0.1398540850903396,
+          -0.09522666750585797
+        ]
+      },
+      "alpha_refit_baseline": {
+        "refit_slope_natlog_per_mag": -0.41889661433605063,
+        "implied_alpha": 0.36965512479683343,
+        "bits_of_A2_over_A": -0.012951523764206586,
+        "bits_of_B_over_A2": -0.026095645243718255,
+        "ci95_B_over_A2": [
+          -0.11806717464461379,
+          0.06757090598212548
+        ],
+        "LL_A2": 5080.274784953608,
+        "LL_B": 4917.680647975607
+      }
+    },
+    "Tobs_1h_bpos": {
+      "parents_M>=5": {
+        "n_parents": 91,
+        "bits_per_event": -0.005597879270094922,
+        "ci95": [
+          -0.025013569090520646,
+          0.020277866184548774
+        ]
+      },
+      "big_three_sequences_excluded": {
+        "n_events_kept": 7075,
+        "n_events_dropped": 1914,
+        "bits_per_kept_event": -0.015530321363166616,
+        "ci95": [
+          -0.038145506411306984,
+          0.005580358693740465
+        ]
+      },
+      "alpha_refit_baseline": {
+        "refit_slope_natlog_per_mag": -0.41889661433605063,
+        "implied_alpha": 0.36965512479683343,
+        "bits_of_A2_over_A": -0.012951523764206586,
+        "bits_of_B_over_A2": 0.011605328767073576,
+        "ci95_B_over_A2": [
+          -0.015254102294536427,
+          0.04181216211519341
+        ],
+        "LL_A2": 5080.274784953608,
+        "LL_B": 5152.584106972867
+      }
+    },
+    "Tobs_3h_plain": {
+      "parents_M>=5": {
+        "n_parents": 91,
+        "bits_per_event": -0.007172914431148635,
+        "ci95": [
+          -0.0302668775903264,
+          0.0122010457389167
+        ]
+      },
+      "big_three_sequences_excluded": {
+        "n_events_kept": 7075,
+        "n_events_dropped": 1914,
+        "bits_per_kept_event": -0.04565164797865952,
+        "ci95": [
+          -0.060001974887709614,
+          -0.030821661841352346
+        ]
+      },
+      "alpha_refit_baseline": {
+        "refit_slope_natlog_per_mag": -0.41889661433605063,
+        "implied_alpha": 0.36965512479683343,
+        "bits_of_A2_over_A": -0.012951523764206586,
+        "bits_of_B_over_A2": 0.0008144577200527567,
+        "ci95_B_over_A2": [
+          -0.04472046716786478,
+          0.04240755956445528
+        ],
+        "LL_A2": 5080.274784953608,
+        "LL_B": 5085.349426674873
+      }
+    },
+    "Tobs_3h_stai": {
+      "parents_M>=5": {
+        "n_parents": 91,
+        "bits_per_event": -0.014699234111586787,
+        "ci95": [
+          -0.06722561852649185,
+          0.03829432362138759
+        ]
+      },
+      "big_three_sequences_excluded": {
+        "n_events_kept": 7075,
+        "n_events_dropped": 1914,
+        "bits_per_kept_event": -0.06349200640045495,
+        "ci95": [
+          -0.07811127115846914,
+          -0.04804163848480402
+        ]
+      },
+      "alpha_refit_baseline": {
+        "refit_slope_natlog_per_mag": -0.41889661433605063,
+        "implied_alpha": 0.36965512479683343,
+        "bits_of_A2_over_A": -0.012951523764206586,
+        "bits_of_B_over_A2": -0.002883263656489196,
+        "ci95_B_over_A2": [
+          -0.06423429691187857,
+          0.056904594833914295
+        ],
+        "LL_A2": 5080.274784953608,
+        "LL_B": 5062.31003407167
+      }
+    },
+    "Tobs_3h_bpos": {
+      "parents_M>=5": {
+        "n_parents": 91,
+        "bits_per_event": -0.0057960376713734425,
+        "ci95": [
+          -0.026706538844586774,
+          0.012210968658426328
+        ]
+      },
+      "big_three_sequences_excluded": {
+        "n_events_kept": 7075,
+        "n_events_dropped": 1914,
+        "bits_per_kept_event": -0.024234034505055083,
+        "ci95": [
+          -0.037102278846762725,
+          -0.011649910088848062
+        ]
+      },
+      "alpha_refit_baseline": {
+        "refit_slope_natlog_per_mag": -0.41889661433605063,
+        "implied_alpha": 0.36965512479683343,
+        "bits_of_A2_over_A": -0.012951523764206586,
+        "bits_of_B_over_A2": 0.012886775642076664,
+        "ci95_B_over_A2": [
+          -0.02180365581778856,
+          0.04264718058375224
+        ],
+        "LL_A2": 5080.274784953608,
+        "LL_B": 5160.568418024704
+      }
+    }
+  },
+  "runtime_minutes_at_partial_dump": 0.22,
+  "sensitivity": {
+    "generator": "temporal+spatial ETAS branching from the training fit; per-parent (M>=4) productivity multiplied by 10^(sd*Z)/E[10^(sd*Z)] with Z ~ N(0,1) truncated at +/-2 (MEAN-PRESERVING, so injecting scatter does not change the branching ratio); offspring located at parent + isotropic normal of sd 0.30*max(3L,10km); GR magnitudes at b_train; pipeline re-run identically (attribution, prior, update, sequence bootstrap) with T_obs = 1 h, no STAI (sims are perfectly observed by construction)",
+    "note": {
+      "K_rescaled": true,
+      "K_sim": 0.03573070972781922,
+      "fitted_branching_ratio": 0.9901474893941004,
+      "branching_ratio_used_for_rescale": 0.9901474893941004,
+      "target_branching": 0.8
+    },
+    "per_sd": {
+      "sd_log10_0": {
+        "n_reps_used": 12,
+        "n_reps_discarded_at_event_cap": 0,
+        "mean_bits_per_event": -0.0028314919699721397,
+        "sd_bits_per_event": 0.0008744791527640222,
+        "bits_reps": [
+          -0.00447,
+          -0.00304,
+          -0.0023,
+          -0.00351,
+          -0.00381,
+          -0.00286,
+          -0.00213,
+          -0.00308,
+          -0.00244,
+          -0.0012,
+          -0.00207,
+          -0.00306
+        ],
+        "power_at_success_rule": 0.0,
+        "mean_n_scoring_events": 9938.083333333334
+      },
+      "sd_log10_0.25": {
+        "n_reps_used": 12,
+        "n_reps_discarded_at_event_cap": 0,
+        "mean_bits_per_event": -0.0006842347816427919,
+        "sd_bits_per_event": 0.0015986303516332186,
+        "bits_reps": [
+          -0.00329,
+          0.00112,
+          -0.00067,
+          -0.00249,
+          0.00121,
+          0.00148,
+          -0.00131,
+          -0.00078,
+          0.00067,
+          -0.00257,
+          -0.0014,
+          -0.00018
+        ],
+        "power_at_success_rule": 0.0,
+        "mean_n_scoring_events": 9651.833333333334
+      },
+      "sd_log10_0.5": {
+        "n_reps_used": 12,
+        "n_reps_discarded_at_event_cap": 0,
+        "mean_bits_per_event": 0.008055317970750807,
+        "sd_bits_per_event": 0.0028865652846205886,
+        "bits_reps": [
+          0.00635,
+          0.00496,
+          0.00977,
+          0.00826,
+          0.00415,
+          0.00861,
+          0.0121,
+          0.0067,
+          0.00827,
+          0.0058,
+          0.01414,
+          0.00755
+        ],
+        "power_at_success_rule": 0.0,
+        "mean_n_scoring_events": 9985.5
+      },
+      "sd_log10_0.75": {
+        "n_reps_used": 12,
+        "n_reps_discarded_at_event_cap": 0,
+        "mean_bits_per_event": 0.018802549878512542,
+        "sd_bits_per_event": 0.004892495144134783,
+        "bits_reps": [
+          0.01973,
+          0.01911,
+          0.01663,
+          0.01684,
+          0.0115,
+          0.01709,
+          0.01489,
+          0.02458,
+          0.01806,
+          0.02422,
+          0.02872,
+          0.01426
+        ],
+        "power_at_success_rule": 0.0,
+        "mean_n_scoring_events": 10614.333333333334
+      },
+      "sd_log10_1": {
+        "n_reps_used": 12,
+        "n_reps_discarded_at_event_cap": 0,
+        "mean_bits_per_event": 0.03748659528922173,
+        "sd_bits_per_event": 0.010692460764408726,
+        "bits_reps": [
+          0.03074,
+          0.03082,
+          0.02359,
+          0.05519,
+          0.03115,
+          0.03455,
+          0.04748,
+          0.03356,
+          0.0384,
+          0.04726,
+          0.05266,
+          0.02443
+        ],
+        "power_at_success_rule": 0.0,
+        "mean_n_scoring_events": 12227.916666666666
+      }
+    },
+    "min_sd_log10_detectable_at_80pct_power": null,
+    "calibration_zero_gain_check": -0.0028314919699721397,
+    "measured_scatter_reading": {
+      "measured_training_residual_sd_log10": 0.6721999786084176,
+      "sim_predicted_bits_per_event_at_that_scatter": 0.015458010389215904,
+      "success_threshold_bits": 0.02,
+      "interpretation": "if this interpolated value is below the frozen success threshold, the arm was underpowered AT THE SCATTER THE DATA ACTUALLY CARRY, and the null is a null of the success rule, not evidence that per-sequence productivity scatter is absent"
+    },
+    "power_note": "power is the fraction of reps meeting BOTH halves of the frozen success rule (bits >= 0.02 AND sequence-block 95% CI excluding 0); where the point-estimate half is met but power is still 0, the CI half is the binding constraint, i.e. the sequence-block CI at this catalogue size cannot resolve an effect of that size"
+  },
+  "counted_invariants": {
+    "n_exploration_events_M>=2.5": 32858,
+    "n_train_events": 23869,
+    "n_scoring_events": 8989,
+    "n_parents_M>=4_exploration": 882,
+    "n_parents_M>=5_exploration": 91,
+    "n_sequences_scoring": 709,
+    "LL_A_finite": true,
+    "all_lambda_positive": true,
+    "no_nan_in_any_reading": true
+  },
+  "runtime_minutes": 4.99
+}

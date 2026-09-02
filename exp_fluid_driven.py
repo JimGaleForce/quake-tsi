@@ -141,7 +141,8 @@ def load(path):
             if m < MAG_MIN:
                 continue
             ts = _dt.datetime.fromisoformat(r["time"].replace("Z", "+00:00"))
-            t.append((ts - W.SPAN_START).total_seconds() / 86400.0)
+            # EPOCH INVARIANT: days since 1970-01-01Z, as MS.raw_series requires.
+            t.append(ts.timestamp() / 86400.0)
             la.append(float(r["latitude"])); lo.append(float(r["longitude"]))
             mg.append(m)
         except (ValueError, KeyError, TypeError):
@@ -211,6 +212,9 @@ def run_arm(declustered):
         if name not in FLUID and name not in TECTONIC:
             continue
         t, la, lo, mg, n_hold = load(path)
+        if t.size:
+            print("EPOCH CHECK %-18s first event %s"
+                  % (name, MS.iso_from_days(np.min(t))), flush=True)
         seq_idx = None
         if declustered:
             keep = _decluster_local(t, la, lo, mg)

@@ -1,0 +1,213 @@
+{
+  "arm": "power of the extended (block-3) learned arm",
+  "state_class": "first-run, exploration split",
+  "priced_tests": 0,
+  "holdout_touched": false,
+  "generated_utc": "2026-09-02T08:49:48.752728+00:00",
+  "contrast_under_test": "C vs A (nuisance + block3 vs nuisance)",
+  "observed_dauc_real_data": 0.001640741667333634,
+  "null_mean": 8.548661352173248e-05,
+  "null_sd": 0.0042690498592458685,
+  "detection_threshold_dauc_2sd": 0.00862358633201347,
+  "n_permutations_behind_null": 200,
+  "trials_per_cell": 10,
+  "eps_grid": [
+    0.05,
+    0.1,
+    0.2,
+    0.4
+  ],
+  "signs": [
+    1,
+    -1
+  ],
+  "drivers": [
+    "lod_d1",
+    "kp"
+  ],
+  "block3_fill_report": {
+    "n_rows": 166465,
+    "per_feature_nan": {
+      "lod": 0,
+      "lod_d1": 0,
+      "lod_d7": 0,
+      "x_pole": 0,
+      "y_pole": 0,
+      "pm_radius": 0,
+      "pm_rate": 0,
+      "kp": 0,
+      "ap": 0,
+      "imf_b": 0,
+      "bz_gsm": 0,
+      "proton_density": 1708,
+      "sw_speed": 21,
+      "dst": 0,
+      "imf_b_24h": 0,
+      "bz_gsm_24h": 0,
+      "proton_density_24h": 250,
+      "sw_speed_24h": 0,
+      "dst_24h": 0
+    },
+    "n_rows_any_source_missing": 21,
+    "policy": "NaN is carried into the model (HistGradientBoosting consumes it natively) and is flagged by an explicit miss_* indicator column. No zero-fill, no imputation, no interpolation across a gap."
+  },
+  "forcing_rows": {
+    "iers_eop": 23381,
+    "kp_ap": 276536,
+    "omni2": 280512
+  },
+  "power": {
+    "lod_d1": {
+      "n_usable_strata": 33293,
+      "n_strata": 33293,
+      "usable_fraction": 1.0,
+      "cells": {
+        "sign=+1,eps=0.05": {
+          "sign": 1,
+          "eps": 0.05,
+          "mean_dauc": 0.0075704030659779434,
+          "sd_dauc": 0.007893560848169433,
+          "fraction_clearing_2sd": 0.4
+        },
+        "sign=+1,eps=0.10": {
+          "sign": 1,
+          "eps": 0.1,
+          "mean_dauc": 0.02201366020983291,
+          "sd_dauc": 0.004650406469260973,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=+1,eps=0.20": {
+          "sign": 1,
+          "eps": 0.2,
+          "mean_dauc": 0.05547866202458569,
+          "sd_dauc": 0.00677856012189683,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=+1,eps=0.40": {
+          "sign": 1,
+          "eps": 0.4,
+          "mean_dauc": 0.12557119930580693,
+          "sd_dauc": 0.007111591612277005,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=-1,eps=0.05": {
+          "sign": -1,
+          "eps": 0.05,
+          "mean_dauc": 0.008076215036337542,
+          "sd_dauc": 0.005316590083181579,
+          "fraction_clearing_2sd": 0.6
+        },
+        "sign=-1,eps=0.10": {
+          "sign": -1,
+          "eps": 0.1,
+          "mean_dauc": 0.023874222881033542,
+          "sd_dauc": 0.004412210662394325,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=-1,eps=0.20": {
+          "sign": -1,
+          "eps": 0.2,
+          "mean_dauc": 0.05346311987580932,
+          "sd_dauc": 0.00330959370711235,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=-1,eps=0.40": {
+          "sign": -1,
+          "eps": 0.4,
+          "mean_dauc": 0.1268613052022058,
+          "sd_dauc": 0.005951426857749008,
+          "fraction_clearing_2sd": 1.0
+        }
+      }
+    },
+    "kp": {
+      "n_usable_strata": 33267,
+      "n_strata": 33293,
+      "usable_fraction": 0.9992190550566185,
+      "cells": {
+        "sign=+1,eps=0.05": {
+          "sign": 1,
+          "eps": 0.05,
+          "mean_dauc": 0.0065338148719993935,
+          "sd_dauc": 0.003529151870714951,
+          "fraction_clearing_2sd": 0.3
+        },
+        "sign=+1,eps=0.10": {
+          "sign": 1,
+          "eps": 0.1,
+          "mean_dauc": 0.019902834643061463,
+          "sd_dauc": 0.004331025930951444,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=+1,eps=0.20": {
+          "sign": 1,
+          "eps": 0.2,
+          "mean_dauc": 0.04886506967652332,
+          "sd_dauc": 0.004224804148962337,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=+1,eps=0.40": {
+          "sign": 1,
+          "eps": 0.4,
+          "mean_dauc": 0.10678023292047371,
+          "sd_dauc": 0.0048384725031709016,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=-1,eps=0.05": {
+          "sign": -1,
+          "eps": 0.05,
+          "mean_dauc": 0.008157011331098318,
+          "sd_dauc": 0.003367117263790894,
+          "fraction_clearing_2sd": 0.4
+        },
+        "sign=-1,eps=0.10": {
+          "sign": -1,
+          "eps": 0.1,
+          "mean_dauc": 0.020313232757563,
+          "sd_dauc": 0.004382673606743117,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=-1,eps=0.20": {
+          "sign": -1,
+          "eps": 0.2,
+          "mean_dauc": 0.04822009779777381,
+          "sd_dauc": 0.0028538701074973276,
+          "fraction_clearing_2sd": 1.0
+        },
+        "sign=-1,eps=0.40": {
+          "sign": -1,
+          "eps": 0.4,
+          "mean_dauc": 0.10590816208124157,
+          "sd_dauc": 0.004834931238835739,
+          "fraction_clearing_2sd": 1.0
+        }
+      }
+    }
+  },
+  "least_favourable_cell_by_eps": {
+    "eps=0.05": {
+      "worst_power": 0.3,
+      "worst_driver": "kp",
+      "worst_sign": 1
+    },
+    "eps=0.10": {
+      "worst_power": 1.0,
+      "worst_driver": "kp",
+      "worst_sign": -1
+    },
+    "eps=0.20": {
+      "worst_power": 1.0,
+      "worst_driver": "kp",
+      "worst_sign": -1
+    },
+    "eps=0.40": {
+      "worst_power": 1.0,
+      "worst_driver": "kp",
+      "worst_sign": -1
+    }
+  },
+  "min_detectable_eps_at_least_favourable_phase": 0.1,
+  "min_detectable_eps_at_most_favourable_cell": 0.1,
+  "verdict": "DESIGN IS SENSITIVE ON BLOCK 3. At the LEAST FAVOURABLE cell (driver and sign swept), the smallest injected within-stratum modulation detected in at least 80% of trials is eps = 0.10. The observed dAUC(C vs A) on real data is +0.00164 against a null of +0.00009 +/- 0.00427, so the block-3 null forecloses that covariate class down to roughly a 10% within-fortnight modulation -- for every interaction a gradient-boosted model can represent, not one declared projection at a time. It forecloses NOTHING at periods longer than the matched fortnight, which is where the decadal LOD claim lives.",
+  "runtime_seconds": 76.76424384117126
+}

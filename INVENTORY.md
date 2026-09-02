@@ -13,7 +13,7 @@ cost real time and is the reason this file exists.
 4. `data/` is gitignored and must never be committed. This file is the map, not the territory.
 5. Anything added to `data/` gets an entry here in the same commit that adds it.
 
-Last measured: **2026-08-22**. Totals below are raw file contents, before any magnitude
+Last measured: **2026-08-22**; §1f added and used-by lines refreshed **2026-09-02**. Totals below are raw file contents, before any magnitude
 floor, exploration split or declustering.
 
 ---
@@ -73,7 +73,15 @@ binding):
 > null the same arm returns 2.51, p = 0.80. The rule is not bureaucratic; it is the difference
 > between a result and an artifact.
 
-*Used by:* nothing yet.
+> **DEFECT, dated 2026-09-02 (rule 3).** Until this date `exp_highn.load_zenodo` returned days since
+> 1995-01-01 while the shared feature builders assumed days since 1970-01-01, so every tidal/lunar
+> feature in the arms below was evaluated 9,131 d before its event. Fixed at the source, regression-
+> tested (`tests/test_epoch_consistency.py`), all affected arms re-run; see `CORRECTIONS.md`
+> 2026-09-02. The observer (solar-hour) conclusions were unaffected; the tidal ones were re-derived.
+
+*Used by:* `exp_highn.py` (P-1.1), `exp_learned.py` + `exp_learned_sensitivity.py` (P-1.4),
+`exp_learned_ext.py` (Phase 2), `exp_diurnal_discriminator.py`, `exp_bvalue_skill.py` (K-405/P-2.2),
+`exp_neural_tpp.py` (neural TPP vs ETAS), `exp_productivity_assim.py` (K-436), `exp_h_etas.py` (B-2).
 
 ### 1b. Global regional catalogues — `data/comcat_world/` (13 files, 71,803 events at M≥4.5)
 
@@ -119,13 +127,58 @@ of the tremor/LFE populations that are known to be strongly tidally modulated.
 
 `manifest.json` and `download.log` present. **Coso is the declared positive control** for the
 Lu/Xue cross-test.
-*Used by:* `results_coso_*.json` (earlier program phases).
+*Used by:* `results_coso_*.json` (earlier program phases), `exp_fluid_driven.py` (P-1.3),
+`exp_k034_landers_control.py` (K-034), `exp_dyntrig_skill.py` (K-038 arm A, 2026-09-02).
 
 ### 1e. Other regional raw catalogues — `data/raw/` (5 regions, 191 year-files)
 
 `apennines` (1990–2026, .txt), `iceland` (1990–2026, .csv), `long_valley` (1984–2026, .txt),
 `parkfield_control` (1990–2026, .csv), `taupo` (1990–2026, .txt). Per-year files; formats
 differ by region and need a loader each.
+
+### 1f. Global trigger catalogue — `data/global_m55/` (1 file, 18,769 events at M≥5.5)
+
+USGS ComCat FDSN event query, worldwide, **M ≥ 5.5, 1985-01-01 → 2023-01-01**, standard
+ComCat CSV header. Downloaded 2026-09-02 by `exp_dyntrig_skill.download_triggers()`.
+
+| file | rows | span | notes |
+|---|---|---|---|
+| `global_m55.csv` | **18,769** | 1985-01-02T05:32:49.140Z – 2022-12-28T16:34:19.271Z | M 5.5 – 9.1, `orderby=time-asc` |
+| `download_log.jsonl` | 38 records | one per calendar year | URL, HTTP status, row count, UTC timestamp |
+| `manifest.json` | — | — | minmag, span, page count, pre/post-dedup rows, sha256 |
+
+`sha256(global_m55.csv) = c6ae76d8fc3dfabfbc0c238f2e363c98c384609c64a3135123dd3e2ea441827e`
+(first 16: `c6ae76d8fc3dfabf`). 38 pages, one per year; **no page returned 0 rows and no page
+hit the 20,000 cap** — both conditions raise rather than pass silently. 18,769 rows before
+de-duplication on `id`, 18,769 after (no duplicates across year boundaries).
+
+**Why it exists.** This is the trigger side of K-038: the "dynamic-stress weather" a target
+region is exposed to from the whole planet, rather than from one named mainshock. The target
+side is §1d (`data/k034/`, the 14 fluid/geothermal cells). Amplitude at a target is computed
+with the **frozen K-034 axis** (van der Elst & Brodsky 2010 eq. 6, `K034_SEALED_LITERATURE.md`)
+— it is not refit here and must not be refit by anything downstream.
+
+**Defects and cautions, recorded per rule 3.**
+1. **No `Ms` column.** ComCat reports a mixed magnitude type (`mw`/`mww`/`mb` …) in `mag`.
+   The K-034 amplitude axis is written in `Ms`. Every use of this file therefore rides on
+   K-034's already-carried "Mw-substituted axis", not on its primary Ms axis.
+2. **Magnitude-scale evolution 1985→2022** is not corrected. Pre-1990 events are more likely
+   to carry `mb`/`ms` than `mww`. This is a completeness-style exposure on the trigger side
+   and no arm has yet measured it.
+3. **18 events lie inside one of the 14 K-034 target boxes** and must be dropped by any arm
+   that treats these as *remote* triggers (`exp_dyntrig_skill.py` drops them globally).
+4. Sub-M5.5 teleseisms are absent by construction; an arm needing the low-amplitude tail of
+   the exposure distribution needs a different download.
+
+**Frozen usage rules that travel with this dataset.**
+- Trigger exclusions used by the first arm, and the ones any comparable arm should reuse:
+  ≥ 300 km from the target **box** (not the centroid), ≥ 2 rupture lengths, and not inside
+  any K-034 box. Rupture length from `log10 L[km] = -2.44 + 0.59 M` (Wells & Coppersmith 1994
+  RLD, all slip types) — **UNVERIFIED against the paper in session**; it sets an exclusion
+  gate only, never a statistic.
+- Surface-wave arrival at the target is `t_trigger + r / 3.5 km s⁻¹`, K-034's phase velocity.
+
+*Used by:* `exp_dyntrig_skill.py` (K-038 arm A, 2026-09-02).
 
 ---
 
@@ -150,7 +203,8 @@ calibrates how often the pipeline manufactures survivors on a property class wit
 structure and near-zero physical prior (Kepler K-427). LOD/polar motion is a different case:
 it is a genuine (if small) mechanical channel and has a specific published claim to test.
 
-*Used by:* nothing yet.
+*Used by:* `engine_ext_forcing.py` -> `exp_learned_ext.py` + `exp_learned_ext_sensitivity.py`
+(Phase 2 step 1 and the P-2.4 placebo reading, 2026-09-02: all three blocks null; survivor rate 0.052/feature).
 
 ---
 

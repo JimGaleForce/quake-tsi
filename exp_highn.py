@@ -92,7 +92,10 @@ def load_zenodo(path):
                                     int(p[3]), int(p[4]), 0,
                                     tzinfo=_dt.timezone.utc)
                 ts = base + _dt.timedelta(seconds=sec)
-                t.append((ts - W.SPAN_START).total_seconds() / 86400.0)
+                # EPOCH INVARIANT: days since 1970-01-01Z, identical to
+                # exp_world_harmonics.load_region, so that the shared feature
+                # builders' `jd = t + W.UNIX_EPOCH_JD` is the TRUE Julian date.
+                t.append(ts.timestamp() / 86400.0)
                 la.append(float(p[6])); lo.append(float(p[7]))
                 dp.append(float(p[8])); mg.append(float(p[9]))
             except (ValueError, OverflowError):
@@ -135,6 +138,7 @@ def main():
 
     for cat_name, path, bands in specs:
         t, la, lo, dp, mg = load_zenodo(path)
+        MS.assert_epoch(t, 2008 if cat_name.startswith("QTM") else 1981, cat_name)
         t, la, lo, dp, mg, n_hold = split(t, la, lo, dp, mg)
         print("%s: %d exploration events (%d holdout reserved), M %.2f..%.2f"
               % (cat_name, t.size, n_hold, mg.min(), mg.max()), flush=True)

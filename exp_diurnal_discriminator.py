@@ -79,6 +79,8 @@ import exp_world_harmonics as W
 OUT_JSON = HERE / "results_diurnal_discriminator.json"
 ZEN = HERE / "data" / "xue_lu_zenodo"
 
+UNIX_EPOCH = _dt.datetime(1970, 1, 1, tzinfo=_dt.timezone.utc)
+
 SPECS = [("QTM_declustered", ZEN / "QTM_decluster_m0.1.txt", 0.1),
          ("SCSN_declustered", ZEN / "SCSN_decluster_m1.5.txt", 1.5)]
 MAG_BANDS = ((0.1, 1.5), (1.5, 2.5), (2.5, 9.9))
@@ -107,11 +109,13 @@ def main():
 
     for name, path, _mfloor in SPECS:
         t, la, lo, dp, mg = HN.load_zenodo(path)
+        MS.assert_epoch(t, 2008 if name.startswith("QTM") else 1981, name)
         t, la, lo, dp, mg, _nh = HN.split(t, la, lo, dp, mg)
         lsh = local_solar_hour(t, lo)
 
-        # UTC weekday. SPAN_START is a Saturday-independent anchor; compute properly.
-        wd = np.array([(W.SPAN_START + _dt.timedelta(days=float(x))).weekday()
+        # UTC weekday. `t` is days since the Unix epoch (EPOCH INVARIANT), so the
+        # anchor for the weekday reconstruction must be 1970-01-01Z, not SPAN_START.
+        wd = np.array([(UNIX_EPOCH + _dt.timedelta(days=float(x))).weekday()
                        for x in t])
         weekend = (wd >= 5)
 

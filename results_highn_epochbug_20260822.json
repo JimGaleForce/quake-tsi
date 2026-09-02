@@ -1,6 +1,6 @@
 {
   "arm": "P-1.1 high-N replay on the Lu/Xue declustered catalogues",
-  "generated_utc": "2026-09-02T08:26:31.683769+00:00",
+  "generated_utc": "2026-08-23T00:06:14.692824+00:00",
   "priced_tests": 1,
   "holdout_touched": false,
   "catalogues": [
@@ -28,25 +28,25 @@
   },
   "n_cells": 300,
   "cell_max_family": {
-    "observed_max_abs_z": 8.218389083445972,
-    "null_max_p95": 3.945891489801823,
+    "observed_max_abs_z": 8.218579089823173,
+    "null_max_p95": 3.9500204700491666,
     "p": 0.0003332222592469177,
     "where": "SCSN_declustered|M_ge1.5_ALL / sun_hourangle.R1"
   },
   "pooled_max_family": {
-    "observed_max_abs_pooled_z": 10.797695126388716,
-    "null_max_p95": 3.6941853329795777,
+    "observed_max_abs_pooled_z": 10.797695850070623,
+    "null_max_p95": 3.6935682926096214,
     "p": 0.0003332222592469177,
     "where": "sun_hourangle.R1"
   },
   "magnitude_ladder_for_top_feature": {
     "feature": "sun_hourangle.R1",
     "z_by_cell": {
-      "SCSN_declustered|M_ge1.5_ALL": 8.218389083445972,
-      "QTM_declustered|M_ge0.1_ALL": 7.1844542718797415,
-      "QTM_declustered|M_ge1.5_control": 2.6355193439213442,
-      "QTM_declustered|M_ge2.5_control": -1.7024123044548505,
-      "SCSN_declustered|M_ge2.5_control": 0.6208903065688486
+      "SCSN_declustered|M_ge1.5_ALL": 8.218579089823173,
+      "QTM_declustered|M_ge0.1_ALL": 7.184186271371354,
+      "QTM_declustered|M_ge1.5_control": 2.6359093256233836,
+      "QTM_declustered|M_ge2.5_control": -1.7021925190485576,
+      "SCSN_declustered|M_ge2.5_control": 0.6206233070349787
     },
     "read": "a real effect persists as the magnitude floor rises and agrees across the two networks; a detection artifact dies"
   },
@@ -55,257 +55,257 @@
       "cell": "SCSN_declustered|M_ge1.5_ALL",
       "feature": "sun_hourangle.R1",
       "n": 39827,
-      "z": 8.218389083445972
+      "z": 8.218579089823173
     },
     {
       "cell": "QTM_declustered|M_ge0.1_ALL",
       "feature": "sun_hourangle.R1",
       "n": 33293,
-      "z": 7.1844542718797415
+      "z": 7.184186271371354
     },
     {
       "cell": "SCSN_declustered|M_ge1.5_ALL",
       "feature": "sun_sinel.mean",
       "n": 39827,
-      "z": -6.851462217724178
+      "z": -6.851603034755345
     },
     {
       "cell": "QTM_declustered|M_ge0.1_ALL",
       "feature": "sun_sinel.mean",
       "n": 33293,
-      "z": -5.951585969898656
+      "z": -5.951383435971654
     },
     {
       "cell": "SCSN_declustered|M_ge1.5_ALL",
       "feature": "sun_az.R1",
       "n": 39827,
-      "z": 5.91907734342289
+      "z": 5.919115144328523
     },
     {
       "cell": "QTM_declustered|M_ge0.1_ALL",
       "feature": "sun_az.R1",
       "n": 33293,
-      "z": 5.269620838869435
+      "z": 5.269228277590007
     },
     {
       "cell": "SCSN_declustered|M_ge1.5_ALL",
       "feature": "sun_hourangle.R3",
       "n": 39827,
-      "z": 3.379349951983298
+      "z": 3.3779828682532997
     },
     {
       "cell": "QTM_declustered|M_ge0.1_ALL",
       "feature": "sun_az.R3",
       "n": 33293,
-      "z": 3.291828689460249
+      "z": 3.292921081469347
     },
     {
       "cell": "SCSN_declustered|M_ge1.5_ALL",
       "feature": "sun_sinel.bot_decile",
       "n": 39827,
-      "z": 3.196621145816685
+      "z": 3.2128045122992206
     },
     {
       "cell": "QTM_declustered|M_ge1.5_control",
       "feature": "sun_sinel.mean",
       "n": 4256,
-      "z": 2.9415228548794286
+      "z": 2.941748982160169
     },
     {
       "cell": "QTM_declustered|M_ge0.1_ALL",
       "feature": "sun_sinel.bot_decile",
       "n": 33293,
-      "z": 2.8140797104985484
+      "z": 2.891705165107011
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "shear.bot_decile",
+      "n": 39827,
+      "z": -2.6759519533685503
     },
     {
       "cell": "QTM_declustered|M_ge1.5_control",
       "feature": "sun_hourangle.R1",
       "n": 4256,
-      "z": 2.6355193439213442
+      "z": 2.6359093256233836
     },
     {
-      "cell": "QTM_declustered|M_ge2.5_control",
-      "feature": "moon_sinel.top_decile",
-      "n": 703,
-      "z": -2.5020402150386634
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "rate_abs.mean",
+      "n": 39827,
+      "z": 2.4895532461602357
     },
     {
       "cell": "SCSN_declustered|M_ge1.5_ALL",
       "feature": "sun_sinel.top_decile",
       "n": 39827,
-      "z": -2.484615832138315
-    },
-    {
-      "cell": "QTM_declustered|M_ge2.5_control",
-      "feature": "shear.top_decile",
-      "n": 703,
-      "z": 2.289681675335788
-    },
-    {
-      "cell": "QTM_declustered|M_ge2.5_control",
-      "feature": "areal.top_decile",
-      "n": 703,
-      "z": -2.28689766482603
-    },
-    {
-      "cell": "QTM_declustered|M_ge0.1_ALL",
-      "feature": "elongation.R3",
-      "n": 33293,
-      "z": -2.283407849466686
-    },
-    {
-      "cell": "QTM_declustered|M_ge0.1_ALL",
-      "feature": "moon_az.R3",
-      "n": 33293,
-      "z": 2.275883953014129
+      "z": -2.486198265903229
     },
     {
       "cell": "SCSN_declustered|M_ge1.5_ALL",
-      "feature": "moon_sinel_abs.mean",
+      "feature": "elong_cos_abs.mean",
       "n": 39827,
-      "z": 2.1743419441093677
+      "z": 2.2471721915067264
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "elongation.R1",
+      "n": 39827,
+      "z": -2.2439378694501237
+    },
+    {
+      "cell": "SCSN_declustered|M_ge2.5_control",
+      "feature": "moon_sinel.bot_decile",
+      "n": 5655,
+      "z": -2.187533755102667
     },
     {
       "cell": "SCSN_declustered|M_ge1.5_ALL",
       "feature": "sun_az.R2",
       "n": 39827,
-      "z": 2.1735657832065707
-    },
-    {
-      "cell": "SCSN_declustered|M_ge2.5_control",
-      "feature": "moon_dist.mean",
-      "n": 5655,
-      "z": -2.1236968927668305
-    },
-    {
-      "cell": "QTM_declustered|M_ge2.5_control",
-      "feature": "shear.mean",
-      "n": 703,
-      "z": 2.089484501527053
+      "z": 2.174127557110227
     },
     {
       "cell": "SCSN_declustered|M_ge1.5_ALL",
-      "feature": "moon_sinel_abs.bot_decile",
+      "feature": "moon_az.R2",
       "n": 39827,
-      "z": -2.0400203069308462
+      "z": 2.159198481443705
     },
     {
-      "cell": "QTM_declustered|M_ge2.5_control",
-      "feature": "moon_sinel_abs.top_decile",
-      "n": 703,
-      "z": -2.035441846659376
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "shear.mean",
+      "n": 39827,
+      "z": 2.1296887985756414
     },
     {
-      "cell": "QTM_declustered|M_ge2.5_control",
-      "feature": "sun_sinel.bot_decile",
-      "n": 703,
-      "z": -2.026338609389992
+      "cell": "SCSN_declustered|M_ge2.5_control",
+      "feature": "moon_sinel.top_decile",
+      "n": 5655,
+      "z": 2.065166962337959
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "shear.top_decile",
+      "n": 39827,
+      "z": 2.0643048754245643
     },
     {
       "cell": "SCSN_declustered|M_ge1.5_ALL",
       "feature": "rate.bot_decile",
       "n": 39827,
-      "z": 1.9802160557004627
-    },
-    {
-      "cell": "SCSN_declustered|M_ge1.5_ALL",
-      "feature": "elong_cos_abs.top_decile",
-      "n": 39827,
-      "z": -1.9166662590874695
+      "z": 1.991430721046197
     },
     {
       "cell": "QTM_declustered|M_ge2.5_control",
       "feature": "sun_sinel_abs.top_decile",
       "n": 703,
-      "z": -1.9122224714590257
+      "z": -1.913089901098876
     },
     {
-      "cell": "SCSN_declustered|M_ge1.5_ALL",
-      "feature": "shear.mean",
-      "n": 39827,
-      "z": -1.8850196007638267
+      "cell": "QTM_declustered|M_ge2.5_control",
+      "feature": "sun_sinel.bot_decile",
+      "n": 703,
+      "z": -1.8920094565356442
+    },
+    {
+      "cell": "QTM_declustered|M_ge1.5_control",
+      "feature": "moon_dist.top_decile",
+      "n": 4256,
+      "z": -1.854247464952917
+    },
+    {
+      "cell": "QTM_declustered|M_ge0.1_ALL",
+      "feature": "moon_dist.mean",
+      "n": 33293,
+      "z": 1.849647864134825
     },
     {
       "cell": "QTM_declustered|M_ge0.1_ALL",
       "feature": "sun_sinel.top_decile",
       "n": 33293,
-      "z": -1.8395386138690182
+      "z": -1.8404252929771185
+    },
+    {
+      "cell": "SCSN_declustered|M_ge1.5_ALL",
+      "feature": "bearing.R2",
+      "n": 39827,
+      "z": 1.7836660934617299
     }
   ],
   "top_15_pooled": [
     {
       "feature": "sun_hourangle.R1",
-      "pooled_z": 10.797695126388716,
+      "pooled_z": 10.797695850070623,
       "n_cells": 5
     },
     {
       "feature": "sun_az.R1",
-      "pooled_z": 7.67736354966632,
+      "pooled_z": 7.675993276684513,
       "n_cells": 5
     },
     {
       "feature": "sun_sinel.mean",
-      "pooled_z": -7.4630695001174505,
+      "pooled_z": -7.463086304990296,
       "n_cells": 5
     },
     {
       "feature": "sun_sinel.bot_decile",
-      "pooled_z": 3.201455295660283,
+      "pooled_z": 3.287236712070154,
       "n_cells": 5
     },
     {
       "feature": "sun_hourangle.R3",
-      "pooled_z": 3.1997735845241073,
+      "pooled_z": 3.1989074653010583,
       "n_cells": 5
     },
     {
       "feature": "sun_az.R3",
-      "pooled_z": 2.6816546835995396,
+      "pooled_z": 2.6835647001959706,
       "n_cells": 5
     },
     {
       "feature": "sun_sinel.top_decile",
-      "pooled_z": -2.3127113301498463,
+      "pooled_z": -2.3259104078017723,
       "n_cells": 5
     },
     {
-      "feature": "elongation.R3",
-      "pooled_z": -2.2574729152975817,
+      "feature": "elong_cos.top_decile",
+      "pooled_z": 2.2074651758346486,
       "n_cells": 5
     },
     {
       "feature": "elongation.R1",
-      "pooled_z": 2.1046916109967806,
-      "n_cells": 5
-    },
-    {
-      "feature": "moon_sinel_abs.bot_decile",
-      "pooled_z": -1.7216828064186314,
-      "n_cells": 5
-    },
-    {
-      "feature": "sun_az.R2",
-      "pooled_z": 1.610055904082624,
+      "pooled_z": -2.1570696746658062,
       "n_cells": 5
     },
     {
       "feature": "elong_cos_abs.mean",
-      "pooled_z": -1.5663416409088835,
+      "pooled_z": 1.9436970476464939,
       "n_cells": 5
     },
     {
-      "feature": "moon_sinel.bot_decile",
-      "pooled_z": 1.479442364019633,
+      "feature": "sun_az.R2",
+      "pooled_z": 1.6112292291365433,
       "n_cells": 5
     },
     {
-      "feature": "areal_abs.bot_decile",
-      "pooled_z": -1.4330475949591193,
+      "feature": "rate_abs.mean",
+      "pooled_z": 1.5193873795981592,
       "n_cells": 5
     },
     {
-      "feature": "rate_abs.bot_decile",
-      "pooled_z": 1.4301214231355084,
+      "feature": "moon_az.R2",
+      "pooled_z": 1.4787319441916624,
+      "n_cells": 5
+    },
+    {
+      "feature": "moon_dist.top_decile",
+      "pooled_z": -1.371458109084471,
+      "n_cells": 5
+    },
+    {
+      "feature": "moon_hourangle.R4",
+      "pooled_z": 1.3537376343048695,
       "n_cells": 5
     }
   ]

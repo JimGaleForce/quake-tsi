@@ -1,11 +1,12 @@
 """POWER OF THE LEARNED ARM. What its null is worth. Priced 0.
 
-`exp_learned.py` returned dAUC = +0.00155, p = 0.3415: a gradient-boosted model given the
+`exp_learned.py` returned dAUC = -0.00148, p = 0.8293 (EPOCH-FIXED rerun, 2026-09-02; the
+superseded epoch-defective run gave +0.00155, p = 0.3415): a gradient-boosted model given the
 full per-event tidal vector, free to represent any interaction, and searched without
 multiplicity cost, does not beat a model that knows only the time of day.
 
 That is only worth something if the design CAN detect a tidal effect. And there is a
-specific reason to doubt it before measuring: model A's absolute AUC is 0.50382. The
+specific reason to doubt it before measuring: model A's absolute AUC is 0.50784. The
 day/night detection artifact is real -- roughly 2 percent of events displaced into local
 night, established in `exp_diurnal_discriminator.py` -- and the model can barely see it.
 Inside a matched stratum, where a case and its four controls share a site and a fortnight,
@@ -64,6 +65,7 @@ DRIVERS = ("areal_abs", "rate_abs")
 def main():
     rng = np.random.default_rng(L.RNG_SEED)
     t, la, lo, dp, mg = HN.load_zenodo(ZEN / "QTM_decluster_m0.1.txt")
+    MS.assert_epoch(t, 2008, "QTM_declustered")
     t, la, lo, dp, mg, _nh = HN.split(t, la, lo, dp, mg)
     n, K = t.size, L.CONTROLS_PER_CASE
     print("QTM declustered exploration: %d events, %d candidates per stratum"
@@ -95,9 +97,10 @@ def main():
 
     out = {"arm": "power of the learned arm", "priced_tests": 0,
            "generated_utc": _dt.datetime.now(_dt.timezone.utc).isoformat(),
-           "observed_dauc_real_data": 0.00155,
-           "null_mean": -0.00028, "null_sd": 0.00391,
-           "detection_threshold_dauc_2sd": 2 * 0.00391,
+           # Read from the EPOCH-FIXED exp_learned.py rerun (2026-09-02).
+           "observed_dauc_real_data": -0.00148,
+           "null_mean": 0.00055, "null_sd": 0.00339,
+           "detection_threshold_dauc_2sd": 2 * 0.00339,
            "trials_per_cell": TRIALS, "power": {}}
 
     for drv in DRIVERS:
@@ -136,7 +139,7 @@ def main():
     out["smallest_reliably_detected_eps"] = best
     out["verdict"] = (
         ("DESIGN IS SENSITIVE. The smallest injected modulation detected in at least 80%% "
-         "of trials is eps = %.2f. The arm's null (dAUC = +0.00155, p = 0.3415) therefore "
+         "of trials is eps = %.2f. The arm's null (dAUC = -0.00148, p = 0.8293) therefore "
          "forecloses the whole covariate space down to roughly that level, which is a "
          "stronger negative result than any binned statistic in this program: it rules "
          "out every interaction a gradient-boosted model can represent, not one declared "

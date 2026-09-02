@@ -122,7 +122,8 @@ def load():
     t0, t1 = rows[0][0], rows[-1][0]
     cut = t0 + (t1 - t0) * EXPLORE_FRAC
     ex = [r for r in rows if r[0] < cut]
-    t = np.array([(r[0] - W.SPAN_START).total_seconds() / 86400.0 for r in ex])
+    # EPOCH INVARIANT: days since 1970-01-01Z, as MS.raw_series requires.
+    t = np.array([r[0].timestamp() / 86400.0 for r in ex])
     return (t, np.array([r[1] for r in ex]), np.array([r[2] for r in ex]),
             np.array([r[3] for r in ex]), np.array([r[4] for r in ex]),
             len(rows) - len(ex), cut)
@@ -169,6 +170,7 @@ def cluster_sums(F, seq_idx, n_seq, mask):
 def main():
     rng = np.random.default_rng(RNG_SEED)
     t, la, lo, dp, mg, n_holdout, cut = load()
+    MS.assert_epoch(t, 2010, "comcat_socal_m25")
     print("SoCal exploration split: %d events (holdout %d reserved, cutoff %s)"
           % (t.size, n_holdout, cut.date()), flush=True)
     is_after, since, seq_raw = classify(t, la, lo, mg)

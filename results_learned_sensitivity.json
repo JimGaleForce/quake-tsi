@@ -1,58 +1,58 @@
 {
   "arm": "power of the learned arm",
   "priced_tests": 0,
-  "generated_utc": "2026-08-23T02:16:46.051720+00:00",
-  "observed_dauc_real_data": 0.00155,
-  "null_mean": -0.00028,
-  "null_sd": 0.00391,
-  "detection_threshold_dauc_2sd": 0.00782,
+  "generated_utc": "2026-09-02T08:27:58.383619+00:00",
+  "observed_dauc_real_data": -0.00148,
+  "null_mean": 0.00055,
+  "null_sd": 0.00339,
+  "detection_threshold_dauc_2sd": 0.00678,
   "trials_per_cell": 5,
   "power": {
     "areal_abs": {
       "eps=0.05": {
-        "mean_dauc": 0.009133299015687046,
-        "sd_dauc": 0.003251523746754492,
+        "mean_dauc": 0.00922385572137907,
+        "sd_dauc": 0.0014037848883450908,
         "fraction_clearing_2sd": 0.8
       },
       "eps=0.10": {
-        "mean_dauc": 0.022337627640152603,
-        "sd_dauc": 0.004375686707351926,
+        "mean_dauc": 0.024395068284985676,
+        "sd_dauc": 0.004279417687695613,
         "fraction_clearing_2sd": 1.0
       },
       "eps=0.20": {
-        "mean_dauc": 0.048835949956126765,
-        "sd_dauc": 0.004748635337067641,
+        "mean_dauc": 0.05053688399848342,
+        "sd_dauc": 0.0025672348849905356,
         "fraction_clearing_2sd": 1.0
       },
       "eps=0.40": {
-        "mean_dauc": 0.09562601498450118,
-        "sd_dauc": 0.004164371148482274,
+        "mean_dauc": 0.09806912117127653,
+        "sd_dauc": 0.0033842846537442913,
         "fraction_clearing_2sd": 1.0
       }
     },
     "rate_abs": {
       "eps=0.05": {
-        "mean_dauc": 0.008072872268508302,
-        "sd_dauc": 0.0060709680660352774,
-        "fraction_clearing_2sd": 0.4
+        "mean_dauc": 0.009755410687859411,
+        "sd_dauc": 0.006809015005525568,
+        "fraction_clearing_2sd": 0.6
       },
       "eps=0.10": {
-        "mean_dauc": 0.027072851608955163,
-        "sd_dauc": 0.00375347826438957,
+        "mean_dauc": 0.019948846254672616,
+        "sd_dauc": 0.004001982934104779,
         "fraction_clearing_2sd": 1.0
       },
       "eps=0.20": {
-        "mean_dauc": 0.0549116676796297,
-        "sd_dauc": 0.004677995837558472,
+        "mean_dauc": 0.053487952563500696,
+        "sd_dauc": 0.0028874428259287295,
         "fraction_clearing_2sd": 1.0
       },
       "eps=0.40": {
-        "mean_dauc": 0.10144668145226414,
-        "sd_dauc": 0.00489134982403369,
+        "mean_dauc": 0.10552465697122489,
+        "sd_dauc": 0.004528668555597278,
         "fraction_clearing_2sd": 1.0
       }
     }
   },
   "smallest_reliably_detected_eps": 0.05,
-  "verdict": "DESIGN IS SENSITIVE. The smallest injected modulation detected in at least 80% of trials is eps = 0.05 (areal amplitude; 0.10 for stressing rate). At eps = 0.05 the pipeline returns dAUC = +0.00913, and at eps = 0.10 it returns +0.02234, against an OBSERVED value on real data of +0.00155 -- six times smaller than a five percent effect and inside the permutation null. The arm's null therefore forecloses the whole covariate space down to roughly a few percent modulation, and it does so for EVERY interaction a gradient-boosted model can represent rather than for one declared projection at a time. That is the strongest negative result this program has produced."
+  "verdict": "DESIGN IS SENSITIVE. The smallest injected modulation detected in at least 80% of trials is eps = 0.05. The arm's null (dAUC = -0.00148, p = 0.8293) therefore forecloses the whole covariate space down to roughly that level, which is a stronger negative result than any binned statistic in this program: it rules out every interaction a gradient-boosted model can represent, not one declared projection at a time."
 }

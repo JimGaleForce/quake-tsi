@@ -1,0 +1,852 @@
+{
+  "arm": "P-1.3 fluid-driven vs tectonic tidal sensitivity",
+  "generated_utc": "2026-08-23T02:07:20.601873+00:00",
+  "priced_tests": 1,
+  "holdout_touched": false,
+  "declared_prediction": "pooled tidal concentration LARGER in fluid-driven than in tectonic regions; the statistic is the difference of pooled z, calibrated against its own null; the 7/7 split is published geology and was fixed before the run",
+  "fluid_regions": [
+    "geysers",
+    "coso",
+    "long_valley",
+    "salton_brawley",
+    "lassen",
+    "yellowstone",
+    "mono_west_nv_mina"
+  ],
+  "tectonic_regions": [
+    "san_jacinto",
+    "parkfield",
+    "mendocino",
+    "wasatch_slc",
+    "smith_valley_nv",
+    "cedar_city_ut",
+    "little_skull_mtn"
+  ],
+  "solar_excluded_from_declared_family": [
+    "sun_sinel",
+    "sun_sinel_abs",
+    "sun_az",
+    "sun_hourangle"
+  ],
+  "why_solar_excluded": "the day/night detection asymmetry is real and was measured at ~2% of events in exp_diurnal_discriminator.py; solar features are carried as an ARTIFACT MONITOR whose firing shows the arm is sensitive, and are excluded from the declared family here BEFORE the run rather than after",
+  "declustered_PRIMARY": {
+    "DECLARED_TEST_group_label_permutation": {
+      "statistic": "mean z^2 (fluid) - mean z^2 (tectonic), lunar/tidal features only",
+      "mean_z2_fluid": 1.0838002726310236,
+      "mean_z2_tectonic": 1.249659131001203,
+      "observed_difference": -0.16585885837017944,
+      "null_mean": 0.0032240127376910507,
+      "null_sd": 0.18784398439830105,
+      "null_p95": 0.3129400251073823,
+      "p_one_sided_fluid_greater": 0.8140371925614877,
+      "n_permutations": 5000,
+      "n_regions": 13,
+      "n_features": 46,
+      "reading": "this tests the DECLARED prediction directly: is sensitivity larger in the fluid-driven group? A signed-difference test cannot answer that and the first version of this arm wrongly used one."
+    },
+    "n_regions": 13,
+    "n_events": 14405,
+    "n_units": 14405,
+    "per_region": {
+      "cedar_city_ut": {
+        "n": 298,
+        "units": 298,
+        "group": "tectonic",
+        "n_holdout_reserved": 324
+      },
+      "coso": {
+        "n": 1595,
+        "units": 1595,
+        "group": "fluid",
+        "n_holdout_reserved": 9131
+      },
+      "geysers": {
+        "n": 1423,
+        "units": 1423,
+        "group": "fluid",
+        "n_holdout_reserved": 9849
+      },
+      "lassen": {
+        "n": 360,
+        "units": 360,
+        "group": "fluid",
+        "n_holdout_reserved": 362
+      },
+      "long_valley": {
+        "n": 1567,
+        "units": 1567,
+        "group": "fluid",
+        "n_holdout_reserved": 4428
+      },
+      "mendocino": {
+        "n": 1885,
+        "units": 1885,
+        "group": "tectonic",
+        "n_holdout_reserved": 2514
+      },
+      "mono_west_nv_mina": {
+        "n": 310,
+        "units": 310,
+        "group": "fluid",
+        "n_holdout_reserved": 425
+      },
+      "parkfield": {
+        "n": 998,
+        "units": 998,
+        "group": "tectonic",
+        "n_holdout_reserved": 664
+      },
+      "salton_brawley": {
+        "n": 1683,
+        "units": 1683,
+        "group": "fluid",
+        "n_holdout_reserved": 5922
+      },
+      "san_jacinto": {
+        "n": 2424,
+        "units": 2424,
+        "group": "tectonic",
+        "n_holdout_reserved": 3365
+      },
+      "smith_valley_nv": {
+        "n": 244,
+        "units": 244,
+        "group": "tectonic",
+        "n_holdout_reserved": 126
+      },
+      "wasatch_slc": {
+        "n": 259,
+        "units": 259,
+        "group": "tectonic",
+        "n_holdout_reserved": 554
+      },
+      "yellowstone": {
+        "n": 1359,
+        "units": 1359,
+        "group": "fluid",
+        "n_holdout_reserved": 3110
+      }
+    },
+    "declared_family_cells": 598,
+    "cell_max_LUNAR_ONLY": {
+      "observed_max_abs_z": 3.383176893154552,
+      "null_max_p95": 4.222621263722932,
+      "p": 0.42285904698433857,
+      "where": "parkfield / elong_cos_abs.bot_decile"
+    },
+    "pooled_fluid": {
+      "max_abs_pooled_z": 2.8664996227938038,
+      "where": "moon_sinel_abs.mean",
+      "null_max_p95": 3.2572754342250225,
+      "p": 0.15294901699433522,
+      "top": [
+        {
+          "feature": "moon_sinel_abs.mean",
+          "pooled_z": -2.8664996227938038,
+          "n_regions": 7
+        },
+        {
+          "feature": "moon_az.R3",
+          "pooled_z": -2.7508411481764363,
+          "n_regions": 7
+        },
+        {
+          "feature": "moon_sinel_abs.bot_decile",
+          "pooled_z": 2.3155193766285054,
+          "n_regions": 7
+        },
+        {
+          "feature": "moon_hourangle.R3",
+          "pooled_z": -2.263530596983448,
+          "n_regions": 7
+        },
+        {
+          "feature": "areal.mean",
+          "pooled_z": -1.9780172646783925,
+          "n_regions": 7
+        },
+        {
+          "feature": "shear.mean",
+          "pooled_z": 1.968019969938561,
+          "n_regions": 7
+        },
+        {
+          "feature": "moon_hourangle.R4",
+          "pooled_z": 1.9476262758522929,
+          "n_regions": 7
+        },
+        {
+          "feature": "areal_abs.top_decile",
+          "pooled_z": -1.9188900925458614,
+          "n_regions": 7
+        }
+      ]
+    },
+    "pooled_tectonic": {
+      "max_abs_pooled_z": 2.1313284429432473,
+      "where": "rate_abs.top_decile",
+      "null_max_p95": 3.260447619138413,
+      "p": 0.6804398533822059,
+      "top": [
+        {
+          "feature": "rate_abs.top_decile",
+          "pooled_z": 2.1313284429432473,
+          "n_regions": 6
+        },
+        {
+          "feature": "areal_abs.bot_decile",
+          "pooled_z": 2.0842311369984423,
+          "n_regions": 6
+        },
+        {
+          "feature": "moon_dist.bot_decile",
+          "pooled_z": 2.069037126555215,
+          "n_regions": 6
+        },
+        {
+          "feature": "moon_hourangle.R4",
+          "pooled_z": -1.6970596997868144,
+          "n_regions": 6
+        },
+        {
+          "feature": "rate_abs.bot_decile",
+          "pooled_z": -1.696256792347322,
+          "n_regions": 6
+        },
+        {
+          "feature": "areal_abs.mean",
+          "pooled_z": -1.6737897465688476,
+          "n_regions": 6
+        },
+        {
+          "feature": "rate_abs.mean",
+          "pooled_z": 1.4617185418387157,
+          "n_regions": 6
+        },
+        {
+          "feature": "areal_abs.top_decile",
+          "pooled_z": -1.4286862155919873,
+          "n_regions": 6
+        }
+      ]
+    },
+    "superseded_signed_difference": {
+      "observed_max_abs_diff_z": 2.575306991398998,
+      "null_max_p95": 3.259289853177583,
+      "p": 0.31422859046984336,
+      "top": [
+        {
+          "feature": "moon_hourangle.R4",
+          "fluid_z": 1.9476262758522929,
+          "tectonic_z": -1.6970596997868144,
+          "diff_z": 2.575306991398998
+        },
+        {
+          "feature": "moon_sinel_abs.mean",
+          "fluid_z": -2.8664996227938038,
+          "tectonic_z": 0.5758457010067244,
+          "diff_z": -2.456385770328915
+        },
+        {
+          "feature": "shear.bot_decile",
+          "fluid_z": -1.9098244742977455,
+          "tectonic_z": 1.243383422451894,
+          "diff_z": -2.235734278188102
+        },
+        {
+          "feature": "moon_sinel_abs.bot_decile",
+          "fluid_z": 2.3155193766285054,
+          "tectonic_z": -0.5770996996429024,
+          "diff_z": 2.044704086811557
+        },
+        {
+          "feature": "rate_abs.mean",
+          "fluid_z": -1.2493968222480125,
+          "tectonic_z": 1.4617185418387157,
+          "diff_z": -1.894385867231697
+        },
+        {
+          "feature": "rate_abs.top_decile",
+          "fluid_z": -0.3236764671907171,
+          "tectonic_z": 2.1313284429432473,
+          "diff_z": -1.7130319386945483
+        },
+        {
+          "feature": "bearing.R1",
+          "fluid_z": 1.7015920251917394,
+          "tectonic_z": -0.3632040726700275,
+          "diff_z": 1.4510391327344936
+        },
+        {
+          "feature": "moon_sinel.mean",
+          "fluid_z": 0.682585792960827,
+          "tectonic_z": -1.2964595027819559,
+          "diff_z": 1.3976090614151206
+        },
+        {
+          "feature": "rate.bot_decile",
+          "fluid_z": -0.9724411263147812,
+          "tectonic_z": 0.9864564531739195,
+          "diff_z": -1.3863934948803471
+        },
+        {
+          "feature": "moon_az.R2",
+          "fluid_z": 1.8655434705545657,
+          "tectonic_z": -0.09617887187646565,
+          "diff_z": 1.386060976661357
+        }
+      ]
+    },
+    "artifact_monitor_SOLAR_pooled_fluid": {
+      "max_abs_pooled_z": 1.9099175694511497,
+      "where": "sun_hourangle.R1",
+      "top": [
+        {
+          "feature": "sun_hourangle.R1",
+          "pooled_z": 1.9099175694511497,
+          "n_regions": 7
+        },
+        {
+          "feature": "sun_sinel_abs.bot_decile",
+          "pooled_z": -1.8443525452712677,
+          "n_regions": 7
+        },
+        {
+          "feature": "sun_az.R1",
+          "pooled_z": 1.5941673196514972,
+          "n_regions": 7
+        },
+        {
+          "feature": "sun_sinel.bot_decile",
+          "pooled_z": -1.4047222071766794,
+          "n_regions": 7
+        },
+        {
+          "feature": "sun_sinel.mean",
+          "pooled_z": 1.093716704274475,
+          "n_regions": 7
+        }
+      ]
+    },
+    "top_15_cells": [
+      {
+        "region": "parkfield",
+        "group": "tectonic",
+        "feature": "elong_cos_abs.bot_decile",
+        "n": 998,
+        "z": -3.383176893154552
+      },
+      {
+        "region": "lassen",
+        "group": "fluid",
+        "feature": "moon_dist.bot_decile",
+        "n": 360,
+        "z": 3.037438591922205
+      },
+      {
+        "region": "san_jacinto",
+        "group": "tectonic",
+        "feature": "moon_sinel.bot_decile",
+        "n": 2424,
+        "z": -2.9781810792659322
+      },
+      {
+        "region": "cedar_city_ut",
+        "group": "tectonic",
+        "feature": "moon_sinel_abs.bot_decile",
+        "n": 298,
+        "z": -2.856052710005926
+      },
+      {
+        "region": "parkfield",
+        "group": "tectonic",
+        "feature": "elong_cos_abs.mean",
+        "n": 998,
+        "z": 2.690899165482952
+      },
+      {
+        "region": "wasatch_slc",
+        "group": "tectonic",
+        "feature": "shear.mean",
+        "n": 259,
+        "z": -2.65274748044867
+      },
+      {
+        "region": "mendocino",
+        "group": "tectonic",
+        "feature": "shear.bot_decile",
+        "n": 1885,
+        "z": 2.643546754114959
+      },
+      {
+        "region": "coso",
+        "group": "fluid",
+        "feature": "rate_abs.bot_decile",
+        "n": 1595,
+        "z": -2.614877330231366
+      },
+      {
+        "region": "lassen",
+        "group": "fluid",
+        "feature": "shear.top_decile",
+        "n": 360,
+        "z": 2.612948291004424
+      },
+      {
+        "region": "yellowstone",
+        "group": "fluid",
+        "feature": "shear.bot_decile",
+        "n": 1359,
+        "z": -2.543442133720745
+      },
+      {
+        "region": "cedar_city_ut",
+        "group": "tectonic",
+        "feature": "moon_dist.top_decile",
+        "n": 298,
+        "z": 2.4887567630239817
+      },
+      {
+        "region": "yellowstone",
+        "group": "fluid",
+        "feature": "moon_hourangle.R2",
+        "n": 1359,
+        "z": 2.4825151928304887
+      },
+      {
+        "region": "san_jacinto",
+        "group": "tectonic",
+        "feature": "areal.bot_decile",
+        "n": 2424,
+        "z": 2.461000078523746
+      },
+      {
+        "region": "cedar_city_ut",
+        "group": "tectonic",
+        "feature": "areal_abs.top_decile",
+        "n": 298,
+        "z": -2.458362013230772
+      },
+      {
+        "region": "yellowstone",
+        "group": "fluid",
+        "feature": "moon_sinel.top_decile",
+        "n": 1359,
+        "z": -2.3969694082172066
+      }
+    ]
+  },
+  "full_sequence_null_SECONDARY": {
+    "DECLARED_TEST_group_label_permutation": {
+      "statistic": "mean z^2 (fluid) - mean z^2 (tectonic), lunar/tidal features only",
+      "mean_z2_fluid": 1.1218812850736466,
+      "mean_z2_tectonic": 1.407329857117817,
+      "observed_difference": -0.2854485720441704,
+      "null_mean": -8.90790919695725e-05,
+      "null_sd": 0.2879312611065009,
+      "null_p95": 0.47546546667983947,
+      "p_one_sided_fluid_greater": 0.8314337132573485,
+      "n_permutations": 5000,
+      "n_regions": 14,
+      "n_features": 46,
+      "reading": "this tests the DECLARED prediction directly: is sensitivity larger in the fluid-driven group? A signed-difference test cannot answer that and the first version of this arm wrongly used one."
+    },
+    "n_regions": 14,
+    "n_events": 96602,
+    "n_units": 3875,
+    "per_region": {
+      "cedar_city_ut": {
+        "n": 465,
+        "units": 208,
+        "group": "tectonic",
+        "n_holdout_reserved": 324
+      },
+      "coso": {
+        "n": 13189,
+        "units": 367,
+        "group": "fluid",
+        "n_holdout_reserved": 9131
+      },
+      "geysers": {
+        "n": 24697,
+        "units": 340,
+        "group": "fluid",
+        "n_holdout_reserved": 9849
+      },
+      "lassen": {
+        "n": 582,
+        "units": 241,
+        "group": "fluid",
+        "n_holdout_reserved": 362
+      },
+      "little_skull_mtn": {
+        "n": 270,
+        "units": 117,
+        "group": "tectonic",
+        "n_holdout_reserved": 104
+      },
+      "long_valley": {
+        "n": 24813,
+        "units": 348,
+        "group": "fluid",
+        "n_holdout_reserved": 4428
+      },
+      "mendocino": {
+        "n": 8604,
+        "units": 315,
+        "group": "tectonic",
+        "n_holdout_reserved": 2514
+      },
+      "mono_west_nv_mina": {
+        "n": 567,
+        "units": 168,
+        "group": "fluid",
+        "n_holdout_reserved": 425
+      },
+      "parkfield": {
+        "n": 2644,
+        "units": 331,
+        "group": "tectonic",
+        "n_holdout_reserved": 664
+      },
+      "salton_brawley": {
+        "n": 8076,
+        "units": 440,
+        "group": "fluid",
+        "n_holdout_reserved": 5922
+      },
+      "san_jacinto": {
+        "n": 7945,
+        "units": 333,
+        "group": "tectonic",
+        "n_holdout_reserved": 3365
+      },
+      "smith_valley_nv": {
+        "n": 536,
+        "units": 147,
+        "group": "tectonic",
+        "n_holdout_reserved": 126
+      },
+      "wasatch_slc": {
+        "n": 462,
+        "units": 163,
+        "group": "tectonic",
+        "n_holdout_reserved": 554
+      },
+      "yellowstone": {
+        "n": 3752,
+        "units": 357,
+        "group": "fluid",
+        "n_holdout_reserved": 3110
+      }
+    },
+    "declared_family_cells": 644,
+    "cell_max_LUNAR_ONLY": {
+      "observed_max_abs_z": 4.47106812588135,
+      "null_max_p95": 4.347096525946201,
+      "p": 0.03165611462845718,
+      "where": "yellowstone / elong_cos.top_decile"
+    },
+    "pooled_fluid": {
+      "max_abs_pooled_z": 2.841283508423166,
+      "where": "elong_cos.mean",
+      "null_max_p95": 3.261292210472038,
+      "p": 0.15928023992002666,
+      "top": [
+        {
+          "feature": "elong_cos.mean",
+          "pooled_z": 2.841283508423166,
+          "n_regions": 7
+        },
+        {
+          "feature": "elong_cos.bot_decile",
+          "pooled_z": -2.414660861760641,
+          "n_regions": 7
+        },
+        {
+          "feature": "rate.mean",
+          "pooled_z": -2.244559201007576,
+          "n_regions": 7
+        },
+        {
+          "feature": "areal_abs.top_decile",
+          "pooled_z": -1.881040083316782,
+          "n_regions": 7
+        },
+        {
+          "feature": "elong_cos.top_decile",
+          "pooled_z": 1.765213133795849,
+          "n_regions": 7
+        },
+        {
+          "feature": "moon_hourangle.R2",
+          "pooled_z": 1.7532135528474238,
+          "n_regions": 7
+        },
+        {
+          "feature": "moon_sinel.bot_decile",
+          "pooled_z": -1.7166134897834902,
+          "n_regions": 7
+        },
+        {
+          "feature": "moon_sinel_abs.top_decile",
+          "pooled_z": -1.5320707812971943,
+          "n_regions": 7
+        }
+      ]
+    },
+    "pooled_tectonic": {
+      "max_abs_pooled_z": 2.58513830400307,
+      "where": "shear.bot_decile",
+      "null_max_p95": 3.26290212011912,
+      "p": 0.2959013662112629,
+      "top": [
+        {
+          "feature": "shear.bot_decile",
+          "pooled_z": 2.58513830400307,
+          "n_regions": 7
+        },
+        {
+          "feature": "shear.mean",
+          "pooled_z": -2.491944848080376,
+          "n_regions": 7
+        },
+        {
+          "feature": "moon_sinel.bot_decile",
+          "pooled_z": 2.354435904502211,
+          "n_regions": 7
+        },
+        {
+          "feature": "elong_cos_abs.mean",
+          "pooled_z": -2.3372858843012905,
+          "n_regions": 7
+        },
+        {
+          "feature": "areal.bot_decile",
+          "pooled_z": -2.2875869914100355,
+          "n_regions": 7
+        },
+        {
+          "feature": "areal.mean",
+          "pooled_z": 2.2802915169144073,
+          "n_regions": 7
+        },
+        {
+          "feature": "shear.top_decile",
+          "pooled_z": -1.9423618848136397,
+          "n_regions": 7
+        },
+        {
+          "feature": "bearing.R4",
+          "pooled_z": 1.9013074253552202,
+          "n_regions": 7
+        }
+      ]
+    },
+    "superseded_signed_difference": {
+      "observed_max_abs_diff_z": 2.8942013598611673,
+      "null_max_p95": 3.190662489551772,
+      "p": 0.12562479173608798,
+      "top": [
+        {
+          "feature": "moon_sinel.bot_decile",
+          "fluid_z": -1.7166134897834902,
+          "tectonic_z": 2.354435904502211,
+          "diff_z": -2.8942013598611673
+        },
+        {
+          "feature": "areal.mean",
+          "fluid_z": -1.1793578891176848,
+          "tectonic_z": 2.2802915169144073,
+          "diff_z": -2.4405760395446747
+        },
+        {
+          "feature": "shear.bot_decile",
+          "fluid_z": -0.8066454784715934,
+          "tectonic_z": 2.58513830400307,
+          "diff_z": -2.3954180904568325
+        },
+        {
+          "feature": "moon_sinel_abs.mean",
+          "fluid_z": -1.4773383685639205,
+          "tectonic_z": 1.7776601294583805,
+          "diff_z": -2.2914658059973942
+        },
+        {
+          "feature": "shear.mean",
+          "fluid_z": 0.5009077593944348,
+          "tectonic_z": -2.491944848080376,
+          "diff_z": 2.121963289170935
+        },
+        {
+          "feature": "bearing.R4",
+          "fluid_z": -0.912701286468191,
+          "tectonic_z": 1.9013074253552202,
+          "diff_z": -2.0053095401319903
+        },
+        {
+          "feature": "moon_sinel.mean",
+          "fluid_z": 1.1308640848429545,
+          "tectonic_z": -1.7599649216892082,
+          "diff_z": 1.9965736865427077
+        },
+        {
+          "feature": "shear.top_decile",
+          "fluid_z": 0.6396894680715455,
+          "tectonic_z": -1.9423618848136397,
+          "diff_z": 1.8564362054678452
+        },
+        {
+          "feature": "elong_cos.mean",
+          "fluid_z": 2.841283508423166,
+          "tectonic_z": 0.30699184080120007,
+          "diff_z": 1.8330437163361124
+        },
+        {
+          "feature": "rate.mean",
+          "fluid_z": -2.244559201007576,
+          "tectonic_z": -0.005643005189925363,
+          "diff_z": -1.5998870394196032
+        }
+      ]
+    },
+    "artifact_monitor_SOLAR_pooled_fluid": {
+      "max_abs_pooled_z": 1.5855706453577953,
+      "where": "sun_hourangle.R4",
+      "top": [
+        {
+          "feature": "sun_hourangle.R4",
+          "pooled_z": -1.5855706453577953,
+          "n_regions": 7
+        },
+        {
+          "feature": "sun_sinel.mean",
+          "pooled_z": -1.3698350500051717,
+          "n_regions": 7
+        },
+        {
+          "feature": "sun_sinel.bot_decile",
+          "pooled_z": 1.1293043001198553,
+          "n_regions": 7
+        },
+        {
+          "feature": "sun_az.R2",
+          "pooled_z": 1.1148998409738262,
+          "n_regions": 7
+        },
+        {
+          "feature": "sun_hourangle.R2",
+          "pooled_z": 1.0805772222971004,
+          "n_regions": 7
+        }
+      ]
+    },
+    "top_15_cells": [
+      {
+        "region": "yellowstone",
+        "group": "fluid",
+        "feature": "elong_cos.top_decile",
+        "n": 3752,
+        "z": 4.47106812588135
+      },
+      {
+        "region": "geysers",
+        "group": "fluid",
+        "feature": "moon_hourangle.R2",
+        "n": 24697,
+        "z": 4.162310816210808
+      },
+      {
+        "region": "wasatch_slc",
+        "group": "tectonic",
+        "feature": "shear.mean",
+        "n": 462,
+        "z": -3.730898093700301
+      },
+      {
+        "region": "cedar_city_ut",
+        "group": "tectonic",
+        "feature": "moon_az.R2",
+        "n": 465,
+        "z": -3.5449346098017385
+      },
+      {
+        "region": "wasatch_slc",
+        "group": "tectonic",
+        "feature": "areal.mean",
+        "n": 462,
+        "z": 3.418531322809478
+      },
+      {
+        "region": "wasatch_slc",
+        "group": "tectonic",
+        "feature": "areal.bot_decile",
+        "n": 462,
+        "z": -3.3198521084386154
+      },
+      {
+        "region": "yellowstone",
+        "group": "fluid",
+        "feature": "elong_cos.mean",
+        "n": 3752,
+        "z": 3.274354146635559
+      },
+      {
+        "region": "geysers",
+        "group": "fluid",
+        "feature": "rate.mean",
+        "n": 24697,
+        "z": -3.242262318767289
+      },
+      {
+        "region": "cedar_city_ut",
+        "group": "tectonic",
+        "feature": "bearing.R3",
+        "n": 465,
+        "z": -3.0293946313503497
+      },
+      {
+        "region": "salton_brawley",
+        "group": "fluid",
+        "feature": "elongation.R3",
+        "n": 8076,
+        "z": 2.966153219333402
+      },
+      {
+        "region": "wasatch_slc",
+        "group": "tectonic",
+        "feature": "shear.top_decile",
+        "n": 462,
+        "z": -2.931924133419942
+      },
+      {
+        "region": "cedar_city_ut",
+        "group": "tectonic",
+        "feature": "moon_sinel_abs.bot_decile",
+        "n": 465,
+        "z": -2.876377947403002
+      },
+      {
+        "region": "mendocino",
+        "group": "tectonic",
+        "feature": "areal.top_decile",
+        "n": 8604,
+        "z": 2.772223759831708
+      },
+      {
+        "region": "parkfield",
+        "group": "tectonic",
+        "feature": "elongation.R2",
+        "n": 2644,
+        "z": -2.6871938283201207
+      },
+      {
+        "region": "mendocino",
+        "group": "tectonic",
+        "feature": "areal.mean",
+        "n": 8604,
+        "z": 2.622353661925123
+      }
+    ]
+  }
+}

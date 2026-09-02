@@ -1,0 +1,259 @@
+{
+  "arm": "near-critical: aftershocks as the target, SEQUENCE-level null",
+  "generated_utc": "2026-08-22T23:48:18.086533+00:00",
+  "priced_tests": 1,
+  "holdout_touched": false,
+  "catalogue": "comcat_socal_m25.csv, M>=2.5, exploration split",
+  "n_events": 15154,
+  "n_holdout_reserved": 3235,
+  "n_sequences": 972,
+  "n_aftershock": 14182,
+  "n_mainshock_background": 972,
+  "null": {
+    "kind": "waveform-matched dwell-time, ONE OFFSET PER SEQUENCE",
+    "why": "a per-event null treats co-temporal aftershocks as independent samples of a slowly-varying global quantity and inflates z by sqrt(events/sequences); the first run of this arm returned max |z| = 26.27 at aftershock_lt1d / elongation.R1 for exactly that reason and it was an artifact, not a signal",
+    "half_window_days": 14.765294,
+    "draws_per_sequence": 200,
+    "replicates": 4000
+  },
+  "populations": [
+    {
+      "name": "aftershock_lt1d",
+      "n": 9028,
+      "sequences": 500
+    },
+    {
+      "name": "aftershock_1to7d",
+      "n": 3210,
+      "sequences": 576
+    },
+    {
+      "name": "aftershock_7to30d",
+      "n": 1944,
+      "sequences": 520
+    },
+    {
+      "name": "mainshock_background",
+      "n": 972,
+      "sequences": 972
+    },
+    {
+      "name": "aftershock_all",
+      "n": 14182,
+      "sequences": 737
+    },
+    {
+      "name": "aftershock_M3plus",
+      "n": 4345,
+      "sequences": 418
+    },
+    {
+      "name": "mainshock_M3plus",
+      "n": 735,
+      "sequences": 735
+    }
+  ],
+  "n_cells": 238,
+  "cell_max_family": {
+    "observed_max_abs_z": 2.509611237935557,
+    "null_max_p95": 3.9205520062561763,
+    "p": 0.8027993001749563,
+    "where": "aftershock_7to30d / moon_hourangle.R4"
+  },
+  "differential_aftershock_minus_mainshock": {
+    "observed_max_abs_diff_z": 2.233021532728042,
+    "null_max_p95": 3.1798462830897862,
+    "p": 0.4768807798050487,
+    "top": [
+      {
+        "feature": "bearing.R1",
+        "z_aftershock": -2.126382604554782,
+        "z_mainshock": 0.9775747724049401,
+        "diff_z": -2.233021532728042
+      },
+      {
+        "feature": "bearing.R2",
+        "z_aftershock": -2.1172759135606247,
+        "z_mainshock": 0.9793314589910916,
+        "diff_z": -2.229307765546013
+      },
+      {
+        "feature": "moon_az.R2",
+        "z_aftershock": -2.0415508561964852,
+        "z_mainshock": 0.9777704594847623,
+        "diff_z": -2.1715922751678054
+      },
+      {
+        "feature": "bearing.R3",
+        "z_aftershock": -1.8858613384528486,
+        "z_mainshock": 0.7877598516987963,
+        "diff_z": -1.921428953886266
+      },
+      {
+        "feature": "moon_hourangle.R1",
+        "z_aftershock": -1.512549149688416,
+        "z_mainshock": 1.1276727067478824,
+        "diff_z": -1.8674878857238488
+      },
+      {
+        "feature": "rate.bot_decile",
+        "z_aftershock": 0.4348000826422604,
+        "z_mainshock": -1.7169775695474658,
+        "diff_z": 1.5740687651046532
+      },
+      {
+        "feature": "moon_az.R1",
+        "z_aftershock": -1.116378266097952,
+        "z_mainshock": 1.0362648380962785,
+        "diff_z": -1.538169766249883
+      },
+      {
+        "feature": "rate_abs.bot_decile",
+        "z_aftershock": -0.7763631541996953,
+        "z_mainshock": 1.0511920105135166,
+        "diff_z": -1.3055626482155371
+      },
+      {
+        "feature": "elong_cos_abs.top_decile",
+        "z_aftershock": 0.7904054349747047,
+        "z_mainshock": -1.0003753450682413,
+        "diff_z": 1.2963874427948396
+      },
+      {
+        "feature": "elongation.R3",
+        "z_aftershock": 0.001165782698657288,
+        "z_mainshock": 1.3545405090159401,
+        "diff_z": -0.9609591737471611
+      }
+    ]
+  },
+  "gradient_with_time_since_mainshock": {
+    "features_tested": 34,
+    "monotone_declining": 3,
+    "expected_by_chance": 5.666666666666667,
+    "p_binomial_greater": 0.9385644966008092,
+    "caveat": "the three bands share sequences, so this binomial is indicative only and is NOT a calibrated family p"
+  },
+  "top_20_cells": [
+    {
+      "population": "aftershock_7to30d",
+      "feature": "moon_hourangle.R4",
+      "n": 1944,
+      "z": 2.509611237935557
+    },
+    {
+      "population": "aftershock_7to30d",
+      "feature": "rate.mean",
+      "n": 1944,
+      "z": -2.2356801825692725
+    },
+    {
+      "population": "aftershock_all",
+      "feature": "bearing.R1",
+      "n": 14182,
+      "z": -2.126382604554782
+    },
+    {
+      "population": "aftershock_all",
+      "feature": "bearing.R2",
+      "n": 14182,
+      "z": -2.1172759135606247
+    },
+    {
+      "population": "aftershock_7to30d",
+      "feature": "rate.top_decile",
+      "n": 1944,
+      "z": -2.08320369196679
+    },
+    {
+      "population": "aftershock_all",
+      "feature": "moon_az.R2",
+      "n": 14182,
+      "z": -2.0415508561964852
+    },
+    {
+      "population": "aftershock_lt1d",
+      "feature": "bearing.R1",
+      "n": 9028,
+      "z": -2.0308970301597875
+    },
+    {
+      "population": "aftershock_lt1d",
+      "feature": "bearing.R2",
+      "n": 9028,
+      "z": -2.022576033796744
+    },
+    {
+      "population": "aftershock_M3plus",
+      "feature": "bearing.R3",
+      "n": 4345,
+      "z": -2.0162691501887675
+    },
+    {
+      "population": "aftershock_M3plus",
+      "feature": "moon_az.R2",
+      "n": 4345,
+      "z": -1.893979839184107
+    },
+    {
+      "population": "aftershock_all",
+      "feature": "bearing.R3",
+      "n": 14182,
+      "z": -1.8858613384528486
+    },
+    {
+      "population": "aftershock_lt1d",
+      "feature": "moon_az.R2",
+      "n": 9028,
+      "z": -1.8735223900221996
+    },
+    {
+      "population": "aftershock_lt1d",
+      "feature": "bearing.R3",
+      "n": 9028,
+      "z": -1.8351519405918626
+    },
+    {
+      "population": "mainshock_background",
+      "feature": "moon_hourangle.R4",
+      "n": 972,
+      "z": 1.7764659536089453
+    },
+    {
+      "population": "mainshock_background",
+      "feature": "rate.bot_decile",
+      "n": 972,
+      "z": -1.7169775695474658
+    },
+    {
+      "population": "aftershock_M3plus",
+      "feature": "bearing.R2",
+      "n": 4345,
+      "z": -1.708148600936784
+    },
+    {
+      "population": "mainshock_M3plus",
+      "feature": "rate.bot_decile",
+      "n": 735,
+      "z": -1.6706547988158524
+    },
+    {
+      "population": "aftershock_7to30d",
+      "feature": "elongation.R3",
+      "n": 1944,
+      "z": -1.62107471919314
+    },
+    {
+      "population": "mainshock_background",
+      "feature": "rate.mean",
+      "n": 972,
+      "z": 1.6129710503049874
+    },
+    {
+      "population": "aftershock_7to30d",
+      "feature": "shear.mean",
+      "n": 1944,
+      "z": -1.5861412061790976
+    }
+  ]
+}
