@@ -165,13 +165,53 @@ block-bootstrap null preserving multi-year rate autocorrelation.
      Omori p variability? magnitude-dependent c?).
   2. `exp_fluid_driven.py` (corrected times): pooled over the 7 fluid-driven regions,
      `moon_sinel_abs.mean` z 3.50, p 0.022 against its own max-null; the 6 tectonic regions pool
-     at p 0.77. Declared 7/7 test null (p 0.46). This is the Lu et al. direction and Coso is in
-     the pool. Not claimed; one of several secondary families. The right next step is the
-     EQ-18 cross-test as commissioned (their regions, their catalogues, their method beside ours).
+     at p 0.77. Declared 7/7 test null (p 0.46). Not claimed; one of several secondary families.
+     **Withdrawn by Popper Round 7 (§P7-26(3)):** the sentence "this is the Lu et al. direction".
+     `moon_sinel_abs` is |sin(lunar elevation)| (`exp_mass_screen.py:177`), an ephemeris scalar, not
+     the fault-plane shear stress Lu et al. test. The pool is also STRONGER under the full-sequence
+     null (p 0.0007) than declustered (p 0.022), which under SP-2 reads as clustering-derived. The
+     EQ-18 cross-test is still worth pre-registering, for a different reason (the Coso Fig 4c
+     detector works); its freeze list is in §P7-26(3).
 - **New dataset:** `data/global_m55/` (INVENTORY §1f), 18,769 worldwide M>=5.5 triggers 1985-2022.
 - Unexplained at 2.15 sigma (declustered per-region under-dispersion): unchanged, logged, not built on.
-- Fable audit findings 3, 4, 6, 7 still open. Popper has not ratified the SP-7 v2 amendment;
-  K-108 non-independence ruling outstanding. Popper has not ruled on any 2026-09-02 arm.
+- Fable audit findings 3, 4, 6, 7 still open. SP-7 v2 ratification and the K-108 non-independence
+  ruling: DEFERRED by Popper Round 7 (§P7-26(7)), top of the Round 8 docket ahead of new arms.
+  Popper's Round 7 rulings on every 2026-09-02 arm are summarised below.
+
+**Popper Round 7 (2026-09-02, ledger §P7-26; the first ruling on any of the above).**
+
+- Correction ACCEPTED, one residual exposure: `exp_world_faultrelative.load_region` was a fifth
+  loader outside `tests/test_epoch_consistency.py`; the mass-screen re-run needed an
+  `engine/EXPLORE_COUNT.jsonl` declaration under SP-1.5. Both being closed this session.
+- Arm A NULL at poor sensitivity (bounds beta < 1.5 at D0 = 10 kPa only). Arm B primary is a
+  NULL-OF-A-BROKEN-RULE (zero power at every injected delta; not quotable as a bound), but arm B
+  **control (c) is PROMOTED to PROVISIONAL (negative)**: a local b DESTROYS 0.48 to 0.88 bits/event
+  at M>=2.5 on both catalogues, pre-registered, same sign, far outside CI. Arm C admitted as a
+  **PROVISIONAL-LEAD, not reportable**. Arm D null at weak sensitivity; its placebo rate
+  (0.052/feature) is accepted as a calibration. Arm G RETIRED AS POSED; its ledger prose claiming
+  the alpha-refit baseline "absorbs" the gain is WITHDRAWN (the JSON says A2 is worse than A by
+  0.013 bits). P-1.1 observer-confirmed, retired as a tidal arm. P-1.4 is the program's best tidal
+  bound (MDE eps 0.05 over the whole covariate space). Holdout candidate from 2026-08-22 RETIRED.
+- **Arm C proof path, frozen at §P7-26(2), three stages, nothing skips.** Stage 1: the ETAS-repair
+  ladder R0 (alpha free, lb 0.05) -> R1 (hierarchical per-sequence productivity) -> R2 (two-component
+  Omori) -> R3 (magnitude-dependent c) -> R4 (fitted Mc(t) incompleteness layer, MANDATORY), on the
+  exploration split only, sequence-block CI, positive control (injected productivity scatter must be
+  recovered by R1) and negative control (Poisson through every rung) BEFORE the primary is read.
+  Stage 2: one scored look on arm C's OWN untouched holdouts (24,532 QTM, 10,604 SCSN), hash into
+  `engine/HOLDOUT_LOG.jsonl` first. Stage 3: 2019+ ComCat (8,256 events at M>=2.5, not ~3,000 as
+  first estimated), only after a sensitivity run: arm G already measured that a sequence-block CI on
+  a SoCal window of this shape gives 0/12 CIs excluding zero at an injected +0.037. The spatial
+  `EtasV1` leg is REMOVED (cell-day grid vs per-event continuous-time likelihoods are not
+  comparable, and a spatial baseline changes the target). 2019+ reservation by §P3-6 is not
+  exclusivity; every 2019+ report must state the cumulative count of independent scored looks.
+- K-431..K-448: **K-448, K-440, K-434 elevated** (the last two are the round's named ETAS repairs).
+  K-441 decisive but not one evaluation (O(2N+2) fits) and its Mc(t) rider is binding. K-444
+  reframed (K-444R; the bias control is the experiment). K-442 contradicted by the same night's
+  diurnal reading and its covariates are post-detection (leakage). Full table at §P7-26(4).
+- **Priority (Popper):** 1. Phase 4 prospective log NOW, v1 = frozen ETAS vs Poisson only ("every
+  week it is not running is unrecoverable evidence"); 2. Phase 2 stage 1 in parallel; 3. K-441 (with
+  rider), K-443, K-446; 4. arm C stage 2 only if stage 1 passes; 5. EQ-18 cross-test when the bin
+  list arrives; 6. K-440 + K-434; 7. arm C stage 3 after its sensitivity run.
 
 **Retired tonight (do not re-propose without moving a multiplier):** K-436 as posed with naive
 first-hour counts (incompleteness); K-038's marginal-effect form (its ledger-class interaction,

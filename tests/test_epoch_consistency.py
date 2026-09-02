@@ -36,6 +36,7 @@ import exp_fluid_driven as FD          # noqa: E402
 import exp_highn as HN                 # noqa: E402
 import exp_mass_screen as MS           # noqa: E402
 import exp_nearcritical as NC          # noqa: E402
+import exp_world_faultrelative as WFR  # noqa: E402
 import exp_world_harmonics as W        # noqa: E402
 
 UNIX_EPOCH = _dt.datetime(1970, 1, 1, tzinfo=_dt.timezone.utc)
@@ -145,11 +146,19 @@ def _load_world(tmp_path):
     return W.load_region(p)[0]
 
 
+def _load_faultrel(tmp_path, monkeypatch=None):
+    p = tmp_path / "faultrel.csv"
+    p.write_text(_csv_text(_three(TIMES["region_full"], (5.5, 5.6, 5.7))),
+                 encoding="utf-8")
+    return WFR.load_region(p)[0]
+
+
 LOADERS = {
     "exp_fluid_driven.load": ("fluid", _load_fluid),
     "exp_highn.load_zenodo": ("zenodo", _load_zenodo),
     "exp_mass_screen.load_region_full": ("region_full", _load_region_full),
     "exp_nearcritical.load": ("nearcritical", _load_nearcritical),
+    "exp_world_faultrelative.load_region": ("region_full", _load_faultrel),
 }
 
 
